@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "es2018",
+		"module": "commonjs",
+		"jsx": "react",
+		"noEmit": false,
+		"checkJs": false,
+		"allowJs": true,
+		"outDir": "server-build",
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"noImplicitAny": false,
+		"moduleResolution": "node",
+		"lib": ["es2018", "esnext.asynciterable", "DOM"],
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
+	},
+}

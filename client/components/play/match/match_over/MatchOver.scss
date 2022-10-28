@@ -1,0 +1,130 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-match-over {
+	$self: &;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+
+	&__header {
+		position: absolute;
+		width: 100%;
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		background-color: rgba(var(--theme-background), 0.3);
+		align-items: center;
+		padding: 50px 0;
+		flex-direction: column;
+
+		h3 {
+			font-size: 2.6rem;
+		}
+
+		> div {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+	}
+
+	&__ended-by {
+		color: rgb(var(--text-color));
+		opacity: 0.8;
+		font-size: 1rem;
+	}
+
+	&__sword {
+		margin-top: 170px;
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+		display: flex;
+		position: relative;
+		z-index: 1000;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.8rem;
+		color: white;
+		box-sizing: border-box;
+		box-shadow: 0 2px 20px rgba(black, 0.3);
+		background-color: rgb(var(--error-color));
+	}
+
+	&--won {
+		#{$self}__header {
+			background-color: rgba(var(--success-color), 0.1) !important;
+		}
+
+		#{$self}__sword {
+			background-color: rgb(var(--success-color));
+		}
+	}
+
+	&--aborted {
+		#{$self}__header {
+			background-color: rgba(var(--theme-background), 0.1) !important;
+		}
+
+		#{$self}__sword {
+			background-color: rgba(var(--button-color)) !important;
+		}
+	}
+
+	&__lobby {
+		padding: 20px;
+		box-sizing: border-box;
+	}
+
+	&__players {
+		width: 90%;
+		margin: 40px 0;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-auto-rows: 130px;
+		grid-gap: 10px;
+
+		> *:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+
+	&__player {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		border: 3px solid transparent;
+		padding: 10px;
+		box-sizing: border-box;
+		border-radius: 6px;
+
+		&--won {
+			background-color: rgba(var(--success-color), 0.2);
+			border-color: rgb(var(--success-color)) !important;
+			box-shadow: 0 0 13px rgba(var(--success-color), 0.5);
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-bottom: 20px;
+	}
+
+	&__main-actions {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		margin-bottom: 15px;
+
+		> *:not(:last-child) {
+			margin-right: 15px;
+		}
+	}
+}

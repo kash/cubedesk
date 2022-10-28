@@ -1,0 +1,18 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-modal-header {
+	width: calc(100% - 40px);
+	color: rgb(var(--text-color));
+	margin-bottom: 25px;
+
+	h2 {
+		color: inherit;
+		font-family: Kontora, Poppins, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+		font-weight: bold;
+		font-size: 1.9rem;
+
+		span {
+			color: rgb(var(--secondary-color));
+		}
+	}
+}

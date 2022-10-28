@@ -1,0 +1,14 @@
+@import '../../styles/config';
+
+.#{$namespace}-play {
+	display: table;
+	width: 100%;
+
+	&__list {
+		width: 100%;
+		max-width: 900px;
+		margin: 0 auto 100px;
+		display: grid;
+		grid-gap: 25px;
+	}
+}

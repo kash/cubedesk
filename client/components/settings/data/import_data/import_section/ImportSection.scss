@@ -1,0 +1,36 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-import-section {
+    p {
+        color: rgb(var(--text-color));
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    > div:not(:last-of-type) {
+        margin-bottom: 25px;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    ol {
+        padding-left: 35px;
+        box-sizing: border-box;
+        list-style: decimal;
+
+        li {
+            line-height: 1.6rem;
+            font-size: 1.1rem;
+            color: rgb(var(--text-color));
+            opacity: 0.85;
+
+            a {
+                color: rgb(var(--text-color));
+                opacity: 0.7;
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-smart-battery {
+	$self: &;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	&__body {
+		border: 2px solid rgb(var(--success-color));
+		height: 8px;
+		border-radius: 3px;
+		overflow: hidden;
+		width: 18px;
+		position: relative;
+	}
+
+	&__bar {
+		position: absolute;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background-color: rgb(var(--success-color));
+	}
+
+	&__tip {
+		height: 7px;
+		width: 2px;
+		background-color: rgb(var(--success-color));
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+	}
+
+	&--orange {
+		#{$self}__body {
+			border-color: rgb(var(--warning-color)) !important;
+		}
+
+		#{$self}__tip,
+		#{$self}__bar {
+			background-color: rgb(var(--warning-color)) !important;
+		}
+	}
+
+	&--red {
+		#{$self}__body {
+			border-color: rgb(var(--warning-color)) !important;
+		}
+
+		#{$self}__tip,
+		#{$self}__bar {
+			background-color: rgb(var(--warning-color)) !important;
+		}
+	}
+}

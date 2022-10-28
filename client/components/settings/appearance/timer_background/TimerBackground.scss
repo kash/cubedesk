@@ -1,0 +1,28 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-timer-background {
+	> input {
+		display: none;
+	}
+
+	&__image {
+		width: 200px;
+		height: 130px;
+		border-radius: 7px;
+		margin-bottom: 8px;
+		position: relative;
+		border: 3px solid rgba(var(--theme-background-opposite), 0.4);
+		overflow: hidden;
+		cursor: pointer;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+}

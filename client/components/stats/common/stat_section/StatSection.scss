@@ -1,0 +1,21 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-stat-section {
+	display: grid;
+	grid-gap: 5px;
+	width: 100%;
+	height: 100%;
+	grid-template-rows: 40px minmax(0, auto);
+
+	&__header {
+		margin-bottom: 0;
+
+		h2 {
+			font-family: Kontora, Poppins, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+			font-size: 1.7rem !important;
+			font-weight: 700;
+			padding: 0;
+			margin: 0;
+		}
+	}
+}

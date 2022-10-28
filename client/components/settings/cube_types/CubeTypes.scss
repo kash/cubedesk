@@ -1,0 +1,15 @@
+@import '../../../styles/config';
+
+.#{$namespace}-manage-custom-cubes {
+	&__add {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 20px 0;
+	}
+
+	&__table {
+		margin-top: 10px;
+	}
+}

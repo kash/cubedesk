@@ -1,0 +1,49 @@
+@import '../../../styles/config';
+
+.#{$namespace}-games-intro {
+	margin-top: 50px;
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		align-items: center;
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 15px;
+		width: 300px;
+
+		> * {
+			margin-bottom: 10px;
+		}
+	}
+
+	&-challenge {
+		width: 100%;
+	}
+
+	&__sub-actions {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+
+	&__header {
+		position: relative;
+		width: 100%;
+		max-width: 700px;
+		margin: auto;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+
+		i {
+			font-size: 3rem;
+			margin-bottom: 20px;
+		}
+	}
+}

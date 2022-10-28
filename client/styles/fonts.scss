@@ -1,0 +1,42 @@
+@mixin fontFace($name, $suffix, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+    $src: null;
+
+    @each $ext in $exts {
+        $url: "https://cdn.cubedesk.io/fonts/" + $name + "/" + $name + " " + $suffix + "." + $ext;
+        $src: append($src, url($url) format(quote($ext)), comma);
+    }
+
+    @font-face {
+        font-family: quote($name);
+        font-style: $style;
+        font-weight: $weight;
+        src: $src;
+    }
+}
+
+// Kontora
+@include fontFace("Kontora", "Thin", 100, normal, woff2 woff);
+@include fontFace("Kontora", "Light", 200, normal, woff2 woff);
+@include fontFace("Kontora", "Regular", 300, normal, woff2 woff);
+@include fontFace("Kontora", "Medium", 400, normal, woff2 woff);
+@include fontFace("Kontora", "SemiBold", 500, normal, woff2 woff);
+@include fontFace("Kontora", "Bold", 600, normal, woff2 woff);
+@include fontFace("Kontora", "ExtraBold", 700, normal, woff2 woff);
+@include fontFace("Kontora", "Black", 800, normal, woff2 woff);
+@include fontFace("Kontora", "ExtraBlack", 900, normal, woff2 woff);
+
+// Gelion
+@include fontFace("Gelion", "Thin", 100, normal, woff2 woff);
+@include fontFace("Gelion", "Thin Italic", 100, italic, woff2 woff);
+@include fontFace("Gelion", "Light", 200, normal, woff2 woff);
+@include fontFace("Gelion", "Light Italic", 200, italic, woff2 woff);
+@include fontFace("Gelion", "Regular", 300, normal, woff2 woff);
+@include fontFace("Gelion", "Regular Italic", 300, italic, woff2 woff);
+@include fontFace("Gelion", "Medium", 400, normal, woff2 woff);
+@include fontFace("Gelion", "Medium Italic", 400, italic, woff2 woff);
+@include fontFace("Gelion", "SemiBold", 500, normal, woff2 woff);
+@include fontFace("Gelion", "SemiBold Italic", 500, italic, woff2 woff);
+@include fontFace("Gelion", "Bold", 600, normal, woff2 woff);
+@include fontFace("Gelion", "Bold Italic", 600, italic, woff2 woff);
+@include fontFace("Gelion", "Black", 700, normal, woff2 woff);
+@include fontFace("Gelion", "Black Italic", 700, italic, woff2 woff);

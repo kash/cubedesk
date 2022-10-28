@@ -1,0 +1,35 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-process-data {
+	&__drop {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 20px 0 10px;
+		border: 3px dashed rgb(var(--button-color));
+		border-radius: 7px;
+		padding: 30px 0;
+		box-sizing: border-box;
+		cursor: pointer;
+		background-color: rgb(var(--module-color));
+
+		&--active {
+			.cd-settings__import-data__drop {
+				border-color: rgb(var(--primary-color));
+
+				p {
+					border-color: rgb(var(--primary-color));
+				}
+			}
+		}
+
+		p {
+			color: rgb(var(--text-color)) !important;
+			margin: 0;
+		}
+
+		input {
+			display: none;
+		}
+	}
+}

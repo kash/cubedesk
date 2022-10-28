@@ -1,0 +1,13 @@
+@import '../../styles/config';
+
+.#{$namespace}-landing {
+	padding-top: 50px;
+	background-color: white;
+	width: 100%;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.#{$namespace}-landing-features {
+	width: 100%;
+}

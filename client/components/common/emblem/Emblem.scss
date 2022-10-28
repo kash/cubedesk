@@ -1,0 +1,56 @@
+.cd-common__emblem {
+	background-color: rgb(var(--button-color));
+	border-radius: 15px;
+	width: auto;
+	margin-bottom: 5px;
+	padding: 5px 11px;
+	box-sizing: border-box;
+	display: table;
+
+	$iconSize: 28px;
+
+	&__icon {
+		width: $iconSize;
+		height: $iconSize;
+		padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
+	}
+
+	&--small {
+		padding: 3px 7px !important;
+		font-weight: 600 !important;
+
+		span {
+			font-size: 0.85rem !important;
+		}
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: row;
+		font-size: 1rem;
+		font-weight: 500;
+		align-items: center;
+		color: rgb(var(--text-color));
+	}
+
+	i {
+		color: inherit;
+		margin-top: 1px;
+	}
+
+	i + span {
+		margin-left: 5px;
+	}
+
+	span {
+		display: table;
+		color: inherit;
+		font-weight: inherit;
+		font-size: inherit;
+		white-space: pre;
+	}
+}

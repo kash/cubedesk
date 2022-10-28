@@ -1,0 +1,25 @@
+@import '../../styles/config';
+
+.#{$namespace}-solve-page {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	padding: 100px 0;
+	background-color: rgb(var(--background-color));
+	box-sizing: border-box;
+	align-items: flex-start;
+
+	&__body {
+		box-sizing: border-box;
+		background-color: rgb(var(--module-color));
+		padding: 25px 20px;
+		border-radius: 6px;
+		width: 100%;
+		max-width: 600px;
+
+		> * {
+			width: 100%;
+		}
+	}
+}

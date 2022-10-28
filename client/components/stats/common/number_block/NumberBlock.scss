@@ -1,0 +1,133 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-number-block {
+	$self: &;
+
+	box-sizing: border-box;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	color: inherit;
+	flex-direction: column;
+	transition: all 0.1s ease-in-out;
+	justify-content: space-between;
+
+	> * {
+		color: inherit;
+	}
+
+	button {
+		cursor: default;
+	}
+
+	&__header {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 10px;
+		align-items: center;
+
+		p {
+			font-size: 1rem;
+			text-align: left;
+		}
+	}
+
+	&--button {
+		&:hover {
+			#{$self}__value {
+				cursor: pointer !important;
+
+				> span {
+					border-bottom: 3px solid;
+				}
+			}
+		}
+	}
+
+	&--center {
+		justify-content: center;
+
+		#{$self}__body {
+			flex-direction: row !important;
+		}
+	}
+
+	&--small {
+		padding: 10px 15px !important;
+
+		#{$self}__value {
+			span {
+				font-size: 1.4rem;
+				line-height: 0.9rem;
+			}
+		}
+	}
+
+	&--noPadding {
+		padding: 0 !important;
+	}
+
+	&--vertical {
+		#{$self}__body {
+			flex-direction: column;
+		}
+	}
+
+	&--large {
+		#{$self}__value {
+			span {
+				font-size: 3.7rem;
+				line-height: 4rem;
+			}
+		}
+	}
+
+	&__body {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: inherit;
+	}
+
+	&__icon {
+		width: 28px;
+		height: 28px;
+		border-radius: 5px;
+		display: flex;
+		font-size: 1.2rem;
+		color: rgb(var(--theme-background-opposite));
+		justify-content: center;
+		align-items: center;
+
+		&--darkIcon {
+			color: rgb(var(--theme-background)) !important;
+		}
+	}
+
+	&__value {
+		color: inherit;
+		margin-left: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		span {
+			color: inherit;
+			display: table;
+			font-size: 2.3rem;
+			line-height: 2.2rem;
+			font-weight: bold;
+			border-bottom: 3px solid transparent;
+			font-family: Kontora, Poppins, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+		}
+
+		p {
+			font-weight: 500;
+			opacity: 0.9;
+			color: rgb(var(--text-color));
+			margin: 0 0 0 10px;
+			font-size: 1rem;
+		}
+	}
+}

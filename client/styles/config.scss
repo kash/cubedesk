@@ -1,0 +1,34 @@
+$namespace: 'cd';
+
+$defaultFontFamily: 'Lato', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+
+:root {
+	--link-color: 36, 107, 253;
+}
+
+$primaryColor: #246bfd;
+$secondaryGreen: #66bb6a;
+$primaryGreen: #66bb6a;
+$buttonColor: #313438;
+$primaryOrange: #ef6c00;
+$primaryBackground: #1a1d21;
+$primaryRed: #e53935;
+$searchHeight: 60px;
+$navWidth: 18rem;
+
+$statsGridRowHeight: 200px;
+
+$successColor: #2dbd61;
+$successColorDark: #2a3f31;
+
+$errorColorBackground: #ffced7;
+$errorColor: #e23343;
+$errorColorDark: #970912;
+
+$warningColorBackground: #ffd1b9;
+$warningColor: #ee6a26;
+$warningColorDark: #d44707;
+
+$infoColorBackground: #a8d6f5;
+$infoColor: #42a5f5;
+$infoColorDark: #1565c0;

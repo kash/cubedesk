@@ -1,0 +1,10 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-cube-stat-avg {
+    display: grid;
+    grid-auto-rows: 1fr;
+
+    > *:nth-child(odd) {
+        background-color: rgba(var(--theme-background-opposite), 0.05);
+    }
+}

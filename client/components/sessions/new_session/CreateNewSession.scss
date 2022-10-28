@@ -1,0 +1,7 @@
+@import '../../../styles/config';
+
+.#{$namespace}-create-new-session {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}

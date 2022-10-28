@@ -1,0 +1,47 @@
+@import '../../../styles/config';
+
+.#{$namespace}-landing-info {
+	h1, h2, h3, h4, h5, p {
+		color: #444;
+	}
+
+	p {
+		font-size: 1.4rem;
+		line-height: 2.1rem;
+		font-weight: 400;
+		opacity: 0.95;
+		font-family: 'Source Sans Pro', Roboto, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	}
+
+	em,
+	strong {
+		font-size: inherit;
+		font-family: inherit;
+	}
+
+	a {
+		font-size: inherit;
+		font-family: inherit;
+		color: rgb(var(--link-color)) !important;
+		font-weight: bold;
+		border-bottom: 3px solid rgb(var(--link-color), 0.5);
+	}
+
+	img {
+		border-radius: 10px;
+		margin: 3rem auto;
+		width: 95%;
+		max-width: 45rem;
+
+		box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
+			0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+	}
+
+	hr {
+		border: none;
+		height: 3px;
+		width: 100%;
+		background-color: #eee;
+		margin: 30px auto;
+	}
+}

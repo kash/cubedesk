@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>timer_layout_bottom</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-718.000000, -282.000000)" fill="#0A94E3" fill-rule="nonzero" stroke="#0A94E3" stroke-width="3">
+            <g id="timer_layout_bottom" transform="translate(720.000000, 284.000000)">
+                <path d="M53,56 L3,56 C1.3457031,56 0,54.6542969 0,53 L0,3 C0,1.3457031 1.3457031,0 3,0 L53,0 C54.6542969,0 56,1.3457031 56,3 L56,53 C56,54.6542969 54.6542969,56 53,56 Z M3,2 C2.4482422,2 2,2.4487305 2,3 L2,53 C2,53.5512695 2.4482422,54 3,54 L53,54 C53.5517578,54 54,53.5512695 54,53 L54,3 C54,2.4487305 53.5517578,2 53,2 L3,2 Z" id="Shape"></path>
+                <path d="M55,38 L1,38 C0.4472656,38 0,37.5522461 0,37 C0,36.4477539 0.4472656,36 1,36 L55,36 C55.5527344,36 56,36.4477539 56,37 C56,37.5522461 55.5527344,38 55,38 Z" id="Path"></path>
+                <path d="M37,56 C36.4472656,56 36,55.5522461 36,55 L36,37 C36,36.4477539 36.4472656,36 37,36 C37.5527344,36 38,36.4477539 38,37 L38,55 C38,55.5522461 37.5527344,56 37,56 Z" id="Path"></path>
+                <path d="M19,56 C18.4472656,56 18,55.5522461 18,55 L18,37 C18,36.4477539 18.4472656,36 19,36 C19.5527344,36 20,36.4477539 20,37 L20,55 C20,55.5522461 19.5527344,56 19,56 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

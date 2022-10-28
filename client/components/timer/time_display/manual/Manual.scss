@@ -1,0 +1,26 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-manual-time-entry {
+	border: 2px solid rgb(var(--button-color));
+	background-color: transparent;
+	font-size: 4.5rem;
+	color: rgb(var(--text-color));
+	font-weight: 500;
+	width: 95%;
+	max-width: 600px;
+	box-sizing: border-box;
+	margin: 5px auto;
+	text-align: center;
+	padding: 0 2px;
+	border-radius: 8px;
+	font-family: 'Roboto Mono', monospace;
+	transition: all 0.1s ease-in-out;
+
+	&:disabled {
+		opacity: 0.3;
+	}
+
+	&--error {
+		border: 2px solid rgb(var(--error-color)) !important;
+	}
+}

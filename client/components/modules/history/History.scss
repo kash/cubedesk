@@ -1,0 +1,37 @@
+@import '../../../styles/config';
+
+.cd-history {
+	width: 100%;
+	padding: 0 5px;
+	box-sizing: border-box;
+	height: 100%;
+	overflow: visible;
+
+	&__actions {
+		display: flex;
+		flex-direction: row;
+
+		button:not(:last-of-type) {
+			margin-right: 7px;
+		}
+
+		&--on {
+			background-color: rgb(var(--text-color)) !important;
+			color: rgb(var(--background-color)) !important;
+		}
+	}
+
+	&__table {
+		height: 100%;
+		width: 100%;
+	}
+
+	&__list {
+		max-height: 100%;
+		overflow: auto;
+	}
+
+	&__head {
+		width: 100%;
+	}
+}

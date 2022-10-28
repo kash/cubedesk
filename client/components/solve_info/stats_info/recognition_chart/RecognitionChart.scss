@@ -1,0 +1,39 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-solve-info-rec-chart {
+	$self: &;
+
+	&__bar {
+		display: grid;
+		margin-bottom: 15px;
+		grid-template-columns: 100px 1fr;
+
+		p {
+			font-size: 0.9rem;
+			font-style: italic;
+			opacity: 0.8;
+			margin-top: 2px;
+		}
+
+		&--gray {
+			#{$self}__right-bar {
+				background-color: rgb(var(--text-color));
+				opacity: 0.3;
+			}
+		}
+	}
+
+	&__left {
+		color: rgb(var(--text-color));
+		font-weight: 600;
+		font-size: 0.9rem;
+	}
+
+	&__right-bar {
+		display: table;
+		min-width: 5px;
+		background-color: rgb(var(--primary-color));
+		height: 5px;
+		border-radius: 3px;
+	}
+}

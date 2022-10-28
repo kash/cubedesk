@@ -1,0 +1,36 @@
+<mjml>
+	<mj-body>
+		<mj-section>
+			<mj-column>
+				<mj-image
+					href="https://www.cubedesk.io"
+					width="200px"
+					src="https://cdn.cubedesk.io/storage/logo_text_black.png"
+				></mj-image>
+
+				<mj-divider border-color="#444"></mj-divider>
+
+				<mj-text font-size="20px" color="#444444" font-family="helvetica">Hey {{user.first_name}},</mj-text>
+				<mj-text line-height="27px" font-size="20px" color="#444444" font-family="helvetica"
+					>{{message}}</mj-text
+				>
+				<mj-text
+					font-weight="bold"
+					font-size="20px"
+					color="#246bfd"
+					text-decoration="underline"
+					font-family="helvetica"
+				>
+					<a font-weight="700" href="{{link}}">{{linkText}}</a>
+				</mj-text>
+				<mj-divider border-color="#444"></mj-divider>
+
+				<mj-text font-size="20px" padding-bottom="0" color="#444444" font-family="helvetica"
+					>Cheers,<br />
+				</mj-text>
+
+				<mj-text font-size="20px" color="#444444" font-family="helvetica">Team CubeDesk</mj-text>
+			</mj-column>
+		</mj-section>
+	</mj-body>
+</mjml>

@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		///// USER DEFINED /////
+		--primary-color: 36, 107, 253;
+		--secondary-color: 65, 176, 88;
+		///// CHANGES WITH LIGHT MODE /////
+		--text-color: 255, 255, 255;
+		--background-color: 18, 20, 28;
+		--button-color: 30, 36, 44;
+		--module-color: 12, 13, 23;
+
+		//// COMPUTED PLACEHOLDERS /////
+		--theme-background: 0, 0, 0;
+		--theme-background-opposite: 255, 255, 255;
+		--theme-module: 0, 0, 0;
+		--theme-module-opposite: 255, 255, 255;
+		--theme-primary: 0, 0, 0;
+		--theme-primary-opposite: 255, 255, 255;
+		--theme-secondary: 0, 0, 0;
+		--theme-secondary-opposite: 0, 0, 0;
+		--theme-text: 0, 0, 0;
+		--theme-text-opposite: 255, 255, 255;
+		--theme-button: 0, 0, 0;
+		--theme-button-opposite: 255, 255, 255;
+
+		// Other
+		--success-color: 45, 189, 97;
+		--error-color: 226, 51, 67;
+		--warning-color: 238, 106, 38;
+		--info-color: 66, 165, 245;
+
+		// White when in dark mode, black when in light mode
+		--theme-color-opposite: 255, 255, 255;
+	}
+}
+
+@import 'fonts';
+@import 'config';
+@import 'reset';
+@import 'react_table';
+@import 'defaults';
+@import 'pattern.scss';
+@import '~react-color-palette/lib/css/styles.css';
+
+h1 {
+	font-size: 3rem;
+	font-weight: bold;
+	color: rgb(var(--text-color));
+}
+
+* {
+	transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}

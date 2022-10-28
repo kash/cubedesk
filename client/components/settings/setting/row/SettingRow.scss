@@ -1,0 +1,78 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-setting-row {
+	$self: &;
+
+	$margin: 30px;
+
+	width: 100%;
+	box-sizing: border-box;
+	min-height: 40px;
+	margin-top: $margin;
+	padding-bottom: $margin;
+	align-items: flex-start;
+
+	&__wrapper {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		&--vertical {
+			flex-direction: column;
+			justify-content: flex-start;
+
+			#{$self}__text {
+				margin-bottom: 10px;
+			}
+
+			#{$self}__body,
+			#{$self}__text {
+				width: 100%;
+			}
+		}
+	}
+
+	&__text {
+		box-sizing: border-box;
+		display: table;
+		text-align: left;
+		width: 300px;
+
+		> legend {
+			font-size: 1.2rem;
+			color: rgb(var(--text-color));
+		}
+	}
+
+	&--sub {
+		#{$self}__text > legend {
+			font-size: 1.1rem;
+			font-weight: normal;
+			line-height: 1.5rem;
+			opacity: 0.9;
+		}
+	}
+
+	&--parent {
+		padding-bottom: 0 !important;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+
+	p {
+		margin-top: 5px;
+		font-size: 0.9rem;
+		color: rgb(var(--text-color));
+		opacity: 0.7;
+		line-height: 1.3rem;
+	}
+
+	input {
+		max-width: 100px;
+	}
+}

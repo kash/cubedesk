@@ -1,0 +1,63 @@
+mutation deleteFriendshipRequest($friendshipRequestId: String!) {
+	deleteFriendshipRequest(friendshipRequestId: $friendshipRequestId) {
+		...FriendshipRequestFragment
+	}
+}
+
+mutation acceptFriendshipRequest($friendshipRequestId: String!) {
+	acceptFriendshipRequest(friendshipRequestId: $friendshipRequestId) {
+		...FriendshipFragment
+	}
+}
+
+mutation unfriend($targetUserId: String!) {
+	unfriend(targetUserId: $targetUserId) {
+		...FriendshipFragment
+	}
+}
+
+mutation sendFriendshipRequest($toUserId: String) {
+	sendFriendshipRequest(toUserId: $toUserId) {
+		...FriendshipRequestFragment
+	}
+}
+
+mutation createAdView($input: CreateAdViewInput) {
+	createAdView(input: $input) {
+		...AdViewFragment
+	}
+}
+
+mutation clickAdView($adViewId: String!) {
+	clickAdView(adViewId: $adViewId) {
+		...AdViewFragment
+	}
+}
+
+mutation mergeSessions($oldSessionId: String, $newSessionId: String) {
+	mergeSessions(oldSessionId: $oldSessionId, newSessionId: $newSessionId) {
+		...SessionFragment
+	}
+}
+
+mutation createSession($input: SessionInput) {
+	createSession(input: $input) {
+		...SessionFragment
+	}
+}
+
+mutation updateSession($id: String, $input: SessionInput) {
+	updateSession(id: $id, input: $input) {
+		...SessionFragment
+	}
+}
+
+mutation deleteSession($id: String) {
+	deleteSession(id: $id) {
+		...SessionFragment
+	}
+}
+
+mutation reorderSessions($ids: [String]!) {
+	reorderSessions(ids: $ids)
+}

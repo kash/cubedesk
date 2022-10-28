@@ -1,0 +1,12 @@
+.cd-common__loading {
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+        font-size: 1.3rem;
+        color: rgb(var(--text-color));
+    }
+}

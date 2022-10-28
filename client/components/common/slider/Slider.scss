@@ -1,0 +1,26 @@
+.cd-common__slider {
+	$slideSize: 20px;
+
+	&__slider {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 100%;
+		height: $slideSize;
+		background: rgb(var(--button-color));
+		outline: none;
+		-webkit-transition: 0.2s;
+		transition: opacity 0.2s;
+		border-radius: 10px;
+	}
+
+	&__slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		box-shadow: 0 2px 6px rgba(black, 0.1);
+		width: $slideSize;
+		height: $slideSize;
+		border-radius: 50%;
+		background: rgb(var(--text-color));
+		cursor: pointer;
+	}
+}

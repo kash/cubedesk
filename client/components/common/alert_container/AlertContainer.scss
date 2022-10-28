@@ -1,0 +1,70 @@
+@import '../.././../styles/config';
+
+.#{$namespace}-alert-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	max-width: 500px;
+
+	&__wrapper {
+		width: 95%;
+		margin: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&--fill {
+			max-width: none;
+			min-height: 100vh;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&__action {
+		margin-top: 15px;
+	}
+
+	> i {
+		font-size: 2rem;
+		margin-bottom: 15px;
+	}
+
+	&--type-success > i {
+		color: rgb(var(--success-color));
+	}
+
+	&--type-info > i {
+		color: rgb(var(--info-color));
+	}
+
+	&--type-error > i {
+		color: rgb(var(--error-color));
+	}
+
+	&--type-warning > i {
+		color: rgb(var(--warning-color));
+	}
+
+	&__text {
+		color: rgb(var(--text-color));
+		text-align: center;
+
+		p {
+			text-align: inherit;
+		}
+
+		a {
+			color: rgb(var(--text-color));
+			display: inline;
+			text-decoration: underline;
+		}
+	}
+
+	&__header {
+		color: rgb(var(--text-color));
+		margin: 5px 0 20px;
+		font-size: 1.3rem;
+	}
+}

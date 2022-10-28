@@ -1,0 +1,28 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-manage-smart-cube {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: 15px 0;
+	width: 100%;
+
+	h4,
+	h5 {
+		color: rgb(var(--text-color));
+		font-weight: 600;
+		font-size: 1.1rem;
+	}
+
+	h5 {
+		font-size: 0.9rem;
+		opacity: 0.8;
+		font-weight: 400;
+	}
+
+	p {
+		font-size: 1rem;
+		color: rgb(var(--text-color));
+	}
+}

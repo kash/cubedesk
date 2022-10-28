@@ -1,0 +1,11 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-solve-info-ll-trainer {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+
+	&__row {
+		width: 50%;
+	}
+}

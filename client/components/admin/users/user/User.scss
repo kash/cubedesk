@@ -1,0 +1,25 @@
+.cd-admin__users__user {
+	background-color: rgb(var(--module-color));
+	border-radius: 5px;
+	padding: 15px;
+	box-sizing: border-box;
+	position: relative;
+
+	> p {
+		margin-bottom: 0;
+		width: 100%;
+		margin-top: 10px;
+		text-align: left;
+	}
+
+	&__emblems {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		margin-bottom: 7px;
+
+		> * {
+			margin-right: 7px;
+		}
+	}
+}

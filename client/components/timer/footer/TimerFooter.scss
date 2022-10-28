@@ -1,0 +1,128 @@
+@import '../../../styles/config';
+
+.#{$namespace}-timer-footer {
+	$self: &;
+
+	height: 100%;
+	padding: 0 15px 0;
+	box-sizing: border-box;
+
+	&__body {
+		height: inherit;
+		box-sizing: border-box;
+		border-radius: 15px;
+		background-color: rgba(var(--module-color), 0.8);
+
+		> * {
+			border: 5px solid transparent;
+		}
+
+		&--mobile {
+			grid-gap: 7px;
+			border-radius: 4px;
+			overflow: visible !important;
+			height: 270px;
+
+			#{$self}__visual-picker {
+				opacity: 1 !important;
+				top: -40px;
+				left: 0;
+			}
+
+			> *:not(:first-child) {
+				display: none;
+			}
+
+			> * {
+				height: 270px !important;
+				overflow: visible !important;
+			}
+		}
+
+		&--layout-bottom {
+			display: grid;
+			overflow: hidden;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			grid-template-rows: auto;
+			grid-auto-rows: 0;
+		}
+	}
+
+	&__mobile-hide-button {
+		width: 100%;
+		opacity: 0.7;
+		align-items: center;
+		height: 30px;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	&__visual-wrapper {
+		padding: 0;
+		box-sizing: border-box;
+		height: 100%;
+		position: relative;
+		overflow: hidden;
+
+		&:hover {
+			#{$self}__visual-picker {
+				opacity: 1 !important;
+			}
+		}
+
+		&--none {
+			border: none !important;
+		}
+
+		&--disabled {
+			pointer-events: none;
+		}
+	}
+
+	&__visual {
+		height: 100%;
+		padding: 10px;
+		position: relative;
+		box-sizing: border-box;
+
+		&-picker {
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			z-index: 1000;
+			transition: opacity 0.1s ease-in-out;
+			opacity: 0;
+		}
+	}
+
+	&--layout-left,
+	&--layout-right {
+		padding: 0 0 10px;
+
+		#{$self}__visual-wrapper:nth-child(1) {
+			grid-column: unset !important;
+		}
+
+		#{$self}__body {
+			display: grid;
+			grid-template-columns: 1fr !important;
+			grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+
+			@media (max-height: 850px) {
+				grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+
+				> div:nth-child(3) {
+					display: none !important;
+				}
+			}
+
+			@media (max-height: 600px) {
+				grid-template-rows: repeat(1, minmax(0, 1fr)) !important;
+
+				> div:nth-child(2) {
+					display: none !important;
+				}
+			}
+		}
+	}
+}

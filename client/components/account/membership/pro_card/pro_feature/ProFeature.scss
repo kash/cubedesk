@@ -1,0 +1,54 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-pro-feature {
+	$self: &;
+
+	padding: 18px 0;
+
+	> legend {
+		display: flex;
+		color: rgb(var(--secondary-color));
+		padding-right: 5px;
+		flex-direction: row;
+		align-items: flex-start;
+
+		i {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-right: 8px;
+			font-size: 1.5rem;
+			position: relative;
+		}
+
+		p {
+			font-weight: 500;
+			opacity: 1;
+			margin: 0;
+			font-size: 1.2rem;
+			line-height: 1.6rem;
+			display: inline-block;
+		}
+	}
+
+	&__details {
+		margin-top: 10px;
+		display: table;
+
+		img {
+			width: 100%;
+			margin: 5px auto 0;
+			height: auto;
+			display: table;
+			max-width: 400px;
+			border-radius: 6px;
+			border: 3px solid rgba(var(--theme-module-opposite), 0.1);
+		}
+	}
+
+	&--hideDetails {
+		#{$self}__details {
+			display: none;
+		}
+	}
+}

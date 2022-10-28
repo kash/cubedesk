@@ -1,0 +1,65 @@
+@import '../../../styles/config';
+
+.#{$namespace}-solve-list-row {
+	background-color: rgb(var(--module-color));
+	padding: 20px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	position: relative;
+	margin-bottom: 15px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	cursor: pointer;
+
+	&__left {
+		h4 {
+			font-weight: bold;
+			font-size: 1.6rem;
+			color: rgb(var(--text-color));
+		}
+
+		span {
+			display: table;
+			opacity: 0.8;
+			font-size: 0.9rem;
+			color: rgb(var(--text-color));
+		}
+	}
+
+	&__time {
+		&--dnf {
+			color: rgb(var(--error-color)) !important;
+		}
+
+		&--plusTwo {
+			color: rgb(var(--warning-color)) !important;
+		}
+	}
+
+	&__center {
+		width: 100%;
+		display: flex;
+		margin-top: -10px;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__scramble {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	&__badges {
+		position: absolute;
+		display: flex;
+		flex-direction: row;
+		bottom: 10px;
+		left: 50%;
+		transform: translate(-50%, 0);
+
+		> * {
+			margin-left: 5px;
+		}
+	}
+}

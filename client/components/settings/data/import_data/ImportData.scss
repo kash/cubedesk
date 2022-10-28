@@ -1,0 +1,12 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-import-data {
+	hr {
+		width: 100%;
+		border: none;
+		height: 3px;
+		padding: 0;
+		margin: 30px 0;
+		background-color: rgb(var(--button-color));
+	}
+}

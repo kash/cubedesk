@@ -1,0 +1,60 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-custom-cube-builder {
+	$self: &;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 40px 0 30px;
+
+	&__colors {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		margin-bottom: 30px;
+
+		> *:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+
+	&__color-cubelet {
+		width: 35px;
+		height: 35px;
+		border-radius: 4px;
+		margin-bottom: 5px;
+		opacity: 0.4;
+		transition: all 0.1s ease-in-out;
+
+		&--selected {
+			opacity: 1;
+			border-radius: 50%;
+			box-shadow: 0 0 20px;
+		}
+	}
+
+	&__visual {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		background-color: rgb(var(--module-color));
+		border-radius: 10px;
+		height: 300px;
+		justify-content: center;
+		position: relative;
+		overflow: hidden;
+	}
+
+	&__visual-background {
+		width: 200%;
+		height: 200%;
+		position: absolute;
+		top: 50%;
+		color: rgb(var(--primary-color), 0.1);
+		left: 50%;
+		z-index: 0;
+		transform: translate(-50%, -50%) rotate(45deg);
+	}
+}

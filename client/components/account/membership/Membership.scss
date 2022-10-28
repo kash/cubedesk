@@ -1,0 +1,7 @@
+@import '../../../styles/config';
+
+.#{$namespace}-membership {
+	&__active {
+		background-color: green;
+	}
+}

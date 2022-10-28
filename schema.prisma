@@ -1,0 +1,894 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserAccount {
+  id                            String                  @id @default(uuid())
+  email                         String                  @unique
+  password                      String
+  first_name                    String
+  join_ip                       String
+  join_country                  String
+  mod                           Boolean                 @default(false)
+  admin                         Boolean                 @default(false)
+  created_at                    DateTime                @default(now())
+  last_name                     String
+  stripe_customer_id            String?                 @unique
+  username                      String?                 @unique
+  verified                      Boolean                 @default(false)
+  banned_forever                Boolean                 @default(false)
+  unsub_id                      String?                 @default(uuid())
+  banned_until                  DateTime?
+  last_solve_at                 DateTime?
+  offline_hash                  String?
+  action_log                    ActionLog[]
+  is_pro                        Boolean                 @default(false)
+  metric_logs                   MetricLog[]
+  algorithm_override            AlgorithmOverride[]
+  badges                        Badge[]
+  badge_type                    BadgeType[]
+  bans                          BanLog[]                @relation("ban_log_banned_user")
+  created_bans                  BanLog[]                @relation("ban_log_created_by")
+  chat_messages                 ChatMessage[]
+  custom_trainer                CustomTrainer[]
+  custom_trainer_downloads      CustomTrainerDownload[] @relation("custom_trainer_download_creator")
+  custom_trainer_downloaded     CustomTrainerDownload[] @relation("custom_trainer_download_user")
+  custom_trainer_likes          CustomTrainerLike[]     @relation("custom_trainer_like_creator")
+  liked_custom_trainers         CustomTrainerLike[]     @relation("custom_trainer_like_user")
+  email_log                     EmailLog[]
+  forgot_password               ForgotPassword[]
+  friendships_other             Friendship[]            @relation("friendship_other_user")
+  friendships                   Friendship[]            @relation("friendship_user")
+  friendship_requests_sent      FriendshipRequest[]     @relation("friendship_request_from_user")
+  friendships_requests_received FriendshipRequest[]     @relation("friendship_request_to_user")
+  game_sessions                 GameSession[]
+  image                         Image[]
+  integrations                  Integration[]
+  matches_won                   Match[]                 @relation("winner")
+  match_participations          MatchParticipant[]
+  match_sessions_created        MatchSession[]          @relation("created_by")
+  notifications_triggered       Notification[]          @relation("notification_triggering_user")
+  notifications                 Notification[]          @relation("notification_for")
+  notification_preferences      NotificationPreference?
+  profile                       Profile?
+  profile_views                 ProfileView[]           @relation("profile_user")
+  viewed_profiles               ProfileView[]           @relation("viewer")
+  reports_for                   Report[]                @relation("report_for")
+  reports_created               Report[]                @relation("report_created_by")
+  sessions                      Session[]
+  settings                      Setting?
+  smart_device                  SmartDevice[]
+  solves                        Solve[]
+  solve_views                   SolveView[]             @relation("solve_view_user")
+  viewed_solve                  SolveView[]             @relation("solve_view_viewer")
+  timer_background              TimerBackground?
+  top_average                   TopAverage[]
+  top_solves                    TopSolve[]
+  trainer_favorite              TrainerFavorite[]
+  user_feature_state            UserFeatureState?
+  elo_rating                    EloRating?
+  elo_log_player                EloLog[]                @relation("player")
+  elo_log_opponent              EloLog[]                @relation("opponent")
+
+  MatchLobby MatchLobby[]
+  AdView     AdView[]
+  @@map("user_account")
+}
+
+model UserFeatureState {
+  id                      String  @id @default(uuid())
+  user_id                 String  @unique
+  received_welcome_screen Boolean @default(false)
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  user UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("user_feature_state")
+}
+
+model Integration {
+  id              String      @id @default(uuid())
+  user_id         String
+  service_name    String
+  auth_token      String
+  refresh_token   String
+  auth_expires_at BigInt
+  created_at      DateTime    @default(now())
+  user            UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("integration")
+}
+
+model Notification {
+  id                         String       @id @default(uuid())
+  user_id                    String
+  notification_type          String
+  triggering_user_id         String?
+  read_at                    DateTime?
+  message                    String
+  icon                       String
+  link                       String
+  created_at                 DateTime     @default(now())
+  notification_category_name String
+  link_text                  String
+  subject                    String
+  in_app_message             String?
+  triggering_user            UserAccount? @relation("notification_triggering_user", fields: [triggering_user_id], references: [id], onDelete: Cascade)
+  user                       UserAccount  @relation("notification_for", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([created_at])
+  @@index([triggering_user_id])
+  @@index([user_id])
+  @@map("notification")
+}
+
+model ActionLog {
+  id             String   @id @default(uuid())
+  user_email     String?
+  action_type    String
+  action_details String?
+  created_at     DateTime @default(now())
+
+  user UserAccount? @relation(fields: [user_email], references: [email], onDelete: Cascade)
+
+  @@map("action_log")
+}
+
+model MetricLog {
+  id             String        @id @default(uuid())
+  user_email     String?
+  metric_type    MetricLogType
+  metric_value   Float?
+  metric_details String?
+  created_at     DateTime      @default(now())
+
+  user UserAccount? @relation(fields: [user_email], references: [email], onDelete: SetDefault)
+
+  @@index([metric_type])
+  @@index([user_email])
+  @@map("metric_log")
+}
+
+model NotificationPreference {
+  id                    String      @id @default(uuid())
+  user_id               String      @unique
+  friend_request        Boolean     @default(true)
+  friend_request_accept Boolean     @default(true)
+  elo_refund            Boolean     @default(true)
+  marketing_emails      Boolean     @default(true)
+  created_at            DateTime    @default(now())
+  user                  UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("notification_preference")
+}
+
+model FriendshipRequest {
+  id          String       @id @default(uuid())
+  from_id     String
+  to_id       String
+  created_at  DateTime     @default(now())
+  accepted_at DateTime?
+  from_user   UserAccount  @relation("friendship_request_from_user", fields: [from_id], references: [id], onDelete: Cascade)
+  to_user     UserAccount  @relation("friendship_request_to_user", fields: [to_id], references: [id], onDelete: Cascade)
+  friendship  Friendship[]
+
+  @@index([from_id])
+  @@index([to_id])
+  @@map("friendship_request")
+}
+
+model Friendship {
+  id                    String            @id @default(uuid())
+  user_id               String
+  other_user_id         String
+  friendship_request_id String
+  created_at            DateTime          @default(now())
+  friendship_request    FriendshipRequest @relation(fields: [friendship_request_id], references: [id], onDelete: Cascade)
+  other_user            UserAccount       @relation("friendship_other_user", fields: [other_user_id], references: [id], onDelete: Cascade)
+  user                  UserAccount       @relation("friendship_user", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([friendship_request_id])
+  @@index([other_user_id])
+  @@index([user_id])
+  @@map("friendship")
+}
+
+model EloRating {
+  id         String @id @default(uuid())
+  user_id    String @unique
+  profile_id String @unique
+
+  elo_overall_rating  Int
+  games_overall_count Int @default(0)
+
+  elo_222_rating  Int
+  games_222_count Int @default(0)
+
+  elo_333_rating  Int
+  games_333_count Int @default(0)
+
+  elo_444_rating  Int
+  games_444_count Int @default(0)
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  user    UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  profile Profile     @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("elo_rating")
+}
+
+model EloLog {
+  id                      String    @id @default(uuid())
+  player_id               String
+  player_new_game_count   Int
+  opponent_id             String?
+  opponent_new_game_count Int?
+  cube_type               String
+  match_id                String?
+  elo_change              Int       @default(0)
+  refunded_at             DateTime?
+  player_new_elo_rating   Int
+  opponent_new_elo_rating Int
+
+  player   UserAccount  @relation("player", fields: [player_id], references: [id], onDelete: Cascade)
+  match    Match?       @relation(fields: [match_id], references: [id], onDelete: SetDefault)
+  opponent UserAccount? @relation("opponent", fields: [opponent_id], references: [id], onDelete: SetDefault)
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  @@index([match_id])
+  @@index([player_id])
+  @@index([opponent_id])
+  @@map("elo_log")
+}
+
+model AdView {
+  id                      String    @id @default(uuid())
+  user_id                 String?
+  ip_address              String?
+  ad_key                  String
+  pathname                String
+  view_time_seconds       Int
+  browser_session_id      String
+  last_session_started_at DateTime  @default(now())
+  clicked_at              DateTime?
+
+  user UserAccount? @relation(fields: [user_id], references: [id], onDelete: SetDefault)
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  @@index([user_id])
+  @@index([ad_key])
+  @@index([browser_session_id])
+  @@map("ad_view")
+}
+
+model Profile {
+  id                          String        @id @default(uuid())
+  user_id                     String        @unique
+  header_image_id             String?       @unique
+  pfp_image_id                String?       @unique
+  created_at                  DateTime      @default(now())
+  bio                         String?
+  favorite_event              String?
+  main_three_cube             String?
+  three_goal                  String?
+  three_method                String?
+  reddit_link                 String?
+  twitch_link                 String?
+  youtube_link                String?
+  twitter_link                String?
+  discord_id                  String?
+  show_discord_message_button Boolean       @default(true)
+  header_image                Image?        @relation("header_image", fields: [header_image_id], references: [id], onDelete: SetDefault)
+  pfp_image                   Image?        @relation("pfp_image", fields: [pfp_image_id], references: [id], onDelete: SetDefault)
+  user                        UserAccount   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  views                       ProfileView[]
+  elo_rating                  EloRating?
+
+  @@index([user_id])
+  @@map("profile")
+}
+
+model Image {
+  id                   String      @id @default(uuid())
+  user_id              String
+  url                  String?
+  storage_path         String?
+  created_at           DateTime    @default(now())
+  user                 UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  profile_header_image Profile?    @relation("header_image")
+  profile_pfp_image    Profile?    @relation("pfp_image")
+
+  @@index([user_id])
+  @@map("image")
+}
+
+model ProfileView {
+  id              String       @id @default(uuid())
+  viewer_id       String?
+  profile_id      String
+  created_at      DateTime     @default(now())
+  profile_user_id String
+  profile         Profile      @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+  profile_user    UserAccount  @relation("profile_user", fields: [profile_user_id], references: [id], onDelete: Cascade)
+  viewer          UserAccount? @relation("viewer", fields: [viewer_id], references: [id], onDelete: Cascade)
+
+  @@index([profile_id])
+  @@index([profile_user_id])
+  @@index([viewer_id])
+  @@map("profile_view")
+}
+
+model ForgotPassword {
+  id         String      @id @default(uuid())
+  user_id    String
+  code       String
+  claimed    Boolean     @default(false)
+  created_at DateTime    @default(now())
+  user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("forgot_password")
+}
+
+model Solve {
+  id                   String            @id @default(uuid())
+  user_id              String
+  time                 Float
+  raw_time             Float?
+  cube_type            String?
+  scramble             String?
+  session_id           String?
+  started_at           BigInt?
+  ended_at             BigInt?
+  dnf                  Boolean           @default(false)
+  plus_two             Boolean           @default(false)
+  from_timer           Boolean           @default(true)
+  notes                String?
+  trainer_name         String?
+  training_session_id  String?
+  custom_scramble      Boolean           @default(false)
+  created_at           DateTime          @default(now())
+  bulk                 Boolean           @default(false)
+  game_session_id      String?
+  inspection_time      Float?            @default(0.0)
+  is_smart_cube        Boolean           @default(false)
+  smart_put_down_time  Float?            @default(0.0)
+  smart_turns          String?
+  smart_turn_count     Int?
+  smart_device_id      String?
+  match_id             String?
+  match_participant_id String?
+  share_code           String?           @unique
+  match                Match?            @relation(fields: [match_id], references: [id], onDelete: Cascade)
+  match_participant    MatchParticipant? @relation(fields: [match_participant_id], references: [id], onDelete: Cascade)
+  session              Session?          @relation(fields: [session_id], references: [id], onDelete: Cascade)
+  smart_device         SmartDevice?      @relation(fields: [smart_device_id], references: [id], onDelete: SetDefault)
+  user                 UserAccount       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  solve_method_steps   SolveMethodStep[]
+  solve_views          SolveView[]
+  top_average_1        TopAverage[]      @relation("solve_1")
+  top_average_2        TopAverage[]      @relation("solve_2")
+  top_average_3        TopAverage[]      @relation("solve_3")
+  top_average_4        TopAverage[]      @relation("solve_4")
+  top_average_5        TopAverage[]      @relation("solve_5")
+  top_solve            TopSolve[]
+  game_session         GameSession?      @relation(fields: [game_session_id], references: [id], onDelete: Cascade)
+
+  @@index([created_at])
+  @@index([match_id])
+  @@index([game_session_id])
+  @@index([match_participant_id])
+  @@index([session_id])
+  @@index([share_code])
+  @@index([bulk])
+  @@index([started_at])
+  @@index([from_timer])
+  @@index([training_session_id])
+  @@index([trainer_name])
+  @@index([user_id])
+  @@map("solve")
+}
+
+model DemoSolve {
+  id              String   @id @default(uuid())
+  demo_session_id String
+  ip_address      String?
+  raw_time        Float?
+  cube_type       String?
+  scramble        String?
+  started_at      BigInt?
+  ended_at        BigInt?
+  updated_at      DateTime @updatedAt
+  created_at      DateTime @default(now())
+
+  @@index([demo_session_id])
+  @@index([created_at])
+  @@map("demo_solve")
+}
+
+model EmailLog {
+  id         String       @id @default(uuid())
+  user_id    String?
+  subject    String
+  template   String
+  vars       String
+  created_at DateTime     @default(now())
+  email      String
+  user       UserAccount? @relation(fields: [user_id], references: [id], onDelete: SetDefault)
+
+  @@index([user_id])
+  @@map("email_log")
+}
+
+model MatchSession {
+  id            String        @id @default(uuid())
+  min_players   Int           @default(2)
+  max_players   Int           @default(2)
+  match_type    String
+  rated         Boolean?      @default(false)
+  custom_match  Boolean       @default(false)
+  created_at    DateTime      @default(now())
+  created_by_id String?
+  created_by    UserAccount?  @relation("created_by", fields: [created_by_id], references: [id], onDelete: Cascade)
+  game_options  GameOptions?
+  chat_messages ChatMessage[]
+  matches       Match[]
+
+  @@index([created_by_id])
+  @@map("match_session")
+}
+
+model Match {
+  id               String             @id @default(uuid())
+  winner_id        String?
+  created_at       DateTime           @default(now())
+  link_code        String             @unique
+  match_session_id String
+  ended_at         DateTime?
+  started_at       DateTime?
+  aborted          Boolean            @default(false)
+  spectate_code    String?            @unique
+  match_session    MatchSession       @relation(fields: [match_session_id], references: [id], onDelete: Cascade)
+  winner           UserAccount?       @relation("winner", fields: [winner_id], references: [id], onDelete: SetDefault)
+  game_session     GameSession[]
+  participants     MatchParticipant[]
+  solves           Solve[]
+  elo_log          EloLog[]
+
+  @@index([link_code])
+  @@index([match_session_id])
+  @@index([spectate_code])
+  @@index([winner_id])
+  @@map("match")
+}
+
+model MatchLobby {
+  id           String   @id @default(uuid())
+  user_id      String
+  cube_type    String
+  game_type    GameType
+  client_id    String
+  player_count Int
+  elo          Int
+
+  created_at DateTime     @default(now())
+  user       UserAccount? @relation(fields: [user_id], references: [id], onDelete: SetDefault)
+
+  @@index([user_id])
+  @@index([game_type])
+  @@map("match_lobby")
+}
+
+model MatchParticipant {
+  id         String      @id @default(uuid())
+  match_id   String
+  user_id    String
+  created_at DateTime    @default(now())
+  resigned   Boolean     @default(false)
+  forfeited  Boolean     @default(false)
+  aborted    Boolean     @default(false)
+  abandoned  Boolean     @default(false)
+  position   Int         @default(0)
+  won        Boolean     @default(false)
+  lost       Boolean     @default(false)
+  match      Match       @relation(fields: [match_id], references: [id], onDelete: Cascade)
+  user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  solves     Solve[]
+
+  @@index([match_id])
+  @@index([user_id])
+  @@map("match_participant")
+}
+
+model ChatMessage {
+  id               String        @id @default(uuid())
+  user_id          String
+  match_session_id String?
+  message          String
+  created_at       DateTime      @default(now())
+  bad_words        Boolean       @default(false)
+  raw_message      String?
+  match_session    MatchSession? @relation(fields: [match_session_id], references: [id], onDelete: Cascade)
+  user             UserAccount   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([match_session_id])
+  @@index([user_id])
+  @@map("chat_message")
+}
+
+model SmartDevice {
+  id            String      @id @default(uuid())
+  name          String
+  internal_name String
+  created_at    DateTime    @default(now())
+  device_id     String
+  user_id       String
+  user          UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  solves        Solve[]
+
+  @@index([user_id])
+  @@map("smart_device")
+}
+
+model SolveMethodStep {
+  id               String   @id @default(uuid())
+  solve_id         String
+  turn_count       Int
+  turns            String?
+  method_name      String
+  step_index       Int
+  step_name        String
+  created_at       DateTime @default(now())
+  total_time       Float?
+  tps              Float?
+  parent_name      String?
+  recognition_time Float    @default(0.0)
+  skipped          Boolean  @default(false)
+  oll_case_key     String?
+  pll_case_key     String?
+  solve            Solve    @relation(fields: [solve_id], references: [id], onDelete: Cascade)
+
+  @@index([solve_id])
+  @@map("solve_method_step")
+}
+
+model BadgeType {
+  id            String       @id @default(uuid())
+  name          String
+  priority      Int          @default(0)
+  color         String
+  created_at    DateTime     @default(now())
+  description   String
+  created_by_id String?
+  created_by    UserAccount? @relation(fields: [created_by_id], references: [id], onDelete: Cascade)
+  badges        Badge[]
+
+  @@map("badge_type")
+}
+
+model Badge {
+  id            String      @id @default(uuid())
+  user_id       String
+  badge_type_id String
+  created_at    DateTime    @default(now())
+  badge_type    BadgeType   @relation(fields: [badge_type_id], references: [id], onDelete: Cascade)
+  user          UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("badge")
+}
+
+model TimerBackground {
+  id           String      @id @default(uuid())
+  url          String?
+  storage_path String?
+  user_id      String      @unique
+  hex          String?
+  created_at   DateTime    @default(now())
+  user         UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("timer_background")
+}
+
+model Report {
+  id               String    @id @default(uuid())
+  created_by_id    String
+  reported_user_id String
+  created_at       DateTime  @default(now())
+  resolved_at      DateTime?
+  reason           String?
+
+  reported_user UserAccount? @relation("report_for", fields: [reported_user_id], references: [id], onDelete: Cascade)
+  created_by    UserAccount  @relation("report_created_by", fields: [created_by_id], references: [id], onDelete: Cascade)
+
+  @@map("report")
+}
+
+model BanLog {
+  id             String      @id @default(uuid())
+  created_by_id  String
+  banned_user_id String
+  reason         String
+  active         Boolean     @default(true)
+  banned_until   DateTime?
+  minutes        Int?        @default(-1)
+  forever        Boolean     @default(false)
+  created_at     DateTime    @default(now())
+  banned_user    UserAccount @relation("ban_log_banned_user", fields: [banned_user_id], references: [id], onDelete: Cascade)
+  created_by     UserAccount @relation("ban_log_created_by", fields: [created_by_id], references: [id], onDelete: SetDefault)
+
+  @@index([banned_user_id])
+  @@map("ban_log")
+}
+
+model SolveView {
+  id         String       @id @default(uuid())
+  solve_id   String
+  viewer_id  String?
+  user_id    String
+  created_at DateTime     @default(now())
+  solve      Solve        @relation(fields: [solve_id], references: [id], onDelete: Cascade)
+  user       UserAccount  @relation("solve_view_user", fields: [user_id], references: [id], onDelete: Cascade)
+  viewer     UserAccount? @relation("solve_view_viewer", fields: [viewer_id], references: [id], onDelete: Cascade)
+
+  @@index([solve_id])
+  @@index([user_id])
+  @@index([viewer_id])
+  @@map("solve_view")
+}
+
+model GameSession {
+  id           String       @id @default(uuid())
+  user_id      String
+  match_id     String?
+  game_type    GameType
+  solve_count  Int          @default(0)
+  total_time   Float        @default(0.0)
+  created_at   DateTime     @default(now())
+  match        Match?       @relation(fields: [match_id], references: [id], onDelete: Cascade)
+  user         UserAccount  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  game_options GameOptions?
+  solves       Solve[]
+
+  @@index([match_id])
+  @@index([user_id])
+  @@map("game_session")
+}
+
+model GameOptions {
+  id                                String        @id @default(uuid())
+  game_session_id                   String?       @unique
+  match_session_id                  String?       @unique
+  game_type                         GameType
+  cube_type                         String        @default("333")
+  elimination_starting_time_seconds Int           @default(30)
+  elimination_percent_change_rate   Int           @default(5)
+  head_to_head_target_win_count     Int           @default(5)
+  gauntlet_time_multiplier          Float         @default(1.0)
+  game_session                      GameSession?  @relation(fields: [game_session_id], references: [id], onDelete: Cascade)
+  match_session                     MatchSession? @relation(fields: [match_session_id], references: [id], onDelete: Cascade)
+  created_at                        DateTime      @default(now())
+
+  @@index([game_session_id])
+  @@index([match_session_id])
+  @@map("game_options")
+}
+
+model TopSolve {
+  id         String      @id @default(uuid())
+  user_id    String
+  time       Float
+  solve_id   String
+  cube_type  String
+  created_at DateTime    @default(now())
+  solve      Solve       @relation(fields: [solve_id], references: [id], onDelete: Cascade)
+  user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([solve_id])
+  @@index([time])
+  @@index([user_id])
+  @@map("top_solve")
+}
+
+model TopAverage {
+  id         String      @id @default(uuid())
+  user_id    String
+  time       Float
+  cube_type  String
+  solve_1_id String
+  solve_2_id String
+  solve_3_id String
+  solve_4_id String
+  solve_5_id String
+  created_at DateTime    @default(now())
+  solve_1    Solve       @relation("solve_1", fields: [solve_1_id], references: [id], onDelete: Cascade)
+  solve_2    Solve       @relation("solve_2", fields: [solve_2_id], references: [id], onDelete: Cascade)
+  solve_3    Solve       @relation("solve_3", fields: [solve_3_id], references: [id], onDelete: Cascade)
+  solve_4    Solve       @relation("solve_4", fields: [solve_4_id], references: [id], onDelete: Cascade)
+  solve_5    Solve       @relation("solve_5", fields: [solve_5_id], references: [id], onDelete: Cascade)
+  user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([time])
+  @@index([user_id])
+  @@map("top_average")
+}
+
+model Session {
+  id         String      @id @default(uuid())
+  name       String
+  user_id    String
+  created_at DateTime    @default(now())
+  order      Int         @default(0)
+  user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  solves     Solve[]
+
+  @@index([user_id])
+  @@map("session")
+}
+
+model CustomTrainer {
+  id            String                  @id @default(uuid())
+  solution      String?
+  scrambles     String?
+  alt_solutions String?
+  algo_type     String                  @default("Custom")
+  group_name    String?
+  colors        String?
+  three_d       Boolean                 @default(false)
+  cube_type     String
+  key           String
+  user_id       String
+  created_at    DateTime                @default(now())
+  name          String
+  like_count    Int                     @default(0)
+  private       Boolean                 @default(false)
+  copy_of_id    String?
+  description   String?
+  downloaded    Boolean                 @default(false)
+  copy_of       CustomTrainer?          @relation("copy_of", fields: [copy_of_id], references: [id], onDelete: SetDefault)
+  user          UserAccount?            @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  copies        CustomTrainer[]         @relation("copy_of")
+  download_of   CustomTrainerDownload[] @relation("custom_trainer_download_new_trainer")
+  downloads     CustomTrainerDownload[] @relation("custom_trainer_download_source_trainer")
+  likes         CustomTrainerLike[]
+
+  @@index([user_id])
+  @@map("custom_trainer")
+}
+
+model CustomTrainerLike {
+  id                String        @id @default(uuid())
+  custom_trainer_id String
+  user_id           String
+  created_at        DateTime      @default(now())
+  creator_id        String
+  creator           UserAccount   @relation("custom_trainer_like_creator", fields: [creator_id], references: [id], onDelete: Cascade)
+  custom_trainer    CustomTrainer @relation(fields: [custom_trainer_id], references: [id], onDelete: Cascade)
+  user              UserAccount   @relation("custom_trainer_like_user", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([creator_id])
+  @@index([custom_trainer_id])
+  @@index([user_id])
+  @@map("custom_trainer_like")
+}
+
+model CustomTrainerDownload {
+  id                String         @id @default(uuid())
+  user_id           String
+  creator_id        String
+  created_at        DateTime       @default(now())
+  new_trainer_id    String?
+  source_trainer_id String
+  creator           UserAccount    @relation("custom_trainer_download_creator", fields: [creator_id], references: [id], onDelete: Cascade)
+  new_trainer       CustomTrainer? @relation("custom_trainer_download_new_trainer", fields: [new_trainer_id], references: [id], onDelete: Cascade)
+  source_trainer    CustomTrainer  @relation("custom_trainer_download_source_trainer", fields: [source_trainer_id], references: [id], onDelete: Cascade)
+  user              UserAccount    @relation("custom_trainer_download_user", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([creator_id])
+  @@index([new_trainer_id])
+  @@index([source_trainer_id])
+  @@index([user_id])
+  @@map("custom_trainer_download")
+}
+
+model TrainerFavorite {
+  id         String      @id @default(uuid())
+  cube_key   String
+  user_id    String
+  created_at DateTime    @default(now())
+  user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("trainer_favorite")
+}
+
+model AlgorithmOverride {
+  id        String  @id @default(uuid())
+  user_id   String
+  rotate    Int?
+  cube_key  String
+  name      String?
+  scrambles String?
+  solution  String?
+
+  created_at DateTime    @default(now())
+  user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("algorithm_override")
+}
+
+model Setting {
+  id                                  String   @id @default(uuid())
+  user_id                             String   @unique
+  focus_mode                          Boolean  @default(false)
+  freeze_time                         Float    @default(0.2)
+  inspection                          Boolean  @default(false)
+  manual_entry                        Boolean  @default(false)
+  inspection_delay                    Int      @default(15)
+  inspection_auto_start               Boolean  @default(false)
+  inverse_time_list                   Boolean  @default(false)
+  hide_time_when_solving              Boolean  @default(false)
+  nav_collapsed                       Boolean  @default(false)
+  pb_confetti                         Boolean  @default(true)
+  play_inspection_sound               Boolean  @default(false)
+  zero_out_time_after_solve           Boolean  @default(false)
+  confirm_delete_solve                Boolean  @default(false)
+  require_period_in_manual_time_entry Boolean  @default(false)
+  created_at                          DateTime @default(now())
+  cube_type                           String   @default("333")
+  stats_module_json                   String?
+  session_id                          String?
+  timer_decimal_points                Int      @default(2)
+  beta_tester                         Boolean  @default(false)
+  use_space_with_smart_cube           Boolean  @default(false)
+
+  custom_cube_types CustomCubeType[] @relation("custom_cube_type_setting")
+  user              UserAccount      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("setting")
+}
+
+model CustomCubeType {
+  id         String   @id @default(uuid())
+  user_id    String
+  name       String
+  private    Boolean  @default(false)
+  scramble   String
+  created_at DateTime @default(now())
+
+  setting Setting @relation("custom_cube_type_setting", fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("custom_cube_type")
+}
+
+enum GameType {
+  HEAD_TO_HEAD
+  ELIMINATION
+  GAUNTLET
+}
+
+enum MetricLogType {
+  DELETE_USER_ACCOUNT
+}

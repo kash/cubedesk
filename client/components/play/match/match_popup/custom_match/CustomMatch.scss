@@ -1,0 +1,60 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-custom-match {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+
+	&__play {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 40px auto 60px;
+	}
+
+	&__config {
+		display: flex;
+		width: 100%;
+		flex-direction: row;
+		flex-wrap: wrap;
+		margin-bottom: 5px;
+
+		> * {
+			margin: 0 5px 5px 0;
+		}
+	}
+
+	&__link {
+		background-color: rgb(var(--button-color));
+		border-radius: 5px;
+		padding: 9px 13px;
+		margin-bottom: 5px;
+		box-sizing: border-box;
+
+		p {
+			color: rgb(var(--theme-button-opposite));
+			font-size: 1rem;
+			margin: 0;
+			font-weight: 600;
+			display: flex;
+			align-items: center;
+			flex-direction: row;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	&__bottom {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
+		width: 100%;
+		justify-content: space-between;
+	}
+}

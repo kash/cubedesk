@@ -1,0 +1,106 @@
+@import '../../../styles/config';
+
+.cd-common__button {
+	background-color: rgb(var(--button-color));
+	border-radius: 5px;
+	color: rgb(var(--text-color));
+	height: 32px;
+	padding: 0 8px;
+	font-weight: 400;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+
+	&:disabled {
+		cursor: unset;
+		opacity: 0.5;
+	}
+
+	&_confirm {
+		display: table;
+		margin-right: 4px;
+	}
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+
+	i {
+		position: relative;
+		top: 1px;
+	}
+
+	span + i {
+		margin-left: 8px;
+	}
+
+	&--small {
+		font-size: 0.9rem;
+		padding: 4px 6px;
+	}
+
+	&--white {
+		background-color: rgb(var(--text-color));
+		color: rgb(var(--background-color));
+	}
+
+	&__info {
+		margin-top: 5px;
+		color: rgb(var(--text-color));
+		opacity: 0.8;
+		font-size: 0.85rem !important;
+	}
+
+	p {
+		margin-top: 5px;
+		opacity: 0.8;
+		color: rgb(var(--text-color));
+	}
+
+	span {
+		display: table;
+		color: inherit;
+		font-size: 0.9rem;
+		white-space: nowrap;
+	}
+
+	&--large {
+		width: 100%;
+		height: 37px;
+	}
+
+	&--round {
+		border-radius: 15px;
+	}
+
+	&--green {
+		background-color: rgb(var(--secondary-color)) !important;
+		color: white !important;
+	}
+
+	&--orange {
+		background-color: $primaryOrange !important;
+		color: white !important;
+	}
+
+	&--red {
+		background-color: $primaryRed !important;
+		color: white !important;
+	}
+
+	&--blue {
+		background-color: rgb(var(--primary-color)) !important;
+		color: white !important;
+	}
+
+	&--flat {
+		border-bottom: 2px solid rgb(var(--text-color)) !important;
+		background-color: transparent !important;
+		padding: 2px 0 !important;
+		border-radius: 0;
+	}
+}

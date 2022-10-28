@@ -1,0 +1,17 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-landing-footer {
+	margin-top: 50px;
+
+	ul {
+		display: flex;
+		flex-direction: row;
+	}
+	a {
+		opacity: 0.7;
+	}
+
+	li:not(:last-of-type) {
+		margin-right: 20px;
+	}
+}

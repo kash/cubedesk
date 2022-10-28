@@ -1,0 +1,54 @@
+@import '../../../../styles/config';
+
+$genericInputMarginBottom: 13px;
+
+@mixin genericInputStyling {
+	background-color: rgb(var(--button-color)) !important;
+	padding: 10px;
+	color: rgb(var(--theme-button-opposite));
+	border-radius: 5px !important;
+	font-size: 0.95rem;
+	width: 100%;
+	box-sizing: border-box;
+	border: none;
+	transition: all 0.1s ease-in-out, height 0ms;
+
+	&:focus {
+		border-color: rgb(var(--theme-button-opposite));
+	}
+
+	&:disabled {
+		opacity: 0.6;
+	}
+
+	&::placeholder {
+		color: rgb(var(--theme-button-opposite)) !important;
+		opacity: 0.35;
+	}
+}
+
+.#{$namespace}-common-generic-input {
+	color: var(--theme-color-opposite);
+
+	input,
+	select,
+	textarea {
+		@include genericInputStyling;
+	}
+
+	&__header {
+		margin-bottom: 5px;
+	}
+
+	&__footer {
+		margin-top: 4px;
+	}
+
+	&--noMargin {
+		margin-bottom: 0 !important;
+	}
+
+	&--fullWidth {
+		width: 100%;
+	}
+}

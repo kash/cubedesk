@@ -1,0 +1,13 @@
+@import '../../../styles/config';
+
+.#{$namespace}-common-horizontal-nav {
+	&__body {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+
+		> *:not(:last-of-type) {
+			margin-right: 13px;
+		}
+	}
+}

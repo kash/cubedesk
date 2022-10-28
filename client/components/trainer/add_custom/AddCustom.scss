@@ -1,0 +1,8 @@
+@import '../../../styles/config';
+
+.#{$namespace}-add-custom-trainer {
+	&__cube-builder-filter {
+		display: flex;
+		flex-direction: column;
+	}
+}

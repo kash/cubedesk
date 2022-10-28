@@ -1,0 +1,101 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-pro-card {
+	$self: &;
+
+	width: 100%;
+	padding: 7px;
+	box-sizing: border-box;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__interval-toggle {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		> span {
+			display: table;
+			font-family: $defaultFontFamily;
+			margin: 0 10px;
+			color: rgb(var(--text-color));
+			font-weight: 600;
+			font-size: 0.9rem;
+		}
+	}
+
+	&__upsell,
+	&__upsold {
+		margin: 15px 0 20px;
+		border-radius: 15px;
+		box-sizing: border-box;
+		padding: 4px 15px;
+		font-size: 0.85rem;
+		opacity: 0.7;
+		font-weight: 600;
+		color: rgb(var(--text-color));
+		font-family: $defaultFontFamily;
+
+		button {
+			padding: 0;
+			font: inherit;
+			color: rgb(var(--secondary-color));
+			border-bottom: 2px solid;
+		}
+	}
+
+	&__upsold {
+		color: rgb(var(--secondary-color));
+	}
+
+	&__more {
+		ul {
+			padding-left: 15px;
+			list-style: disc;
+
+			li {
+				color: rgb(var(--text-color), 0.9);
+			}
+
+			li:not(:last-child) {
+				margin-bottom: 7px;
+			}
+		}
+	}
+
+	&__features {
+		margin: 20px 0 30px;
+		width: 100%;
+	}
+
+	&__price {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
+		margin: 20px 0 15px;
+		color: rgb(var(--text-color));
+
+		h2 {
+			margin-right: 5px;
+			margin-bottom: 0;
+			font-size: 3rem;
+
+			span {
+				color: inherit;
+			}
+		}
+
+		> span {
+			display: table;
+			color: rgb(var(--text-color));
+			font-family: $defaultFontFamily;
+			font-size: 1.1rem;
+			font-weight: 600;
+			position: relative;
+			opacity: 0.6;
+			top: -7px;
+		}
+	}
+}

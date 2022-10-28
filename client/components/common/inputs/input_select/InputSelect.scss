@@ -1,0 +1,92 @@
+@import '../../../../styles/config';
+@import '../generic_input/GenericInput';
+
+.#{$namespace}-input-select {
+	min-width: 150px;
+
+	&__control {
+		@include genericInputStyling;
+	}
+
+	&__wrapper {
+		position: relative;
+	}
+
+	&__create {
+		position: absolute;
+		top: 6px;
+		right: 5px;
+	}
+
+	* {
+		font-family: $defaultFontFamily !important;
+	}
+
+	&__value-container {
+		padding: 0 !important;
+	}
+
+	&__indicator-separator,
+	&__clear-indicator {
+		display: none !important;
+	}
+
+	&__menu {
+		margin-top: 2px !important;
+		background-color: rgb(var(--background-color)) !important;
+		cursor: pointer !important;
+
+		&-list {
+			padding: 0 !important;
+		}
+
+		&-notice {
+			&--no-options {
+				opacity: 0.6 !important;
+				padding: 20px 0 !important;
+			}
+		}
+	}
+
+	&__placeholder {
+		margin: 0 !important;
+	}
+
+	&__option {
+		background-color: transparent !important;
+		cursor: pointer !important;
+		color: rgb(var(--text-color)) !important;
+	}
+
+	&__multi-value {
+		background-color: rgb(var(--primary-color)) !important;
+		margin-right: 7px !important;
+
+		&__label {
+			font-size: 0.9rem;
+			color: white !important;
+		}
+
+		&__remove {
+			background-color: transparent !important;
+			cursor: pointer;
+		}
+	}
+
+	&__single-value {
+		font-size: 0.9rem;
+		color: rgb(var(--text-color)) !important;
+	}
+
+	&__indicator {
+		display: none !important;
+	}
+
+	&__input-container {
+		cursor: pointer !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		font-family: $defaultFontFamily !important;
+		color: rgb(var(--text-color)) !important;
+	}
+}

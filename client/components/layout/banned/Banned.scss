@@ -1,0 +1,71 @@
+.cd-banned {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	z-index: 100000000;
+	justify-content: center;
+	background-color: rgb(var(--background-color));
+	align-items: center;
+
+	&__body {
+		width: 95%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		max-width: 500px;
+
+		> i {
+			color: rgb(var(--error-color));
+			font-size: 2rem;
+			margin-bottom: 15px;
+		}
+
+		p span {
+			font-weight: 600;
+			background-color: rgb(var(--module-color));
+			border-radius: 4px;
+			box-sizing: border-box;
+			color: rgb(var(--error-color));
+			padding: 4px;
+		}
+
+		p i {
+			font-style: italic;
+		}
+
+		h4 {
+			color: rgb(var(--text-color));
+			margin: 5px 0 20px;
+			font-size: 1.3rem;
+		}
+
+		a {
+			color: rgb(var(--text-color));
+			text-decoration: underline;
+		}
+
+		&__reason {
+			background-color: rgb(var(--module-color));
+			padding: 15px;
+			width: 100%;
+			margin: 0 0 20px;
+			border-radius: 10px;
+			color: rgb(var(--text-color));
+			box-sizing: border-box;
+
+			> span {
+				display: table;
+				margin-bottom: 7px;
+				color: rgb(var(--text-color));
+				font-weight: 600;
+			}
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+}

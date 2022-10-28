@@ -1,0 +1,68 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-theme-option {
+	border: 4px solid rgb(var(--button-color), 0.9);
+	background-color: rgb(var(--button-color), 0.4);
+	border-radius: 30px;
+	padding: 12px 30px;
+	display: flex;
+	position: relative;
+	margin: 0 12px 12px 0;
+	width: 100%;
+	flex-direction: row;
+	align-items: center;
+
+	&--selected {
+		border-color: rgb(var(--primary-color));
+	}
+
+	&__pro {
+		position: absolute;
+		top: 50%;
+		right: 20px;
+		transform: translate(0, -50%);
+	}
+
+	> p {
+		opacity: 1;
+		color: rgb(var(--text-color));
+		font-weight: bold;
+		transition: all 0.1s ease-in-out;
+		font-size: 1.2rem;
+		margin: 0 !important;
+	}
+
+	&:hover {
+		opacity: 0.8;
+	}
+
+	&__preview {
+		$previewWidth: 40px;
+
+		border: 2px solid rgb(var(--theme-background-opposite), 0.3);
+		margin-right: 10px;
+		border-radius: 5px;
+		overflow: hidden;
+		position: relative;
+		width: $previewWidth;
+		height: 30px;
+		display: table;
+
+		&-body {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			position: absolute;
+			top: 50%;
+			left: 57%;
+			transform: translate(-50%, -50%) rotate(25deg);
+
+			> span {
+				box-sizing: border-box;
+				width: calc(#{$previewWidth} * 1.5);
+				height: calc(#{$previewWidth} * 1.5);
+				display: table;
+			}
+		}
+	}
+}

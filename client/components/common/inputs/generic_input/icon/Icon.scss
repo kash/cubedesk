@@ -1,0 +1,22 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-common-icon {
+	font-size: 0.9rem;
+	color: rgb(var(--theme-button-opposite));
+	opacity: 0.4;
+
+	&--success {
+		color: $primaryGreen !important;
+		opacity: 1;
+	}
+
+	&--warning {
+		color: $primaryOrange !important;
+		opacity: 1;
+	}
+
+	&--error {
+		color: $primaryRed !important;
+		opacity: 1;
+	}
+}

@@ -1,0 +1,43 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-match-stats {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	&__upper {
+		> h3 {
+			width: 100%;
+			font-size: 2rem;
+			margin: 0;
+			text-align: center;
+		}
+	}
+
+	&__pie {
+		width: 100%;
+		max-width: 150px;
+		margin: 10px auto 20px;
+	}
+
+	&__ratio {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		max-width: 350px;
+		margin: 30px auto 0;
+		position: relative;
+
+		h4 {
+			font-size: 1.4rem;
+		}
+	}
+
+	&__ratio-side {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+}

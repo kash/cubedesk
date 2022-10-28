@@ -1,0 +1,49 @@
+@import '../../../styles/config';
+
+.#{$namespace}-profile-pb-card {
+	display: flex;
+	position: relative;
+	padding: 20px;
+	box-sizing: border-box;
+	background-color: rgb(var(--module-color));
+	border-radius: 10px;
+	text-align: left;
+	box-shadow: 0 3px 15px rgba(black, 0.25);
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+
+	&__actions {
+		position: absolute;
+		top: 2px;
+		left: 10px;
+	}
+
+	&__time {
+		> span:first-of-type {
+			color: rgb(var(--text-color));
+			font-size: 3rem;
+			font-weight: bold;
+		}
+
+		> span:last-of-type {
+			font-size: 0.85rem;
+			color: rgb(var(--text-color));
+			display: table;
+			opacity: 0.7;
+			margin-top: 5px;
+		}
+	}
+
+	&__scramble {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+
+		&-visual {
+			height: 70px;
+			width: 70px;
+			margin-bottom: 5px;
+		}
+	}
+}

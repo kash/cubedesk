@@ -1,0 +1,23 @@
+@import '../../../styles/config';
+
+.#{$namespace}-edit-algo {
+	&__header {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px 0 20px;
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: row;
+		margin-top: 30px;
+		align-items: center;
+		justify-content: space-between;
+
+		> *:not(:last-child) {
+			margin-right: 7px;
+		}
+	}
+}

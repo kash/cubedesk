@@ -1,0 +1,61 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-manage-user-summary {
+	grid-column: span 2;
+
+	&__section {
+		padding: 15px;
+	}
+
+	&__pills {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+
+		> * {
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+	}
+
+	&__pill {
+		padding: 15px 10px 15px 15px;
+		background-color: rgb(var(--button-color));
+		border: 3px solid rgb(var(--theme-button-opposite), 0.1);
+		border-radius: 23px;
+
+		span {
+			font-size: 1.1rem;
+		}
+	}
+
+	&__solve-cubetype {
+		> span {
+			color: rgb(var(--text-color));
+			opacity: 0.8;
+			font-size: 1.1rem;
+			margin: 5px 0 10px;
+			font-style: italic;
+		}
+
+		&:not(:last-child) {
+			margin-bottom: 15px;
+		}
+	}
+
+	&__pill-title {
+		color: rgb(var(--theme-button-opposite));
+	}
+
+	&__pill-value {
+		padding: 6px 13px;
+		margin-left: 10px;
+		background-color: rgb(var(--secondary-color));
+		border-radius: 15px;
+		color: rgb(var(--theme-secondary-opposite));
+	}
+
+	> *:not(:last-child) {
+		border-bottom: 2px solid rgb(var(--theme-module-opposite), 0.2);
+	}
+}

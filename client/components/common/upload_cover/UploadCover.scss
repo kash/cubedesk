@@ -1,0 +1,59 @@
+@import '../../../styles/config';
+
+.#{$namespace}-common-upload-cover {
+	opacity: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+	background-color: rgba(black, 0.8);
+	transition: all 0.1s ease-in-out;
+
+	&:hover {
+		opacity: 1 !important;
+
+		i {
+			opacity: 1;
+			top: 0;
+		}
+	}
+
+	&--loading {
+		transition: unset !important;
+		opacity: 1 !important;
+
+		i {
+			transition: unset !important;
+			opacity: 1 !important;
+			top: 0 !important;
+		}
+	}
+
+	&__body {
+		width: 100%;
+		height: 100%;
+
+		> div {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	i {
+		color: white;
+		font-size: 1.4rem;
+		position: relative;
+		top: 5px;
+		opacity: 0;
+		transition: all 0.2s ease-in-out;
+	}
+}

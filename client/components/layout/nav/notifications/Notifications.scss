@@ -1,0 +1,58 @@
+.cd-notifications {
+	position: relative;
+
+	&__unread {
+		$unreadSize: 15px;
+
+		position: absolute;
+		top: -4px;
+		right: -4px;
+		background-color: rgb(var(--error-color));
+		color: white;
+		width: $unreadSize;
+		height: $unreadSize;
+		box-shadow: 0 0 2px rgba(black, 0.3);
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 0.67rem;
+		z-index: 10000;
+	}
+
+	&__handle {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1rem;
+		color: rgb(var(--text-color));
+	}
+
+	&__body {
+		padding: 10px;
+		box-sizing: border-box;
+
+		> div:not(:last-child) {
+			margin-bottom: 10px;
+		}
+
+		&--empty {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding-bottom: 100px;
+			box-sizing: border-box;
+		}
+	}
+
+	.cd-common__dropdown__body {
+		width: 400px;
+		max-height: none;
+		height: 500px;
+	}
+}

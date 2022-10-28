@@ -1,0 +1,20 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-scramble-face {
+	$faceWidth: 100%;
+
+	width: $faceWidth;
+	height: $faceWidth;
+	max-width: 100%;
+	max-height: 100%;
+	display: grid;
+	grid-gap: 3px;
+
+	> span {
+		background-color: rgb(var(--module-color));
+		border-radius: 2px;
+		width: 100%;
+		box-sizing: border-box;
+		height: 100%;
+	}
+}

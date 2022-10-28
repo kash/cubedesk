@@ -1,0 +1,41 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-integration {
+	width: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__name {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		img {
+			width: 70px;
+			height: auto;
+		}
+
+		h4 {
+			opacity: 0.9;
+			margin-top: 10px;
+		}
+	}
+
+	&__description {
+		opacity: 0.7;
+		margin: 5px 0 10px;
+	}
+
+	&__actions {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		> *:not(:last-child) {
+			margin-bottom: 5px;
+		}
+	}
+}

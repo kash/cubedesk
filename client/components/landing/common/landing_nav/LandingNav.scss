@@ -1,0 +1,65 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-landing-nav {
+	$self: &;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	width: 100%;
+	padding: 14px 0;
+	box-sizing: border-box;
+	background-color: white;
+	transition: all 0.1s ease-in-out;
+	border-bottom: 2px solid transparent;
+	color: #444;
+
+	&--scrolled {
+		border-color: #eee;
+	}
+
+	&__logo {
+		a {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		img {
+			width: 120px;
+		}
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		width: calc(100% - 30px);
+		color: inherit;
+		margin: auto;
+		max-width: 1600px;
+		justify-content: space-between;
+	}
+
+	&__links {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: inherit;
+
+		> *:not(:first-child) {
+			margin-left: 25px;
+		}
+	}
+
+	&__signup {
+		color: $primaryColor;
+		border-color: lighten($primaryColor, 30%) !important;
+	}
+
+	&__1v1 {
+		color: #409444;
+		border-color: lighten(#409444, 30%) !important;
+	}
+}

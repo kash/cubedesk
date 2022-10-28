@@ -1,0 +1,83 @@
+h1,
+h2,
+h3,
+h4,
+h5 {
+	color: rgb(var(--text-color));
+	font-weight: 600;
+}
+
+h2 {
+	font-size: 2rem;
+	margin-bottom: 8px;
+}
+
+h3 {
+	font-size: 1.3rem;
+	margin-bottom: 5px;
+}
+
+h4 {
+	font-size: 1.1rem;
+	margin-bottom: 5px;
+}
+
+h5 {
+	font-size: 1rem;
+}
+
+p {
+	color: rgb(var(--text-color));
+	font-weight: 400;
+	opacity: 0.9;
+	font-size: 1rem;
+	line-height: 1.3rem;
+	margin-bottom: 15px;
+}
+
+.ph-spin {
+	-webkit-animation-name: ph-spin;
+	animation-name: ph-spin;
+	-webkit-animation-delay: 0s;
+	animation-delay: 0s;
+	-webkit-animation-delay: 0;
+	animation-delay: 0;
+	-webkit-animation-direction: normal;
+	animation-direction: normal;
+	-webkit-animation-direction: normal;
+	animation-direction: normal;
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+}
+
+@-webkit-keyframes ph-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes ph-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}

@@ -1,0 +1,35 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-chat-message {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+
+	$aviSize: 40px;
+
+	&__left {
+		width: $aviSize;
+	}
+
+	&__right {
+		width: calc(100% - #{$aviSize});
+
+		b {
+			font-weight: bold;
+			margin-bottom: 8px;
+			color: rgb(var(--text-color));
+			font-size: 0.95rem;
+			position: relative;
+			top: -2px;
+		}
+
+		p {
+			margin: 0;
+			word-break: break-word;
+		}
+
+		> p:not(:last-of-type) {
+			margin-bottom: 3px;
+		}
+	}
+}

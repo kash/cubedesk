@@ -1,0 +1,139 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-help-page {
+	width: calc(100% - 60px);
+	margin: auto;
+	box-sizing: border-box;
+	max-width: 900px;
+
+	&__body {
+		width: 100%;
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5 {
+			font-weight: bold;
+			color: #444;
+			font-family: Kontora, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+		}
+
+		h1 {
+			font-size: 3rem;
+		}
+
+		h2 {
+			font-size: 2rem;
+		}
+
+		img {
+			width: auto;
+			height: auto;
+			margin: 20px auto;
+			display: table;
+			border-radius: 5px;
+			box-shadow: 0 5px 20px rgba(black, 0.2);
+			max-width: 700px;
+			max-height: 600px;
+		}
+
+		p {
+			color: #555555;
+			padding: 0;
+			margin: 10px 0;
+		}
+
+		ul {
+			margin-left: 30px;
+
+			li {
+				list-style: disc;
+				margin: 5px 0;
+			}
+		}
+
+		ol {
+			margin-left: 30px;
+
+			li {
+				margin: 5px 0;
+				list-style: decimal;
+			}
+		}
+
+		blockquote {
+			background-color: #eee;
+			padding: 10px 15px;
+			box-sizing: border-box;
+			border-radius: 5px;
+			margin-left: 30px;
+		}
+
+		pre {
+			margin: 10px 0;
+			background-color: #eee;
+			padding: 15px;
+			box-sizing: border-box;
+			border-radius: 5px;
+		}
+
+		a {
+			color: #246bfd;
+			border-bottom: 2px solid lighten(#246bfd, 30%);
+		}
+
+		hr {
+			border: none;
+			height: 3px;
+			background-color: #eee;
+			padding: 0;
+			margin: 10px 0;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: separate;
+			border: 1px solid rgb(var(--button-color));
+			border-radius: 4px;
+
+			td,
+			th {
+				border-left: 1px solid rgb(var(--button-color));
+				border-top: 1px solid rgb(var(--button-color));
+			}
+
+			td:first-child,
+			th:first-child {
+				border-left: none;
+			}
+
+			th {
+				border-top: none;
+				font-weight: 600;
+				font-size: 1rem;
+				color: rgb(var(--text-color)) !important;
+			}
+
+			td,
+			th {
+				padding: 7px 10px;
+				text-align: left;
+				box-sizing: border-box;
+				color: rgb(var(--text-color));
+				opacity: 0.9;
+				font-size: 0.9rem;
+			}
+
+			&__actions {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-end;
+
+				> * {
+					margin-left: 7px;
+				}
+			}
+		}
+	}
+}

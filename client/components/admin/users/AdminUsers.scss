@@ -1,0 +1,46 @@
+@import '../../../styles/config';
+
+.#{$namespace}-admin-users {
+	position: relative;
+
+	&__body {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+
+	&__search {
+		margin-top: 20px;
+		width: 100%;
+		position: relative;
+		height: 50px;
+
+		input {
+			font-size: 1.3rem;
+			height: 100%;
+			color: rgb(var(--text-color));
+			border: none;
+			width: 100%;
+			font-weight: 300;
+			box-sizing: border-box;
+			padding: 0 15px;
+			border-radius: 6px;
+			background-color: rgb(var(--module-color));
+		}
+
+		i {
+			position: absolute;
+			top: 50%;
+			color: rgb(var(--text-color));
+			right: 15px;
+			transform: translate(0, -50%);
+		}
+	}
+
+	&__grid {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-gap: 15px;
+	}
+}

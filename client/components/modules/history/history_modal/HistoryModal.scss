@@ -1,0 +1,44 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-history-modal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 50px;
+	position: relative;
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		width: 100%;
+
+		h2 {
+			text-transform: capitalize;
+			margin-bottom: 2px;
+
+			span {
+				color: rgb(var(--secondary-color));
+			}
+		}
+
+		p {
+			font-size: 1.1rem;
+		}
+	}
+
+	.cd-history__list {
+		max-height: 500px;
+	}
+
+	&__toggle-text {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	&__body {
+		margin-top: 40px;
+		width: 100%;
+	}
+}

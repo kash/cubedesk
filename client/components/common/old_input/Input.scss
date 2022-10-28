@@ -1,0 +1,30 @@
+@import '../../../styles/config';
+
+.#{$namespace}-common-input {
+	position: relative;
+
+	&--resetbutton input {
+		padding-right: 30px;
+	}
+
+	> i {
+		position: absolute;
+		width: 30px;
+		height: 100%;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 10;
+		margin-left: 3px;
+		top: 1px;
+
+		& + input {
+			padding-left: 30px;
+		}
+	}
+
+	&-reset {
+		right: 4px;
+	}
+}

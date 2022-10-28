@@ -1,0 +1,12 @@
+certs
+localschema.graphql
+client/@types/generated
+node_modules
+build
+dist
+migrations
+.git
+.idea
+.github
+npm-debug.log
+.DS_Store

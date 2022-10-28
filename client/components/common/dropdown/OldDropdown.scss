@@ -1,0 +1,85 @@
+@import '../../../styles/config';
+
+.cd-common__dropdown {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	> button {
+		padding: 0;
+	}
+
+	&__body {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 5px);
+		max-height: 400px;
+		overflow-y: auto;
+		display: flex;
+		padding: 5px;
+		border-radius: 5px;
+		box-sizing: border-box;
+		min-width: 160px;
+		box-shadow: 0 4px 13px rgba(black, 0.2);
+		flex-direction: column;
+		z-index: 1000000;
+		background-color: rgb(var(--button-color));
+
+		> *:not(:last-child) {
+			margin-bottom: 6px;
+		}
+
+		> button,
+		> .cd-common__button__wrapper > button,
+		> a {
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+			align-items: center;
+			color: rgb(var(--text-color));
+			text-align: left !important;
+			border-radius: 4px;
+			justify-content: flex-start;
+			padding: 8px;
+			box-sizing: border-box;
+			white-space: nowrap;
+			transition: all 0.1s ease-in-out;
+			font-size: 1rem;
+
+			&:disabled {
+				opacity: 0.4 !important;
+				background-color: transparent !important;
+				cursor: unset !important;
+			}
+
+			i {
+				opacity: 0.7;
+				margin-right: 5px;
+				width: 20px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			span {
+				display: table;
+				color: inherit;
+			}
+
+			&:hover {
+				background-color: rgba(white, 0.1);
+			}
+		}
+
+		&--up {
+			top: unset !important;
+			bottom: calc(100% + 5px);
+		}
+
+		&--left {
+			right: unset;
+			left: 0 !important;
+		}
+	}
+}

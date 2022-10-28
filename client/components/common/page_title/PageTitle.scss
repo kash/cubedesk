@@ -1,0 +1,42 @@
+@import '../../../styles/config';
+
+.#{$namespace}-page-title {
+	width: 100%;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	position: relative;
+
+	&__title {
+		display: flex;
+		flex-direction: row;
+		font-family: Kontora, Poppins, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+		align-items: center;
+		font-weight: 500;
+		font-size: 2.7rem;
+
+		i {
+			position: relative;
+			top: 3px;
+			margin-right: 12px;
+		}
+	}
+
+	&__lines {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 30px;
+	}
+
+	&__line {
+		background-color: rgb(var(--primary-color));
+		height: 4px;
+		width: 50px;
+		border-radius: 4px;
+		margin-right: 5px;
+
+		&--secondary {
+			width: 35px;
+			background-color: rgb(var(--secondary-color));
+		}
+	}
+}

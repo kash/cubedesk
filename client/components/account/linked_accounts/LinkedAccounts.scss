@@ -1,0 +1,8 @@
+@import '../../../styles/config';
+
+.#{$namespace}-account-linked-accounts {
+	> * {
+		max-width: 300px;
+		margin-bottom: 25px;
+	}
+}

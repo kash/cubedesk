@@ -1,0 +1,60 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-landing-signup-button {
+	box-sizing: border-box;
+	color: white;
+	font-size: clamp(1rem, 2vw, 1.2rem);
+	font-weight: 600;
+	font-family: Kontora, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	background-color: $primaryColor;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 12px 20px;
+	border-radius: 4px;
+
+	span {
+		color: inherit;
+		display: table;
+		margin-right: 9px;
+	}
+
+	i {
+		position: relative;
+		transition: all 0.1s ease-in-out;
+		top: 1px;
+	}
+
+	&:hover i {
+		margin-left: 5px;
+	}
+
+	&__wrapper {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+
+		p {
+			margin: 8px 0 0;
+			font-size: 0.95rem;
+		}
+
+		> span {
+			margin-top: 10px;
+			display: table;
+			background-color: $primaryOrange;
+			font-size: 0.95rem;
+			border-radius: 14px;
+			padding: 4px 8px;
+			color: white;
+			font-weight: 500;
+
+			> span {
+				font: inherit;
+				padding-bottom: 0;
+				color: inherit;
+				border-bottom: 1px solid white;
+			}
+		}
+	}
+}

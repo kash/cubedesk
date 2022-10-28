@@ -1,0 +1,39 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-elo-change {
+	$self: &;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 15px 0 5px;
+
+	> span {
+		display: table;
+	}
+
+	&__elo {
+		font-size: 2rem;
+		margin-bottom: 5px;
+		font-weight: bold;
+		opacity: 0;
+		transition: all 1s ease-in-out;
+		color: rgb(var(--text-color));
+
+		&--animating {
+			transition: all 1s ease-in-out;
+			opacity: 1;
+		}
+	}
+
+	&__change {
+		opacity: 0.9;
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: rgb(var(--success-color));
+
+		&--loss {
+			color: rgb(var(--warning-color));
+		}
+	}
+}

@@ -1,0 +1,23 @@
+.cd-offline {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background-color: rgb(var(--error-color));
+	color: white;
+	padding: 15px;
+	border-radius: 5px;
+	width: 95%;
+	max-width: 300px;
+	z-index: 100000000;
+
+	i {
+		font-size: 1rem;
+		color: inherit;
+		margin-bottom: 10px;
+	}
+
+	p {
+		color: inherit;
+		line-height: 1.4rem;
+	}
+}

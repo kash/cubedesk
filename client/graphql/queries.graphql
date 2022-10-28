@@ -1,0 +1,53 @@
+query receivedFriendshipRequestsFromUser($userId: String!) {
+	receivedFriendshipRequestsFromUser(userId: $userId) {
+		...FriendshipRequestFragment
+	}
+}
+
+query sentFriendshipRequestsToUser($userId: String!) {
+	sentFriendshipRequestsToUser(userId: $userId) {
+		...FriendshipRequestFragment
+	}
+}
+
+query solveByShareCode($shareCode: String) {
+	solveByShareCode(shareCode: $shareCode) {
+		...SolveWithUserFragment
+	}
+}
+
+query profile($username: String) {
+	profile(username: $username) {
+		...ProfileFragment
+	}
+}
+
+query eloLeaderboards($pageArgs: PaginationArgsInput) {
+	eloLeaderboards(pageArgs: $pageArgs) {
+		hasMore
+		total
+		items {
+			...EloRatingWithUserFragment
+		}
+	}
+}
+
+query userSearch($pageArgs: PaginationArgsInput) {
+	userSearch(pageArgs: $pageArgs) {
+		hasMore
+		total
+		items {
+			...PublicUserFragment
+		}
+	}
+}
+
+query adminUserSearch($pageArgs: PaginationArgsInput) {
+	adminUserSearch(pageArgs: $pageArgs) {
+		hasMore
+		total
+		items {
+			...UserAccountFragment
+		}
+	}
+}

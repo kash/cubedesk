@@ -1,0 +1,22 @@
+@import '../../../styles/config';
+
+@mixin genericInputStyling {
+	background-color: rgb(var(--button-color));
+	padding: 10px;
+	color: rgb(var(--text-color));
+	border-radius: 5px;
+	font-size: 0.95rem;
+	width: 100%;
+	box-sizing: border-box;
+	border: 2px solid rgb(var(--button-color));
+	transition: all 0.1s ease-in-out;
+
+	&:disabled {
+		opacity: 0.6;
+	}
+
+	&::placeholder {
+		color: rgb(var(--text-color)) !important;
+		opacity: 0.35;
+	}
+}

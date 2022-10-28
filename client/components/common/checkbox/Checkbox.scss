@@ -1,0 +1,90 @@
+@import '../../../styles/config';
+
+.#{$namespace}-common-checkbox {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	margin: 7px 0;
+	font-family: $defaultFontFamily;
+
+	label {
+		color: rgb(var(--text-color));
+		font-size: 0.95rem;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	span {
+		position: relative;
+		margin-right: 6px;
+		color: rgb(var(--text-color));
+		font-size: 0.9rem;
+		margin-top: -3px;
+		width: calc(100% - 33px);
+	}
+
+	&--noMargin {
+		margin: 0 !important;
+	}
+
+	&--noWrap {
+		label {
+			white-space: pre;
+		}
+	}
+
+	input[type='checkbox'] {
+		padding: 0;
+		position: absolute;
+		opacity: 0;
+
+		& + label {
+			position: relative;
+			cursor: pointer;
+			padding: 0;
+			font-size: 0.9rem;
+		}
+
+		& + label:before {
+			content: '';
+			background-color: rgba(var(--theme-module-opposite), 0.1);
+			margin-right: 8px;
+			display: inline-block;
+			vertical-align: text-top;
+			width: 16px;
+			height: 16px;
+			border-radius: 3px;
+			//border: 2px solid rgba(var(--theme-background), 0.2);
+		}
+
+		&:hover + label:before {
+			border: 2px solid rgba(var(--primary-color), 0.6);
+		}
+
+		&:checked + label:before {
+			background: rgb(var(--primary-color));
+		}
+
+		&:disabled + label {
+			cursor: default;
+			opacity: 0.7 !important;
+		}
+
+		&:checked + label:after {
+			content: '';
+			position: absolute;
+			left: 3px;
+			zoom: 0.9;
+			top: 9px;
+			background: rgb(var(--text-color));
+			width: 2px;
+			height: 2px;
+			box-shadow: 2px 0 0 rgb(var(--text-color)), 4px 0 0 rgb(var(--text-color)),
+				4px -2px 0 rgb(var(--text-color)), 4px -4px 0 rgb(var(--text-color)), 4px -6px 0 rgb(var(--text-color)),
+				4px -8px 0 rgb(var(--text-color));
+			transform: rotate(45deg) translate(0, -50%);
+		}
+	}
+}

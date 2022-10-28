@@ -1,0 +1,36 @@
+@import '../../../styles/config';
+
+.#{$namespace} {
+	&-body {
+		background-color: rgb(var(--background-color));
+		min-height: 100vh;
+		box-sizing: border-box;
+		width: 100%;
+		height: 100%;
+		display: grid;
+		grid-template-columns: $navWidth 1fr;
+
+		&__content {
+			width: 100%;
+			position: relative;
+		}
+
+		&--navCollapsed {
+			grid-template-columns: 80px 1fr;
+		}
+
+		&--full {
+			grid-template-columns: 1fr;
+		}
+
+		&--mobile {
+			padding-top: 55px !important;
+			grid-template-columns: 1fr;
+		}
+
+		&:not(&--noPadding) > &__content {
+			padding: 30px;
+			box-sizing: border-box;
+		}
+	}
+}

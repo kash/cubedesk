@@ -1,0 +1,30 @@
+@import '../../../styles/config';
+
+.#{$namespace}-time-distro {
+	$self: &;
+
+	height: 100%;
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+	transition: all 0.1s ease-in-out;
+
+	&__buckets {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		opacity: 0;
+		z-index: 1000;
+		transition: all 0.1s ease-in-out;
+	}
+
+	> div:last-of-type {
+		display: flex;
+	}
+
+	&:hover {
+		#{$self}__buckets {
+			opacity: 1;
+		}
+	}
+}

@@ -1,0 +1,119 @@
+@import '../../../styles/config';
+
+.#{$namespace}-modal {
+	$self: &;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(black, 0.8);
+	overflow: auto;
+	transition: all 0.2s ease-in-out;
+	// It's over 9000!
+	z-index: 100000;
+
+	#{$self} {
+		z-index: 100000;
+	}
+
+	&--active {
+		opacity: 1;
+
+		#{$self}__center {
+			margin-top: 50px;
+		}
+	}
+
+	&-confirm {
+		width: 100%;
+
+		p {
+			color: rgb(var(--text-color));
+			margin-bottom: 30px;
+			line-height: 1.4rem;
+			opacity: 0.9;
+		}
+
+		b {
+			font-weight: bold;
+			color: inherit;
+		}
+
+		a {
+			display: inline;
+			color: rgb(var(--primary-color));
+		}
+
+		input {
+			width: 100% !important;
+			max-width: none !important;
+		}
+	}
+
+	&__body {
+		width: 100%;
+		height: 100%;
+		overflow-y: auto;
+		left: 0;
+		top: 0;
+	}
+
+	&__description {
+		font-size: 1rem;
+		color: rgb(var(--text-color));
+		margin: 15px 0;
+		opacity: 0.8;
+		line-height: 1.4rem;
+	}
+
+	&__center {
+		margin: 90px auto 50px;
+		padding: 25px;
+		box-shadow: 0 4px 15px rgba(black, 0.1);
+		border-radius: 10px;
+		transition: all 0.15s ease-in-out;
+		background-color: rgb(var(--background-color));
+		width: 95%;
+		max-width: 600px;
+		box-sizing: border-box;
+		height: auto;
+		position: relative;
+	}
+
+	&__close-button {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		color: rgb(var(--text-color));
+		width: 40px;
+		height: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.7rem;
+		z-index: 10000;
+		border-radius: 5px;
+		transition: all 0.1s ease-in-out;
+
+		&:hover {
+			background-color: rgba(black, 0.2);
+		}
+	}
+
+	&--fullSize {
+		width: 100% !important;
+		max-width: unset !important;
+		height: 100%;
+
+		#{$self}__center {
+			max-width: none !important;
+			width: 100% !important;
+			height: 100% !important;
+			margin: 0 !important;
+			border-radius: 0 !important;
+		}
+	}
+}

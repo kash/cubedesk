@@ -1,0 +1,98 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-target-times {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	height: 100%;
+
+	> i {
+		color: rgb(var(--text-color));
+		font-size: 1.2rem;
+		margin: 30px auto 0;
+	}
+
+	&__wrapper {
+		overflow-y: auto;
+	}
+
+	&--current {
+		color: rgb(var(--warning-color)) !important;
+	}
+
+	&__button {
+		&--plusTwo {
+			color: rgb(var(--warning-color)) !important;
+		}
+
+		&--failed,
+		&--dnf {
+			color: rgb(var(--error-color)) !important;
+		}
+	}
+
+	&__target {
+		color: rgb(var(--text-color)) !important;
+		opacity: 0.6;
+	}
+
+	&__solve-info {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+
+		> button,
+		> span {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: 0;
+			font-weight: bold;
+			white-space: pre;
+			font-size: 1rem;
+			text-align: right;
+			color: rgb(var(--secondary-color));
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		> * {
+			margin-right: 5px;
+			transition: opacity 0.1s ease-in-out;
+			opacity: 0.3;
+			font-size: 1rem !important;
+
+			&:hover {
+				opacity: 0.7;
+			}
+		}
+	}
+
+	&__row {
+		padding: 0 6px;
+		height: 30px;
+		align-items: center;
+		flex-direction: row;
+		justify-content: space-between;
+		display: grid;
+		grid-template-columns: 1fr 135px;
+	}
+
+	&__desc {
+		text-align: left;
+		font-weight: 600;
+		color: rgb(var(--text-color));
+
+		span {
+			opacity: 0.45;
+			color: inherit;
+			font: inherit;
+		}
+	}
+}

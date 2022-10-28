@@ -1,0 +1,18 @@
+.cd-pfp {
+	background-color: rgba(#eee, 0.3);
+	$pfpSize: 150px;
+
+	width: $pfpSize;
+	height: $pfpSize;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	padding: 10px;
+	box-sizing: border-box;
+	align-items: center;
+	position: relative;
+
+	.cd-common-upload-cover {
+		border-radius: 50%;
+	}
+}

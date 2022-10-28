@@ -1,0 +1,59 @@
+@import '../../../styles/config';
+
+.#{$namespace}-common-text-body {
+	&__title {
+		font-size: 1.7rem;
+	}
+
+	hr {
+		border: none;
+		height: 3px;
+		width: 100%;
+		background-color: rgb(var(--button-color));
+		margin: 1rem auto;
+	}
+
+	&__body {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		p {
+			color: rgb(var(--text-color));
+		}
+
+		p {
+			font-size: 1.1rem;
+			line-height: 1.3rem;
+			font-weight: 400;
+			opacity: 0.95;
+			font-family: 'Source Sans Pro', Roboto, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+		}
+
+		em,
+		strong {
+			font-size: inherit;
+			font-family: inherit;
+		}
+
+		a {
+			font-size: inherit;
+			font-family: inherit;
+			color: rgb(var(--link-color)) !important;
+			font-weight: bold;
+			border-bottom: 3px solid rgb(var(--link-color), 0.5);
+		}
+
+		img {
+			border-radius: 10px;
+			margin: 3rem auto;
+			width: 95%;
+			max-width: 45rem;
+
+			box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
+				0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075),
+				0 16px 16px hsl(0deg 0% 0% / 0.075);
+		}
+	}
+}

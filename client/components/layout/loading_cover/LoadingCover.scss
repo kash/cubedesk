@@ -1,0 +1,27 @@
+@import '../../../styles/config';
+
+.#{$namespace}-loading-cover {
+	position: fixed;
+	left: 0;
+	z-index: 10000000;
+	top: 0;
+	width: 100vw;
+	color: rgb(var(--text-color));
+	background-color: rgb(var(--background-color));
+	height: 100vh;
+	display: flex;
+	transition: background-color 0.1s ease-in-out, opacity 0.15s 0.4s ease-in-out;
+	justify-content: center;
+	align-items: center;
+
+	i {
+		font-size: 1.7rem;
+		color: inherit;
+	}
+
+	&--fadeOut {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.15s 0.4s ease-in-out;
+	}
+}

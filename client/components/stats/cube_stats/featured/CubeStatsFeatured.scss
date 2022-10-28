@@ -1,0 +1,72 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-stats-featured {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(200px, auto)) !important;
+
+	&__right {
+		display: grid;
+		grid-gap: 10px;
+		grid-template-rows: 1fr 1fr;
+	}
+
+	&__single-pb {
+		margin-top: 15px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-end;
+		width: 100%;
+
+		ul {
+			li {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				color: rgb(var(--text-color));
+
+				i {
+					column-span: inherit;
+					font-size: 1.8rem;
+				}
+
+				p {
+					font-size: 1rem;
+					font-weight: bold;
+					margin: 0;
+					padding: 0;
+				}
+
+				span {
+					font-size: 0.9rem;
+					opacity: 0.5;
+					display: table;
+					color: inherit;
+				}
+
+				> div {
+					margin-left: 5px;
+					display: flex;
+					flex-direction: column;
+					color: inherit;
+				}
+			}
+		}
+	}
+
+	&__spb-info {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	&__spb-scramble {
+		display: flex;
+		align-items: flex-end;
+
+		> * {
+			height: unset;
+		}
+	}
+}

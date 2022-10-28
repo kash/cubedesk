@@ -1,0 +1,47 @@
+@import '../../styles/config';
+
+@import '../../styles/config';
+
+.#{$namespace}-settings {
+	$self: &;
+
+	&__body {
+		margin-top: 20px;
+		width: 100%;
+		max-width: 650px;
+		padding-bottom: 300px;
+
+		> div:not(:last-of-type) {
+			margin-bottom: 20px;
+			border-bottom: 3px solid rgba(var(--theme-background-opposite), 0.1);
+		}
+	}
+
+	&__text-size {
+		width: 100%;
+		text-align: center;
+		padding: 30px 0 50px;
+
+		h3 {
+			font-family: 'Roboto Mono', monospace;
+			font-weight: 400 !important;
+			color: rgb(var(--text-color)) !important;
+		}
+	}
+
+	&--mobileMode {
+		#{$self}__row {
+			flex-direction: column;
+			justify-content: unset;
+		}
+	}
+
+	&__timer-layout {
+		display: flex;
+		flex-direction: column;
+
+		> *:not(:last-child) {
+			margin-bottom: 15px;
+		}
+	}
+}

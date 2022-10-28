@@ -1,0 +1,14 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-smart-cube-solve-check {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 15px;
+
+	img {
+		width: 100%;
+		max-width: 150px;
+		margin: 20px 0 30px;
+	}
+}

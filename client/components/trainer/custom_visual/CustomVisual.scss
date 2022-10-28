@@ -1,0 +1,74 @@
+@import '../../../styles/config';
+
+.#{$namespace}-custom-visual {
+	$self: &;
+
+	&__twoD-body {
+		display: grid;
+		position: relative;
+		z-index: 100;
+	}
+
+	&--threeD {
+		padding-top: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__threeD-face {
+		margin: 0 !important;
+		display: grid;
+		grid-gap: 6px;
+	}
+
+	&__threeD-body {
+		$wrapperOffset: 13%;
+
+		width: 1px;
+		height: 1px;
+		position: relative;
+		z-index: 100;
+
+		// Left
+		> #{$self}__threeD-face:nth-child(1) {
+			position: absolute;
+			right: 0;
+			top: 0;
+			transform: translate($wrapperOffset, -50%) skew(0, 29deg) rotateY(46deg);
+		}
+
+		> #{$self}__threeD-face:nth-child(2) {
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			transform: translate(-50%, calc((100% + #{$wrapperOffset}) * -1)) rotateX(57deg) rotate(45deg);
+		}
+
+		> #{$self}__threeD-face:nth-child(3) {
+			position: absolute;
+			left: 0;
+			top: 0;
+			transform: translate(-$wrapperOffset, -50%) skew(0, -29deg) rotateY(-46deg);
+		}
+	}
+
+	&__cubelet {
+		display: table;
+		width: 100%;
+		height: 100%;
+		border-radius: 4px;
+
+		&--button {
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+
+		&:disabled,
+		&--empty {
+			opacity: 0 !important;
+		}
+	}
+}

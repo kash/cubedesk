@@ -1,0 +1,17 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-solve-info-step-pie {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 40px;
+
+	&__pie {
+		margin-top: 50px;
+	}
+
+	svg > g {
+		transform: translate(50%, 50%);
+	}
+}

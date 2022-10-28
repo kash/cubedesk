@@ -1,0 +1,13 @@
+export enum Consts {
+	APP_NAME = 'CubeDesk',
+	DOMAIN_NAME = 'cubedesk.io',
+	S3_BUCKET_NAME = 'cubedesk',
+	S3_IMAGE_FOLDER = 'images/',
+	MAX_IMAGE_WIDTH = 1600,
+	MAX_IMAGE_HEIGHT = 1600,
+
+	DB_SPACE_SEPARATOR = ' ',
+	OAUTH_TOKEN_EXPIRE_TIME = 3600,
+	INVITE_CODE_COUNT = 5,
+	INVITE_CODE_LENGTH = 7,
+}

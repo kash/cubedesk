@@ -1,0 +1,7 @@
+@import '../../../styles/config';
+
+.#{$namespace}-solve-info-notes {
+    i {
+        color: rgb(var(--text-color));
+    }
+}

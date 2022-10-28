@@ -1,0 +1,22 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-common-icon {
+	font-size: 0.9rem;
+	color: rgb(var(--text-color));
+	opacity: 0.4;
+
+	&--success {
+		color: rgb(var(--success-color)) !important;
+		opacity: 1;
+	}
+
+	&--warning {
+		color: rgb(var(--warning-color)) !important;
+		opacity: 1;
+	}
+
+	&--error {
+		color: rgb(var(--error-color)) !important;
+		opacity: 1;
+	}
+}

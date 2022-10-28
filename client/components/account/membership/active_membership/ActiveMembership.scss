@@ -1,0 +1,36 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-active-membership {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__check {
+		background-color: rgb(var(--primary-color));
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: rgb(var(--theme-primary-opposite));
+		border-radius: 6px;
+		width: 100%;
+		font-weight: bold;
+		padding: 15px;
+		box-shadow: 0 2px 6px rgba(var(--theme-module-opposite), 0.12);
+		box-sizing: border-box;
+		justify-content: center;
+		margin-bottom: 10px;
+
+		i {
+			margin-left: 5px;
+		}
+	}
+
+	&__cancelled {
+		font-weight: bold;
+		color: rgb(var(--error-color));
+	}
+
+	> *:last-child {
+		margin-top: 25px;
+	}
+}

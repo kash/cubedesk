@@ -1,0 +1,20 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-ban-user {
+	&__duration {
+		margin-top: 20px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 20px;
+
+		&--forever {
+			opacity: 0.6;
+			pointer-events: none;
+		}
+	}
+
+	&__options {
+		margin: 20px 0;
+		width: 100%;
+	}
+}

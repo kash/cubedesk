@@ -1,0 +1,206 @@
+on:
+    workflow_call:
+        inputs:
+            EBS_APP_NAME:
+                required: true
+                type: string
+            EBS_ENV_NAME:
+                required: true
+                type: string
+            SUB_DOMAIN:
+                required: true
+                type: string
+            ECR_IMAGE_NAME:
+                required: true
+                type: string
+            ENV:
+                required: true
+                type: string
+            STRIPE_PRO_PRODUCT_ID:
+                required: true
+                type: string
+            DISCORD_SERVER_ID:
+                required: true
+                type: string
+            RESOURCES_BASE_URI:
+                required: true
+                type: string
+            DIST_BASE_URI:
+                required: true
+                type: string
+        secrets:
+            AWS_APP_ACCESS_KEY_ID:
+                required: true
+            AWS_APP_SECRET_ACCESS_KEY:
+                required: true
+            AWS_ACCESS_KEY_ID:
+                required: true
+            AWS_SECRET_ACCESS_KEY:
+                required: true
+            DATABASE_URL:
+                required: true
+            JWT_SECRET:
+                required: true
+            WCA_SECRET:
+                required: true
+            REDIS_URL:
+                required: true
+            AIRTABLE_BEARER_TOKEN:
+                required: true
+            DISCORD_SECRET:
+                required: true
+            DISCORD_BOT_SECRET:
+                required: true
+            STRIPE_SECRET_KEY:
+                required: true
+            LOG_DNA_ACCESS_KEY:
+                required: true
+            MAILCHIMP_API_KEY:
+                required: false
+            SENTRY_AUTH_TOKEN:
+                required: true
+            ELASTICSEARCH_CLOUD_ID:
+                required: true
+            ELASTICSEARCH_ELASTIC_PASSWORD:
+                required: true
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION: us-west-2
+            AWS_SECURITY_GROUP_NAME: default
+            ECR_IMAGE_NAME: ${{ inputs.ECR_IMAGE_NAME }}
+
+        steps:
+            - name: Checkout Latest Repo
+              uses: actions/checkout@main
+
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.13.0'
+                  cache: 'npm'
+
+            - name: Get timestamp
+              uses: gerred/actions/current-time@master
+              id: current-time
+
+            - name: Generate unique id
+              id: deployment-id
+              run: echo "::set-output name=id::$(uuidgen)"
+
+            - name: Run string replace
+              uses: frabert/replace-string-action@master
+              id: format-time
+              with:
+                  pattern: '[:\.]+'
+                  string: '${{ steps.current-time.outputs.time }}'
+                  replace-with: '-'
+                  flags: 'g'
+
+            - name: Set release name
+              run: echo '::set-output name=RELEASE_NAME::release-${{ steps.format-time.outputs.replaced }}'
+              id: release-name
+
+            - name: Create Env File
+              run: |
+                  touch .env
+                  echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_APP_ACCESS_KEY_ID }} >> .env
+                  echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_APP_SECRET_ACCESS_KEY }} >> .env
+                  echo AWS_DEFAULT_REGION=${{ env.AWS_DEFAULT_REGION }} >> .env
+                  echo STRIPE_PRO_PRODUCT_ID=${{ inputs.STRIPE_PRO_PRODUCT_ID }} >> .env
+                  echo DISCORD_SERVER_ID=${{ inputs.DISCORD_SERVER_ID }} >> .env
+                  echo DISCORD_BOT_SECRET=${{ secrets.DISCORD_BOT_SECRET }} >> .env
+                  echo DISCORD_SECRET=${{ secrets.DISCORD_SECRET }} >> .env
+                  echo DEPLOYMENT_ID=${{ steps.deployment-id.outputs.id }} >> .env
+                  echo LOG_DNA_ACCESS_KEY=${{ secrets.LOG_DNA_ACCESS_KEY }} >> .env
+                  echo MAILCHIMP_API_KEY=${{ secrets.MAILCHIMP_API_KEY }} >> .env
+                  echo SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} >> .env
+                  echo ELASTICSEARCH_CLOUD_ID=${{ secrets.ELASTICSEARCH_CLOUD_ID }} >> .env
+                  echo ELASTICSEARCH_ELASTIC_PASSWORD=${{ secrets.ELASTICSEARCH_ELASTIC_PASSWORD }} >> .env
+                  echo LOG_LEVEL=info
+                  echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+                  echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+                  echo RESOURCES_BASE_URI=${{ inputs.RESOURCES_BASE_URI }} >> .env
+                  echo DIST_BASE_URI=${{ inputs.DIST_BASE_URI }} >> .env
+                  echo AIRTABLE_BEARER_TOKEN=${{ secrets.AIRTABLE_BEARER_TOKEN }} >> .env
+                  echo ENV=${{ inputs.ENV }} >> .env
+                  echo WCA_SECRET=${{ secrets.WCA_SECRET }} >> .env
+                  echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
+                  echo ECR_IMAGE_NAME=${{ inputs.ECR_IMAGE_NAME }} >> .env
+                  echo NODE_TLS_REJECT_UNAUTHORIZED=1 >> .env
+                  echo REDIS_URL=${{ secrets.REDIS_URL }} >> .env
+                  echo BASE_URI=https://${{ inputs.SUB_DOMAIN }}.cubedesk.io >> .env
+                  echo RELEASE_NAME=${{ steps.release-name.outputs.RELEASE_NAME }} >> .env
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+            - name: Get Github action IP
+              id: ip
+              uses: haythem/public-ip@v1.2
+
+            - name: Setting environment variables..
+              run: |
+                  echo "AWS_DEFAULT_REGION=${{ env.AWS_DEFAULT_REGION }}" >> $GITHUB_ENV
+                  echo "AWS_SG_NAME=${{ env.AWS_SECURITY_GROUP_NAME }}" >> $GITHUB_ENV
+
+            - name: Add Github Actions IP to Security group
+              run: |
+                  aws ec2 authorize-security-group-ingress --group-name ${{ env.AWS_SG_NAME }} --protocol tcp --port 5432 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v1
+
+            - name: Build, tag, and push image to Amazon ECR
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  ECR_REPOSITORY: ${{ inputs.ECR_IMAGE_NAME }}
+                  IMAGE_TAG: latest
+              run: |
+                  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . \
+                    --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+                    --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+                    --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+                    --build-arg RESOURCES_BASE_URI=${{ inputs.RESOURCES_BASE_URI}} \
+                    --build-arg DEPLOYMENT_ID=${{ steps.deployment-id.outputs.id }} \
+                    --build-arg RELEASE_NAME=${{ steps.release-name.outputs.RELEASE_NAME }} \
+                    --build-arg SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} \
+                    --build-arg ENV=${{ inputs.ENV }}
+                  docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+            - name: Generate Deployment Package
+              run: |
+                  sed -i -e 's/{{ECR_IMAGE_NAME}}/${{ inputs.ECR_IMAGE_NAME }}/g' Dockerrun.aws.json
+                  zip deploy.zip Dockerrun.aws.json .ebextensions .platform -r
+
+            - name: GitHub Action for npx
+              uses: mikeal/npx@1.0.0
+
+            - name: Generate prisma
+              run: |
+                  npx prisma@3.0.2 generate
+                  npx prisma@3.0.2 migrate deploy
+
+            - name: Deploy to EB
+              uses: einaregilsson/beanstalk-deploy@v14
+              with:
+                  aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  application_name: ${{ inputs.EBS_APP_NAME }}
+                  environment_name: ${{ inputs.EBS_ENV_NAME }}
+                  version_label: ${{ steps.release-name.outputs.RELEASE_NAME }}
+                  region: ${{ env.AWS_DEFAULT_REGION }}
+                  deployment_package: deploy.zip
+
+            - name: Remove Github Actions IP from security group
+              run: |
+                  aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_SG_NAME }} --protocol tcp --port 5432 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+              if: always()

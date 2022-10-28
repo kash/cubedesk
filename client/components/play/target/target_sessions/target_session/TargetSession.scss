@@ -1,0 +1,99 @@
+.cd-community__sessions__session {
+	position: relative;
+	margin-bottom: 20px;
+	border-radius: 4px;
+	border: 2px solid rgb(var(--button-color));
+	padding: 10px;
+	box-sizing: border-box;
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+
+		h4 {
+			color: rgb(var(--text-color));
+			font-size: 1.4rem;
+
+			span {
+				color: rgb(var(--primary-color));
+				font-weight: bold;
+				margin-right: 5px;
+				display: inline-block;
+			}
+		}
+
+		> span {
+			color: rgb(var(--text-color));
+			font-size: 0.9rem;
+			opacity: 0.7;
+			margin-top: 5px;
+		}
+	}
+
+	&__players {
+		margin-top: 15px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		&__list {
+			margin-top: 15px;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			> *:not(:last-child) {
+				border-bottom: 1px solid rgb(var(--button-color));
+			}
+		}
+
+		&__player {
+			width: 100%;
+			position: relative;
+			padding: 8px 0;
+
+			&__emblems {
+				position: absolute;
+				top: 10px;
+				right: 5px;
+			}
+		}
+	}
+
+	&__status {
+		margin-top: 15px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		.cd-common__input__wrapper,
+		input {
+			width: 100%;
+		}
+
+		&--video {
+			display: flex;
+			flex-direction: row;
+		}
+
+		&--verified,
+		&--review {
+			color: rgb(var(--text-color));
+			opacity: 0.7;
+
+			i {
+				margin-left: 3px;
+				color: rgb(var(--secondary-color));
+			}
+		}
+	}
+
+	&__actions {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+}

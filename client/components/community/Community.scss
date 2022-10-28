@@ -1,0 +1,18 @@
+.cd-community {
+	position: relative;
+
+	&__nav-list {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: flex-start;
+	}
+
+	&__search-input {
+		margin-left: 10px;
+	}
+
+	.cd-common__horizontal-nav__body {
+		margin-right: 10px;
+	}
+}

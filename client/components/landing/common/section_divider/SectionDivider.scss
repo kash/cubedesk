@@ -1,0 +1,15 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-landing-section-divider {
+	margin: 30px auto;
+	width: 95%;
+	max-width: 600px;
+
+	&__line {
+		border: none;
+		height: 6px;
+		border-radius: 2px;
+		background-color: #b6b7c7;
+		margin: 15px auto;
+	}
+}

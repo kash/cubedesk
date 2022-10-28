@@ -1,0 +1,57 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-public-trainer {
+	width: 100%;
+	background-color: rgb(var(--module-color));
+	border: 2px solid rgb(var(--button-color));
+	border-radius: 4px;
+	margin-bottom: 15px;
+	padding: 15px;
+	box-sizing: border-box;
+	position: relative;
+	grid-gap: 10px;
+
+	p {
+		margin-bottom: 0;
+	}
+
+	&__cube {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+	}
+
+	&__top {
+		display: grid;
+		flex-direction: row;
+		width: 100%;
+		grid-template-columns: 130px 1fr;
+	}
+
+	&__info {
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		border-bottom: 2px solid rgb(var(--button-color));
+	}
+
+	&__avi {
+		margin-top: 10px;
+	}
+
+	&__download {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+	}
+
+	&__actions {
+		margin-top: 20px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+
+		> * {
+			margin-right: 10px;
+		}
+	}
+}

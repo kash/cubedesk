@@ -1,0 +1,12 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-start-instructions {
+	width: 100%;
+	text-align: center;
+	color: rgba(var(--text-color), 0.5);
+	font-size: 0.88rem;
+
+	span {
+		color: inherit;
+	}
+}

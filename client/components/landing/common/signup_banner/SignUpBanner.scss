@@ -1,0 +1,31 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-landing-signup-banner {
+	width: 95%;
+	max-width: 800px;
+	height: 250px;
+	margin: 40px auto;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow: hidden;
+	position: relative;
+	border-radius: 6px;
+	border: 5px solid #ddd;
+	justify-content: center;
+
+	h3 {
+		font-family: Kontora, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+		font-size: clamp(1.8rem, 2.2vw, 2.2rem);
+		font-weight: 600;
+		text-align: center;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
+	}
+}

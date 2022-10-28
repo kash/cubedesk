@@ -1,0 +1,12 @@
+.cd-profile__edit {
+	&__bio {
+		grid-column: span 2;
+	}
+
+	&__grid {
+        margin-bottom: 20px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 20px;
+	}
+}

@@ -1,0 +1,48 @@
+@import '../../../styles/config';
+
+.cd-top-nav {
+	$self: &;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	width: 100%;
+	padding: 15px 0;
+	box-sizing: border-box;
+	background-color: rgb(var(--theme-primary));
+	color: rgb(var(--text-color));
+
+	&--white {
+		background-color: white;
+		color: #444 !important;
+	}
+
+	&__logo {
+		img {
+			width: 150px;
+		}
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		width: 95%;
+		color: inherit;
+		margin: auto;
+		max-width: 1600px;
+		justify-content: space-between;
+	}
+
+	&__links {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: inherit;
+
+		> *:not(:last-child) {
+			margin-right: 20px;
+		}
+	}
+}

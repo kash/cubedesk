@@ -1,0 +1,38 @@
+@import '../../../styles/config';
+
+.#{$namespace}-timer-header-control {
+	display: grid;
+	flex-direction: row;
+	grid-template-columns: 1fr 1fr 1fr;
+	transition: opacity 0.2s ease-in-out;
+	justify-content: space-between;
+	padding: 20px;
+	box-sizing: border-box;
+	top: 0;
+	width: 100%;
+	z-index: 30;
+	position: absolute;
+
+	&:focus-within {
+		z-index: 10000;
+	}
+
+	> div {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: flex-start;
+
+		> *:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+
+	> div:first-of-type {
+		justify-content: flex-start;
+	}
+
+	> div:last-of-type {
+		justify-content: flex-end;
+	}
+}

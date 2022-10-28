@@ -1,0 +1,39 @@
+@import '../../../styles/config';
+
+.#{$namespace}-landing-home {
+	background-color: white;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 100px;
+	position: relative;
+	box-sizing: border-box;
+	align-items: center;
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	p {
+		color: #444;
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 4vw, 4rem);
+		font-weight: 800;
+		line-height: 150%;
+		text-align: left;
+		color: #333;
+		font-family: Kontora, Poppins, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	}
+
+	h2 {
+		font-size: clamp(1.6rem, 2.5vw, 2.5rem);
+		line-height: 140%;
+		color: #5c5c5c !important;
+		font-weight: 800;
+		font-family: Kontora, Poppins, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	}
+}

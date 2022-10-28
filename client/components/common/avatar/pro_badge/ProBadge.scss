@@ -1,0 +1,30 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-pro-badge {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	z-index: 1000;
+	color: white;
+	font-weight: 600;
+	font-size: 0.75rem;
+	letter-spacing: 0.04rem;
+	transform: translate(-50%, 30%);
+	background-color: #246bfd;
+	border-radius: 4px;
+	padding: 1px 4px;
+	box-shadow: 0 2px 10px rgba(black, 0.1);
+
+	&--small {
+		font-size: 0.52rem;
+	}
+
+	&--large {
+		padding: 2px 7px;
+		font-size: 1rem;
+	}
+
+	&--tiny {
+		font-size: 0.45rem;
+	}
+}

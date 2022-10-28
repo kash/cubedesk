@@ -1,0 +1,43 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-review-import {
+	h4 {
+		font-size: 1.1rem;
+		margin-bottom: 10px;
+		color: rgb(var(--text-color));
+		font-weight: bold;
+
+		span {
+			color: rgb(var(--secondary-color));
+		}
+	}
+
+	&__stats {
+		margin: 20px 0;
+	}
+
+	&__session,
+	&__session-header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+
+		> * {
+			display: flex;
+			flex-direction: row;
+			width: 33%;
+		}
+
+		> *:not(:first-child) {
+			justify-content: flex-end;
+		}
+	}
+
+	&__session-header {
+		padding-top: 15px;
+		margin-top: 15px;
+		border-top: 2px solid rgb(var(--theme-module-opposite), 0.15);
+		margin-bottom: 8px;
+	}
+}

@@ -1,0 +1,14 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-common-input-legend {
+	color: rgb(var(--text-color));
+	font-weight: 500;
+	font-size: 0.95rem;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-family: $defaultFontFamily;
+	}
+}

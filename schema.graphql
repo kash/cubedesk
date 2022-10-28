@@ -1,0 +1,1508 @@
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+"""
+A time string at UTC, such as 10:15:30Z, compliant with the `full-time` format outlined in section 5.6 of the RFC 3339profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Time
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+"""
+
+    A string representing a duration conforming to the ISO8601 standard,
+    such as: P1W1DT13H23M34S
+    P is the duration designator (for period) placed at the start of the duration representation.
+    Y is the year designator that follows the value for the number of years.
+    M is the month designator that follows the value for the number of months.
+    W is the week designator that follows the value for the number of weeks.
+    D is the day designator that follows the value for the number of days.
+    T is the time designator that precedes the time components of the representation.
+    H is the hour designator that follows the value for the number of hours.
+    M is the minute designator that follows the value for the number of minutes.
+    S is the second designator that follows the value for the number of seconds.
+
+    Note the time designator, T, that precedes the time value.
+
+    Matches moment.js, Luxon and DateFns implementations
+    ,/. is valid for decimal places and +/- is a valid prefix
+  
+"""
+scalar Duration
+
+"""
+A field whose value is a UTC Offset: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+"""
+scalar UtcOffset
+
+"""
+A local date string (i.e., with no associated timezone) in `YYYY-MM-DD` format, e.g. `2020-01-01`.
+"""
+scalar LocalDate
+
+"""
+A local time string (i.e., with no associated timezone) in 24-hr `HH:mm[:ss[.SSS]]` format, e.g. `14:25` or `14:25:06` or `14:25:06.123`.
+"""
+scalar LocalTime
+
+"""
+A local time string (i.e., with no associated timezone) in 24-hr `HH:mm[:ss[.SSS]]` format, e.g. `14:25` or `14:25:06` or `14:25:06.123`.  This scalar is very similar to the `LocalTime`, with the only difference being that `LocalEndTime` also allows `24:00` as a valid value to indicate midnight of the following day.  This is useful when using the scalar to represent the exclusive upper bound of a time block.
+"""
+scalar LocalEndTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress @specifiedBy(url: "https://www.w3.org/Protocols/rfc822/")
+
+"""Floats that will have a value less than 0."""
+scalar NegativeFloat
+
+"""Integers that will have a value less than 0."""
+scalar NegativeInt
+
+"""A string that cannot be passed as an empty value"""
+scalar NonEmptyString
+
+"""Floats that will have a value of 0 or more."""
+scalar NonNegativeFloat
+
+"""Integers that will have a value of 0 or more."""
+scalar NonNegativeInt
+
+"""Floats that will have a value of 0 or less."""
+scalar NonPositiveFloat
+
+"""Integers that will have a value of 0 or less."""
+scalar NonPositiveInt
+
+"""
+A field whose value conforms to the standard E.164 format as specified in: https://en.wikipedia.org/wiki/E.164. Basically this is +17895551234.
+"""
+scalar PhoneNumber
+
+"""Floats that will have a value greater than 0."""
+scalar PositiveFloat
+
+"""Integers that will have a value greater than 0."""
+scalar PositiveInt
+
+"""
+A field whose value conforms to the standard postal code formats for United States, United Kingdom, Germany, Canada, France, Italy, Australia, Netherlands, Spain, Denmark, Sweden, Belgium, India, Austria, Portugal, Switzerland or Luxembourg.
+"""
+scalar PostalCode
+
+"""Floats that will have a value of 0 or more."""
+scalar UnsignedFloat
+
+"""Integers that will have a value of 0 or more."""
+scalar UnsignedInt
+
+"""
+A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+"""
+scalar URL
+
+"""
+A field whose value conforms with the standard mongodb object ID as described here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId. Example: 5e5677d71bdc2ae76344968c
+"""
+scalar ObjectID
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar Long
+
+"""
+The `SafeInt` scalar type represents non-fractional signed whole numeric values that are considered safe as defined by the ECMAScript specification.
+"""
+scalar SafeInt @specifiedBy(url: "https://www.ecma-international.org/ecma-262/#sec-number.issafeinteger")
+
+"""
+A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier.
+"""
+scalar UUID
+
+"""
+A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier.
+"""
+scalar GUID
+
+"""
+A field whose value is a hex color code: https://en.wikipedia.org/wiki/Web_colors.
+"""
+scalar HexColorCode @specifiedBy(url: "https://en.wikipedia.org/wiki/Web_colors")
+
+"""
+A field whose value is a CSS HSL color: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl()_and_hsla().
+"""
+scalar HSL @specifiedBy(url: "https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl()_and_hsla()")
+
+"""
+A field whose value is a CSS HSLA color: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl()_and_hsla().
+"""
+scalar HSLA
+
+"""
+A field whose value is a IPv4 address: https://en.wikipedia.org/wiki/IPv4.
+"""
+scalar IPv4
+
+"""
+A field whose value is a IPv6 address: https://en.wikipedia.org/wiki/IPv6.
+"""
+scalar IPv6
+
+"""
+A field whose value is a ISBN-10 or ISBN-13 number: https://en.wikipedia.org/wiki/International_Standard_Book_Number.
+"""
+scalar ISBN
+
+"""
+A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
+"""
+scalar JWT
+
+"""
+A field whose value is a valid decimal degrees latitude number (53.471): https://en.wikipedia.org/wiki/Latitude
+"""
+scalar Latitude
+
+"""
+A field whose value is a valid decimal degrees longitude number (53.471): https://en.wikipedia.org/wiki/Longitude
+"""
+scalar Longitude
+
+"""
+A field whose value is a IEEE 802 48-bit MAC address: https://en.wikipedia.org/wiki/MAC_address.
+"""
+scalar MAC
+
+"""
+A field whose value is a valid TCP port within the range of 0 to 65535: https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_ports
+"""
+scalar Port
+
+"""
+A field whose value is a CSS RGB color: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()_and_rgba().
+"""
+scalar RGB
+
+"""
+A field whose value is a CSS RGBA color: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()_and_rgba().
+"""
+scalar RGBA
+
+"""A currency string, such as $21.25"""
+scalar USCurrency
+
+"""
+A field whose value is a Currency: https://en.wikipedia.org/wiki/ISO_4217.
+"""
+scalar Currency @specifiedBy(url: "https://en.wikipedia.org/wiki/ISO_4217")
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+"""The `Byte` scalar type represents byte value as a Buffer"""
+scalar Byte
+
+"""Represents NULL values"""
+scalar Void
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+enum SolvesSortBy {
+  CREATED_AT_DESC
+  CREATED_AT_ASC
+  TIME_DESC
+  TIME_ASC
+}
+
+enum SolvesFilter {
+  PLUS_TWO
+  NOT_PLUS_TWO
+  DNF
+  NOT_DNF
+  IMPORTED
+  NOT_IMPORTED
+  SMART
+  NOT_SMART
+}
+
+type Query {
+  solve(id: String): Solve
+  solveList(cubeType: String, filters: [SolvesFilter], sortBy: SolvesSortBy, page: Int, includeAll: Boolean): SolveList
+  solveByShareCode(shareCode: String): Solve
+  me: UserAccount!
+  profile(username: String): Profile!
+  smartDevices: [SmartDevice]
+  unreadNotificationCount: Int
+  notifications(page: Int): [Notification]
+  matchSession(id: String): MatchSession!
+  badgeTypes: [BadgeType]
+  customTrainers(id: String): [CustomTrainer]
+  customTrainer(id: String): CustomTrainer
+  publicCustomTrainers(page: Int = 0, pageSize: Int = 25, searchQuery: String = ""): PaginatedCustomTrainers
+  customTrainerDownloads: [CustomTrainerDownload]
+  customTrainerLikes: [CustomTrainerLike]
+  gameSession(id: String): GameSession
+  gameSessions: [GameSession]
+  allFriendships: [Friendship]
+  friendships(page: Int = 0, pageSize: Int = 25, searchQuery: String = ""): PaginatedFriendships
+  friendshipRequestsSent(page: Int = 0, pageSize: Int = 25, searchQuery: String = ""): PaginatedFriendshipRequests
+  friendshipRequestsReceived(page: Int = 0, pageSize: Int = 25, searchQuery: String = ""): PaginatedFriendshipRequests
+  receivedFriendshipRequestsFromUser(userId: String): [FriendshipRequest]
+  sentFriendshipRequestsToUser(userId: String): [FriendshipRequest]
+  userSearch(pageArgs: PaginationArgsInput): PaginatedUserAccounts
+  solves: [Solve]
+  sessions: [Session]
+  settings: Setting
+  stats: Stats
+  trainerAlgorithms: [TrainerAlgorithm]
+  integration(integrationType: IntegrationType): Integration
+  wcaMe: WcaAccount
+  discordMe: WcaAccount
+  integrations: [Integration]
+  algorithmOverrides: [AlgorithmOverride]
+  membership: Membership
+  membershipOptions: MembershipOptions
+  reports: [ReportSummary]
+  helpCategories: [ArticleCategory]
+  helpArticle(slug: String): ArticlePage
+  trainerFavorites: [TrainerFavorite]
+  topSolves(page: Int, cubeType: String): [TopSolve]
+  topAverages(page: Int, cubeType: String): [TopAverage]
+  customCubeTypes: [CustomCubeType]
+  match(id: String): Match
+  matchBySpectateCode(code: String): Match
+  matchByLinkCode(code: String): Match
+  notificationPreferences: NotificationPreference
+  adminUserSearch(pageArgs: PaginationArgsInput): PaginatedUserAccountsForAdmin
+  getUserAccountForAdmin(userId: String): UserAccountForAdmin
+  eloLeaderboards(pageArgs: PaginationArgsInput): PaginatedEloLeaderboards
+  myEloLeaderboardsPosition: Int
+  statsModule: StatsModule
+}
+
+type Mutation {
+  bulkCreateSolves(solves: [SolveInput]): Void
+  deleteSolve(id: String): Solve!
+  updateSolve(id: String, input: SolveInput): Solve!
+  deleteTrainingSolves(id: String): Void
+  deleteSolvesByCubeType(cubeType: String): Void
+  deleteAllTrainingSolves: Void
+  deleteAllSolves: Void
+  createUserAccount(first_name: String!, last_name: String!, email: String!, username: String!, password: String!): PublicUserAccount
+  updateUserAccount(first_name: String!, last_name: String!, email: String!, username: String!): PublicUserAccount
+  updateUserPassword(old_password: String!, new_password: String!): PublicUserAccount
+  deleteUserAccount: PublicUserAccount
+  logOut: PublicUserAccount!
+  authenticateUser(email: String!, password: String!): PublicUserAccount!
+  uploadProfileHeader(file: Upload): Image!
+  uploadProfilePicture(file: Upload): Image!
+  updateProfile(input: ProfileInput): Profile!
+  addNewSmartDevice(originalName: String, deviceId: String): SmartDevice
+  changeSmartDeviceName(id: String, name: String): SmartDevice
+  deleteSmartDevice(id: String): SmartDevice
+  deleteTimerBackground: TimerBackground!
+  uploadTimerBackground(file: Upload): TimerBackground!
+  setTimerBackgroundHex(hex: String): TimerBackground!
+  deleteNotification(id: String): Notification
+  markNotificationAsRead(id: String): Notification
+  createBadgeType(input: BadgeTypeInput): BadgeType
+  editBadgeType(id: String, input: BadgeTypeInput): BadgeType
+  deleteBadgeType(id: String!): BadgeType
+  addBadgeToUser(badgeTypeId: String, userId: String): Badge
+  removeBadgeFromUser(badgeTypeId: String, userId: String): Badge
+  sendForgotPasswordCode(email: String): Void
+  checkForgotPasswordCode(email: String, code: String): Boolean
+  updateForgotPassword(email: String, code: String, password: String): PublicUserAccount
+  createCustomTrainer(data: CustomTrainerCreateInput): CustomTrainer
+  updateCustomTrainer(id: String, data: CustomTrainerCreateInput): CustomTrainer
+  deleteCustomTrainer(id: String): CustomTrainer
+  downloadCustomTrainer(sourceId: String): CustomTrainer
+  likeCustomTrainer(customTrainerId: String): CustomTrainerLike
+  unlikeCustomTrainer(customTrainerId: String): CustomTrainerLike
+  createGameSession(matchId: String, gameType: GameType): GameSession
+  deleteGameSession(id: String): GameSession
+  sendFriendshipRequest(toUserId: String): FriendshipRequest
+  acceptFriendshipRequest(friendshipRequestId: String): Friendship
+  deleteFriendshipRequest(friendshipRequestId: String): FriendshipRequest
+  unfriend(targetUserId: String): Friendship
+  createSolve(input: SolveInput): Solve
+  createSession(input: SessionInput): Session
+  updateSession(input: SessionInput, id: String): Session
+  reorderSessions(ids: [String]): Void
+  deleteSession(id: String): Session
+  mergeSessions(newSessionId: String, oldSessionId: String): Session
+  bulkCreateSessions(sessions: [SessionInput]): Void
+  setSetting(input: SettingInput): Setting
+  resetSettings: Setting
+  createIntegration(code: String, integrationType: IntegrationType): Integration
+  deleteIntegration(integrationType: IntegrationType): Integration
+  updateAlgorithmOverride(algoKey: String, input: AlgorithmOverrideInput): AlgorithmOverride
+  deleteAlgorithmOverride(algoKey: String): AlgorithmOverride
+  cancelMembership: Boolean
+  generateBuyLink(priceId: String): String
+  reportProfile(reason: String, userId: String): Report
+  resolveReports(userId: String): Float
+  createTrainerFavorite(cubeKey: String): TrainerFavorite
+  deleteTrainerFavorite(cubeKey: String): TrainerFavorite
+  publishTopSolve(solveId: String): TopSolve
+  publishTopAverages(solveIds: [String]): TopAverage
+  deleteTopSolve(id: String): TopSolve
+  deleteTopAverage(id: String): TopAverage
+  createCustomCubeType(input: CustomCubeTypeInput): CustomCubeType
+  deleteCustomCubeType(id: String): CustomCubeType
+  createMatchWithNewSession(input: MatchSessionInput): Match
+  updateOfflineHash(hash: String): String
+  unsubEmails(unsubId: String): Boolean
+  updateNotificationPreferences(value: Boolean, key: String): NotificationPreference
+  banUserAccount(input: BanUserInput): BanLog
+  unbanUserAccount(userId: String): UserAccount
+  setVerifiedStatus(verified: Boolean, userId: String): UserAccount
+  adminDeleteUserAccount(userId: String): UserAccount
+  bulkDeleteSolves(solveIds: [String]): Int
+  bulkMoveSolvesToSession(sessionId: String, solveIds: [String]): Int
+  bulkDnfSolves(solveIds: [String]): Int
+  bulkPlusTwoSolves(solveIds: [String]): Int
+  bulkOkSolves(solveIds: [String]): Int
+  bulkUpdateSolvesCubeType(cubeType: String, solveIds: [String]): Int
+  updateStatsModuleBlocks(blocks: [StatsModuleBlockInput]): StatsModule
+  createDemoSolve(input: DemoSolveInput): DemoSolve
+  createAdView(input: CreateAdViewInput): AdView
+  clickAdView(adViewId: String): AdView
+}
+
+type SmartDevice {
+  id: String
+  name: String
+  internal_name: String
+  device_id: String
+  user_id: String
+  created_at: DateTime
+  solves: [Solve]
+  user: PublicUserAccount
+}
+
+type Solve {
+  id: String
+  time: Float
+  raw_time: Float
+  cube_type: String
+  scramble: String
+  game_session_id: String
+  from_timer: Boolean
+  training_session_id: String
+  session_id: String
+  user_id: String
+  bulk: Boolean
+  started_at: BigInt
+  ended_at: BigInt
+  dnf: Boolean
+  plus_two: Boolean
+  notes: String
+  trainer_name: String
+  created_at: DateTime
+  is_smart_cube: Boolean
+  smart_device_id: String
+  match_id: String
+  match_participant_id: String
+  smart_turn_count: Int
+  smart_turns: String
+  smart_put_down_time: Float
+  inspection_time: Float
+  demo_mode: Boolean
+  share_code: String
+  solve_method_steps: [SolveMethodStep]
+  solve_views: [SolveView]
+  smart_device: SmartDevice
+  user: PublicUserAccount
+}
+
+type SolveMethodStep {
+  id: String
+  solve_id: String
+  turn_count: Int
+  turns: String
+  total_time: Float
+  tps: Float
+  recognition_time: Float
+  oll_case_key: String
+  pll_case_key: String
+  skipped: Boolean
+  parent_name: String
+  method_name: String
+  step_index: Int
+  step_name: String
+  created_at: DateTime
+  solve: Solve
+}
+
+type SolveView {
+  id: String
+  solve_id: String
+  viewer_id: String
+  user_id: String
+  created_at: DateTime
+  viewer: PublicUserAccount
+  user: PublicUserAccount
+}
+
+type SolveList {
+  solves: [Solve]
+  more_results: Boolean
+  total_count: Int
+}
+
+type Profile {
+  id: String
+  user_id: String
+  header_image_id: String
+  pfp_image_id: String
+  created_at: DateTime
+  bio: String
+  favorite_event: String
+  main_three_cube: String
+  three_goal: String
+  three_method: String
+  reddit_link: String
+  twitch_link: String
+  youtube_link: String
+  twitter_link: String
+  discord_id: String
+  show_discord_message_button: Boolean
+  header_image: Image
+  pfp_image: Image
+  user: PublicUserAccount
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+}
+
+type Image {
+  id: String
+  user_id: String
+  url: String
+  storage_path: String
+  created_at: DateTime
+  user: PublicUserAccount
+}
+
+type TopSolve {
+  id: String
+  time: Float
+  cube_type: String
+  created_at: DateTime
+  solve: Solve
+  user: PublicUserAccount
+}
+
+type TopAverage {
+  id: String
+  time: Float
+  cube_type: String
+  created_at: DateTime
+  solve_1: Solve
+  solve_2: Solve
+  solve_3: Solve
+  solve_4: Solve
+  solve_5: Solve
+  user: PublicUserAccount
+}
+
+type Integration {
+  id: String
+  user_id: String
+  service_name: IntegrationType
+  auth_token: String
+  refresh_token: String
+  auth_expires_at: BigInt
+  created_at: DateTime
+  user: PublicUserAccount
+}
+
+enum IntegrationType {
+  discord
+  wca
+}
+
+type BadgeType {
+  id: String
+  name: String
+  description: String
+  created_by_id: String
+  priority: Int
+  color: String
+  created_at: DateTime
+  created_by: PublicUserAccount
+}
+
+type CustomCubeType {
+  id: String
+  user_id: String
+  scramble: String
+  name: String
+  private: Boolean
+  created_at: DateTime
+}
+
+type Setting {
+  id: String
+  user_id: String
+  created_at: DateTime
+  focus_mode: Boolean
+  freeze_time: Float
+  inspection: Boolean
+  manual_entry: Boolean
+  inspection_delay: Int
+  inverse_time_list: Boolean
+  hide_time_when_solving: Boolean
+  nav_collapsed: Boolean
+  pb_confetti: Boolean
+  play_inspection_sound: Boolean
+  zero_out_time_after_solve: Boolean
+  confirm_delete_solve: Boolean
+  require_period_in_manual_time_entry: Boolean
+  use_space_with_smart_cube: Boolean
+  timer_decimal_points: Int
+  cube_type: String
+  session_id: String
+  beta_tester: Boolean
+  custom_cube_types: [CustomCubeType]
+}
+
+type EloLog {
+  id: String
+  player_id: String
+  player_new_game_count: String
+  opponent_id: String
+  opponent_new_game_count: String
+  cube_type: String
+  match_id: String
+  elo_change: Float
+  player_new_elo_rating: Float
+  opponent_new_elo_rating: Float
+  updated_at: DateTime
+  created_at: DateTime
+  match: Match
+  player: PublicUserAccount
+  opponent: PublicUserAccount
+}
+
+type Match {
+  id: String
+  winner_id: String
+  link_code: String
+  spectate_code: String
+  match_session_id: String
+  aborted: Boolean
+  ended_at: DateTime
+  started_at: DateTime
+  created_at: DateTime
+  winner: PublicUserAccount
+  match_session: MatchSession
+  participants: [MatchParticipant]
+  elo_log: [EloLog]
+}
+
+type MatchParticipant {
+  id: String
+  match_id: String
+  user_id: String
+  position: Int
+  resigned: Boolean
+  forfeited: Boolean
+  won: Boolean
+  lost: Boolean
+  created_at: DateTime
+  match: Match
+  user: PublicUserAccount
+  solves: [Solve]
+}
+
+type GameOptions {
+  id: String
+  game_session_id: String
+  match_session_id: String
+  game_type: GameType
+  cube_type: String
+  elimination_starting_time_seconds: Float
+  elimination_percent_change_rate: Float
+  head_to_head_target_win_count: Float
+  gauntlet_time_multiplier: Float
+}
+
+enum GameType {
+  HEAD_TO_HEAD
+  ELIMINATION
+}
+
+type MatchSession {
+  id: String
+  created_by_id: String
+  custom_match: Boolean
+  match_type: String
+  rated: Boolean
+  min_players: Int
+  max_players: Int
+  created_at: DateTime
+  game_options: GameOptions
+  winner: PublicUserAccount
+  created_by: PublicUserAccount
+  participants: [MatchParticipant]
+  chat_messages: [ChatMessage]
+}
+
+type ChatMessage {
+  id: String
+  user_id: String
+  match_session_id: String
+  message: String
+  created_at: DateTime
+  match_session: MatchSession
+  user: PublicUserAccount
+}
+
+type Report {
+  id: String
+  created_by_id: String
+  reason: String
+  reported_user_id: String
+  resolved_at: DateTime
+  created_at: DateTime
+  created_by: PublicUserAccount
+  reported_user: PublicUserAccount
+}
+
+type ReportSummary {
+  user: PublicUserAccount
+  count: Int
+  first_report: DateTime
+  last_report: DateTime
+  reports: [Report]
+}
+
+type TimerBackground {
+  id: String
+  url: String
+  storage_path: String
+  user_id: String
+  hex: String
+  created_at: DateTime
+  user: PublicUserAccount
+}
+
+type EloRating {
+  id: String
+  user_id: String
+  profile_id: String
+  elo_overall_rating: Float
+  games_overall_count: Float
+  elo_222_rating: Float
+  games_222_count: Float
+  elo_333_rating: Float
+  games_333_count: Float
+  elo_444_rating: Float
+  games_444_count: Float
+  updated_at: DateTime
+  created_at: DateTime
+  user: PublicUserAccount
+  profile: Profile
+}
+
+type PaginatedEloLeaderboards {
+  items: [EloRating]
+  total: Int
+  hasMore: Boolean
+}
+
+type NotificationPreference {
+  id: String
+  user_id: String
+  friend_request: Boolean
+  friend_request_accept: Boolean
+  elo_refund: Boolean
+  marketing_emails: Boolean
+  created_at: DateTime
+}
+
+type UserAccountMatchesSummary {
+  count: Float
+  wins: Float
+  losses: Float
+}
+
+type UserAccountSolvesSummary {
+  count: Float
+  average: Float
+  min_time: Float
+  max_time: Float
+  sum: Float
+  cube_type: String
+}
+
+type UserAccountSummary {
+  matches: UserAccountMatchesSummary
+  match_solves: [UserAccountSolvesSummary]
+  timer_solves: [UserAccountSolvesSummary]
+  solves: Int
+  reports_for: Int
+  reports_created: Int
+  profile_views: Int
+  bans: Int
+}
+
+type PublicUserAccount implements IPublicUserAccount {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+}
+
+interface IPublicUserAccount {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+}
+
+type Badge {
+  id: String
+  user_id: String
+  badge_type_id: String
+  created_at: DateTime
+  user: PublicUserAccount
+  badge_type: BadgeType
+}
+
+type UserAccount implements IPublicUserAccount & IUserAccount {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+  email: String
+  first_name: String
+  last_name: String
+  offline_hash: String
+  pro_status: SubscriptionStatus
+  join_country: String
+  timer_background: TimerBackground
+  bans: [BanLog]
+}
+
+interface IUserAccount implements IPublicUserAccount {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+  email: String
+  first_name: String
+  last_name: String
+  offline_hash: String
+  pro_status: SubscriptionStatus
+  join_country: String
+  timer_background: TimerBackground
+  bans: [BanLog]
+}
+
+enum SubscriptionStatus {
+  NONE
+  ACTIVE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  PAST_DUE
+  TRIALING
+  UNPAID
+  TRIAL_EXPIRED
+}
+
+type BanLog {
+  id: String
+  created_by_id: String
+  banned_user_id: String
+  reason: String
+  active: Boolean
+  banned_until: DateTime
+  minutes: Int
+  forever: Boolean
+  created_at: DateTime
+  created_by: UserAccountForAdmin
+  banned_user: UserAccountForAdmin
+}
+
+type UserAccountForAdmin implements IPublicUserAccount & IUserAccount & IUserAccountForAdmin {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+  email: String
+  first_name: String
+  last_name: String
+  offline_hash: String
+  pro_status: SubscriptionStatus
+  join_country: String
+  timer_background: TimerBackground
+  bans: [BanLog]
+  join_ip: String
+  reports_for: [Report]
+  chat_messages: [ChatMessage]
+  notification_preferences: NotificationPreference
+  settings: Setting
+  summary: UserAccountSummary
+}
+
+interface IUserAccountForAdmin implements IUserAccount & IPublicUserAccount {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+  email: String
+  first_name: String
+  last_name: String
+  offline_hash: String
+  pro_status: SubscriptionStatus
+  join_country: String
+  timer_background: TimerBackground
+  bans: [BanLog]
+  join_ip: String
+  reports_for: [Report]
+  chat_messages: [ChatMessage]
+  notification_preferences: NotificationPreference
+  settings: Setting
+  summary: UserAccountSummary
+}
+
+type InternalUserAccount implements IPublicUserAccount & IUserAccount & IUserAccountForAdmin & IInternalUserAccount {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+  email: String
+  first_name: String
+  last_name: String
+  offline_hash: String
+  pro_status: SubscriptionStatus
+  join_country: String
+  timer_background: TimerBackground
+  bans: [BanLog]
+  join_ip: String
+  reports_for: [Report]
+  chat_messages: [ChatMessage]
+  notification_preferences: NotificationPreference
+  settings: Setting
+  summary: UserAccountSummary
+  password: String
+  stripe_customer_id: String
+}
+
+interface IInternalUserAccount implements IUserAccountForAdmin & IUserAccount & IPublicUserAccount {
+  id: String
+  admin: Boolean
+  mod: Boolean
+  created_at: DateTime
+  username: String
+  verified: Boolean
+  is_pro: Boolean
+  last_solve_at: DateTime
+  banned_forever: Boolean
+  banned_until: DateTime
+  profile: Profile
+  elo_rating: EloRating
+  integrations: [Integration]
+  badges: [Badge]
+  top_solves: [TopSolve]
+  top_averages: [TopAverage]
+  email: String
+  first_name: String
+  last_name: String
+  offline_hash: String
+  pro_status: SubscriptionStatus
+  join_country: String
+  timer_background: TimerBackground
+  bans: [BanLog]
+  join_ip: String
+  reports_for: [Report]
+  chat_messages: [ChatMessage]
+  notification_preferences: NotificationPreference
+  settings: Setting
+  summary: UserAccountSummary
+  password: String
+  stripe_customer_id: String
+}
+
+type PaginatedUserAccounts {
+  items: [PublicUserAccount]
+  total: Int
+  hasMore: Boolean
+}
+
+type PaginatedUserAccountsForAdmin {
+  items: [UserAccount]
+  total: Int
+  hasMore: Boolean
+}
+
+type FriendshipRequest {
+  id: String
+  from_id: String
+  to_id: String
+  accepted: Boolean
+  from_user: PublicUserAccount
+  to_user: PublicUserAccount
+  created_at: DateTime
+}
+
+type Friendship {
+  id: String
+  user_id: String
+  other_user_id: String
+  friendship_request_id: String
+  created_at: DateTime
+  friendship_request: FriendshipRequest
+  user: PublicUserAccount
+  other_user: PublicUserAccount
+}
+
+type PaginatedFriendships {
+  items: [Friendship]
+  total: Int
+  hasMore: Boolean
+}
+
+type PaginatedFriendshipRequests {
+  items: [FriendshipRequest]
+  total: Int
+  hasMore: Boolean
+}
+
+type FriendshipStats {
+  friend_count: Int
+  friend_requests_count: Int
+  friend_requests_sent_count: Int
+}
+
+type FriendshipResult {
+  id: String
+  records: [Friendship]
+  more_results: Boolean
+}
+
+type FriendshipRequestResult {
+  records: [FriendshipRequest]
+  more_results: Boolean
+  total_count: Int
+}
+
+type Session {
+  id: String
+  name: String
+  user_id: String
+  order: Float
+  demo_mode: Boolean
+  created_at: DateTime
+}
+
+type Stats {
+  friend_count: Float
+  matches_played: Float
+  matches_won: Float
+  matches_lost: Float
+  matches_tied: Float
+  profile_views: Float
+  match_solve_count: Float
+  match_max_win_streak: Float
+  solve_views: Float
+}
+
+type TrainerAlgorithm {
+  id: String
+  name: String
+  active: Boolean
+  scrambles: String
+  solution: String
+  pro_only: Boolean
+  img_link: String
+  cube_type: String
+  algo_type: String
+  colors: String
+  rotate: Float
+  group_name: String
+}
+
+type WcaAccount {
+  id: String
+  url: String
+  wca_id: String
+  country_iso2: String
+  created_at: String
+}
+
+type AlgorithmOverride {
+  id: String
+  rotate: Int
+  solution: String
+  cube_key: String
+  user_id: String
+  name: String
+  scrambles: String
+  created_at: DateTime
+}
+
+type MembershipPricing {
+  id: String
+  currency: String
+  unit_amount: Float
+  interval_count: Float
+  interval: String
+}
+
+type Membership {
+  status: SubscriptionStatus
+  canceled_at: Float
+  ended_at: Float
+  cancel_at_period_end: Boolean
+  current_period_end: Float
+  days_until_due: Float
+  start_date: Float
+  pricing: MembershipPricing
+}
+
+type MembershipOptions {
+  month: MembershipPricing
+  year: MembershipPricing
+}
+
+type TrainerFavorite {
+  id: String
+  user_id: String
+  cube_key: String
+  created_at: DateTime
+}
+
+type StatsModule {
+  blocks: [StatsModuleBlock]
+}
+
+type StatsModuleBlock {
+  statType: String
+  sortBy: String
+  session: Boolean
+  colorName: String
+  averageCount: Int
+}
+
+type DemoSolve {
+  id: String
+  demo_session_id: String
+  ip_address: String
+  raw_time: Float
+  cube_type: String
+  scramble: String
+  started_at: BigInt
+  ended_at: BigInt
+  updated_at: DateTime
+  created_at: DateTime
+}
+
+type AdView {
+  id: String
+  user_id: String
+  ad_key: String
+  pathname: String
+  view_time_seconds: Int
+  browser_session_id: String
+  clicked_at: DateTime
+  updated_at: DateTime
+  created_at: DateTime
+  user: UserAccount
+}
+
+type Notification {
+  id: String
+  user_id: String
+  notification_type: String
+  notification_category_name: String
+  in_app_message: String
+  triggering_user_id: String
+  read_at: DateTime
+  message: String
+  icon: String
+  link: String
+  link_text: String
+  subject: String
+  created_at: DateTime
+  triggering_user: PublicUserAccount
+}
+
+type Store {
+  json: String
+}
+
+input SmartDeviceInput {
+  device_id: String
+}
+
+input SolveInput {
+  id: String
+  time: Float
+  raw_time: Float
+  cube_type: String
+  scramble: String
+  game_session_id: String
+  session_id: String
+  started_at: BigInt
+  ended_at: BigInt
+  dnf: Boolean
+  plus_two: Boolean
+  bulk: Boolean
+  notes: String
+  from_timer: Boolean
+  trainer_name: String
+  is_smart_cube: Boolean
+  training_session_id: String
+  smart_device_id: String
+  match_id: String
+  match_participant_id: String
+  smart_turn_count: Int
+  smart_turns: String
+  smart_put_down_time: Float
+  inspection_time: Float
+}
+
+input ProfileInput {
+  bio: String
+  favorite_event: String
+  main_three_cube: String
+  three_goal: String
+  three_method: String
+  reddit_link: String
+  twitch_link: String
+  youtube_link: String
+  twitter_link: String
+}
+
+input BadgeTypeInput {
+  name: String
+  description: String
+  priority: Int
+  color: String
+}
+
+input CustomCubeTypeInput {
+  scramble: String
+  name: String
+  private: Boolean
+}
+
+input SettingInput {
+  focus_mode: Boolean
+  freeze_time: Float
+  inspection: Boolean
+  manual_entry: Boolean
+  inspection_delay: Int
+  inverse_time_list: Boolean
+  hide_time_when_solving: Boolean
+  nav_collapsed: Boolean
+  pb_confetti: Boolean
+  play_inspection_sound: Boolean
+  zero_out_time_after_solve: Boolean
+  confirm_delete_solve: Boolean
+  require_period_in_manual_time_entry: Boolean
+  use_space_with_smart_cube: Boolean
+  timer_decimal_points: Int
+  cube_type: String
+  session_id: String
+  beta_tester: Boolean
+}
+
+input GameOptionsInput {
+  cube_type: String
+  game_type: GameType
+  elimination_starting_time_seconds: Float
+  elimination_percent_change_rate: Float
+  head_to_head_target_win_count: Float
+  gauntlet_time_multiplier: Float
+}
+
+input MatchSessionInput {
+  min_players: Int
+  max_players: Int
+  match_type: GameType
+  cube_type: String
+  head_to_head_target_win_count: Float
+}
+
+input SessionInput {
+  id: String
+  name: String
+  order: Float
+}
+
+input AlgorithmOverrideInput {
+  rotate: Int
+  solution: String
+  cube_key: String
+  name: String
+  scrambles: String
+}
+
+input StatsModuleBlockInput {
+  statType: String
+  sortBy: String
+  session: Boolean
+  colorName: String
+  averageCount: Int
+}
+
+input DemoSolveInput {
+  demo_session_id: String
+  raw_time: Float
+  cube_type: String
+  scramble: String
+  started_at: BigInt
+  ended_at: BigInt
+}
+
+input CreateAdViewInput {
+  ad_key: String
+  pathname: String
+  browser_session_id: String
+}
+
+type CustomTrainer {
+  id: String
+  solution: String
+  scrambles: String
+  alt_solutions: String
+  algo_type: String
+  group_name: String
+  colors: String
+  three_d: Boolean
+  cube_type: String
+  key: String
+  user_id: String
+  created_at: DateTime
+  name: String
+  like_count: Int
+  private: Boolean
+  copy_of_id: String
+  description: String
+  downloaded: Boolean
+  copy_of: CustomTrainer
+  user: PublicUserAccount
+}
+
+type PaginatedCustomTrainers {
+  items: [CustomTrainer]
+  total: Int
+  hasMore: Boolean
+}
+
+type CustomTrainerDownload {
+  id: String
+  user_id: String
+  creator_id: String
+  created_at: DateTime
+  new_trainer_id: String
+  source_trainer_id: String
+  creator: PublicUserAccount
+  new_trainer: CustomTrainer
+  source_trainer: CustomTrainer
+  user: PublicUserAccount
+}
+
+type CustomTrainerLike {
+  id: String
+  custom_trainer_id: String
+  user_id: String
+  created_at: DateTime
+  creator_id: String
+  creator: PublicUserAccount
+  custom_trainer: CustomTrainer
+  user: PublicUserAccount
+}
+
+type GameSession {
+  id: String
+  user_id: String
+  match_id: String
+  game_type: GameType
+  solve_count: Int
+  total_time: Float
+  created_at: DateTime
+  match: Match
+  user: PublicUserAccount
+  solves: [Solve]
+}
+
+input PaginationArgsInput {
+  page: Int = 0
+  pageSize: Int = 25
+  searchQuery: String = ""
+}
+
+type ArticleCategory {
+  id: String
+  title: String
+  slug: String
+  order: Float
+  reference: Boolean
+  createdAt: String
+  children: [ArticlePreview]
+}
+
+type ArticlePreview {
+  _id: String
+  title: String
+  slug: String
+  path: String
+  order: Float
+  hidden: Boolean
+  children: [ArticlePreview]
+}
+
+type ArticlePage {
+  id: String
+  title: String
+  slug: String
+  body: String
+  hidden: Boolean
+  order: Float
+  isReference: Boolean
+  excerpt: String
+  createdAt: String
+  updatedAt: String
+  parentDoc: String
+  category: String
+}
+
+input CustomTrainerCreateInput {
+  solution: String!
+  colors: String
+  cube_type: String!
+  group_name: String
+  scrambles: String
+  alt_solutions: String
+  three_d: Boolean
+  name: String!
+  private: Boolean
+  description: String
+}
+
+input BanUserInput {
+  user_id: String
+  reason: String
+  minutes: Int
+  delete_published_solves: Boolean
+  cheating_in_1v1: Boolean
+}

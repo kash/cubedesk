@@ -1,0 +1,46 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-pro-feature-list {
+	width: 100%;
+
+	&__list {
+		> *:not(:last-child) {
+			border-bottom: 2px solid rgba(var(--theme-module-opposite), 0.2);
+		}
+
+		&--hideDetails {
+			> * {
+				border: none !important;
+			}
+		}
+	}
+
+	&__header {
+		margin: 20px 0 10px;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
+		justify-content: space-between;
+
+		h4 {
+			margin-bottom: 0;
+		}
+	}
+
+	&__more {
+		ul {
+			list-style: disc;
+			padding-left: 20px;
+			box-sizing: border-box;
+			color: rgb(var(--text-color));
+
+			li {
+				color: inherit;
+			}
+
+			> li:not(:last-child) {
+				margin-bottom: 5px;
+			}
+		}
+	}
+}

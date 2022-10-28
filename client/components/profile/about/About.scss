@@ -1,0 +1,62 @@
+@import '../../../styles/config';
+
+.#{$namespace}-profile-about {
+	position: relative;
+
+	&__edit {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	&__body {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(400px, auto));
+		grid-gap: 30px;
+		margin-top: 10px;
+	}
+
+	&__header {
+		> *:not(:last-child) {
+			margin-bottom: 10px;
+		}
+	}
+
+	&__bio {
+		p {
+			color: rgb(var(--text-color));
+			font-size: 1.3rem;
+			opacity: 0.9;
+			line-height: 1.7rem;
+			margin-top: 10px;
+
+			i {
+				font-style: italic;
+			}
+		}
+	}
+
+	&__details {
+		display: grid;
+		grid-gap: 10px;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	&__detail-block {
+		padding: 10px;
+		border-radius: 4px;
+		box-sizing: border-box;
+		display: flex;
+		background-color: rgb(var(--module-color));
+		flex-direction: column;
+		align-items: flex-start;
+
+		> span {
+			display: table;
+			margin-top: 5px;
+			font-size: 1.3rem;
+			font-weight: 600;
+			color: rgb(var(--text-color));
+		}
+	}
+}

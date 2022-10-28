@@ -1,0 +1,47 @@
+@import '../../styles/config';
+
+.#{$namespace}-timer {
+	$self: &;
+
+	justify-content: flex-end;
+
+	&__wrapper {
+		$gridGap: 15px;
+
+		box-sizing: border-box;
+		height: calc(100vh - 55px);
+		width: 100%;
+		display: grid;
+		grid-template-rows: 1fr 300px;
+		grid-gap: $gridGap;
+		z-index: 10;
+
+		&--right,
+		&--left {
+			padding: 0 10px 10px !important;
+			grid-template-columns: minmax(0, auto) 350px;
+			grid-template-rows: 1fr;
+
+			> * {
+				height: calc(100vh - 70px) !important;
+			}
+
+			#{$self}__main {
+				grid-row: unset !important;
+
+				&-center {
+					margin-top: -15vh;
+				}
+			}
+		}
+
+		&--left {
+			padding: 0 0 10px 10px !important;
+			grid-template-columns: 350px minmax(0, auto) !important;
+		}
+
+		&--mobileFooterHidden {
+			grid-template-rows: 1fr 50px;
+		}
+	}
+}

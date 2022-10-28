@@ -1,0 +1,96 @@
+@import '../../../styles/config';
+
+.#{$namespace}-avatar {
+	$self: &;
+	$aviSize: 50px;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	position: relative;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	&__verified {
+		color: rgb(var(--info-color));
+		margin-left: 5px;
+		display: table;
+	}
+
+	&__name {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__elo {
+		font-size: 0.85rem;
+		color: rgb(var(--text-color), 0.7);
+	}
+
+	&__username {
+		font-weight: 500;
+		position: relative;
+		font-size: 1rem;
+		display: flex;
+		align-content: center;
+		flex-direction: row;
+		color: rgb(var(--text-color));
+		word-break: normal;
+	}
+
+	&__emblems {
+		margin-top: 3px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+
+		> * {
+			margin: 6px 6px 0 0 !important;
+		}
+	}
+
+	&__options {
+		margin-left: 5px;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-left: 8px;
+		max-width: calc(100% - #{$aviSize} - 8px);
+
+		> span:not(:first-of-type) {
+			margin-top: 4px;
+		}
+	}
+
+	&--vertical {
+		flex-direction: column;
+
+		#{$self}__info {
+			margin-top: 5px;
+			margin-left: unset;
+			max-width: unset;
+		}
+	}
+
+	&__email {
+		display: table;
+		font-weight: 400;
+		font-size: 0.9rem;
+		opacity: 0.8;
+		color: rgb(var(--text-color));
+		word-break: break-all;
+	}
+}

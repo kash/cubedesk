@@ -1,0 +1,62 @@
+@import '../../styles/config';
+
+.#{$namespace}-login {
+	width: 95%;
+	max-width: 400px;
+	background-color: rgb(var(--module-color));
+	padding: 25px;
+	box-sizing: border-box;
+	border-radius: 5px;
+
+	a {
+		color: rgb(var(--text-color));
+		text-decoration: underline;
+		margin: 0 0 15px;
+		display: inline-block;
+		font-size: 0.9rem;
+		opacity: 0.7;
+	}
+
+	p {
+		font-size: 0.9rem;
+		margin-top: 25px;
+		color: rgb(var(--text-color));
+		margin-bottom: 0;
+
+		a {
+			margin-bottom: 0;
+		}
+	}
+
+	&--split {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 20px;
+	}
+
+	&__section {
+		p {
+			text-align: center;
+			line-height: 1.4rem;
+			margin: 0 0 15px !important;
+		}
+	}
+
+	&__wrapper {
+		width: 100%;
+		min-height: 100vh;
+		height: 100%;
+		background-color: rgb(var(--background-color));
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-direction: column;
+
+		a {
+			img {
+				width: 200px;
+				margin: 100px 0 30px;
+			}
+		}
+	}
+}

@@ -1,0 +1,27 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-settings-theme-options {
+	&__presets {
+		display: grid;
+		box-sizing: border-box;
+		width: 100%;
+		grid-gap: 10px;
+		grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+	}
+
+	&__customize {
+		display: grid;
+		box-sizing: border-box;
+		width: 100%;
+		grid-gap: 10px;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+		> * {
+			padding: 0 !important;
+		}
+
+		.#{$namespace}-common-color-picker {
+			margin-top: 5px;
+		}
+	}
+}

@@ -1,0 +1,57 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-common-radio {
+	&__input:not(:last-child) {
+		margin-bottom: 10px;
+	}
+
+	input[type='radio'] {
+		position: absolute;
+		opacity: 0;
+
+		& + label {
+			position: relative;
+			cursor: pointer;
+			padding: 0;
+			color: rgb(var(--text-color));
+			font-size: 0.9rem;
+		}
+
+		& + label:before {
+			content: '';
+			background-color: rgb(var(--button-color));
+			margin-right: 8px;
+			display: inline-block;
+			vertical-align: text-top;
+			width: 13px;
+			height: 13px;
+			border-radius: 50%;
+			border: 2px solid rgba(0, 0, 0, 0.1);
+		}
+
+		&:hover + label:before {
+			opacity: 0.7;
+		}
+
+		&:checked + label:before {
+			background: rgb(var(--primary-color));
+		}
+
+		&:disabled + label {
+			cursor: default;
+			opacity: 0.7 !important;
+		}
+
+		&:checked + label:after {
+			content: '';
+			position: absolute;
+			zoom: 1;
+			top: 5px;
+			left: 5px;
+			background: rgb(var(--text-color));
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+		}
+	}
+}

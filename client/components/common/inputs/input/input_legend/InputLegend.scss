@@ -1,0 +1,37 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-common-input-legend {
+	color: rgb(var(--text-color));
+	font-weight: 600;
+	font-size: 0.95rem;
+
+	&--large {
+		font-size: 1.1rem !important;
+		font-weight: 700 !important;
+	}
+
+	&__wrapper {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-family: $defaultFontFamily;
+	}
+
+	&__optional {
+		font: inherit;
+		font-weight: normal;
+		font-size: 0.9rem;
+		margin: 0 0 0 7px !important;
+		font-style: italic;
+		color: rgb(var(--text-color));
+		opacity: 0.6;
+		display: table;
+		padding: 0 !important;
+		position: relative;
+	}
+
+	i {
+		color: inherit;
+		margin-left: 5px;
+	}
+}

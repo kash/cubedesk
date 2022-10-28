@@ -1,0 +1,15 @@
+export const EloRatingMock = {
+	id: 'a3254d0d-2ede-45e8-ad39-2bc700d8d513',
+	user_id: 'e4de5533-7c34-42c1-ae57-93ad0cb5b3d8',
+	profile_id: 'ffd1aa3d-1606-4b34-8fba-519fe99c2750',
+	elo_overall_rating: 1000,
+	games_overall_count: 0,
+	elo_222_rating: 1000,
+	games_222_count: 0,
+	elo_333_rating: 989,
+	games_333_count: 37,
+	elo_444_rating: 1000,
+	games_444_count: 0,
+	updated_at: '2022-06-18T19:51:07.914Z',
+	created_at: '2022-05-25T17:00:55.930Z',
+};

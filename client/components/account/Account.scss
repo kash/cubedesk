@@ -1,0 +1,15 @@
+@import '../../styles/config';
+
+.#{$namespace}-account {
+	width: 100%;
+
+	> div {
+		margin-top: 15px;
+		width: 100%;
+		max-width: 400px;
+	}
+
+	&-nav {
+		max-width: unset !important;
+	}
+}

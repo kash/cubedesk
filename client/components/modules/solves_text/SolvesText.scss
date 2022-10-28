@@ -1,0 +1,41 @@
+@import '../../../styles/config';
+
+.#{$namespace}-solves-text {
+	&__text {
+		margin-top: 10px;
+		border-radius: 5px;
+		color: rgb(var(--text-color));
+		background-color: rgb(var(--module-color));
+		padding: 15px;
+		box-sizing: border-box;
+		font-size: 1rem;
+		font-family: Roboto Mono, monospace;
+		margin-bottom: 15px;
+		overflow-x: auto;
+		max-height: 600px;
+		white-space: pre;
+
+		&--wrapText {
+			white-space: pre-wrap !important;
+		}
+	}
+
+	&__options {
+		display: flex;
+		flex-direction: column;
+
+		> * {
+			width: 50%;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		> * {
+			margin-right: 15px;
+		}
+	}
+}

@@ -1,0 +1,41 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-feature-circles {
+	position: absolute;
+	z-index: 0;
+
+	&--pos-topLeft {
+		top: 0;
+		left: 0;
+	}
+
+	&--pos-topRight {
+		top: 0;
+		right: 0;
+		transform: rotate(90deg);
+	}
+
+	&--pos-bottomLeft {
+		bottom: 0;
+		left: 0;
+		transform: rotate(-90deg);
+	}
+
+	&--pos-bottomRight {
+		bottom: 0;
+		right: 0;
+		transform: rotate(180deg);
+	}
+
+	&__circle {
+		border-radius: 50%;
+		border: 6px solid;
+		width: 40px;
+		background-color: transparent;
+		height: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+	}
+}

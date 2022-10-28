@@ -1,0 +1,67 @@
+@import '../../../styles/config';
+
+.#{$namespace}-smart-cube {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+
+	&__cube {
+		zoom: 0.4;
+		margin-top: -8%;
+		margin-bottom: -8%;
+	}
+
+	> div:last-child {
+		z-index: 100;
+	}
+
+	&__wrapper {
+		margin-bottom: 5px;
+	}
+
+	#temp-cube {
+		width: 100px;
+		height: 100px;
+	}
+
+	&__info {
+		position: absolute;
+		top: 7px;
+		right: 25px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.cd-common__emblem--small {
+			padding: 0 !important;
+			width: 23px;
+			height: 23px;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-content: center;
+		}
+
+		> *:not(:last-child) {
+			margin-bottom: 10px;
+		}
+
+		&__dropdown-handle {
+			width: 23px;
+			height: 23px;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			color: rgb(var(--text-color));
+			align-items: center;
+			font-size: 0.8rem;
+			background-color: rgb(var(--button-color));
+
+			i {
+				margin-top: 3px;
+				margin-left: 1px;
+			}
+		}
+	}
+}

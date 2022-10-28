@@ -1,0 +1,15 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-manage-user-actions {
+	display: flex;
+	flex-direction: row;
+	margin: 15px 0;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	width: 100%;
+
+	> * {
+		margin-right: 7px;
+		margin-bottom: 7px;
+	}
+}

@@ -1,0 +1,72 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-match-module {
+	display: grid;
+	grid-template-rows: 40px 1fr;
+	height: 100%;
+	align-items: center;
+	position: relative;
+	box-sizing: border-box;
+
+	&__header {
+		display: flex;
+		width: 100%;
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: space-between;
+		height: 100%;
+	}
+
+	&__objective {
+		color: rgb(var(--text-color));
+		font-weight: 500;
+		font-size: 1.1rem;
+		opacity: 0.8;
+	}
+
+	h2 {
+		color: rgb(var(--text-color));
+		font-weight: bold;
+		font-size: 4.5rem;
+		margin: 5px 0 0;
+	}
+
+	p {
+		color: rgb(var(--text-color));
+		opacity: 0.7;
+		font-size: 0.9rem;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 25px;
+	}
+
+	&--green {
+		color: rgb(var(--success-color)) !important;
+	}
+
+	&--red {
+		color: rgb(var(--error-color)) !important;
+	}
+
+	&__alert {
+		padding: 4px 14px;
+		border-radius: 15px;
+		font-weight: 500;
+		font-size: 0.9rem;
+		margin-top: 10px;
+
+		&--red {
+			background-color: rgb(var(--error-color));
+			color: white;
+		}
+
+		&--green {
+			background-color: rgb(var(--success-color));
+			color: white;
+		}
+	}
+}

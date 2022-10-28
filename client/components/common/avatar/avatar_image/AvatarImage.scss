@@ -1,0 +1,40 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-avatar-image {
+	$aviSize: 50px;
+	$aviSizeTiny: 24px;
+	$aviSizeSmall: 30px;
+	$aviSizeLarge: 150px;
+
+	position: relative;
+
+	&__body {
+		position: relative;
+		background-color: rgba(var(--text-color), 0.2);
+		width: $aviSize;
+		height: $aviSize;
+		border-radius: 50%;
+		overflow: hidden;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		&--tiny {
+			width: $aviSizeTiny !important;
+			height: $aviSizeTiny !important;
+		}
+
+		&--small {
+			width: $aviSizeSmall !important;
+			height: $aviSizeSmall !important;
+		}
+
+		&--large {
+			width: $aviSizeLarge !important;
+			height: $aviSizeLarge !important;
+		}
+	}
+}

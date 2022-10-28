@@ -1,0 +1,24 @@
+@import '../../../../../styles/config';
+
+.#{$namespace}-dropdown-option {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	span {
+		display: table;
+	}
+
+	i {
+		margin-left: 5px;
+	}
+
+	&--on {
+		background-color: rgb(var(--text-color)) !important;
+		color: rgb(var(--background-color)) !important;
+	}
+
+	&:hover {
+		background-color: rgb(var(--button-color));
+	}
+}

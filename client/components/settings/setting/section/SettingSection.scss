@@ -1,0 +1,11 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-setting-section {
+	> .#{$namespace}-setting-row:not(:first-child) {
+		padding-left: 20px;
+	}
+
+	> .#{$namespace}-setting-section {
+		border-bottom: 0;
+	}
+}

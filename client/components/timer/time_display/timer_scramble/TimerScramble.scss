@@ -1,0 +1,93 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-timer-scramble {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	position: relative;
+	transition: opacity 0.1s ease-in-out;
+
+	&__body {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		max-width: 1200px;
+		margin-bottom: 5px;
+		font-size: 1.4rem;
+		color: rgb(var(--text-color)) !important;
+		font-family: 'Roboto Mono', monospace;
+		line-height: 2rem;
+
+		textarea {
+			-webkit-text-fill-color: rgb(var(--text-color));
+			opacity: 1;
+			border: 2px solid transparent;
+			box-sizing: border-box;
+			border-radius: 7px;
+			padding: 7px;
+			display: table;
+			transition: all 0.1s ease-in-out;
+			background-color: transparent;
+			width: calc(100% - 20px);
+			margin: auto;
+			min-width: 100px;
+			text-shadow: 0 1px 7px rgba(black, 0.2);
+			text-align: center;
+			resize: none;
+			font-size: inherit;
+			color: inherit !important;
+			font-family: inherit;
+			line-height: inherit;
+		}
+
+		> span {
+			color: inherit;
+			line-height: inherit;
+			font-family: inherit;
+			font-size: inherit;
+			transition: all 0.1s ease-in-out;
+			text-shadow: 0 1px 7px rgba(black, 0.2);
+		}
+
+		> span:not(:last-of-type) {
+			margin-right: 0.8rem;
+		}
+
+		&--green {
+			color: $primaryGreen !important;
+		}
+
+		&--red {
+			color: $primaryRed !important;
+		}
+
+		&--orange {
+			color: $primaryOrange !important;
+		}
+
+		&--smart {
+			width: auto;
+		}
+	}
+
+	&--edit {
+		border: 2px solid rgba(var(--text-color), 0.2) !important;
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: row;
+		margin-top: 5px;
+
+		&--focused {
+			display: none !important;
+		}
+
+		> *:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+}

@@ -1,0 +1,62 @@
+@import '../../../styles/config';
+
+.#{$namespace}-trainer-algo {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-between;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding-right: 15px;
+		box-sizing: border-box;
+		min-height: 100%;
+	}
+
+	&__original-by {
+		color: rgb(var(--text-color));
+		font-size: 0.9rem;
+		opacity: 0.7;
+		margin-bottom: 8px;
+
+		a {
+			display: inline;
+			color: inherit;
+			border-bottom: 2px solid rgb(var(--text-color));
+		}
+	}
+
+	&__right {
+		box-sizing: border-box;
+		width: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&--threeD {
+			> * {
+				margin-top: -20px;
+			}
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: row;
+
+		> * {
+			margin-right: 8px;
+		}
+	}
+
+	h3 {
+		font-size: 1.2rem;
+	}
+
+	p {
+		font-family: Roboto Mono, monospace;
+	}
+}

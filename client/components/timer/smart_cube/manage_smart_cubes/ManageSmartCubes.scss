@@ -1,0 +1,14 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-manage-smart-cubes {
+	width: 100%;
+
+	&__body {
+		min-height: 140px;
+		width: 100%;
+
+		> div:not(:last-of-type) {
+			border-bottom: 2px solid rgb(var(--button-color));
+		}
+	}
+}

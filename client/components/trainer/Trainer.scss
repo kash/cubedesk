@@ -1,0 +1,34 @@
+@import '../../styles/config';
+
+.#{$namespace}-trainer {
+	&__filter {
+		display: flex;
+		flex-direction: row;
+		> * {
+			margin-right: 10px;
+		}
+	}
+
+	&__create-custom {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	&__algos {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		grid-gap: 20px;
+
+		&--empty {
+			grid-template-columns: 1fr !important;
+		}
+	}
+
+	&__header {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: space-between;
+	}
+}

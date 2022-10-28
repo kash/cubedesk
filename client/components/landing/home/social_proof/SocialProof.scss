@@ -1,0 +1,66 @@
+@import '../../../../styles/config';
+
+.#{$namespace}-landing-social-proof {
+	display: flex;
+	overflow: hidden;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	padding: 100px 0;
+
+	> *:not(:first-child) {
+		margin-top: 25px;
+	}
+
+	> *:nth-child(odd) {
+		padding-left: 7px;
+	}
+
+	&__row {
+		width: 100%;
+		overflow: hidden;
+		position: relative;
+		margin: auto;
+		box-sizing: border-box;
+		height: 150px;
+	}
+
+	&__row-body {
+		height: 100%;
+		position: absolute;
+		display: flex;
+		flex-direction: row;
+		left: 50%;
+		top: 0;
+		transform: translate(-50%, 0);
+	}
+
+	@media (max-width: 1000px) {
+		&__row {
+			height: auto;
+			overflow: unset;
+			width: 95%;
+			padding: 0 !important;
+			margin: 0 auto 15px !important;
+		}
+
+		&__row-body {
+			width: 100%;
+			position: unset;
+			transform: unset;
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+			grid-gap: 15px;
+
+			> * {
+				margin: 0 !important;
+			}
+		}
+	}
+
+	@media (max-width: 800px) {
+		> *:not(:first-child) {
+			display: none;
+		}
+	}
+}
