@@ -38,7 +38,6 @@ import {printSchema} from 'graphql';
 import {initRedisClient} from './services/redis';
 import Discord from './services/discord';
 import {initCronJobs} from './services/cron';
-import {initMailChimp} from './services/mailchimp';
 import {initWebhookListeners, initWebhookListenersRaw} from './webhooks';
 import {exposeResourcesForSearchEngines} from './middlewares/search_engines';
 import {initSearch} from './services/search';
@@ -227,7 +226,6 @@ if (!isDev) {
 	try {
 		await initRedisClient();
 		await Discord.init();
-		initMailChimp();
 		initCronJobs();
 		initSocket(server);
 	} catch (e) {

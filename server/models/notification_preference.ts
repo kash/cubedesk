@@ -1,7 +1,6 @@
 import {v4 as uuid} from 'uuid';
 import {getPrisma} from '../database';
 import {UserAccount} from '../schemas/UserAccount.schema';
-import {updateEmailListStatus} from '../services/mailchimp';
 
 const GDPR_COUNTRY_CODES = [
 	'AT',
@@ -75,11 +74,6 @@ export async function createNotificationPreference(user: UserAccount) {
 
 export async function setNotificationPreference(user: UserAccount, key: string, value: boolean) {
 	const np = await getOrCreateNotificationPreferences(user);
-
-	if (key === 'marketing_emails') {
-		const notifStatus = value ? 'subscribed' : 'unsubscribed';
-		await updateEmailListStatus(user.email, notifStatus);
-	}
 
 	return await getPrisma().notificationPreference.update({
 		where: {

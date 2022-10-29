@@ -55,7 +55,6 @@
 		"@elastic/elasticsearch": "^8.2.1",
 		"@graphql-tools/schema": "^8.3.1",
 		"@logdna/logger": "^2.6.1",
-		"@mailchimp/mailchimp_marketing": "^3.0.75",
 		"@markdoc/markdoc": "^0.1.2",
 		"@popperjs/core": "^2.11.2",
 		"@prisma/client": "^3.0.2",

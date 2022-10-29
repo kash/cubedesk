@@ -3,10 +3,7 @@ import stripeWebhookListener from './stripe';
 import mailchimpWebhookListener from './mailchimp';
 
 export function initWebhookListeners() {
-	global.app.post(
-		'/api/mailchimp-webhook',
-		mailchimpWebhookListener
-	);
+
 }
 
 export function initWebhookListenersRaw() {

@@ -2,7 +2,6 @@ import {Arg, Authorized, Ctx, Mutation, Query, Resolver} from 'type-graphql';
 import {GraphQLContext} from '../@types/interfaces/server.interface';
 import {Role} from '../middlewares/auth';
 import {NotificationPreference} from '../schemas/NotificationPreference.schema';
-import {syncUserMarketingEmailsStatus} from '../services/mailchimp';
 import {
 	createNotificationPreference,
 	getNotificationPreferences,
@@ -16,7 +15,6 @@ export class NotificationPreferenceResolver {
 	async notificationPreferences(@Ctx() context: GraphQLContext) {
 		const {user} = context;
 
-		await syncUserMarketingEmailsStatus(user.email);
 		const prefs = await getNotificationPreferences(user);
 
 		if (!prefs) {

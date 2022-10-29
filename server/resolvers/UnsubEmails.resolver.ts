@@ -4,7 +4,6 @@ import {Role} from '../middlewares/auth';
 import GraphQLError from '../util/graphql_error';
 import {ErrorCode} from '../constants/errors';
 import {setNotificationPreference} from '../models/notification_preference';
-import {updateEmailListStatus} from '../services/mailchimp';
 
 function getUserByUnsubId(context: GraphQLContext, unsubId: string) {
 	const {prisma} = context;
@@ -28,7 +27,6 @@ export class UnsubEmailsResolver {
 		}
 
 		await setNotificationPreference(user, 'marketing_emails', false);
-		await updateEmailListStatus(user.email, 'unsubscribed');
 
 		return true;
 	}
