@@ -16,6 +16,11 @@ The visual below should give you a decent understanding of the infrastructure be
 
 ![CubeDesk's infrastructure](https://cdn.cubedesk.io/docs/infrastructure.jpg)
 
+## Support
+CubeDesk is completely free to us, but, unfortunately, the cloud isn't. If you'd like to support CubeDesk, consider getting a [Pro membership](https://www.cubedesk.io/account/pro). You'll get tons of cool features and you'll be supporting development as well.
+
+To further 
+
 ## License
 This project is licensed under the GPL license (version 3 or later). This means that this library is free to use, although you must publish any code that uses it (e.g. also put it on GitHub). See the [full license](https://github.com/kash/cubedesk/blob/staging/LICENSE.md) for exact details.
 
