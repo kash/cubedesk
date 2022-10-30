@@ -78,6 +78,8 @@ RUN aws s3 cp dist s3://cubedesk/dist --recursive --cache-control max-age=604800
 
 RUN npm prune --production
 
+RUN cp -r ./server/resources/mjml_templates ./build/server/resources
+
 RUN rm -rf ./client ./server ./shared ./test ./dist ./public && \
     mv ./build/server ./server && \
     mv ./build/client ./client && \
