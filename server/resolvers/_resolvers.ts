@@ -15,7 +15,6 @@ export * from './Integration.resolver';
 export * from './AlgorithmOverride.resolver';
 export * from './Membership.resolver';
 export * from './Report.resolver';
-export * from './Help.resolver';
 export * from './TrainerFavorite.resolver';
 export * from './Leaderboards.resolver';
 export * from './CustomCubeType.resolver';

@@ -52,6 +52,7 @@ RUN rm -rf build && \
     yarn deploy
 
 # Create Sentry release (frontend)
+ENV SENTRY_PROJECT=frontend
 ENV SENTRY_RELEASE=frontend-$RELEASE_NAME
 RUN npx @sentry/cli releases new $SENTRY_RELEASE && \
     npx @sentry/cli releases deploys "$SENTRY_RELEASE" new -e $ENV && \
@@ -61,6 +62,7 @@ RUN npx @sentry/cli releases new $SENTRY_RELEASE && \
     npx @sentry/cli releases finalize $SENTRY_RELEASE
 
 # Create Sentry release (backend)
+ENV SENTRY_PROJECT=backend
 ENV SENTRY_RELEASE=backend-$RELEASE_NAME
 RUN npx @sentry/cli releases new $SENTRY_RELEASE && \
     npx @sentry/cli releases deploys "$SENTRY_RELEASE" new -e $ENV && \

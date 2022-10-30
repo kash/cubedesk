@@ -18,7 +18,6 @@ import '@sentry/tracing';
 import {initLLStates} from './util/solve/ll_states';
 import {initSocket} from './match/init';
 import 'seedrandom';
-import './services/readme';
 import {initMjmlTemplates} from './services/ses';
 import GraphQLError from './util/graphql_error';
 import colors from 'colors';

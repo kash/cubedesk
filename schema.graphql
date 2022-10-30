@@ -292,8 +292,6 @@ type Query {
   membership: Membership
   membershipOptions: MembershipOptions
   reports: [ReportSummary]
-  helpCategories: [ArticleCategory]
-  helpArticle(slug: String): ArticlePage
   trainerFavorites: [TrainerFavorite]
   topSolves(page: Int, cubeType: String): [TopSolve]
   topAverages(page: Int, cubeType: String): [TopAverage]
@@ -1449,41 +1447,6 @@ input PaginationArgsInput {
   page: Int = 0
   pageSize: Int = 25
   searchQuery: String = ""
-}
-
-type ArticleCategory {
-  id: String
-  title: String
-  slug: String
-  order: Float
-  reference: Boolean
-  createdAt: String
-  children: [ArticlePreview]
-}
-
-type ArticlePreview {
-  _id: String
-  title: String
-  slug: String
-  path: String
-  order: Float
-  hidden: Boolean
-  children: [ArticlePreview]
-}
-
-type ArticlePage {
-  id: String
-  title: String
-  slug: String
-  body: String
-  hidden: Boolean
-  order: Float
-  isReference: Boolean
-  excerpt: String
-  createdAt: String
-  updatedAt: String
-  parentDoc: String
-  category: String
 }
 
 input CustomTrainerCreateInput {
