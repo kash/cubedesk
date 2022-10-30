@@ -13,7 +13,7 @@ const b = block('landing-nav');
 const MAX_NAV_WIDTH = 1200;
 
 interface Props {
-	showBorder: boolean;
+	showBorder?: boolean;
 }
 
 interface NavLinkProps {

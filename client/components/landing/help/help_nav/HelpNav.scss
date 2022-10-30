@@ -1,7 +1,0 @@
-@import '../../../../styles/config';
-
-.#{$namespace}-help-nav {
-	> *:not(:last-child) {
-		border-bottom: 2px solid #eee;
-	}
-}
