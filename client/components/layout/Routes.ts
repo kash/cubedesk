@@ -34,16 +34,11 @@ import {Store} from 'redux';
 import Reports from '../admin/reports/Reports';
 import LandingHome from '../landing/home/LandingHome';
 import DefaultTimer from '../timer/DefaultTimer';
-import HelpPage, {prefetchHelpPageData} from '../landing/help/help_page/HelpPage';
-import HelpWrapper from '../landing/help/help_wrapper/HelpWrapper';
-import {prefetchHelpNavData} from '../landing/help/help_nav/HelpNav';
 import AdminUsers from '../admin/users/AdminUsers';
 import UnsubEmails from '../unsub/UnsubEmails';
 import EloBoard from '../community/EloBoard';
 import DemoTimer from '../timer/DemoTimer';
 import AboutCubeDesk from '../landing/about/AboutCubeDesk';
-import HTSLearn from '../landing/how_to_solve/HTSLearn';
-import HTSLanding from '../landing/how_to_solve/HTSLanding';
 
 interface PageOptions {
 	restricted: boolean;
@@ -124,16 +119,6 @@ export const routes: (PageContext | RedirectPath)[] = [
 	route('/demo', null, App, DemoTimer, false, false, false, false, true),
 	route('/terms', null, Landing, Terms, false, true),
 	route('/privacy', null, Landing, Privacy, false, true),
-
-	route('/help', Landing, HelpWrapper, HelpPage, false, true, false, false, false, [prefetchHelpNavData]),
-	route('/help/:category/:slug', Landing, HelpWrapper, HelpPage, false, true, false, false, false, [
-		prefetchHelpPageData,
-		prefetchHelpNavData,
-	]),
-	route('/help/:category/:slug/:slug2', Landing, HelpWrapper, HelpPage, false, true, false, false, false, [
-		prefetchHelpPageData,
-		prefetchHelpNavData,
-	]),
 
 	// Public
 	route('/solve/:shareCode', null, App, SolvePage, false, false, false, false, false, [prefetchSolveData]),

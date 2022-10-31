@@ -1,8 +1,10 @@
 schema: schema.graphql
-silent: true
+silent: false
 documents: ./client/graphql/*.graphql
 generates:
-    './client/@types/generated/graphql.ts':
+    client/@types/generated/graphql.ts:
+        config:
+            dedupeFragments: true
         plugins:
             - typescript
             - typescript-operations

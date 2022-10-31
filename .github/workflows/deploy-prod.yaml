@@ -30,7 +30,6 @@ jobs:
             DISCORD_SECRET: ${{ secrets.DISCORD_SECRET }}
             DISCORD_BOT_SECRET: ${{ secrets.DISCORD_BOT_SECRET }}
             STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-            LOG_DNA_ACCESS_KEY: ${{ secrets.LOG_DNA_ACCESS_KEY }}
             SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
             ELASTICSEARCH_CLOUD_ID: ${{ secrets.ELASTICSEARCH_CLOUD_ID }}
             ELASTICSEARCH_ELASTIC_PASSWORD: ${{ secrets.ELASTICSEARCH_ELASTIC_PASSWORD }}

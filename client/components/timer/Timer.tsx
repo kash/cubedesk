@@ -7,22 +7,17 @@ import TimeDisplay from './time_display/TimeDisplay';
 import TimerScramble from './time_display/timer_scramble/TimerScramble';
 import KeyWatcher from './key_watcher/KeyWatcher';
 import {TimerProps, TimerStore} from './@types/interfaces';
-import {getStorageURL, resourceUri} from '../../util/storage';
+import {getStorageURL} from '../../util/storage';
 import block from '../../styles/bem';
 import {useGeneral} from '../../util/hooks/useGeneral';
 import {useMe} from '../../util/hooks/useMe';
-import Challengers from '../play/target/challengers/Challengers';
 import {initTimer} from './helpers/init';
 import {useSettings} from '../../util/hooks/useSettings';
 import {listenForPbEvents} from './helpers/pb';
 import {useWindowListener} from '../../util/hooks/useListener';
 import SmartCube from './smart_cube/SmartCube';
 import {Link} from 'react-router-dom';
-import CubeDeskTShirtAd from '../ads/CubeDeskTShirtAd';
 import {isNotPro} from '../../util/pro';
-import {SlideShowSlideProps} from '../common/slideshow/SlideShowSlide';
-import {openModal, openSlideShowModal} from '../../actions/general';
-import SlideShow from '../common/slideshow/SlideShow';
 
 const b = block('timer');
 
