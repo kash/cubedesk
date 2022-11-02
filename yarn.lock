@@ -15228,10 +15228,10 @@ request@^2.88.0, request@^2.88.2:
     tunnel-agent "^0.6.0"
     uuid "^3.3.2"
 
-requestretry@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/requestretry/-/requestretry-6.0.0.tgz#a213b2133ee3b18f74c2bbc0f4e094e561b57335"
-  integrity sha512-X7O+BMlfHgzetfSDtgQIMinLn1BuT+95W12iffDzyOS+HLoBEIQqCZv++UTChUWVjOu+pudbocD76+4j+jK9ww==
+requestretry@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/requestretry/-/requestretry-7.0.0.tgz#570a9fcbeb2d6a85d7f15eb2265840d787f0c44d"
+  integrity sha512-g1Odu3IBKb6fYQog+HLy5FZ1CMwejIpD0iX1u1qXLsRj8TeQmFCpX9pTe50qhIirKvx1mcmoAeuLBFXLlBw6vA==
   dependencies:
     extend "^3.0.2"
     lodash "^4.17.15"
