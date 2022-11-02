@@ -17,6 +17,7 @@ import {useMe} from '../../../util/hooks/useMe';
 import NavLink from './NavLink';
 import Button from '../../common/button/Button';
 import LoginNav from './LoginNav';
+import {resourceUri} from '../../../util/storage';
 
 const b = block('nav');
 
@@ -162,18 +163,37 @@ export default function Nav() {
 					</div>
 					<div className={b('bottom-section')}>
 						<div className={b('social')}>
-							<a href="https://discord.gg/wdVbhDnsQV" target="_blank">
-								<i className="ph-discord-logo-fill" />
-							</a>
-							<a href="https://www.instagram.com/cubedesk/" target="_blank">
-								<i className="ph-instagram-logo-fill" />
-							</a>
-							<a href="https://www.reddit.com/r/cubedesk" target="_blank">
-								<i className="ph-reddit-logo-fill" />
-							</a>
-							<a href="/home" target="_blank">
-								<i className="ph-globe-fill" />
-							</a>
+							<SocialIcon
+								href="https://discord.gg/wdVbhDnsQV"
+								darkPath={resourceUri('/images/logos/discord_logo_white.svg')}
+								lightPath={resourceUri('/images/logos/discord_logo_black.svg')}
+								name="Discord"
+							/>
+							<SocialIcon
+								href="https://www.instagram.com/cubedesk/"
+								darkPath={resourceUri('/images/logos/instagram_logo_white.svg')}
+								lightPath={resourceUri('/images/logos/instagram_logo_black.svg')}
+								name="Instagram"
+							/>
+							<SocialIcon
+								href="https://www.reddit.com/r/cubedesk"
+								darkPath={resourceUri('/images/logos/reddit_logo_white.svg')}
+								lightPath={resourceUri('/images/logos/reddit_logo_black.svg')}
+								name="Reddit"
+							/>
+
+							<SocialIcon
+								href="https://github.com/kash/cubedesk"
+								darkPath={resourceUri('/images/logos/github_logo_white.svg')}
+								lightPath={resourceUri('/images/logos/github_logo_black.svg')}
+								name="GitHub"
+							/>
+							<SocialIcon
+								href="/home"
+								darkPath={resourceUri('/images/logos/globe_logo_white.svg')}
+								lightPath={resourceUri('/images/logos/globe_logo_black.svg')}
+								name="Globe"
+							/>
 						</div>
 						<Button
 							large
@@ -190,5 +210,28 @@ export default function Nav() {
 				</div>
 			</div>
 		</div>
+	);
+}
+
+interface SocialIconInterface {
+	name: string;
+	href: string;
+	darkPath: string;
+	lightPath: string;
+}
+
+function SocialIcon(props: SocialIconInterface) {
+	const {darkPath, name, href, lightPath} = props;
+	const moduleColor = useTheme('module_color');
+
+	let path = darkPath;
+	if (!moduleColor.isDark) {
+		path = lightPath;
+	}
+
+	return (
+		<a href={href} target="_blank">
+			<img src={path} alt={`${name} logo`} />
+		</a>
 	);
 }

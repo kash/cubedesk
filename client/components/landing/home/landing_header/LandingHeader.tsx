@@ -12,6 +12,18 @@ export default function LandingHeader() {
 			<div className={b('body')}>
 				<div className={b('left')}>
 					<div className={b('left-body')}>
+						<a
+							className="mb-2 flex flex-row items-center rounded-full bg-[#1B1F23] py-2 pl-2 pr-4"
+							href="https://github.com/kash/cubedesk"
+							target="_blank"
+						>
+							<img
+								className="w-5"
+								src={resourceUri('/images/logos/github_logo_white.svg')}
+								alt="GitHub logo"
+							/>
+							<span className="ml-1.5 text-sm text-white">CubeDesk is Open Source!</span>
+						</a>
 						<h1>
 							<span>All the tools</span> you need to improve at cubing.
 						</h1>
@@ -19,19 +31,19 @@ export default function LandingHeader() {
 						<SignUpButton />
 						<div className={b('stats')}>
 							<div className={b('stat')}>
-								<span>20K</span>
+								<span>25K</span>
 								<p>Cubers</p>
 							</div>
 							<div className={b('stat')}>
-								<span>10M</span>
+								<span>15M</span>
 								<p>Solves</p>
 							</div>
 							<div className={b('stat')}>
-								<span>25K</span>
+								<span>50K</span>
 								<p>1v1 Matches</p>
 							</div>
 							<div className={b('stat')}>
-								<span>4 Years</span>
+								<span>10+ Years</span>
 								<p>Spent Cubing</p>
 							</div>
 						</div>
@@ -42,6 +54,10 @@ export default function LandingHeader() {
 				</div>
 			</div>
 			<div className={b('social')}>
+				<a href="https://github.com/kash/cubedesk" target="_blank">
+					<img src={resourceUri('/images/logos/github_logo.svg')} alt="GitHub logo" />
+					<span>GitHub</span>
+				</a>
 				<a href="https://discord.gg/wdVbhDnsQV" target="_blank">
 					<img src={resourceUri('/images/logos/discord_logo.svg')} alt="Discord logo" />
 					<span>Discord</span>
