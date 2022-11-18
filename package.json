@@ -154,7 +154,7 @@
 		"socket.io-client": "^4.2.0",
 		"sorted-array": "^2.0.4",
 		"stripe": "^8.211.0",
-		"three": "0.124.0",
+		"three": "0.125.0",
 		"tinycolor": "^0.0.1",
 		"type-graphql": "^1.1.1",
 		"uniqid": "^5.3.0",
