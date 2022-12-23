@@ -110,7 +110,7 @@
 		"jimp": "^0.16.1",
 		"js-file-download": "^0.4.12",
 		"json-stable-stringify": "^1.0.1",
-		"jsonwebtoken": "^8.5.1",
+		"jsonwebtoken": "^9.0.0",
 		"lodash": "^4.17.21",
 		"lokijs": "^1.5.12",
 		"memoizee": "^0.4.15",
