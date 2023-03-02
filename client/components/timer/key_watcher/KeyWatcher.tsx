@@ -5,8 +5,6 @@ import {
 	clearInspectionTimers,
 	getTimer,
 	INSPECTION_GRACE_PERIOD_TIMEOUT,
-	INSPECTION_INTERVAL,
-	INSPECTION_TIMEOUT,
 	setTimer,
 	START_TIMEOUT,
 	stopTimer,
@@ -17,12 +15,10 @@ import {TimerContext} from '../Timer';
 import {smartCubeSelected} from '../helpers/util';
 import {setTimerParam, setTimerParams} from '../helpers/params';
 import block from '../../../styles/bem';
-import {endTimer, resetTimerParams, startTimer} from '../helpers/events';
+import {endTimer, resetTimerParams, startTimer, startInspection} from '../helpers/events';
 import {useDocumentListener, useWindowListener} from '../../../util/hooks/useListener';
-import {getTimerStore} from '../../../util/store/getTimer';
 import {useSettings} from '../../../util/hooks/useSettings';
 import {useGeneral} from '../../../util/hooks/useGeneral';
-import {resourceUri} from '../../../util/storage';
 import {getSettings} from '../../../db/settings/query';
 
 const timerClass = block('timer');
@@ -52,10 +48,9 @@ export default function KeyWatcher(props: Props) {
 	};
 
 	const modals = useGeneral('modals');
-	const inspectionDelay = useSettings('inspection_delay');
-	const inspectionAutoStart = useSettings('inspection_auto_start');
-	const playInspectionSound = useSettings('play_inspection_sound');
-	const stackMatOn = useSettings('timer_type') === 'stackmat';
+	const timerType = useSettings('timer_type');
+	const stackMatOn = timerType === 'stackmat';
+	const ganTimerOn = timerType === 'gantimer';
 	const inspection = useSettings('inspection');
 	const manualEntry = useSettings('manual_entry');
 
@@ -108,7 +103,7 @@ export default function KeyWatcher(props: Props) {
 		const solveOpen = modals.length > 1 || (!inModal && modals.length);
 
 		// Checking for various conditions where we don't want to start the timer
-		if (solveOpen || !startEnabled || timerDisabled || disabled || editScramble || smartCubeSelected(context)) {
+		if (ganTimerOn || solveOpen || !startEnabled || timerDisabled || disabled || editScramble || smartCubeSelected(context)) {
 			return;
 		}
 
@@ -174,7 +169,7 @@ export default function KeyWatcher(props: Props) {
 	function keyupSpace(e, touch = false) {
 		const freezeTime = getSettings().freeze_time;
 
-		if ((e.keyCode !== 32 && !touch) || !spaceTimerStarted || manualEntry) return;
+		if (ganTimerOn || (e.keyCode !== 32 && !touch) || !spaceTimerStarted || manualEntry) return;
 
 		if (getTimer(START_TIMEOUT)) {
 			stopTimer(START_TIMEOUT);
@@ -213,7 +208,7 @@ export default function KeyWatcher(props: Props) {
 	 * @param e
 	 */
 	function escapePressed(e) {
-		if (e.code !== 'Escape') {
+		if (ganTimerOn || e.code !== 'Escape') {
 			return;
 		}
 
@@ -231,59 +226,6 @@ export default function KeyWatcher(props: Props) {
 				resetTimerParams(context);
 			}, 10);
 		}
-	}
-
-	function startInspection() {
-		setTimerParams({
-			inInspection: true,
-			inspectionTimer: inspectionDelay + 2,
-			addTwoToSolve: false,
-			dnfTime: false,
-		});
-
-		setTimer(
-			INSPECTION_TIMEOUT,
-			setTimeout(() => {
-				if (inspectionAutoStart) {
-					startTimer();
-				}
-				setTimerParams({
-					dnfTime: true,
-					addTwoToSolve: false,
-				});
-			}, inspectionDelay * 1000 + 2000)
-		);
-
-		setTimer(
-			INSPECTION_INTERVAL,
-			setInterval(() => {
-				const insTimer = getTimerStore('inspectionTimer');
-
-				if (playInspectionSound) {
-					let audio;
-					if (inspectionDelay - insTimer === 5) {
-						audio = new Audio(resourceUri('/audio/8_sec.mp3'));
-					} else if (inspectionDelay - insTimer === 9) {
-						audio = new Audio(resourceUri('/audio/12_sec.mp3'));
-					}
-
-					if (audio) {
-						audio.playbackRate = 2.3;
-						audio.play();
-					}
-				}
-
-				let addTwoToSolve = false;
-				if (insTimer <= 3) {
-					addTwoToSolve = true;
-				}
-
-				setTimerParams({
-					inspectionTimer: insTimer - 1,
-					addTwoToSolve,
-				});
-			}, 1000)
-		);
 	}
 
 	return (
