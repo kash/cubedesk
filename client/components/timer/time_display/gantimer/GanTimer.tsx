@@ -12,8 +12,8 @@ import { GanTimerConnection, GanTimerEvent, GanTimerState, connectGanTimer } fro
 // Since this component is singleton and should never have multiple instances,
 // also will never be used in different contexts, we won't pollute context
 // with connection status and event subscription. Just use module-scoped variables.
-var conn: GanTimerConnection | null = null;
-var subs: SubscriptionLike | null = null;
+let conn: GanTimerConnection | null = null;
+let subs: SubscriptionLike | null = null;
 
 export default function GanTimer() {
 
