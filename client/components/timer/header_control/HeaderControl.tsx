@@ -102,6 +102,10 @@ export default function HeaderControl() {
 					disabled: cubeType !== '333',
 					onClick: () => selectTimerType('smart'),
 				},
+				{
+					text: 'GAN Smart Timer',
+					onClick: () => selectTimerType('gantimer'),
+				},
 			]}
 		/>
 	);

@@ -17,7 +17,7 @@ export default function AboutCubeDesk() {
 					still figure out how to solve one, albeit not as fast as I used to.
 				</p>
 				<p>
-					As I got better and more involved with the cubing community, I started to realize the lack to robust
+					As I got better and more involved with the cubing community, I started to realize the lack of robust
 					and modern software in the Rubik's Cube world. I couldn’t even find a timer that I liked. Everything
 					out there was either too complicated, too simple, or just looked old. So, I decided to put my
 					programming knowledge to use and build an app for myself. My goal was to create the best Rubik’s
