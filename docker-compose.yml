@@ -1,0 +1,65 @@
+services:
+
+  app-builder:
+    image: node:16
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - npm_cache:/root/.npm
+      - yarn_cache:/usr/local/share/.cache
+    command: yarn build
+    depends_on:
+      - redis
+      - postgres
+
+  app-graphql:
+    extends:
+      service: app-builder
+    command: npx graphql-codegen --watch
+
+  app-server:
+    ports:
+      - 3000:3000
+    extends:
+      service: app-builder
+    command: yarn server
+
+  install:
+    extends:
+      service: app-builder
+    profiles:
+      - install
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - |
+        set -e
+        yarn
+        npx prisma format
+        npx prisma generate
+        npx prisma migrate dev
+
+  redis:
+    image: redis:7
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: cubedesk
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  redis_data:
+  npm_cache:
+  yarn_cache:
