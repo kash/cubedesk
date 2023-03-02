@@ -11,8 +11,10 @@ import block from '../../../styles/bem';
 import {useSettings} from '../../../util/hooks/useSettings';
 import StartInstructions from './start_instructions/StartInstructions';
 import StackMat from './stackmat/StackMat';
+import GanTimer from './gantimer/GanTimer';
 
 const b = block('time-display');
+const bi = block('timer-bottom-info');
 
 export default function TimeDisplay() {
 	const context = useContext(TimerContext);
@@ -42,6 +44,7 @@ export default function TimeDisplay() {
 	const timerFontFamily = useSettings('timer_font_family');
 	const timerType = useSettings('timer_type');
 	const stackMatOn = timerType === 'stackmat';
+	const ganTimerOn = timerType === 'gantimer';
 	const zeroOutTimeAfterSolve = useSettings('zero_out_time_after_solve');
 
 	const mobileMode = useGeneral('mobile_mode');
@@ -55,6 +58,8 @@ export default function TimeDisplay() {
 			stopInterval();
 		} else if (!timerCounter.current && timeStartedAt) {
 			startInterval();
+		} if (!solving && finalTime < 0) {
+			setTime(0);
 		}
 	}, [solving, finalTime, timeStartedAt]);
 
@@ -122,6 +127,8 @@ export default function TimeDisplay() {
 
 	if (stackMatOn) {
 		bottomInfo = <StackMat />;
+	} else if (ganTimerOn) {
+		bottomInfo = <GanTimer />;
 	} else if (smartCubeSelected(context)) {
 		if (preflightChecks(smartTurns, scramble)) {
 			bottomInfo = (
@@ -151,7 +158,7 @@ export default function TimeDisplay() {
 			>
 				{timeStr}
 			</h1>
-			{bottomInfo}
+			<div className={bi()}>{bottomInfo}</div>
 			{subTimerActions}
 		</>
 	);
