@@ -42,8 +42,9 @@ module.exports = [
 		plugins,
 		watch: !deploying,
 		watchOptions: {
-			aggregateTimeout: 200,
-			poll: 200,
+			aggregateTimeout: 2000,
+			poll: 5000,
+			ignored: ['**/node_modules', '**/.git'],
 		},
 		resolve: {
 			extensions: ['.ts', '.tsx', '.jsx', '.js', '.json'],

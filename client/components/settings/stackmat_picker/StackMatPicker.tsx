@@ -32,7 +32,7 @@ export default function StackMatPicker(props: IModalProps) {
 				const storedIds = new Set();
 
 				for (const device of devices) {
-					if (device.kind !== 'audiooutput') {
+					if (device.kind !== 'audioinput') {
 						continue;
 					}
 

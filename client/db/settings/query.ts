@@ -29,7 +29,7 @@ export interface AllSettings {
 	custom_cube_types: CustomCubeType[];
 
 	// Local
-	timer_type: 'keyboard' | 'smart' | 'stackmat';
+	timer_type: 'keyboard' | 'smart' | 'stackmat' | 'gantimer';
 	timer_layout: TimerLayoutPosition;
 	timer_module_count: number;
 	stackmat_id: string;

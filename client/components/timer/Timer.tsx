@@ -12,6 +12,7 @@ import block from '../../styles/bem';
 import {useGeneral} from '../../util/hooks/useGeneral';
 import {useMe} from '../../util/hooks/useMe';
 import {initTimer} from './helpers/init';
+import {stopAllTimers} from './helpers/timers';
 import {useSettings} from '../../util/hooks/useSettings';
 import {listenForPbEvents} from './helpers/pb';
 import {useWindowListener} from '../../util/hooks/useListener';
@@ -72,10 +73,10 @@ export default function Timer(props: TimerProps) {
 
 		// Go back to the default settings when user leaves page
 		return () => {
+			stopAllTimers();
 			dispatch({
 				type: 'RESET_TIMER_PARAMS',
 			});
-
 			toggleHtmlOverflow('unset');
 		};
 	}, []);

@@ -1,4 +1,5 @@
 import request from 'request';
+import {logger} from './logger';
 
 interface IfConfig {
 	ip: string;
@@ -23,7 +24,14 @@ export function getLocationFromIp(ip: string): Promise<IfConfig> {
 				return;
 			}
 
-			resolve(JSON.parse(body));
+			try {
+				resolve(JSON.parse(body));
+			} catch (e) {
+				logger.error('Could not parse location from IP', {
+					body
+				});
+				reject();
+			}
 		});
 	});
 }

@@ -13,6 +13,10 @@ type DiscordRole = 'Pro' | 'Admin';
 
 export default class Discord {
 	static async init() {
+		if (!process.env.DISCORD_SERVER_ID) {
+			logger.warn('Discord client is not initialized: DISCORD_SERVER_ID is not set');
+			return;
+		}
 		client = new Client({
 			intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS],
 		});

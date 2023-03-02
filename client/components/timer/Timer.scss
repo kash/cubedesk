@@ -193,7 +193,7 @@
 			pointer-events: none;
 			opacity: 0.3;
 		}
-
+		#{$self}-bottom-info,
 		#{$self}-scramble,
 		#{$self}-footer {
 			pointer-events: none;

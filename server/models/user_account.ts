@@ -4,14 +4,12 @@ import {hashPassword} from '../util/password';
 import {Prisma} from '@prisma/client';
 import {getPrisma} from '../database';
 import dayjs from 'dayjs';
-import {createMetricLog, deleteMetricLog} from './metric_log';
+import {createMetricLog} from './metric_log';
 import {MetricLogType} from '../@types/enums';
 import {
 	InternalUserAccount,
 	PublicUserAccount,
 	UserAccount,
-	UserAccountForAdmin,
-	UserAccountSummary,
 } from '../schemas/UserAccount.schema';
 import GraphQLError from '../util/graphql_error';
 import {ErrorCode} from '../constants/errors';

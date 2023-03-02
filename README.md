@@ -9,10 +9,10 @@ Before creating a bug or asking for a new feature, it's worthwhile to bring up y
 If you'd like to request a new feature or make suggestions, please use the [Discussions page](https://github.com/kash/cubedesk/discussions).
 
 ## Development
-If you'd like to contribute to CubeDesk, firsly, *thank you*; secondly, please follow the [Development Onboarding instructions on the Wiki](https://github.com/kash/cubedesk/wiki/Development-Onboarding). Getting set up should only take less than 10 minutes!
+If you'd like to contribute to CubeDesk, firstly, *thank you*; secondly, please follow the [Development Onboarding instructions on the Wiki](https://github.com/kash/cubedesk/wiki/Development-Onboarding). Getting set up should only take less than 10 minutes!
 
 ## Infrastructure
-The visual below should give you a decent understanding of the infrastructure behidn CubeDesk. For a full breakdown, checkout the [Infrasture page on the Wiki](https://github.com/kash/cubedesk/wiki/Infrastructure).
+The visual below should give you a decent understanding of the infrastructure behind CubeDesk. For a full breakdown, checkout the [Infrasture page on the Wiki](https://github.com/kash/cubedesk/wiki/Infrastructure).
 
 ![CubeDesk's infrastructure](https://cdn.cubedesk.io/docs/infrastructure.jpg)
 
