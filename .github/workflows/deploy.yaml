@@ -180,8 +180,8 @@ jobs:
 
             - name: Generate prisma
               run: |
-                  npx prisma@3.0.2 generate
-                  npx prisma@3.0.2 migrate deploy
+                  npx prisma@4.11.0 generate
+                  npx prisma@4.11.0 migrate deploy
 
             - name: Deploy to EB
               uses: einaregilsson/beanstalk-deploy@v14
