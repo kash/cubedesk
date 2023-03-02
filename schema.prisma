@@ -15,21 +15,21 @@ model UserAccount {
   first_name                    String
   join_ip                       String
   join_country                  String
-  mod                           Boolean                 @default(false)
   admin                         Boolean                 @default(false)
   created_at                    DateTime                @default(now())
   last_name                     String
-  stripe_customer_id            String?                 @unique
   username                      String?                 @unique
   verified                      Boolean                 @default(false)
   banned_forever                Boolean                 @default(false)
-  unsub_id                      String?                 @default(uuid())
   banned_until                  DateTime?
-  last_solve_at                 DateTime?
-  offline_hash                  String?
-  action_log                    ActionLog[]
+  stripe_customer_id            String?                 @unique
   is_pro                        Boolean                 @default(false)
-  metric_logs                   MetricLog[]
+  mod                           Boolean                 @default(false)
+  offline_hash                  String?
+  unsub_id                      String?                 @default(uuid())
+  last_solve_at                 DateTime?
+  action_log                    ActionLog[]
+  ad_views                      AdView[]
   algorithm_override            AlgorithmOverride[]
   badges                        Badge[]
   badge_type                    BadgeType[]
@@ -41,6 +41,9 @@ model UserAccount {
   custom_trainer_downloaded     CustomTrainerDownload[] @relation("custom_trainer_download_user")
   custom_trainer_likes          CustomTrainerLike[]     @relation("custom_trainer_like_creator")
   liked_custom_trainers         CustomTrainerLike[]     @relation("custom_trainer_like_user")
+  elo_log_opponent              EloLog[]                @relation("opponent")
+  elo_log_player                EloLog[]                @relation("player")
+  elo_rating                    EloRating?
   email_log                     EmailLog[]
   forgot_password               ForgotPassword[]
   friendships_other             Friendship[]            @relation("friendship_other_user")
@@ -51,16 +54,18 @@ model UserAccount {
   image                         Image[]
   integrations                  Integration[]
   matches_won                   Match[]                 @relation("winner")
+  match_lobbies                 MatchLobby[]
   match_participations          MatchParticipant[]
   match_sessions_created        MatchSession[]          @relation("created_by")
+  metric_logs                   MetricLog[]
   notifications_triggered       Notification[]          @relation("notification_triggering_user")
   notifications                 Notification[]          @relation("notification_for")
   notification_preferences      NotificationPreference?
   profile                       Profile?
   profile_views                 ProfileView[]           @relation("profile_user")
   viewed_profiles               ProfileView[]           @relation("viewer")
-  reports_for                   Report[]                @relation("report_for")
   reports_created               Report[]                @relation("report_created_by")
+  reports_for                   Report[]                @relation("report_for")
   sessions                      Session[]
   settings                      Setting?
   smart_device                  SmartDevice[]
@@ -72,24 +77,17 @@ model UserAccount {
   top_solves                    TopSolve[]
   trainer_favorite              TrainerFavorite[]
   user_feature_state            UserFeatureState?
-  elo_rating                    EloRating?
-  elo_log_player                EloLog[]                @relation("player")
-  elo_log_opponent              EloLog[]                @relation("opponent")
 
-  MatchLobby MatchLobby[]
-  AdView     AdView[]
   @@map("user_account")
 }
 
 model UserFeatureState {
-  id                      String  @id @default(uuid())
-  user_id                 String  @unique
-  received_welcome_screen Boolean @default(false)
-
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
-
-  user UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id                      String      @id @default(uuid())
+  user_id                 String      @unique
+  received_welcome_screen Boolean     @default(false)
+  updated_at              DateTime    @updatedAt
+  created_at              DateTime    @default(now())
+  user                    UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
   @@map("user_feature_state")
@@ -133,13 +131,12 @@ model Notification {
 }
 
 model ActionLog {
-  id             String   @id @default(uuid())
+  id             String       @id @default(uuid())
   user_email     String?
   action_type    String
   action_details String?
-  created_at     DateTime @default(now())
-
-  user UserAccount? @relation(fields: [user_email], references: [email], onDelete: Cascade)
+  created_at     DateTime     @default(now())
+  user           UserAccount? @relation(fields: [user_email], references: [email], onDelete: Cascade)
 
   @@map("action_log")
 }
@@ -151,8 +148,7 @@ model MetricLog {
   metric_value   Float?
   metric_details String?
   created_at     DateTime      @default(now())
-
-  user UserAccount? @relation(fields: [user_email], references: [email], onDelete: SetDefault)
+  user           UserAccount?  @relation(fields: [user_email], references: [email], onDelete: SetDefault)
 
   @@index([metric_type])
   @@index([user_email])
@@ -164,9 +160,9 @@ model NotificationPreference {
   user_id               String      @unique
   friend_request        Boolean     @default(true)
   friend_request_accept Boolean     @default(true)
-  elo_refund            Boolean     @default(true)
-  marketing_emails      Boolean     @default(true)
   created_at            DateTime    @default(now())
+  marketing_emails      Boolean     @default(true)
+  elo_refund            Boolean     @default(true)
   user                  UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
@@ -179,9 +175,9 @@ model FriendshipRequest {
   to_id       String
   created_at  DateTime     @default(now())
   accepted_at DateTime?
+  friendship  Friendship[]
   from_user   UserAccount  @relation("friendship_request_from_user", fields: [from_id], references: [id], onDelete: Cascade)
   to_user     UserAccount  @relation("friendship_request_to_user", fields: [to_id], references: [id], onDelete: Cascade)
-  friendship  Friendship[]
 
   @@index([from_id])
   @@index([to_id])
@@ -205,51 +201,43 @@ model Friendship {
 }
 
 model EloRating {
-  id         String @id @default(uuid())
-  user_id    String @unique
-  profile_id String @unique
-
+  id                  String      @id @default(uuid())
+  user_id             String      @unique
+  elo_222_rating      Int
+  elo_333_rating      Int
+  elo_444_rating      Int
+  updated_at          DateTime    @updatedAt
+  created_at          DateTime    @default(now())
   elo_overall_rating  Int
-  games_overall_count Int @default(0)
-
-  elo_222_rating  Int
-  games_222_count Int @default(0)
-
-  elo_333_rating  Int
-  games_333_count Int @default(0)
-
-  elo_444_rating  Int
-  games_444_count Int @default(0)
-
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
-
-  user    UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  profile Profile     @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+  profile_id          String      @unique
+  games_222_count     Int         @default(0)
+  games_333_count     Int         @default(0)
+  games_444_count     Int         @default(0)
+  games_overall_count Int         @default(0)
+  profile             Profile     @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+  user                UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
   @@map("elo_rating")
 }
 
 model EloLog {
-  id                      String    @id @default(uuid())
-  player_id               String
-  player_new_game_count   Int
+  id                      String       @id @default(uuid())
   opponent_id             String?
-  opponent_new_game_count Int?
   cube_type               String
+  elo_change              Int          @default(0)
+  updated_at              DateTime     @updatedAt
+  created_at              DateTime     @default(now())
   match_id                String?
-  elo_change              Int       @default(0)
-  refunded_at             DateTime?
-  player_new_elo_rating   Int
+  player_id               String
   opponent_new_elo_rating Int
-
-  player   UserAccount  @relation("player", fields: [player_id], references: [id], onDelete: Cascade)
-  match    Match?       @relation(fields: [match_id], references: [id], onDelete: SetDefault)
-  opponent UserAccount? @relation("opponent", fields: [opponent_id], references: [id], onDelete: SetDefault)
-
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
+  opponent_new_game_count Int?
+  player_new_elo_rating   Int
+  player_new_game_count   Int
+  refunded_at             DateTime?
+  match                   Match?       @relation(fields: [match_id], references: [id], onDelete: SetDefault)
+  opponent                UserAccount? @relation("opponent", fields: [opponent_id], references: [id], onDelete: SetDefault)
+  player                  UserAccount  @relation("player", fields: [player_id], references: [id], onDelete: Cascade)
 
   @@index([match_id])
   @@index([player_id])
@@ -258,20 +246,18 @@ model EloLog {
 }
 
 model AdView {
-  id                      String    @id @default(uuid())
+  id                      String       @id @default(uuid())
   user_id                 String?
   ip_address              String?
   ad_key                  String
-  pathname                String
   view_time_seconds       Int
   browser_session_id      String
-  last_session_started_at DateTime  @default(now())
   clicked_at              DateTime?
-
-  user UserAccount? @relation(fields: [user_id], references: [id], onDelete: SetDefault)
-
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
+  updated_at              DateTime     @updatedAt
+  created_at              DateTime     @default(now())
+  pathname                String
+  last_session_started_at DateTime     @default(now())
+  user                    UserAccount? @relation(fields: [user_id], references: [id], onDelete: SetDefault)
 
   @@index([user_id])
   @@index([ad_key])
@@ -296,11 +282,11 @@ model Profile {
   twitter_link                String?
   discord_id                  String?
   show_discord_message_button Boolean       @default(true)
+  elo_rating                  EloRating?
   header_image                Image?        @relation("header_image", fields: [header_image_id], references: [id], onDelete: SetDefault)
   pfp_image                   Image?        @relation("pfp_image", fields: [pfp_image_id], references: [id], onDelete: SetDefault)
   user                        UserAccount   @relation(fields: [user_id], references: [id], onDelete: Cascade)
   views                       ProfileView[]
-  elo_rating                  EloRating?
 
   @@index([user_id])
   @@map("profile")
@@ -360,14 +346,10 @@ model Solve {
   ended_at             BigInt?
   dnf                  Boolean           @default(false)
   plus_two             Boolean           @default(false)
-  from_timer           Boolean           @default(true)
   notes                String?
   trainer_name         String?
-  training_session_id  String?
-  custom_scramble      Boolean           @default(false)
   created_at           DateTime          @default(now())
   bulk                 Boolean           @default(false)
-  game_session_id      String?
   inspection_time      Float?            @default(0.0)
   is_smart_cube        Boolean           @default(false)
   smart_put_down_time  Float?            @default(0.0)
@@ -377,6 +359,11 @@ model Solve {
   match_id             String?
   match_participant_id String?
   share_code           String?           @unique
+  from_timer           Boolean           @default(true)
+  game_session_id      String?
+  custom_scramble      Boolean           @default(false)
+  training_session_id  String?
+  game_session         GameSession?      @relation(fields: [game_session_id], references: [id], onDelete: Cascade)
   match                Match?            @relation(fields: [match_id], references: [id], onDelete: Cascade)
   match_participant    MatchParticipant? @relation(fields: [match_participant_id], references: [id], onDelete: Cascade)
   session              Session?          @relation(fields: [session_id], references: [id], onDelete: Cascade)
@@ -390,7 +377,6 @@ model Solve {
   top_average_4        TopAverage[]      @relation("solve_4")
   top_average_5        TopAverage[]      @relation("solve_5")
   top_solve            TopSolve[]
-  game_session         GameSession?      @relation(fields: [game_session_id], references: [id], onDelete: Cascade)
 
   @@index([created_at])
   @@index([match_id])
@@ -443,14 +429,14 @@ model MatchSession {
   min_players   Int           @default(2)
   max_players   Int           @default(2)
   match_type    String
-  rated         Boolean?      @default(false)
   custom_match  Boolean       @default(false)
   created_at    DateTime      @default(now())
   created_by_id String?
-  created_by    UserAccount?  @relation("created_by", fields: [created_by_id], references: [id], onDelete: Cascade)
-  game_options  GameOptions?
+  rated         Boolean?      @default(false)
   chat_messages ChatMessage[]
+  game_options  GameOptions?
   matches       Match[]
+  created_by    UserAccount?  @relation("created_by", fields: [created_by_id], references: [id], onDelete: Cascade)
 
   @@index([created_by_id])
   @@map("match_session")
@@ -464,14 +450,14 @@ model Match {
   match_session_id String
   ended_at         DateTime?
   started_at       DateTime?
-  aborted          Boolean            @default(false)
   spectate_code    String?            @unique
+  aborted          Boolean            @default(false)
+  elo_log          EloLog[]
+  game_session     GameSession[]
   match_session    MatchSession       @relation(fields: [match_session_id], references: [id], onDelete: Cascade)
   winner           UserAccount?       @relation("winner", fields: [winner_id], references: [id], onDelete: SetDefault)
-  game_session     GameSession[]
   participants     MatchParticipant[]
   solves           Solve[]
-  elo_log          EloLog[]
 
   @@index([link_code])
   @@index([match_session_id])
@@ -481,16 +467,15 @@ model Match {
 }
 
 model MatchLobby {
-  id           String   @id @default(uuid())
+  id           String      @id @default(uuid())
   user_id      String
   cube_type    String
   game_type    GameType
-  client_id    String
   player_count Int
   elo          Int
-
-  created_at DateTime     @default(now())
-  user       UserAccount? @relation(fields: [user_id], references: [id], onDelete: SetDefault)
+  created_at   DateTime    @default(now())
+  client_id    String
+  user         UserAccount @relation(fields: [user_id], references: [id], onDelete: SetDefault)
 
   @@index([user_id])
   @@index([game_type])
@@ -504,11 +489,11 @@ model MatchParticipant {
   created_at DateTime    @default(now())
   resigned   Boolean     @default(false)
   forfeited  Boolean     @default(false)
-  aborted    Boolean     @default(false)
-  abandoned  Boolean     @default(false)
   position   Int         @default(0)
   won        Boolean     @default(false)
   lost       Boolean     @default(false)
+  abandoned  Boolean     @default(false)
+  aborted    Boolean     @default(false)
   match      Match       @relation(fields: [match_id], references: [id], onDelete: Cascade)
   user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
   solves     Solve[]
@@ -578,8 +563,8 @@ model BadgeType {
   created_at    DateTime     @default(now())
   description   String
   created_by_id String?
-  created_by    UserAccount? @relation(fields: [created_by_id], references: [id], onDelete: Cascade)
   badges        Badge[]
+  created_by    UserAccount? @relation(fields: [created_by_id], references: [id], onDelete: Cascade)
 
   @@map("badge_type")
 }
@@ -610,15 +595,14 @@ model TimerBackground {
 }
 
 model Report {
-  id               String    @id @default(uuid())
+  id               String      @id @default(uuid())
+  created_at       DateTime    @default(now())
+  reason           String?
   created_by_id    String
   reported_user_id String
-  created_at       DateTime  @default(now())
   resolved_at      DateTime?
-  reason           String?
-
-  reported_user UserAccount? @relation("report_for", fields: [reported_user_id], references: [id], onDelete: Cascade)
-  created_by    UserAccount  @relation("report_created_by", fields: [created_by_id], references: [id], onDelete: Cascade)
+  created_by       UserAccount @relation("report_created_by", fields: [created_by_id], references: [id], onDelete: Cascade)
+  reported_user    UserAccount @relation("report_for", fields: [reported_user_id], references: [id], onDelete: Cascade)
 
   @@map("report")
 }
@@ -664,9 +648,9 @@ model GameSession {
   solve_count  Int          @default(0)
   total_time   Float        @default(0.0)
   created_at   DateTime     @default(now())
+  game_options GameOptions?
   match        Match?       @relation(fields: [match_id], references: [id], onDelete: Cascade)
   user         UserAccount  @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  game_options GameOptions?
   solves       Solve[]
 
   @@index([match_id])
@@ -684,9 +668,9 @@ model GameOptions {
   elimination_percent_change_rate   Int           @default(5)
   head_to_head_target_win_count     Int           @default(5)
   gauntlet_time_multiplier          Float         @default(1.0)
+  created_at                        DateTime      @default(now())
   game_session                      GameSession?  @relation(fields: [game_session_id], references: [id], onDelete: Cascade)
   match_session                     MatchSession? @relation(fields: [match_session_id], references: [id], onDelete: Cascade)
-  created_at                        DateTime      @default(now())
 
   @@index([game_session_id])
   @@index([match_session_id])
@@ -747,13 +731,7 @@ model Session {
 
 model CustomTrainer {
   id            String                  @id @default(uuid())
-  solution      String?
-  scrambles     String?
-  alt_solutions String?
-  algo_type     String                  @default("Custom")
-  group_name    String?
   colors        String?
-  three_d       Boolean                 @default(false)
   cube_type     String
   key           String
   user_id       String
@@ -764,9 +742,15 @@ model CustomTrainer {
   copy_of_id    String?
   description   String?
   downloaded    Boolean                 @default(false)
+  group_name    String?
+  scrambles     String?
+  solution      String?
+  alt_solutions String?
+  three_d       Boolean                 @default(false)
+  algo_type     String                  @default("Custom")
   copy_of       CustomTrainer?          @relation("copy_of", fields: [copy_of_id], references: [id], onDelete: SetDefault)
-  user          UserAccount?            @relation(fields: [user_id], references: [id], onDelete: Cascade)
   copies        CustomTrainer[]         @relation("copy_of")
+  user          UserAccount             @relation(fields: [user_id], references: [id], onDelete: Cascade)
   download_of   CustomTrainerDownload[] @relation("custom_trainer_download_new_trainer")
   downloads     CustomTrainerDownload[] @relation("custom_trainer_download_source_trainer")
   likes         CustomTrainerLike[]
@@ -822,15 +806,14 @@ model TrainerFavorite {
 }
 
 model AlgorithmOverride {
-  id        String  @id @default(uuid())
-  user_id   String
-  rotate    Int?
-  cube_key  String
-  name      String?
-  scrambles String?
-  solution  String?
-
+  id         String      @id @default(uuid())
+  user_id    String
+  rotate     Int?
+  cube_key   String
   created_at DateTime    @default(now())
+  solution   String?
+  name       String?
+  scrambles  String?
   user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
@@ -838,32 +821,31 @@ model AlgorithmOverride {
 }
 
 model Setting {
-  id                                  String   @id @default(uuid())
-  user_id                             String   @unique
-  focus_mode                          Boolean  @default(false)
-  freeze_time                         Float    @default(0.2)
-  inspection                          Boolean  @default(false)
-  manual_entry                        Boolean  @default(false)
-  inspection_delay                    Int      @default(15)
-  inspection_auto_start               Boolean  @default(false)
-  inverse_time_list                   Boolean  @default(false)
-  hide_time_when_solving              Boolean  @default(false)
-  nav_collapsed                       Boolean  @default(false)
-  pb_confetti                         Boolean  @default(true)
-  play_inspection_sound               Boolean  @default(false)
-  zero_out_time_after_solve           Boolean  @default(false)
-  confirm_delete_solve                Boolean  @default(false)
-  require_period_in_manual_time_entry Boolean  @default(false)
-  created_at                          DateTime @default(now())
-  cube_type                           String   @default("333")
-  stats_module_json                   String?
+  id                                  String           @id @default(uuid())
+  user_id                             String           @unique
+  focus_mode                          Boolean          @default(false)
+  freeze_time                         Float            @default(0.2)
+  inspection                          Boolean          @default(false)
+  manual_entry                        Boolean          @default(false)
+  inspection_delay                    Int              @default(15)
+  inverse_time_list                   Boolean          @default(false)
+  hide_time_when_solving              Boolean          @default(false)
+  nav_collapsed                       Boolean          @default(false)
+  pb_confetti                         Boolean          @default(true)
+  play_inspection_sound               Boolean          @default(false)
+  zero_out_time_after_solve           Boolean          @default(false)
+  confirm_delete_solve                Boolean          @default(false)
+  require_period_in_manual_time_entry Boolean          @default(false)
+  created_at                          DateTime         @default(now())
+  cube_type                           String           @default("333")
   session_id                          String?
-  timer_decimal_points                Int      @default(2)
-  beta_tester                         Boolean  @default(false)
-  use_space_with_smart_cube           Boolean  @default(false)
-
-  custom_cube_types CustomCubeType[] @relation("custom_cube_type_setting")
-  user              UserAccount      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  timer_decimal_points                Int              @default(2)
+  beta_tester                         Boolean          @default(false)
+  use_space_with_smart_cube           Boolean          @default(false)
+  inspection_auto_start               Boolean          @default(false)
+  stats_module_json                   String?
+  custom_cube_types                   CustomCubeType[] @relation("custom_cube_type_setting")
+  user                                UserAccount      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
   @@map("setting")
@@ -873,20 +855,19 @@ model CustomCubeType {
   id         String   @id @default(uuid())
   user_id    String
   name       String
-  private    Boolean  @default(false)
-  scramble   String
   created_at DateTime @default(now())
-
-  setting Setting @relation("custom_cube_type_setting", fields: [user_id], references: [user_id], onDelete: Cascade)
+  scramble   String
+  private    Boolean  @default(false)
+  setting    Setting  @relation("custom_cube_type_setting", fields: [user_id], references: [user_id], onDelete: Cascade)
 
   @@index([user_id])
   @@map("custom_cube_type")
 }
 
 enum GameType {
-  HEAD_TO_HEAD
   ELIMINATION
   GAUNTLET
+  HEAD_TO_HEAD
 }
 
 enum MetricLogType {

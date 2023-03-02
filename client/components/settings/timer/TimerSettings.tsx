@@ -16,6 +16,7 @@ export const TIMER_INPUT_TYPE_NAMES = {
 	keyboard: 'Keyboard',
 	stackmat: 'StackMat',
 	smart: 'Smart Cube',
+	gantimer: 'GAN Smart Timer',
 };
 
 export default function TimerSettings() {
@@ -88,7 +89,7 @@ export default function TimerSettings() {
 				<Dropdown
 					icon={null}
 					text={getTimerTypeName(timerType)}
-					options={['keyboard', 'stackmat', 'smart'].map((c) => ({
+					options={['keyboard', 'stackmat', 'smart', 'gantimer'].map((c) => ({
 						text: getTimerTypeName(c),
 						onClick: () => updateSetting('timer_type', c),
 					}))}
