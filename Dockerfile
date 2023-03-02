@@ -50,26 +50,6 @@ RUN rm -rf build && \
     npx prisma generate && \
     yarn deploy
 
-## Create Sentry release (frontend)
-#ENV SENTRY_PROJECT=frontend
-#ENV SENTRY_RELEASE=frontend-$RELEASE_NAME
-#RUN npx @sentry/cli releases new $SENTRY_RELEASE && \
-#    npx @sentry/cli releases deploys "$SENTRY_RELEASE" new -e $ENV && \
-#    npx @sentry/cli releases set-commits $SENTRY_RELEASE --auto && \
-#    npx @sentry/cli releases files "$SENTRY_RELEASE" upload-sourcemaps ./build/client && \
-#    npx @sentry/cli releases files "$SENTRY_RELEASE" upload-sourcemaps ./dist && \
-#    npx @sentry/cli releases finalize $SENTRY_RELEASE
-#
-## Create Sentry release (backend)
-#ENV SENTRY_PROJECT=backend
-#ENV SENTRY_RELEASE=backend-$RELEASE_NAME
-#RUN npx @sentry/cli releases new $SENTRY_RELEASE && \
-#    npx @sentry/cli releases deploys "$SENTRY_RELEASE" new -e $ENV && \
-#    npx @sentry/cli releases set-commits $SENTRY_RELEASE --auto && \
-#    npx @sentry/cli releases files $SENTRY_RELEASE upload-sourcemaps ./build  && \
-#    npx @sentry/cli releases finalize $SENTRY_RELEASE
-
-
 RUN find ./dist -name "*.map" -type f -delete && \
     find ./build -name "*.map" -type f -delete
 
