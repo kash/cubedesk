@@ -6,9 +6,6 @@ import http from 'http';
 import fs from 'fs';
 import {getPrisma, initPrisma} from './database';
 import requestIp from 'request-ip';
-
-initPrisma();
-
 import {initLogger, logger} from './services/logger';
 import {ApolloServer} from 'apollo-server-express';
 import {baseResolvers, baseScalars} from './graphql';
@@ -41,6 +38,8 @@ import {initWebhookListeners, initWebhookListenersRaw} from './webhooks';
 import {exposeResourcesForSearchEngines} from './middlewares/search_engines';
 import {initSearch} from './services/search';
 
+initPrisma();
+
 colors.enable();
 global.colors = colors;
 
@@ -50,7 +49,7 @@ const isDev = env === 'development';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-BigInt.prototype.toJSON = function () {
+BigInt.prototype.toJSON = function() {
 	return this.toString();
 };
 
@@ -112,11 +111,11 @@ function parseList(l: {[key: string]: any}) {
 		gqlMutations.push(model.gqlMutation || '');
 		gqlMutationActions = {
 			...gqlMutationActions,
-			...(model.mutateActions || {}),
+			...(model.mutateActions || {})
 		};
 		gqlQueryActions = {
 			...gqlQueryActions,
-			...(model.queryActions || {}),
+			...(model.queryActions || {})
 		};
 	}
 }
@@ -135,7 +134,7 @@ if (!isDev) {
 		dsn: 'https://2f30d529a6b242449dc1f86ec18c1ba3@o637154.ingest.sentry.io/5770453',
 		release: process.env.RELEASE_NAME,
 		tracesSampleRate: 1.0,
-		environment: env,
+		environment: env
 	});
 }
 
@@ -153,7 +152,7 @@ if (!isDev) {
 		...baseResolvers,
 		Upload: GraphQLUpload,
 		Query: {...gqlQueryActions},
-		Mutation: {...gqlMutationActions},
+		Mutation: {...gqlMutationActions}
 	};
 
 	const newSchema = await buildSchema({
@@ -161,12 +160,15 @@ if (!isDev) {
 		orphanedTypes: Object.values(schemaList) as any,
 		authChecker: customAuthChecker,
 		nullableByDefault: true,
+		validate: {
+			forbidUnknownValues: false
+		}
 	});
 
 	const mergedSchema = mergeSchemas({
 		schemas: [newSchema],
 		typeDefs: oldTypeDef,
-		resolvers: oldResolver,
+		resolvers: oldResolver
 	});
 
 	// Start server
@@ -183,7 +185,7 @@ if (!isDev) {
 			}
 
 			return {user, ipAddress, req, res, prisma: getPrisma()};
-		},
+		}
 	});
 
 	const path = '/graphql';
@@ -200,7 +202,7 @@ if (!isDev) {
 		fs.writeFile('schema.graphql', schemaStr, (err) => {
 			if (err) {
 				logger.error('Error writing GraphQL schema to file', {
-					error: err,
+					error: err
 				});
 			}
 		});
@@ -209,7 +211,7 @@ if (!isDev) {
 	if (isDev && process.env.HTTPS === 'true') {
 		const options = {
 			key: fs.readFileSync('./certs/server.key'),
-			cert: fs.readFileSync('./certs/server.cert'),
+			cert: fs.readFileSync('./certs/server.cert')
 		};
 
 		server = https.createServer(options, app);
@@ -229,7 +231,7 @@ if (!isDev) {
 		initSocket(server);
 	} catch (e) {
 		logger.error('Could not initiate critical service', {
-			error: e,
+			error: e
 		});
 	}
 })();
