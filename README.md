@@ -1,4 +1,7 @@
 # CubeDesk
+
+[![Deploy CubeDesk to Production](https://github.com/kash/cubedesk/actions/workflows/deploy-prod.yaml/badge.svg?branch=main)](https://github.com/kash/cubedesk/actions/workflows/deploy-prod.yaml)
+
 [CubeDesk](https://cubedesk.io) is a free, open-source application that allows [speedcubers](https://en.wikipedia.org/wiki/Speedcubing) to keep track of their times, visualize their stats, train hundreds of algorithms, and play with other cubers.
 
 ![Home page of cubedesk](https://cdn.cubedesk.io/static/images/landing/timer.png)
