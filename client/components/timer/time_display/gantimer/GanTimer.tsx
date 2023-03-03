@@ -5,6 +5,9 @@ import Emblem from '../../../common/emblem/Emblem';
 import { startTimer, endTimer, startInspection, cancelInspection } from '../../helpers/events';
 import { setTimerParams } from '../../helpers/params';
 import { useSettings } from '../../../../util/hooks/useSettings';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../../../actions/general';
+import BluetoothErrorMessage from '../../common/BluetoothErrorMessage';
 
 import { SubscriptionLike } from 'rxjs';
 import { GanTimerConnection, GanTimerEvent, GanTimerState, connectGanTimer } from 'gan-web-bluetooth';
@@ -17,6 +20,7 @@ let subs: SubscriptionLike | null = null;
 
 export default function GanTimer() {
 
+	const dispatch = useDispatch();
 	const inspectionEnabled = useSettings('inspection');
 	const [connected, setConnected] = useState(false);
 
@@ -71,10 +75,15 @@ export default function GanTimer() {
 			conn = null;
 			setConnected(false);
 		} else {
-			conn = await connectGanTimer();
-			conn.events$.subscribe(evt => evt.state == GanTimerState.DISCONNECT && (conn = null));
-			subs = conn.events$.subscribe(handleTimerEvent);
-			setConnected(true);
+			let bluetoothAvailable = !!navigator.bluetooth && await navigator.bluetooth.getAvailability();
+			if (bluetoothAvailable) {
+				conn = await connectGanTimer();
+				conn.events$.subscribe(evt => evt.state == GanTimerState.DISCONNECT && (conn = null));
+				subs = conn.events$.subscribe(handleTimerEvent);
+				setConnected(true);
+			} else {
+				dispatch(openModal(<BluetoothErrorMessage />));
+			}
 		}
 	}
 
