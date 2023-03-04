@@ -17,6 +17,7 @@ import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import Button from '../../common/button/Button';
 import {toastError} from '../../../util/toast';
 import {endTimer, startTimer} from '../helpers/events';
+import BluetoothErrorMessage from '../common/BluetoothErrorMessage';
 
 const b = block('smart-cube');
 
@@ -224,11 +225,16 @@ export default function SmartCube() {
 		turnIndex.current += 1;
 	}
 
-	function connectBluetooth() {
+	async function connectBluetooth() {
 		try {
-			connect.current.connect();
+			let bluetoothAvailable = !!navigator.bluetooth && await navigator.bluetooth.getAvailability();
+			if (bluetoothAvailable) {
+				connect.current.connect();
+			} else {
+				dispatch(openModal(<BluetoothErrorMessage />));
+			}
 		} catch (e) {
-			toastError(e);
+			toastError('Web Bluetooth API error' + e ? `: ${e}` : '');
 			// chrome://flags/#enable-experimental-web-platform-features
 		}
 	}
