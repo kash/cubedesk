@@ -15,5 +15,5 @@
 		"lib": ["es2018", "esnext.asynciterable", "DOM"],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true
-	},
+	}
 }

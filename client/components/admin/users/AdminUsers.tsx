@@ -23,8 +23,6 @@ export default function AdminUsers() {
 			}
 		);
 
-		console.log(res);
-
 		return res.data.adminUserSearch;
 	}
 

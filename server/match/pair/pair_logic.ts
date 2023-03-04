@@ -47,7 +47,7 @@ export async function joinLobby(
 export async function removeMatchLobbyRecordsByClientId(clientId: string) {
 	return getPrisma().matchLobby.deleteMany({
 		where: {
-			client_id: clientId
+			client_id: clientId,
 		},
 	});
 }

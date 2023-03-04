@@ -61,7 +61,7 @@ export async function getMeWithCookieString(cookies: string | any): Promise<User
 	for (const c of coo) {
 		const kv = c.split('=');
 		if (!kv || kv.length !== 2) {
-			return null;
+			continue;
 		}
 
 		cookieMap[kv[0]] = kv[1];
