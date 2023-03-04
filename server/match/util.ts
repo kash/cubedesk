@@ -109,8 +109,6 @@ async function getUserFromClient(client: SocketType): Promise<PublicUserAccount>
 
 	// Set the user in Redis if it doesn't exist
 	if (!existsInRedis) {
-		console.log('COOKIE', client.handshake.headers.cookie);
-
 		const user = await getMeWithCookieString(client.handshake.headers.cookie);
 		if (!user) {
 			return null;
