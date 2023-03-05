@@ -17,7 +17,7 @@ export async function uploadObject(fileBuffer: Buffer, path: string, options: Pa
 		Bucket: BUCKET_NAME,
 		Key: path,
 		Body: fileBuffer,
-		...options,
+		...options
 	};
 
 	const command = new PutObjectCommand(params);
@@ -31,7 +31,7 @@ export async function deleteObject(path: string) {
 	}
 	const params = {
 		Bucket: BUCKET_NAME,
-		Key: path,
+		Key: path
 	};
 
 	const command = new DeleteObjectCommand(params);

@@ -1,8 +1,9 @@
 import React from 'react';
 import './Play.scss';
-import GameRow from './game_row/GameRow';
 import block from '../../styles/bem';
 import {GameType} from '../../../shared/match/consts';
+import HeadToHead from './logic/HeadToHead';
+import Elimination from './logic/Elimination';
 
 const b = block('play');
 
@@ -17,7 +18,7 @@ export interface GameMetaData {
 const gameTypeData: Record<GameType, GameMetaData> = {
 	[GameType.HEAD_TO_HEAD]: {
 		id: 'head-to-head',
-		icon: 'ph-users-fill',
+		icon: 'ph-lightning-fill',
 		description: 'Go head-to-head with another user. First player to 5 wins',
 		name: '1v1',
 		color: '#ff9800',
@@ -37,11 +38,25 @@ export function getGameMetaData(gameType: GameType) {
 
 export default function Play() {
 	return (
-		<div className={b()}>
-			<div className={b('list')}>
-				<GameRow gameType={GameType.HEAD_TO_HEAD} />
-				<GameRow gameType={GameType.ELIMINATION} />
+		<div className="mx-auto flex flex-row items-center justify-center">
+			<div className="mx-auto flex flex-row flex-wrap gap-3">
+				<PlayRow>
+					<HeadToHead />
+				</PlayRow>
+				<PlayRow>
+					<Elimination />
+				</PlayRow>
 			</div>
 		</div>
+	);
+}
+
+interface PlayRowProps {
+	children: React.ReactNode;
+}
+
+function PlayRow(props: PlayRowProps) {
+	return (
+		<div className="w-full max-w-md rounded-lg border-4 border-solid border-slate-300/10 p-5">{props.children}</div>
 	);
 }

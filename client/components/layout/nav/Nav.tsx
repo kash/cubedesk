@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import {useRouteMatch} from 'react-router-dom';
+import {Link, useRouteMatch} from 'react-router-dom';
 import './Nav.scss';
 import {setSetting} from '../../../db/settings/update';
 import {setGeneral} from '../../../actions/general';
@@ -145,6 +145,21 @@ export default function Nav() {
 		<NavLink {...link} key={link.name} collapsed={navClosed} selected={link.match.test(pathname)} />
 	));
 
+	let getPro = null;
+	if (!me?.is_pro && !navClosed) {
+		getPro = (
+			<Link
+				to="/account/pro"
+				className="mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded bg-primary py-2 px-3"
+			>
+				<div className="flex flex-row items-center gap-1 font-bold text-tmo-primary">
+					<span className="table">Get CubeDesk Pro</span>
+					<i className="ph-arrow-right-bold" />
+				</div>
+			</Link>
+		);
+	}
+
 	return (
 		<div className={b({collapsed: navClosed})}>
 			<div className={b('wrapper')}>
@@ -158,6 +173,7 @@ export default function Nav() {
 								<AccountDropdown />
 							</div>
 						</div>
+						{getPro}
 						<div className="mt-4">{navLinks}</div>
 						<LoginNav collapsed={navClosed} />
 					</div>

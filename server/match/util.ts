@@ -64,6 +64,7 @@ export async function getClientById(id: string): Promise<SocketType> {
 
 export async function getDetailedClientInfo(client: SocketType): Promise<DetailedClientInfo> {
 	const user = await getUserFromClient(client);
+
 	return {
 		client,
 		user,

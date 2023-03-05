@@ -1,5 +1,5 @@
 schema: schema.graphql
-silent: false
+silent: true
 documents: ./client/graphql/*.graphql
 generates:
     client/@types/generated/graphql.ts:

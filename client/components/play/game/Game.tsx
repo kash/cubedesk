@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useState, createContext} from 'react';
+import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import './Game.scss';
 import {getGameMetaData} from '../Play';
 import {useDispatch} from 'react-redux';
@@ -8,7 +8,6 @@ import {getExistingMatch} from '../helpers/match';
 import {useRouteMatch} from 'react-router-dom';
 import GameChallenger from './game_challenger/GameChallenger';
 import GameTimer from './game_timer/GameTimer';
-import block from '../../../styles/bem';
 import {reactState} from '../../../@types/react';
 import {useMe} from '../../../util/hooks/useMe';
 import {PlayerStatus} from '../../../shared/match/types';
@@ -18,8 +17,7 @@ import {getCubeTypeInfoById} from '../../../util/cubes/util';
 import {Solve} from '../../../../server/schemas/Solve.schema';
 import {Match} from '../../../../server/schemas/Match.schema';
 import {GameType} from '../../../../shared/match/consts';
-
-const b = block('games-intro');
+import classNames from 'classnames';
 
 export interface GameSolveRow {
 	id: string;
@@ -208,21 +206,21 @@ export default function Game(props: GameProps) {
 
 	return (
 		<GameContext.Provider value={contextValue}>
-			<div className={b()}>
+			<div className="h-full">
 				<GameTimer />
 
-				<div className={b('header')} style={{color}}>
-					<i className={icon} />
-					<h2>{name}</h2>
-				</div>
-				<div className={b('body')}>
-					<p>{description}</p>
-					<div className={b('actions')}>
+				<div className="flex h-full flex-col justify-between">
+					<div className="flex flex-col items-start gap-3" style={{color}}>
+						<div className="flex flex-row items-center gap-2">
+							<i className={classNames(icon, 'text-4xl')} />
+							<h2 className="text-4xl">{name}</h2>
+						</div>
+						<p className="text-xl">{description}</p>
+					</div>
+
+					<div className="flex flex-col gap-3">
 						{playButton}
 						<GameChallenger />
-						<div className={b('sub')}>
-							<Button onClick={openSessions} gray text="My Games" />
-						</div>
 					</div>
 				</div>
 			</div>
