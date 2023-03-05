@@ -26,7 +26,7 @@ require('esbuild')
 		entryPoints: ['client/components/App.tsx'],
 		outfile: `dist/${deploymentId}.min.js`,
 		bundle: true,
-		// logLevel: 'error',
+		logLevel: 'error',
 		minify: !dev,
 		define: {
 			'process.env.RESOURCES_BASE_URI': JSON.stringify(resourceBaseUri),

@@ -16,7 +16,8 @@ export default function EloRow(props: Props) {
 		<div className="mb-2 flex w-full flex-row items-center justify-between rounded bg-module p-4">
 			<div className="flex flex-row items-center">
 				<div
-					className={classNames('flex h-10 w-10 items-center justify-center rounded bg-button text-text', {
+					className={classNames('flex h-10 w-10 items-center justify-center rounded text-text', {
+						'bg-button': rank > 3,
 						'bg-amber-300': rank === 1,
 						'text-amber-800': rank === 1,
 						'bg-stone-400': rank === 2,

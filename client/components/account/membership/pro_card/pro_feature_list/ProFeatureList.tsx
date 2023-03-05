@@ -4,7 +4,7 @@ import block from '../../../../../styles/bem';
 import ProFeature from '../pro_feature/ProFeature';
 import {useToggle} from '../../../../../util/hooks/useToggle';
 import Button from '../../../../common/button/Button';
-import {getStorageURL, resourceUri} from '../../../../../util/storage';
+import {resourceUri} from '../../../../../util/storage';
 
 const b = block('pro-feature-list');
 

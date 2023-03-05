@@ -23,10 +23,16 @@ export default function GameChallenger() {
 	const minPlayers = 2;
 	const maxPlayers = 2;
 
-	function openMatch() {
+	function openMatch(joinLobby: boolean) {
 		dispatch(
 			openModal(
-				<MatchPopup cubeType="333" minPlayers={minPlayers} maxPlayers={maxPlayers} matchType={gameType} />,
+				<MatchPopup
+					cubeType="333"
+					joinLobby={joinLobby}
+					minPlayers={minPlayers}
+					maxPlayers={maxPlayers}
+					matchType={gameType}
+				/>,
 				{
 					title: `Play ${gameTypeData.name}`,
 					onClose: () => {
@@ -37,17 +43,19 @@ export default function GameChallenger() {
 		);
 	}
 
-	let button = <Button secondary text="Challenge" large fullWidth className={b()} onClick={openMatch} />;
+	let joinLobbyButton = null;
+	const challengeButton = <Button flat primary text="Challenge" large fullWidth onClick={() => openMatch(false)} />;
 
 	// Custom styling on plain button when multiplayer only
 	if (multiplayerOnly) {
-		button = <Button primary large fullWidth text="Challenge" className={b()} onClick={openMatch} />;
+		joinLobbyButton = <Button primary large fullWidth text="Join Lobby" onClick={() => openMatch(true)} />;
 	}
 
 	return (
-		<div className={b()}>
-			{button}
-			<ActivePlayers matchType={gameType} />
+		<div className="flex w-full flex-col justify-center gap-3">
+			{joinLobbyButton}
+			{challengeButton}
+			<ActivePlayers matchType={gameType as any} />
 		</div>
 	);
 }

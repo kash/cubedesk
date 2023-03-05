@@ -150,9 +150,9 @@ export default function Nav() {
 		getPro = (
 			<Link
 				to="/account/pro"
-				className="mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded bg-green-600 py-2 px-3"
+				className="mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded bg-primary py-2 px-3"
 			>
-				<div className="flex flex-row items-center gap-1 font-bold text-white">
+				<div className="flex flex-row items-center gap-1 font-bold text-tmo-primary">
 					<span className="table">Get CubeDesk Pro</span>
 					<i className="ph-arrow-right-bold" />
 				</div>

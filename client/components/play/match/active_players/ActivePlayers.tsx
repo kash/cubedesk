@@ -20,8 +20,8 @@ export default function ActivePlayers(props: Props) {
 
 		socketClient().on('roomSizeUpdate', (data) => {
 			setLoaded(true);
-			setPlayersInQueue(data[matchType]?.lobby || 0)
-			setPlayersInMatch(data[matchType]?.match || 0)
+			setPlayersInQueue(data[matchType]?.lobby || 0);
+			setPlayersInMatch(data[matchType]?.match || 0);
 		});
 
 		return () => {
@@ -41,9 +41,11 @@ export default function ActivePlayers(props: Props) {
 		socketClient().emit(SocketConst.STOP_WATCHING_ROOM_SIZES);
 	}
 
-	let body = '-';
+	let body;
 	if (loaded) {
 		body = `${getPlayerName(playersInQueue)} in lobby / ${getPlayerName(playersInMatch)} in a match`;
+	} else {
+		return null;
 	}
 
 	return (

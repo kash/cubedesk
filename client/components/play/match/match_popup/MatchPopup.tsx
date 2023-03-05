@@ -16,6 +16,7 @@ export enum MatchPopupPage {
 }
 
 interface Props {
+	joinLobby?: boolean;
 	matchType: GameType;
 	cubeType: string;
 	minPlayers: number;
@@ -36,7 +37,7 @@ export const MatchPopupContext = createContext<IMatchPopupContext>(null);
 export default function MatchPopup(props: Props) {
 	const {matchType} = props;
 
-	const [page, setPage] = useState<MatchPopupPage>(MatchPopupPage.HOME);
+	const [page, setPage] = useState<MatchPopupPage>(props.joinLobby ? MatchPopupPage.LOBBY : MatchPopupPage.HOME);
 	const [minPlayers, setMinPlayers] = useState<number>(props.minPlayers);
 	const [maxPlayers, setMaxPlayers] = useState<number>(props.maxPlayers);
 	const [cubeType, setCubeType] = useState<string>(props.cubeType);
