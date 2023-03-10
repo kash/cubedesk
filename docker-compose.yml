@@ -39,6 +39,7 @@ services:
         npx prisma format
         npx prisma generate
         npx prisma migrate dev
+        npx graphql-codegen
 
   redis:
     image: redis:7
