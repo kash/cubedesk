@@ -10,7 +10,10 @@
 	padding-top: 20px;
 	box-sizing: border-box;
 	width: $navWidth;
-	height: 100vh;
+	height: 100vh; // fallback, eventually should be removed
+	@supports(height: 100dvh) {
+		height: 100dvh;
+	}
 	z-index: 1000;
 	top: 0;
 	left: 0;

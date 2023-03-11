@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './HeaderControl.scss';
 import {GlobalHotKeys} from 'react-hotkeys';
 import {setCubeType, setSetting} from '../../../db/settings/update';
@@ -20,6 +20,7 @@ import {TIMER_INPUT_TYPE_NAMES} from '../../settings/timer/TimerSettings';
 import {useSettings} from '../../../util/hooks/useSettings';
 import {AllSettings} from '../../../db/settings/query';
 import {useMe} from '../../../util/hooks/useMe';
+import screenfull from '../../../util/vendor/screenfull';
 
 const b = block('timer-header-control');
 
@@ -35,6 +36,16 @@ export default function HeaderControl() {
 	const manualEntry = useSettings('manual_entry');
 	const inspection = useSettings('inspection');
 	const timerType = useSettings('timer_type');
+
+	const [fullScreenMode, setFullScreenMode] = useState(false);
+	if (screenfull.isEnabled) {
+		useEffect(() => {
+			let updateFullScreenState = () => setFullScreenMode(screenfull.isFullscreen);
+			updateFullScreenState();
+			screenfull.on('change', updateFullScreenState);
+			return () => screenfull.off('change', updateFullScreenState);
+		}, []);
+	}
 
 	function toggleCreateNewSession() {
 		dispatch(openModal(<CreateNewSession />));
@@ -116,6 +127,13 @@ export default function HeaderControl() {
 		<Dropdown
 			noMargin
 			options={[
+				{
+					text: 'Full Screen',
+					on: fullScreenMode,
+					hidden: !screenfull.isEnabled,
+					onClick: () => screenfull.toggle(),
+					icon: 'ph-frame-corners',
+				},
 				{
 					text: 'Focus Mode',
 					on: focusMode,
