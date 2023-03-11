@@ -234,7 +234,7 @@ export default function SmartCube() {
 				dispatch(openModal(<BluetoothErrorMessage />));
 			}
 		} catch (e) {
-			toastError('Web Bluetooth API error' + e ? `: ${e}` : '');
+			toastError('Web Bluetooth API error' + (e ? `: ${e}` : ''));
 			// chrome://flags/#enable-experimental-web-platform-features
 		}
 	}
