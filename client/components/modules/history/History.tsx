@@ -4,11 +4,12 @@ import {GlobalHotKeys} from 'react-hotkeys';
 import './History.scss';
 import Empty from '../../common/empty/Empty';
 import {HOTKEY_MAP} from '../../../util/timer/hotkeys';
-import {FilterSolvesOptions, fetchSolves} from '../../../db/solves/query';
+import {FilterSolvesOptions, fetchSolves, fetchLastSolve} from '../../../db/solves/query';
 import HistorySolveRow from './solve_row/HistorySolveRow';
-import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '../../../db/solves/operations';
+import {toggleDnfSolveDb, togglePlusTwoSolveDb, setOkSolveDb} from '../../../db/solves/operations';
 import {deleteSolveDb} from '../../../db/solves/update';
 import {useSolveDb} from '../../../util/hooks/useSolveDb';
+import {useGeneral} from '../../../util/hooks/useGeneral';
 import {Solve} from '../../../../server/schemas/Solve.schema';
 
 interface Props {
@@ -16,27 +17,21 @@ interface Props {
 	filterOptions?: FilterSolvesOptions;
 	disabled?: boolean;
 	reverseOrder?: boolean;
+	hotKeysEnabled?: boolean;
 }
 
 // TODO NOW hotkeys for History
 export default function History(props: Props) {
-	const {solves: parentSolves, reverseOrder, disabled, filterOptions} = props;
+	const {solves: parentSolves, reverseOrder, disabled, filterOptions, hotKeysEnabled} = props;
 
 	useSolveDb();
+	const modals = useGeneral('modals');
 
 	let solves;
 	if (parentSolves) {
 		solves = parentSolves;
 	} else {
 		solves = fetchSolves(filterOptions);
-	}
-
-	function getLastSolve() {
-		if (solves && solves.length) {
-			return solves[solves.length - 1];
-		}
-
-		return null;
 	}
 
 	function renderSolveRow(index: number) {
@@ -54,16 +49,33 @@ export default function History(props: Props) {
 		return <HistorySolveRow disabled={disabled} key={solve.id} index={displayIndex} solve={solve} />;
 	}
 
+	function getLastSolve() {
+		return fetchLastSolve(filterOptions);
+	}
+
+	// allow hotkey actions only when explicitly enabled and no any modal windows active
+	function isHotKeysEnabled() {
+		return hotKeysEnabled && (!modals || modals.length == 0);
+	}
+
+	function okLastSolve() {
+		if (isHotKeysEnabled())
+			setOkSolveDb(getLastSolve());
+	}
+
 	function dnfLastSolve() {
-		toggleDnfSolveDb(getLastSolve());
+		if (isHotKeysEnabled())
+			toggleDnfSolveDb(getLastSolve());
 	}
 
 	function plusTwoLastSolve() {
-		togglePlusTwoSolveDb(getLastSolve());
+		if (isHotKeysEnabled())
+			togglePlusTwoSolveDb(getLastSolve());
 	}
 
 	function deleteLastSolve() {
-		deleteSolveDb(getLastSolve());
+		if (isHotKeysEnabled())
+			deleteSolveDb(getLastSolve());
 	}
 
 	if (!solves.length) {
@@ -75,6 +87,7 @@ export default function History(props: Props) {
 	}
 
 	const HOTKEY_HANDLERS = {
+		TOGGLE_OK: okLastSolve,
 		TOGGLE_DNF: dnfLastSolve,
 		DELETE_LAST_TIME: deleteLastSolve,
 		TOGGLE_PLUS_TWO: plusTwoLastSolve,

@@ -22,3 +22,16 @@ export function togglePlusTwoSolveDb(solve: Solve) {
 		plus_two: solve.plus_two,
 	});
 }
+
+export function setOkSolveDb(solve: Solve) {
+	if (!solve) {
+		return;
+	}
+
+	solve.dnf = false;
+	solve.plus_two = false;
+	updateSolveDb(solve, {
+		dnf: solve.dnf,
+		plus_two: solve.plus_two
+	});
+}
