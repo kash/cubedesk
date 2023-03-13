@@ -47,7 +47,7 @@ export default function TimerModule(props: Props) {
 
 	const moduleMap: Record<TimerModuleType, FooterModuleData> = {
 		[TimerModuleType.HISTORY]: {
-			module: <History filterOptions={solvesFilter} />,
+			module: <History filterOptions={solvesFilter} hotKeysEnabled />,
 			proOnly: false,
 		},
 		[TimerModuleType.LAST_SOLVE]: {
