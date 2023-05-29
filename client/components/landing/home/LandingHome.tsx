@@ -1,6 +1,7 @@
 import React from 'react';
 import './LandingHome.scss';
 import Feature from '../common/feature/Feature';
+import {TreeEvergreen, ArrowFatLineRight, Users, PaintBrushBroad} from '@phosphor-icons/react';
 import Settings from './settings/Settings';
 import {resourceUri} from '../../../util/storage';
 import block from '../../../styles/bem';
@@ -81,7 +82,7 @@ export default function LandingHome() {
 					<FeatureGrid
 						gridItems={[
 							{
-								icon: 'ph-paint-brush-broad-bold',
+								icon: <PaintBrushBroad weight="bold" />,
 								iconColor: '#8059ff',
 								title: 'Modern Design',
 								description:
@@ -92,7 +93,7 @@ export default function LandingHome() {
 							{
 								title: 'Community',
 								iconColor: '#00e330',
-								icon: 'ph-users-bold',
+								icon: <Users weight="bold" />,
 								description:
 									'With thousands of users, CubeDesk is one of the biggest cubing communities where you can make friends, share your PBs and 1v1 others.',
 								imgAlt: '"1v1" in the center of the image surrounded by these icons: heart, chat, Discord, Instagram, Reddit, and a Rubik\'s Cube. In the four corners are these words: Leaderboards, Profiles, Friends, and Marketplace.',
@@ -100,7 +101,7 @@ export default function LandingHome() {
 							},
 							{
 								title: 'Easy Transfer',
-								icon: 'ph-arrow-fat-line-right-bold',
+								icon: <ArrowFatLineRight weight="bold" />,
 								iconColor: '#ff9900',
 								description:
 									'Transfer all of your data from csTimer to CubeDesk with just a few click. Export, import, start cube. Simple.',
@@ -134,7 +135,7 @@ export default function LandingHome() {
 					vertical
 					circlesPos="bottomLeft"
 					circleCount={7}
-					icon="ph-tree-evergreen-fill"
+					icon={<TreeEvergreen weight="fill" />}
 					primaryColor="#9899ed"
 					secondaryColor="#5779ad"
 					title="Themes"

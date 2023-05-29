@@ -1,5 +1,6 @@
 import React from 'react';
 import './MobileNav.scss';
+import {List} from '@phosphor-icons/react';
 import {useRouteMatch} from 'react-router-dom';
 import Logo from '../../../common/logo/Logo';
 import {NAV_LINKS} from '../Nav';
@@ -37,7 +38,7 @@ export default function MobileNav() {
 			<div className="cd-nav-mobile__body">
 				<div className="cd-nav-mobile__left">
 					<Dropdown
-						icon="ph-list"
+						icon={<List />}
 						openLeft
 						options={NAV_LINKS.map((link) => ({
 							link: link.link,

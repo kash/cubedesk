@@ -19,12 +19,13 @@ import {useMe} from '../../../util/hooks/useMe';
 import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import {getMatchLinkBase} from './match_popup/custom_match/CustomMatch';
 import {toastSuccess} from '../../../util/toast';
+import {Prohibit, CaretDown, Copy, Flag} from '@phosphor-icons/react';
 import {copyText} from '../../common/copy_text/CopyText';
 import MatchOver from './match_over/MatchOver';
-import {Solve} from '../../../../server/schemas/Solve.schema';
 import {MatchSession} from '../../../../server/schemas/MatchSession.schema';
 import {PublicUserAccount} from '../../../../server/schemas/UserAccount.schema';
 import {GameType} from '../../../../shared/match/consts';
+import {Solve} from '../../../@types/generated/graphql';
 
 interface MatchProps {
 	matchPath: string;
@@ -218,15 +219,20 @@ export default function Match(props: MatchProps) {
 				<Dropdown
 					openLeft
 					text="Match Options"
-					icon="ph-caret-down-bold"
+					icon={<CaretDown weight="bold" />}
 					options={[
-						{text: 'Copy Spectate Link', icon: 'ph-copy-bold', onClick: copySpectateLink},
-						{text: 'Copy Play Link', icon: 'ph-copy-bold', onClick: copyPlayLink},
-						{text: 'Resign', disabled: !!match?.ended_at, icon: 'ph-flag-bold', onClick: resignGame},
+						{text: 'Copy Spectate Link', icon: <Copy weight="bold" />, onClick: copySpectateLink},
+						{text: 'Copy Play Link', icon: <Copy weight="bold" />, onClick: copyPlayLink},
+						{
+							text: 'Resign',
+							disabled: !!match?.ended_at,
+							icon: <Flag weight="bold" />,
+							onClick: resignGame,
+						},
 						{
 							text: 'Abort',
 							disabled: anySolves || !!match?.ended_at,
-							icon: 'ph-prohibit-bold',
+							icon: <Prohibit weight="bold" />,
 							onClick: abortGame,
 						},
 					]}

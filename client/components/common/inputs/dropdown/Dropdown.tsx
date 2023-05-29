@@ -2,6 +2,7 @@ import React, {ReactNode, useState} from 'react';
 import './Dropdown.scss';
 import block from '../../../../styles/bem';
 import CSS from 'csstype';
+import {CaretDown} from '@phosphor-icons/react';
 import DropdownOption, {IDropdownOption} from './dropdown_option/DropdownOption';
 import GenericInput, {GenericInputProps, InputProps} from '../generic_input/GenericInput';
 import Button, {ButtonProps} from '../../button/Button';
@@ -18,7 +19,7 @@ export interface DropdownProps extends GenericInputProps<HTMLDivElement> {
 	flat?: boolean;
 	openLeft?: boolean;
 	handle?: ReactNode;
-	icon?: string;
+	icon?: JSX.Element;
 	text?: string;
 	dropdownButtonProps?: ButtonProps;
 	fullWidth?: boolean;
@@ -100,7 +101,7 @@ export default function Dropdown(props: InputProps<DropdownProps>) {
 	let handleDiv = (
 		<Button
 			flat={flat}
-			icon={icon === null ? null : icon || 'ph-caret-down-bold'}
+			icon={icon === null ? null : icon || <CaretDown weight="bold" />}
 			onClick={openDropdown}
 			gray
 			text={text}

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {CaretDown} from '@phosphor-icons/react';
 import {useDispatch} from 'react-redux';
 import ImportData, {ImportDataType} from './import_data/ImportData';
 import fileDownload from 'js-file-download';
@@ -88,7 +89,7 @@ export default function DataSettings() {
 			<SettingRow loggedInOnly title="Import data" description="Import data from csTimer or CubeDesk">
 				<Dropdown
 					text="Import data"
-					icon="ph-caret-down-bold"
+					icon={<CaretDown weight="bold" />}
 					options={[
 						{text: 'Import from csTimer', onClick: () => openImportModal(ImportDataType.CS_TIMER)},
 						{text: 'Import from CubeDesk', onClick: () => openImportModal(ImportDataType.CUBEDESK)},

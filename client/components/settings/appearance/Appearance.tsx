@@ -11,6 +11,7 @@ import {useSettings} from '../../../util/hooks/useSettings';
 import Button from '../../common/button/Button';
 import ThemeOptions from './theme_options/ThemeOptions';
 import {AllSettings, getDefaultSetting} from '../../../db/settings/query';
+import {CaretDown} from '@phosphor-icons/react';
 
 const DEFAULT_FONT_FAMILY = 'Roboto Mono';
 
@@ -48,7 +49,7 @@ export default function Appearance() {
 				<Dropdown
 					text={String(timerModuleCount)}
 					noMargin
-					icon="ph-caret-down"
+					icon={<CaretDown />}
 					options={[1, 2, 3, 4, 5, 6].map((count) => ({
 						text: String(count) + (count === 3 ? ' (Default)' : ''),
 						onClick: () => updateSetting('timer_module_count', count),
@@ -68,7 +69,7 @@ export default function Appearance() {
 				<Dropdown
 					text={timerFontFamily}
 					noMargin
-					icon="ph-caret-down"
+					icon={<CaretDown />}
 					options={FONT_FAMILIES.map((ff) => ({
 						text: ff,
 						onClick: () => updateSetting('timer_font_family', ff),

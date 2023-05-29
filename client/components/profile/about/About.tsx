@@ -1,5 +1,6 @@
 import React from 'react';
 import './About.scss';
+import {YoutubeLogo, TwitterLogo, RedditLogo, TwitchLogo} from '@phosphor-icons/react';
 import Emblem from '../../common/emblem/Emblem';
 import {Profile} from '../../../@types/generated/graphql';
 import block from '../../../styles/bem';
@@ -13,7 +14,7 @@ interface Props {
 export default function About(props: Props) {
 	const {profile} = props;
 
-	function addSocial(list, key, name, icon, background, color) {
+	function addSocial(list, key, name, icon: JSX.Element, background, color) {
 		if (!profile[key]) {
 			return null;
 		}
@@ -31,7 +32,7 @@ export default function About(props: Props) {
 				target="_blank"
 				href={profile[key]}
 			>
-				<i className={icon} />
+				{icon}
 				<span className="ml-2 text-inherit">{name}</span>
 			</a>
 		);
@@ -40,10 +41,10 @@ export default function About(props: Props) {
 	let social = null;
 	const socialLinks = [];
 
-	addSocial(socialLinks, 'youtube_link', 'YouTube', 'ph-youtube-logo-fill', '#FF0000', 'white');
-	addSocial(socialLinks, 'twitch_link', 'Twitch', 'ph-twitch-logo-fill', '#6441A4', 'white');
-	addSocial(socialLinks, 'twitter_link', 'Twitter', 'ph-twitter-logo-fill', '#1DA1F2', 'white');
-	addSocial(socialLinks, 'reddit_link', 'Reddit', 'ph-reddit-logo-fill', '#FF5700', 'white');
+	addSocial(socialLinks, 'youtube_link', 'YouTube', <YoutubeLogo weight="fill" />, '#FF0000', 'white');
+	addSocial(socialLinks, 'twitch_link', 'Twitch', <TwitchLogo weight="fill" />, '#6441A4', 'white');
+	addSocial(socialLinks, 'twitter_link', 'Twitter', <TwitterLogo weight="fill" />, '#1DA1F2', 'white');
+	addSocial(socialLinks, 'reddit_link', 'Reddit', <RedditLogo weight="fill" />, '#FF5700', 'white');
 
 	if (socialLinks.length) {
 		social = (

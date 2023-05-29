@@ -10,7 +10,7 @@ export interface IDropdownOption {
 	text: string;
 	checkbox?: boolean;
 	link?: string;
-	icon?: string;
+	icon?: JSX.Element;
 	on?: boolean;
 	disabled?: boolean;
 	hidden?: boolean;
@@ -25,15 +25,10 @@ interface Props {
 export default function DropdownOption(props: Props) {
 	const {text, hidden, checkbox, onChange, disabled, link, icon, on, onClick} = props.option;
 
-	let iconElement = null;
-	if (icon) {
-		iconElement = <i className={icon} />;
-	}
-
 	const body = (
 		<>
 			<span>{text}</span>
-			{iconElement}
+			{icon}
 		</>
 	);
 

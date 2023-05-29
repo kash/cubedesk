@@ -6,6 +6,7 @@ import Switch from '../../../common/switch/Switch';
 import {MembershipOptions} from '../../../../@types/generated/graphql';
 import Button, {CommonType} from '../../../common/button/Button';
 import {gql} from '@apollo/client/core';
+import {ArrowSquareOut} from '@phosphor-icons/react';
 import {useMutation, useQuery} from '@apollo/client';
 import Module from '../../../common/module/Module';
 import {MEMBERSHIP_OPTIONS_QUERY} from '../Membership';
@@ -125,7 +126,7 @@ export default function ProCard(props: Props) {
 					theme={CommonType.PRIMARY}
 					onClick={openBuyLink}
 					text={`Buy Pro - ${buyText}`}
-					icon="ph-arrow-square-out"
+					icon={<ArrowSquareOut />}
 				/>
 				<ProFeatureList />
 				<Button
@@ -136,7 +137,7 @@ export default function ProCard(props: Props) {
 					theme={CommonType.PRIMARY}
 					onClick={openBuyLink}
 					text={`Buy Pro - ${buyText}`}
-					icon="ph-arrow-square-out"
+					icon={<ArrowSquareOut />}
 				/>
 			</div>
 		</Module>

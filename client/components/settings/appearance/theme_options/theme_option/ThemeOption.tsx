@@ -8,9 +8,10 @@ import {useMe} from '../../../../../util/hooks/useMe';
 import Tag from '../../../../common/tag/Tag';
 import {openModal} from '../../../../../actions/general';
 import ProOnlyModal from '../../../../common/pro_only/ProOnlyModal';
+import {Lock} from '@phosphor-icons/react';
 import {getSetting} from '../../../../../db/settings/query';
 import {APP_THEME_PRESETS, PresetThemeValues} from '../../../../../util/themes/theme_consts';
-import {isNotPro, isPro} from '../../../../../util/pro';
+import {isNotPro} from '../../../../../util/pro';
 
 const b = block('theme-option');
 
@@ -50,7 +51,7 @@ export default function ThemeOption(props: Props) {
 	if (theme.proOnly && isNotPro(me)) {
 		proLock = (
 			<div className={b('pro')}>
-				<Tag small icon="ph-lock-fill" text="Pro Theme" backgroundColor="primary" />
+				<Tag small icon={<Lock weight="fill" />} text="Pro Theme" backgroundColor="primary" />
 			</div>
 		);
 	}

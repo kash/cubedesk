@@ -9,6 +9,7 @@ import {getGameMetaData} from '../../Play';
 import ModalHeader from '../../../common/modal/modal_header/ModalHeader';
 import {GameType} from '../../../../../shared/match/consts';
 import {GameSession} from '../../../../../server/schemas/Game.schema';
+import LoadingIcon from '../../../common/LoadingIcon';
 
 interface Props {
 	gameType: GameType;
@@ -52,7 +53,7 @@ export default function TargetSessions(props: Props) {
 	} else if (sessions && !sessions.length) {
 		body = <Empty text="You don't have any sessions at the moment" />;
 	} else {
-		body = <i className="ph-circle-notch-bold ph-spin" />;
+		body = <LoadingIcon />;
 	}
 
 	return (

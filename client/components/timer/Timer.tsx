@@ -1,6 +1,7 @@
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 import './Timer.scss';
+import {ArrowRight} from '@phosphor-icons/react';
 import HeaderControl from './header_control/HeaderControl';
 import TimerFooter from './footer/TimerFooter';
 import TimeDisplay from './time_display/TimeDisplay';
@@ -111,7 +112,7 @@ export default function Timer(props: TimerProps) {
 		timerFooterAd = (
 			<div className={b('get-pro')}>
 				<Link to="/account/pro">
-					Get CubeDesk Pro for $5/mo <i className="ph-arrow-right-fill" />
+					Get CubeDesk Pro for $5/mo <ArrowRight weight="fill" />
 				</Link>
 			</div>
 		);

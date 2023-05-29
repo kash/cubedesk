@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Warning} from '@phosphor-icons/react';
 import './Banned.scss';
 import {getDateFromNow} from '../../../util/dates';
 import Button from '../../common/button/Button';
@@ -37,7 +38,7 @@ class Banned extends React.Component {
 		return (
 			<div className="cd-banned">
 				<div className="cd-banned__body">
-					<i className="ph-warning-bold" />
+					<Warning weight="bold" />
 					<h4>Account banned</h4>
 					{bannedText}
 					<div className="cd-banned__body__reason">

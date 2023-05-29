@@ -1,6 +1,7 @@
 import React, {ReactNode, useContext} from 'react';
 import './ReviewImport.scss';
 import block from '../../../../../styles/bem';
+import {X} from '@phosphor-icons/react';
 import {ImportDataContext} from '../ImportData';
 import Button from '../../../../common/button/Button';
 import {gql} from '@apollo/client/core';
@@ -12,7 +13,6 @@ import {clearOfflineData} from '../../../../layout/offline';
 import CubePicker from '../../../../common/cube_picker/CubePicker';
 import Input from '../../../../common/inputs/input/Input';
 import InputLegend from '../../../../common/inputs/input/input_legend/InputLegend';
-import Checkbox from '../../../../common/checkbox/Checkbox';
 
 const b = block('review-import');
 
@@ -134,7 +134,7 @@ export default function ReviewImport() {
 						<CubePicker onChange={(ct) => updateSessionCubeType(session.id, ct.id)} value={cubeType} />
 					</div>
 					<div>
-						<Button icon="ph-x" onClick={() => removeSession(session.id)} transparent />
+						<Button icon={<X />} onClick={() => removeSession(session.id)} transparent />
 					</div>
 				</div>
 			);

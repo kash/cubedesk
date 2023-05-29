@@ -7,6 +7,7 @@ import {useWindowListener} from '../../../../util/hooks/useListener';
 import {ColorName} from '../../../../../shared/colors';
 import Dropdown from '../../../common/inputs/dropdown/Dropdown';
 import {IDropdownOption} from '../../../common/inputs/dropdown/dropdown_option/DropdownOption';
+import {CaretDown} from '@phosphor-icons/react';
 
 const b = block('landing-nav');
 
@@ -117,7 +118,7 @@ export default function LandingNav(props: Props) {
 					</Link>
 				</div>
 				<div className={b('links')}>
-					<Dropdown flat icon="ph-caret-down-fill" options={dropDownOptions} />
+					<Dropdown flat icon={<CaretDown weight="fill" />} options={dropDownOptions} />
 					{showNavLinks}
 				</div>
 			</div>

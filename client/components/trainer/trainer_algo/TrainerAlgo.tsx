@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import './TrainerAlgo.scss';
+import {CaretRight, Pencil, Trash} from '@phosphor-icons/react';
 import block from '../../../styles/bem';
 import Button from '../../common/button/Button';
 import Module from '../../common/module/Module';
@@ -69,9 +70,9 @@ export default function TrainerAlgo(props: Props) {
 						<p>{algo.solution}</p>
 					</div>
 					<div className={b('actions')}>
-						<Button onClick={openTrainer} primary text="Start Training" icon="ph-caret-right" />
+						<Button onClick={openTrainer} primary text="Start Training" icon={<CaretRight />} />
 						<TrainerFavButton algoExt={algoExt} />
-						<Button onClick={editAlgo} gray icon="ph-pencil" />
+						<Button onClick={editAlgo} gray icon={<Pencil />} />
 						<Button
 							hidden={!isCustom}
 							confirmModalProps={{
@@ -82,7 +83,7 @@ export default function TrainerAlgo(props: Props) {
 								triggerAction: deleteCustom,
 							}}
 							gray
-							icon="ph-trash"
+							icon={<Trash />}
 						/>
 					</div>
 				</div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {X, Bluetooth} from '@phosphor-icons/react';
 import './HistorySolveRow.scss';
 import block from '../../../../styles/bem';
 import {getTimeString} from '../../../../util/time';
@@ -49,7 +50,7 @@ export default function HistorySolveRow(props: Props) {
 
 	let bluetoothIcon = null;
 	if (isSmartCube) {
-		bluetoothIcon = <i className="ph-bluetooth" />;
+		bluetoothIcon = <Bluetooth />;
 	}
 
 	let actions = null;
@@ -77,7 +78,7 @@ export default function HistorySolveRow(props: Props) {
 				<Button
 					title="Delete solve"
 					className={b('action', {active: true})}
-					icon="ph-x-bold"
+					icon={<X />}
 					flat
 					white
 					onClick={deleteSolve}

@@ -5,10 +5,8 @@ import {CommunityContext} from '../Community';
 import block from '../../../styles/bem';
 import Input from '../../common/inputs/input/Input';
 import PageTitle from '../../common/page_title/PageTitle';
-import Button from '../../common/button/Button';
-import {openModal} from '../../../actions/general';
 import {useDispatch} from 'react-redux';
-import PublishSolves from '../../profile/publish_solves/PublishSolves';
+import {MagnifyingGlass} from '@phosphor-icons/react';
 
 const TABS = [
 	{
@@ -42,7 +40,7 @@ export default function CommunityNav() {
 					<HorizontalNav tabId={page} tabs={TABS} />
 					<div className={b('search-input')}>
 						<Input
-							icon="ph-magnifying-glass"
+							icon={<MagnifyingGlass />}
 							placeholder="Search for username"
 							value={userSearchQuery}
 							onChange={handleQueryChange}

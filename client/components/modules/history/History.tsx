@@ -9,7 +9,7 @@ import HistorySolveRow from './solve_row/HistorySolveRow';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '../../../db/solves/operations';
 import {deleteSolveDb} from '../../../db/solves/update';
 import {useSolveDb} from '../../../util/hooks/useSolveDb';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '../../../@types/generated/graphql';
 
 interface Props {
 	solves?: Solve[];

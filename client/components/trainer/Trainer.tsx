@@ -1,6 +1,7 @@
 import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
 import {v4 as uuid} from 'uuid';
 import './Trainer.scss';
+import {Plus, ArrowRight, Star} from '@phosphor-icons/react';
 import PageTitle from '../common/page_title/PageTitle';
 import {
 	fetchTrainerAlgorithmCount,
@@ -277,13 +278,20 @@ export default function Trainer() {
 			<div className={b()}>
 				<PageTitle pageName="Trainer">
 					<div className={b('create-custom')}>
-						<Button primary text="Create New" icon="ph-plus" glow large onClick={openCreateCustomTrainer} />
+						<Button
+							primary
+							text="Create New"
+							icon={<Plus />}
+							glow
+							large
+							onClick={openCreateCustomTrainer}
+						/>
 					</div>
 					<div className={b('header')}>
 						<div className={b('filter')}>
 							<Dropdown openLeft text={context.cubeType.name} options={[...cubeTypeDropdownOptions]} />
 							<Dropdown openLeft text={algoType} options={[...algoTypeDropdownOptions]} />
-							<Button icon="ph-star" white={favsOnly} gray onClick={() => toggleFavsOnly()} />
+							<Button icon={<Star />} white={favsOnly} gray onClick={() => toggleFavsOnly()} />
 							<Dropdown
 								text="Train"
 								openLeft
@@ -306,7 +314,7 @@ export default function Trainer() {
 								theme={CommonType.WARNING}
 								to="/trainer/public-trainers"
 								text="Marketplace"
-								icon="ph-arrow-right"
+								icon={<ArrowRight />}
 							/>
 						</div>
 					</div>

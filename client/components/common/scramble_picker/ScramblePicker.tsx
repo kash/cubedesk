@@ -1,5 +1,6 @@
 import React from 'react';
 import Dropdown, {DropdownProps} from '../inputs/dropdown/Dropdown';
+import {CaretDown} from '@phosphor-icons/react';
 import {getScrambleTypeById, getAllScrambleTypeNames} from '../../../util/cubes/util';
 import {IDropdownOption} from '../inputs/dropdown/dropdown_option/DropdownOption';
 import {ScrambleType} from '../../../util/cubes/cube_scrambles';
@@ -52,7 +53,7 @@ export default function ScramblePicker(props: Props) {
 		<Dropdown
 			text={text}
 			legend="Scramble type"
-			icon="ph-caret-down"
+			icon={<CaretDown />}
 			options={options}
 			openLeft
 			dropdownMaxHeight={300}

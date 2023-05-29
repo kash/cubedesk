@@ -1,4 +1,5 @@
 import React from 'react';
+import {CircleNotch} from '@phosphor-icons/react';
 import Error from '../old_error/Error';
 import {Link} from 'react-router-dom';
 
@@ -98,7 +99,7 @@ export default class LinkButton extends React.Component {
 		}
 
 		if (loading) {
-			ic = <i className="ph-circle-notch-bold ph-spin" />;
+			ic = <CircleNotch weight="bold" className="spin" />;
 		}
 
 		let err = null;

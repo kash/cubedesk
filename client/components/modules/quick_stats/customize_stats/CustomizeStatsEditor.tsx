@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import HorizontalNav from '../../../common/horizontal_nav/HorizontalNav';
 import {useToggle} from '../../../../util/hooks/useToggle';
+import {Check} from '@phosphor-icons/react';
 import Input from '../../../common/inputs/input/Input';
 import Checkbox from '../../../common/checkbox/Checkbox';
 import InputLegend from '../../../common/inputs/input/input_legend/InputLegend';
@@ -179,7 +180,7 @@ export default function CustomizeStatsEditor(props: Props) {
 
 	let saveDiv = null;
 	if (savedStatus === 'saved') {
-		saveDiv = <Tag textColor="green" text="Saved" icon="ph-check-bold" />;
+		saveDiv = <Tag textColor="green" text="Saved" icon={<Check weight="bold" />} />;
 	} else if (savedStatus === 'saving') {
 		saveDiv = <Tag textColor="orange" text="Saving..." />;
 	}
@@ -189,7 +190,7 @@ export default function CustomizeStatsEditor(props: Props) {
 			<div className="absolute top-0 right-0 flex flex-row gap-3">{saveDiv}</div>
 			<div className="flex flex-col">
 				<div className="w-full">
-					<h3 className="capitalize text-text/80 w-full text-center">{description}</h3>
+					<h3 className="w-full text-center capitalize text-text/80">{description}</h3>
 					{error && <p className="mt-2 text-error/80">{error}</p>}
 				</div>
 				<FormSection removePaddingTop>

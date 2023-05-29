@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './SolvesText.scss';
 import block from '../../../styles/bem';
+import {Download} from '@phosphor-icons/react';
 import Button, {CommonType} from '../../common/button/Button';
 import CopyText from '../../common/copy_text/CopyText';
 import dayjs from 'dayjs';
@@ -145,7 +146,12 @@ export default function SolvesText(props: Props) {
 						text: 'Copy text',
 					}}
 				/>
-				<Button icon="ph-download-bold" theme={CommonType.GRAY} onClick={downloadCsv} text="Download as CSV" />
+				<Button
+					icon={<Download weight="bold" />}
+					theme={CommonType.GRAY}
+					onClick={downloadCsv}
+					text="Download as CSV"
+				/>
 			</div>
 		</div>
 	);

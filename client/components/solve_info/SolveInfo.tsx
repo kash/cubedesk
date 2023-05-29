@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {getTimeString} from '../../util/time';
 import './SolveInfo.scss';
+import {Cube, Bluetooth} from '@phosphor-icons/react';
 import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
 import ScrambleInfo from './scramble_info/ScrambleInfo';
 import SolutionInfo from './solution_info/SolutionInfo';
@@ -235,7 +236,7 @@ export default function SolveInfo(props: Props) {
 					<div className={b('sub-actions')}>
 						{isSmartCube ? (
 							<Tag
-								icon="ph-bluetooth"
+								icon={<Bluetooth />}
 								text={smartDevice?.name}
 								title="Smart cube"
 								large
@@ -243,12 +244,12 @@ export default function SolveInfo(props: Props) {
 							/>
 						) : null}
 
-						<Tag icon="ph-cube-bold" backgroundColor="button" text={cubeTypeInfo.name} />
+						<Tag icon={<Cube weight="bold" />} backgroundColor="button" text={cubeTypeInfo.name} />
 						{plusTwoButton}
 						{dnfButton}
 					</div>
 					<div className="w-full pt-5">
-						<span className="text-sm text-text/60 table m-auto">{getFullFormattedDate(endedAt)}</span>
+						<span className="m-auto table text-sm text-text/60">{getFullFormattedDate(endedAt)}</span>
 					</div>
 				</div>
 				<div className={b('info')}>

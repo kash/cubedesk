@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import './JoinOptions.scss';
+import {UsersThree, UserPlus} from '@phosphor-icons/react';
 import block from '../../../../../styles/bem';
 import {MatchPopupContext, MatchPopupPage} from '../MatchPopup';
 
@@ -12,13 +13,13 @@ export default function JoinOptions() {
 		<div className={b()}>
 			<button className={b('option')} onClick={() => setPage(MatchPopupPage.LOBBY)}>
 				<div className={b('center', {lobby: true})}>
-					<i className="ph-users-three-fill" />
+					<UsersThree weight="fill" />
 					<h2>Join Lobby</h2>
 				</div>
 			</button>
 			<button className={b('option')} onClick={() => setPage(MatchPopupPage.CUSTOM_OPTIONS)}>
 				<div className={b('center', {custom: true})}>
-					<i className="ph-user-plus-fill" />
+					<UserPlus weight="fill" />
 					<h2>Create Match</h2>
 				</div>
 			</button>

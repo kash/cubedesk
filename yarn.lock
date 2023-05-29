@@ -3733,6 +3733,11 @@
     tslib "^2.4.1"
     webcrypto-core "^1.7.4"
 
+"@phosphor-icons/react@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@phosphor-icons/react/-/react-2.0.9.tgz#9b720dfe35ed9cb75fa0c59921bbc98acf483b45"
+  integrity sha512-/dtQ0M9MXAr35wy8zPlwF684EvYRvGWZPAv+Bd0BR4vzIhjzfLBdHSovFxSP1rj3UOHvVR08qgRL04Kv90oqHA==
+
 "@prisma/client@^4.11.0":
   version "4.11.0"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-4.11.0.tgz#41d5664dea4172c954190a432f70b86d3e2e629b"

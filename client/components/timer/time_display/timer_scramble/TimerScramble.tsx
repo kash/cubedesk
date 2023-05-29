@@ -1,5 +1,6 @@
 import React, {ReactNode, useContext, useEffect, useRef} from 'react';
 import './TimerScramble.scss';
+import {ArrowClockwise, Lock, PencilSimple} from '@phosphor-icons/react';
 import TextareaAutosize from 'react-textarea-autosize';
 import CopyText from '../../../common/copy_text/CopyText';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '../../../../db/settings/update';
@@ -99,14 +100,14 @@ export default function TimerScramble() {
 					white={!isSmart && editScramble}
 					transparent
 					disabled={isSmart || scrambleLocked}
-					icon="ph-pencil-simple-bold"
+					icon={<PencilSimple weight="bold" />}
 				/>
 				<Button
 					transparent
 					onClick={toggleScrambleLock}
 					title="Lock scramble"
 					white={scrambleLocked}
-					icon="ph-lock-bold"
+					icon={<Lock weight="bold" />}
 				/>
 				<CopyText
 					text={scramble}
@@ -120,7 +121,7 @@ export default function TimerScramble() {
 					onClick={() => resetScramble(context)}
 					transparent
 					title="Reset scramble"
-					icon="ph-arrow-clockwise-bold"
+					icon={<ArrowClockwise weight="bold" />}
 				/>
 			</div>
 		</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './LastSolve.scss';
 import {useDispatch} from 'react-redux';
+import {Info} from '@phosphor-icons/react';
 import {openModal} from '../../../actions/general';
 import SolveInfo from '../../solve_info/SolveInfo';
 import Scramble from '../scramble/ScrambleVisual';
@@ -73,7 +74,7 @@ function LastSolve(props: Props) {
 
 			<div className={b('actions')}>
 				<div>
-					<Button gray icon="ph-info-bold" onClick={showSolveInfo} />
+					<Button gray icon={<Info weight="bold" />} onClick={showSolveInfo} />
 					<Button gray text="+2" onClick={plusTwoAction} warning={plusTwo} />
 					<Button gray text="DNF" onClick={dnfAction} danger={dnf} />
 				</div>

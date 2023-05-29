@@ -1,8 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import './Session.scss';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '../../api';
+import {DotsThreeOutlineVertical} from '@phosphor-icons/react';
 import {setCubeType, setCurrentSession} from '../../../db/settings/update';
 import {v4 as uuid} from 'uuid';
 import {SortableHandle} from 'react-sortable-hoc';
@@ -129,7 +128,7 @@ export default function Session(props: Props) {
 	const DragHandle = SortableHandle(() => (
 		<span tabIndex={0}>
 			<button tabIndex={-1} style={{pointerEvents: 'none'}} className={b('handle')}>
-				<i className="ph-dots-three-outline-vertical-fill" />
+				<DotsThreeOutlineVertical weight="fill" />
 			</button>
 		</span>
 	));

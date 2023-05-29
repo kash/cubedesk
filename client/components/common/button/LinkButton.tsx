@@ -12,7 +12,7 @@ const b = block('common-button');
 interface Props {
 	to: string;
 	text?: string;
-	icon?: string;
+	icon?: JSX.Element;
 	info?: string;
 	small?: boolean;
 	target?: string;
@@ -56,11 +56,6 @@ export default function LinkButton(props: Props) {
 
 	const theme = props.theme || CommonType.PRIMARY;
 
-	let ic = null;
-	if (icon) {
-		ic = <i className={icon} />;
-	}
-
 	let textSpan = null;
 	if (text) {
 		textSpan = <span style={textStyle || {}}>{text}</span>;
@@ -81,14 +76,14 @@ export default function LinkButton(props: Props) {
 		<>
 			{textSpan}
 			{children}
-			{ic}
+			{icon}
 		</>
 	);
 
 	if (iconFirst) {
 		linkBody = (
 			<>
-				{ic}
+				{icon}
 				{textSpan}
 				{children}
 			</>

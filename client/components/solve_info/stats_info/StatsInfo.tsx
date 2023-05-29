@@ -1,5 +1,6 @@
 import React from 'react';
 import './StatsInfo.scss';
+import {Timer, ArrowCounterClockwise, ArrowsClockwise} from '@phosphor-icons/react';
 import StepPie from './step_pie/StepPie';
 import RecognitionChart from './recognition_chart/RecognitionChart';
 import ExecutionTime from './execution_time/ExecutionTime';
@@ -21,10 +22,10 @@ export default function StatsInfo(props: Props) {
 	const smartInspectionTime = solve.inspection_time;
 	const tps = Math.floor((smartTurnCount / time) * 10) / 10;
 
-	function getStatCard(icon: string, title: string, val: number | string) {
+	function getStatCard(icon: JSX.Element, title: string, val: number | string) {
 		return (
 			<div className={b('card')}>
-				<i className={icon} />
+				{icon}
 				<p>{title}</p>
 				<h4>{val}</h4>
 			</div>
@@ -34,9 +35,9 @@ export default function StatsInfo(props: Props) {
 	return (
 		<div className={b()}>
 			<div className={b('card').mix(b('section'))}>
-				{getStatCard('ph-arrows-clockwise', 'Turns Per Second', tps)}
-				{getStatCard('ph-timer', 'Inspection Time', smartInspectionTime ? smartInspectionTime + 's' : '-')}
-				{getStatCard('ph-arrow-counter-clockwise', 'Turns', smartTurnCount)}
+				{getStatCard(<ArrowsClockwise />, 'Turns Per Second', tps)}
+				{getStatCard(<Timer />, 'Inspection Time', smartInspectionTime ? smartInspectionTime + 's' : '-')}
+				{getStatCard(<ArrowCounterClockwise />, 'Turns', smartTurnCount)}
 			</div>
 			<hr />
 			<div className={b('section')}>

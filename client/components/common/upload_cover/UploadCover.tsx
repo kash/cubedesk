@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import Dropzone from 'react-dropzone';
 import './UploadCover.scss';
+import {CloudArrowUp} from '@phosphor-icons/react';
 import block from '../../../styles/bem';
 import {toastError} from '../../../util/toast';
+import LoadingIcon from '../LoadingIcon';
 
 const b = block('common-upload-cover');
 
@@ -35,10 +37,10 @@ export default function UploadCover(props: Props) {
 		setLoading(false);
 	}
 
-	let coverIcon = <i className="ph-cloud-arrow-up-bold" />;
+	let coverIcon = <CloudArrowUp weight="bold" />;
 
 	if (loading) {
-		coverIcon = <i className="ph-circle-notch-bold ph-spin" />;
+		coverIcon = <LoadingIcon />;
 	}
 
 	return (

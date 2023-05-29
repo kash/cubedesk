@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import './HeaderControl.scss';
+import {MagnifyingGlassPlus, CrosshairSimple, Keyboard, Plus, X, CaretDown} from '@phosphor-icons/react';
 import {GlobalHotKeys} from 'react-hotkeys';
 import {setCubeType, setSetting} from '../../../db/settings/update';
 import CubePicker from '../../common/cube_picker/CubePicker';
@@ -87,7 +88,7 @@ export default function HeaderControl() {
 		<Dropdown
 			noMargin
 			text={timerTypeName}
-			icon="ph-caret-down"
+			icon={<CaretDown />}
 			options={[
 				{
 					text: 'Keyboard',
@@ -121,35 +122,35 @@ export default function HeaderControl() {
 					on: focusMode,
 					hidden: headerOptions.hideFocus,
 					onClick: () => toggleSetting('focus_mode'),
-					icon: 'ph-crosshair-simple',
+					icon: <CrosshairSimple />,
 				},
 				{
 					text: 'Inspection',
 					on: inspection,
 					hidden: headerOptions.hideInspection,
 					onClick: () => toggleSetting('inspection'),
-					icon: 'ph-magnifying-glass-plus',
+					icon: <MagnifyingGlassPlus />,
 				},
 				{
 					text: 'Manual Entry',
 					on: manualEntry,
 					hidden: headerOptions.hideManualEntry,
 					onClick: () => toggleSetting('manual_entry'),
-					icon: 'ph-keyboard',
+					icon: <Keyboard />,
 					disabled: manualDisabled,
 				},
 				{
 					text: 'New Session',
 					hidden: headerOptions.hideNewSession || !me,
 					onClick: toggleCreateNewSession,
-					icon: 'ph-plus',
+					icon: <Plus />,
 				},
 			]}
 		/>
 	);
 
 	if (focusMode) {
-		topRightButton = <Button noMargin transparent icon="ph-x" onClick={() => toggleSetting('focus_mode')} />;
+		topRightButton = <Button noMargin transparent icon={<X />} onClick={() => toggleSetting('focus_mode')} />;
 	}
 
 	return (

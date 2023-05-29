@@ -1,5 +1,6 @@
 import React from 'react';
 import './SignUpButton.scss';
+import {ArrowRight} from '@phosphor-icons/react';
 import block from '../../../../styles/bem';
 
 const b = block('landing-signup-button');
@@ -9,7 +10,7 @@ export default function SignUpButton() {
 		<div className={b('wrapper')}>
 			<a href="/demo" className={b()}>
 				<span>Try Demo</span>
-				<i className="ph-arrow-right" />
+				<ArrowRight />
 			</a>
 		</div>
 	);

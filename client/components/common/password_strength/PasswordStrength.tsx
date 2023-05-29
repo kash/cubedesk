@@ -1,6 +1,7 @@
 import React from 'react';
 import {validateStrongPassword} from '../../../util/auth/password';
 import './PasswordStrength.scss';
+import {Check} from '@phosphor-icons/react';
 import block from '../../../styles/bem';
 
 const b = block('password-strength');
@@ -40,7 +41,7 @@ function PasswordCase(props: SingleProps) {
 
 	return (
 		<span className={b('case', {checked})}>
-			<i className="ph-check-bold" />
+			<Check weight="bold" />
 			{name}
 		</span>
 	);

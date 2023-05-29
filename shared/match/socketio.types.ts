@@ -1,8 +1,8 @@
 import {SocketReservedEventsMap} from 'socket.io/dist/socket';
 import {GameOptionsInput} from '../../server/schemas/GameOptions.schema';
 import {PublicUserAccount} from '../../server/schemas/UserAccount.schema';
-import {Solve} from '../../server/schemas/Solve.schema';
 import {MatchInputChatMessage, MatchUpdate, MatchUpdateChat, UpdateRoomInfo} from '../../client/shared/match/types';
+import {Solve} from '../../client/@types/generated/graphql';
 
 export interface ServerToClientEvents extends SocketReservedEventsMap {
 	opponentStartedSolve: (opponent: PublicUserAccount, startedAtUnix: number) => void;

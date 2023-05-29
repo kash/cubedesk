@@ -4,18 +4,7 @@ import './Emblem.scss';
 
 export default class Emblem extends React.Component {
 	render() {
-		const {
-			text,
-			red,
-			color,
-			orange,
-			backgroundColor,
-			small,
-			purple,
-			green,
-			className,
-			icon: iconClass,
-		} = this.props;
+		const {text, red, color, orange, backgroundColor, small, purple, green, className, icon} = this.props;
 
 		let classList = 'cd-common__emblem';
 		if (className) {
@@ -24,11 +13,6 @@ export default class Emblem extends React.Component {
 
 		if (small) {
 			classList += ' cd-common__emblem--small';
-		}
-
-		let icon = null;
-		if (iconClass) {
-			icon = <i className={iconClass} />;
 		}
 
 		const styles = {};

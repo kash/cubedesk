@@ -7,7 +7,7 @@ import Icon from '../generic_input/icon/Icon';
 const b = block('common-input');
 
 interface Props extends GenericInputProps<HTMLInputElement> {
-	icon?: string;
+	icon?: JSX.Element;
 	step?: number;
 	type?: React.HTMLInputTypeAttribute;
 }

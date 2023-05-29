@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import './Challenger.scss';
+import {Placeholder, WifiSlash, Check, Clock, X, Trophy} from '@phosphor-icons/react';
 import {addEventListener} from '../../../../../util/event_handler';
 import {getTimeString} from '../../../../../util/time';
 import Avatar from '../../../../common/avatar/Avatar';
@@ -26,12 +27,12 @@ export interface ChallengerProps {
 }
 
 const statusIconMap = {
-	[PlayerStatus.None]: <Emblem small icon="ph-placeholder-bold" />,
-	[PlayerStatus.Disconnected]: <Emblem small red icon="ph-wifi-slash-bold" />,
-	[PlayerStatus.Waiting]: <Emblem small green icon="ph-check-bold" />,
-	[PlayerStatus.Playing]: <Emblem small orange icon="ph-clock-bold" />,
-	[PlayerStatus.Lost]: <Emblem small red icon="ph-x-bold" />,
-	[PlayerStatus.Won]: <Emblem small green icon="ph-trophy-bold" />,
+	[PlayerStatus.None]: <Emblem small icon={<Placeholder weight="bold" />} />,
+	[PlayerStatus.Disconnected]: <Emblem small red icon={<WifiSlash weight="bold" />} />,
+	[PlayerStatus.Waiting]: <Emblem small green icon={<Check weight="bold" />} />,
+	[PlayerStatus.Playing]: <Emblem small orange icon={<Clock weight="bold" />} />,
+	[PlayerStatus.Lost]: <Emblem small red icon={<X weight="bold" />} />,
+	[PlayerStatus.Won]: <Emblem small green icon={<Trophy weight="bold" />} />,
 };
 
 export default function Challenger(props: ChallengerProps) {
@@ -156,7 +157,7 @@ export default function Challenger(props: ChallengerProps) {
 	let timeStr = getTimeString(displayTime, 2);
 	let statusIcon = statusIconMap[standing?.status || PlayerStatus.Playing] || null;
 	if (leaveCounter) {
-		statusIcon = <Emblem small red icon="ph-wifi-slash-bold" text={leaveCounter} />;
+		statusIcon = <Emblem small red icon={<WifiSlash weight="bold" />} text={leaveCounter} />;
 	}
 
 	const solving = timerCounter.current && displayTime && rated;

@@ -6,7 +6,7 @@ import CSS from 'csstype';
 const b = block('pro-feature');
 
 interface Props {
-	icon: string;
+	icon: JSX.Element;
 	name: string;
 	iconColor?: string;
 	description?: string;
@@ -31,7 +31,7 @@ export default function ProFeature(props: Props) {
 	return (
 		<div className={b({hideDetails})}>
 			<legend style={legendStyle}>
-				<i className={icon} />
+				{icon}
 				<p>{name}</p>
 			</legend>
 			<div className={b('details')}>

@@ -1,17 +1,16 @@
 import React, {useEffect, useRef} from 'react';
-import Button from '../../common/button/Button';
 import {ColorName, getColorHexValueFromName} from '../../../../shared/colors';
 import {useGeneral} from '../../../util/hooks/useGeneral';
 import {gqlMutateTyped} from '../../api';
-import {ClickAdViewDocument, CreateAdViewDocument, UpdateAdViewDocument} from '../../../@types/generated/graphql';
-import {AdView} from '../../../../server/schemas/AdView.schema';
+import {AdView, ClickAdViewDocument, CreateAdViewDocument} from '../../../@types/generated/graphql';
+import {ArrowSquareOut} from '@phosphor-icons/react';
 import {useLocation} from 'react-router-dom';
 import {useMe} from '../../../util/hooks/useMe';
 import {isPro} from '../../../util/pro';
 import RemoveAdButton from './RemoveAdButton';
 
 interface Props {
-	icon: string;
+	icon: JSX.Element;
 	text: string;
 	link: string;
 	adKey: string;
@@ -59,12 +58,13 @@ export default function MiniAd(props: Props) {
 	}
 
 	const iconSpan = (
-		<i
+		<span
 			style={{
 				color: getColorHexValueFromName(iconColor),
 			}}
-			className={icon}
-		/>
+		>
+			{icon}
+		</span>
 	);
 	let linkSpan = null;
 
@@ -74,8 +74,8 @@ export default function MiniAd(props: Props) {
 
 	return (
 		<div className="flex flex-col items-center">
-			<div className="rounded-lg mb-1 overflow-hidden bg-tm-background">
-				<div className="w-[30rem] border-solid rounded-lg border-4 border-tmo-background/20 transition-colors hover:border-tmo-background/50 max-w-full bg-tmo-background/10 overflow-hidden">
+			<div className="mb-1 overflow-hidden rounded-lg bg-tm-background">
+				<div className="w-[30rem] max-w-full overflow-hidden rounded-lg border-4 border-solid border-tmo-background/20 bg-tmo-background/10 transition-colors hover:border-tmo-background/50">
 					<a
 						target="_blank"
 						className="group relative grid grid-cols-[4rem_1fr] flex-row items-center"
@@ -86,16 +86,16 @@ export default function MiniAd(props: Props) {
 							style={{
 								backgroundColor: getColorHexValueFromName(backgroundColor),
 							}}
-							className="w-16 h-16 text-4xl bg-green-500 flex justify-center items-center text-white"
+							className="flex h-16 w-16 items-center justify-center bg-green-500 text-4xl text-white"
 						>
 							{iconSpan}
 						</div>
-						<div className="py-2 px-3 w-full h-full">
-							<div className="relative w-full h-full">
+						<div className="h-full w-full py-2 px-3">
+							<div className="relative h-full w-full">
 								<div className="font-normal text-text/80">{text}</div>
-								<div className="absolute opacity-60 transition-opacity group-hover:opacity-100 flex flex-row items-center bottom-0 right-0">
+								<div className="absolute bottom-0 right-0 flex flex-row items-center opacity-60 transition-opacity group-hover:opacity-100">
 									{linkSpan}
-									<i className="ph-arrow-square-out" />
+									<ArrowSquareOut />
 								</div>
 							</div>
 						</div>
