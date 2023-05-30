@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {StatsContext} from '../../Stats';
+import {CaretDoubleUp, Hash, Eye} from '@phosphor-icons/react';
 import StatsGrid from '../../common/stats_grid/StatsGrid';
 import MatchStats from '../../common/match_stats/MatchStats';
 import NumberBlock from '../../common/number_block/NumberBlock';
@@ -17,14 +18,14 @@ export default function AllStatsCommunity() {
 			<StatsGrid rows={1} columns={2}>
 				<NumberBlock
 					proOnly
-					icon="ph-hash-bold"
+					icon={<Hash weight="bold" />}
 					title="Solves"
 					color="#5A81B5"
 					value={solvesInMatches.toLocaleString()}
 				/>
 				<NumberBlock
 					proOnly
-					icon="ph-caret-double-up-bold"
+					icon={<CaretDoubleUp weight="bold" />}
 					title="Best win streak"
 					color="#5A81B5"
 					value={maxWinStreak}
@@ -33,7 +34,7 @@ export default function AllStatsCommunity() {
 					proOnly
 					colSpan={1}
 					rowSpan={1}
-					icon="ph-eye"
+					icon={<Eye />}
 					title="Solve Views"
 					value={stats.solve_views}
 					color="#667289"
@@ -42,7 +43,7 @@ export default function AllStatsCommunity() {
 					proOnly
 					colSpan={1}
 					rowSpan={1}
-					icon="ph-eye"
+					icon={<Eye />}
 					title="Profile Views"
 					value={stats.profile_views}
 					color="#667289"

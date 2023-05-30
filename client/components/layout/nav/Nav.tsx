@@ -4,6 +4,18 @@ import {Link, useRouteMatch} from 'react-router-dom';
 import './Nav.scss';
 import {setSetting} from '../../../db/settings/update';
 import {setGeneral} from '../../../actions/general';
+import {
+	ArrowLeft,
+	Sword,
+	ChartPie,
+	LadderSimple,
+	Users,
+	ListBullets,
+	Rows,
+	Wrench,
+	Timer,
+	ArrowRight,
+} from '@phosphor-icons/react';
 import Notifications from './notifications/Notifications';
 import Logo from '../../common/logo/Logo';
 import MobileNav from './mobile_nav/MobileNav';
@@ -23,7 +35,7 @@ const b = block('nav');
 
 export interface NavLinkProps {
 	name: string;
-	icon: string;
+	icon: JSX.Element;
 	match: RegExp;
 	link: string;
 	newTag?: boolean;
@@ -33,52 +45,52 @@ export interface NavLinkProps {
 export const NAV_LINKS: NavLinkProps[] = [
 	{
 		name: 'Timer',
-		icon: 'ph-timer-bold',
+		icon: <Timer weight="bold" />,
 		match: /(^\/$|^$)|(^\/demo$|^$)/,
 		link: '/',
 	},
 	{
 		name: '1v1',
-		icon: 'ph-sword-bold',
+		icon: <Sword weight="bold" />,
 		match: /^\/play/,
 		link: '/play',
 		loginRequired: true,
 	},
 	{
 		name: 'Stats',
-		icon: 'ph-chart-pie-bold',
+		icon: <ChartPie weight="bold" />,
 		match: /^\/stats/,
 		link: '/stats',
 	},
 	{
 		name: 'Community',
-		icon: 'ph-users-bold',
+		icon: <Users weight="bold" />,
 		match: /^\/community|\/user\//,
 		link: '/community/leaderboards',
 	},
 	{
 		name: 'Trainer',
-		icon: 'ph-ladder-simple-bold',
+		icon: <LadderSimple weight="bold" />,
 		match: /^\/trainer/,
 		link: '/trainer/333/OLL',
 		loginRequired: true,
 	},
 	{
 		name: 'Solves',
-		icon: 'ph-list-bullets-bold',
+		icon: <ListBullets weight="bold" />,
 		match: /^\/solves/,
 		link: '/solves',
 	},
 	{
 		name: 'Sessions',
-		icon: 'ph-rows-bold',
+		icon: <Rows weight="bold" />,
 		match: /^\/sessions/,
 		link: '/sessions',
 		loginRequired: true,
 	},
 	{
 		name: 'Settings',
-		icon: 'ph-wrench-bold',
+		icon: <Wrench weight="bold" />,
 		match: /^\/settings/,
 		link: '/settings/timer',
 	},
@@ -154,7 +166,7 @@ export default function Nav() {
 			>
 				<div className="flex flex-row items-center gap-1 font-bold text-tmo-primary">
 					<span className="table">Get CubeDesk Pro</span>
-					<i className="ph-arrow-right-bold" />
+					<ArrowRight weight="bold" />
 				</div>
 			</Link>
 		);
@@ -216,7 +228,7 @@ export default function Nav() {
 							iconFirst
 							hidden={forceNavCollapsed}
 							text={navCollapsed ? '' : 'Collapse'}
-							icon={navCollapsed ? 'ph-arrow-right-fill' : 'ph-arrow-left-fill'}
+							icon={navCollapsed ? <ArrowRight weight="fill" /> : <ArrowLeft weight="fill" />}
 							transparent
 							className={b('collapse-button')}
 							type="button"

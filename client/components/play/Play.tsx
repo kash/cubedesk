@@ -1,15 +1,13 @@
 import React from 'react';
+import {Lightning, Sword} from '@phosphor-icons/react';
 import './Play.scss';
-import block from '../../styles/bem';
 import {GameType} from '../../../shared/match/consts';
 import HeadToHead from './logic/HeadToHead';
 import Elimination from './logic/Elimination';
 
-const b = block('play');
-
 export interface GameMetaData {
 	id: string;
-	icon: string;
+	icon: JSX.Element;
 	description: string;
 	name: string;
 	color: string;
@@ -18,14 +16,14 @@ export interface GameMetaData {
 const gameTypeData: Record<GameType, GameMetaData> = {
 	[GameType.HEAD_TO_HEAD]: {
 		id: 'head-to-head',
-		icon: 'ph-lightning-fill',
+		icon: <Lightning weight="fill" />,
 		description: 'Go head-to-head with another user. First player to 5 wins',
 		name: '1v1',
 		color: '#ff9800',
 	},
 	[GameType.ELIMINATION]: {
 		id: 'elimination',
-		icon: 'ph-sword-fill',
+		icon: <Sword weight="fill" />,
 		description: 'Start with 30 seconds, go 5% faster each solve. How many can you do?',
 		name: 'Elimination',
 		color: '#42a5f5',

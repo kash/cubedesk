@@ -3,6 +3,7 @@ import './Pagination.scss';
 import HorizontalNav from '../horizontal_nav/HorizontalNav';
 import Empty from '../empty/Empty';
 import Loading from '../loading/Loading';
+import {MagnifyingGlass} from '@phosphor-icons/react';
 import {numberWithCommas} from '../../../util/strings/util';
 import {DocumentNode, gql} from '@apollo/client';
 import {gqlQuery} from '../../api';
@@ -206,7 +207,7 @@ export default function Pagination<T>(props: Props) {
 			<div className={b('header')}>
 				<Input
 					placeholder={`Search for ${currentTab.plural}`}
-					icon="ph-magnifying-glass-bold"
+					icon={<MagnifyingGlass weight="bold" />}
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}
 				/>

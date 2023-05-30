@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import './Profile.scss';
+import {CircleWavyCheck, Plus} from '@phosphor-icons/react';
 import {gql} from '@apollo/client';
 import {gqlMutate, gqlQuery} from '../api';
 import {PROFILE_FRAGMENT} from '../../util/graphql/fragments';
@@ -26,6 +27,7 @@ import AvatarDropdown from '../common/avatar/avatar_dropdown/AvatarDropdown';
 import {openModal} from '../../actions/general';
 import PublishSolves from './publish_solves/PublishSolves';
 import Button from '../common/button/Button';
+import LoadingIcon from '../common/LoadingIcon';
 
 const b = block('profile');
 
@@ -166,7 +168,7 @@ export default function Profile() {
 	if (loading) {
 		return (
 			<div className={b({loading})}>
-				<i className="ph-circle-notch-bold ph-spin" />
+				<LoadingIcon />
 			</div>
 		);
 	}
@@ -199,7 +201,7 @@ export default function Profile() {
 			<div className={b('name')}>
 				<h2>
 					{user.username}
-					{user.verified ? <i className="ph-circle-wavy-check-fill" /> : null}
+					{user.verified ? <CircleWavyCheck weight="fill" /> : null}
 				</h2>
 				<h3>Joined on {new Date(user.created_at).toLocaleDateString()}</h3>
 			</div>
@@ -240,7 +242,9 @@ export default function Profile() {
 
 	let publishSolves = null;
 	if (myProfile) {
-		publishSolves = <Button primary icon="ph-plus-bold" text="Publish Your PBs" onClick={openPublishSolves} />;
+		publishSolves = (
+			<Button primary icon={<Plus weight="bold" />} text="Publish Your PBs" onClick={openPublishSolves} />
+		);
 	}
 
 	return (

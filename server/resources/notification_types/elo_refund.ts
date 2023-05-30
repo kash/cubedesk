@@ -38,7 +38,7 @@ export default class EloRefundNotification extends Notification {
 	}
 
 	icon() {
-		return 'ph-sword';
+		return 'sword';
 	}
 
 	link() {

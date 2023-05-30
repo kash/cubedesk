@@ -1,6 +1,7 @@
 import React, {ReactNode, useMemo, useState} from 'react';
 import './MatchOver.scss';
 import block from '../../../../styles/bem';
+import {Sword} from '@phosphor-icons/react';
 import Button from '../../../common/button/Button';
 import Avatar from '../../../common/avatar/Avatar';
 import {useMe} from '../../../../util/hooks/useMe';
@@ -132,7 +133,7 @@ export default function MatchOver(props: Props) {
 				</div>
 			</div>
 			<div className={b('sword')}>
-				<i className="ph-sword" />
+				<Sword />
 			</div>
 			<EloChange userId={me.id} eloLogs={match.elo_log} />
 			<div className={b('players')}>{players}</div>

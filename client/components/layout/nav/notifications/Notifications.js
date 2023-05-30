@@ -1,5 +1,6 @@
 import React from 'react';
 import './Notifications.scss';
+import {Bell} from '@phosphor-icons/react';
 import {connect} from 'react-redux';
 import OldDropdown from '../../../common/dropdown/OldDropdown';
 import Loading from '../../../common/loading/Loading';
@@ -249,7 +250,7 @@ class Notifications extends React.Component {
 					preventCloseOnInnerClick
 					rawHandle={
 						<div className="cd-notifications__handle">
-							<i className="ph-bell-bold" />
+							<Bell weight="bold" />
 						</div>
 					}
 				>

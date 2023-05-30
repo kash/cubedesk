@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Tag from '../../common/tag/Tag';
+import {Lock} from '@phosphor-icons/react';
 import {useMe} from '../../../util/hooks/useMe';
 import {NavLinkProps} from './Nav';
 
@@ -17,7 +18,7 @@ export default function NavLink(props: Props) {
 
 	let infoTag = null;
 	if (loginRequired && !me) {
-		infoTag = <Tag icon="ph-lock-fill" textColor="orange" />;
+		infoTag = <Tag icon={<Lock weight="fill" />} textColor="orange" />;
 	} else if (newTag) {
 		infoTag = <Tag text="new" textColor="orange" />;
 	}
@@ -46,7 +47,7 @@ export default function NavLink(props: Props) {
 		linkClasses.push('group-hover:opacity-100');
 	}
 
-	let navLabel = <span className="ml-4 text-text font-roboto">{name}</span>;
+	let navLabel = <span className="ml-4 font-roboto text-text">{name}</span>;
 	if (collapsed) {
 		navLabel = null;
 		infoTag = null;
@@ -57,7 +58,7 @@ export default function NavLink(props: Props) {
 		<div className={wrapperClasses.join(' ')}>
 			<div className="relative">
 				<Link to={link} className={linkClasses.join(' ')}>
-					<i className={`text-xl ${icon}`} />
+					<span className="text-xl">{icon}</span>
 					{navLabel}
 				</Link>
 				<div className="absolute right-0 top-1/2 -translate-y-1/2">{infoTag}</div>

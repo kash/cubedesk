@@ -24,7 +24,7 @@ export default class FriendRequestNotification extends Notification {
 	}
 
 	icon() {
-		return 'ph-user-bold';
+		return 'user';
 	}
 
 	link() {

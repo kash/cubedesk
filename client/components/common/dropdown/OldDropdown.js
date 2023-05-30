@@ -1,5 +1,6 @@
 import React from 'react';
 import './OldDropdown.scss';
+import {CaretDown} from '@phosphor-icons/react';
 import Button from '../old_button/OldButton';
 import InputLegend from '../inputs/input/input_legend/InputLegend';
 
@@ -88,7 +89,7 @@ export default class OldDropdown extends React.Component {
 			);
 		}
 
-		let handle = <i className={icon || 'ph-caret-down-bold'} />;
+		let handle = icon || <CaretDown weight="bold" />;
 
 		if (this.props.handle) {
 			handle = this.props.handle;

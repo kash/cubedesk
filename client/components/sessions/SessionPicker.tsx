@@ -1,4 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
+import {CaretDown} from '@phosphor-icons/react';
 import {setCubeType, setCurrentSession} from '../../db/settings/update';
 import {fetchSessionById, fetchSessions} from '../../db/sessions/query';
 import {fetchLastCubeTypeForSession} from '../../db/solves/query';
@@ -58,7 +59,7 @@ export default function SessionPicker(props: Props) {
 
 	return (
 		<div>
-			<Dropdown noMargin openLeft text={sessionName} icon="ph-caret-down" options={options} />
+			<Dropdown noMargin openLeft text={sessionName} icon={<CaretDown />} options={options} />
 		</div>
 	);
 }

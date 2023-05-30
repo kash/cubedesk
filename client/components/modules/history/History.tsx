@@ -9,8 +9,8 @@ import HistorySolveRow from './solve_row/HistorySolveRow';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb, setOkSolveDb} from '../../../db/solves/operations';
 import {deleteSolveDb} from '../../../db/solves/update';
 import {useSolveDb} from '../../../util/hooks/useSolveDb';
+import {Solve} from '../../../@types/generated/graphql';
 import {useGeneral} from '../../../util/hooks/useGeneral';
-import {Solve} from '../../../../server/schemas/Solve.schema';
 
 interface Props {
 	solves?: Solve[];
@@ -59,23 +59,19 @@ export default function History(props: Props) {
 	}
 
 	function okLastSolve() {
-		if (isHotKeysEnabled())
-			setOkSolveDb(getLastSolve());
+		if (isHotKeysEnabled()) setOkSolveDb(getLastSolve());
 	}
 
 	function dnfLastSolve() {
-		if (isHotKeysEnabled())
-			toggleDnfSolveDb(getLastSolve());
+		if (isHotKeysEnabled()) toggleDnfSolveDb(getLastSolve());
 	}
 
 	function plusTwoLastSolve() {
-		if (isHotKeysEnabled())
-			togglePlusTwoSolveDb(getLastSolve());
+		if (isHotKeysEnabled()) togglePlusTwoSolveDb(getLastSolve());
 	}
 
 	function deleteLastSolve() {
-		if (isHotKeysEnabled())
-			deleteSolveDb(getLastSolve());
+		if (isHotKeysEnabled()) deleteSolveDb(getLastSolve());
 	}
 
 	if (!solves.length) {

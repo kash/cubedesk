@@ -1,13 +1,14 @@
 import React from 'react';
 import './FeatureText.scss';
 import block from '../../../../../styles/bem';
+import {Check} from '@phosphor-icons/react';
 import SignUpButton from '../../signup_button/SignUpButton';
 
 const b = block('landing-feature-text');
 
 interface FeatureItem {
 	text: string;
-	icon?: string;
+	icon?: JSX.Element;
 }
 
 export interface IFeatureTextProps {
@@ -17,7 +18,7 @@ export interface IFeatureTextProps {
 	secondaryColor?: string;
 	whiteText?: boolean;
 	vertical?: boolean;
-	icon?: string;
+	icon?: JSX.Element;
 	signUpButton?: boolean;
 	featureList?: FeatureItem[];
 }
@@ -37,9 +38,7 @@ export default function FeatureText(props: IFeatureTextProps) {
 					{featureList.map((item, index) => {
 						return (
 							<li key={index}>
-								<div>
-									<i style={{color: primaryColor}} className={item.icon || 'ph-check-bold'} />
-								</div>
+								<div style={{color: primaryColor}}>{item.icon || <Check weight="bold" />}</div>
 								<span>{item.text}</span>
 							</li>
 						);
@@ -63,7 +62,7 @@ export default function FeatureText(props: IFeatureTextProps) {
 					color: primaryColor,
 				}}
 			>
-				{icon ? <i className={icon} /> : null}
+				{icon}
 				{title}
 			</h3>
 		);

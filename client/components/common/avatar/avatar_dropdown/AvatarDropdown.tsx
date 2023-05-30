@@ -1,6 +1,7 @@
 import React from 'react';
 import Dropdown, {DropdownProps} from '../../inputs/dropdown/Dropdown';
 import {copyText} from '../../copy_text/CopyText';
+import {CaretDown, User, Copy, Flag, Pen, GearSix} from '@phosphor-icons/react';
 import {toastSuccess} from '../../../../util/toast';
 import {openModal} from '../../../../actions/general';
 import UserView from '../../../admin/manage_user/ManageUser';
@@ -55,18 +56,18 @@ export default function AvatarDropdown(props: Props) {
 	return (
 		<Dropdown
 			noMargin
-			icon="ph-caret-down-bold"
+			icon={<CaretDown weight="bold" />}
 			dropdownButtonProps={{
 				transparent: mini,
 				small: mini,
 				gray: false,
 			}}
 			options={[
-				{text: 'View Profile', link: `/user/${user.username}`, icon: 'ph-user-bold'},
-				{text: 'Copy Profile Link', onClick: copyProfileLink, icon: 'ph-copy-bold'},
-				{text: 'Report', onClick: reportProfile, icon: 'ph-flag-bold', hidden: myProfile || !me},
-				{text: 'Edit', onClick: editProfile, icon: 'ph-pen-bold', hidden: !myProfile},
-				{text: 'Manage User', onClick: manageUser, icon: 'ph-gear-six-bold', hidden: !amAdmin},
+				{text: 'View Profile', link: `/user/${user.username}`, icon: <User weight="bold" />},
+				{text: 'Copy Profile Link', onClick: copyProfileLink, icon: <Copy weight="bold" />},
+				{text: 'Report', onClick: reportProfile, icon: <Flag weight="bold" />, hidden: myProfile || !me},
+				{text: 'Edit', onClick: editProfile, icon: <Pen weight="bold" />, hidden: !myProfile},
+				{text: 'Manage User', onClick: manageUser, icon: <GearSix weight="bold" />, hidden: !amAdmin},
 			]}
 			{...dropdownProps}
 		/>

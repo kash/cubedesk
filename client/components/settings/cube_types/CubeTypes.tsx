@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import './CubeTypes.scss';
+import {Trash, Plus} from '@phosphor-icons/react';
 import {refreshSettings, setCubeType} from '../../../db/settings/update';
 import {getAllCubeTypes, getScrambleTypeById} from '../../../util/cubes/util';
 import {openModal} from '../../../actions/general';
@@ -58,7 +59,7 @@ export default function CubeTypes() {
 					<Button
 						gray
 						hidden={cubeType.default}
-						icon="ph-trash"
+						icon={<Trash />}
 						glow
 						confirmModalProps={{
 							title: 'Delete custom cube type',
@@ -75,7 +76,7 @@ export default function CubeTypes() {
 	return (
 		<div>
 			<div className={b('add')}>
-				<Button text="Create New" primary icon="ph-plus-bold" onClick={addCustomCubeType} />
+				<Button text="Create New" primary icon={<Plus weight="bold" />} onClick={addCustomCubeType} />
 			</div>
 			<div className={b('table')}>
 				<table className="cd-table">

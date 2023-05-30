@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './PublicTrainer.scss';
+import {ThumbsDown, ThumbsUp, Download} from '@phosphor-icons/react';
 import AlgoVisual from '../../algo_visual/AlgoVisual';
 import {gql} from '@apollo/client';
 import {gqlMutate} from '../../../api';
@@ -118,14 +119,14 @@ export default function PublicTrainer(props: Props) {
 			</div>
 			<div className={b('actions')}>
 				<Button
-					icon={liked ? 'ph-thumbs-up' : 'ph-thumbs-up'}
+					icon={liked ? <ThumbsUp /> : <ThumbsDown />}
 					onClick={likeTrainer}
 					text={`${likes} Like${likes === 1 ? '' : 's'}`}
 					gray
 					primary={liked}
 				/>
 				<Button
-					icon="ph-download-bold"
+					icon={<Download weight="bold" />}
 					text={downloadedFinal ? 'Downloaded' : 'Download'}
 					disabled={downloadedFinal}
 					hidden={trainerOwnedByUser}

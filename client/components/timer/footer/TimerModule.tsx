@@ -1,4 +1,5 @@
 import React, {ReactNode, useContext} from 'react';
+import {CaretDown} from '@phosphor-icons/react';
 import {TimerModuleDropdownOptions, TimerModuleType} from '../@types/enums';
 import {FooterModuleData, TimerCustomModuleOptions} from '../@types/interfaces';
 import History from '../../modules/history/History';
@@ -103,7 +104,7 @@ export default function TimerModule(props: Props) {
 	}
 
 	let dropdown: ReactNode = (
-		<div className="absolute opacity-0 group-hover:opacity-100 z-40">
+		<div className="absolute z-40 opacity-0 group-hover:opacity-100">
 			<Dropdown
 				openLeft
 				noMargin
@@ -112,7 +113,7 @@ export default function TimerModule(props: Props) {
 					glow: true,
 				}}
 				dropdownMaxHeight={200}
-				icon="ph-caret-down"
+				icon={<CaretDown />}
 				text={currentModuleName}
 				options={moduleDropdownOptions.map((option) => ({
 					text: option.label,

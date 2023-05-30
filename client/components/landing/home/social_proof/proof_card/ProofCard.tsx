@@ -1,5 +1,6 @@
 import React from 'react';
 import './ProofCard.scss';
+import {Link, Quotes} from '@phosphor-icons/react';
 import block from '../../../../../styles/bem';
 import {resourceUri} from '../../../../../util/storage';
 
@@ -39,7 +40,7 @@ export default function ProofCard(props: Props) {
 	if (link) {
 		linkIcon = (
 			<div className={b('link-icon')}>
-				<i className="ph-link-bold" />
+				<Link weight="bold" />
 			</div>
 		);
 	}
@@ -49,7 +50,7 @@ export default function ProofCard(props: Props) {
 	if (isQuote) {
 		quoteIcon = (
 			<div className={b('quote-icon')}>
-				<i className="ph-quotes-fill" />
+				<Quotes weight="fill" />
 			</div>
 		);
 	}

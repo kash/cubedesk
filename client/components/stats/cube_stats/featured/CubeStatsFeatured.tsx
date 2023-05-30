@@ -1,5 +1,6 @@
 import React, {useContext, useMemo} from 'react';
 import './CubeStatsFeatured.scss';
+import {Timer, Hash, Trophy, CalendarBlank} from '@phosphor-icons/react';
 import block from '../../../../styles/bem';
 import NumberBlock from '../../common/number_block/NumberBlock';
 import ScrambleVisual from '../../../modules/scramble/ScrambleVisual';
@@ -45,7 +46,7 @@ export default function CubeStatsFeatured() {
 			<NumberBlock
 				large
 				onClick={() => openSolve(singlePb?.solve)}
-				icon="ph-trophy-bold"
+				icon={<Trophy weight="bold" />}
 				title="Single PB"
 				value={getTimeString(singlePb?.time)}
 				color="#23C586"
@@ -54,7 +55,7 @@ export default function CubeStatsFeatured() {
 					<div className={b('spb-info')}>
 						<ul>
 							<li>
-								<i className="ph-calendar-blank" />
+								<CalendarBlank />
 								<div>
 									<p>{pbDate.toLocaleDateString()}</p>
 									<span>({getDateFromNow(pbDate)})</span>
@@ -75,14 +76,14 @@ export default function CubeStatsFeatured() {
 			<div className={b('right')}>
 				<NumberBlock
 					center
-					icon="ph-hash-bold"
+					icon={<Hash weight="bold" />}
 					title="Total Solves"
 					value={totalSolves}
 					color="#54ACE4"
 				/>
 				<NumberBlock
 					center
-					icon="ph-timer-bold"
+					icon={<Timer weight="bold" />}
 					title="Time Spent Cubing"
 					value={getTimeString(timeSpentCubing)}
 					color="#6D7D90"

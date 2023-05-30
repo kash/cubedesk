@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {CircleNotch} from '@phosphor-icons/react';
 import './Button.scss';
 import Error from '../old_error/Error';
 import ConfirmModal from '../confirm_modal/ConfirmModal';
@@ -146,7 +147,7 @@ class OldButton extends React.Component {
 		}
 
 		if (loading) {
-			ic = <i className="ph-circle-notch-bold ph-spin" />;
+			ic = <CircleNotch weight="bold" className="spin" />;
 		}
 
 		let err = null;

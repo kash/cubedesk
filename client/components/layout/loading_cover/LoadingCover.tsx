@@ -3,6 +3,7 @@ import './LoadingCover.scss';
 import block from '../../../styles/bem';
 import {getLocalStorage} from '../../../util/data/local_storage';
 import CSS from 'csstype';
+import LoadingIcon from '../../common/LoadingIcon';
 
 const b = block('loading-cover');
 
@@ -38,7 +39,7 @@ export default function LoadingCover(props: Props) {
 				fadeOut,
 			})}
 		>
-			<i className="ph-circle-notch-bold ph-spin" />
+			<LoadingIcon />
 		</div>
 	);
 }

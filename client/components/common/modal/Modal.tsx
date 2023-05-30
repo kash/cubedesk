@@ -2,6 +2,7 @@ import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import CSS from 'csstype';
 import {useDispatch} from 'react-redux';
 import './Modal.scss';
+import {X} from '@phosphor-icons/react';
 import {closeModal} from '../../../actions/general';
 import ModalHeader from './modal_header/ModalHeader';
 import block from '../../../styles/bem';
@@ -87,11 +88,11 @@ export default function Modal(props: IModalProps) {
 
 	let closeButton = (
 		<button
-			className="absolute top-4 right-4 z-40 text-text w-8 h-8 flex font-bold text-xl items-center justify-center rounded hover:bg-tm-background/30"
+			className="absolute top-4 right-4 z-40 flex h-8 w-8 items-center justify-center rounded text-xl font-bold text-text hover:bg-tm-background/30"
 			type="button"
 			onClick={clickClose}
 		>
-			<i className="ph-x" />
+			<X />
 		</button>
 	);
 

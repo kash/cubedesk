@@ -2,6 +2,7 @@ import React, {ReactNode, useEffect, useState} from 'react';
 import './Solves.scss';
 import CubePicker from '../common/cube_picker/CubePicker';
 import Empty from '../common/empty/Empty';
+import {SortAscending, SortDescending, Share, Funnel} from '@phosphor-icons/react';
 import SolveListRow from './solve_row/SolveListRow';
 import Loading from '../common/loading/Loading';
 import {numberWithCommas} from '../../util/strings/util';
@@ -164,8 +165,8 @@ export default function SolvesList() {
 		<div className={b()}>
 			<PageTitle pageName="Solves" />
 
-			<div className="gap-2 flex flex-col container max-w-2xl mx-auto">
-				<div className="container flex flex-row gap-2 items-center mb-2">
+			<div className="container mx-auto flex max-w-2xl flex-col gap-2">
+				<div className="container mb-2 flex flex-row items-center gap-2">
 					<CubePicker
 						dropdownProps={{
 							openLeft: true,
@@ -177,7 +178,7 @@ export default function SolvesList() {
 						openLeft
 						preventCloseOnInnerClick
 						text={filterText}
-						icon="ph-funnel-bold"
+						icon={<Funnel weight="bold" />}
 						options={[
 							getFilterOptionValue('+2 Only', 'plus_two'),
 							getFilterOptionValue('No +2s', 'plus_two', true),
@@ -193,7 +194,7 @@ export default function SolvesList() {
 						text="Sort"
 						openLeft
 						preventCloseOnInnerClick
-						icon={sortInverse ? 'ph-sort-ascending-bold' : 'ph-sort-descending-bold'}
+						icon={sortInverse ? <SortAscending weight="bold" /> : <SortDescending weight="bold" />}
 						options={[
 							{
 								text: 'Date',
@@ -209,14 +210,14 @@ export default function SolvesList() {
 							},
 							{
 								text: 'Reverse Order',
-								icon: sortInverse ? 'ph-sort-descending-bold' : 'ph-sort-ascending-bold',
+								icon: sortInverse ? <SortDescending weight="bold" /> : <SortAscending weight="bold" />,
 								// checkbox: true,
 								// on: sortInverse,
 								onClick: toggleSortByOrder,
 							},
 						]}
 					/>
-					<Button disabled={!solves?.length} gray icon="ph-share-bold" onClick={viewAsText} />
+					<Button disabled={!solves?.length} gray icon={<Share weight="bold" />} onClick={viewAsText} />
 					<div className="grow" />
 					<ResultCount value={solveCountText} />
 				</div>

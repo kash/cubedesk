@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import './ActiveMembership.scss';
 import block from '../../../../styles/bem';
 import {Membership} from '../../../../@types/generated/graphql';
-import Button, {CommonType} from '../../../common/button/Button';
+import Button from '../../../common/button/Button';
+import {Star} from '@phosphor-icons/react';
 import {useMutation} from '@apollo/client';
 import {gql} from '@apollo/client/core';
 import ProFeatureList from '../pro_card/pro_feature_list/ProFeatureList';
@@ -61,7 +62,7 @@ export default function ActiveMembership(props: Props) {
 		<Module>
 			<div className={b()}>
 				<div className={b('check')}>
-					You have a Pro membership! <i className="ph-star-fill" />
+					You have a Pro membership! <Star weight="fill" />
 				</div>
 				{cancelBlock}
 				<ProFeatureList />

@@ -9,7 +9,7 @@ import {isNotPro} from '../../../../util/pro';
 const b = block('number-block');
 
 interface Props {
-	icon: string;
+	icon: JSX.Element;
 	title: string;
 	color: string;
 	value: string | number;
@@ -70,15 +70,12 @@ export default function NumberBlock(props: Props) {
 	}
 
 	return (
-		<StatModule
-			className={b({center, vertical, noPadding, large, small, button: !!onClick})}
-			style={style}
-		>
+		<StatModule className={b({center, vertical, noPadding, large, small, button: !!onClick})} style={style}>
 			<div className={b('body')}>
 				<button className={b('value', {clickable: !!onClick})} onClick={onClick}>
 					<div className={b('header')}>
 						<div className={b('icon', {darkIcon})} style={{backgroundColor: color}}>
-							<i className={icon} />
+							{icon}
 						</div>
 						<p>{title}</p>
 					</div>

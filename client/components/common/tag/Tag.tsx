@@ -1,12 +1,13 @@
 import React from 'react';
 import {ColorName} from '../../../../shared/colors';
 import CSS from 'csstype';
+import {CircleNotch} from '@phosphor-icons/react';
 import {useColor} from '../../../util/hooks/useTheme';
 
 export interface TagProps {
 	text?: string;
 	title?: string;
-	icon?: string;
+	icon?: JSX.Element;
 	large?: boolean;
 	bold?: boolean;
 	glow?: boolean;
@@ -28,18 +29,18 @@ export default function Tag(props: TagProps) {
 	let iconBody = null;
 
 	if (loading) {
-		iconBody = <i className="ph-circle-notch-bold ph-spin" />;
+		iconBody = <CircleNotch weight="bold" className="spin" />;
 	} else if (icon) {
-		iconBody = <i className={icon} />;
+		iconBody = icon;
 	}
 
 	if (iconBody) {
-		iconDiv = <div className="ml-1 relative top-px text-inherit">{iconBody}</div>;
+		iconDiv = <div className="relative top-px ml-1 text-inherit">{iconBody}</div>;
 	}
 
 	let textSpan = null;
 	if (text) {
-		textSpan = <span className="text-inherit font-label">{text}</span>;
+		textSpan = <span className="font-label text-inherit">{text}</span>;
 	}
 
 	const containerClass = [];
@@ -81,7 +82,7 @@ export default function Tag(props: TagProps) {
 
 	return (
 		<div className={containerClass.join(' ')} style={wrapperStyle}>
-			<div title={title} className="items-center flex-row flex font-label font-bold" style={bodyStyle}>
+			<div title={title} className="flex flex-row items-center font-label font-bold" style={bodyStyle}>
 				{textSpan}
 				{iconDiv}
 			</div>

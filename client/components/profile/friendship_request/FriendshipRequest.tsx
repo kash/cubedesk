@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {X, Plus, Timer, Check} from '@phosphor-icons/react';
 import {addFriendship, removeFriendship} from '../../../actions/account';
 import {toastSuccess} from '../../../util/toast';
 import {gqlMutate, gqlMutateTyped, gqlQueryTyped} from '../../api';
@@ -108,41 +109,41 @@ export default function FriendshipRequest(props: Props) {
 	function getFriendButtonParams(): ButtonProps {
 		let friendButtonParams: ButtonProps = {
 			text: 'Add Friend',
-			icon: 'ph-plus-bold',
+			icon: <Plus weight="bold" />,
 			gray: true,
 		};
 
 		if (friends[user.id]) {
 			friendButtonParams = {
 				text: 'Friends',
-				icon: 'ph-check-bold',
+				icon: <Check weight="bold" />,
 				gray: true,
 			};
 
 			if (overFriendButton) {
 				friendButtonParams = {
 					text: 'Remove Friend',
-					icon: 'ph-x-bold',
+					icon: <X weight="bold" />,
 					danger: true,
 				};
 			}
 		} else if (friendRequestReceived) {
 			friendButtonParams = {
 				text: 'Accept Friend Request',
-				icon: 'ph-plus-bold',
+				icon: <Plus weight="bold" />,
 				primary: true,
 			};
 		} else if (friendRequestSent) {
 			friendButtonParams = {
 				text: 'Friend Request Sent',
-				icon: 'ph-timer-bold',
+				icon: <Timer weight="bold" />,
 				warning: true,
 			};
 
 			if (overFriendButton) {
 				friendButtonParams = {
 					text: 'Cancel Friend Request',
-					icon: 'ph-x-bold',
+					icon: <X weight="bold" />,
 					danger: true,
 				};
 			}

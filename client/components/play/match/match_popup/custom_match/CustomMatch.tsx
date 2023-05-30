@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './CustomMatch.scss';
 import block from '../../../../../styles/bem';
+import {ArrowRight, Eye} from '@phosphor-icons/react';
 import CopyText from '../../../../common/copy_text/CopyText';
 import {gql} from '@apollo/client';
 import {gqlMutate} from '../../../../api';
@@ -117,7 +118,7 @@ export default function CustomMatch() {
 						<Button
 							text="Show Link"
 							onClick={toggleShowChallengeLink}
-							icon="ph-eye-bold"
+							icon={<Eye weight="bold" />}
 							white={showChallengeLink}
 						/>
 						<CopyText
@@ -138,7 +139,7 @@ export default function CustomMatch() {
 						}}
 						text={spectateLink}
 					/>
-					<Button icon="ph-arrow-right" primary glow large text="Join Match" to={matchLink} />
+					<Button icon={<ArrowRight />} primary glow large text="Join Match" to={matchLink} />
 				</div>
 			</div>
 		);

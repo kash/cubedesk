@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './Lobby.scss';
+import {UsersThree} from '@phosphor-icons/react';
 import block from '../../../../../styles/bem';
 import {socketClient} from '../../../../../util/socket/socketio';
 import Button from '../../../../common/button/Button';
@@ -45,7 +46,7 @@ export default function Lobby(props: Props) {
 	return (
 		<div className={b()}>
 			<div className={b('body')}>
-				<i className="ph-users-three-fill" />
+				<UsersThree weight="fill" />
 				<p>Looking for players{dots}</p>
 				<Button text="Cancel" onClick={cancelSearch} />
 			</div>

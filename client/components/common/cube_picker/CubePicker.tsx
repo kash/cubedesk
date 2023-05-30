@@ -1,11 +1,7 @@
 import React from 'react';
 import Dropdown, {DropdownProps} from '../inputs/dropdown/Dropdown';
-import {
-	getAllCubeTypeNames,
-	getDefaultCubeTypeNames,
-	getCubeTypeInfoById,
-	getDefaultCubeTypes
-} from '../../../util/cubes/util';
+import {getAllCubeTypeNames, getDefaultCubeTypeNames, getCubeTypeInfoById} from '../../../util/cubes/util';
+import {Cube} from '@phosphor-icons/react';
 import {IDropdownOption} from '../inputs/dropdown/dropdown_option/DropdownOption';
 import {CubeType} from '../../../util/cubes/cube_types';
 
@@ -63,6 +59,12 @@ export default function CubePicker(props: Props) {
 	text += cubeType?.name || '';
 
 	return (
-		<Dropdown text={text} icon="ph-cube-bold" options={options} dropdownMaxHeight={300} {...(dropdownProps || {})} />
+		<Dropdown
+			text={text}
+			icon={<Cube weight="bold" />}
+			options={options}
+			dropdownMaxHeight={300}
+			{...(dropdownProps || {})}
+		/>
 	);
 }

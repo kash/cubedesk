@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 import './AlertContainer.scss';
+import {CheckSquare, Warning, WarningOctagon, Info} from '@phosphor-icons/react';
 import block from '../../../styles/bem';
 import Loading from '../loading/Loading';
 
@@ -33,16 +34,16 @@ export default function AlertContainer(props: Props) {
 
 	switch (type) {
 		case 'success':
-			icon = <i className="ph-check-square-fill" />;
+			icon = <CheckSquare weight="fill" />;
 			break;
 		case 'error':
-			icon = <i className="ph-warning-fill" />;
+			icon = <Warning weight="fill" />;
 			break;
 		case 'warning':
-			icon = <i className="ph-warning-octagon-fill" />;
+			icon = <WarningOctagon weight="fill" />;
 			break;
 		case 'info':
-			icon = <i className="ph-info-fill" />;
+			icon = <Info weight="fill" />;
 			break;
 	}
 

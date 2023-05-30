@@ -1,6 +1,6 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
 import './LayoutSelector.scss';
+import {AlignRightSimple, AlignBottomSimple, AlignLeftSimple} from '@phosphor-icons/react';
 import {setSetting} from '../../../../db/settings/update';
 import {useSettings} from '../../../../util/hooks/useSettings';
 import block from '../../../../styles/bem';
@@ -10,7 +10,6 @@ import {TimerLayoutPosition} from '../../../../db/settings/query';
 const b = block('settings-layout-selector');
 
 export default function LayoutSelector() {
-	const dispatch = useDispatch();
 	const timerLayout = useSettings('timer_layout');
 
 	function selectLayout(timerLayout: TimerLayoutPosition) {
@@ -28,7 +27,7 @@ export default function LayoutSelector() {
 				primary={timerLayout === 'left'}
 				gray
 				text="Align Left"
-				icon="ph-align-left-simple-bold"
+				icon={<AlignLeftSimple weight="bold" />}
 			/>
 			<Button
 				onClick={() => {
@@ -39,7 +38,7 @@ export default function LayoutSelector() {
 				primary={timerLayout === 'bottom'}
 				gray
 				text="Align Bottom"
-				icon="ph-align-bottom-simple-bold"
+				icon={<AlignBottomSimple weight="bold" />}
 			/>
 			<Button
 				onClick={() => {
@@ -50,7 +49,7 @@ export default function LayoutSelector() {
 				glow={timerLayout === 'right'}
 				gray
 				text="Align Right"
-				icon="ph-align-right-simple-bold"
+				icon={<AlignRightSimple weight="bold" />}
 			/>
 		</div>
 	);

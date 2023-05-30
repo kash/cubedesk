@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import './Sessions.scss';
+import {Plus} from '@phosphor-icons/react';
 import CubePicker from '../common/cube_picker/CubePicker';
 import TimeChart from '../modules/time_chart/TimeChart';
 import History from '../modules/history/History';
@@ -183,7 +184,7 @@ export default function Sessions() {
 					text="New Session"
 					onClick={openCreateNewSession}
 					type="button"
-					icon="ph-plus-bold"
+					icon={<Plus weight="bold" />}
 				/>
 			</PageTitle>
 			<div className={b('body')}>

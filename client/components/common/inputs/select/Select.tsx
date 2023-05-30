@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react';
+import {CaretDown} from '@phosphor-icons/react';
 import GenericInput, {GenericInputProps, InputProps} from '../../old_generic_input/GenericInput';
 
 interface Props extends GenericInputProps<HTMLSelectElement> {
@@ -23,7 +24,10 @@ export default function Select(props: InputProps<Props>) {
 						{defaultOp}
 						{children}
 					</select>
-					<i className="ph-caret-down-fill text-inherit cursor-pointer absolute -translate-y-1/2 right-1.5 top-1/2 pointer-events-none" />
+					<CaretDown
+						weight="fill"
+						className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 cursor-pointer text-inherit"
+					/>
 				</div>
 			}
 		/>

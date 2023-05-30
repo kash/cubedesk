@@ -1,6 +1,7 @@
 import React, {ReactNode, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import './ProfileRow.scss';
+import {Trash, Eye, User} from '@phosphor-icons/react';
 import Avatar from '../../common/avatar/Avatar';
 import {DocumentNode, gql} from '@apollo/client';
 import {gqlMutate} from '../../api';
@@ -98,12 +99,12 @@ export default function ProfileRow(props: ProfileRowProps) {
 			<Dropdown
 				noMargin
 				options={[
-					{text: 'View details', icon: 'ph-eye', onClick: () => openSolve(solve)},
-					{text: 'View profile', icon: 'ph-user', link: `/user/${user.username}`},
+					{text: 'View details', icon: <Eye />, onClick: () => openSolve(solve)},
+					{text: 'View profile', icon: <User />, link: `/user/${user.username}`},
 					{
 						text: 'Delete solve',
 						hidden: !(solve && (me.admin || me.id === user.id)),
-						icon: 'ph-trash',
+						icon: <Trash />,
 						onClick: deleteSolve,
 					},
 				]}

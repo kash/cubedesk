@@ -1,5 +1,14 @@
 import React, {useContext, useMemo} from 'react';
 import './SubStats.scss';
+import {
+	WarningOctagon,
+	Warning,
+	NumberSquareOne,
+	Calculator,
+	Hash,
+	CaretDoubleRight,
+	CaretDoubleUp,
+} from '@phosphor-icons/react';
 import block from '../../../../styles/bem';
 import {StatsContext} from '../../Stats';
 import NumberBlock from '../number_block/NumberBlock';
@@ -48,7 +57,7 @@ export default function SubStats(props: Props) {
 				small
 				center
 				proOnly={proOnly}
-				icon="ph-caret-double-right-bold"
+				icon={<CaretDoubleRight weight="bold" />}
 				title="Solve Streak"
 				value={`${streak.currentStreak} day${streak.currentStreak === 1 ? '' : 's'}`}
 				color={SUB_STATS_COLOR}
@@ -57,7 +66,7 @@ export default function SubStats(props: Props) {
 				small
 				center
 				proOnly={proOnly}
-				icon="ph-caret-double-up-bold"
+				icon={<CaretDoubleUp weight="bold" />}
 				title="Highest Streak"
 				value={`${streak.highestStreak} day${streak.highestStreak === 1 ? '' : 's'}`}
 				color={SUB_STATS_COLOR}
@@ -66,7 +75,7 @@ export default function SubStats(props: Props) {
 				small
 				center
 				proOnly={proOnly}
-				icon="ph-warning-octagon-bold"
+				icon={<WarningOctagon weight="bold" />}
 				title="DNFs"
 				value={`${subStats.dnfCount} (${subStats.dnfPercent}%)`}
 				color={SUB_STATS_COLOR}
@@ -75,7 +84,7 @@ export default function SubStats(props: Props) {
 				small
 				center
 				proOnly={proOnly}
-				icon="ph-warning-bold"
+				icon={<Warning weight="bold" />}
 				title="+2s"
 				value={`${subStats.plusTwoCount} (${subStats.plusTwoPercent}%)`}
 				color={SUB_STATS_COLOR}
@@ -84,7 +93,7 @@ export default function SubStats(props: Props) {
 				small
 				center
 				proOnly={proOnly}
-				icon="ph-calculator-bold"
+				icon={<Calculator weight="bold" />}
 				title="Avg # Solves / Session"
 				value={avgSolvesPerSession}
 				color={SUB_STATS_COLOR}
@@ -93,7 +102,7 @@ export default function SubStats(props: Props) {
 				small
 				center
 				proOnly={proOnly}
-				icon="ph-number-square-one-bold"
+				icon={<NumberSquareOne weight="bold" />}
 				title="First Solve"
 				value={firstSolveTime}
 				color={SUB_STATS_COLOR}

@@ -8,7 +8,7 @@ interface GridItem {
 	title: string;
 	description: string;
 	iconColor?: string;
-	icon?: string;
+	icon?: JSX.Element;
 	imgSrc: string;
 	imgAlt: string;
 }
@@ -28,12 +28,13 @@ export default function FeatureGrid(props: Props) {
 		let iconSpan = null;
 		if (item.icon) {
 			iconSpan = (
-				<i
-					className={item.icon}
+				<span
 					style={{
 						color: item.iconColor,
 					}}
-				/>
+				>
+					{item.icon}
+				</span>
 			);
 		}
 

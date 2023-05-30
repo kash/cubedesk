@@ -3,6 +3,7 @@ import './IntegrationService.scss';
 import {Integration} from '../../../../@types/generated/graphql';
 import block from '../../../../styles/bem';
 import Button from '../../../common/button/Button';
+import {Check, ArrowRight} from '@phosphor-icons/react';
 import {gql, useMutation, useQuery} from '@apollo/client';
 import {INTEGRATION_FRAGMENT} from '../../../../util/graphql/fragments';
 import Loading from '../../../common/loading/Loading';
@@ -115,7 +116,7 @@ export default function IntegrationService(props: Props) {
 					primary
 					disabled={!!integration}
 					text={integration ? 'Account Linked' : 'Link Account'}
-					icon={integration ? 'ph-check' : 'ph-arrow-right'}
+					icon={integration ? <Check /> : <ArrowRight />}
 					to={serviceUri}
 				/>
 				{revokeButton}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {CaretDown} from '@phosphor-icons/react';
 import {setSetting} from '../../../db/settings/update';
 import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import {useSettings} from '../../../util/hooks/useSettings';
@@ -100,7 +100,7 @@ export default function StackMatPicker(props: IModalProps) {
 					}}
 					openLeft
 					text={name}
-					icon="ph-caret-down"
+					icon={<CaretDown />}
 					error={error}
 					options={options.map((op) => ({
 						onClick: () => selectAudio(op.deviceId),

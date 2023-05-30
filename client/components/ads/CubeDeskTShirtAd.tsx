@@ -1,4 +1,5 @@
 import React from 'react';
+import {TShirt} from '@phosphor-icons/react';
 import MiniAd from './core/MiniAd';
 
 /**
@@ -19,7 +20,7 @@ export default function CubeDeskTShirtAd() {
 			link="https://www.thecubicle.com/collections/new-arrivals/products/cubedesk-t-shirt-1"
 			backgroundColor="white"
 			iconColor="black"
-			icon="ph-t-shirt-fill"
+			icon={<TShirt weight="fill" />}
 			text="CubeDesk t-shirts are here! Pick up a new, clean t-shirt for just $26.99."
 		/>
 	);

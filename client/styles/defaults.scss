@@ -35,9 +35,9 @@ p {
 	margin-bottom: 15px;
 }
 
-.ph-spin {
-	-webkit-animation-name: ph-spin;
-	animation-name: ph-spin;
+.spin {
+	-webkit-animation-name: spin;
+	animation-name: spin;
 	-webkit-animation-delay: 0s;
 	animation-delay: 0s;
 	-webkit-animation-delay: 0;
@@ -60,7 +60,7 @@ p {
 	animation-timing-function: linear;
 }
 
-@-webkit-keyframes ph-spin {
+@-webkit-keyframes spin {
 	0% {
 		-webkit-transform: rotate(0deg);
 		transform: rotate(0deg);
@@ -71,7 +71,7 @@ p {
 	}
 }
 
-@keyframes ph-spin {
+@keyframes spin {
 	0% {
 		-webkit-transform: rotate(0deg);
 		transform: rotate(0deg);

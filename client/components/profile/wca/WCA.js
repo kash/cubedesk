@@ -3,6 +3,7 @@ import './WCA.scss';
 import LinkButton from '../../common/button/LinkButton';
 import Emblem from '../../common/emblem/Emblem';
 import {gql} from '@apollo/client';
+import {Check} from '@phosphor-icons/react';
 import {gqlQuery} from '../../api';
 
 export default class WCA extends React.Component {
@@ -55,7 +56,7 @@ export default class WCA extends React.Component {
 			if (wcaMe) {
 				body = (
 					<a target="_blank" href={wcaMe.url || null}>
-						<Emblem text="WCA Profile Linked" icon="ph-check-bold" green />
+						<Emblem text="WCA Profile Linked" icon={<Check weight="bold" />} green />
 					</a>
 				);
 			}

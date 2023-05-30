@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import './CustomMatchOptions.scss';
 import block from '../../../../../../styles/bem';
+import {ArrowRight} from '@phosphor-icons/react';
 import HorizontalNav from '../../../../../common/horizontal_nav/HorizontalNav';
-import InputLegend from '../../../../../common/inputs/input/input_legend/InputLegend';
 import {MatchPopupContext, MatchPopupPage} from '../../MatchPopup';
 import CubePicker from '../../../../../common/cube_picker/CubePicker';
 import {CubeType} from '../../../../../../util/cubes/cube_types';
@@ -71,7 +71,7 @@ export default function CustomMatchOptions() {
 				</div>
 			</ProOnly>
 			<div className={b('actions')}>
-				<Button onClick={createMatch} text="Create custom match" icon="ph-arrow-right" primary glow large />
+				<Button onClick={createMatch} text="Create custom match" icon={<ArrowRight />} primary glow large />
 			</div>
 		</div>
 	);

@@ -4,7 +4,7 @@ import Emblem from '../../common/emblem/Emblem';
 import Battery from './battery/Battery';
 import Connect from './bluetooth/connect';
 import {setTimerParams} from '../helpers/params';
-import {emitEvent} from '../../../util/event_handler';
+import {Bluetooth, DotsThree} from '@phosphor-icons/react';
 import {preflightChecks} from './preflight';
 import {openModal} from '../../../actions/general';
 import ManageSmartCubes from './manage_smart_cubes/ManageSmartCubes';
@@ -66,10 +66,7 @@ export default function SmartCube() {
 	}, []);
 
 	useEffect(() => {
-		if (
-			!smartCubeConnecting &&
-			smartTurns.length
-		) {
+		if (!smartCubeConnecting && smartTurns.length) {
 			const turn = smartTurns[smartTurns.length - 1].turn;
 			cubejs.current.move(turn);
 
@@ -227,7 +224,7 @@ export default function SmartCube() {
 
 	async function connectBluetooth() {
 		try {
-			let bluetoothAvailable = !!navigator.bluetooth && await navigator.bluetooth.getAvailability();
+			let bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				connect.current.connect();
 			} else {
@@ -264,7 +261,7 @@ export default function SmartCube() {
 			dropdownButtonProps={{
 				transparent: true,
 			}}
-			icon="ph-dots-three"
+			icon={<DotsThree />}
 			options={[
 				{
 					text: 'Mark as solved',
@@ -286,13 +283,13 @@ export default function SmartCube() {
 
 	let emblem;
 	if (smartCubeConnecting) {
-		emblem = <Emblem small orange icon="ph-bluetooth" />;
+		emblem = <Emblem small orange icon={<Bluetooth />} />;
 		actionButton = <Button text="Connecting..." disabled />;
 		battery = null;
 	} else if (smartCubeConnected) {
-		emblem = <Emblem small green icon="ph-bluetooth" />;
+		emblem = <Emblem small green icon={<Bluetooth />} />;
 	} else {
-		emblem = <Emblem small red icon="ph-bluetooth" />;
+		emblem = <Emblem small red icon={<Bluetooth />} />;
 		actionButton = <Button text="Connect" onClick={connectBluetooth} />;
 		battery = null;
 	}

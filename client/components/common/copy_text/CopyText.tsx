@@ -1,4 +1,5 @@
 import React, {useRef, useState} from 'react';
+import {Copy, Check} from '@phosphor-icons/react';
 import Button, {ButtonProps} from '../button/Button';
 import {toastSuccess} from '../../../util/toast';
 
@@ -65,7 +66,7 @@ export default function CopyText(props: Props) {
 			onClick={onClick}
 			title="Copy text"
 			gray
-			icon={textCopied ? 'ph-check-bold' : 'ph-copy-bold'}
+			icon={textCopied ? <Check weight="bold" /> : <Copy weight="bold" />}
 			{...finalButtonProps}
 			white={textCopied}
 		/>

@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import './Button.scss';
 import {Link} from 'react-router-dom';
+import {CircleNotch} from '@phosphor-icons/react';
 import Error from '../inputs/error/Error';
 import ConfirmModal, {ConfirmModalProps} from '../confirm_modal/ConfirmModal';
 import {openModal} from '../../../actions/general';
@@ -46,7 +47,7 @@ export interface ButtonProps {
 	alignRight?: boolean;
 	type?: 'reset' | 'submit' | 'button';
 	className?: string;
-	icon?: string;
+	icon?: JSX.Element;
 	flatBorder?: boolean;
 	style?: CSS.Properties;
 	loading?: boolean;
@@ -148,9 +149,9 @@ export default function Button(props: ButtonProps) {
 
 	let ic = null;
 	if (loading) {
-		ic = <i className="ph-circle-notch-bold ph-spin" />;
+		ic = <CircleNotch className="spin" weight="bold" />;
 	} else if (icon) {
-		ic = <i className={icon} />;
+		ic = icon;
 	}
 
 	let textSpan = null;

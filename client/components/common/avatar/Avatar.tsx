@@ -1,6 +1,7 @@
 import React from 'react';
 import './Avatar.scss';
 import AvatarImage from './avatar_image/AvatarImage';
+import {CircleWavyCheck} from '@phosphor-icons/react';
 import {Link} from 'react-router-dom';
 import Badges from './badges/Badges';
 import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../../server/schemas/UserAccount.schema';
@@ -41,7 +42,7 @@ export default function Avatar(props: Props) {
 	if (user?.verified) {
 		verifiedSymbol = (
 			<span className={b('verified')}>
-				<i className="ph-circle-wavy-check-fill" />
+				<CircleWavyCheck weight="fill" />
 			</span>
 		);
 	}

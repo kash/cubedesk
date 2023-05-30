@@ -2,6 +2,7 @@ import React from 'react';
 import {gql} from '@apollo/client';
 import './Notif.scss';
 import dayjs from 'dayjs';
+import {Sword, User} from '@phosphor-icons/react';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {gqlMutate} from '../../../../api';
 import AvatarImage from '../../../../common/avatar/avatar_image/AvatarImage';
@@ -69,6 +70,20 @@ export default class Notif extends React.Component {
 		let className = 'cd-notifications__notif';
 		if (notif.read_at || read) {
 			className += ' cd-notifications__notif--read';
+		}
+
+		let iconBody = null;
+		// TODO turn NotificationType into a compiled typed
+		switch (notif.notification_type) {
+			case 'elo_refund': {
+				iconBody = <Sword weight="bold" />;
+				break;
+			}
+			case 'friend_request':
+			case 'friend_request_accept': {
+				iconBody = <User weight="bold" />;
+				break;
+			}
 		}
 
 		let icon = (

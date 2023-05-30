@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import {CaretUp, CaretDown} from '@phosphor-icons/react';
 import {setSetting} from '../../../db/settings/update';
 import {TimerContext} from '../Timer';
 import './TimerFooter.scss';
@@ -32,7 +33,7 @@ export default function TimerFooter() {
 			<div className={b('mobile-hide-button')}>
 				<Button
 					text={hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
-					icon={hideMobileTimerFooter ? 'ph-caret-up' : 'ph-caret-down'}
+					icon={hideMobileTimerFooter ? <CaretUp /> : <CaretDown />}
 					onClick={toggleMobileHideButton}
 					white
 					flat
@@ -47,13 +48,7 @@ export default function TimerFooter() {
 			const customModule = customModules[i];
 			const moduleType = customModule.moduleType;
 
-			modules.push(
-				<TimerModule
-					key={`${i}-${moduleType}`}
-					index={i}
-					customOptions={customModule}
-				/>
-			);
+			modules.push(<TimerModule key={`${i}-${moduleType}`} index={i} customOptions={customModule} />);
 		}
 	} else {
 		for (let i = 0; i < timerModuleCount; i++) {

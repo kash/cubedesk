@@ -1,5 +1,6 @@
 import React from 'react';
 import './PublicTrainerHeader.scss';
+import {ArrowLeft} from '@phosphor-icons/react';
 import block from '../../../../styles/bem';
 import LinkButton from '../../../common/button/LinkButton';
 import {CommonType} from '../../../common/button/Button';
@@ -18,7 +19,7 @@ export default function PublicTrainerHeader() {
 					theme={CommonType.WHITE}
 					flat
 					iconFirst
-					icon="ph-arrow-left"
+					icon={<ArrowLeft />}
 					text="Back to Trainer"
 					to="/trainer/333/OLL"
 				/>
