@@ -39,7 +39,9 @@ export default function LoadingCover(props: Props) {
 				fadeOut,
 			})}
 		>
-			<LoadingIcon />
+			<span className="text-3xl text-slate-600">
+				<LoadingIcon />
+			</span>
 		</div>
 	);
 }
