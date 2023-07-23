@@ -8,7 +8,7 @@ import {
 	Hash,
 	CaretDoubleRight,
 	CaretDoubleUp,
-} from '@phosphor-icons/react';
+} from 'phosphor-react';
 import block from '../../../../styles/bem';
 import {StatsContext} from '../../Stats';
 import NumberBlock from '../number_block/NumberBlock';

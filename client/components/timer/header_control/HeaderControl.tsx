@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './HeaderControl.scss';
-import {MagnifyingGlassPlus, CrosshairSimple, Keyboard, Plus, X, CaretDown} from '@phosphor-icons/react';
+import {MagnifyingGlassPlus, FrameCorners, CrosshairSimple, Keyboard, Plus, X, CaretDown} from 'phosphor-react';
 import {GlobalHotKeys} from 'react-hotkeys';
 import {setCubeType, setSetting} from '../../../db/settings/update';
 import CubePicker from '../../common/cube_picker/CubePicker';
@@ -41,7 +41,7 @@ export default function HeaderControl() {
 	const [fullScreenMode, setFullScreenMode] = useState(false);
 	if (screenfull.isEnabled) {
 		useEffect(() => {
-			let updateFullScreenState = () => setFullScreenMode(screenfull.isFullscreen);
+			const updateFullScreenState = () => setFullScreenMode(screenfull.isFullscreen);
 			updateFullScreenState();
 			screenfull.on('change', updateFullScreenState);
 			return () => screenfull.off('change', updateFullScreenState);
@@ -133,7 +133,7 @@ export default function HeaderControl() {
 					on: fullScreenMode,
 					hidden: !screenfull.isEnabled,
 					onClick: () => screenfull.toggle(),
-					icon: 'ph-frame-corners',
+					icon: <FrameCorners />,
 				},
 				{
 					text: 'Focus Mode',

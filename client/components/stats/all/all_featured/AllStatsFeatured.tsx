@@ -1,5 +1,5 @@
 import React, {useContext, useMemo} from 'react';
-import {ArrowFatLinesUp, Hash, Timer} from '@phosphor-icons/react';
+import {ArrowFatLinesUp, Hash, Timer} from 'phosphor-react';
 import {StatsContext} from '../../Stats';
 import {useSolveDb} from '../../../../util/hooks/useSolveDb';
 import {fetchAllCubeTypesSolved} from '../../../../db/solves/query';

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Dropzone from 'react-dropzone';
 import './UploadCover.scss';
-import {CloudArrowUp} from '@phosphor-icons/react';
+import {CloudArrowUp} from 'phosphor-react';
 import block from '../../../styles/bem';
 import {toastError} from '../../../util/toast';
 import LoadingIcon from '../LoadingIcon';

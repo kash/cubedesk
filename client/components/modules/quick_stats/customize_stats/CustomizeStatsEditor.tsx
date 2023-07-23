@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import HorizontalNav from '../../../common/horizontal_nav/HorizontalNav';
 import {useToggle} from '../../../../util/hooks/useToggle';
-import {Check} from '@phosphor-icons/react';
+import {Check} from 'phosphor-react';
 import Input from '../../../common/inputs/input/Input';
 import Checkbox from '../../../common/checkbox/Checkbox';
 import InputLegend from '../../../common/inputs/input/input_legend/InputLegend';

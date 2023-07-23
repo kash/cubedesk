@@ -19,7 +19,7 @@ import {useMe} from '../../../util/hooks/useMe';
 import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import {getMatchLinkBase} from './match_popup/custom_match/CustomMatch';
 import {toastSuccess} from '../../../util/toast';
-import {Prohibit, CaretDown, Copy, Flag} from '@phosphor-icons/react';
+import {Prohibit, CaretDown, Copy, Flag} from 'phosphor-react';
 import {copyText} from '../../common/copy_text/CopyText';
 import MatchOver from './match_over/MatchOver';
 import {MatchSession} from '../../../../server/schemas/MatchSession.schema';

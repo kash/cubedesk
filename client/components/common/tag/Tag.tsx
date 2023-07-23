@@ -1,7 +1,7 @@
 import React from 'react';
 import {ColorName} from '../../../../shared/colors';
 import CSS from 'csstype';
-import {CircleNotch} from '@phosphor-icons/react';
+import {CircleNotch} from 'phosphor-react';
 import {useColor} from '../../../util/hooks/useTheme';
 
 export interface TagProps {

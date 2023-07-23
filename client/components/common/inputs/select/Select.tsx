@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import GenericInput, {GenericInputProps, InputProps} from '../../old_generic_input/GenericInput';
 
 interface Props extends GenericInputProps<HTMLSelectElement> {

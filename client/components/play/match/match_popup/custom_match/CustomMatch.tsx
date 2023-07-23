@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './CustomMatch.scss';
 import block from '../../../../../styles/bem';
-import {ArrowRight, Eye} from '@phosphor-icons/react';
+import {ArrowRight, Eye} from 'phosphor-react';
 import CopyText from '../../../../common/copy_text/CopyText';
 import {gql} from '@apollo/client';
 import {gqlMutate} from '../../../../api';

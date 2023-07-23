@@ -1,7 +1,7 @@
 import React, {ReactNode, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import './ProfileRow.scss';
-import {Trash, Eye, User} from '@phosphor-icons/react';
+import {Trash, Eye, User} from 'phosphor-react';
 import Avatar from '../../common/avatar/Avatar';
 import {DocumentNode, gql} from '@apollo/client';
 import {gqlMutate} from '../../api';

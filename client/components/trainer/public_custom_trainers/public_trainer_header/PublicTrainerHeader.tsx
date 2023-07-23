@@ -1,6 +1,6 @@
 import React from 'react';
 import './PublicTrainerHeader.scss';
-import {ArrowLeft} from '@phosphor-icons/react';
+import {ArrowLeft} from 'phosphor-react';
 import block from '../../../../styles/bem';
 import LinkButton from '../../../common/button/LinkButton';
 import {CommonType} from '../../../common/button/Button';

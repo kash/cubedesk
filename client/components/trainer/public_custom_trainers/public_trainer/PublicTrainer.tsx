@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './PublicTrainer.scss';
-import {ThumbsDown, ThumbsUp, Download} from '@phosphor-icons/react';
+import {ThumbsDown, ThumbsUp, Download} from 'phosphor-react';
 import AlgoVisual from '../../algo_visual/AlgoVisual';
 import {gql} from '@apollo/client';
 import {gqlMutate} from '../../../api';

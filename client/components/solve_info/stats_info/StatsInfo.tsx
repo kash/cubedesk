@@ -1,6 +1,6 @@
 import React from 'react';
 import './StatsInfo.scss';
-import {Timer, ArrowCounterClockwise, ArrowsClockwise} from '@phosphor-icons/react';
+import {Timer, ArrowCounterClockwise, ArrowsClockwise} from 'phosphor-react';
 import StepPie from './step_pie/StepPie';
 import RecognitionChart from './recognition_chart/RecognitionChart';
 import ExecutionTime from './execution_time/ExecutionTime';

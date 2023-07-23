@@ -3,7 +3,7 @@ import './IntegrationService.scss';
 import {Integration} from '../../../../@types/generated/graphql';
 import block from '../../../../styles/bem';
 import Button from '../../../common/button/Button';
-import {Check, ArrowRight} from '@phosphor-icons/react';
+import {Check, ArrowRight} from 'phosphor-react';
 import {gql, useMutation, useQuery} from '@apollo/client';
 import {INTEGRATION_FRAGMENT} from '../../../../util/graphql/fragments';
 import Loading from '../../../common/loading/Loading';

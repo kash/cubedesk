@@ -1,6 +1,6 @@
 import React, {ReactNode, useContext, useEffect, useRef} from 'react';
 import './TimerScramble.scss';
-import {ArrowClockwise, Lock, PencilSimple} from '@phosphor-icons/react';
+import {ArrowClockwise, Lock, PencilSimple} from 'phosphor-react';
 import TextareaAutosize from 'react-textarea-autosize';
 import CopyText from '../../../common/copy_text/CopyText';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '../../../../db/settings/update';

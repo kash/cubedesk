@@ -3,7 +3,7 @@ import './Pagination.scss';
 import HorizontalNav from '../horizontal_nav/HorizontalNav';
 import Empty from '../empty/Empty';
 import Loading from '../loading/Loading';
-import {MagnifyingGlass} from '@phosphor-icons/react';
+import {MagnifyingGlass} from 'phosphor-react';
 import {numberWithCommas} from '../../../util/strings/util';
 import {DocumentNode, gql} from '@apollo/client';
 import {gqlQuery} from '../../api';

@@ -3,7 +3,7 @@ import './WCA.scss';
 import LinkButton from '../../common/button/LinkButton';
 import Emblem from '../../common/emblem/Emblem';
 import {gql} from '@apollo/client';
-import {Check} from '@phosphor-icons/react';
+import {Check} from 'phosphor-react';
 import {gqlQuery} from '../../api';
 
 export default class WCA extends React.Component {

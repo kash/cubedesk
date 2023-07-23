@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import './CubeTypes.scss';
-import {Trash, Plus} from '@phosphor-icons/react';
+import {Trash, Plus} from 'phosphor-react';
 import {refreshSettings, setCubeType} from '../../../db/settings/update';
 import {getAllCubeTypes, getScrambleTypeById} from '../../../util/cubes/util';
 import {openModal} from '../../../actions/general';

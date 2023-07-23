@@ -2,7 +2,7 @@ import React from 'react';
 import {gql} from '@apollo/client';
 import './Notif.scss';
 import dayjs from 'dayjs';
-import {Sword, User} from '@phosphor-icons/react';
+import {Sword, User} from 'phosphor-react';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {gqlMutate} from '../../../../api';
 import AvatarImage from '../../../../common/avatar/avatar_image/AvatarImage';

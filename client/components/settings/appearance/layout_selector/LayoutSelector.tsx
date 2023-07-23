@@ -1,6 +1,6 @@
 import React from 'react';
 import './LayoutSelector.scss';
-import {AlignRightSimple, AlignBottomSimple, AlignLeftSimple} from '@phosphor-icons/react';
+import {AlignRightSimple, AlignBottomSimple, AlignLeftSimple} from 'phosphor-react';
 import {setSetting} from '../../../../db/settings/update';
 import {useSettings} from '../../../../util/hooks/useSettings';
 import block from '../../../../styles/bem';

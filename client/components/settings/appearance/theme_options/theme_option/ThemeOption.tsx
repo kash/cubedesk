@@ -8,7 +8,7 @@ import {useMe} from '../../../../../util/hooks/useMe';
 import Tag from '../../../../common/tag/Tag';
 import {openModal} from '../../../../../actions/general';
 import ProOnlyModal from '../../../../common/pro_only/ProOnlyModal';
-import {Lock} from '@phosphor-icons/react';
+import {Lock} from 'phosphor-react';
 import {getSetting} from '../../../../../db/settings/query';
 import {APP_THEME_PRESETS, PresetThemeValues} from '../../../../../util/themes/theme_consts';
 import {isNotPro} from '../../../../../util/pro';

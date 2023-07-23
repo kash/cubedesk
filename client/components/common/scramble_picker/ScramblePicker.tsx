@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown, {DropdownProps} from '../inputs/dropdown/Dropdown';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import {getScrambleTypeById, getAllScrambleTypeNames} from '../../../util/cubes/util';
 import {IDropdownOption} from '../inputs/dropdown/dropdown_option/DropdownOption';
 import {ScrambleType} from '../../../util/cubes/cube_scrambles';

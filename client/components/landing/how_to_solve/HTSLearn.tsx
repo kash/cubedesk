@@ -1,5 +1,5 @@
 import React from 'react';
-import {ArrowRight} from '@phosphor-icons/react';
+import {ArrowRight} from 'phosphor-react';
 import HTSNav from './hts_nav/HTSNav';
 import HTSContent from './hts_content/HTSContent';
 import Button from '../../common/button/Button';

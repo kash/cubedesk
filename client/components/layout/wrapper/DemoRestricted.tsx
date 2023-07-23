@@ -1,5 +1,5 @@
 import React from 'react';
-import {Lock} from '@phosphor-icons/react';
+import {Lock} from 'phosphor-react';
 import Button from '../../common/button/Button';
 import Tag from '../../common/tag/Tag';
 

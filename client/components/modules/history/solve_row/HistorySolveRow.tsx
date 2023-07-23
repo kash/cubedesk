@@ -1,5 +1,5 @@
 import React from 'react';
-import {X, Bluetooth} from '@phosphor-icons/react';
+import {X, Bluetooth} from 'phosphor-react';
 import './HistorySolveRow.scss';
 import block from '../../../../styles/bem';
 import {getTimeString} from '../../../../util/time';

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import './TrainerAlgo.scss';
-import {CaretRight, Pencil, Trash} from '@phosphor-icons/react';
+import {CaretRight, Pencil, Trash} from 'phosphor-react';
 import block from '../../../styles/bem';
 import Button from '../../common/button/Button';
 import Module from '../../common/module/Module';

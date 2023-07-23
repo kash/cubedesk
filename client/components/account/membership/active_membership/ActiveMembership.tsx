@@ -3,7 +3,7 @@ import './ActiveMembership.scss';
 import block from '../../../../styles/bem';
 import {Membership} from '../../../../@types/generated/graphql';
 import Button from '../../../common/button/Button';
-import {Star} from '@phosphor-icons/react';
+import {Star} from 'phosphor-react';
 import {useMutation} from '@apollo/client';
 import {gql} from '@apollo/client/core';
 import ProFeatureList from '../pro_card/pro_feature_list/ProFeatureList';

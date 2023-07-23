@@ -1,7 +1,7 @@
 import React from 'react';
 import {validateStrongPassword} from '../../../util/auth/password';
 import './PasswordStrength.scss';
-import {Check} from '@phosphor-icons/react';
+import {Check} from 'phosphor-react';
 import block from '../../../styles/bem';
 
 const b = block('password-strength');

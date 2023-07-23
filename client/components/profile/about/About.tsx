@@ -1,6 +1,6 @@
 import React from 'react';
 import './About.scss';
-import {YoutubeLogo, TwitterLogo, RedditLogo, TwitchLogo} from '@phosphor-icons/react';
+import {YoutubeLogo, TwitterLogo, RedditLogo, TwitchLogo} from 'phosphor-react';
 import Emblem from '../../common/emblem/Emblem';
 import {Profile} from '../../../@types/generated/graphql';
 import block from '../../../styles/bem';

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TShirt} from '@phosphor-icons/react';
+import {TShirt} from 'phosphor-react';
 import MiniAd from './core/MiniAd';
 
 /**

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {getTimeString} from '../../util/time';
 import './SolveInfo.scss';
-import {Cube, Bluetooth} from '@phosphor-icons/react';
+import {Cube, Bluetooth} from 'phosphor-react';
 import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
 import ScrambleInfo from './scramble_info/ScrambleInfo';
 import SolutionInfo from './solution_info/SolutionInfo';

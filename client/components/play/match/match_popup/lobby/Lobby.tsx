@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './Lobby.scss';
-import {UsersThree} from '@phosphor-icons/react';
+import {UsersThree} from 'phosphor-react';
 import block from '../../../../../styles/bem';
 import {socketClient} from '../../../../../util/socket/socketio';
 import Button from '../../../../common/button/Button';

@@ -4,7 +4,7 @@ import Emblem from '../../common/emblem/Emblem';
 import Battery from './battery/Battery';
 import Connect from './bluetooth/connect';
 import {setTimerParams} from '../helpers/params';
-import {Bluetooth, DotsThree} from '@phosphor-icons/react';
+import {Bluetooth, DotsThree} from 'phosphor-react';
 import {preflightChecks} from './preflight';
 import {openModal} from '../../../actions/general';
 import ManageSmartCubes from './manage_smart_cubes/ManageSmartCubes';

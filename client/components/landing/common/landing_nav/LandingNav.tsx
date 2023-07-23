@@ -7,7 +7,7 @@ import {useWindowListener} from '../../../../util/hooks/useListener';
 import {ColorName} from '../../../../../shared/colors';
 import Dropdown from '../../../common/inputs/dropdown/Dropdown';
 import {IDropdownOption} from '../../../common/inputs/dropdown/dropdown_option/DropdownOption';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 
 const b = block('landing-nav');
 

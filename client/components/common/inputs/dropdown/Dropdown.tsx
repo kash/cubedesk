@@ -2,7 +2,7 @@ import React, {ReactNode, useState} from 'react';
 import './Dropdown.scss';
 import block from '../../../../styles/bem';
 import CSS from 'csstype';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import DropdownOption, {IDropdownOption} from './dropdown_option/DropdownOption';
 import GenericInput, {GenericInputProps, InputProps} from '../generic_input/GenericInput';
 import Button, {ButtonProps} from '../../button/Button';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Tag from '../../common/tag/Tag';
-import {Lock} from '@phosphor-icons/react';
+import {Lock} from 'phosphor-react';
 import {useMe} from '../../../util/hooks/useMe';
 import {NavLinkProps} from './Nav';
 

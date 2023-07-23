@@ -6,7 +6,7 @@ import block from '../../../styles/bem';
 import Input from '../../common/inputs/input/Input';
 import PageTitle from '../../common/page_title/PageTitle';
 import {useDispatch} from 'react-redux';
-import {MagnifyingGlass} from '@phosphor-icons/react';
+import {MagnifyingGlass} from 'phosphor-react';
 
 const TABS = [
 	{

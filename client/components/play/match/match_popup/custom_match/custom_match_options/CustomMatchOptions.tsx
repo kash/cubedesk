@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import './CustomMatchOptions.scss';
 import block from '../../../../../../styles/bem';
-import {ArrowRight} from '@phosphor-icons/react';
+import {ArrowRight} from 'phosphor-react';
 import HorizontalNav from '../../../../../common/horizontal_nav/HorizontalNav';
 import {MatchPopupContext, MatchPopupPage} from '../../MatchPopup';
 import CubePicker from '../../../../../common/cube_picker/CubePicker';

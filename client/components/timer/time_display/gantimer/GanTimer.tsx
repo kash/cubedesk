@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {ITimerContext, TimerContext} from '../../Timer';
-import {Bluetooth} from '@phosphor-icons/react';
+import {Bluetooth} from 'phosphor-react';
 import Emblem from '../../../common/emblem/Emblem';
 import {startTimer, endTimer, startInspection, cancelInspection} from '../../helpers/events';
 import {setTimerParams} from '../../helpers/params';

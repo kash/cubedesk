@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import './JoinOptions.scss';
-import {UsersThree, UserPlus} from '@phosphor-icons/react';
+import {UsersThree, UserPlus} from 'phosphor-react';
 import block from '../../../../../styles/bem';
 import {MatchPopupContext, MatchPopupPage} from '../MatchPopup';
 

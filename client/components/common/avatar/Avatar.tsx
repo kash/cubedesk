@@ -1,7 +1,7 @@
 import React from 'react';
 import './Avatar.scss';
 import AvatarImage from './avatar_image/AvatarImage';
-import {CircleWavyCheck} from '@phosphor-icons/react';
+import {CircleWavyCheck} from 'phosphor-react';
 import {Link} from 'react-router-dom';
 import Badges from './badges/Badges';
 import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../../server/schemas/UserAccount.schema';

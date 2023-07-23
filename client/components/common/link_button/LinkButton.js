@@ -1,5 +1,5 @@
 import React from 'react';
-import {CircleNotch} from '@phosphor-icons/react';
+import {CircleNotch} from 'phosphor-react';
 import Error from '../old_error/Error';
 import {Link} from 'react-router-dom';
 

@@ -1,7 +1,7 @@
 import React, {ReactNode, useMemo, useState} from 'react';
 import './MatchOver.scss';
 import block from '../../../../styles/bem';
-import {Sword} from '@phosphor-icons/react';
+import {Sword} from 'phosphor-react';
 import Button from '../../../common/button/Button';
 import Avatar from '../../../common/avatar/Avatar';
 import {useMe} from '../../../../util/hooks/useMe';

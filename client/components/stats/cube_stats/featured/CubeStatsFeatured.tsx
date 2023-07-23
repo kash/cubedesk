@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from 'react';
 import './CubeStatsFeatured.scss';
-import {Timer, Hash, Trophy, CalendarBlank} from '@phosphor-icons/react';
+import {Timer, Hash, Trophy, CalendarBlank} from 'phosphor-react';
 import block from '../../../../styles/bem';
 import NumberBlock from '../../common/number_block/NumberBlock';
 import ScrambleVisual from '../../../modules/scramble/ScrambleVisual';

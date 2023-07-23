@@ -1,7 +1,7 @@
 import React from 'react';
 import './FeatureText.scss';
 import block from '../../../../../styles/bem';
-import {Check} from '@phosphor-icons/react';
+import {Check} from 'phosphor-react';
 import SignUpButton from '../../signup_button/SignUpButton';
 
 const b = block('landing-feature-text');

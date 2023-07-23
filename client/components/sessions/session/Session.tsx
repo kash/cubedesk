@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import './Session.scss';
-import {DotsThreeOutlineVertical} from '@phosphor-icons/react';
+import {DotsThreeOutlineVertical} from 'phosphor-react';
 import {setCubeType, setCurrentSession} from '../../../db/settings/update';
 import {v4 as uuid} from 'uuid';
 import {SortableHandle} from 'react-sortable-hoc';

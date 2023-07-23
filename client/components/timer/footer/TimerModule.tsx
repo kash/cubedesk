@@ -1,5 +1,5 @@
 import React, {ReactNode, useContext} from 'react';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import {TimerModuleDropdownOptions, TimerModuleType} from '../@types/enums';
 import {FooterModuleData, TimerCustomModuleOptions} from '../@types/interfaces';
 import History from '../../modules/history/History';
