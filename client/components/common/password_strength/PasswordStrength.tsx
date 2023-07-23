@@ -36,7 +36,7 @@ interface SingleProps {
 	checked: boolean;
 }
 
-function PasswordCase(props: SingleProps) {
+export function PasswordCase(props: SingleProps) {
 	const {name, checked} = props;
 
 	return (
