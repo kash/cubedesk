@@ -31,19 +31,19 @@ export default function LandingHeader() {
 						<SignUpButton />
 						<div className={b('stats')}>
 							<div className={b('stat')}>
-								<span>25K</span>
+								<span>40K</span>
 								<p>Cubers</p>
 							</div>
 							<div className={b('stat')}>
-								<span>15M</span>
+								<span>25M</span>
 								<p>Solves</p>
 							</div>
 							<div className={b('stat')}>
-								<span>50K</span>
+								<span>100K</span>
 								<p>1v1 Matches</p>
 							</div>
 							<div className={b('stat')}>
-								<span>10+ Years</span>
+								<span>15+ Years</span>
 								<p>Spent Cubing</p>
 							</div>
 						</div>
