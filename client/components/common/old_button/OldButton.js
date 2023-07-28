@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {CircleNotch} from '@phosphor-icons/react';
+import {CircleNotch} from 'phosphor-react';
 import './Button.scss';
 import Error from '../old_error/Error';
 import ConfirmModal from '../confirm_modal/ConfirmModal';

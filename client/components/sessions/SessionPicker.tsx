@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import {setCubeType, setCurrentSession} from '../../db/settings/update';
 import {fetchSessionById, fetchSessions} from '../../db/sessions/query';
 import {fetchLastCubeTypeForSession} from '../../db/solves/query';

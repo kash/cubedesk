@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import './Challenger.scss';
-import {Placeholder, WifiSlash, Check, Clock, X, Trophy} from '@phosphor-icons/react';
+import {Placeholder, WifiSlash, Check, Clock, X, Trophy} from 'phosphor-react';
 import {addEventListener} from '../../../../../util/event_handler';
 import {getTimeString} from '../../../../../util/time';
 import Avatar from '../../../../common/avatar/Avatar';

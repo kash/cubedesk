@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import './Button.scss';
 import {Link} from 'react-router-dom';
-import {CircleNotch} from '@phosphor-icons/react';
+import {CircleNotch} from 'phosphor-react';
 import Error from '../inputs/error/Error';
 import ConfirmModal, {ConfirmModalProps} from '../confirm_modal/ConfirmModal';
 import {openModal} from '../../../actions/general';

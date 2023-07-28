@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './HeaderControl.scss';
-import {MagnifyingGlassPlus, FrameCorners, CrosshairSimple, Keyboard, Plus, X, CaretDown} from '@phosphor-icons/react';
+import {MagnifyingGlassPlus, FrameCorners, CrosshairSimple, Keyboard, Plus, X, CaretDown} from 'phosphor-react';
 import {GlobalHotKeys} from 'react-hotkeys';
 import {setCubeType, setSetting} from '../../../db/settings/update';
 import CubePicker from '../../common/cube_picker/CubePicker';

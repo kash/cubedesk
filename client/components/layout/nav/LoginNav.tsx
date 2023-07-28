@@ -1,5 +1,5 @@
 import React from 'react';
-import {SignIn} from '@phosphor-icons/react';
+import {SignIn} from 'phosphor-react';
 import Button from '../../common/button/Button';
 import {useMe} from '../../../util/hooks/useMe';
 

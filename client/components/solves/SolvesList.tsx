@@ -2,7 +2,7 @@ import React, {ReactNode, useEffect, useState} from 'react';
 import './Solves.scss';
 import CubePicker from '../common/cube_picker/CubePicker';
 import Empty from '../common/empty/Empty';
-import {SortAscending, SortDescending, Share, Funnel} from '@phosphor-icons/react';
+import {SortAscending, SortDescending, Share, Funnel} from 'phosphor-react';
 import SolveListRow from './solve_row/SolveListRow';
 import Loading from '../common/loading/Loading';
 import {numberWithCommas} from '../../util/strings/util';

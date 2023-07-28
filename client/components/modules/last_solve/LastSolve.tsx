@@ -1,7 +1,7 @@
 import React from 'react';
 import './LastSolve.scss';
 import {useDispatch} from 'react-redux';
-import {Info} from '@phosphor-icons/react';
+import {Info} from 'phosphor-react';
 import {openModal} from '../../../actions/general';
 import SolveInfo from '../../solve_info/SolveInfo';
 import Scramble from '../scramble/ScrambleVisual';

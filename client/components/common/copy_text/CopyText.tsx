@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {Copy, Check} from '@phosphor-icons/react';
+import {Copy, Check} from 'phosphor-react';
 import Button, {ButtonProps} from '../button/Button';
 import {toastSuccess} from '../../../util/toast';
 

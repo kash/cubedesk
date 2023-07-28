@@ -1,7 +1,7 @@
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 import './Timer.scss';
-import {ArrowRight} from '@phosphor-icons/react';
+import {ArrowRight} from 'phosphor-react';
 import HeaderControl from './header_control/HeaderControl';
 import TimerFooter from './footer/TimerFooter';
 import TimeDisplay from './time_display/TimeDisplay';

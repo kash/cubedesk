@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import './HistoryModal.scss';
-import {AlignLeft} from '@phosphor-icons/react';
+import {AlignLeft} from 'phosphor-react';
 import block from '../../../../styles/bem';
 import Emblem from '../../../common/emblem/Emblem';
 import History from '../History';

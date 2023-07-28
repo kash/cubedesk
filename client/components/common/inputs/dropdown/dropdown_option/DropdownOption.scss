@@ -4,13 +4,10 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	gap: 4px;
 
 	span {
 		display: table;
-	}
-
-	i {
-		margin-left: 5px;
 	}
 
 	&--on {

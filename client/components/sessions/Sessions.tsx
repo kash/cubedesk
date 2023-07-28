@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import './Sessions.scss';
-import {Plus} from '@phosphor-icons/react';
+import {Plus} from 'phosphor-react';
 import CubePicker from '../common/cube_picker/CubePicker';
 import TimeChart from '../modules/time_chart/TimeChart';
 import History from '../modules/history/History';

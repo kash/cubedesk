@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './SolvesText.scss';
 import block from '../../../styles/bem';
-import {Download} from '@phosphor-icons/react';
+import {Download} from 'phosphor-react';
 import Button, {CommonType} from '../../common/button/Button';
 import CopyText from '../../common/copy_text/CopyText';
 import dayjs from 'dayjs';

@@ -1,7 +1,7 @@
 import React from 'react';
 import './LandingHome.scss';
 import Feature from '../common/feature/Feature';
-import {TreeEvergreen, ArrowFatLineRight, Users, PaintBrushBroad} from '@phosphor-icons/react';
+import {TreeEvergreen, ArrowFatLineRight, Users, PaintBrushBroad} from 'phosphor-react';
 import Settings from './settings/Settings';
 import {resourceUri} from '../../../util/storage';
 import block from '../../../styles/bem';

@@ -3,7 +3,7 @@ import {ColorName, getColorHexValueFromName} from '../../../../shared/colors';
 import {useGeneral} from '../../../util/hooks/useGeneral';
 import {gqlMutateTyped} from '../../api';
 import {AdView, ClickAdViewDocument, CreateAdViewDocument} from '../../../@types/generated/graphql';
-import {ArrowSquareOut} from '@phosphor-icons/react';
+import {ArrowSquareOut} from 'phosphor-react';
 import {useLocation} from 'react-router-dom';
 import {useMe} from '../../../util/hooks/useMe';
 import {isPro} from '../../../util/pro';

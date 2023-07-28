@@ -1,7 +1,7 @@
 import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
 import {v4 as uuid} from 'uuid';
 import './Trainer.scss';
-import {Plus, ArrowRight, Star} from '@phosphor-icons/react';
+import {Plus, ArrowRight, Star} from 'phosphor-react';
 import PageTitle from '../common/page_title/PageTitle';
 import {
 	fetchTrainerAlgorithmCount,

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {X, Plus, Timer, Check} from '@phosphor-icons/react';
+import {X, Plus, Timer, Check} from 'phosphor-react';
 import {addFriendship, removeFriendship} from '../../../actions/account';
 import {toastSuccess} from '../../../util/toast';
 import {gqlMutate, gqlMutateTyped, gqlQueryTyped} from '../../api';

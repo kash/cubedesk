@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {CaretUp, CaretDown} from '@phosphor-icons/react';
+import {CaretUp, CaretDown} from 'phosphor-react';
 import {setSetting} from '../../../db/settings/update';
 import {TimerContext} from '../Timer';
 import './TimerFooter.scss';

@@ -1,16 +1,6 @@
 import React from 'react';
 import './ProFeatureList.scss';
-import {
-	CaretUp,
-	CaretDown,
-	Confetti,
-	Gift,
-	Sword,
-	DiscordLogo,
-	Tree,
-	ChartLineUp,
-	HeartStraight,
-} from '@phosphor-icons/react';
+import {CaretUp, CaretDown, Confetti, Gift, Sword, DiscordLogo, Tree, ChartLineUp, HeartStraight} from 'phosphor-react';
 import block from '../../../../../styles/bem';
 import ProFeature from '../pro_feature/ProFeature';
 import {useToggle} from '../../../../../util/hooks/useToggle';

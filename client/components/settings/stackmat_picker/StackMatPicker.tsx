@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import {setSetting} from '../../../db/settings/update';
 import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import {useSettings} from '../../../util/hooks/useSettings';

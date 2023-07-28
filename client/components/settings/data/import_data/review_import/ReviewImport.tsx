@@ -1,7 +1,7 @@
 import React, {ReactNode, useContext} from 'react';
 import './ReviewImport.scss';
 import block from '../../../../../styles/bem';
-import {X} from '@phosphor-icons/react';
+import {X} from 'phosphor-react';
 import {ImportDataContext} from '../ImportData';
 import Button from '../../../../common/button/Button';
 import {gql} from '@apollo/client/core';

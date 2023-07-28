@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Warning} from '@phosphor-icons/react';
+import {Warning} from 'phosphor-react';
 import './Banned.scss';
 import {getDateFromNow} from '../../../util/dates';
 import Button from '../../common/button/Button';

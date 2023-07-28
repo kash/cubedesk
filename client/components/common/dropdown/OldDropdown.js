@@ -1,6 +1,6 @@
 import React from 'react';
 import './OldDropdown.scss';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import Button from '../old_button/OldButton';
 import InputLegend from '../inputs/input/input_legend/InputLegend';
 

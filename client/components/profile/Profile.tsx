@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import './Profile.scss';
-import {CircleWavyCheck, Plus} from '@phosphor-icons/react';
+import {CircleWavyCheck, Plus} from 'phosphor-react';
 import {gql} from '@apollo/client';
 import {gqlMutate, gqlQuery} from '../api';
 import {PROFILE_FRAGMENT} from '../../util/graphql/fragments';

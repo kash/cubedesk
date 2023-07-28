@@ -15,7 +15,7 @@ import {
 	Wrench,
 	Timer,
 	ArrowRight,
-} from '@phosphor-icons/react';
+} from 'phosphor-react';
 import Notifications from './notifications/Notifications';
 import Logo from '../../common/logo/Logo';
 import MobileNav from './mobile_nav/MobileNav';

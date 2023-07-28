@@ -1,6 +1,6 @@
 import React from 'react';
 import './Notifications.scss';
-import {Bell} from '@phosphor-icons/react';
+import {Bell} from 'phosphor-react';
 import {connect} from 'react-redux';
 import OldDropdown from '../../../common/dropdown/OldDropdown';
 import Loading from '../../../common/loading/Loading';

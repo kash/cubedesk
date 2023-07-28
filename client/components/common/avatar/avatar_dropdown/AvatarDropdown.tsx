@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown, {DropdownProps} from '../../inputs/dropdown/Dropdown';
 import {copyText} from '../../copy_text/CopyText';
-import {CaretDown, User, Copy, Flag, Pen, GearSix} from '@phosphor-icons/react';
+import {CaretDown, User, Copy, Flag, Pen, GearSix} from 'phosphor-react';
 import {toastSuccess} from '../../../../util/toast';
 import {openModal} from '../../../../actions/general';
 import UserView from '../../../admin/manage_user/ManageUser';

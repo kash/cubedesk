@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 import {useDispatch} from 'react-redux';
 import ImportData, {ImportDataType} from './import_data/ImportData';
 import fileDownload from 'js-file-download';

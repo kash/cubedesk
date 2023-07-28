@@ -1,5 +1,5 @@
 import React from 'react';
-import {Star} from '@phosphor-icons/react';
+import {Star} from 'phosphor-react';
 import Button from '../../../common/button/Button';
 import {TrainerAlgorithmExtended} from '../../../../db/trainer/init';
 import {cleanTrainerAlgorithm} from '../../util/clean';

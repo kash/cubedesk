@@ -1,6 +1,6 @@
 import React from 'react';
 import './MobileNav.scss';
-import {List} from '@phosphor-icons/react';
+import {List} from 'phosphor-react';
 import {useRouteMatch} from 'react-router-dom';
 import Logo from '../../../common/logo/Logo';
 import {NAV_LINKS} from '../Nav';

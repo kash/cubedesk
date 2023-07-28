@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {Lock} from '@phosphor-icons/react';
+import {Lock} from 'phosphor-react';
 import Tag from '../tag/Tag';
 
 interface Props {

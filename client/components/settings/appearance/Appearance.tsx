@@ -11,7 +11,7 @@ import {useSettings} from '../../../util/hooks/useSettings';
 import Button from '../../common/button/Button';
 import ThemeOptions from './theme_options/ThemeOptions';
 import {AllSettings, getDefaultSetting} from '../../../db/settings/query';
-import {CaretDown} from '@phosphor-icons/react';
+import {CaretDown} from 'phosphor-react';
 
 const DEFAULT_FONT_FAMILY = 'Roboto Mono';
 

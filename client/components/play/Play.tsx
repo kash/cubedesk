@@ -1,5 +1,5 @@
 import React from 'react';
-import {Lightning, Sword} from '@phosphor-icons/react';
+import {Lightning, Sword} from 'phosphor-react';
 import './Play.scss';
 import {GameType} from '../../../shared/match/consts';
 import HeadToHead from './logic/HeadToHead';
