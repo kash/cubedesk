@@ -10,7 +10,8 @@
 		color: rgb(var(--secondary-color));
 		padding-right: 5px;
 		flex-direction: row;
-		align-items: flex-start;
+		align-items: center;
+		gap: 5px;
 
 		i {
 			display: flex;
