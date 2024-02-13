@@ -39,7 +39,6 @@ async function getAirtableResults(table: string, offset?: string): Promise<Airta
 	}
 
 	const bearerToken = process.env.AIRTABLE_BEARER_TOKEN;
-
 	const options = {
 		url,
 		json: true,
