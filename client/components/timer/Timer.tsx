@@ -112,7 +112,7 @@ export default function Timer(props: TimerProps) {
 		timerFooterAd = (
 			<div className={b('get-pro')}>
 				<Link to="/account/pro">
-					Get CubeDesk Pro for $5/mo <ArrowRight weight="fill" />
+					Support development and get Pro <ArrowRight weight="fill" />
 				</Link>
 			</div>
 		);

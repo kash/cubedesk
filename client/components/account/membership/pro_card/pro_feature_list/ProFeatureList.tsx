@@ -67,13 +67,6 @@ export default function ProFeatureList() {
 				/>
 				<ProFeature
 					hideDetails={hideDetails}
-					iconColor="rgb(var(--warning-color))"
-					icon={<Gift weight="fill" />}
-					name="Monthly giveaways"
-					description="All Pros get entered into a monthly giveaway with lots of prizes. From gift cards to bluetooth timers to mystery prizes!"
-				/>
-				<ProFeature
-					hideDetails={hideDetails}
 					iconColor="rgb(var(--success-color))"
 					icon={<Confetti weight="fill" />}
 					name="And more!"
