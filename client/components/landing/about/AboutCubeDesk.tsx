@@ -41,7 +41,7 @@ export default function AboutCubeDesk() {
 				<img src={resourceUri('/images/landing/about/about_desktop_v1.png')} alt="First version of CubeDesk" />
 				<p>
 					Since I had made CubeDesk just for myself, it lacked a ton of functionality that real users would
-					expected. Also, it had a bunch of bugs that I had learned to deal with. So, in order to feel good
+					expect. Also, it had a bunch of bugs that I had learned to deal with. So, in order to feel good
 					about releasing an actual app, I decided to spend some time cleaning up the code and polishing the
 					design.
 				</p>
