@@ -100,7 +100,7 @@
 		"hex-to-rgba": "^2.0.1",
 		"html-minifier": "^4.0.0",
 		"ignore-styles": "^5.0.1",
-		"ioredis": "^5.0.5",
+		"ioredis": "^5.3.2",
 		"jimp": "^0.16.1",
 		"js-file-download": "^0.4.12",
 		"json-stable-stringify": "^1.0.1",

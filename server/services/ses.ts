@@ -1,5 +1,5 @@
 import {SendEmailResponse, SES} from '@aws-sdk/client-ses';
-import path from 'path'
+import path from 'path';
 import fs from 'fs';
 import Handlebars from 'handlebars';
 import mjml2html from 'mjml';
@@ -9,13 +9,13 @@ import {UserAccount} from '../schemas/UserAccount.schema';
 const ses = new SES({region: 'us-west-2'});
 
 type MjmlTemplate = {
-	[key: string]: string
-}
+	[key: string]: string;
+};
 const mjmlTemplates: MjmlTemplate = {};
 
 type EmailTemplateVars = {
-	[key: string]: any
-}
+	[key: string]: any;
+};
 
 export function initMjmlTemplates(): void {
 	const directoryPath = path.join(__dirname, '/../resources/mjml_templates');
@@ -28,14 +28,19 @@ export function initMjmlTemplates(): void {
 	});
 }
 
-export async function sendEmailWithTemplate(user: UserAccount, subject: string, template: string, vars: EmailTemplateVars): Promise<SendEmailResponse> {
+export async function sendEmailWithTemplate(
+	user: UserAccount,
+	subject: string,
+	template: string,
+	vars: EmailTemplateVars
+): Promise<SendEmailResponse> {
 	let variables = vars || {};
 	const source = mjmlTemplates[template];
 
 	variables = {
 		user,
-		...variables
-	}
+		...variables,
+	};
 
 	const templateBody = Handlebars.compile(source);
 	const body = templateBody(variables);

@@ -22,6 +22,10 @@ mutation sendFriendshipRequest($toUserId: String) {
 	}
 }
 
+mutation unsubEmails($unsubId: String!) {
+	unsubEmails(unsubId: $unsubId)
+}
+
 mutation createAdView($input: CreateAdViewInput) {
 	createAdView(input: $input) {
 		...AdViewFragment
