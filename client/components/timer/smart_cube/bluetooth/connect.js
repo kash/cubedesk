@@ -18,6 +18,7 @@ export default class Connect extends SmartCube {
 					{namePrefix: 'Mi Smart Magic Cube'},
 					{namePrefix: 'GAN'},
 					{namePrefix: 'Gan'},
+					{namePrefix: 'gan'},
 					{namePrefix: 'GoCube'},
 					{namePrefix: 'Rubiks'},
 
