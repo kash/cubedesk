@@ -67,7 +67,6 @@ export default function TimerScramble() {
 
 	function handleScrambleChange(e) {
 		e.preventDefault();
-
 		setTimerParam('scramble', e.target.value);
 	}
 
