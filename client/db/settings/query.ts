@@ -27,6 +27,7 @@ export interface AllSettings {
 	cube_type: string;
 	session_id: string;
 	custom_cube_types: CustomCubeType[];
+	locked_scramble: string;
 
 	// Local
 	timer_type: 'keyboard' | 'smart' | 'stackmat' | 'gantimer';
@@ -75,6 +76,7 @@ const defaultSettings: AllSettings = {
 	beta_tester: false,
 	cube_type: '333',
 	session_id: null,
+	locked_scramble: null,
 	custom_cube_types: [],
 
 	timer_type: 'keyboard',
