@@ -13,6 +13,7 @@ import SmartScramble from './smart_scramble/SmartScramble';
 import {setTimerParam} from '../../helpers/params';
 import {smartCubeSelected} from '../../helpers/util';
 import {useSettings} from '../../../../util/hooks/useSettings';
+import {setSetting} from '../../../../db/settings/update';
 
 const b = block('timer-scramble');
 
@@ -32,13 +33,23 @@ export default function TimerScramble() {
 
 	const {editScramble, scrambleLocked, notification, hideScramble, timeStartedAt} = context;
 	let scramble = context.scramble;
+	const lockedScramble = useSettings('locked_scramble');
 
 	useEffect(() => {
-		resetScramble(context);
+		if (lockedScramble && !timeStartedAt) {
+			setTimerParam('scramble', lockedScramble);
+			setTimerParam('scrambleLocked', true);
+		} else {
+			resetScramble(context);
+		}
 	}, [cubeType, sessionId]);
 
 	function toggleScrambleLock() {
 		setTimerParam('scrambleLocked', !scrambleLocked);
+
+		const lockedScramble = scrambleLocked ? null : scramble;
+
+		setSetting('locked_scramble', lockedScramble);
 	}
 
 	function toggleEditScramble() {
@@ -53,6 +64,7 @@ export default function TimerScramble() {
 
 	function handleScrambleChange(e) {
 		e.preventDefault();
+
 		setTimerParam('scramble', e.target.value);
 	}
 
