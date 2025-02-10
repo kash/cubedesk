@@ -45,6 +45,9 @@ export default function TimerScramble() {
 	}, [cubeType, sessionId]);
 
 	function toggleScrambleLock() {
+		if (editScramble) {
+			setTimerParam('editScramble', false);
+		}
 		setTimerParam('scrambleLocked', !scrambleLocked);
 
 		const lockedScramble = scrambleLocked ? null : scramble;
