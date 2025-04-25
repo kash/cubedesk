@@ -59,7 +59,8 @@ export default class EditProfile extends React.Component {
 			return;
 		}
 
-		if (youtubeLink && !/https:\/\/(www\.)?youtube\.com\/(user|channel|u|c)\/.+/.test(youtubeLink)) {
+		if (youtubeLink && (!/https:\/\/(www\.)?youtube\.com\/(user|channel|u|c)\/.+/.test(youtubeLink)
+		   		|| !/https:\/\/(www\.)?youtube\.com\/@.+/.test(youtubeLink))) {
 			this.setState({
 				error: 'Invalid YouTube link',
 			});
