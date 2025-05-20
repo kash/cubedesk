@@ -1,4 +1,4 @@
-FROM node:20.19.2-slim AS builder
+FROM node:20.19-slim AS builder
 
 WORKDIR /app
 
@@ -66,7 +66,7 @@ RUN rm -rf ./client ./server ./shared ./test ./dist ./public && \
     mv ./build/client ./client && \
     mv ./build/shared ./shared
 
-FROM node:20.19.2-slim
+FROM node:20.19-slim
 
 ENV NODE_ENV=production
 RUN apt-get update && \
