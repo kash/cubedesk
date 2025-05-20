@@ -16,7 +16,7 @@
 		"deploy": "graphql-codegen && yarn build && yarn compile-server && yarn compile-client && yarn compile-shared"
 	},
 	"engines": {
-		"node": "16.*"
+		"node": "20.x"
 	},
 	"jest": {
 		"preset": "ts-jest",
@@ -46,7 +46,6 @@
 		"@elastic/elasticsearch": "^8.2.1",
 		"@graphql-tools/schema": "^8.3.1",
 		"@graphql-typed-document-node/core": "^3.1.2",
-		"phosphor-react": "^1.4.1",
 		"@prisma/client": "^4.11.0",
 		"@sentry/browser": "^6.3.5",
 		"@sentry/integrations": "^7.8.1",
@@ -61,6 +60,7 @@
 		"@visx/responsive": "^1.3.0",
 		"@visx/scale": "^1.3.0",
 		"@visx/shape": "^1.3.0",
+		"aes-js": "^3.1.2",
 		"ajv": "^8.6.2",
 		"ajv-errors": "^3.0.0",
 		"apollo-server": "^2.23.0",
@@ -92,7 +92,7 @@
 		"events": "^3.3.0",
 		"express": "^4.16.3",
 		"flat": "^5.0.2",
-		"gan-web-bluetooth": "^1.0.3",
+		"gan-web-bluetooth": "^3.0.2",
 		"graphql": "15.3.0",
 		"graphql-scalars": "^1.9.0",
 		"graphql-upload": "^12.0.0",
@@ -112,6 +112,7 @@
 		"mjml": "^4.10.3",
 		"nanoid": "^3.3.4",
 		"node-fetch": "^2.6.0",
+		"phosphor-react": "^1.4.1",
 		"process": "^0.11.10",
 		"react": "^17.0.2",
 		"react-beforeunload": "^2.5.3",
