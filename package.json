@@ -16,7 +16,7 @@
 		"deploy": "graphql-codegen && yarn build && yarn compile-server && yarn compile-client && yarn compile-shared"
 	},
 	"engines": {
-		"node": "16.*"
+		"node": "20.x"
 	},
 	"jest": {
 		"preset": "ts-jest",
