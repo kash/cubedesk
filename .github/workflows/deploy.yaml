@@ -76,7 +76,7 @@ jobs:
 
             - uses: actions/setup-node@v2
               with:
-                  node-version: '16.13.0'
+                  node-version: '20.19.2'
                   cache: 'npm'
 
             - name: Get timestamp
