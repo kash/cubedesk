@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/common/horizontal_nav/HorizontalNav.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-common-horizontal-nav__body{display:flex;flex-direction:row;flex-wrap:wrap}.cd-common-horizontal-nav__body>*:not(:last-of-type){margin-right:13px}"],"names":[],"mappings":"AAAA,8BAAiC,4DAA+E"}

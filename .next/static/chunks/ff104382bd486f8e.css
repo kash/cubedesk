@@ -1,0 +1,3 @@
+:root{--link-color:36,107,253}.cd-password-strength{flex-direction:column;align-items:flex-start;margin:5px 0;display:flex}.cd-password-strength__case{color:rgb(var(--text-color));opacity:.5;flex-direction:row;align-items:center;gap:5px;margin-bottom:4px;font-size:.9rem;display:flex}.cd-password-strength__case i{margin-right:5px;display:none;position:relative;top:1px}.cd-password-strength__case--checked{color:#2dbd61;opacity:1}.cd-password-strength__case--checked i{display:unset}
+
+/*# sourceMappingURL=491ee6b484e9ed36.css.map*/

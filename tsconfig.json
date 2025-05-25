@@ -1,19 +1,45 @@
 {
-	"compilerOptions": {
-		"target": "es2018",
-		"module": "commonjs",
-		"jsx": "react",
-		"noEmit": false,
-		"checkJs": false,
-		"allowJs": true,
-		"outDir": "server-build",
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"noImplicitAny": false,
-		"moduleResolution": "node",
-		"lib": ["es2018", "esnext.asynciterable", "DOM"],
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true
-	}
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noEmit": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "allowUnreachableCode": true,
+    "jsx": "preserve",
+    "incremental": true,
+      "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "isolatedModules": true,
+    "target": "ES2017",
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,0 +1,3 @@
+module.exports={64120:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({default:()=>i});var d=a.i(669044),e=a.i(951062),f=a.i(755177),g=a.i(135898),h=a.i(486036);function i(){let a=(0,f.useSettings)("cube_type"),b=(0,f.useSettings)("session_id");return(0,g.useSolveDb)(),(0,d.jsxs)(d.Fragment,{children:[(0,d.jsx)(h.default,{path:"/demo",title:"CubeDesk Demo"}),(0,d.jsx)(e.default,{demoMode:!0,solvesFilter:{from_timer:!0,cube_type:a,session_id:b}}),";"]})}},621868:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({default:()=>f});var d=a.i(669044),e=a.i(64120);function f(){return(0,d.jsx)(e.default,{})}}};
+
+//# sourceMappingURL=src_aa0082ee._.js.map

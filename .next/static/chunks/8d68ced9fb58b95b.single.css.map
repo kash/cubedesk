@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/settings/appearance/layout_selector/LayoutSelector.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-settings-layout-selector{display:flex;flex-direction:column;align-items:flex-end}.cd-settings-layout-selector>*{margin-bottom:15px}"],"names":[],"mappings":"AAAA,8BAAiC,qFAAqF"}

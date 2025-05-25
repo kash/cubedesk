@@ -1,0 +1,17 @@
+const CHUNK_PUBLIC_PATH = "server/app/community/friends/received/page.js";
+const runtime = require("../../../../chunks/ssr/[turbopack]_runtime.js");
+runtime.loadChunk("server/chunks/ssr/[root-of-the-server]__afbe91ad._.js");
+runtime.loadChunk("server/chunks/ssr/b8e5e_next_dist_180274e9._.js");
+runtime.loadChunk("server/chunks/ssr/[root-of-the-server]__16b01ba5._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules__pnpm_8e062e71._.js");
+runtime.loadChunk("server/chunks/ssr/b8e5e_next_dist_client_components_forbidden-error_8710c9b4.js");
+runtime.loadChunk("server/chunks/ssr/b8e5e_next_dist_client_components_unauthorized-error_d36a9a3d.js");
+runtime.loadChunk("server/chunks/ssr/_dc3c5a12._.js");
+runtime.loadChunk("server/chunks/ssr/[root-of-the-server]__c728cf9c._.js");
+runtime.loadChunk("server/chunks/ssr/_b014f14e._.js");
+runtime.loadChunk("server/chunks/ssr/_81613cea._.js");
+runtime.loadChunk("server/chunks/ssr/_cb9409db._.js");
+runtime.loadChunk("server/chunks/ssr/_ec8aa92f._.js");
+runtime.getOrInstantiateRuntimeModule(423710, CHUNK_PUBLIC_PATH);
+runtime.getOrInstantiateRuntimeModule(274676, CHUNK_PUBLIC_PATH);
+module.exports = runtime.getOrInstantiateRuntimeModule(274676, CHUNK_PUBLIC_PATH).exports;

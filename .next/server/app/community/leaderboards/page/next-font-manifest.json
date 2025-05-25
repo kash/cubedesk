@@ -1,0 +1,11 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/src/app/community/leaderboards/page": [
+      "static/media/QGYvz_MVcBeNP4NJtEtqUYLknw-s.p.17653016.woff2",
+      "static/media/L0x5DF4xlVMF_BfR8bXMIjhLq3_cXbKD-s.p.f7723675.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}

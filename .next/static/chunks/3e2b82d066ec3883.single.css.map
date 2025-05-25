@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/sessions/new_session/CreateNewSession.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-create-new-session{display:flex;flex-direction:column;align-items:flex-start}"],"names":[],"mappings":"AAAA,8BAAiC"}

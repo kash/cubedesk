@@ -1,0 +1,5 @@
+:root{--link-color:36,107,253}.cd-account-linked-accounts>*{max-width:300px;margin-bottom:25px}
+
+:root{--link-color:36,107,253}.cd-integration{flex-direction:column;align-items:center;width:100%;display:flex;position:relative}.cd-integration__name{flex-direction:column;align-items:center;display:flex}.cd-integration__name img{width:70px;height:auto}.cd-integration__name h4{opacity:.9;margin-top:10px}.cd-integration__description{opacity:.7;margin:5px 0 10px}.cd-integration__actions{flex-direction:column;align-items:center;width:100%;display:flex}.cd-integration__actions>:not(:last-child){margin-bottom:5px}
+
+/*# sourceMappingURL=43d6d522289886fb.css.map*/

@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/stats/common/sub_stats/SubStats.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-sub-stats{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3, 1fr);grid-gap:10px;height:100%}"],"names":[],"mappings":"AAAA,8BAAiC"}

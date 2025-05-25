@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/landing/Landing.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-landing{padding-top:50px;background-color:#fff;width:100%;box-sizing:border-box;height:100%}.cd-landing-features{width:100%}"],"names":[],"mappings":"AAAA,8BAAiC,gGAAgG"}

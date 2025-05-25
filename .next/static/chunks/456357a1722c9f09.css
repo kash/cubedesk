@@ -1,0 +1,3 @@
+.cd-common-pagination{width:100%;max-width:700px;margin:30px auto 50px}.cd-common-pagination__header{flex-direction:row;justify-content:flex-start;align-items:flex-end;width:100%;margin:40px 0 10px;display:flex}.cd-common-pagination__header>*{width:100%}.cd-common-pagination__body{flex-direction:column;align-items:center;display:flex}.cd-common-pagination__body>span{color:rgb(var(--text-color));opacity:.6;text-align:left;width:100%;margin-bottom:7px;font-size:.9rem;display:table}.cd-common-pagination__list{flex-direction:column;width:100%;display:flex}.cd-common-pagination__pagination{flex-direction:row;align-items:center;margin:20px auto 0;display:flex}.cd-common-pagination__pagination p{margin:0 20px}
+
+/*# sourceMappingURL=500b31dd27ab7d18.css.map*/

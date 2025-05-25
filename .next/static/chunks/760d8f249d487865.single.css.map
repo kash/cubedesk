@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/stats/common/stat_module/StatModule.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-stat-module{background-color:rgb(var(--module-color));border-radius:20px;padding:25px;width:100%;box-sizing:border-box}"],"names":[],"mappings":"AAAA,8BAAiC"}

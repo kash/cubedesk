@@ -1,0 +1,3 @@
+:root{--link-color:36,107,253}.cd-trainer__filter{flex-direction:row;display:flex}.cd-trainer__filter>*{margin-right:10px}.cd-trainer__create-custom{position:absolute;top:0;right:0}.cd-trainer__algos{grid-gap:20px;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));display:grid}.cd-trainer__algos--empty{grid-template-columns:1fr!important}.cd-trainer__header{flex-direction:row;justify-content:space-between;align-items:flex-start;display:flex}
+
+/*# sourceMappingURL=b24578ad24c360dc.css.map*/

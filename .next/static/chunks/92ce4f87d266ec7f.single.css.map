@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/timer/time_display/start_instructions/StartInstructions.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-start-instructions{width:100%;text-align:center;color:rgba(var(--text-color), 0.5);font-size:.88rem}.cd-start-instructions span{color:inherit}"],"names":[],"mappings":"AAAA,8BAAiC,sGAAwG"}

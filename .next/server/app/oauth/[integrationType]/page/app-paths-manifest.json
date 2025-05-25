@@ -1,0 +1,3 @@
+{
+  "/oauth/[integrationType]/page": "app/oauth/[integrationType]/page.js"
+}

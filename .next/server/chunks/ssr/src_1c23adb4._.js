@@ -1,0 +1,3 @@
+module.exports={349281:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({logOut:()=>e});var d=a.i(639223);async function e(){try{await d.api.userAccount.logOut.mutate()}catch(a){}window.location.href="/"}},793706:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({default:()=>f});var d=a.i(236348),e=a.i(349281);function f(){return(0,d.useEffect)(()=>{(0,e.logOut)()},[]),null}}};
+
+//# sourceMappingURL=src_1c23adb4._.js.map

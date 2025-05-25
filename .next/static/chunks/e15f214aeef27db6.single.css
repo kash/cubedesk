@@ -1,0 +1,2 @@
+:root{--link-color:36,107,253}.cd-elo-change{flex-direction:column;align-items:center;margin:15px 0 5px;display:flex}.cd-elo-change>span{display:table}.cd-elo-change__elo{opacity:0;color:rgb(var(--text-color));margin-bottom:5px;font-size:2rem;font-weight:700;transition:all 1s ease-in-out}.cd-elo-change__elo--animating{opacity:1;transition:all 1s ease-in-out}.cd-elo-change__change{opacity:.9;color:rgb(var(--success-color));font-size:.95rem;font-weight:700}.cd-elo-change__change--loss{color:rgb(var(--warning-color))}
+/*# sourceMappingURL=6e70f0a1811f47bb.single.css.map*/

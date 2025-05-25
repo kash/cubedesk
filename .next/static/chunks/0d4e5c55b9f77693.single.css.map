@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/stats/cube_stats/averages/CubeStatAverages.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-cube-stat-avg{display:grid;grid-auto-rows:1fr}.cd-cube-stat-avg>*:nth-child(odd){background-color:rgba(var(--theme-background-opposite), 0.05)}"],"names":[],"mappings":"AAAA,8BAAiC,kDAAkD"}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/solve_info/notes_info/NotesInfo.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-solve-info-notes i{color:rgb(var(--text-color))}"],"names":[],"mappings":"AAAA,8BAAiC"}

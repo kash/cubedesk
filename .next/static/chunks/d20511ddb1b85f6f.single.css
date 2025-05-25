@@ -1,0 +1,2 @@
+:root{--link-color:36,107,253}.cd-manual-time-entry{border:2px solid rgb(var(--button-color));color:rgb(var(--text-color));box-sizing:border-box;text-align:center;background-color:#0000;border-radius:8px;width:95%;max-width:600px;margin:5px auto;padding:0 2px;font-family:Roboto Mono,monospace;font-size:4.5rem;font-weight:500;transition:all .1s ease-in-out}.cd-manual-time-entry:disabled{opacity:.3}.cd-manual-time-entry--error{border:2px solid rgb(var(--error-color))!important}
+/*# sourceMappingURL=88dc17545e1ff32d.single.css.map*/

@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/stats/cube_stats/CubeStats.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-cube-stats{width:100%;display:grid;grid-template-columns:repeat(auto-fill, minmax(500px, 1fr));grid-auto-rows:350px;grid-column-gap:30px;grid-row-gap:30px}"],"names":[],"mappings":"AAAA,8BAAiC"}

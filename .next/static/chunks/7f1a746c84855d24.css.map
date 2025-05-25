@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/settings/setting/section/SettingSection.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-setting-section>.cd-setting-row:not(:first-child){padding-left:20px}.cd-setting-section>.cd-setting-section{border-bottom:0}"],"names":[],"mappings":"AAAA,8BAAiC,wEAAwE"}

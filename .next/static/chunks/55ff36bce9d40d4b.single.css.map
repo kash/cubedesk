@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/common/inputs/error/Error.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-common-error{display:table;font-size:.85rem;color:#e53935;font-family:\"Lato\",\"Helvetica Neue\",Helvetica,Roboto,Arial,sans-serif;margin-top:5px}"],"names":[],"mappings":"AAAA,8BAAiC"}

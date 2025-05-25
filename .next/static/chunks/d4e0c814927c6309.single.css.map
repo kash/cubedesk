@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/play/target/challengers/Challengers.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-timer-challengers{width:100%;height:100%;display:grid;grid-gap:.5rem;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr))}"],"names":[],"mappings":"AAAA,8BAAiC"}

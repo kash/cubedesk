@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/modules/time_chart/TimeChart.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-time-chart{transition:all .1s ease-in-out;width:100%;height:100%;max-height:100%;padding-left:20px;box-sizing:border-box}.cd-time-chart svg{overflow:visible}"],"names":[],"mappings":"AAAA,8BAAiC,6HAA6H"}

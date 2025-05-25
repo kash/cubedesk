@@ -1,0 +1,2 @@
+:root{--link-color:36,107,253}.cd-chat-message{flex-direction:row;align-items:flex-start;display:flex}.cd-chat-message__left{width:40px}.cd-chat-message__right{width:calc(100% - 40px)}.cd-chat-message__right b{color:rgb(var(--text-color));margin-bottom:8px;font-size:.95rem;font-weight:700;position:relative;top:-2px}.cd-chat-message__right p{word-break:break-word;margin:0}.cd-chat-message__right>p:not(:last-of-type){margin-bottom:3px}
+/*# sourceMappingURL=e531663a597d9475.single.css.map*/

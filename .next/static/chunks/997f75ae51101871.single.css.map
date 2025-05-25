@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/common/inputs/input/input_info/InputInfo.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-common-info{opacity:.6;color:rgb(var(--text-color));display:table;font-family:\"Lato\",\"Helvetica Neue\",Helvetica,Roboto,Arial,sans-serif;font-size:.85rem}"],"names":[],"mappings":"AAAA,8BAAiC"}

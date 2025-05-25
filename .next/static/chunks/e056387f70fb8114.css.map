@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/account/Account.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-account{width:100%}.cd-account>div{margin-top:15px;width:100%;max-width:400px}.cd-account-nav{max-width:unset !important}"],"names":[],"mappings":"AAAA,8BAAiC,uBAAuB,2DAA2D"}

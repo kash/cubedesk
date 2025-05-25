@@ -1,0 +1,10 @@
+module.exports={950529:a=>{"use strict";var{g:b,__dirname:c}=a;function d(a,b){return{type:"SET_SSR_VALUE",payload:{key:a,value:b}}}function e(a,b){return{type:"SET_SSR_VALUE",payload:{key:a,value:b}}}a.s({setSsrTempSolve:()=>d,setSsrValue:()=>e})},550041:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({useSsr:()=>g}),a.i(375719);var d=a.i(766839),e=a.i(928244),f=a.i(950529);function g(a){let b=(0,d.useDispatch)(),c=(0,e.useSelector)(a=>a?.ssr),g=null;return a&&a in c&&(g=c[a]),[g,function(c){b((0,f.setSsrValue)(a,c))}]}},425990:a=>{"use strict";var{g:b,__dirname:c}=a;{a.s({default:()=>o,prefetchSolveData:()=>n});var d=a.i(669044),e=a.i(950529),f=a.i(137782);(()=>{let a=Error("Cannot find module '../../lib/util/graphql/fragments'");throw a.code="MODULE_NOT_FOUND",a})(),(()=>{let a=Error("Cannot find module '../api'");throw a.code="MODULE_NOT_FOUND",a})();var g=a.i(480713),h=a.i(486036),i=a.i(492163),j=a.i(96629),k=a.i(550041),l=a.i(318058);let b=(0,a.i(105395).default)("solve-page");async function m(a){let b=f.gql`
+		${SOLVE_WITH_USER_FRAGMENT}
+		query Query($shareCode: String) {
+			solveByShareCode(shareCode: $shareCode) {
+				...SolveWithUserFragment
+			}
+		}
+	`;return(await gqlQuery(b,{shareCode:a},"no-cache")).data.solveByShareCode}async function n(a,b){let c=b.params.shareCode,d=await m(c);return a.dispatch((0,e.setSsrValue)(c,d))}function o(){let a=(0,l.useRouteMatch)().params.shareCode,[c]=(0,k.useSsr)(a),e=(0,j.getCubeTypeInfoById)(c.cube_type),f=(0,i.getTimeString)(c.time),m=e.name,n=c.user.username;return(0,d.jsxs)("div",{className:b(),children:[(0,d.jsx)(h.default,{path:`/solve/${a}`,title:`${(0,i.getTimeString)(c.time)} Solve for ${e.name} by ${n} | CubeDesk`,description:`View the details of this ${f} ${m} solve by ${n}. CubeDesk is the most advanced speedcubing timer, analytics, and trainer application.`}),(0,d.jsx)("div",{className:b("body"),children:(0,d.jsx)(g.default,{disabled:!0,solve:c,solveId:c?.id})})]})}}},633002:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({default:()=>f});var d=a.i(669044),e=a.i(425990);function f(){return(0,d.jsx)(e.default,{})}}};
+
+//# sourceMappingURL=src_ac7a766d._.js.map

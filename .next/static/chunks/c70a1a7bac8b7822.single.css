@@ -1,0 +1,2 @@
+:root{--link-color:36,107,253}.cd-horizontal-line{background-color:rgba(var(--theme-background-opposite),.25);opacity:.7;border-radius:2px;width:100%;height:3px;margin:25px 0;display:flex;position:relative}.cd-horizontal-line span{background-color:rgb(var(--text-color));color:rgb(var(--button-color));border-radius:10px;justify-content:center;align-items:center;height:20px;padding:0 6px;font-size:.8rem;font-weight:600;display:flex;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+/*# sourceMappingURL=13efccfa76ca77e0.single.css.map*/

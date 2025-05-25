@@ -1,0 +1,5 @@
+:root{--link-color:36,107,253}.cd-create-new-session{flex-direction:column;align-items:flex-start;display:flex}
+
+:root{--link-color:36,107,253}.cd-time-distro{box-sizing:border-box;width:100%;height:100%;transition:all .1s ease-in-out;position:relative}.cd-time-distro__buckets{opacity:0;z-index:1000;transition:all .1s ease-in-out;position:absolute;top:5px;right:5px}.cd-time-distro>div:last-of-type{display:flex}.cd-time-distro:hover .cd-time-distro__buckets{opacity:1}
+
+/*# sourceMappingURL=5007ed841fccabba.css.map*/

@@ -1,0 +1,3 @@
+(globalThis.TURBOPACK=globalThis.TURBOPACK||[]).push(["object"==typeof document?document.currentScript:void 0,{294223:t=>{"use strict";var{g:u,__dirname:c}=t;t.s({logOut:()=>i});var o=t.i(981675);async function i(){try{await o.api.userAccount.logOut.mutate()}catch(t){}window.location.href="/"}},860718:t=>{"use strict";var{g:u,__dirname:c}=t;t.s({default:()=>a});var o=t.i(498343),i=t.i(294223);function a(){return(0,o.useEffect)(()=>{(0,i.logOut)()},[]),null}}}]);
+
+//# sourceMappingURL=c37c82bf9dca4904.js.map

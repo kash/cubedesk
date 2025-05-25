@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/common/loading/Loading.scss.css"],"sourcesContent":[".cd-common__loading{width:100%;min-height:100px;display:flex;justify-content:center;align-items:center}.cd-common__loading i{font-size:1.3rem;color:rgb(var(--text-color))}"],"names":[],"mappings":"AAAA,uGAAuG"}

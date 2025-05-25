@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/profile/edit_profile/EditProfile.scss.css"],"sourcesContent":[".cd-profile__edit__bio{grid-column:span 2}.cd-profile__edit__grid{margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;grid-gap:20px}"],"names":[],"mappings":"AAAA,0CAA0C"}

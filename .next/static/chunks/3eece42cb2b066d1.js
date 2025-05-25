@@ -1,0 +1,3 @@
+(globalThis.TURBOPACK=globalThis.TURBOPACK||[]).push(["object"==typeof document?document.currentScript:void 0,{242009:s=>{"use strict";var{g:e,__dirname:l}=s;{s.s({default:()=>a});var i=s.i(168111);let e=(0,s.i(45231).default)("page-title");function a(s){let{pageName:l,children:a,icon:t}=s,c=null;return t&&(c=(0,i.jsx)("i",{className:t})),(0,i.jsxs)("div",{className:e(),children:[(0,i.jsxs)("h1",{className:e("title"),children:[c,l]}),(0,i.jsxs)("div",{className:e("lines"),children:[(0,i.jsx)("div",{className:e("line")}),(0,i.jsx)("div",{className:e("line",{secondary:!0})})]}),a]})}}}}]);
+
+//# sourceMappingURL=6013f23631929d4d.js.map

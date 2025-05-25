@@ -1,0 +1,3 @@
+module.exports={563681:function(a){var{g:b,__dirname:c,m:d,e:e}=a;d.exports=a.r(844732)},337773:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({default:()=>h});var d=a.i(669044),e=a.i(951062),f=a.i(755177),g=a.i(135898);function h(){let a=(0,f.useSettings)("cube_type"),b=(0,f.useSettings)("session_id");return(0,g.useSolveDb)(),(0,d.jsx)(e.default,{solvesFilter:{session_id:b,from_timer:!0,cube_type:a}})}},429417:a=>{"use strict";var{g:b,__dirname:c}=a;a.s({default:()=>h});var d=a.i(669044),e=a.i(337773),f=a.i(712177);a.i(563681);var g=a.i(236348);function h(){let a=(0,f.useMe)();return((0,g.useEffect)(()=>{},[a]),a)?(0,d.jsx)(e.default,{}):null}}};
+
+//# sourceMappingURL=_1d4e76aa._.js.map

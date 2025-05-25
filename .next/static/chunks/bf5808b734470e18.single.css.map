@@ -1,0 +1,1 @@
+{"version":3,"sources":["turbopack:///[project]/src/components/solve_info/stats_info/ll_trainer/LLTrainer.scss.css"],"sourcesContent":[":root{--link-color: 36, 107, 253}.cd-solve-info-ll-trainer{display:flex;flex-direction:row;align-items:flex-start}.cd-solve-info-ll-trainer__row{width:50%}"],"names":[],"mappings":"AAAA,8BAAiC,iFAAiF"}
