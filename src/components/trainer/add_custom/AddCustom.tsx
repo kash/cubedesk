@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import Input from '../../common/inputs/input/Input';
+import {Button} from '@/components/ui/button';
+import {api} from '@/trpc/react';
 import './AddCustom.scss';
 import Cube from 'cubejs';
-import HorizontalNav from '../../common/horizontal_nav/HorizontalNav';
-import CubeBuilder from './cube_builder/CubeBuilder';
-import Checkbox from '../../common/checkbox/Checkbox';
-import Loading from '../../common/loading/Loading';
-import {useToggle} from '../../../lib/util/hooks/useToggle';
-import {useInput} from '../../../lib/util/hooks/useInput';
-import ModalHeader from '../../common/modal/modal_header/ModalHeader';
-import TextArea from '../../common/inputs/textarea/TextArea';
-import Button from '../../common/button/Button';
+import React, {useEffect, useState} from 'react';
 import {createCustomTrainerDb, updateCustomTrainerDb} from '../../../lib/db/trainer/custom';
-import {IModalProps} from '../../common/modal/Modal';
+import {useInput} from '../../../lib/util/hooks/useInput';
+import {useToggle} from '../../../lib/util/hooks/useToggle';
 import block from '../../../styles/bem';
+import Checkbox from '../../common/checkbox/Checkbox';
 import HorizontalLine from '../../common/horizontal_line/HorizontalLine';
-import { api } from '@/trpc/react';
+import HorizontalNav from '../../common/horizontal_nav/HorizontalNav';
+import Input from '../../common/inputs/input/Input';
+import TextArea from '../../common/inputs/textarea/TextArea';
+import Loading from '../../common/loading/Loading';
+import {IModalProps} from '../../common/modal/Modal';
+import ModalHeader from '../../common/modal/modal_header/ModalHeader';
+import CubeBuilder from './cube_builder/CubeBuilder';
 
 const b = block('add-custom-trainer');
 
@@ -45,9 +45,9 @@ export default function AddCustom(props: Props) {
 	const [threeD, toggleThreeD] = useToggle(false);
 
 	// Use tRPC query instead of Apollo useQuery
-	const { data: trainerData, isLoading: isTrainerLoading } = api.customTrainer.getById.useQuery(
-		{ id: editingId },
-		{ enabled: !!editingId }
+	const {data: trainerData, isLoading: isTrainerLoading} = api.customTrainer.getById.useQuery(
+		{id: editingId},
+		{enabled: !!editingId},
 	);
 
 	function getColorKey(ct: string, td: boolean) {
@@ -90,7 +90,7 @@ export default function AddCustom(props: Props) {
 			try {
 				const inv = Cube.inverse(sol);
 				scrambles.push(inv);
-			} catch (e) {
+			} catch (e: unknown) {
 				console.error(e);
 			}
 		}
@@ -132,7 +132,7 @@ export default function AddCustom(props: Props) {
 			}
 
 			onComplete();
-		} catch (e) {
+		} catch (e: unknown) {
 			setError(e.message);
 			setSaving(false);
 		}
@@ -186,7 +186,11 @@ export default function AddCustom(props: Props) {
 					info="These solutions will be reversed and used for scrambles. One per line"
 				/>
 				{trainerData?.copy_of_id ? null : (
-					<Checkbox checked={privateChecked} text="Make trainer private" onChange={onPrivateChange} />
+					<Checkbox
+						checked={privateChecked}
+						text="Make trainer private"
+						onChange={onPrivateChange}
+					/>
 				)}
 				<HorizontalLine />
 				<div className={b('cube-builder-filter')}>

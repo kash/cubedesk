@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './CubeBuilder.scss';
-import block from '../../../../styles/bem';
 import {getCubeTypeInfoById} from '../../../../lib/util/cubes/util';
+import block from '../../../../styles/bem';
 import CustomVisual from '../../custom_visual/CustomVisual';
 
 const b = block('custom-cube-builder');

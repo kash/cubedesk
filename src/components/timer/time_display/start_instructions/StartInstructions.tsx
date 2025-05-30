@@ -1,5 +1,5 @@
 import React from 'react';
-import './StartInstructions.scss'
+import './StartInstructions.scss';
 import block from '../../../../styles/bem';
 
 const b = block('start-instructions');
@@ -9,9 +9,5 @@ interface Props {
 }
 
 export default function StartInstructions(props: Props) {
-    return (
-        <div className={b()}>
-			{props.children}
-        </div>
-    )
+	return <div className={b()}>{props.children}</div>;
 }

@@ -1,4 +1,4 @@
-import {PrismaClient} from '@prisma/client';
+import {Prisma, PrismaClient} from '@prisma/client';
 
 let prisma: PrismaClient | undefined;
 
@@ -33,3 +33,5 @@ export function getPrismaClient() {
 
 	return client;
 }
+
+export type PrismaModelName = Uncapitalize<Prisma.ModelName>;

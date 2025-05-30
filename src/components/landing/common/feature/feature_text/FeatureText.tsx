@@ -1,14 +1,14 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import './FeatureText.scss';
 import block from '../../../../../styles/bem';
-import {Check} from 'phosphor-react';
+import {Check} from '@phosphor-icons/react/dist/ssr';
 import SignUpButton from '../../signup_button/SignUpButton';
 
 const b = block('landing-feature-text');
 
 interface FeatureItem {
 	text: string;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 }
 
 export interface IFeatureTextProps {
@@ -18,7 +18,7 @@ export interface IFeatureTextProps {
 	secondaryColor?: string;
 	whiteText?: boolean;
 	vertical?: boolean;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	signUpButton?: boolean;
 	featureList?: FeatureItem[];
 }

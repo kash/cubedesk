@@ -1,17 +1,17 @@
-import React from 'react';
+import {Lock} from '@phosphor-icons/react/dist/ssr';
 import './ThemeOption.scss';
-import block from '../../../../../styles/bem';
 import jsonStr from 'json-stable-stringify';
+import React from 'react';
 import {useDispatch} from 'react-redux';
+import {openModal} from '../../../../../lib/actions/general';
+import {getSetting} from '../../../../../lib/db/settings/query';
 import {setSetting} from '../../../../../lib/db/settings/update';
 import {useMe} from '../../../../../lib/util/hooks/useMe';
-import Tag from '../../../../common/tag/Tag';
-import {openModal} from '../../../../../lib/actions/general';
-import ProOnlyModal from '../../../../common/pro_only/ProOnlyModal';
-import {Lock} from 'phosphor-react';
-import {getSetting} from '../../../../../lib/db/settings/query';
-import {APP_THEME_PRESETS, PresetThemeValues} from '../../../../../lib/util/themes/theme_consts';
 import {isNotPro} from '../../../../../lib/util/pro';
+import {APP_THEME_PRESETS, PresetThemeValues} from '../../../../../lib/util/themes/theme_consts';
+import block from '../../../../../styles/bem';
+import ProOnlyModal from '../../../../common/pro_only/ProOnlyModal';
+import Tag from '../../../../common/tag/Tag';
 
 const b = block('theme-option');
 
@@ -51,7 +51,12 @@ export default function ThemeOption(props: Props) {
 	if (theme.proOnly && isNotPro(me)) {
 		proLock = (
 			<div className={b('pro')}>
-				<Tag small icon={<Lock weight="fill" />} text="Pro Theme" backgroundColor="primary" />
+				<Tag
+					small
+					icon={<Lock weight="fill" />}
+					text="Pro Theme"
+					backgroundColor="primary"
+				/>
 			</div>
 		);
 	}

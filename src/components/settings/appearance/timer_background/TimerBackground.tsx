@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {gql} from '@apollo/client';
 import './TimerBackground.scss';
-import {gqlMutate} from '../../../api';
-import {getMe} from '../../../../lib/actions/account';
-import UploadCover from '../../../common/upload_cover/UploadCover';
-import {useMe} from '../../../../lib/util/hooks/useMe';
-import {getStorageURL} from '../../../../lib/util/storage';
-import Button from '../../../common/button/Button';
-import block from '../../../../styles/bem';
-import {TimerBackground as TimerBackgroundSchema} from '../../../../../client/@types/generated/graphql';
+import {getMe} from '@/lib/actions/account';
+import UploadCover from '@/components/common/upload_cover/UploadCover';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {getStorageURL} from '@/lib/util/storage';
+import {Button} from '@/components/ui/button';
+import block from '@/styles/bem';
+import {TimerBackground as TimerBackgroundSchema} from '@/generated/zod';
 
 const b = block('timer-background');
 
@@ -18,27 +16,14 @@ export default function TimerBackground() {
 	const me = useMe();
 
 	const [loading, setLoading] = useState(false);
-	const [image, setImage] = useState<string>(getStorageURL(me?.timer_background?.storage_path) || '');
+	const [image, setImage] = useState<string>(
+		getStorageURL(me?.timer_background?.storage_path) || '',
+	);
 
 	async function uploadTimerBackground(variables) {
-		const query = gql`
-			mutation Mutate($file: Upload) {
-				uploadTimerBackground(file: $file) {
-					id
-					storage_path
-				}
-			}
-		`;
-
-		const res = await gqlMutate<{uploadTimerBackground: TimerBackgroundSchema}>(query, variables);
-		const storagePath = res.data.uploadTimerBackground.storage_path;
-		const url = getStorageURL(storagePath);
-
-		setImage(url);
-		dispatch(getMe());
-
+		// TODO: Migrate to tRPC upload endpoint
 		return {
-			storagePath,
+			storagePath: null,
 		};
 	}
 
@@ -49,15 +34,8 @@ export default function TimerBackground() {
 
 		setLoading(true);
 
-		const query = gql`
-			mutation Mutate {
-				deleteTimerBackground {
-					id
-				}
-			}
-		`;
-
-		await gqlMutate(query);
+		// TODO: Migrate to tRPC endpoint
+		// await deleteTimerBackground()
 
 		setImage('');
 		setLoading(false);
@@ -70,7 +48,11 @@ export default function TimerBackground() {
 				<UploadCover upload={uploadTimerBackground} />
 				{image ? <img src={image} alt="Timer background" /> : null}
 			</div>
-			{image ? <Button flat text="Reset background" danger onClick={resetBackgroundImage} /> : null}
+			{image ? (
+				<Button variant="destructive" onClick={resetBackgroundImage}>
+					Reset background
+				</Button>
+			) : null}
 		</div>
 	);
 }

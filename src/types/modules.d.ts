@@ -1,0 +1,9 @@
+declare module 'cubejs';
+declare module 'simplebar-react';
+declare module 'stackmat';
+declare module '@react-three/drei';
+declare module '@react-three/fiber';
+declare module 'twisty';
+declare module 'crypto-browserify';
+declare module 'next-pwa';
+declare module 'isomorphic-unfetch';

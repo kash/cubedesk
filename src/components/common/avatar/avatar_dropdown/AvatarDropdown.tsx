@@ -1,15 +1,15 @@
+import UserView from '@/components/admin/manage_user/ManageUser';
+import {copyText} from '@/components/common/copy_text/CopyText';
+import Dropdown, {DropdownProps} from '@/components/common/inputs/dropdown/Dropdown';
+import EditProfile from '@/components/profile/edit_profile/EditProfile';
+import ReportUser from '@/components/profile/report/ReportUser';
+import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/generated/zod';
+import {openModal} from '@/lib/actions/general';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {toastSuccess} from '@/lib/util/toast';
+import {CaretDown, Copy, Flag, GearSix, Pen, User} from '@phosphor-icons/react/dist/ssr';
 import React from 'react';
-import Dropdown, {DropdownProps} from '../../inputs/dropdown/Dropdown';
-import {copyText} from '../../copy_text/CopyText';
-import {CaretDown, User, Copy, Flag, Pen, GearSix} from 'phosphor-react';
-import {toastSuccess} from '../../../../lib/util/toast';
-import {openModal} from '../../../../lib/actions/general';
-import UserView from '../../../admin/manage_user/ManageUser';
 import {useDispatch} from 'react-redux';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../../server/schemas/UserAccount.schema';
-import ReportUser from '../../../profile/report/ReportUser';
-import EditProfile from '../../../profile/edit_profile/EditProfile';
-import {useMe} from '../../../../lib/util/hooks/useMe';
 
 interface Props {
 	mini?: boolean;
@@ -37,7 +37,7 @@ export default function AvatarDropdown(props: Props) {
 		dispatch(
 			openModal(<UserView userId={user.id} />, {
 				width: 1200,
-			})
+			}),
 		);
 	}
 
@@ -49,7 +49,7 @@ export default function AvatarDropdown(props: Props) {
 		dispatch(
 			openModal(<EditProfile profile={profile} />, {
 				title: 'Edit Profile',
-			})
+			}),
 		);
 	}
 
@@ -63,11 +63,30 @@ export default function AvatarDropdown(props: Props) {
 				gray: false,
 			}}
 			options={[
-				{text: 'View Profile', link: `/user/${user.username}`, icon: <User weight="bold" />},
+				{
+					text: 'View Profile',
+					link: `/user/${user.username}`,
+					icon: <User weight="bold" />,
+				},
 				{text: 'Copy Profile Link', onClick: copyProfileLink, icon: <Copy weight="bold" />},
-				{text: 'Report', onClick: reportProfile, icon: <Flag weight="bold" />, hidden: myProfile || !me},
-				{text: 'Edit', onClick: editProfile, icon: <Pen weight="bold" />, hidden: !myProfile},
-				{text: 'Manage User', onClick: manageUser, icon: <GearSix weight="bold" />, hidden: !amAdmin},
+				{
+					text: 'Report',
+					onClick: reportProfile,
+					icon: <Flag weight="bold" />,
+					hidden: myProfile || !me,
+				},
+				{
+					text: 'Edit',
+					onClick: editProfile,
+					icon: <Pen weight="bold" />,
+					hidden: !myProfile,
+				},
+				{
+					text: 'Manage User',
+					onClick: manageUser,
+					icon: <GearSix weight="bold" />,
+					hidden: !amAdmin,
+				},
 			]}
 			{...dropdownProps}
 		/>

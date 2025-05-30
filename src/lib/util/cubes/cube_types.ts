@@ -22,7 +22,7 @@ function getCubeType(id: string, name: string, scramble: string, size?: number):
 	return data;
 }
 
-export const CUBE_TYPES = {
+export const CUBE_TYPES: Record<string, CubeType> = {
 	'222': getCubeType('222', '2x2', '222', 2),
 	'333': getCubeType('333', '3x3', '333', 3),
 	'444': getCubeType('444', '4x4', '444', 4),
@@ -39,4 +39,4 @@ export const CUBE_TYPES = {
 	'333oh': getCubeType('333oh', '3x3 One-Handed', '333', 3),
 	'333bl': getCubeType('333bl', '3x3 Blind', '333bl', 3),
 	other: getCubeType('other', 'Other', 'none'),
-};
+} as const;

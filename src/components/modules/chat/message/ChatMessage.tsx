@@ -2,7 +2,7 @@ import React from 'react';
 import './ChatMessage.scss';
 import AvatarImage from '../../../common/avatar/avatar_image/AvatarImage';
 import block from '../../../../styles/bem';
-import {PublicUserAccount} from '../../../../server/schemas/UserAccount.schema';
+import {PublicUserAccount} from '@/types/user-account';
 
 const b = block('chat-message');
 

@@ -1,5 +1,5 @@
-import {Match} from '../../schemas/Match.schema';
-import {PublicUserAccount} from '../../schemas/UserAccount.schema';
+import {Match} from '@/generated/zod';
+import {PublicUserAccount} from '@/types/user-account';
 import {updateMatchParticipant} from '../../models/match_participation';
 import {emitMatchUpdate} from './send';
 import {sendMatchUpdateById} from './standings';

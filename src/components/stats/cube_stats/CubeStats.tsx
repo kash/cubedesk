@@ -1,16 +1,16 @@
 import React, {useContext} from 'react';
 import './CubeStats.scss';
-import block from '../../../styles/bem';
-import CubeStatsFeatured from './featured/CubeStatsFeatured';
-import TimeChart from '../../modules/time_chart/TimeChart';
-import StatSection from '../common/stat_section/StatSection';
-import StatModule from '../common/stat_module/StatModule';
-import CubeStatAverages from './averages/CubeStatAverages';
-import {StatsContext} from '../Stats';
-import SubStats from '../common/sub_stats/SubStats';
-import SolvesPerDay from '../../modules/solves_per_day/SolvesPerDay';
 import {useMe} from '../../../lib/util/hooks/useMe';
 import {isNotPro} from '../../../lib/util/pro';
+import block from '../../../styles/bem';
+import SolvesPerDay from '../../modules/solves_per_day/SolvesPerDay';
+import TimeChart from '../../modules/time_chart/TimeChart';
+import StatModule from '../common/stat_module/StatModule';
+import StatSection from '../common/stat_section/StatSection';
+import SubStats from '../common/sub_stats/SubStats';
+import {StatsContext} from '../Stats';
+import CubeStatAverages from './averages/CubeStatAverages';
+import CubeStatsFeatured from './featured/CubeStatsFeatured';
 
 const b = block('cube-stats');
 

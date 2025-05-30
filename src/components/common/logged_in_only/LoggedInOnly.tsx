@@ -1,7 +1,7 @@
+import {useRouter} from 'next/navigation';
 import React, {ReactNode} from 'react';
 import {useMe} from '../../../lib/util/hooks/useMe';
 import Cover from '../cover/Cover';
-import {useHistory} from 'react-router-dom';
 
 interface Props {
 	ignore?: boolean;
@@ -12,7 +12,7 @@ interface Props {
 export default function LoggedInOnly(props: Props) {
 	const {children, ignore, noPadding} = props;
 
-	const history = useHistory();
+	const router = useRouter();
 	const me = useMe();
 
 	if (me || ignore) {
@@ -22,7 +22,7 @@ export default function LoggedInOnly(props: Props) {
 	function onClick(e) {
 		e.preventDefault();
 
-		history.push('/signup');
+		router.push('/signup');
 	}
 
 	return (

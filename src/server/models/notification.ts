@@ -1,7 +1,7 @@
 import {getPrisma} from '../database';
 import Notification from '../resources/notification_types/notification';
-import {UserAccount} from '../schemas/UserAccount.schema';
-import {Notification as NotificationSchema} from '../schemas/Notification.schema';
+import {UserAccount} from '@/types/user-account';
+import {Notification as NotificationSchema} from '@/generated/zod';
 
 const notificationInclude = {
 	triggering_user: {

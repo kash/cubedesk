@@ -2,10 +2,10 @@ import {getPrisma} from '../database';
 import {Prisma} from '@prisma/client';
 import {getEloRatingColumnNameFromCubeType} from './elo_rating';
 import {logger} from '../services/logger';
-import {UserAccount} from '../schemas/UserAccount.schema';
+import {UserAccount} from '@/types/user-account';
 import {getUserById} from './user_account';
 import EloRefundNotification from '../resources/notification_types/elo_refund';
-import {EloLog} from '../schemas/EloLog.schema';
+import {EloLog} from '@/generated/zod';
 
 export function createEloLog(input: Prisma.EloLogUncheckedCreateInput) {
 	return getPrisma().eloLog.create({
@@ -54,7 +54,7 @@ export async function refundElo(cheaterUserId: string) {
 
 	try {
 		await getPrisma().$transaction(txs);
-	} catch (e) {
+	} catch (e: unknown) {
 		logger.error('Could not refund ELO', {
 			error: e,
 		});

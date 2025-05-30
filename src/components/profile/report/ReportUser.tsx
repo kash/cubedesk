@@ -1,8 +1,9 @@
 import React from 'react';
 import './ReportProfile.scss';
 import {toastSuccess} from '../../../lib/util/toast';
-import Button from '../../common/button/Button';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../server/schemas/UserAccount.schema';
+import {Button} from '@/components/ui/button';
+import {PublicUserAccount, UserAccount} from '@/types/user-account';
+import {UserAccountForAdmin} from '@/types/admin';
 import {useInput} from '../../../lib/util/hooks/useInput';
 import {IModalProps} from '../../common/modal/Modal';
 import TextArea from '../../common/inputs/textarea/TextArea';

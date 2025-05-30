@@ -1,11 +1,12 @@
-import { api } from '../../../trpc/react';
+import {api} from '@/trpc/react';
 
 export async function logOut() {
 	try {
-		await api.userAccount.logOut.mutate();
-	} catch (e) {
-		// Continue with logout even if API call fails
+		await api.auth.logout.mutate();
+		window.location.href = '/login';
+	} catch (error) {
+		// If logout fails, still redirect to login page
+		console.error('Logout error:', error);
+		window.location.href = '/login';
 	}
-
-	window.location.href = '/';
 }

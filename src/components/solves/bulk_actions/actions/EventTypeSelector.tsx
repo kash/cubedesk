@@ -1,11 +1,11 @@
+import {Button} from '@/components/ui/button';
+import {Solve} from '@/generated/zod';
 import React, {useState} from 'react';
-import Button from '../../../common/button/Button';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {CubeType} from '../../../../lib/util/cubes/cube_types';
+import {getBasicPlural} from '../../../../lib/util/strings/plural';
+import CubePicker from '../../../common/cube_picker/CubePicker';
 import {IModalProps} from '../../../common/modal/Modal';
 import ModalHeader from '../../../common/modal/modal_header/ModalHeader';
-import {CubeType} from '../../../../lib/util/cubes/cube_types';
-import CubePicker from '../../../common/cube_picker/CubePicker';
-import {getBasicPlural} from '../../../../lib/util/strings/plural';
 
 interface Props extends IModalProps {
 	solves: Solve[];
@@ -13,13 +13,14 @@ interface Props extends IModalProps {
 
 export default function EventTypeSelector(props: Props) {
 	const {solves, onComplete} = props;
-	const [cubeType, setCubeType] = useState<CubeType>(null);
+	const [cubeType, setCubeType] = useState<CubeType | null>(null);
 
 	let selectedCubeType = null;
 	if (cubeType) {
 		selectedCubeType = (
-			<p className="mb-5 mt-4 text-2xl table text-text border-b-4 border-solid border-text/20">
-				Set event type of <span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
+			<p className="text-text border-text/20 mt-4 mb-5 table border-b-4 border-solid text-2xl">
+				Set event type of{' '}
+				<span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
 				<span className="text-warning">{cubeType.name}</span>
 			</p>
 		);
@@ -41,7 +42,9 @@ export default function EventTypeSelector(props: Props) {
 				/>
 			</div>
 			{selectedCubeType}
-			<Button large onClick={() => onComplete(cubeType)} disabled={!cubeType} primary text="Continue" />
+			<Button onClick={() => onComplete(cubeType)} disabled={!cubeType}>
+				Continue
+			</Button>
 		</div>
 	);
 }

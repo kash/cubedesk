@@ -1,6 +1,6 @@
 import {IImportDataContext, ImportableData} from '../ImportData';
 import {v4 as uuid} from 'uuid';
-import {SessionInput, SolveInput} from '../../../../../../client/@types/generated/graphql';
+import {SessionInput, SolveInput} from '@/generated/zod';
 
 const CSTIMER_CUBEDESK_CUBETYPE_MAP = {
 	'333': '333',
@@ -115,7 +115,7 @@ function parseAndValidateInput(txt: string) {
 	if (typeof txt === 'string') {
 		try {
 			data = JSON.parse(txt);
-		} catch (e) {
+		} catch (e: unknown) {
 			throw new Error('Invalid input. Could not parse csTimer data.');
 		}
 	} else if (typeof txt === 'object') {
@@ -171,7 +171,10 @@ function getSessionData(sesData: string | object) {
 	return sessionInput;
 }
 
-function getAllSolves(data: Record<string, CsTimerSolve[]>, sessionData: CsTimerProperties['sessionData']) {
+function getAllSolves(
+	data: Record<string, CsTimerSolve[]>,
+	sessionData: CsTimerProperties['sessionData'],
+) {
 	const solves: SolveInput[] = [];
 	for (const session of sessionData) {
 		const sessionKey = `session${session.key}`;

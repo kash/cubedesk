@@ -1,1 +1,1 @@
-export { material as classic } from './classic';
+export {material as classic} from './classic';

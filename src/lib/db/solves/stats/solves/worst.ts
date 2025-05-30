@@ -1,4 +1,4 @@
-import {Solve} from '../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 import {checkForAverageWorstUpdate} from './cache/average_cache';
 import {checkForSingleWorstUpdate} from './cache/single_cache';
 

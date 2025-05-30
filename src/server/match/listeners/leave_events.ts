@@ -2,8 +2,8 @@ import {getClientRooms, getClientsInRoom, getDetailedClientInfo, leaveAllRooms, 
 import {getMatchIdFromPlayersRoom, getMatchPlayersRoomName} from '../match';
 import {getMatchById, updateMatch} from '../../models/match';
 import {sendMatchUpdate} from '../update/standings';
-import {Match} from '../../schemas/Match.schema';
-import {PublicUserAccount} from '../../schemas/UserAccount.schema';
+import {Match} from '@/generated/zod';
+import {PublicUserAccount} from '@/types/user-account';
 import {emitMatchUpdate} from '../update/send';
 import {MatchConst} from '../../../lib/shared/match/consts';
 import {SocketClient} from '../init';

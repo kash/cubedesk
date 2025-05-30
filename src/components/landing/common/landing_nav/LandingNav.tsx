@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import './LandingNav.scss';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import block from '../../../../styles/bem';
 import {resourceUri} from '../../../../lib/util/storage';
 import {useWindowListener} from '../../../../lib/util/hooks/useListener';
 import {ColorName} from '../../../../shared/colors';
 import Dropdown from '../../../common/inputs/dropdown/Dropdown';
 import {IDropdownOption} from '../../../common/inputs/dropdown/dropdown_option/DropdownOption';
-import {CaretDown} from 'phosphor-react';
+import {CaretDown} from '@phosphor-icons/react/dist/ssr';
 
 const b = block('landing-nav');
 
@@ -55,23 +55,15 @@ export default function LandingNav(props: Props) {
 	const [navSmall, setNavSmall] = useState(false);
 	const [scrolled, setScrolled] = useState(showBorder);
 
-	useWindowListener('scroll', windowScroll);
-	useWindowListener('resize', windowResize);
-
-	useEffect(() => {
-		windowScroll();
-		windowResize();
-	}, []);
-
-	function windowResize() {
+	const windowResize = useCallback(() => {
 		if (window.innerWidth <= MAX_NAV_WIDTH && !navSmall) {
 			setNavSmall(true);
 		} else if (window.innerWidth > MAX_NAV_WIDTH && navSmall) {
 			setNavSmall(false);
 		}
-	}
+	}, [navSmall]);
 
-	function windowScroll() {
+	const windowScroll = useCallback(() => {
 		if (showBorder || typeof window === 'undefined') {
 			return;
 		}
@@ -81,7 +73,15 @@ export default function LandingNav(props: Props) {
 		} else if (window.scrollY === 0 && scrolled) {
 			setScrolled(false);
 		}
-	}
+	}, [showBorder, scrolled]);
+
+	useWindowListener('scroll', windowScroll);
+	useWindowListener('resize', windowResize);
+
+	useEffect(() => {
+		windowScroll();
+		windowResize();
+	}, [windowScroll, windowResize]);
 
 	const dropDownOptions: IDropdownOption[] = [];
 	const showNavLinks = [];
@@ -113,7 +113,7 @@ export default function LandingNav(props: Props) {
 		<div className={b({scrolled})}>
 			<div className={b('body')}>
 				<div className={b('logo')}>
-					<Link to="/home">
+					<Link href="/">
 						<img src={resourceUri(`/images/logos/cubedesk_logo_black.svg`)} alt="CubeDesk Logo" />
 					</Link>
 				</div>

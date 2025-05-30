@@ -1,6 +1,6 @@
-import {AllSettings, getDefaultSettings} from './query';
-import {getLocalStorage, setLocalStorageObject} from '../../util/data/local_storage';
 import {getMe} from '../../../components/store';
+import {getLocalStorage, setLocalStorageObject} from '../../util/data/local_storage';
+import {AllSettings, getDefaultSettings} from './query';
 
 export function getAllLocalSettings(userId: string): AllSettings {
 	clearDemoUserSettings();
@@ -35,7 +35,10 @@ export function getLocalSettingValue<T extends keyof AllSettings>(key: T): AllSe
 	return localSettings[key];
 }
 
-export function setLocalSettingValue<T extends keyof AllSettings>(key: T, value: AllSettings[T]): void {
+export function setLocalSettingValue<T extends keyof AllSettings>(
+	key: T,
+	value: AllSettings[T],
+): void {
 	const me = getMe();
 	const userId = me?.id || 'demo';
 

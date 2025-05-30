@@ -1,4 +1,4 @@
-import {PublicUserAccount, UserAccount} from '../../server/schemas/UserAccount.schema';
+import {PublicUserAccount, UserAccount} from '@/types/user-account';
 
 export function isPro(user: UserAccount | PublicUserAccount): boolean {
 	if (!user) {

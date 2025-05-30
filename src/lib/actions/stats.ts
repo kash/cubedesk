@@ -7,7 +7,6 @@ export function initStatsModuleStore(statsModule: StatsModule) {
 	};
 }
 
-
 export function addStatsModuleBlock(statOptions: StatsModuleBlock) {
 	return {
 		type: 'ADD_STATS_MODULE_BLOCK',

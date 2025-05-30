@@ -1,37 +1,37 @@
-import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
-import {v4 as uuid} from 'uuid';
+import Empty from '@/components/common/empty/Empty';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import './Trainer.scss';
-import {Plus, ArrowRight, Star} from 'phosphor-react';
-import PageTitle from '../common/page_title/PageTitle';
+import PageTitle from '@/components/common/page-title/PageTitle';
+import AlgoModule from '@/components/modules/algo_module/AlgoModule';
+import {TimerModuleType} from '@/components/timer/@types/enums';
+import Timer from '@/components/timer/Timer';
+import {Button} from '@/components/ui/button';
+import {Solve} from '@/generated/zod';
+import {openModal} from '@/lib/actions/general';
+import {TrainerAlgorithmExtended} from '@/lib/db/trainer/init';
 import {
 	fetchTrainerAlgorithmCount,
 	fetchTrainerAlgorithmCubeTypes,
 	fetchTrainerAlgorithms,
 	fetchTrainerAlgorithmTypes,
 	FilterTrainerOptions,
-} from '../../lib/db/trainer/query';
+} from '@/lib/db/trainer/query';
+import {CubeType} from '@/lib/util/cubes/cube_types';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
+import {useToggle} from '@/lib/util/hooks/useToggle';
+import {useTrainerDb} from '@/lib/util/hooks/useTrainerDb';
+import block from '@/styles/bem';
+import {ArrowRight, Plus, Star} from '@phosphor-icons/react/dist/ssr';
 import Chance from 'chance';
-import block from '../../styles/bem';
-import {CubeType} from '../../lib/util/cubes/cube_types';
-import {getCubeTypeInfoById} from '../../lib/util/cubes/util';
-import TrainerAlgo from './trainer_algo/TrainerAlgo';
-import Dropdown from '../common/inputs/dropdown/Dropdown';
-import Empty from '../common/empty/Empty';
-import {useRouteMatch} from 'react-router-dom';
-import {useTrainerDb} from '../../lib/util/hooks/useTrainerDb';
-import {openModal} from '../../lib/actions/general';
-import memoize from 'memoizee';
-import Timer from '../timer/Timer';
-import {useDispatch} from 'react-redux';
 import _ from 'lodash';
-import {TrainerAlgorithmExtended} from '../../lib/db/trainer/init';
-import {TimerModuleType} from '../timer/@types/enums';
-import AlgoModule from '../modules/algo_module/AlgoModule';
-import LinkButton from '../common/button/LinkButton';
-import Button, {CommonType} from '../common/button/Button';
+import memoize from 'memoizee';
+import Link from 'next/link';
+import {useParams} from 'next/navigation';
+import React, {createContext, ReactNode, useEffect, useMemo, useState, useCallback} from 'react';
+import {useDispatch} from 'react-redux';
+import {v4 as uuid} from 'uuid';
 import AddCustom from './add_custom/AddCustom';
-import {useToggle} from '../../lib/util/hooks/useToggle';
-import {Solve} from '../../server/schemas/Solve.schema';
+import TrainerAlgo from './trainer_algo/TrainerAlgo';
 
 const b = block('trainer');
 
@@ -39,7 +39,10 @@ export interface ITrainerContext {
 	cubeType: CubeType;
 	algoType: string;
 	filter: FilterTrainerOptions;
-	openTrainer: (trainingSessionType: TrainingSessionType, algo?: TrainerAlgorithmExtended) => void;
+	openTrainer: (
+		trainingSessionType: TrainingSessionType,
+		algo?: TrainerAlgorithmExtended,
+	) => void;
 }
 
 export type TrainingSessionType = 'all' | 'single' | 'favorites';
@@ -51,11 +54,10 @@ const DEFAULT_ALGO_TYPE = 'OLL';
 
 export default function Trainer() {
 	const dispatch = useDispatch();
-	const match = useRouteMatch();
-	const matchParams: any = match.params;
+	const params = useParams();
 
-	const urlCubeType = matchParams.cubeType || DEFAULT_ALGO_CUBE_TYPE;
-	const urlAlgoType = matchParams.algoType || DEFAULT_ALGO_TYPE;
+	const urlCubeType = (params.cubeType as string) || DEFAULT_ALGO_CUBE_TYPE;
+	const urlAlgoType = (params.algoType as string) || DEFAULT_ALGO_TYPE;
 
 	const [loaded, setLoaded] = useState(false);
 	const [cubeType, setCubeType] = useState(urlCubeType);
@@ -81,7 +83,11 @@ export default function Trainer() {
 		filter.favorite = true;
 	}
 
-	const getRandomTrainerAlgo = (filter: FilterTrainerOptions, trainerSessionId: string, index: number) => {
+	const getRandomTrainerAlgo = (
+		filter: FilterTrainerOptions,
+		trainerSessionId: string,
+		index: number,
+	) => {
 		const seed = trainerSessionId + index;
 		const algs = fetchTrainerAlgorithms(filter);
 		const chance = new Chance(seed);
@@ -92,17 +98,28 @@ export default function Trainer() {
 
 	const randomAlgo = memoize(getRandomTrainerAlgo);
 
-	function getCurrentTrainerAlgo(filter: FilterTrainerOptions, trainerSessionId: string, index: number) {
+	const getCurrentTrainerAlgo = useCallback((
+		filter: FilterTrainerOptions,
+		trainerSessionId: string,
+		index: number,
+	) => {
 		return randomAlgo(filter, trainerSessionId, index);
-	}
+	}, [randomAlgo]);
 
-	function getCustomScramble(filter: FilterTrainerOptions, trainerSessionId: string, index: number) {
+	const getCustomScramble = useCallback((
+		filter: FilterTrainerOptions,
+		trainerSessionId: string,
+		index: number,
+	) => {
 		const algo = randomAlgo(filter, trainerSessionId, index);
 		const scrambles = algo.scrambles.split('\n');
 		return _.sample(scrambles);
-	}
+	}, [randomAlgo]);
 
-	function openTrainer(trainingSessionType: TrainingSessionType, algo?: TrainerAlgorithmExtended) {
+	const openTrainer = useCallback((
+		trainingSessionType: TrainingSessionType,
+		algo?: TrainerAlgorithmExtended,
+	) => {
 		const sessionFilter = {
 			...filter,
 		};
@@ -153,7 +170,11 @@ export default function Trainer() {
 						},
 						{
 							customBody: (context) => {
-								const ag = getCurrentTrainerAlgo(sessionFilter, sessionId, context.sessionSolveCount);
+								const ag = getCurrentTrainerAlgo(
+									sessionFilter,
+									sessionId,
+									context.sessionSolveCount,
+								);
 								return {
 									module: <AlgoModule algoExt={ag} />,
 								};
@@ -171,10 +192,10 @@ export default function Trainer() {
 				/>,
 				{
 					fullSize: true,
-				}
-			)
+				},
+			),
 		);
-	}
+	}, [filter, cubeType, dispatch, getCurrentTrainerAlgo, getCustomScramble]);
 
 	const cubeTypes = useMemo(fetchTrainerAlgorithmCubeTypes, [loaded]);
 	const algoTypes = useMemo(
@@ -182,7 +203,7 @@ export default function Trainer() {
 			fetchTrainerAlgorithmTypes({
 				cube_type: cubeType,
 			}),
-		[loaded, cubeType]
+		[loaded, cubeType],
 	);
 
 	const algos = useMemo(
@@ -190,7 +211,7 @@ export default function Trainer() {
 			fetchTrainerAlgorithms(filter, {
 				sortBy: 'id',
 			}),
-		[cubeType, algoType, filter, loaded, updateCount]
+		[cubeType, algoType, filter, loaded, updateCount],
 	);
 
 	const favCount = algos.reduce((acc, alg) => {
@@ -211,11 +232,11 @@ export default function Trainer() {
 		filter,
 	};
 
-	function openCreateCustomTrainer() {
+	const openCreateCustomTrainer = useCallback(() => {
 		dispatch(openModal(<AddCustom />));
-	}
+	}, [dispatch]);
 
-	function selectCubeType(ct: string) {
+	const selectCubeType = useCallback((ct: string) => {
 		setCubeType(ct);
 
 		const newAlgoTypes = fetchTrainerAlgorithmTypes({
@@ -231,16 +252,17 @@ export default function Trainer() {
 			}
 		}
 
-		const newAlgType = oldAlgValid || algoType === CUSTOM_TRAINER_ALGO_TYPE ? algoType : DEFAULT_ALGO_TYPE;
+		const newAlgType =
+			oldAlgValid || algoType === CUSTOM_TRAINER_ALGO_TYPE ? algoType : DEFAULT_ALGO_TYPE;
 		setAlgoType(newAlgType);
 		history.replaceState({}, null, window.location.origin + `/trainer/${ct}/${newAlgType}`);
-	}
+	}, [algoType]);
 
-	function selectAlgoType(at: string) {
+	const selectAlgoType = useCallback((at: string) => {
 		setAlgoType(at);
 
 		history.replaceState({}, null, window.location.origin + `/trainer/${cubeType}/${at}`);
-	}
+	}, [cubeType]);
 
 	let body: ReactNode;
 	if (algos && algos.length) {
@@ -278,20 +300,29 @@ export default function Trainer() {
 			<div className={b()}>
 				<PageTitle pageName="Trainer">
 					<div className={b('create-custom')}>
-						<Button
-							primary
-							text="Create New"
-							icon={<Plus />}
-							glow
-							large
-							onClick={openCreateCustomTrainer}
-						/>
+						<Button size="lg" icon={Plus} onClick={openCreateCustomTrainer}>
+							Create New
+						</Button>
 					</div>
 					<div className={b('header')}>
 						<div className={b('filter')}>
-							<Dropdown openLeft text={context.cubeType.name} options={[...cubeTypeDropdownOptions]} />
-							<Dropdown openLeft text={algoType} options={[...algoTypeDropdownOptions]} />
-							<Button icon={<Star />} white={favsOnly} gray onClick={() => toggleFavsOnly()} />
+							<Dropdown
+								openLeft
+								text={context.cubeType.name}
+								options={[...cubeTypeDropdownOptions]}
+							/>
+							<Dropdown
+								openLeft
+								text={algoType}
+								options={[...algoTypeDropdownOptions]}
+							/>
+							<Button
+								variant={favsOnly ? 'outline' : 'secondary'}
+								size="icon"
+								onClick={() => toggleFavsOnly()}
+							>
+								<Star weight="bold" />
+							</Button>
 							<Dropdown
 								text="Train"
 								openLeft
@@ -309,13 +340,11 @@ export default function Trainer() {
 							/>
 						</div>
 						<div className={b('public-trainers')}>
-							<LinkButton
-								noMargin
-								theme={CommonType.WARNING}
-								to="/trainer/public-trainers"
-								text="Marketplace"
-								icon={<ArrowRight />}
-							/>
+							<Link href="/trainer/public-trainers">
+								<Button variant="destructive" className="!m-0" icon={ArrowRight}>
+									Marketplace
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</PageTitle>

@@ -1,27 +1,35 @@
-import React, {useContext, useEffect, useState} from 'react';
+import CubePicker from '@/components/common/cube_picker/CubePicker';
 import './HeaderControl.scss';
-import {MagnifyingGlassPlus, FrameCorners, CrosshairSimple, Keyboard, Plus, X, CaretDown} from 'phosphor-react';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import CreateNewSession from '@/components/sessions/new_session/CreateNewSession';
+import SessionSwitcher from '@/components/sessions/SessionPicker';
+import StackMatPicker from '@/components/settings/stackmat_picker/StackMatPicker';
+import {TIMER_INPUT_TYPE_NAMES} from '@/components/settings/timer/TimerSettings';
+import {Button} from '@/components/ui/button';
+import {openModal} from '@/lib/actions/general';
+import {AllSettings} from '@/lib/db/settings/query';
+import {setCubeType, setSetting} from '@/lib/db/settings/update';
+import {toggleSetting} from '@/lib/db/settings/update';
+import {useGeneral} from '@/lib/util/hooks/useGeneral';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {useSettings} from '@/lib/util/hooks/useSettings';
+import {HOTKEY_MAP} from '@/lib/util/timer/hotkeys';
+import screenfull from '@/lib/util/vendor/screenfull';
+import block from '@/styles/bem';
+import {
+	CaretDown,
+	CrosshairSimple,
+	FrameCorners,
+	Keyboard,
+	MagnifyingGlassPlus,
+	Plus,
+	X,
+} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {GlobalHotKeys} from 'react-hotkeys';
-import {setCubeType, setSetting} from '../../../lib/db/settings/update';
-import CubePicker from '../../common/cube_picker/CubePicker';
-import SessionSwitcher from '../../sessions/SessionPicker';
-import {HOTKEY_MAP} from '../../../lib/util/timer/hotkeys';
-import CreateNewSession from '../../sessions/new_session/CreateNewSession';
-import {openModal} from '../../../lib/actions/general';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import {TimerContext} from '../Timer';
-import {toggleSetting} from '../../../lib/db/settings/update';
 import {useDispatch} from 'react-redux';
-import {useGeneral} from '../../../lib/util/hooks/useGeneral';
 import {smartCubeSelected} from '../helpers/util';
-import Button from '../../common/button/Button';
-import block from '../../../styles/bem';
-import StackMatPicker from '../../settings/stackmat_picker/StackMatPicker';
-import {TIMER_INPUT_TYPE_NAMES} from '../../settings/timer/TimerSettings';
-import {useSettings} from '../../../lib/util/hooks/useSettings';
-import {AllSettings} from '../../../lib/db/settings/query';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import screenfull from '../../../lib/util/vendor/screenfull';
+import {TimerContext} from '../Timer';
 
 const b = block('timer-header-control');
 
@@ -48,21 +56,21 @@ export default function HeaderControl() {
 		}, []);
 	}
 
-	function toggleCreateNewSession() {
+	const toggleCreateNewSession = useCallback(() => {
 		dispatch(openModal(<CreateNewSession />));
-	}
+	}, [dispatch]);
 
-	function changeCubeType(cubeTypeId: string) {
+	const changeCubeType = useCallback((cubeTypeId: string) => {
 		setCubeType(cubeTypeId);
-	}
+	}, []);
 
-	function selectTimerType(timerType: AllSettings['timer_type']) {
+	const selectTimerType = useCallback((timerType: AllSettings['timer_type']) => {
 		setSetting('timer_type', timerType);
-	}
+	}, []);
 
-	function openStackMat() {
+	const openStackMat = useCallback(() => {
 		dispatch(openModal(<StackMatPicker />));
-	}
+	}, [dispatch]);
 
 	const handlers = {
 		TOGGLE_INSPECTION_MODE: () => toggleSetting('inspection'),
@@ -168,7 +176,11 @@ export default function HeaderControl() {
 	);
 
 	if (focusMode) {
-		topRightButton = <Button noMargin transparent icon={<X />} onClick={() => toggleSetting('focus_mode')} />;
+		topRightButton = (
+			<Button variant="ghost" className="!m-0" onClick={() => toggleSetting('focus_mode')}>
+				<X weight="bold" />
+			</Button>
+		);
 	}
 
 	return (

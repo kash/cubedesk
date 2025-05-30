@@ -1,6 +1,6 @@
 import React, {createContext, useState} from 'react';
-import SlideShowSlide, {SlideShowSlideProps} from './SlideShowSlide';
 import {reactState} from '../../../../client/@types/react';
+import SlideShowSlide, {SlideShowSlideProps} from './SlideShowSlide';
 
 interface SlideShowProps {
 	lastButtonText?: string;

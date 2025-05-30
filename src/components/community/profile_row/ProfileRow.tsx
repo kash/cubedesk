@@ -1,19 +1,17 @@
-import React, {ReactNode, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import Avatar from '@/components/common/avatar/Avatar';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import './ProfileRow.scss';
-import {Trash, Eye, User} from 'phosphor-react';
-import Avatar from '../../common/avatar/Avatar';
-import {DocumentNode, gql} from '@apollo/client';
-import {gqlMutate} from '../../api';
-import {getTimeString} from '../../../lib/util/time';
-import {useGeneral} from '../../../lib/util/hooks/useGeneral';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import block from '../../../styles/bem';
-import {openModal} from '../../../lib/actions/general';
-import ReportUser from '../../profile/report/ReportUser';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import {Solve} from '../../../server/schemas/Solve.schema';
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
+import ReportUser from '@/components/profile/report/ReportUser';
+import {PublicUserAccount, Solve} from '@/generated/zod';
+import {openModal} from '@/lib/actions/general';
+import {useGeneral} from '@/lib/util/hooks/useGeneral';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {getTimeString} from '@/lib/util/time';
+import block from '@/styles/bem';
+import {api} from '@/trpc/react';
+import {Eye, Trash, User} from '@phosphor-icons/react/dist/ssr';
+import React, {ReactNode, useCallback, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 const b = block('profile-row');
 
@@ -40,37 +38,22 @@ export default function ProfileRow(props: ProfileRowProps) {
 	const solveId = solve ? solve.id : null;
 	const isMe = solve?.user?.id === me?.id;
 
-	async function reportProfile() {
+	const reportProfile = useCallback(async () => {
 		dispatch(openModal(<ReportUser user={user} />));
-	}
+	}, [dispatch, user]);
 
-	async function deleteSolve() {
-		let query;
+	const deleteTopSolveMutation = api.leaderboards.deleteTopSolve.useMutation();
+	const deleteTopAverageMutation = api.leaderboards.deleteTopAverage.useMutation();
 
+	const deleteSolve = useCallback(async () => {
 		if (recordType === 'top_solve') {
-			query = gql`
-				mutation Mutate($id: String) {
-					deleteTopSolve(id: $id) {
-						id
-					}
-				}
-			`;
+			await deleteTopSolveMutation.mutateAsync({id: solveId});
 		} else if (recordType === 'top_average') {
-			query = gql`
-				mutation Mutate($id: String) {
-					deleteTopAverage(id: $id) {
-						id
-					}
-				}
-			`;
+			await deleteTopAverageMutation.mutateAsync({id: solveId});
 		}
 
-		await gqlMutate(query as DocumentNode, {
-			id: solveId,
-		});
-
 		setDeleted(true);
-	}
+	}, [recordType, deleteTopSolveMutation, deleteTopAverageMutation, solveId]);
 
 	if (deleted) {
 		return null;

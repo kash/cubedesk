@@ -1,8 +1,8 @@
 import {v4 as uuid} from 'uuid';
 import {IImportDataContext, ImportableData} from '../ImportData';
-import {Session} from '../../../../../../client/@types/generated/graphql';
-import {fetchSessions} from '../../../../../lib/db/sessions/query';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
+import {Session} from '@/generated/zod';
+import {fetchSessions} from '@/lib/db/sessions/query';
+import {Solve} from '@/generated/zod';
 
 type LegacySession = {
 	id: string;
@@ -31,8 +31,10 @@ export function parseCubeDeskLegacyData(txt: string, context: IImportDataContext
 
 	try {
 		sessionMap = (JSON.parse(txt) as CubeDeskLegacyExportSchema).timer.sessionMap;
-	} catch (e) {
-		throw new Error('Invalid import file. Please make sure this is a valid file exported from CubeDesk');
+	} catch (e: unknown) {
+		throw new Error(
+			'Invalid import file. Please make sure this is a valid file exported from CubeDesk',
+		);
 	}
 
 	const sessionIds = Object.keys(sessionMap);

@@ -1,11 +1,9 @@
-import {gql} from '@apollo/client';
-import {gqlMutate} from '../../api';
-import {snakifyObject} from '../../../lib/util/strings/snakify';
-import {IGameContext} from '../game/Game';
-import {PlayerStatus} from '../../../lib/shared/match/types';
-import {GameSession, Match} from '../../../../client/@types/generated/graphql';
-import {SOLVE_FRAGMENT} from '../../../lib/util/graphql/fragments';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {snakifyObject} from '@/lib/util/strings/snakify';
+import {IGameContext} from '@/components/play/game/Game';
+import {PlayerStatus} from '@/lib/shared/match/types';
+import {GameSession, Match} from '@/generated/zod';
+import {Solve} from '@/generated/zod';
+import {api} from '@/trpc/react';
 
 export default async function onSolve(solve: Solve, context: IGameContext, match?: Match) {
 	const {
@@ -27,51 +25,35 @@ export default async function onSolve(solve: Solve, context: IGameContext, match
 			return sessionId;
 		}
 
-		return new Promise((resolve) => {
-			const query = gql`
-				mutation Mutate($gameType: GameType, $matchId: String) {
-					createGameSession(gameType: $gameType, matchId: $matchId) {
-						id
-					}
-				}
-			`;
+		// TODO: Migrate to tRPC - need game.createGameSession mutation
+		// const createGameSessionMutation = api.game.createGameSession.useMutation();
+		// const gameSession = await createGameSessionMutation.mutateAsync({
+		// 	gameType,
+		// 	matchId: match?.id || null,
+		// });
+		// setSessionId(gameSession.id);
+		// return gameSession.id;
 
-			gqlMutate<{createGameSession: GameSession}>(query, {
-				gameType,
-				matchId: match?.id || null,
-			}).then((res) => {
-				const gameSession = res.data.createGameSession;
-
-				setSessionId(gameSession.id);
-				resolve(gameSession.id);
-			});
-		});
+		throw new Error('createGameSession mutation not migrated to tRPC');
 	}
 
 	async function addTimeToHistory(solve) {
-		const query = gql`
-			${SOLVE_FRAGMENT}
-
-			mutation Mutate($input: SolveInput) {
-				createSolve(input: $input) {
-					...SolveFragment
-				}
-			}
-		`;
-
 		let gameSessionId = sessionId;
 		if (!gameSessionId) {
 			gameSessionId = await getSessionId();
 		}
 
-		const data = await gqlMutate<{createSolve: Solve}>(query, {
-			input: {
-				...snakifyObject(solve),
-				game_session_id: gameSessionId,
-			},
-		});
+		// TODO: Migrate to tRPC - need solve.create mutation
+		// const createSolveMutation = api.solve.create.useMutation();
+		// const newSolve = await createSolveMutation.mutateAsync({
+		// 	input: {
+		// 		...snakifyObject(solve),
+		// 		game_session_id: gameSessionId,
+		// 	},
+		// });
+		// return newSolve;
 
-		return data.data.createSolve;
+		throw new Error('createSolve mutation not migrated to tRPC');
 	}
 
 	function nextChallenge() {

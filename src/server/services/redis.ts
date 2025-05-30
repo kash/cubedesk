@@ -88,7 +88,7 @@ function connectRedisLock() {
 export async function acquireRedisLock(redisKey: generatedRedisKey, durationMs: number): Promise<Lock> {
 	try {
 		return await redlock.acquire([redisKey.key], durationMs);
-	} catch (e) {
+	} catch (e: unknown) {
 		return null;
 	}
 }

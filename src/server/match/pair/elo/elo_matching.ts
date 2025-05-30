@@ -1,7 +1,7 @@
 import {getLobbyRoomName} from '../../match';
 import {MatchRoom} from '../../../../lib/shared/match/events';
 import {getClientIdsInRoom} from '../../util';
-import {MatchLobby} from '../../../schemas/MatchLobby.schema';
+import {MatchLobby} from '@/generated/zod';
 import {GameType} from '../../../../shared/match/consts';
 
 const MIN_ELO_DIFF = 100;

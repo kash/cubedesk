@@ -1,13 +1,12 @@
+import AvatarDropdown from '@/components/common/avatar/avatar_dropdown/AvatarDropdown';
+import '@/components/common/avatar/Avatar.scss';
+import AvatarImage from '@/components/common/avatar/avatar_image/AvatarImage';
+import Badges from '@/components/common/avatar/badges/Badges';
+import {Profile, PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/generated/zod';
+import block from '@/styles/bem';
+import {CircleWavyCheck} from '@phosphor-icons/react/dist/ssr';
+import Link from 'next/link';
 import React from 'react';
-import './Avatar.scss';
-import AvatarImage from './avatar_image/AvatarImage';
-import {CircleWavyCheck} from 'phosphor-react';
-import {Link} from 'react-router-dom';
-import Badges from './badges/Badges';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../server/schemas/UserAccount.schema';
-import block from '../../../styles/bem';
-import AvatarDropdown from './avatar_dropdown/AvatarDropdown';
-import {Profile} from '../../../server/schemas/Profile.schema';
 
 const b = block('avatar');
 
@@ -28,7 +27,18 @@ interface Props {
 
 export default function Avatar(props: Props) {
 	const user = props.user as UserAccountForAdmin;
-	const {small, large, vertical, showOptions, showEloType, tiny, showEmail, hideBadges, target, noLink} = props;
+	const {
+		small,
+		large,
+		vertical,
+		showOptions,
+		showEloType,
+		tiny,
+		showEmail,
+		hideBadges,
+		target,
+		noLink,
+	} = props;
 
 	function onClick(e) {
 		if (noLink) {
@@ -89,8 +99,19 @@ export default function Avatar(props: Props) {
 	return (
 		<div className={b('wrapper')}>
 			<div className={b('body')}>
-				<Link target={target || '_self'} className={b({vertical})} onClick={onClick} to={link}>
-					<AvatarImage large={large} tiny={tiny} small={small} user={user} profile={profile} />
+				<Link
+					target={target || '_self'}
+					className={b({vertical})}
+					onClick={onClick}
+					href={link}
+				>
+					<AvatarImage
+						large={large}
+						tiny={tiny}
+						small={small}
+						user={user}
+						profile={profile}
+					/>
 					<div className={b('info')}>
 						{nameSpan}
 						{emailSpan}

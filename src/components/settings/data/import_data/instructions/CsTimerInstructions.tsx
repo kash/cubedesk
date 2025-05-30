@@ -1,26 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import block from '../../../../../styles/bem';
-import CubePicker from '../../../../common/cube_picker/CubePicker';
-import {ImportDataContext} from '../ImportData';
-import {ButtonProps} from '../../../../common/button/Button';
 import ImportSection from '../import_section/ImportSection';
 
 const b = block('import-instructions');
 
 export default function CsTimerInstructions() {
-	const context = useContext(ImportDataContext);
-
-	const dropdownButtonProps: ButtonProps = {
-		glow: true,
-		primary: true,
-		large: true,
-		disabled: context.importing || !!context.file,
-	};
-
-	if (!context.cubeType) {
-		dropdownButtonProps.text = 'Select cube type';
-	}
-
 	return (
 		<div className={b()}>
 			<ImportSection title="How to export data from csTimer">

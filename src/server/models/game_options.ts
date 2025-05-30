@@ -1,6 +1,6 @@
 import {getPrisma} from '../database';
 import {Prisma} from '@prisma/client';
-import {GameOptions} from '../schemas/GameOptions.schema';
+import {GameOptions} from '@/generated/zod';
 
 export async function createGameOptions(input: Prisma.GameOptionsUncheckedCreateInput): Promise<GameOptions> {
 	return getPrisma().gameOptions.create({

@@ -1,5 +1,5 @@
-import {getLokiDb} from '../lokijs';
-import {Session} from '../../../server/schemas/Session.schema';
+import {Session} from '@/generated/zod';
+import {getLokiDb} from '@/lib/db/lokijs';
 
 export function getSessionDb(): Collection<Session> {
 	const db = getLokiDb();

@@ -1,22 +1,21 @@
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
+import React, {createContext, ReactNode, useEffect, useState, useCallback} from 'react';
 import './Game.scss';
-import {getGameMetaData} from '../Play';
+import {getGameMetaData} from '@/app/play/page';
 import {useDispatch} from 'react-redux';
-import {openModal} from '../../../lib/actions/general';
-import TargetSessions from '../target/target_sessions/TargetSessions';
-import {getExistingMatch} from '../helpers/match';
-import {useRouteMatch} from 'react-router-dom';
-import GameChallenger from './game_challenger/GameChallenger';
-import GameTimer from './game_timer/GameTimer';
-import {reactState} from '../../../../client/@types/react';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import {PlayerStatus} from '../../../lib/shared/match/types';
-import Button from '../../common/button/Button';
-import {getNewScramble} from '../../timer/helpers/scramble';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
-import {Solve} from '../../../server/schemas/Solve.schema';
-import {Match} from '../../../server/schemas/Match.schema';
-import {GameType} from '../../../shared/match/consts';
+import {openModal} from '@/lib/actions/general';
+import TargetSessions from '@/components/play/target/target_sessions/TargetSessions';
+import {getExistingMatch} from '@/components/play/helpers/match';
+import {useParams} from 'next/navigation';
+import GameChallenger from '@/components/play/game/game_challenger/GameChallenger';
+import GameTimer from '@/components/play/game/game_timer/GameTimer';
+import {Dispatch, SetStateAction} from 'react';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {PlayerStatus} from '@/lib/shared/match/types';
+import Button from '@/components/common/button/Button';
+import {getNewScramble} from '@/components/timer/helpers/scramble';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
+// Solve and Match types will need to be imported from generated/zod once available
+import {GameType} from '@/shared/match/consts';
 import classNames from 'classnames';
 
 export interface GameSolveRow {
@@ -25,7 +24,7 @@ export interface GameSolveRow {
 	indexText: string;
 	solveStatus: PlayerStatus;
 	solveTime?: number;
-	solve: Solve;
+	solve: any;
 	targetTime?: number;
 	solveDescription?: string;
 }
@@ -38,8 +37,8 @@ export interface PlayerStatusInfo {
 	statusPrompt: string;
 }
 
-export type SolveRowInfo = (myId: string, timeIndex: number, solves: Solve[], match?: Match) => GameSolveRow;
-export type PlayerStatusFn = (myId: string, timeIndex: number, solves: Solve[], match?: Match) => PlayerStatusInfo;
+export type SolveRowInfo = (myId: string, timeIndex: number, solves: any[], match?: any) => GameSolveRow;
+export type PlayerStatusFn = (myId: string, timeIndex: number, solves: any[], match?: any) => PlayerStatusInfo;
 
 interface GameProps {
 	gameType: GameType;
@@ -59,19 +58,19 @@ interface GameProps {
 export interface IGameContext extends GameProps {
 	// State
 	showTimer: boolean;
-	setShowTimer: reactState<boolean>;
+	setShowTimer: Dispatch<SetStateAction<boolean>>;
 	timeIndex: number;
-	setTimeIndex: reactState<number>;
+	setTimeIndex: Dispatch<SetStateAction<number>>;
 	scramble: string;
-	setScramble: reactState<string>;
+	setScramble: Dispatch<SetStateAction<string>>;
 	solves: Solve[];
-	setSolves: reactState<Solve[]>;
+	setSolves: Dispatch<SetStateAction<Solve[]>>;
 	sessionId: string;
-	setSessionId: reactState<string>;
+	setSessionId: Dispatch<SetStateAction<string>>;
 	matchOpen: boolean;
-	setMatchOpen: reactState<boolean>;
+	setMatchOpen: Dispatch<SetStateAction<boolean>>;
 	cubeType: string;
-	setCubeType: reactState<string>;
+	setCubeType: Dispatch<SetStateAction<string>>;
 
 	// More
 	toggleTimer: () => void;
@@ -110,13 +109,55 @@ export default function Game(props: GameProps) {
 	const [showTimer, setShowTimer] = useState(false);
 	const [timeIndex, setTimeIndex] = useState(0);
 	const [scramble, setScramble] = useState('');
-	const [solves, setSolves] = useState<Solve[]>([]);
+	const [solves, setSolves] = useState<any[]>([]);
 	const [sessionId, setSessionId] = useState(null);
 	const [matchOpen, setMatchOpen] = useState(false);
 
 	const dispatch = useDispatch();
-	const routeMatch = useRouteMatch<MatchParams>();
-	const linkCode = routeMatch.params.linkCode;
+	const params = useParams();
+	const linkCode = params.linkCode as string;
+
+	const openSessions = useCallback(() => {
+		dispatch(openModal(<TargetSessions gameType={gameType} />));
+	}, [dispatch, gameType]);
+
+	const updateScramble = useCallback(() => {
+		let scramble;
+		if (getScramble) {
+			scramble = getScramble(timeIndex);
+		} else {
+			const ct = getCubeTypeInfoById(cubeType);
+			scramble = getNewScramble(ct.scramble);
+		}
+
+		setScramble(scramble);
+	}, [getScramble, timeIndex, cubeType]);
+
+	const toggleTimer = useCallback(() => {
+		setShowTimer(!showTimer);
+		setSessionId(null);
+		setTimeIndex(0);
+		setSolves([]);
+		setMatchOpen(false);
+		updateScramble();
+	}, [showTimer, updateScramble]);
+
+	const closeTimer = useCallback(() => {
+		setShowTimer(false);
+		setSessionId(null);
+		setTimeIndex(0);
+		setSolves([]);
+		setMatchOpen(false);
+		updateScramble();
+	}, [updateScramble]);
+
+	// TODO FUTURE handle this on the DB side
+	const retrySolve = useCallback(() => {
+		const solvesRep = [...solves];
+		solvesRep.pop();
+		setTimeIndex(solvesRep.length);
+		setSolves(solvesRep);
+	}, [solves]);
 
 	useEffect(() => {
 		updateScramble();
@@ -127,49 +168,7 @@ export default function Game(props: GameProps) {
 				setMatchOpen(true);
 			}
 		});
-	}, []);
-
-	function openSessions() {
-		dispatch(openModal(<TargetSessions gameType={gameType} />));
-	}
-
-	function updateScramble() {
-		let scramble;
-		if (getScramble) {
-			scramble = getScramble(timeIndex);
-		} else {
-			const ct = getCubeTypeInfoById(cubeType);
-			scramble = getNewScramble(ct.scramble);
-		}
-
-		setScramble(scramble);
-	}
-
-	function toggleTimer() {
-		setShowTimer(!showTimer);
-		setSessionId(null);
-		setTimeIndex(0);
-		setSolves([]);
-		setMatchOpen(false);
-		updateScramble();
-	}
-
-	function closeTimer() {
-		setShowTimer(false);
-		setSessionId(null);
-		setTimeIndex(0);
-		setSolves([]);
-		setMatchOpen(false);
-		updateScramble();
-	}
-
-	// TODO FUTURE handle this on the DB side
-	function retrySolve() {
-		const solvesRep = [...solves];
-		solvesRep.pop();
-		setTimeIndex(solvesRep.length);
-		setSolves(solvesRep);
-	}
+	}, [updateScramble, me?.id, linkCode, defaultCubeType]);
 
 	const contextValue: IGameContext = {
 		...props,

@@ -1,22 +1,22 @@
-import React from 'react';
-import {useDispatch} from 'react-redux';
+import {DotsThreeOutlineVertical} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback} from 'react';
 import './Session.scss';
-import {DotsThreeOutlineVertical} from 'phosphor-react';
-import {setCubeType, setCurrentSession} from '../../../lib/db/settings/update';
-import {v4 as uuid} from 'uuid';
+import {useDispatch} from 'react-redux';
 import {SortableHandle} from 'react-sortable-hoc';
-import {getDateFromNow} from '../../../lib/util/dates';
-import {fetchLastCubeTypeForSession} from '../../../lib/db/solves/query';
-import {Session as SessionSchema} from '../../../server/schemas/Session.schema';
-import {createSessionDb, deleteSessionDb, mergeSessionsDb} from '../../../lib/db/sessions/update';
-import block from '../../../styles/bem';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
+import {v4 as uuid} from 'uuid';
+import {reactState} from '../../../../client/@types/react';
 import {openModal} from '../../../lib/actions/general';
-import ConfirmModal from '../../common/confirm_modal/ConfirmModal';
 import {fetchSessionById} from '../../../lib/db/sessions/query';
+import {createSessionDb, deleteSessionDb, mergeSessionsDb} from '../../../lib/db/sessions/update';
+import {setCubeType, setCurrentSession} from '../../../lib/db/settings/update';
+import {fetchLastCubeTypeForSession} from '../../../lib/db/solves/query';
+import {getDateFromNow} from '../../../lib/util/dates';
 import {useSettings} from '../../../lib/util/hooks/useSettings';
 import {toastSuccess} from '../../../lib/util/toast';
-import {reactState} from '../../../../client/@types/react';
+import {Session as SessionSchema} from '@/generated/zod';
+import block from '../../../styles/bem';
+import ConfirmModal from '../../common/confirm_modal/ConfirmModal';
+import Dropdown from '../../common/inputs/dropdown/Dropdown';
 
 const b = block('session-row');
 
@@ -39,12 +39,12 @@ export default function Session(props: Props) {
 
 	const lastCubeType = fetchLastCubeTypeForSession(session.id) || '333';
 
-	function makeCurrent() {
+	const makeCurrent = useCallback(() => {
 		setCurrentSession(session.id);
 		setCubeType(lastCubeType);
-	}
+	}, [session.id, lastCubeType]);
 
-	async function mergeSessions() {
+	const mergeSessions = useCallback(async () => {
 		dispatch(
 			openModal(
 				<ConfirmModal
@@ -58,13 +58,13 @@ export default function Session(props: Props) {
 					buttonProps={{
 						danger: true,
 					}}
-				/>
-			)
+				/>,
+			),
 		);
-	}
+	}, [dispatch, session.name, session.id, currentSession.name, currentSessionId, props]);
 
-	async function deleteSession() {
-		async function triggerAction() {
+	const deleteSession = useCallback(async () => {
+		const triggerAction = async () => {
 			const id = session.id;
 			const name = session.name;
 			let updatedSessionId = currentSessionId;
@@ -85,7 +85,7 @@ export default function Session(props: Props) {
 			props.setSelectedSessionId(updatedSessionId);
 			await deleteSessionDb(session);
 			toastSuccess(`Successfully deleted session "${name}"`);
-		}
+		};
 
 		dispatch(
 			openModal(
@@ -94,10 +94,10 @@ export default function Session(props: Props) {
 					description={`Be careful here. You are about to delete "${session.name}." This action is irreversible.`}
 					triggerAction={triggerAction}
 					buttonText="Delete session"
-				/>
-			)
+				/>,
+			),
 		);
-	}
+	}, [dispatch, session, currentSessionId, props]);
 
 	let dropdown = null;
 

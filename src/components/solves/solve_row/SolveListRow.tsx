@@ -1,16 +1,16 @@
-import React from 'react';
-import {useDispatch} from 'react-redux';
+import {Solve} from '@/generated/zod';
+import React, {useCallback} from 'react';
 import './SolveListRow.scss';
-import {getTimeString} from '../../../lib/util/time';
+import {useDispatch} from 'react-redux';
 import {openModal} from '../../../lib/actions/general';
-import SolveInfo from '../../solve_info/SolveInfo';
-import Emblem from '../../common/emblem/Emblem';
-import {getDateFromNow} from '../../../lib/util/dates';
-import Scramble from '../../modules/scramble/ScrambleVisual';
 import {getCubeTypeName} from '../../../lib/util/cubes/util';
+import {getDateFromNow} from '../../../lib/util/dates';
+import {getTimeString} from '../../../lib/util/time';
 import block from '../../../styles/bem';
+import Emblem from '../../common/emblem/Emblem';
 import Tag from '../../common/tag/Tag';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import Scramble from '../../modules/scramble/ScrambleVisual';
+import SolveInfo from '../../solve-info/SolveInfo';
 
 const b = block('solve-list-row');
 
@@ -23,9 +23,9 @@ export default function SolveListRow(props: Props) {
 
 	const dispatch = useDispatch();
 
-	function openSolve() {
+	const openSolve = useCallback(() => {
 		dispatch(openModal(<SolveInfo solveId={solve.id} />));
-	}
+	}, [dispatch, solve.id]);
 
 	const time = getTimeString(solve);
 	const dnf = solve.dnf;
@@ -62,7 +62,12 @@ export default function SolveListRow(props: Props) {
 			</div>
 			<div className={b('scramble')}>
 				<div className={b('scramble-body')}>
-					<Scramble frontFace width="60px" scramble={scramble} cubeType={solve.cube_type} />
+					<Scramble
+						frontFace
+						width="60px"
+						scramble={scramble}
+						cubeType={solve.cube_type}
+					/>
 				</div>
 			</div>
 			<div className={b('badges')}>

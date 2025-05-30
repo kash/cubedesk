@@ -1,16 +1,16 @@
-import {InternalUserAccount} from '../schemas/UserAccount.schema';
 import Stripe from 'stripe';
+import {updateStripeCustomerWithDiscordMetadata} from '../integrations/discord';
+import {setSetting} from '../models/settings';
+import {updateUserAccountWithParams} from '../models/user_account';
+import {InternalUserAccount} from '@/types/user-account';
+import Discord from '../services/discord';
 import {
 	cancelAllStripeSubscriptions,
 	getStripeCustomerById,
 	getStripeCustomerId,
 	getStripeCustomerSubscriptions,
-	SubscriptionStatus,
 } from '../services/stripe';
-import {updateUserAccountWithParams} from '../models/user_account';
-import Discord from '../services/discord';
-import {updateStripeCustomerWithDiscordMetadata} from '../integrations/discord';
-import {setSetting} from '../models/settings';
+import {SubscriptionStatus} from '@/types/memebership';
 
 type SubscriptionData = {
 	status: SubscriptionStatus;
@@ -22,7 +22,9 @@ type SubscriptionData = {
 
 const proProductId = process.env.STRIPE_PRO_PRODUCT_ID;
 
-export async function getProSubscriptionAndUpdateUserProStatus(user: InternalUserAccount): Promise<SubscriptionData> {
+export async function getProSubscriptionAndUpdateUserProStatus(
+	user: InternalUserAccount,
+): Promise<SubscriptionData> {
 	const customerId = await getStripeCustomerId(user);
 	const subs = await getStripeCustomerSubscriptions(customerId);
 

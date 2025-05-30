@@ -148,7 +148,7 @@ export const mutateActions = {
 
 		try {
 			return await deleteUserAccount(user);
-		} catch (e) {
+		} catch (e: unknown) {
 			throw new GraphQLError(ErrorCode.INTERNAL_SERVER_ERROR, 'Something went wrong on our side');
 		}
 	},

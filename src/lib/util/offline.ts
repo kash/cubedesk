@@ -1,4 +1,4 @@
-import { UserAccount } from '../../server/schemas/UserAccount.schema';
+import { UserAccount } from '@/types/user-account';
 import { generateId } from '../../shared/code';
 
 const OFFLINE_KEY = 'cd_offline_hash';

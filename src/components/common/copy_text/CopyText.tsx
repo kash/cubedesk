@@ -1,7 +1,7 @@
-import React, {useRef, useState} from 'react';
-import {Copy, Check} from 'phosphor-react';
-import Button, {ButtonProps} from '../button/Button';
-import {toastSuccess} from '../../../lib/util/toast';
+import {Button, ButtonProps} from '@/components/ui/button';
+import {toastSuccess} from '@/lib/util/toast';
+import {Check, Copy} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback, useRef, useState} from 'react';
 
 export function copyText(source: string) {
 	const el = document.createElement('textarea');
@@ -17,7 +17,7 @@ export function copyText(source: string) {
 
 interface Props {
 	text: 'self' | string;
-	buttonProps?: ButtonProps;
+	buttonProps?: Partial<ButtonProps>;
 	toastifyMessageOnCopy?: string;
 	onCopy?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -25,10 +25,10 @@ interface Props {
 export default function CopyText(props: Props) {
 	const {text, buttonProps, onCopy, toastifyMessageOnCopy} = props;
 
-	const textCopiedTimeout = useRef<NodeJS.Timeout>();
+	const textCopiedTimeout = useRef<NodeJS.Timeout | null>(null);
 	const [textCopied, setTextCopied] = useState(false);
 
-	function onClick(e) {
+	const onClick = useCallback((e) => {
 		let source = text;
 
 		if (text === 'self') {
@@ -54,21 +54,15 @@ export default function CopyText(props: Props) {
 		if (toastifyMessageOnCopy) {
 			toastSuccess(toastifyMessageOnCopy);
 		}
-	}
-
-	const finalButtonProps = {
-		gray: true,
-		...buttonProps,
-	};
+	}, [text, onCopy, toastifyMessageOnCopy]);
 
 	return (
 		<Button
 			onClick={onClick}
 			title="Copy text"
-			gray
-			icon={textCopied ? <Check weight="bold" /> : <Copy weight="bold" />}
-			{...finalButtonProps}
-			white={textCopied}
+			variant={textCopied ? 'default' : 'secondary'}
+			icon={textCopied ? Check : Copy}
+			{...buttonProps}
 		/>
 	);
 }

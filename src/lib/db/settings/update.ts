@@ -1,10 +1,10 @@
+import {updateOfflineHash} from '@/lib/util/offline';
 import {snakeCase} from 'change-case';
-import {AllSettings, getSetting} from './query';
-import {getSettingsDb, SettingValue} from './init';
+import {api} from '../../../trpc/react';
 import {emitEvent} from '../../util/event_handler';
+import {getSettingsDb, SettingValue} from './init';
 import {setLocalSettingValue} from './local';
-import { updateOfflineHash } from "@/lib/util/offline";
-import { api } from '../../../trpc/react';
+import {AllSettings, getSetting} from './query';
 
 export const MOBILE_FONT_SIZE_MULTIPLIER = 0.75;
 export const MIN_MOBILE_FREEZE_TIME = 0.45;
@@ -21,7 +21,7 @@ export async function refreshSettings() {
 	try {
 		const settingsDb = getSettingsDb();
 		const backendSettings = await api.setting.settings.query();
-		
+
 		for (const key of Object.keys(backendSettings)) {
 			const value = backendSettings[key];
 			const setVal = settingsDb.findOne({
@@ -35,12 +35,14 @@ export async function refreshSettings() {
 			setVal.value = value;
 			settingsDb.update(setVal);
 		}
-	} catch (e) {
+	} catch (e: unknown) {
 		// Handle error silently
 	}
 }
 
-type BoolSettingKeys = {[k in keyof AllSettings]: AllSettings[k] extends boolean ? k : never}[keyof AllSettings];
+type BoolSettingKeys = {
+	[k in keyof AllSettings]: AllSettings[k] extends boolean ? k : never;
+}[keyof AllSettings];
 type BoolSettingKey = {[k in BoolSettingKeys]: boolean};
 export function toggleSetting(key: keyof BoolSettingKey) {
 	const val = getSetting(key);
@@ -111,9 +113,9 @@ async function setSettingApi(setVals: SettingValue[]) {
 		promises.push(
 			api.setting.setSetting.mutate({
 				input: payload,
-			})
+			}),
 		);
-	} catch (e) {
+	} catch (e: unknown) {
 		// Continue with offline hash update
 	}
 

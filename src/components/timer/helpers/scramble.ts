@@ -1,5 +1,5 @@
-import {getCubeTypeInfoById, getScrambleTypeById} from '../../../lib/util/cubes/util';
 import {Scrambow} from 'scrambow';
+import {getCubeTypeInfoById, getScrambleTypeById} from '../../../lib/util/cubes/util';
 import {ITimerContext} from '../Timer';
 import {setTimerParam} from './params';
 

@@ -1,4 +1,4 @@
-import {Profile} from '../schemas/Profile.schema';
+import {Profile} from '@/generated/zod';
 import fs from 'fs';
 import {acquireRedisLock, createRedisKey, RedisNamespace} from './redis';
 import {getPrisma} from '../database';
@@ -73,7 +73,7 @@ async function invalidateSiteMapCache() {
 		logger.info('Invalidated CloudFront cache', {
 			location: res.Location,
 		});
-	} catch (e) {
+	} catch (e: unknown) {
 		logger.warn('Could not invalidate CloudFront cache', {
 			error: e,
 		});

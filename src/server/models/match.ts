@@ -1,14 +1,11 @@
-import {getPrisma} from '../database';
-import uniqid from 'uniqid';
 import dayjs from 'dayjs';
-import {Prisma} from '@prisma/client';
+import uniqid from 'uniqid';
+import {Match, Prisma, UserAccount as PublicUserAccount, MatchSession} from '@prisma/client';
 import {v4 as uuid} from 'uuid';
-import {Match} from '../schemas/Match.schema';
-import {MatchSession} from '../schemas/MatchSession.schema';
-import {MatchConst} from '../../lib/shared/match/consts';
-import {publicUserInclude} from './user_account';
-import {PublicUserAccount} from '../schemas/UserAccount.schema';
-import {MatchCacher} from '../match/update/match_cacher';
+import {getPrismaClient} from '@/server/services/database';
+import {publicUserInclude} from '@/server/models/user_account';
+import {MatchCacher} from '@/server/match/update/match_cacher';
+import {MatchConst} from '@/shared/match/consts';
 
 export function matchInclude(includeChat: boolean): Prisma.MatchInclude {
 	let matchSessionInclude = {};
@@ -50,8 +47,8 @@ export function matchInclude(includeChat: boolean): Prisma.MatchInclude {
 	};
 }
 
-export async function getMatchById(id: string, includeChat?: boolean) {
-	const match = await getPrisma().match.findUnique({
+export async function getMatchById(id: string, includeChat: boolean) {
+	const match = await getPrismaClient().match.findUnique({
 		where: {
 			id,
 		},
@@ -62,7 +59,7 @@ export async function getMatchById(id: string, includeChat?: boolean) {
 }
 
 export async function getUserMatchCount(user: PublicUserAccount) {
-	return getPrisma().matchParticipant.aggregate({
+	return getPrismaClient().matchParticipant.aggregate({
 		_count: {
 			id: true,
 		},
@@ -72,8 +69,8 @@ export async function getUserMatchCount(user: PublicUserAccount) {
 	});
 }
 
-export async function getMatchBySpectateCode(code: string, includeChat?: boolean) {
-	const match = await getPrisma().match.findUnique({
+export async function getMatchBySpectateCode(code: string, includeChat: boolean) {
+	const match = await getPrismaClient().match.findUnique({
 		where: {
 			spectate_code: code,
 		},
@@ -85,8 +82,8 @@ export async function getMatchBySpectateCode(code: string, includeChat?: boolean
 	return cleanMatch(match);
 }
 
-export async function getMatchByLinkCode(code: string, includeChat?: boolean) {
-	const match = await getPrisma().match.findUnique({
+export async function getMatchByLinkCode(code: string, includeChat: boolean) {
+	const match = await getPrismaClient().match.findUnique({
 		where: {
 			link_code: code,
 		},
@@ -96,11 +93,12 @@ export async function getMatchByLinkCode(code: string, includeChat?: boolean) {
 	return cleanMatch(match);
 }
 
-export async function cleanMatch(match): Promise<Match> {
-	if (!match) {
-		return match;
+export async function cleanMatch(match: Match | null): Promise<Match | null> {
+	if (!match || !match.participants) {
+		return null;
 	}
-	if (match.participants) {
+
+	if (match.participants && match.participants.length > 0) {
 		for (let i = 0; i < match.participants.length; i += 1) {
 			const part = match.participants[i];
 
@@ -134,7 +132,7 @@ export async function createMatch(matchSession: MatchSession, started?: boolean)
 	const linkCode = uniqid.time();
 	const spectateCode = uniqid();
 
-	return getPrisma().match.create({
+	return getPrismaClient().match.create({
 		data: {
 			id: MatchConst.MATCH_ID_PREFIX + uuid(),
 			link_code: linkCode,
@@ -145,13 +143,13 @@ export async function createMatch(matchSession: MatchSession, started?: boolean)
 	});
 }
 
-export async function updateMatch(match, data: Prisma.MatchUncheckedUpdateInput) {
+export async function updateMatch(match: Match, data: Prisma.MatchUncheckedUpdateInput) {
 	if (!match.ended_at && data.ended_at) {
 		const matchCacher = new MatchCacher(match.id);
 		await matchCacher.forceUpdateMatchCache();
 	}
 
-	return getPrisma().match.update({
+	return getPrismaClient().match.update({
 		where: {
 			id: match.id,
 		},

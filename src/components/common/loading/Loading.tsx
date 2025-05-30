@@ -1,6 +1,6 @@
+import {CircleNotch} from '@phosphor-icons/react/dist/ssr';
 import React from 'react';
-import {CircleNotch} from 'phosphor-react';
-import './Loading.scss';
+import '@/components/common/loading/Loading.scss';
 
 export default function Loading() {
 	return (

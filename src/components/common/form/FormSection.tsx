@@ -1,8 +1,8 @@
 import React, {ReactNode} from 'react';
-import ProOnly from '../pro_only/ProOnly';
 import {useMe} from '../../../lib/util/hooks/useMe';
-import Tag from '../tag/Tag';
 import {isNotPro} from '../../../lib/util/pro';
+import ProOnly from '../pro_only/ProOnly';
+import Tag from '../tag/Tag';
 
 interface Props {
 	removeBorderBottom?: boolean;

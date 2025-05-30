@@ -1,5 +1,5 @@
-import {updateSolveDb} from './update';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {updateSolveDb} from '@/lib/db/solves/update';
+import {Solve} from '@/generated/zod';
 
 export function toggleDnfSolveDb(solve: Solve) {
 	if (!solve) {

@@ -1,9 +1,12 @@
 import React from 'react';
 import './UserSummary.scss';
-import block from '../../../../styles/bem';
-import {UserAccountSolvesSummary, UserAccountSummary} from '../../../../server/schemas/UserAccount.schema';
 import {getCubeTypeInfoById} from '../../../../lib/util/cubes/util';
 import {getTimeString} from '../../../../lib/util/time';
+import {
+	UserAccountSolvesSummary,
+	UserAccountSummary,
+} from '@/types/admin';
+import block from '../../../../styles/bem';
 
 const b = block('manage-user-summary');
 
@@ -47,14 +50,15 @@ export default function UserSummary(props: Props) {
 						{getPill('Min Time', getTimeString(ct.min_time, 2))}
 						{getPill('Max Time', getTimeString(ct.max_time, 2))}
 					</div>
-				</div>
+				</div>,
 			);
 		}
 
 		return list;
 	}
 
-	const matchWinPercent = 100 - Math.floor((summary.matches.losses / summary.matches.count) * 100) / 10;
+	const matchWinPercent =
+		100 - Math.floor((summary.matches.losses / summary.matches.count) * 100) / 10;
 
 	return (
 		<div className={b()}>

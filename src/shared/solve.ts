@@ -1,11 +1,11 @@
-import {Solve} from '../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 
 export function sanitizeSolve(s: Solve): Solve {
 	const solve = {...s};
 	delete solve.created_at;
 
-	let startedAt: number | bigint = solve.started_at;
-	let endedAt: number | bigint = solve.ended_at;
+	let startedAt: number | bigint | string | null = solve.started_at;
+	let endedAt: number | bigint | string | null = solve.ended_at;
 	if (startedAt && typeof startedAt === 'string') {
 		startedAt = parseInt(startedAt, 10);
 	}
@@ -14,8 +14,8 @@ export function sanitizeSolve(s: Solve): Solve {
 		endedAt = parseInt(endedAt, 10);
 	}
 
-	solve.started_at = Number(startedAt) as any;
-	solve.ended_at = Number(endedAt) as any;
+	solve.started_at = startedAt ? Number(startedAt) : null;
+	solve.ended_at = endedAt ? Number(endedAt) : null;
 	solve.dnf = !!solve.dnf;
 	solve.plus_two = !!solve.plus_two;
 

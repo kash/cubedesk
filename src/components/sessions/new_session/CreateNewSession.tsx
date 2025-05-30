@@ -1,17 +1,16 @@
-import React, {useState} from 'react';
+import {Button} from '@/components/ui/button';
 import './CreateNewSession.scss';
-import Input from '../../common/inputs/input/Input';
-import {setCubeType, setCurrentSession} from '../../../lib/db/settings/update';
-import CubePicker from '../../common/cube_picker/CubePicker';
+import {Input} from '@/components/ui/input';
+import React, {useCallback, useState} from 'react';
 import {createSessionDb} from '../../../lib/db/sessions/update';
-import {IModalProps} from '../../common/modal/Modal';
-import {toastError} from '../../../lib/util/toast';
-import {useInput} from '../../../lib/util/hooks/useInput';
-import Button from '../../common/button/Button';
+import {setCubeType, setCurrentSession} from '../../../lib/db/settings/update';
 import {CubeType} from '../../../lib/util/cubes/cube_types';
-import ModalHeader from '../../common/modal/modal_header/ModalHeader';
+import {useInput} from '../../../lib/util/hooks/useInput';
+import {toastError} from '../../../lib/util/toast';
 import block from '../../../styles/bem';
-import FormSection from '../../common/form/FormSection';
+import CubePicker from '../../common/cube_picker/CubePicker';
+import {IModalProps} from '../../common/modal/Modal';
+import ModalHeader from '../../common/modal/modal_header/ModalHeader';
 
 const b = block('create-new-session');
 
@@ -22,11 +21,11 @@ export default function CreateNewSession(props: IModalProps) {
 	const [sessionCubeType, setSessionCubeType] = useState('333');
 	const [name, setName] = useInput('');
 
-	function onCubeTypeChange(ct: CubeType) {
+	const onCubeTypeChange = useCallback((ct: CubeType) => {
 		setSessionCubeType(ct.id);
-	}
+	}, []);
 
-	async function createSession() {
+	const createSession = useCallback(async () => {
 		if (loading) {
 			return;
 		}
@@ -39,11 +38,11 @@ export default function CreateNewSession(props: IModalProps) {
 			setCubeType(sessionCubeType);
 
 			onComplete(session);
-		} catch (e) {
+		} catch (e: unknown) {
 			setLoading(false);
 			toastError('Server Error: Could not create session');
 		}
-	}
+	}, [loading, name, sessionCubeType, onComplete]);
 
 	const disabled = !name.trim() || loading || !sessionCubeType;
 
@@ -57,7 +56,7 @@ export default function CreateNewSession(props: IModalProps) {
 				<Input
 					placeholder="New Session"
 					maxLength={200}
-					legend="Session Name"
+					label="Session Name"
 					value={name}
 					onChange={setName}
 				/>
@@ -72,15 +71,9 @@ export default function CreateNewSession(props: IModalProps) {
 				value={sessionCubeType}
 			/>
 			<div className="mt-3">
-				<Button
-					glow
-					primary
-					large
-					text="Create Session"
-					onClick={createSession}
-					disabled={disabled}
-					loading={loading}
-				/>
+				<Button size="lg" onClick={createSession} disabled={disabled} loading={loading}>
+					Create Session
+				</Button>
 			</div>
 		</div>
 	);

@@ -36,7 +36,7 @@ export function stopTimer(name) {
 }
 
 export function stopAllTimers() {
-	Object.keys(timers).forEach(name => stopTimer(name));
+	Object.keys(timers).forEach((name) => stopTimer(name));
 }
 
 export function clearInspectionTimers(clearModifications: boolean, run: boolean) {

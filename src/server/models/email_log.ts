@@ -1,6 +1,6 @@
 import {getPrisma} from '../database';
 import {v4 as uuid} from 'uuid';
-import {UserAccount} from '../schemas/UserAccount.schema';
+import {UserAccount} from '@/types/user-account';
 
 export async function createEmailLog(
 	user: UserAccount,

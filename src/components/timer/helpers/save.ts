@@ -1,9 +1,9 @@
+import {Solve, SolveInput} from '@/generated/zod';
+import {createSolveDb} from '@/lib/db/solves/update';
+import {emitEvent} from '@/lib/util/event_handler';
 import {v4 as uuid} from 'uuid';
-import {createSolveDb} from '../../../lib/db/solves/update';
 import {ITimerContext} from '../Timer';
-import {emitEvent} from '../../../lib/util/event_handler';
 import {setTimerParam} from './params';
-import {Solve, SolveInput} from '../../../server/schemas/Solve.schema';
 
 export function saveSolve(
 	context: ITimerContext,
@@ -13,7 +13,7 @@ export function saveSolve(
 	endedAt: number,
 	dnf = false,
 	plusTwo = false,
-	overrides: Partial<SolveInput> = {}
+	overrides: Partial<SolveInput> = {},
 ) {
 	const {onSolve, addTwoToSolve, cubeType, dnfTime, demoMode} = context;
 

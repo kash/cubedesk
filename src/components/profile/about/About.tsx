@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import './About.scss';
-import {YoutubeLogo, TwitterLogo, RedditLogo, TwitchLogo} from 'phosphor-react';
-import Emblem from '../../common/emblem/Emblem';
-import {Profile} from '../../../../client/@types/generated/graphql';
-import block from '../../../styles/bem';
+import {YoutubeLogo, TwitterLogo, RedditLogo, TwitchLogo} from '@phosphor-icons/react/dist/ssr';
+import Emblem from '@/components/common/emblem/Emblem';
+import {Profile} from '@/generated/zod';
+import block from '@/styles/bem';
 
 const b = block('profile-about');
 
@@ -14,7 +14,7 @@ interface Props {
 export default function About(props: Props) {
 	const {profile} = props;
 
-	function addSocial(list, key, name, icon: JSX.Element, background, color) {
+	function addSocial(list, key, name, icon: ReactNode, background, color) {
 		if (!profile[key]) {
 			return null;
 		}

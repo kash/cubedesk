@@ -3,11 +3,11 @@ import {DetailedClientInfo, getDetailedClientInfo, joinRoom, leaveAllMatchRooms,
 import {createMatchSession} from '../../models/match_session';
 import {createMatch, updateMatch} from '../../models/match';
 import {sendMatchUpdateById} from '../update/standings';
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/generated/zod';
 import {createMatchParticipant} from '../../models/match_participation';
-import {MatchSession} from '../../schemas/MatchSession.schema';
+import {MatchSession} from '@/generated/zod';
 import {emitMatchUpdate} from '../update/send';
-import {GameOptionsInput} from '../../schemas/GameOptions.schema';
+import {GameOptionsInput} from '@/generated/zod';
 import {createGameOptions} from '../../models/game_options';
 import {logger} from '../../services/logger';
 import {GameType} from '../../../shared/match/consts';
@@ -63,7 +63,7 @@ export async function pairPlayersInRoom(
 			});
 
 			match = await createMatch(matchSession, true);
-		} catch (e) {
+		} catch (e: unknown) {
 			logger.error('Error creating match session.', {
 				error: e,
 			});

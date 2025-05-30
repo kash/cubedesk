@@ -3,7 +3,7 @@ import {
 	UserAccountMatchesSummary,
 	UserAccountSolvesSummary,
 	UserAccountSummary,
-} from '../schemas/UserAccount.schema';
+} from '@/types/admin';
 import {getPrisma} from '../database';
 import {trainerExceptions} from './solve';
 

@@ -1,43 +1,28 @@
 import React, {ReactNode, useContext} from 'react';
 import './ReviewImport.scss';
-import block from '../../../../../styles/bem';
-import {X} from 'phosphor-react';
+import block from '@/styles/bem';
+import {X} from '@phosphor-icons/react/dist/ssr';
 import {ImportDataContext} from '../ImportData';
-import Button from '../../../../common/button/Button';
-import {gql} from '@apollo/client/core';
-import {gqlMutate} from '../../../../api';
-import {toastError} from '../../../../../lib/util/toast';
-import {SessionInput, SolveInput} from '../../../../../../client/@types/generated/graphql';
+import {Button} from '@/components/ui/button';
+import {toastError} from '@/lib/util/toast';
+import {SessionInput, SolveInput} from '@/generated/zod';
 import ImportSection from '../import_section/ImportSection';
-import {clearOfflineData} from '../../../../layout/offline';
-import CubePicker from '../../../../common/cube_picker/CubePicker';
-import Input from '../../../../common/inputs/input/Input';
-import InputLegend from '../../../../common/inputs/input/input_legend/InputLegend';
+import {clearOfflineData} from '@/components/layout/offline';
+import CubePicker from '@/components/common/cube_picker/CubePicker';
+import Input from '@/components/common/inputs/input/Input';
+import InputLegend from '@/components/common/inputs/input/input_legend/InputLegend';
+import {api} from '@/trpc/react';
 
 const b = block('review-import');
 
 async function bulkImportSessions(sessions: SessionInput[]) {
-	const query = gql`
-		mutation Mutate($sessions: [SessionInput]) {
-			bulkCreateSessions(sessions: $sessions)
-		}
-	`;
-
-	await gqlMutate(query, {
-		sessions,
-	});
+	// TODO: Migrate to tRPC - need bulk session import endpoint
+	return;
 }
 
 async function bulkImportSolves(solves: SolveInput[]) {
-	const query = gql`
-		mutation Mutate($solves: [SolveInput]) {
-			bulkCreateSolves(solves: $solves)
-		}
-	`;
-
-	await gqlMutate(query, {
-		solves,
-	});
+	// TODO: Migrate to tRPC - need bulk solve import endpoint
+	return;
 }
 
 export default function ReviewImport() {
@@ -55,7 +40,7 @@ export default function ReviewImport() {
 			await bulkImportSolves(data.solves);
 			await clearOfflineData();
 			window.location.href = '/sessions';
-		} catch (e) {
+		} catch (e: unknown) {
 			console.error(e);
 			context.setImporting(false);
 			toastError(e.message);
@@ -128,13 +113,25 @@ export default function ReviewImport() {
 			return (
 				<div className={b('session')} key={session.id}>
 					<div>
-						<Input value={session.name} onChange={(e) => updateSessionName(session.id, e.target.value)} />
+						<Input
+							value={session.name}
+							onChange={(e) => updateSessionName(session.id, e.target.value)}
+						/>
 					</div>
 					<div>
-						<CubePicker onChange={(ct) => updateSessionCubeType(session.id, ct.id)} value={cubeType} />
+						<CubePicker
+							onChange={(ct) => updateSessionCubeType(session.id, ct.id)}
+							value={cubeType}
+						/>
 					</div>
 					<div>
-						<Button icon={<X />} onClick={() => removeSession(session.id)} transparent />
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={() => removeSession(session.id)}
+						>
+							<X weight="bold" />
+						</Button>
 					</div>
 				</div>
 			);
@@ -147,7 +144,7 @@ export default function ReviewImport() {
 				<InputLegend large text="Session Name" />
 				<InputLegend large text="Cube Type" />
 				<InputLegend large text="Remove" />
-			</div>
+			</div>,
 		);
 	}
 
@@ -169,13 +166,12 @@ export default function ReviewImport() {
 				</div>
 				<Button
 					loading={context.importing}
-					text="Import data"
-					primary
-					large
-					glow
+					size="lg"
 					disabled={context.importing}
 					onClick={importData}
-				/>
+				>
+					Import data
+				</Button>
 			</ImportSection>
 		</div>
 	);

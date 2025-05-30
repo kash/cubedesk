@@ -1,9 +1,9 @@
-import {UserAccount} from '../../server/schemas/UserAccount.schema';
-import {Friendship} from '../../server/schemas/Friendship.schema';
-import { api } from '../../trpc/react';
+import {Friendship} from '@/generated/zod';
+import {api} from '@/trpc/react';
+import {Dispatch} from 'react';
 
 export function getMe() {
-	return async (dispatch) => {
+	return async (dispatch: Dispatch<any>) => {
 		try {
 			const me = await api.userAccount.me.query();
 
@@ -13,7 +13,7 @@ export function getMe() {
 					me: me || null,
 				},
 			});
-		} catch (e) {
+		} catch (e: unknown) {
 			dispatch({
 				type: 'SET_ME',
 				payload: {

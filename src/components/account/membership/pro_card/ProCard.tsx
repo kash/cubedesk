@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import Loading from '@/components/common/loading/Loading';
 import './ProCard.scss';
-import block from '../../../../styles/bem';
-import Tag from '../../../common/tag/Tag';
-import Switch from '../../../common/switch/Switch';
-import Button, {CommonType} from '../../../common/button/Button';
-import {ArrowSquareOut} from 'phosphor-react';
-import Module from '../../../common/module/Module';
-import ProFeatureList from './pro_feature_list/ProFeatureList';
-import Loading from '../../../common/loading/Loading';
-import {useMe} from '../../../../lib/util/hooks/useMe';
+import Module from '@/components/common/module/Module';
+import Switch from '@/components/common/switch/Switch';
+import Tag from '@/components/common/tag/Tag';
+import {Button} from '@/components/ui/button';
+import {useMe} from '@/lib/util/hooks/useMe';
+import block from '@/styles/bem';
 import {api} from '@/trpc/react';
+import {ArrowSquareOut} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback, useState} from 'react';
+import ProFeatureList from './pro_feature_list/ProFeatureList';
 
 const b = block('pro-card');
 
@@ -39,9 +39,12 @@ interface Props {
 
 export default function ProCard(props: Props) {
 	const [selInterval, setSelInterval] = useState<MembershipInterval>(MembershipInterval.MONTH);
-	const {data: memOpData, isLoading: loading} = api.membership.membershipOptions.useQuery(undefined, {
-		enabled: !props.options,
-	});
+	const {data: memOpData, isLoading: loading} = api.membership.membershipOptions.useQuery(
+		undefined,
+		{
+			enabled: !props.options,
+		},
+	);
 
 	const me = useMe();
 	const options = props.options || memOpData;
@@ -53,15 +56,15 @@ export default function ProCard(props: Props) {
 		return <Loading />;
 	}
 
-	function cycleInterval() {
+	const cycleInterval = useCallback(() => {
 		if (selInterval === MembershipInterval.MONTH) {
 			setSelInterval(MembershipInterval.YEAR);
 		} else {
 			setSelInterval(MembershipInterval.MONTH);
 		}
-	}
+	}, [selInterval]);
 
-	async function openBuyLink() {
+	const openBuyLink = useCallback(async () => {
 		if (!me) {
 			window.location.href = '/login';
 			return;
@@ -72,7 +75,7 @@ export default function ProCard(props: Props) {
 		});
 
 		window.location.href = url;
-	}
+	}, [me, genBuyLinkMut, options, selInterval]);
 
 	let price = '0';
 	let interval = '-';
@@ -113,26 +116,26 @@ export default function ProCard(props: Props) {
 				</div>
 				{upsell}
 				<Button
-					fullWidth
-					primary
-					large
+					className="w-full"
+					variant="default"
+					size="lg"
 					loading={genBuyLinkMut.isPending}
-					theme={CommonType.PRIMARY}
 					onClick={openBuyLink}
-					text={`Buy Pro - ${buyText}`}
-					icon={<ArrowSquareOut />}
-				/>
+				>
+					<ArrowSquareOut className="mr-2" />
+					{`Buy Pro - ${buyText}`}
+				</Button>
 				<ProFeatureList />
 				<Button
-					fullWidth
-					primary
-					large
+					className="w-full"
+					variant="default"
+					size="lg"
 					loading={genBuyLinkMut.isPending}
-					theme={CommonType.PRIMARY}
 					onClick={openBuyLink}
-					text={`Buy Pro - ${buyText}`}
-					icon={<ArrowSquareOut />}
-				/>
+				>
+					<ArrowSquareOut className="mr-2" />
+					{`Buy Pro - ${buyText}`}
+				</Button>
 			</div>
 		</Module>
 	);

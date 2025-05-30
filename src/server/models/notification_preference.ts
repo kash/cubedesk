@@ -1,6 +1,6 @@
 import {v4 as uuid} from 'uuid';
 import {getPrisma} from '../database';
-import {UserAccount} from '../schemas/UserAccount.schema';
+import {UserAccount} from '@/types/user-account';
 
 const GDPR_COUNTRY_CODES = [
 	'AT',

@@ -1,7 +1,7 @@
 import {setSetting} from '../../lib/db/settings/update';
 import {getSetting} from '../../lib/db/settings/query';
 import {APP_THEME_PRESETS} from '../../lib/util/themes/theme_consts';
-import {UserAccount} from '../../server/schemas/UserAccount.schema';
+import {UserAccount} from '@/types/user-account';
 import {isPro} from '../../lib/util/pro';
 
 export function updateSettingsBasedOnProStatus(me: UserAccount) {

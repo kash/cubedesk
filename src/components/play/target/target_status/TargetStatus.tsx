@@ -5,7 +5,7 @@ import block from '../../../../styles/bem';
 import {PlayerStatus} from '../../../../lib/shared/match/types';
 import {MatchContext} from '../../match/Match';
 import {useMe} from '../../../../lib/util/hooks/useMe';
-import Button from '../../../common/button/Button';
+import {Button} from '@/components/ui/button';
 
 const b = block('game-target-status');
 

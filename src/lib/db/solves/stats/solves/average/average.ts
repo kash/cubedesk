@@ -1,7 +1,7 @@
+import {Solve} from '@/generated/zod';
+import {fetchSolves, FilterSolvesOptions} from '../../../query';
 // Not providing a count will result in getting the average for all solves for this cube type
 import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
-import {fetchSolves, FilterSolvesOptions} from '../../../query';
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
 
 export function getCurrentAverage(filterOptions: FilterSolvesOptions, count: number = -1) {
 	const cacheKey: SolveCacheKey = {

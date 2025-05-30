@@ -1,20 +1,20 @@
+import {SolveInput} from '@/generated/zod';
+import {getSettings} from '@/lib/db/settings/query';
+import {emitEvent} from '@/lib/util/event_handler';
+import {resourceUri} from '@/lib/util/storage';
+import {getTimerStore} from '@/lib/util/store/getTimer';
+import {ITimerContext} from '../Timer';
 import {setTimerParams} from './params';
-import {
-	setTimer,
-	stopTimer,
-	clearInspectionTimers,
-	START_TIMEOUT,
-	INSPECTION_TIMEOUT,
-	INSPECTION_INTERVAL
-} from './timers';
-import {emitEvent} from '../../../lib/util/event_handler';
 import {saveSolve} from './save';
 import {resetScramble} from './scramble';
-import {ITimerContext} from '../Timer';
-import {SolveInput} from '../../../server/schemas/Solve.schema';
-import {getSettings} from '../../../lib/db/settings/query';
-import {getTimerStore} from '../../../lib/util/store/getTimer';
-import {resourceUri} from '../../../lib/util/storage';
+import {
+	clearInspectionTimers,
+	INSPECTION_INTERVAL,
+	INSPECTION_TIMEOUT,
+	setTimer,
+	START_TIMEOUT,
+	stopTimer,
+} from './timers';
 
 let endLocked = false;
 
@@ -37,8 +37,11 @@ export function startTimer() {
 	});
 }
 
-export function endTimer(context: ITimerContext, finalTimeMilli?: number, overrides?: Partial<SolveInput>) {
-
+export function endTimer(
+	context: ITimerContext,
+	finalTimeMilli?: number,
+	overrides?: Partial<SolveInput>,
+) {
 	const {scramble, timeStartedAt} = context;
 
 	if (endLocked || !timeStartedAt) {
@@ -61,7 +64,16 @@ export function endTimer(context: ITimerContext, finalTimeMilli?: number, overri
 
 	resetTimerParams(context);
 	setTimeout(() => {
-		saveSolve(context, finalTime, scramble, timeStartedAt.getTime(), now.getTime(), false, false, overrides);
+		saveSolve(
+			context,
+			finalTime,
+			scramble,
+			timeStartedAt.getTime(),
+			now.getTime(),
+			false,
+			false,
+			overrides,
+		);
 		endLocked = false;
 	}, 10);
 }
@@ -83,12 +95,11 @@ export function cancelInspection() {
 }
 
 export function startInspection() {
-
 	const {
 		inspection_delay: inspectionDelay,
 		inspection_auto_start: inspectionAutoStart,
 		play_inspection_sound: playInspectionSound,
-		timer_type: timerType
+		timer_type: timerType,
 	} = getSettings();
 
 	const stackMatOn = timerType === 'stackmat';
@@ -103,15 +114,18 @@ export function startInspection() {
 
 	setTimer(
 		INSPECTION_TIMEOUT,
-		setTimeout(() => {
-			if (inspectionAutoStart && !ganTimerOn && !stackMatOn) {
-				startTimer();
-			}
-			setTimerParams({
-				dnfTime: true,
-				addTwoToSolve: false,
-			});
-		}, inspectionDelay * 1000 + 2000)
+		setTimeout(
+			() => {
+				if (inspectionAutoStart && !ganTimerOn && !stackMatOn) {
+					startTimer();
+				}
+				setTimerParams({
+					dnfTime: true,
+					addTwoToSolve: false,
+				});
+			},
+			inspectionDelay * 1000 + 2000,
+		),
 	);
 
 	setTimer(
@@ -138,7 +152,6 @@ export function startInspection() {
 				inspectionTimer: insTimer - 1,
 				addTwoToSolve,
 			});
-		}, 1000)
+		}, 1000),
 	);
-
 }

@@ -9,7 +9,7 @@ import {useSettings} from '../../../lib/util/hooks/useSettings';
 import {getTimeString} from '../../../lib/util/time';
 import {useDispatch} from 'react-redux';
 import {openModal} from '../../../lib/actions/general';
-import SolveInfo from '../../solve_info/SolveInfo';
+import SolveInfo from '../../solve-info/SolveInfo';
 import HistoryModal from '../history/history_modal/HistoryModal';
 import CSS from 'csstype';
 import {useSolveDb} from '../../../lib/util/hooks/useSolveDb';
@@ -102,8 +102,8 @@ export default function QuickStatsBlock(props: Props) {
 						time={statsBlockSolvesFilter?.time}
 						solves={statsBlockSolvesFilter.solves}
 						description={statsBlockDescription}
-					/>
-				)
+					/>,
+				),
 			);
 		} else if (solveCount) {
 			dispatch(openModal(<SolveInfo solveId={statsBlockSolvesFilter.solve.id} />));
@@ -117,7 +117,7 @@ export default function QuickStatsBlock(props: Props) {
 			<div className="flex flex-row">
 				<StatDescription statOptions={statOptions} />
 			</div>
-			<div className="relative w-full h-full flex items-start justify-center">
+			<div className="relative flex h-full w-full items-start justify-center">
 				<button onClick={openSolve} className={buttonClasses.join(' ')} style={buttonStyle}>
 					{statValue}
 				</button>
@@ -158,5 +158,5 @@ function StatDescription(props: DescProps) {
 		text.push('worst');
 	}
 
-	return <span className="text-[0.8rem] px-0.5 text-text/70">{text.join(' ')}</span>;
+	return <span className="text-text/70 px-0.5 text-[0.8rem]">{text.join(' ')}</span>;
 }

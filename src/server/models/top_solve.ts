@@ -2,8 +2,8 @@ import {v4 as uuid} from 'uuid';
 import {getPrisma} from '../database';
 import {Prisma} from '@prisma/client';
 import {getAverage} from '../../lib/db/solves/stats/solves/average/average';
-import {UserAccount} from '../schemas/UserAccount.schema';
-import {Solve as SolveClientType} from '../schemas/Solve.schema';
+import {UserAccount} from '@/types/user-account';
+import {Solve as SolveClientType} from '@/generated/zod';
 
 export async function deleteAllPublishedSolves(user) {
 	return Promise.all([deleteAllTopSolves(user), deleteAllTopAverages(user)]);

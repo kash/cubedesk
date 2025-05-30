@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
+import {InputWrapper} from '@/components/common/InputWrapper';
+import {api} from '@/trpc/react';
+import React, {useCallback, useState} from 'react';
 import {validateStrongPassword} from '../../../lib/util/auth/password';
-import PasswordStrength from '../../common/password_strength/PasswordStrength';
-import Input from '../../common/inputs/input/Input';
-import Button from '../../common/button/Button';
 import {useInput} from '../../../lib/util/hooks/useInput';
 import {toastSuccess} from '../../../lib/util/toast';
-import {api} from '@/trpc/react';
+import PasswordStrength from '../../common/password_strength/PasswordStrength';
 
 export default function Password() {
 	const [oldPassword, setOldPassword] = useInput('');
@@ -14,7 +15,7 @@ export default function Password() {
 
 	const updatePasswordMutation = api.auth.updatePassword.useMutation();
 
-	async function changePassword() {
+	const changePassword = useCallback(async () => {
 		if (updatePasswordMutation.isPending) {
 			return;
 		}
@@ -35,22 +36,31 @@ export default function Password() {
 		} catch (err) {
 			setError(err.message);
 		}
-	}
+	}, [updatePasswordMutation, password, oldPassword]);
 
 	return (
 		<div>
-			<Input type="password" value={oldPassword} legend="Current Password" onChange={setOldPassword} />
-			<Input type="password" value={password} legend="New Password" onChange={setPassword} />
+			<InputWrapper label="Current Password">
+				<Input
+					type="password"
+					value={oldPassword}
+					onChange={setOldPassword}
+				/>
+			</InputWrapper>
+			<InputWrapper label="New Password">
+				<Input type="password" value={password} onChange={setPassword} />
+			</InputWrapper>
 			<PasswordStrength password={password} />
-			<Button
-				primary
-				glow
-				large
-				text="Change Password"
-				error={error}
-				loading={updatePasswordMutation.isPending}
-				onClick={changePassword}
-			/>
+			<div>
+				<Button
+					size="lg"
+					loading={updatePasswordMutation.isPending}
+					onClick={changePassword}
+				>
+					Change Password
+				</Button>
+				{error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+			</div>
 		</div>
 	);
 }

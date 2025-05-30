@@ -1,15 +1,15 @@
+import jsonStr from 'json-stable-stringify';
 import React, {useMemo} from 'react';
-import Tag from '../../common/tag/Tag';
+import {fetchSolves, FilterSolvesOptions} from '../../../lib/db/solves/query';
+import {useSolveDb} from '../../../lib/util/hooks/useSolveDb';
 import {getBasicPlural} from '../../../lib/util/strings/plural';
+import Tag from '../../common/tag/Tag';
+import BulkChangeEventSolvesButton from './actions/BulkChangeEvent';
 import BulkDeleteSolvesButton from './actions/BulkDelete';
+import BulkDnfSolvesButton from './actions/BulkDnf';
 import BulkMoveSolvesButton from './actions/BulkMove';
 import BulkOkSolvesButton from './actions/BulkOk';
-import BulkChangeEventSolvesButton from './actions/BulkChangeEvent';
 import BulkPlusTwoSolvesButton from './actions/BulkPlusTwo';
-import BulkDnfSolvesButton from './actions/BulkDnf';
-import {fetchSolves, FilterSolvesOptions} from '../../../lib/db/solves/query';
-import jsonStr from 'json-stable-stringify';
-import {useSolveDb} from '../../../lib/util/hooks/useSolveDb';
 
 interface Props {
 	filter: FilterSolvesOptions;
@@ -24,14 +24,16 @@ export default function BulkActions(props: Props) {
 	const disabled = solves.length === 0;
 
 	return (
-		<div className="border-4 p-4 border-solid rounded border-button/90 relative z-10">
-			<div className="flex relative flex-col items-start mb-2">
+		<div className="border-button/90 relative z-10 rounded border-4 border-solid p-4">
+			<div className="relative mb-2 flex flex-col items-start">
 				<div className="absolute top-0 right-0">
 					<Tag backgroundColor="primary" text="Pro Feature" />
 				</div>
-				<span className="table text-text/70">Bulk action on {getBasicPlural(solves.length, 'solve')}</span>
+				<span className="text-text/70 table">
+					Bulk action on {getBasicPlural(solves.length, 'solve')}
+				</span>
 			</div>
-			<div className="flex flex-row flex-wrap gap-2 mt-3">
+			<div className="mt-3 flex flex-row flex-wrap gap-2">
 				<BulkDeleteSolvesButton solves={solves} disabled={disabled} />
 				<BulkMoveSolvesButton solves={solves} disabled={disabled} />
 				<BulkChangeEventSolvesButton solves={solves} disabled={disabled} />

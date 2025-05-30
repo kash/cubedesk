@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
-import {CaretUp, CaretDown} from 'phosphor-react';
-import {setSetting} from '../../../lib/db/settings/update';
-import {TimerContext} from '../Timer';
+import {Button} from '@/components/ui/button';
+import {setSetting} from '@/lib/db/settings/update';
+import {useGeneral} from '@/lib/util/hooks/useGeneral';
+import {useSettings} from '@/lib/util/hooks/useSettings';
 import './TimerFooter.scss';
-import block from '../../../styles/bem';
-import {useSettings} from '../../../lib/util/hooks/useSettings';
-import {useGeneral} from '../../../lib/util/hooks/useGeneral';
-import Button from '../../common/button/Button';
+import block from '@/styles/bem';
+import {CaretDown, CaretUp} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback, useContext} from 'react';
+import {TimerContext} from '../Timer';
 import TimerModule from './TimerModule';
 
 const b = block('timer-footer');
@@ -23,21 +23,22 @@ export default function TimerFooter() {
 	const timerModules = useSettings('timer_modules');
 	const timerModuleCount = useSettings('timer_module_count');
 
-	function toggleMobileHideButton() {
+	const toggleMobileHideButton = useCallback(() => {
 		setSetting('hide_mobile_timer_footer', !hideMobileTimerFooter);
-	}
+	}, [hideMobileTimerFooter]);
 
 	let mobileHideButton = null;
 	if (mobileMode) {
 		mobileHideButton = (
 			<div className={b('mobile-hide-button')}>
-				<Button
-					text={hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
-					icon={hideMobileTimerFooter ? <CaretUp /> : <CaretDown />}
-					onClick={toggleMobileHideButton}
-					white
-					flat
-				/>
+				<Button variant="outline" onClick={toggleMobileHideButton}>
+					{hideMobileTimerFooter ? (
+						<CaretUp weight="bold" />
+					) : (
+						<CaretDown weight="bold" />
+					)}
+					{hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
+				</Button>
 			</div>
 		);
 	}
@@ -48,16 +49,22 @@ export default function TimerFooter() {
 			const customModule = customModules[i];
 			const moduleType = customModule.moduleType;
 
-			modules.push(<TimerModule key={`${i}-${moduleType}`} index={i} customOptions={customModule} />);
+			modules.push(
+				<TimerModule key={`${i}-${moduleType}`} index={i} customOptions={customModule} />,
+			);
 		}
 	} else {
 		for (let i = 0; i < timerModuleCount; i++) {
 			const moduleType = timerModules[i % timerModules.length];
-			modules.push(<TimerModule key={`${i}-${moduleType}`} index={i} moduleType={moduleType} />);
+			modules.push(
+				<TimerModule key={`${i}-${moduleType}`} index={i} moduleType={moduleType} />,
+			);
 		}
 	}
 
-	let body = <div className={b('body', {mobile: mobileMode, layout: timerLayout})}>{modules}</div>;
+	let body = (
+		<div className={b('body', {mobile: mobileMode, layout: timerLayout})}>{modules}</div>
+	);
 	if (mobileMode && hideMobileTimerFooter) {
 		body = null;
 	}

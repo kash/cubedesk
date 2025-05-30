@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
-import Input from '../../common/inputs/input/Input';
-import {Link} from 'react-router-dom';
+import React, {useCallback, useState} from 'react';
+import {Input} from '@/components/ui/input';
+import {InputWrapper} from '@/components/common/InputWrapper';
+import Link from 'next/link';
 import {validateStrongPassword} from '../../../lib/util/auth/password';
 import PasswordStrength from '../../common/password_strength/PasswordStrength';
 import {getLoginLink, getRedirectLink} from '../../../lib/util/auth/login';
 import block from '../../../styles/bem';
 import {useInput} from '../../../lib/util/hooks/useInput';
-import Button from '../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import {api} from '@/trpc/react';
 
 const b = block('login');
@@ -21,7 +22,7 @@ export default function SignUp() {
 
 	const signupMutation = api.auth.signup.useMutation();
 
-	async function signUp(e) {
+	const signUp = useCallback(async (e) => {
 		e.preventDefault();
 		setError('');
 
@@ -45,10 +46,10 @@ export default function SignUp() {
 				password,
 			});
 			window.location.href = getRedirectLink();
-		} catch (e) {
+		} catch (e: unknown) {
 			setError(e.message);
 		}
-	}
+	}, [signupMutation, password, firstName, lastName, email, username]);
 
 	const disabled = !firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !username.trim();
 
@@ -56,32 +57,43 @@ export default function SignUp() {
 		<div className={b()}>
 			<form onSubmit={signUp}>
 				<div className={b('row', {split: true})}>
-					<Input onChange={setFirstName} value={firstName} legend="First Name" />
-					<Input onChange={setLastName} value={lastName} legend="Last Name" />
+					<InputWrapper label="First Name">
+						<Input onChange={setFirstName} value={firstName} />
+					</InputWrapper>
+					<InputWrapper label="Last Name">
+						<Input onChange={setLastName} value={lastName} />
+					</InputWrapper>
 				</div>
-				<Input onChange={setEmail} type="email" value={email} legend="Email" />
-				<Input
-					onChange={setUsername}
-					autoCorrect="off"
-					autoCapitalize="none"
-					value={username}
-					name="username"
-					legend="Username"
-				/>
-				<Input onChange={setPassword} type="password" value={password} legend="Password" />
+				<InputWrapper label="Email">
+					<Input onChange={setEmail} type="email" value={email} />
+				</InputWrapper>
+				<InputWrapper label="Username">
+					<Input
+						onChange={setUsername}
+						autoCorrect="off"
+						autoCapitalize="none"
+						value={username}
+						name="username"
+					/>
+				</InputWrapper>
+				<InputWrapper label="Password">
+					<Input onChange={setPassword} type="password" value={password} />
+				</InputWrapper>
 				<PasswordStrength password={password} />
-				<Button
-					loading={signupMutation.isPending}
-					type="submit"
-					disabled={disabled}
-					error={error}
-					primary
-					large
-					text="Sign up"
-				/>
+				<div>
+					<Button
+						loading={signupMutation.isPending}
+						type="submit"
+						disabled={disabled}
+						size="lg"
+					>
+						Sign up
+					</Button>
+					{error && <p className="text-sm text-red-600 mt-1">{error}</p>}
+				</div>
 			</form>
 			<p>
-				Already have an account? <Link to={getLoginLink()}>Log in</Link>
+				Already have an account? <Link href={getLoginLink()}>Log in</Link>
 			</p>
 		</div>
 	);

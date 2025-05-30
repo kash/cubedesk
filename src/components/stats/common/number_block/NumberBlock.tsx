@@ -1,15 +1,15 @@
-import React, {ReactNode} from 'react';
-import './NumberBlock.scss';
-import block from '../../../../styles/bem';
 import CSS from 'csstype';
-import StatModule from '../stat_module/StatModule';
+import './NumberBlock.scss';
+import React, {ReactNode} from 'react';
 import {useMe} from '../../../../lib/util/hooks/useMe';
 import {isNotPro} from '../../../../lib/util/pro';
+import block from '../../../../styles/bem';
+import StatModule from '../stat_module/StatModule';
 
 const b = block('number-block');
 
 interface Props {
-	icon: JSX.Element;
+	icon: ReactNode;
 	title: string;
 	color: string;
 	value: string | number;
@@ -70,7 +70,10 @@ export default function NumberBlock(props: Props) {
 	}
 
 	return (
-		<StatModule className={b({center, vertical, noPadding, large, small, button: !!onClick})} style={style}>
+		<StatModule
+			className={b({center, vertical, noPadding, large, small, button: !!onClick})}
+			style={style}
+		>
 			<div className={b('body')}>
 				<button className={b('value', {clickable: !!onClick})} onClick={onClick}>
 					<div className={b('header')}>

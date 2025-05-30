@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Checkbox from '../../common/checkbox/Checkbox';
 import InputLegend from '../../common/inputs/input/input_legend/InputLegend';
 import {api} from '@/trpc/react';
@@ -15,7 +15,7 @@ export default function NotificationPreferences() {
 		setPrefs(data);
 	}, [data]);
 
-	function handleChange(e: any) {
+	const handleChange = useCallback((e: any) => {
 		const newPrefs = {...prefs};
 		newPrefs[e.target.name] = e.target.checked;
 		setPrefs(newPrefs);
@@ -24,7 +24,7 @@ export default function NotificationPreferences() {
 			key: e.target.name,
 			value: e.target.checked,
 		});
-	}
+	}, [prefs, updatePrefsMutation]);
 
 	const notificationTypeNames = [
 		{

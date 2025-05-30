@@ -1,11 +1,11 @@
-import React, {ReactNode, useEffect, useRef, useState} from 'react';
+import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import {closeModal} from '@/lib/actions/general';
+import block from '@/styles/bem';
+import '@/components/common/modal/Modal.scss';
+import {X} from '@phosphor-icons/react/dist/ssr';
 import CSS from 'csstype';
+import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import './Modal.scss';
-import {X} from 'phosphor-react';
-import {closeModal} from '../../../lib/actions/general';
-import ModalHeader from './modal_header/ModalHeader';
-import block from '../../../styles/bem';
 
 const b = block('modal');
 
@@ -88,7 +88,7 @@ export default function Modal(props: IModalProps) {
 
 	let closeButton = (
 		<button
-			className="absolute top-4 right-4 z-40 flex h-8 w-8 items-center justify-center rounded text-xl font-bold text-text hover:bg-tm-background/30"
+			className="text-text hover:bg-tm-background/30 absolute top-4 right-4 z-40 flex h-8 w-8 items-center justify-center rounded text-xl font-bold"
 			type="button"
 			onClick={clickClose}
 		>

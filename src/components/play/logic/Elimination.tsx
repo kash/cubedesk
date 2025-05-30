@@ -2,7 +2,10 @@ import React from 'react';
 import TargetTimes from '../target/target_times/TargetTimes';
 import TargetStatus from '../target/target_status/TargetStatus';
 import Game from '../game/Game';
-import {getEliminationPlayerStatus, getEliminationSolveRowInfo} from '../../../lib/shared/game_logic/elimination';
+import {
+	getEliminationPlayerStatus,
+	getEliminationSolveRowInfo,
+} from '../../../lib/shared/game_logic/elimination';
 import ScrambleVisual from '../../modules/scramble/ScrambleVisual';
 import {GameType} from '../../../shared/match/consts';
 
@@ -17,7 +20,9 @@ export default function Elimination() {
 			gameType={GameType.ELIMINATION}
 			visual1={<TargetTimes reverse />}
 			visual2={<TargetStatus />}
-			visual3={(context) => <ScrambleVisual scramble={context.scramble} cubeType={context.cubeType} />}
+			visual3={(context) => (
+				<ScrambleVisual scramble={context.scramble} cubeType={context.cubeType} />
+			)}
 		/>
 	);
 }

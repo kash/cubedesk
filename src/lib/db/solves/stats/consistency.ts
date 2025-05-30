@@ -1,6 +1,6 @@
-import {fetchSolves, FilterSolvesOptions} from '../query';
-import {BarGraphData} from '../../../../components/modules/bar_graph/BarGraph';
 import dayjs from 'dayjs';
+import {BarGraphData} from '../../../../components/modules/bar_graph/BarGraph';
+import {fetchSolves, FilterSolvesOptions} from '../query';
 
 export function getSolveCountByDateData(filter: FilterSolvesOptions): BarGraphData[] {
 	const start = new Date(filter.started_at as number);
@@ -21,7 +21,7 @@ export function getSolveCountByDateData(filter: FilterSolvesOptions): BarGraphDa
 		},
 		{
 			sortBy: 'started_at',
-		}
+		},
 	);
 
 	let solveIndex = 0;

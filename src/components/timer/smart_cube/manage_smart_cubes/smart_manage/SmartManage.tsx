@@ -1,7 +1,7 @@
-import React from 'react';
+import {SmartDevice} from '@/generated/zod';
 import './SmartManage.scss';
-import block from '../../../../../styles/bem';
-import {SmartDevice} from '../../../../../../client/@types/generated/graphql';
+import block from '@/styles/bem';
+import React from 'react';
 
 const b = block('manage-smart-cube');
 

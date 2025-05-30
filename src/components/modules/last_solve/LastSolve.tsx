@@ -1,18 +1,18 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './LastSolve.scss';
 import {useDispatch} from 'react-redux';
-import {Info} from 'phosphor-react';
-import {openModal} from '../../../lib/actions/general';
-import SolveInfo from '../../solve_info/SolveInfo';
-import Scramble from '../scramble/ScrambleVisual';
-import {getTimeString} from '../../../lib/util/time';
-import {fetchLastSolve, fetchSolve, FilterSolvesOptions} from '../../../lib/db/solves/query';
-import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '../../../lib/db/solves/operations';
-import {deleteSolveDb} from '../../../lib/db/solves/update';
-import block from '../../../styles/bem';
-import {useSolveDb} from '../../../lib/util/hooks/useSolveDb';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
-import Button from '../../common/button/Button';
+import {Info} from '@phosphor-icons/react/dist/ssr';
+import {openModal} from '@/lib/actions/general';
+import SolveInfo from '@/components/solve-info/SolveInfo';
+import Scramble from '@/components/modules/scramble/ScrambleVisual';
+import {getTimeString} from '@/lib/util/time';
+import {fetchLastSolve, fetchSolve, FilterSolvesOptions} from '@/lib/db/solves/query';
+import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/lib/db/solves/operations';
+import {deleteSolveDb} from '@/lib/db/solves/update';
+import block from '@/styles/bem';
+import {useSolveDb} from '@/lib/util/hooks/useSolveDb';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
+import {Button} from '@/components/ui/button';
 
 const b = block('last-solve');
 
@@ -40,24 +40,24 @@ function LastSolve(props: Props) {
 	const time = getTimeString(lastSolve.time);
 	const cubeTypeName = getCubeTypeInfoById(cubeType).name;
 
-	function plusTwoAction() {
+	const plusTwoAction = useCallback(() => {
 		const dbSolve = fetchSolve(lastSolve.id);
 		togglePlusTwoSolveDb(dbSolve);
-	}
+	}, [lastSolve?.id])
 
-	function dnfAction() {
+	const dnfAction = useCallback(() => {
 		const dbSolve = fetchSolve(lastSolve.id);
 		toggleDnfSolveDb(dbSolve);
-	}
+	}, [lastSolve?.id])
 
-	function showSolveInfo() {
+	const showSolveInfo = useCallback(() => {
 		dispatch(openModal(<SolveInfo solveId={lastSolve.id} />));
-	}
+	}, [dispatch, lastSolve?.id])
 
-	function deleteAction() {
+	const deleteAction = useCallback(() => {
 		const dbSolve = fetchSolve(lastSolve.id);
 		deleteSolveDb(dbSolve);
-	}
+	}, [lastSolve?.id])
 
 	return (
 		<div className={b()}>
@@ -74,12 +74,20 @@ function LastSolve(props: Props) {
 
 			<div className={b('actions')}>
 				<div>
-					<Button gray icon={<Info weight="bold" />} onClick={showSolveInfo} />
-					<Button gray text="+2" onClick={plusTwoAction} warning={plusTwo} />
-					<Button gray text="DNF" onClick={dnfAction} danger={dnf} />
+					<Button variant="secondary" size="icon" onClick={showSolveInfo}>
+						<Info weight="bold" />
+					</Button>
+					<Button variant={plusTwo ? "destructive" : "secondary"} onClick={plusTwoAction}>
+						+2
+					</Button>
+					<Button variant={dnf ? "destructive" : "secondary"} onClick={dnfAction}>
+						DNF
+					</Button>
 				</div>
 				<div>
-					<Button danger flat title="Delete solve" text="Delete" onClick={deleteAction} />
+					<Button variant="destructive" size="sm" title="Delete solve" onClick={deleteAction}>
+						Delete
+					</Button>
 				</div>
 			</div>
 		</div>

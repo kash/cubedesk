@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import './TimeDistro.scss';
-import {CaretDown} from 'phosphor-react';
+import {CaretDown} from '@phosphor-icons/react/dist/ssr';
 import {FilterSolvesOptions} from '../../../lib/db/solves/query';
 import jsonStr from 'json-stable-stringify';
 import {useSolveDb} from '../../../lib/util/hooks/useSolveDb';

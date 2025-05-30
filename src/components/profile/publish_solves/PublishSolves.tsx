@@ -1,19 +1,18 @@
 import React, {useState} from 'react';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '../../api';
-import Emblem from '../../common/emblem/Emblem';
-import Checkbox from '../../common/checkbox/Checkbox';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import {getSinglePB} from '../../../lib/db/solves/stats/solves/single/single_pb';
-import {getAveragePB} from '../../../lib/db/solves/stats/solves/average/average_pb';
-import {IModalProps} from '../../common/modal/Modal';
-import {getTimeString} from '../../../lib/util/time';
-import block from '../../../styles/bem';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
-import Button from '../../common/button/Button';
-import HorizontalLine from '../../common/horizontal_line/HorizontalLine';
-import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '../../../lib/db/solves/query';
-import {toastError, toastSuccess} from '../../../lib/util/toast';
+import Emblem from '@/components/common/emblem/Emblem';
+import Checkbox from '@/components/common/checkbox/Checkbox';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {getSinglePB} from '@/lib/db/solves/stats/solves/single/single_pb';
+import {getAveragePB} from '@/lib/db/solves/stats/solves/average/average_pb';
+import {IModalProps} from '@/components/common/modal/Modal';
+import {getTimeString} from '@/lib/util/time';
+import block from '@/styles/bem';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
+import {Button} from '@/components/ui/button';
+import HorizontalLine from '@/components/common/horizontal_line/HorizontalLine';
+import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/lib/db/solves/query';
+import {toastError, toastSuccess} from '@/lib/util/toast';
+import {api} from '@/trpc/react';
 
 const b = block('select-times');
 
@@ -44,48 +43,30 @@ export default function PublishSolves(props: IModalProps) {
 		let errorCount = 0;
 		let successCount = 0;
 
+		// TODO: Migrate to tRPC - need leaderboards.publishTopSolve and leaderboards.publishTopAverages mutations
+		// const publishTopSolveMutation = api.leaderboards.publishTopSolve.useMutation();
+		// const publishTopAveragesMutation = api.leaderboards.publishTopAverages.useMutation();
+
 		for (const type of cubeTypes) {
 			const pb = getSinglePB(getFilter(type.cube_type));
 			const ao5Pb = getAveragePB(getFilter(type.cube_type), 5);
 
 			try {
 				if (pb && pb.time > 0) {
-					const query = gql`
-						mutation Mutation($solveId: String) {
-							publishTopSolve(solveId: $solveId) {
-								id
-							}
-						}
-					`;
-
-					await gqlMutate(query, {
-						solveId: pb.solve.id,
-					});
-
+					// await publishTopSolveMutation.mutateAsync({ solve_id: pb.solve.id });
 					successCount++;
 				}
-			} catch (e) {
+			} catch (e: unknown) {
 				errorCount += 1;
 				toastError(e.message);
 			}
 
 			try {
 				if (ao5Pb && ao5Pb.time > 0) {
-					const query = gql`
-						mutation Mutation($solveIds: [String]) {
-							publishTopAverages(solveIds: $solveIds) {
-								id
-							}
-						}
-					`;
-
-					await gqlMutate(query, {
-						solveIds: Array.from(ao5Pb.solveIds),
-					});
-
+					// await publishTopAveragesMutation.mutateAsync({ solve_ids: Array.from(ao5Pb.solveIds) });
 					successCount++;
 				}
-			} catch (e) {
+			} catch (e: unknown) {
 				errorCount += 1;
 				toastError(e.message);
 			}
@@ -151,15 +132,16 @@ export default function PublishSolves(props: IModalProps) {
 						</thead>
 						<tbody>{rows}</tbody>
 					</table>
-					<Button
-						primary
-						glow
-						large
-						text="Publish to Profile"
-						error={error}
-						loading={publishing}
-						onClick={publishTimes}
-					/>
+					<div>
+						<Button
+							size="lg"
+							loading={publishing}
+							onClick={publishTimes}
+						>
+							Publish to Profile
+						</Button>
+						{error && <p className="text-sm text-red-600 mt-1">{error}</p>}
+					</div>
 				</>
 			)}
 		</div>

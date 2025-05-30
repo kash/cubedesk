@@ -1,11 +1,20 @@
-import React from 'react';
+import {Button} from '@/components/ui/button';
 import './ProFeatureList.scss';
-import {CaretUp, CaretDown, Confetti, Gift, Sword, DiscordLogo, Tree, ChartLineUp, HeartStraight} from 'phosphor-react';
+import {
+	CaretDown,
+	CaretUp,
+	ChartLineUp,
+	Confetti,
+	DiscordLogo,
+	HeartStraight,
+	Sword,
+	Tree,
+} from '@phosphor-icons/react/dist/ssr';
+import React from 'react';
+import {useToggle} from '../../../../../lib/util/hooks/useToggle';
+import {resourceUri} from '../../../../../lib/util/storage';
 import block from '../../../../../styles/bem';
 import ProFeature from '../pro_feature/ProFeature';
-import {useToggle} from '../../../../../lib/util/hooks/useToggle';
-import Button from '../../../../common/button/Button';
-import {resourceUri} from '../../../../../lib/util/storage';
 
 const b = block('pro-feature-list');
 

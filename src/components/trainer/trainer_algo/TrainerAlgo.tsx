@@ -1,21 +1,21 @@
-import React, {useContext} from 'react';
+import Module from '@/components/common/module/Module';
 import './TrainerAlgo.scss';
-import {CaretRight, Pencil, Trash} from 'phosphor-react';
-import block from '../../../styles/bem';
-import Button from '../../common/button/Button';
-import Module from '../../common/module/Module';
-import {CUSTOM_TRAINER_ALGO_TYPE, TrainerContext} from '../Trainer';
-import {openModal} from '../../../lib/actions/general';
+import {Button} from '@/components/ui/button';
+import {CustomTrainer} from '@/generated/zod';
+import {openModal} from '@/lib/actions/general';
+import {deleteCustomTrainer} from '@/lib/db/trainer/custom';
+import {TrainerAlgorithmExtended} from '@/lib/db/trainer/init';
+import block from '@/styles/bem';
+import {CaretRight, Pencil, Trash} from '@phosphor-icons/react/dist/ssr';
+import Link from 'next/link';
+import React, {useContext} from 'react';
 import {useDispatch} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {cleanTrainerAlgorithm} from '../util/clean';
-import EditAlgo from '../edit_algo/EditAlgo';
-import {TrainerAlgorithmExtended} from '../../../lib/db/trainer/init';
-import TrainerFavButton from './trainer_fav_button/TrainerFavButton';
 import AddCustom from '../add_custom/AddCustom';
-import {deleteCustomTrainer} from '../../../lib/db/trainer/custom';
-import {CustomTrainer} from '../../../../client/@types/generated/graphql';
 import CustomVisual from '../custom_visual/CustomVisual';
+import EditAlgo from '../edit_algo/EditAlgo';
+import {CUSTOM_TRAINER_ALGO_TYPE, TrainerContext} from '../Trainer';
+import {cleanTrainerAlgorithm} from '../util/clean';
+import TrainerFavButton from './trainer_fav_button/TrainerFavButton';
 
 const b = block('trainer-algo');
 
@@ -55,7 +55,7 @@ export default function TrainerAlgo(props: Props) {
 		const copyUsername = algoExt.copy_of.user.username;
 		originalBy = (
 			<div className={b('original-by')}>
-				Original by <Link to={`/user/${copyUsername}`}>{copyUsername}</Link>
+				Original by <Link href={`/user/${copyUsername}`}>{copyUsername}</Link>
 			</div>
 		);
 	}
@@ -70,21 +70,28 @@ export default function TrainerAlgo(props: Props) {
 						<p>{algo.solution}</p>
 					</div>
 					<div className={b('actions')}>
-						<Button onClick={openTrainer} primary text="Start Training" icon={<CaretRight />} />
+						<Button onClick={openTrainer} variant="default">
+							<CaretRight className="mr-2" />
+							Start Training
+						</Button>
 						<TrainerFavButton algoExt={algoExt} />
-						<Button onClick={editAlgo} gray icon={<Pencil />} />
-						<Button
-							hidden={!isCustom}
-							confirmModalProps={{
-								buttonText: 'Delete custom trainer',
-								title: 'Delete custom trainer',
-								description:
-									'Deleting this custom trainer will delete all of it solves as well. Be careful here.',
-								triggerAction: deleteCustom,
-							}}
-							gray
-							icon={<Trash />}
-						/>
+						<Button onClick={editAlgo} variant="secondary">
+							<Pencil />
+						</Button>
+						{isCustom && (
+							<Button
+								confirmModalProps={{
+									buttonText: 'Delete custom trainer',
+									title: 'Delete custom trainer',
+									description:
+										'Deleting this custom trainer will delete all of it solves as well. Be careful here.',
+									triggerAction: deleteCustom,
+								}}
+								variant="secondary"
+							>
+								<Trash />
+							</Button>
+						)}
 					</div>
 				</div>
 				<div className={b('right', {threeD: algoExt.three_d})}>

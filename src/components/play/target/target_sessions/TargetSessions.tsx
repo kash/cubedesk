@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {gql} from '@apollo/client';
 import './TargetSessions.scss';
-import {gqlQuery} from '../../../api';
 import TargetSession from './target_session/TargetSession';
-import Empty from '../../../common/empty/Empty';
-import {GAME_SESSION_FRAGMENT} from '../../../../lib/util/graphql/fragments';
-import {getGameMetaData} from '../../Play';
-import ModalHeader from '../../../common/modal/modal_header/ModalHeader';
-import {GameType} from '../../../../shared/match/consts';
-import {GameSession} from '../../../../server/schemas/Game.schema';
-import LoadingIcon from '../../../common/LoadingIcon';
+import Empty from '@/components/common/empty/Empty';
+import {getGameMetaData} from '@/components/play/Play';
+import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import {GameType} from '@/shared/match/consts';
+import {GameSession} from '@/generated/zod';
+import LoadingIcon from '@/components/common/LoadingIcon';
+import {api} from '@/trpc/react';
 
 interface Props {
 	gameType: GameType;
@@ -22,23 +20,11 @@ export default function TargetSessions(props: Props) {
 	const [sessions, setSessions] = useState(null);
 
 	useEffect(() => {
-		interface GameSessionQuery {
-			gameSessions: GameSession[];
-		}
+		// TODO: Migrate to tRPC - need game.getGameSessions query
+		// const gameSessionsQuery = api.game.getGameSessions.useQuery();
+		// setSessions(gameSessionsQuery.data || []);
 
-		const query = gql`
-			${GAME_SESSION_FRAGMENT}
-
-			query Query {
-				gameSessions {
-					...GameSessionFragment
-				}
-			}
-		`;
-
-		gqlQuery<GameSessionQuery>(query).then((res) => {
-			setSessions(res.data.gameSessions);
-		});
+		setSessions([]);
 	}, []);
 
 	let body;

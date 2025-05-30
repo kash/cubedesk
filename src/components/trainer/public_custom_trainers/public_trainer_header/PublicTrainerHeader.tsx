@@ -1,9 +1,9 @@
-import React from 'react';
+import {Button} from '@/components/ui/button';
 import './PublicTrainerHeader.scss';
-import {ArrowLeft} from 'phosphor-react';
+import {ArrowLeft} from '@phosphor-icons/react/dist/ssr';
+import Link from 'next/link';
+import React from 'react';
 import block from '../../../../styles/bem';
-import LinkButton from '../../../common/button/LinkButton';
-import {CommonType} from '../../../common/button/Button';
 
 const b = block('public-trainer-header');
 
@@ -15,14 +15,12 @@ export default function PublicTrainerHeader() {
 				<h3>Download free trainer algorithms created by the amazing CubeDesk community.</h3>
 			</div>
 			<div className={b('back')}>
-				<LinkButton
-					theme={CommonType.WHITE}
-					flat
-					iconFirst
-					icon={<ArrowLeft />}
-					text="Back to Trainer"
-					to="/trainer/333/OLL"
-				/>
+				<Link href="/trainer/333/OLL">
+					<Button variant="outline">
+						<ArrowLeft />
+						Back to Trainer
+					</Button>
+				</Link>
 			</div>
 			<img
 				alt="Floating Rubik's cube"

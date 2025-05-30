@@ -1,8 +1,8 @@
 import {IGameContext} from '../../game/Game';
 import {reactState} from '../../../../../client/@types/react';
-import {Match} from '../../../../server/schemas/Match.schema';
-import {Solve} from '../../../../server/schemas/Solve.schema';
-import {MatchSession} from '../../../../server/schemas/MatchSession.schema';
+import {Match} from '@/generated/zod';
+import {Solve} from '@/generated/zod';
+import {MatchSession} from '@/generated/zod';
 
 interface ExistingMatch {
 	match: Match;

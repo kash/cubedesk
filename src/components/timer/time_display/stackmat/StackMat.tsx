@@ -1,9 +1,9 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import StartInstructions from '../start_instructions/StartInstructions';
-import {ITimerContext, TimerContext} from '../../Timer';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {useSettings} from '../../../../lib/util/hooks/useSettings';
 import Stackmat from '../../../../lib/util/vendor/stackmat';
 import {endTimer, startTimer} from '../../helpers/events';
+import {ITimerContext, TimerContext} from '../../Timer';
+import StartInstructions from '../start_instructions/StartInstructions';
 
 export default function StackMat() {
 	const stackMatId = useSettings('stackmat_id');
@@ -20,27 +20,7 @@ export default function StackMat() {
 		localContext.current = context;
 	}, [context]);
 
-	// Initialize StackMat
-	useEffect(() => {
-		if (!stackMatId) {
-			return;
-		}
-
-		navigator.mediaDevices
-			.enumerateDevices()
-			.then(initStackMat)
-			.catch((e) => {
-				console.error(e);
-				stackMat.current = null;
-				if (stackMatRetryCount < 5) {
-					setTimeout(() => {
-						setStackMatRetryCount(stackMatRetryCount + 1);
-					}, 1000);
-				}
-			});
-	}, [stackMatRetryCount]);
-
-	function initStackMat() {
+	const initStackMat = useCallback(() => {
 		if (stackMat.current) {
 			return;
 		}
@@ -60,7 +40,27 @@ export default function StackMat() {
 				endTimer(localContext.current, timer.time_milli);
 			}
 		});
-	}
+	}, [stackMatId]);
+
+	// Initialize StackMat
+	useEffect(() => {
+		if (!stackMatId) {
+			return;
+		}
+
+		navigator.mediaDevices
+			.enumerateDevices()
+			.then(initStackMat)
+			.catch((e) => {
+				console.error(e);
+				stackMat.current = null;
+				if (stackMatRetryCount < 5) {
+					setTimeout(() => {
+						setStackMatRetryCount(stackMatRetryCount + 1);
+					}, 1000);
+				}
+			});
+	}, [initStackMat, stackMatId, stackMatRetryCount]);
 
 	return (
 		<StartInstructions>

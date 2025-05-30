@@ -23,60 +23,10 @@ const SessionInputSchema = z.object({
 type Session = z.infer<typeof SessionSchema>;
 type SessionInput = z.infer<typeof SessionInputSchema>;
 
-async function createSession(userId: string, input: SessionInput) {
-	const prisma = getPrismaClient();
-
-	return prisma.session.create({
-		data: {
-			id: uniqid('se-'),
-			...input,
-			user_id: userId,
-			order: 0,
-		},
-	});
-}
-
-async function bulkCreateSessions(userId: string, input: SessionInput[]) {
-	const prisma = getPrismaClient();
-
-	const data = [];
-	for (const ses of input) {
-		data.push({
-			...ses,
-			user_id: userId,
-		});
-	}
-
-	return prisma.session.createMany({
-		data,
-	});
-}
-
 export async function getSessionById(id: string) {
 	return getPrismaClient().session.findUnique({
 		where: {
 			id,
-		},
-	});
-}
-
-async function updateSession(session: Session, input: SessionInput) {
-	const prisma = getPrismaClient();
-
-	return prisma.session.update({
-		where: {
-			id: session.id,
-		},
-		data: input,
-	});
-}
-
-async function deleteSession(session: Session) {
-	const prisma = getPrismaClient();
-
-	return prisma.session.delete({
-		where: {
-			id: session.id,
 		},
 	});
 }
@@ -94,31 +44,6 @@ async function getSessionsByUser(userId: string) {
 				created_at: 'desc',
 			},
 		],
-	});
-}
-
-async function mergeSessions(oldSession: Session, newSession: Session, userId: string) {
-	const prisma = getPrismaClient();
-
-	return prisma.solve.updateMany({
-		where: {
-			user_id: userId,
-			session_id: oldSession.id,
-		},
-		data: {
-			session_id: newSession.id,
-		},
-	});
-}
-
-async function getSessionsByIds(userId: string, ids: string[]) {
-	return getPrismaClient().session.findMany({
-		where: {
-			user_id: userId,
-			id: {
-				in: ids,
-			},
-		},
 	});
 }
 
@@ -150,16 +75,27 @@ async function updateOrderOfSessions(sessions: Session[]): Promise<Session[]> {
 }
 
 export const sessionRouter = createTRPCRouter({
-	sessions: userProcedure
-		.output(z.array(SessionSchema))
-		.query(async ({ctx}) => {
-			return getSessionsByUser(ctx.me.id);
-		}),
+	sessions: userProcedure.output(z.array(SessionSchema)).query(async ({ctx}) => {
+		return getSessionsByUser(ctx.me.id);
+	}),
 
 	createSession: userProcedure
 		.input(SessionInputSchema)
 		.output(SessionSchema)
 		.mutation(async ({ctx, input}) => {
+			async function createSession(userId: string, input: SessionInput) {
+				const prisma = getPrismaClient();
+
+				return prisma.session.create({
+					data: {
+						id: uniqid('se-'),
+						...input,
+						user_id: userId,
+						order: 0,
+					},
+				});
+			}
+
 			const sessions = await getSessionsByUser(ctx.me.id);
 			input.order = sessions.length;
 
@@ -174,12 +110,25 @@ export const sessionRouter = createTRPCRouter({
 		}),
 
 	updateSession: userProcedure
-		.input(z.object({
-			id: z.string(),
-			input: SessionInputSchema,
-		}))
+		.input(
+			z.object({
+				id: z.string(),
+				input: SessionInputSchema,
+			}),
+		)
 		.output(SessionSchema)
 		.mutation(async ({ctx, input}) => {
+			async function updateSession(session: Session, input: SessionInput) {
+				const prisma = getPrismaClient();
+
+				return prisma.session.update({
+					where: {
+						id: session.id,
+					},
+					data: input,
+				});
+			}
+
 			const session = await getSessionById(input.id);
 
 			if (!session || session.user_id !== ctx.me.id) {
@@ -190,11 +139,24 @@ export const sessionRouter = createTRPCRouter({
 		}),
 
 	reorderSessions: userProcedure
-		.input(z.object({
-			ids: z.array(z.string()),
-		}))
+		.input(
+			z.object({
+				ids: z.array(z.string()),
+			}),
+		)
 		.output(z.void())
 		.mutation(async ({ctx, input}) => {
+			async function getSessionsByIds(userId: string, ids: string[]) {
+				return getPrismaClient().session.findMany({
+					where: {
+						user_id: userId,
+						id: {
+							in: ids,
+						},
+					},
+				});
+			}
+
 			const sessions = await getSessionsByIds(ctx.me.id, input.ids);
 			if (sessions.length !== input.ids.length) {
 				throw new TRPCError({code: 'NOT_FOUND', message: 'Invalid session ID list'});
@@ -214,11 +176,23 @@ export const sessionRouter = createTRPCRouter({
 		}),
 
 	deleteSession: userProcedure
-		.input(z.object({
-			id: z.string(),
-		}))
+		.input(
+			z.object({
+				id: z.string(),
+			}),
+		)
 		.output(SessionSchema)
 		.mutation(async ({ctx, input}) => {
+			async function deleteSession(session: Session) {
+				const prisma = getPrismaClient();
+
+				return prisma.session.delete({
+					where: {
+						id: session.id,
+					},
+				});
+			}
+
 			const session = await getSessionById(input.id);
 
 			if (!session || session.user_id !== ctx.me.id) {
@@ -232,16 +206,47 @@ export const sessionRouter = createTRPCRouter({
 		}),
 
 	mergeSessions: userProcedure
-		.input(z.object({
-			oldSessionId: z.string(),
-			newSessionId: z.string(),
-		}))
+		.input(
+			z.object({
+				oldSessionId: z.string(),
+				newSessionId: z.string(),
+			}),
+		)
 		.output(SessionSchema)
 		.mutation(async ({ctx, input}) => {
+			async function mergeSessions(oldSession: Session, newSession: Session, userId: string) {
+				const prisma = getPrismaClient();
+
+				return prisma.solve.updateMany({
+					where: {
+						user_id: userId,
+						session_id: oldSession.id,
+					},
+					data: {
+						session_id: newSession.id,
+					},
+				});
+			}
+
+			async function deleteSession(session: Session) {
+				const prisma = getPrismaClient();
+
+				return prisma.session.delete({
+					where: {
+						id: session.id,
+					},
+				});
+			}
+
 			const oldSession = await getSessionById(input.oldSessionId);
 			const newSession = await getSessionById(input.newSessionId);
 
-			if (!oldSession || !newSession || oldSession.user_id !== ctx.me.id || newSession.user_id !== ctx.me.id) {
+			if (
+				!oldSession ||
+				!newSession ||
+				oldSession.user_id !== ctx.me.id ||
+				newSession.user_id !== ctx.me.id
+			) {
 				throw new TRPCError({code: 'NOT_FOUND', message: 'Invalid session IDs'});
 			}
 
@@ -253,17 +258,41 @@ export const sessionRouter = createTRPCRouter({
 		}),
 
 	bulkCreateSessions: userProcedure
-		.input(z.object({
-			sessions: z.array(SessionInputSchema),
-		}))
+		.input(
+			z.object({
+				sessions: z.array(SessionInputSchema),
+			}),
+		)
 		.output(z.void())
 		.mutation(async ({ctx, input}) => {
+			async function bulkCreateSessions(userId: string, input: SessionInput[]) {
+				const prisma = getPrismaClient();
+
+				const data = [];
+				for (const ses of input) {
+					data.push({
+						...ses,
+						user_id: userId,
+					});
+				}
+
+				return prisma.session.createMany({
+					data,
+				});
+			}
+
 			if (!input.sessions || !input.sessions.length) {
-				throw new TRPCError({code: 'BAD_REQUEST', message: 'Must include at least one session'});
+				throw new TRPCError({
+					code: 'BAD_REQUEST',
+					message: 'Must include at least one session',
+				});
 			}
 
 			if (input.sessions.length > 1000) {
-				throw new TRPCError({code: 'BAD_REQUEST', message: 'You cannot import that many sessions'});
+				throw new TRPCError({
+					code: 'BAD_REQUEST',
+					message: 'You cannot import that many sessions',
+				});
 			}
 
 			await bulkCreateSessions(ctx.me.id, input.sessions);

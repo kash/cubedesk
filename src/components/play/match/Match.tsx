@@ -1,31 +1,31 @@
-import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
+import React, {createContext, useContext, useEffect, useRef, useState, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import './Match.scss';
-import {isSocketConnected, socketClient} from '../../../lib/util/socket/socketio';
-import Modal from '../../common/modal/Modal';
-import Timer from '../../timer/Timer';
-import ChatBox from '../../modules/chat/ChatBox';
-import {Match as MatchSchema} from '../../../server/schemas/Match.schema';
-import {TimerProps} from '../../timer/@types/interfaces';
-import {reactState} from '../../../../client/@types/react';
-import Listeners from './Listeners';
-import {MatchConst} from '../../../lib/shared/match/consts';
-import {ChallengerProps} from '../target/challengers/challenger/Challenger';
-import {openModal} from '../../../lib/actions/general';
-import History from '../../modules/history/History';
-import {updateMatchState} from './helpers/state';
-import {GameContext} from '../game/Game';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import {getMatchLinkBase} from './match_popup/custom_match/CustomMatch';
-import {toastSuccess} from '../../../lib/util/toast';
-import {Prohibit, CaretDown, Copy, Flag} from 'phosphor-react';
-import {copyText} from '../../common/copy_text/CopyText';
-import MatchOver from './match_over/MatchOver';
-import {MatchSession} from '../../../server/schemas/MatchSession.schema';
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
-import {GameType} from '../../../shared/match/consts';
-import {Solve} from '../../../../client/@types/generated/graphql';
+import {isSocketConnected, socketClient} from '@/lib/util/socket/socketio';
+import Modal from '@/components/common/modal/Modal';
+import Timer from '@/components/timer/Timer';
+import ChatBox from '@/components/modules/chat/ChatBox';
+import {Match as MatchSchema} from '@/generated/zod';
+import {TimerProps} from '@/components/timer/@types/interfaces';
+import {reactState} from '@/client/@types/react';
+import Listeners from '@/components/play/match/Listeners';
+import {MatchConst} from '@/lib/shared/match/consts';
+import {ChallengerProps} from '@/components/play/target/challengers/challenger/Challenger';
+import {openModal} from '@/lib/actions/general';
+import History from '@/components/modules/history/History';
+import {updateMatchState} from '@/components/play/match/helpers/state';
+import {GameContext} from '@/components/play/game/Game';
+import {useMe} from '@/lib/util/hooks/useMe';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {getMatchLinkBase} from '@/components/play/match/match_popup/custom_match/CustomMatch';
+import {toastSuccess} from '@/lib/util/toast';
+import {Prohibit, CaretDown, Copy, Flag} from '@phosphor-icons/react/dist/ssr';
+import {copyText} from '@/components/common/copy_text/CopyText';
+import MatchOver from '@/components/play/match/match_over/MatchOver';
+import {MatchSession} from '@/generated/zod';
+import {PublicUserAccount} from '@/generated/zod';
+import {GameType} from '@/shared/match/consts';
+import {Solve} from '@/generated/zod';
 
 interface MatchProps {
 	matchPath: string;
@@ -98,10 +98,10 @@ export default function Match(props: MatchProps) {
 
 	const me = useMe();
 
-	function exitMatch() {
+	const exitMatch = useCallback(() => {
 		history.replaceState({}, null, window.location.origin + matchPath);
 		window.location.reload();
-	}
+	}, [matchPath]);
 
 	useEffect(() => {
 		if (matchOver) {
@@ -111,7 +111,7 @@ export default function Match(props: MatchProps) {
 				})
 			);
 		}
-	}, [matchOver]);
+	}, [matchOver, dispatch, exitMatch, match, matchType]);
 
 	// Send heartbeat every 2 seconds
 	useEffect(() => {
@@ -127,16 +127,16 @@ export default function Match(props: MatchProps) {
 		};
 	}, [match]);
 
-	function clickChallengerActionButton(challenger: PublicUserAccount, solves: Solve[]) {
+	const clickChallengerActionButton = useCallback((challenger: PublicUserAccount, solves: Solve[]) => {
 		dispatch(
 			openModal(<History disabled solves={solves} />, {
 				width: 600,
 				title: `${challenger.username}'s Times`,
 			})
 		);
-	}
+	}, [dispatch]);
 
-	function getChallengers() {
+	const getChallengers = useCallback(() => {
 		const challengers: ChallengerProps[] = [];
 
 		if (!match || !match.participants || !match.participants.length) {
@@ -174,9 +174,9 @@ export default function Match(props: MatchProps) {
 		}
 
 		return challengers;
-	}
+	}, [match, matchOver, gameContext, spectating, clickChallengerActionButton, me.id]);
 
-	async function matchOnSolve(solve: Solve) {
+	const matchOnSolve = useCallback(async (solve: Solve) => {
 		solve.match_id = match?.id;
 
 		if (onSolve) {
@@ -184,27 +184,27 @@ export default function Match(props: MatchProps) {
 		}
 
 		socketClient().emit('playerSolveSaved', match?.id, solve);
-	}
+	}, [match, onSolve]);
 
-	function resignGame() {
+	const resignGame = useCallback(() => {
 		socketClient().emit('playerResignedMatch', match?.id);
-	}
+	}, [match?.id]);
 
-	function abortGame() {
+	const abortGame = useCallback(() => {
 		socketClient().emit('playerAbortedMatch', match?.id);
-	}
+	}, [match?.id]);
 
-	function copySpectateLink() {
+	const copySpectateLink = useCallback(() => {
 		const link = getMatchLinkBase(matchType) + match.spectate_code;
 		copyText(link);
 		toastSuccess('Successfully copied Spectate link');
-	}
+	}, [matchType, match?.spectate_code]);
 
-	function copyPlayLink() {
+	const copyPlayLink = useCallback(() => {
 		const link = getMatchLinkBase(matchType) + match.link_code;
 		copyText(link);
 		toastSuccess('Successfully copied Play link');
-	}
+	}, [matchType, match?.link_code]);
 
 	// Timer
 	let timer = null;

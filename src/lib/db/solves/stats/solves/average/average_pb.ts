@@ -1,8 +1,8 @@
-import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
+import {Solve} from '@/generated/zod';
 import SortedArray from 'sorted-array';
-import {getAverage} from './average';
 import {fetchSolves, FilterSolvesOptions} from '../../../query';
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
+import {getAverage} from './average';
 
 export function getAveragePB(filterOptions: FilterSolvesOptions, count: number) {
 	const cacheKey: SolveCacheKey = {

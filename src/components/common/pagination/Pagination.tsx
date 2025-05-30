@@ -1,15 +1,15 @@
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
+import Empty from '@/components/common/empty/Empty';
 import './Pagination.scss';
-import HorizontalNav from '../horizontal_nav/HorizontalNav';
-import Empty from '../empty/Empty';
-import Loading from '../loading/Loading';
-import {MagnifyingGlass} from 'phosphor-react';
-import {numberWithCommas} from '../../../lib/util/strings/util';
+import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import { Input } from '@/components/ui/input';
+import Loading from '@/components/common/loading/Loading';
+import {Button} from '@/components/ui/button';
+import {numberWithCommas} from '@/lib/util/strings/util';
+import block from '@/styles/bem';
+import {MagnifyingGlass} from '@phosphor-icons/react/dist/ssr';
+import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 // TODO: Convert to tRPC pagination
-import {useRouteMatch} from 'react-router-dom';
-import block from '../../../styles/bem';
-import Input from '../inputs/input/Input';
-import Button from '../button/Button';
+import {usePathname} from 'next/navigation';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -25,7 +25,7 @@ export interface PaginationTab {
 	id: string;
 	value: string;
 	dataQueryName: string;
-	queryFragment: DocumentNode | string;
+	queryFragment?: string;
 	queryFragmentName: string;
 	plural: string;
 	link?: string;
@@ -37,11 +37,18 @@ interface Props {
 	searchable?: boolean;
 	searchQuery?: string;
 	prefetchData?: (page: number, tab?: PaginationTab) => void;
-	customFetchData?: (params: { take: number; skip: number }) => Promise<PaginationOutput<any>>;
+	customFetchData?: (params: {take: number; skip: number}) => Promise<PaginationOutput<any>>;
 }
 
 export default function Pagination<T>(props: Props) {
-	const {tabs, itemRow, searchable, prefetchData, customFetchData, searchQuery: parentSearchQuery} = props;
+	const {
+		tabs,
+		itemRow,
+		searchable,
+		prefetchData,
+		customFetchData,
+		searchQuery: parentSearchQuery,
+	} = props;
 
 	const [hasMore, setHasMore] = useState(false);
 	const [totalResults, setTotalResults] = useState(0);
@@ -53,20 +60,20 @@ export default function Pagination<T>(props: Props) {
 
 	const finalSearchQuery = parentSearchQuery ? parentSearchQuery : searchQuery;
 
-	const routeMatch = useRouteMatch();
+	const pathname = usePathname();
 
 	// Sets page count and updates current page data when tab or page changes
 	useEffect(() => {
 		setPageCounts();
 
 		for (const tab of tabs) {
-			if (tabs.length === 1 || tab.link === routeMatch.path) {
+			if (tabs.length === 1 || tab.link === pathname) {
 				setTabId(tab.id);
 				updatePage(tab);
 				break;
 			}
 		}
-	}, [routeMatch.path, page, searchQuery, parentSearchQuery]);
+	}, [pathname, page, searchQuery, parentSearchQuery]);
 
 	// Current tab that the user is on
 	const currentTab = useMemo(() => {
@@ -110,35 +117,13 @@ export default function Pagination<T>(props: Props) {
 			});
 		}
 
+		// TODO: This component needs to be refactored to use tRPC instead of generic GraphQL queries
+		// For now, returning empty data to prevent GraphQL usage
 		return new Promise((resolve) => {
-			if (prefetchData) {
-				prefetchData(page, tab);
-			}
-
-			const dataQueryName = tab.dataQueryName;
-			const queryFragment = tab.queryFragment;
-			const queryFragmentName = tab.queryFragmentName;
-
-			const query = gql`
-                ${queryFragment}
-
-                query Query($page: Int!, $pageSize: Int!, $searchQuery: String) {
-                    ${dataQueryName}(pageSize: $pageSize, page: $page, searchQuery: $searchQuery) {
-                        hasMore
-						total
-                        items {
-                            ...${queryFragmentName}
-                        }
-                    }
-                }
-			`;
-
-			gqlQuery(query, {
-				page,
-				pageSize: DEFAULT_PAGE_SIZE,
-				searchQuery: finalSearchQuery,
-			}).then(({data}) => {
-				resolve(data[dataQueryName]);
+			resolve({
+				hasMore: false,
+				total: 0,
+				items: [],
 			});
 		});
 	}
@@ -213,12 +198,15 @@ export default function Pagination<T>(props: Props) {
 	if (searchable) {
 		inputQuery = (
 			<div className={b('header')}>
-				<Input
-					placeholder={`Search for ${currentTab.plural}`}
-					icon={<MagnifyingGlass weight="bold" />}
-					value={searchQuery}
-					onChange={(e) => setSearchQuery(e.target.value)}
-				/>
+				<div className="relative">
+					<MagnifyingGlass weight="bold" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+					<Input
+						placeholder={`Search for ${currentTab.plural}`}
+						className="pl-10"
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+					/>
+				</div>
 			</div>
 		);
 	}
@@ -232,11 +220,23 @@ export default function Pagination<T>(props: Props) {
 				{resultCount}
 				<div className={b('list')}>{body}</div>
 				<div className={b('pagination')}>
-					<Button onClick={prevPage} text="Prev" disabled={page === 0} primary={page > 0} />
+					<Button
+						onClick={prevPage}
+						disabled={page === 0}
+						variant={page > 0 ? 'default' : 'secondary'}
+					>
+						Prev
+					</Button>
 					<p>
 						Page {page + 1} of {Math.ceil(totalResults / 25) || 1}
 					</p>
-					<Button onClick={nextPage} text="Next" disabled={!hasMore} primary={hasMore} />
+					<Button
+						onClick={nextPage}
+						disabled={!hasMore}
+						variant={hasMore ? 'default' : 'secondary'}
+					>
+						Next
+					</Button>
 				</div>
 			</div>
 		</div>

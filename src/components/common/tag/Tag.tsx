@@ -1,13 +1,14 @@
-import React from 'react';
-import {ColorName} from '../../../shared/colors';
+import {useColor} from '@/lib/util/hooks/useTheme';
+import {ColorName} from '@/shared/colors';
+import {Icon} from '@phosphor-icons/react';
+import {CircleNotch} from '@phosphor-icons/react/dist/ssr';
 import CSS from 'csstype';
-import {CircleNotch} from 'phosphor-react';
-import {useColor} from '../../../lib/util/hooks/useTheme';
+import React, {ReactNode} from 'react';
 
 export interface TagProps {
 	text?: string;
 	title?: string;
-	icon?: JSX.Element;
+	icon?: Icon | ReactNode;
 	large?: boolean;
 	bold?: boolean;
 	glow?: boolean;
@@ -20,7 +21,8 @@ export interface TagProps {
 }
 
 export default function Tag(props: TagProps) {
-	const {textColor, text, backgroundColor, bold, loading, title, icon, small, large, glow} = props;
+	const {textColor, text, backgroundColor, bold, loading, title, icon, small, large, glow} =
+		props;
 
 	const backgroundColorProps = useColor(backgroundColor);
 	const textColorProps = useColor(textColor);
@@ -82,7 +84,11 @@ export default function Tag(props: TagProps) {
 
 	return (
 		<div className={containerClass.join(' ')} style={wrapperStyle}>
-			<div title={title} className="flex flex-row items-center font-label font-bold" style={bodyStyle}>
+			<div
+				title={title}
+				className="font-label flex flex-row items-center font-bold"
+				style={bodyStyle}
+			>
 				{textSpan}
 				{iconDiv}
 			</div>

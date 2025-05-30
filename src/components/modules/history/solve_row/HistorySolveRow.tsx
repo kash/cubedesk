@@ -1,15 +1,15 @@
-import React from 'react';
-import {X, Bluetooth} from 'phosphor-react';
+import React, {useCallback} from 'react';
+import {X, Bluetooth} from '@phosphor-icons/react/dist/ssr';
 import './HistorySolveRow.scss';
 import block from '../../../../styles/bem';
 import {getTimeString} from '../../../../lib/util/time';
 import {useDispatch} from 'react-redux';
 import {openModal} from '../../../../lib/actions/general';
-import SolveInfo from '../../../solve_info/SolveInfo';
+import SolveInfo from '../../../solve-info/SolveInfo';
 import {deleteSolveDb} from '../../../../lib/db/solves/update';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '../../../../lib/db/solves/operations';
-import Button from '../../../common/button/Button';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Button} from '@/components/ui/button';
+import {Solve} from '@/generated/zod';
 
 const b = block('history-solve-row');
 
@@ -24,21 +24,21 @@ export default function HistorySolveRow(props: Props) {
 
 	const dispatch = useDispatch();
 
-	function deleteSolve() {
+	const deleteSolve = useCallback(() => {
 		deleteSolveDb(solve);
-	}
+	}, [solve])
 
-	function plusTwoSolve() {
+	const plusTwoSolve = useCallback(() => {
 		togglePlusTwoSolveDb(solve);
-	}
+	}, [solve])
 
-	function dnfSolve() {
+	const dnfSolve = useCallback(() => {
 		toggleDnfSolveDb(solve);
-	}
+	}, [solve])
 
-	function openSolve() {
+	const openSolve = useCallback(() => {
 		dispatch(openModal(<SolveInfo solve={solve} solveId={solve.id} disabled={disabled} />));
-	}
+	}, [dispatch, solve, disabled])
 
 	const solveTime = solve.time;
 	const dnf = solve.dnf;
@@ -60,29 +60,30 @@ export default function HistorySolveRow(props: Props) {
 				<Button
 					title="Plus two solve"
 					className={b('action', {active: plusTwo})}
-					text="+2"
-					flat
-					white
-					warning={plusTwo}
+					variant={plusTwo ? "destructive" : "outline"}
+					size="sm"
 					onClick={plusTwoSolve}
-				/>
+				>
+					+2
+				</Button>
 				<Button
 					title="DNF solve"
 					className={b('action', {active: dnf})}
-					flat
-					white
-					danger={dnf}
-					text="DNF"
+					variant={dnf ? "destructive" : "outline"}
+					size="sm"
 					onClick={dnfSolve}
-				/>
+				>
+					DNF
+				</Button>
 				<Button
 					title="Delete solve"
 					className={b('action', {active: true})}
-					icon={<X />}
-					flat
-					white
+					variant="outline"
+					size="icon"
 					onClick={deleteSolve}
-				/>
+				>
+					<X weight="bold" />
+				</Button>
 			</>
 		);
 	}

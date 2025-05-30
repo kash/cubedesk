@@ -1,165 +1,196 @@
-import React from 'react';
+import {Checkbox} from '@/components/ui/checkbox';
 import './BanUser.scss';
-import Checkbox from '../../../common/checkbox/Checkbox';
-import Input from '../../../common/inputs/input/Input';
-import Select from '../../../common/inputs/select/Select';
-import { api } from '@/trpc/react';
-import { toastSuccess } from '@/lib/util/toast';
-import TextArea from '../../../common/inputs/textarea/TextArea';
-import Button from '../../../common/button/Button';
+import {Input} from '@/components/ui/input';
+import {InputWrapper} from '@/components/common/InputWrapper';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {Textarea} from '@/components/ui/textarea';
+import {IModalProps} from '@/components/common/modal/Modal';
+import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import {Button} from '@/components/ui/button';
+import {UserAccount} from '@/generated/zod';
+import {useInput} from '@/lib/util/hooks/useInput';
+import {useToggle} from '@/lib/util/hooks/useToggle';
+import {toastSuccess} from '@/lib/util/toast';
 import block from '@/styles/bem';
-import { useToggle } from '@/lib/util/hooks/useToggle';
-import { useInput } from '@/lib/util/hooks/useInput';
-import { IModalProps } from '../../../common/modal/Modal';
-import ModalHeader from '../../../common/modal/modal_header/ModalHeader';
-import { UserAccount, UserAccountForAdmin } from '@/server/schemas/UserAccount.schema';
+import {api} from '@/trpc/react';
+import React, {useCallback} from 'react';
 
 const b = block('ban-user');
 
 interface Props extends IModalProps {
-  user: UserAccount | UserAccountForAdmin;
+	user: UserAccount;
 }
 
 export default function BanUser(props: Props) {
-  const { user } = props;
+	const {user} = props;
 
-  const [cheatingIn1v1, toggleCheatingIn1v1] = useToggle(false);
-  const [deletePublishedSolves, toggleDeletePublishedSolves] = useToggle(true);
-  const [durationCount, setDurationCount] = useInput(1);
-  const [durationUnit, setDurationUnit] = useInput('day');
-  const [reason, setReason] = useInput('');
-  const [forever, toggleForever] = useToggle(false);
+	const [cheatingIn1v1, toggleCheatingIn1v1] = useToggle(false);
+	const [deletePublishedSolves, toggleDeletePublishedSolves] = useToggle(true);
+	const [durationCount, setDurationCount] = useInput(1);
+	const [durationUnit, setDurationUnit] = useInput('day');
+	const [reason, setReason] = useInput('');
+	const [forever, toggleForever] = useToggle(false);
 
-  const banUserMutation = api.admin.banUserAccount.useMutation({
-    onSuccess: () => {
-      const { durationText } = getDurationMinutes();
-      toastSuccess(`Banned ${user.username} for ${durationText}`);
-      props.onComplete();
-    }
-  });
-  
-  const loading = banUserMutation.isPending;
-  const error = banUserMutation.error?.message;
+	const banUserMutation = api.admin.banUserAccount.useMutation({
+		onSuccess: () => {
+			const {durationText} = getDurationMinutes();
+			toastSuccess(`Banned ${user.username} for ${durationText}`);
+			if (props.onComplete) {
+				props.onComplete();
+			}
+		},
+	});
 
-  function getDurationMinutes() {
-    const multipliers = {
-      minute: 1,
-      hour: 60,
-      day: 60 * 24,
-      week: 60 * 24 * 7,
-      month: 60 * 24 * 30,
-      year: 60 * 24 * 365,
-    };
+	const loading = banUserMutation.isPending;
+	const error = banUserMutation.error?.message;
 
-    let duration = durationCount;
-    if (typeof duration === 'string') {
-      duration = parseInt(duration, 10);
-    }
+	const getDurationMinutes = useCallback(() => {
+		const multipliers = {
+			minute: 1,
+			hour: 60,
+			day: 60 * 24,
+			week: 60 * 24 * 7,
+			month: 60 * 24 * 30,
+			year: 60 * 24 * 365,
+		};
 
-    if (!multipliers[durationUnit]) {
-      throw new Error('Invalid duration type');
-    }
+		let duration = durationCount;
+		if (typeof duration === 'string') {
+			duration = parseInt(duration, 10);
+		}
 
-    if (!duration || duration < 0) {
-      throw new Error('Invalid duration');
-    }
+		if (!multipliers[durationUnit]) {
+			throw new Error('Invalid duration type');
+		}
 
-    if (duration > 100) {
-      throw new Error('Duration count cannot be over 100');
-    }
+		if (!duration || duration < 0) {
+			throw new Error('Invalid duration');
+		}
 
-    let minutes = duration * multipliers[durationUnit];
-    let durationText = `${duration} ${durationUnit}${duration === 1 ? '' : 's'}`;
+		if (duration > 100) {
+			throw new Error('Duration count cannot be over 100');
+		}
 
-    if (forever) {
-      durationText = 'forever';
-      minutes = -1;
-    }
+		let minutes = duration * multipliers[durationUnit];
+		let durationText = `${duration} ${durationUnit}${duration === 1 ? '' : 's'}`;
 
-    return {
-      durationText,
-      minutes,
-    };
-  }
+		if (forever) {
+			durationText = 'forever';
+			minutes = -1;
+		}
 
-  async function submitBan() {
-    if (loading) {
-      return;
-    }
+		return {
+			durationText,
+			minutes,
+		};
+	}, [durationCount, durationUnit, forever]);
 
-    const { minutes } = getDurationMinutes();
-    await banUserMutation.mutateAsync({
-      user_id: user.id,
-      minutes,
-      reason,
-      cheating_in_1v1: cheatingIn1v1,
-      delete_published_solves: deletePublishedSolves,
-    });
-  }
+	const submitBan = useCallback(async () => {
+		if (loading) {
+			return;
+		}
 
-  const disabled = loading || !reason;
+		const {minutes} = getDurationMinutes();
+		await banUserMutation.mutateAsync({
+			user_id: user.id,
+			minutes,
+			reason,
+			cheating_in_1v1: cheatingIn1v1,
+			delete_published_solves: deletePublishedSolves,
+		});
+	}, [
+		loading,
+		getDurationMinutes,
+		banUserMutation,
+		user.id,
+		reason,
+		cheatingIn1v1,
+		deletePublishedSolves,
+	]);
 
-  return (
-    <div className={b()}>
-      <ModalHeader
-        title={`Ban ${user.username}`}
-        description="If this user has broken a rule, you can ban them here. You can either ban them for a set amount of time or forever"
-      />
-      <TextArea
-        autoSize
-        fullWidth
-        onChange={setReason}
-        name="reason"
-        legend="Reason (user-facing)"
-        value={reason}
-      />
-      <div className={b('duration', {forever})}>
-        <Input
-          disabled={forever}
-          legend="Count"
-          type="number"
-          name="durationCount"
-          value={durationCount}
-          onChange={setDurationCount}
-        />
-        <Select
-          disabled={forever}
-          legend="Duration type"
-          name="durationType"
-          value={durationUnit}
-          onChange={setDurationUnit}
-        >
-          <option value="minute">Minute</option>
-          <option value="hour">Hour</option>
-          <option value="day">Day</option>
-          <option value="week">Week</option>
-          <option value="month">Month</option>
-          <option value="year">Year</option>
-        </Select>
-      </div>
-      <div className={b('options')}>
-        <Checkbox
-          text="Delete all published solves"
-          onChange={() => toggleDeletePublishedSolves()}
-          checked={deletePublishedSolves}
-        />
-        <Checkbox text="Ban user forever" onChange={() => toggleForever()} checked={forever} />
-        <Checkbox
-          text="User was cheating in 1v1 (refunds ELO)"
-          onChange={() => toggleCheatingIn1v1()}
-          checked={cheatingIn1v1}
-        />
-      </div>
-      <Button
-        text="Ban user"
-        disabled={disabled}
-        danger
-        large
-        glow
-        onClick={submitBan}
-        loading={loading}
-        error={error}
-      />
-    </div>
-  );
+	const disabled = loading || !reason;
+
+	return (
+		<div className={b()}>
+			<ModalHeader
+				title={`Ban ${user.username}`}
+				description="If this user has broken a rule, you can ban them here. You can either ban them for a set amount of time or forever"
+			/>
+			<InputWrapper label="Reason (user-facing)">
+				<Textarea
+					onChange={(e) => setReason(e.target.value)}
+					name="reason"
+					value={reason}
+					className="w-full"
+				/>
+			</InputWrapper>
+			<div className={b('duration', {forever})}>
+				<InputWrapper label="Count">
+					<Input
+						disabled={forever}
+						type="number"
+						name="durationCount"
+						value={durationCount}
+						onChange={setDurationCount}
+					/>
+				</InputWrapper>
+				<InputWrapper label="Duration type">
+					<Select
+						disabled={forever}
+						name="durationType"
+						value={durationUnit}
+						onValueChange={setDurationUnit}
+					>
+						<SelectTrigger>
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="minute">Minute</SelectItem>
+							<SelectItem value="hour">Hour</SelectItem>
+							<SelectItem value="day">Day</SelectItem>
+							<SelectItem value="week">Week</SelectItem>
+							<SelectItem value="month">Month</SelectItem>
+							<SelectItem value="year">Year</SelectItem>
+						</SelectContent>
+					</Select>
+				</InputWrapper>
+			</div>
+			<div className={b('options')}>
+				<div className="flex items-center space-x-2">
+					<Checkbox
+						id="delete-solves"
+						onCheckedChange={() => toggleDeletePublishedSolves()}
+						checked={deletePublishedSolves}
+					/>
+					<label htmlFor="delete-solves">Delete all published solves</label>
+				</div>
+				<div className="flex items-center space-x-2">
+					<Checkbox
+						id="ban-forever"
+						onCheckedChange={() => toggleForever()}
+						checked={forever}
+					/>
+					<label htmlFor="ban-forever">Ban user forever</label>
+				</div>
+				<div className="flex items-center space-x-2">
+					<Checkbox
+						id="cheating-1v1"
+						onCheckedChange={() => toggleCheatingIn1v1()}
+						checked={cheatingIn1v1}
+					/>
+					<label htmlFor="cheating-1v1">User was cheating in 1v1 (refunds ELO)</label>
+				</div>
+			</div>
+			<Button
+				disabled={disabled}
+				variant="destructive"
+				size="lg"
+				onClick={submitBan}
+				loading={loading}
+				error={error}
+			>
+				Ban user
+			</Button>
+		</div>
+	);
 }

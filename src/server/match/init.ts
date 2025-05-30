@@ -6,7 +6,7 @@ import MatchTypeLogic from './match_types/match_type_interface';
 import HeadToHead from './match_types/head_to_head';
 import {createAdapter} from '@socket.io/redis-adapter';
 import {ClientToServerEvents, ServerToClientEvents} from '../../shared/match/socketio.types';
-import {Match} from '../schemas/Match.schema';
+import {Match} from '@/generated/zod';
 import {listenForSolveEvents} from './listeners/solve_events';
 import {listenForJoinEvents} from './listeners/join_events';
 import {listenForLeaveEvents} from './listeners/leave_events';

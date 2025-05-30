@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import Input from '../../common/inputs/input/Input';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import PasswordStrength from '../../common/password_strength/PasswordStrength';
 import {validateStrongPassword} from '../../../lib/util/auth/password';
 import {useInput} from '../../../lib/util/hooks/useInput';
 import {getRedirectLink} from '../../../lib/util/auth/login';
 import block from '../../../styles/bem';
-import Button from '../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import {api} from '@/trpc/react';
 
 const b = block('login');
@@ -17,7 +17,7 @@ export default function Forgot() {
 
 	const forgotPasswordMutation = api.auth.forgotPassword.useMutation();
 
-	async function handleSubmit(e) {
+	const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setError('');
 
@@ -34,33 +34,28 @@ export default function Forgot() {
 			await forgotPasswordMutation.mutateAsync({
 				email: email.trim(),
 			});
-			setError('Forgot password functionality is not yet implemented. Please contact support.');
-		} catch (e) {
+			setError(
+				'Forgot password functionality is not yet implemented. Please contact support.',
+			);
+		} catch (e: unknown) {
 			setError(e.message);
 		}
-	}
+	}, [forgotPasswordMutation, email]);
 
 	return (
 		<div className={b()}>
 			<form onSubmit={handleSubmit}>
-				<Input 
-					type="email" 
-					onChange={setEmail} 
-					value={email} 
-					name="email" 
-					legend="Email" 
-				/>
-				<Button 
-					loading={forgotPasswordMutation.isPending} 
-					type="submit" 
-					error={error} 
-					large 
-					primary 
-					text="Reset Password" 
-				/>
+				<Input type="email" onChange={setEmail} value={email} name="email" legend="Email" />
+				<div>
+					<Button loading={forgotPasswordMutation.isPending} type="submit" size="lg">
+						Reset Password
+					</Button>
+					{error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+				</div>
 			</form>
 			<p>
-				You can also <Link to="/signup">sign up</Link> or <Link to="/login">login</Link>.
+				You can also <Link href="/signup">sign up</Link> or <Link href="/login">login</Link>
+				.
 			</p>
 		</div>
 	);

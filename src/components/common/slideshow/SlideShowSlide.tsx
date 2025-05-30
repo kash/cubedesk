@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
-import SlideShowDots from './SlideShowDots';
-import SlideShowButtons from './SlideShowButtons';
 import TextBody from '../text_body/TextBody';
+import SlideShowButtons from './SlideShowButtons';
+import SlideShowDots from './SlideShowDots';
 
 export interface SlideShowSlideProps {
 	imgSrc: string;
@@ -13,19 +13,19 @@ export default function SlideShowSlide(props: SlideShowSlideProps) {
 	const {imgSrc, body, title} = props;
 
 	return (
-		<div className="flex flex-row w-full h-[500px]">
-			<div className="h-full w-[500px] min-w-[500px] relative">
+		<div className="flex h-[500px] w-full flex-row">
+			<div className="relative h-full w-[500px] min-w-[500px]">
 				<img
 					alt={title}
-					className="object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full w-full h-full shadow-lg"
+					className="absolute top-1/2 left-1/2 h-full max-h-full w-full max-w-full -translate-x-1/2 -translate-y-1/2 object-cover shadow-lg"
 					src={imgSrc}
 				/>
-				<div className="absolute left-1/2 -translate-x-1/2 bottom-3">
+				<div className="absolute bottom-3 left-1/2 -translate-x-1/2">
 					<SlideShowDots />
 				</div>
 			</div>
-			<div className="p-8 h-full w-full">
-				<div className="w-full h-full relative flex flex-col justify-between">
+			<div className="h-full w-full p-8">
+				<div className="relative flex h-full w-full flex-col justify-between">
 					<div className="w-full">
 						<TextBody title={title}>{body}</TextBody>
 					</div>

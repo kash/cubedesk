@@ -7,9 +7,9 @@ import {
 	RedisNamespace,
 	setKeyInRedis,
 } from '../../services/redis';
-import {MatchParticipant} from '../../schemas/MatchParticipant.schema';
+import {MatchParticipant} from '@/generated/zod';
 import {logger} from '../../services/logger';
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/generated/zod';
 
 export class MatchCacher {
 	matchId: string;

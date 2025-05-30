@@ -1,6 +1,6 @@
 import {emitEvent} from '../../../../util/event_handler';
 import jsonStr from 'json-stable-stringify';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 import {checkForAveragePBUpdate} from './cache/average_cache';
 import {checkForSinglePB} from './cache/single_cache';
 

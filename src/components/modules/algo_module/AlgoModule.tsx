@@ -1,17 +1,17 @@
-import React, {useMemo} from 'react';
+import {Button} from '@/components/ui/button';
 import './AlgoModule.scss';
-import block from '../../../styles/bem';
+import React from 'react';
 import {useDispatch} from 'react-redux';
 import {openModal} from '../../../lib/actions/general';
-import EditAlgo from '../../trainer/edit_algo/EditAlgo';
-import Button from '../../common/button/Button';
-import AlgoVisual from '../../trainer/algo_visual/AlgoVisual';
-import {cleanTrainerAlgorithm} from '../../trainer/util/clean';
-import {useToggle} from '../../../lib/util/hooks/useToggle';
-import TrainerFavButton from '../../trainer/trainer_algo/trainer_fav_button/TrainerFavButton';
-import Tag from '../../common/tag/Tag';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
 import {TrainerAlgorithmExtended} from '../../../lib/db/trainer/init';
+import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
+import {useToggle} from '../../../lib/util/hooks/useToggle';
+import block from '../../../styles/bem';
+import Tag from '../../common/tag/Tag';
+import AlgoVisual from '../../trainer/algo_visual/AlgoVisual';
+import EditAlgo from '../../trainer/edit_algo/EditAlgo';
+import TrainerFavButton from '../../trainer/trainer_algo/trainer_fav_button/TrainerFavButton';
+import {cleanTrainerAlgorithm} from '../../trainer/util/clean';
 
 const b = block('algo-module');
 
@@ -28,9 +28,9 @@ export default function AlgoModule(props: Props) {
 	const algo = cleanTrainerAlgorithm(algoExt);
 	const cubeType = getCubeTypeInfoById(algoExt.cube_type);
 
-	function editAlgo() {
+	const editAlgo = React.useCallback(() => {
 		dispatch(openModal(<EditAlgo algoExt={algoExt} />));
-	}
+	}, [dispatch, algoExt]);
 
 	return (
 		<div className={b()}>
@@ -45,19 +45,25 @@ export default function AlgoModule(props: Props) {
 						{showSolution && <p>{algo.solution}</p>}
 					</div>
 					<div className={b('visual')}>
-						<AlgoVisual colors={algo.colors} rotate={algo.rotate} cubeType={algo.cube_type} />
+						<AlgoVisual
+							colors={algo.colors}
+							rotate={algo.rotate}
+							cubeType={algo.cube_type}
+						/>
 					</div>
 				</div>
 
 				<div className={b('actions')}>
 					<TrainerFavButton algoExt={algoExt} />
-					<Button text="Edit" gray onClick={editAlgo} />
+					<Button variant="secondary" onClick={editAlgo}>
+						Edit
+					</Button>
 					<Button
-						text={showSolution ? 'Hide solution' : 'Show solution'}
-						white={showSolution}
-						gray
+						variant={showSolution ? 'secondary' : 'default'}
 						onClick={() => toggleShowSolution()}
-					/>
+					>
+						{showSolution ? 'Hide solution' : 'Show solution'}
+					</Button>
 				</div>
 			</div>
 		</div>

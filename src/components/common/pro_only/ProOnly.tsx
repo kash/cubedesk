@@ -1,10 +1,10 @@
-import React, {ReactNode} from 'react';
-import {useDispatch} from 'react-redux';
 import {openModal} from '@/lib/actions/general';
-import ProOnlyModal from './ProOnlyModal';
 import {useMe} from '@/lib/util/hooks/useMe';
 import {isPro} from '@/lib/util/pro';
+import React, {ReactNode, useCallback} from 'react';
+import {useDispatch} from 'react-redux';
 import Cover from '../cover/Cover';
+import ProOnlyModal from './ProOnlyModal';
 
 interface Props {
 	forceShow?: boolean;
@@ -19,18 +19,26 @@ export default function ProOnly(props: Props) {
 	const dispatch = useDispatch();
 	const me = useMe();
 
-	if ((isPro(me) || ignore) && !forceShow) {
+	const shouldHide = (isPro(me) || ignore) && !forceShow;
+
+	const handleClick = useCallback(() => {
+		if (shouldHide) {
+			return;
+		}
+
+		dispatch(openModal(<ProOnlyModal />));
+	}, [shouldHide, dispatch]);
+
+	if (shouldHide) {
 		return <>{children}</>;
 	}
 
-	function onClick(e) {
-		e.preventDefault();
-
-		dispatch(openModal(<ProOnlyModal />));
-	}
-
 	return (
-		<Cover tagText={lockIconOnly ? null : 'Pro Feature'} noPadding={noPadding} onClick={onClick}>
+		<Cover
+			tagText={lockIconOnly ? undefined : 'Pro Feature'}
+			noPadding={noPadding}
+			onClick={handleClick}
+		>
 			{children}
 		</Cover>
 	);

@@ -1,18 +1,18 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import './Manual.scss';
-import {convertTimeStringToSeconds} from '../../../../lib/util/time';
-import {TimerContext} from '../../Timer';
-import block from '../../../../styles/bem';
-import {resetScramble} from '../../helpers/scramble';
-import {saveSolve} from '../../helpers/save';
-import StartInstructions from '../start_instructions/StartInstructions';
-import {useSettings} from '../../../../lib/util/hooks/useSettings';
 import {useElementListener} from '../../../../lib/util/hooks/useListener';
+import {useSettings} from '../../../../lib/util/hooks/useSettings';
+import {convertTimeStringToSeconds} from '../../../../lib/util/time';
+import block from '../../../../styles/bem';
+import {saveSolve} from '../../helpers/save';
+import {resetScramble} from '../../helpers/scramble';
+import {TimerContext} from '../../Timer';
+import StartInstructions from '../start_instructions/StartInstructions';
 
 const b = block('manual-time-entry');
 
 export default function Manual() {
-	const manualInput = useRef<HTMLInputElement>();
+	const manualInput = useRef<HTMLInputElement>(null);
 
 	const [manualTime, setManualTime] = useState('');
 	const [error, setError] = useState(false);
@@ -24,9 +24,7 @@ export default function Manual() {
 	const timerFontFamily = useSettings('timer_font_family');
 	const requirePeriodInManualTimeEntry = useSettings('require_period_in_manual_time_entry');
 
-	useElementListener(manualInput.current, 'keypress', addManualTime, [manualInput?.current]);
-
-	function addManualTime(e) {
+	const addManualTime = useCallback((e) => {
 		if (e.key !== 'Enter' || error) {
 			return;
 		}
@@ -38,7 +36,15 @@ export default function Manual() {
 			const endedAt = new Date().getTime();
 			const startedAt = endedAt - seconds.timeMilli;
 
-			saveSolve(context, seconds.timeMilli, scramble, startedAt, endedAt, seconds.dnf, seconds.plusTwo);
+			saveSolve(
+				context,
+				seconds.timeMilli,
+				scramble,
+				startedAt,
+				endedAt,
+				seconds.dnf,
+				seconds.plusTwo,
+			);
 			resetScramble(context);
 
 			setManualTime('');
@@ -46,9 +52,11 @@ export default function Manual() {
 		} catch (err) {
 			// Do nothing
 		}
-	}
+	}, [error, manualTime, requirePeriodInManualTimeEntry, context, scramble]);
 
-	function handleManualEntryChange(e) {
+	useElementListener(manualInput.current, 'keypress', addManualTime, [manualInput?.current]);
+
+	const handleManualEntryChange = useCallback((e) => {
 		const val = e.target.value;
 
 		let manualEntryErr = false;
@@ -65,7 +73,7 @@ export default function Manual() {
 
 		setManualTime(val);
 		setError(manualEntryErr);
-	}
+	}, [requirePeriodInManualTimeEntry])
 
 	let input = (
 		<input
@@ -91,7 +99,9 @@ export default function Manual() {
 		<div className={b('wrapper')}>
 			{input}
 			{hideTime ? null : (
-				<StartInstructions>Manually enter time. Append "+2" or enter "DNF" if needed</StartInstructions>
+				<StartInstructions>
+					Manually enter time. Append "+2" or enter "DNF" if needed
+				</StartInstructions>
 			)}
 		</div>
 	);

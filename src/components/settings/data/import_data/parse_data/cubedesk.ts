@@ -1,9 +1,9 @@
+import {Session} from '@/generated/zod';
+import {Solve} from '@/generated/zod';
+import {fetchSessions} from '@/lib/db/sessions/query';
 import {v4 as uuid} from 'uuid';
 import {IImportDataContext, ImportableData} from '../ImportData';
-import {Session} from '../../../../../../client/@types/generated/graphql';
-import {fetchSessions} from '../../../../../lib/db/sessions/query';
 import {parseCubeDeskLegacyData} from './cubedesk_legacy';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
 
 interface CubeDeskExportSchema {
 	solves: Solve[];
@@ -21,8 +21,10 @@ export function parseCubeDeskData(txt: string, context: IImportDataContext): Imp
 		if (!importedData.sessions && (importedData as any).timer) {
 			return parseCubeDeskLegacyData(txt, context);
 		}
-	} catch (e) {
-		throw new Error('Invalid import file. Please make sure this is a valid file exported from CubeDesk');
+	} catch (e: unknown) {
+		throw new Error(
+			'Invalid import file. Please make sure this is a valid file exported from CubeDesk',
+		);
 	}
 
 	const sessions = [];
@@ -73,7 +75,7 @@ function getUpdatedSolves(solves: Solve[], oldNewSessionMap: Record<string, stri
 				solve.session_id = newSessionId;
 			} else {
 				throw new Error(
-					'There is a solve in this data that is not associated with a session. Terminating import.'
+					'There is a solve in this data that is not associated with a session. Terminating import.',
 				);
 			}
 		}

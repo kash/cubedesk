@@ -1,7 +1,7 @@
+import {AlgorithmOverride, CustomTrainer, TrainerFavorite} from '@/generated/zod';
+import {TrainerAlgorithm} from '@/lib/types/stats';
 import _ from 'lodash';
 import {getLokiDb} from '../lokijs';
-import {AlgorithmOverride, CustomTrainer, TrainerFavorite} from '../../../../client/@types/generated/graphql';
-import {TrainerAlgorithm} from '../../types/stats';
 
 export interface TrainerAlgorithmExtended extends TrainerAlgorithm {
 	overrides?: AlgorithmOverride;
@@ -27,7 +27,7 @@ export function initTrainerDb(
 	customAlgos: CustomTrainer[],
 	algos: TrainerAlgorithm[],
 	overrides: AlgorithmOverride[],
-	favorites: TrainerFavorite[]
+	favorites: TrainerFavorite[],
 ) {
 	if (typeof window === 'undefined') {
 		return;
@@ -56,7 +56,7 @@ export function initTrainerDb(
 
 		try {
 			getTrainerDb().insert(insert);
-		} catch (e) {
+		} catch (e: unknown) {
 			console.error(e);
 		}
 	}

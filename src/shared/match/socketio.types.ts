@@ -1,12 +1,24 @@
+import {GameOptions} from '@/generated/zod';
+import {UserAccount} from '@/generated/zod';
+import {Solve} from '@/generated/zod';
+import {
+	MatchInputChatMessage,
+	MatchUpdate,
+	MatchUpdateChat,
+	UpdateRoomInfo,
+} from '@/lib/shared/match/types';
 import {SocketReservedEventsMap} from 'socket.io/dist/socket';
-import {GameOptionsInput} from '../../server/schemas/GameOptions.schema';
-import {PublicUserAccount} from '../../server/schemas/UserAccount.schema';
-import {MatchInputChatMessage, MatchUpdate, MatchUpdateChat, UpdateRoomInfo} from '../../lib/shared/match/types';
-import {Solve} from '../../../client/@types/generated/graphql';
+
+// Type for public user data (without password)
+type PublicUserAccount = Omit<UserAccount, 'password'>;
 
 export interface ServerToClientEvents extends SocketReservedEventsMap {
 	opponentStartedSolve: (opponent: PublicUserAccount, startedAtUnix: number) => void;
-	opponentEndedSolve: (opponent: PublicUserAccount, endedAtUnix: number, finalTimeMillis: number) => void;
+	opponentEndedSolve: (
+		opponent: PublicUserAccount,
+		endedAtUnix: number,
+		finalTimeMillis: number,
+	) => void;
 	newMatchChatMessage: (data: MatchUpdateChat) => void;
 	opponentLeftMatch: (opponent: PublicUserAccount, secondsToReturn: number) => void;
 	opponentSolveUpdated: (opponent: PublicUserAccount, solve: Solve) => void;
@@ -18,9 +30,23 @@ export interface ServerToClientEvents extends SocketReservedEventsMap {
 	matchStarted: (data: MatchUpdate) => void;
 	myRoomsUpdated: (rooms: string[]) => void;
 	lobbyInfoUpdated: (data: UpdateRoomInfo) => void;
-	inactivityBeforeSolveStartsWarning: (opponent: PublicUserAccount, secondsToStart: number) => void;
+	inactivityBeforeSolveStartsWarning: (
+		opponent: PublicUserAccount,
+		secondsToStart: number,
+	) => void;
 	solveTakingTooLongWarning: (opponent: PublicUserAccount, secondsToFinish: number) => void;
 }
+
+// Type for game options input (partial GameOptions for creation)
+type GameOptionsInput = Pick<
+	GameOptions,
+	| 'game_type'
+	| 'cube_type'
+	| 'elimination_starting_time_seconds'
+	| 'elimination_percent_change_rate'
+	| 'head_to_head_target_win_count'
+	| 'gauntlet_time_multiplier'
+>;
 
 export interface ClientToServerEvents extends SocketReservedEventsMap {
 	playerJoinedLobby: (gameOptions: GameOptionsInput) => void;

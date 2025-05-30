@@ -1,21 +1,20 @@
-import React, {useContext, useMemo} from 'react';
-import './SubStats.scss';
 import {
-	WarningOctagon,
-	Warning,
-	NumberSquareOne,
 	Calculator,
-	Hash,
 	CaretDoubleRight,
 	CaretDoubleUp,
-} from 'phosphor-react';
+	NumberSquareOne,
+	Warning,
+	WarningOctagon,
+} from '@phosphor-icons/react/dist/ssr';
+import './SubStats.scss';
+import dayjs from 'dayjs';
+import React, {useContext, useMemo} from 'react';
+import {getSolveStreak} from '../../../../lib/db/solves/stats/streak';
+import {getSubStats} from '../../../../lib/db/solves/stats/sub_stats';
+import {useSolveDb} from '../../../../lib/util/hooks/useSolveDb';
 import block from '../../../../styles/bem';
 import {StatsContext} from '../../Stats';
 import NumberBlock from '../number_block/NumberBlock';
-import {useSolveDb} from '../../../../lib/util/hooks/useSolveDb';
-import {getSolveStreak} from '../../../../lib/db/solves/stats/streak';
-import {getSubStats} from '../../../../lib/db/solves/stats/sub_stats';
-import dayjs from 'dayjs';
 
 const b = block('sub-stats');
 

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './Lobby.scss';
-import {UsersThree} from 'phosphor-react';
+import {UsersThree} from '@phosphor-icons/react/dist/ssr';
 import block from '../../../../../styles/bem';
 import {socketClient} from '../../../../../lib/util/socket/socketio';
-import Button from '../../../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import {GameType} from '../../../../../shared/match/consts';
 
 const b = block('match-join-lobby');

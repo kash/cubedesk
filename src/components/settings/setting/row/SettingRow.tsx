@@ -1,15 +1,15 @@
 import React, {ReactNode} from 'react';
 import './SettingRow.scss';
-import block from '../../../../styles/bem';
-import Switch from '../../../common/switch/Switch';
-import {setSetting} from '../../../../lib/db/settings/update';
-import {toastError} from '../../../../lib/util/toast';
-import {useInput} from '../../../../lib/util/hooks/useInput';
-import Input from '../../../common/inputs/input/Input';
-import ProOnly from '../../../common/pro_only/ProOnly';
-import {useSettings} from '../../../../lib/util/hooks/useSettings';
 import {AllSettings} from '../../../../lib/db/settings/query';
+import {setSetting} from '../../../../lib/db/settings/update';
+import {useInput} from '../../../../lib/util/hooks/useInput';
+import {useSettings} from '../../../../lib/util/hooks/useSettings';
+import {toastError} from '../../../../lib/util/toast';
+import block from '../../../../styles/bem';
+import Input from '../../../common/inputs/input/Input';
 import LoggedInOnly from '../../../common/logged_in_only/LoggedInOnly';
+import ProOnly from '../../../common/pro_only/ProOnly';
+import Switch from '../../../common/switch/Switch';
 
 const b = block('setting-row');
 

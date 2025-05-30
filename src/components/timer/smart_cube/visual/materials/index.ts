@@ -1,6 +1,6 @@
-import { classic } from './classic';
+import {classic} from './classic';
 
-export { classic };
+export {classic};
 export default {
-  classic,
+	classic,
 };

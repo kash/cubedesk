@@ -1,11 +1,11 @@
 import {acquireRedisLock, createRedisKey, RedisNamespace} from '../../services/redis';
 import {getPrisma} from '../../database';
-import {GameOptionsInput} from '../../schemas/GameOptions.schema';
-import {PublicUserAccount} from '../../schemas/UserAccount.schema';
+import {GameOptionsInput} from '@/generated/zod';
+import {PublicUserAccount} from '@/types/user-account';
 import {getUserEloRatingByCubeType} from '../../models/elo_rating';
 import {Socket} from 'socket.io';
 import {getPlayerPairsByGameType} from './elo/elo_matching';
-import {MatchLobby} from '../../schemas/MatchLobby.schema';
+import {MatchLobby} from '@/generated/zod';
 import {pairPlayersInRoom} from './start_match';
 import {getClientById} from '../util';
 import {GameType} from '../../../shared/match/consts';

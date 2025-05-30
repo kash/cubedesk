@@ -6,7 +6,7 @@ import CSS from 'csstype';
 const b = block('pro-feature');
 
 interface Props {
-	icon: JSX.Element;
+	icon: ReactNode;
 	name: string;
 	iconColor?: string;
 	description?: string;

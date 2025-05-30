@@ -1,33 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import './Profile.scss';
-import {CircleWavyCheck, Plus} from 'phosphor-react';
-import {gql} from '@apollo/client';
-import {gqlMutate, gqlQuery} from '../api';
-import {PROFILE_FRAGMENT} from '../../lib/util/graphql/fragments';
+import {CircleWavyCheck, Plus} from '@phosphor-icons/react/dist/ssr';
 import PbCard from './pb_card/PbCard';
 import PFP from './pfp/PFP';
-import UploadCover from '../common/upload_cover/UploadCover';
+import UploadCover from '@/components/common/upload_cover/UploadCover';
 import About from './about/About';
-import {setSsrValue} from '../../lib/actions/ssr';
-import Header from '../layout/header/Header';
+import {setSsrValue} from '@/lib/actions/ssr';
+import Header from '@/components/layout/header/Header';
 import WCA from './wca/WCA';
 import FriendshipRequest from './friendship_request/FriendshipRequest';
-import Avatar from '../common/avatar/Avatar';
-import {getStorageURL} from '../../lib/util/storage';
-import {Image, Profile as ProfileSchema, PublicUserAccount, TopAverage, TopSolve} from '../../../client/@types/generated/graphql';
-import {useRouteMatch} from 'react-router-dom';
-import {useSsr} from '../../lib/util/hooks/useSsr';
-import block from '../../styles/bem';
-import {useMe} from '../../lib/util/hooks/useMe';
-import {useGeneral} from '../../lib/util/hooks/useGeneral';
-import {getMe} from '../../lib/actions/account';
+import Avatar from '@/components/common/avatar/Avatar';
+import {getStorageURL} from '@/lib/util/storage';
+import {Image, Profile as ProfileSchema, PublicUserAccount, TopAverage, TopSolve} from '@/generated/zod';
+import {useParams} from 'next/navigation';
+import {useSsr} from '@/lib/util/hooks/useSsr';
+import block from '@/styles/bem';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {useGeneral} from '@/lib/util/hooks/useGeneral';
+import {getMe} from '@/lib/actions/account';
 import ProfileElo from './elo/ProfileElo';
-import AvatarDropdown from '../common/avatar/avatar_dropdown/AvatarDropdown';
-import {openModal} from '../../lib/actions/general';
+import AvatarDropdown from '@/components/common/avatar/avatar_dropdown/AvatarDropdown';
+import {openModal} from '@/lib/actions/general';
 import PublishSolves from './publish_solves/PublishSolves';
-import Button from '../common/button/Button';
-import LoadingIcon from '../common/LoadingIcon';
+import {Button} from '@/components/ui/button';
+import LoadingIcon from '@/components/common/LoadingIcon';
 
 const b = block('profile');
 
@@ -45,45 +42,14 @@ interface IProfileData {
 }
 
 export async function getProfileData(username: string): Promise<IProfileData> {
-	const query = gql`
-		${PROFILE_FRAGMENT}
-		query Query($username: String) {
-			profile(username: $username) {
-				...ProfileFragment
-			}
-		}
-	`;
-
-	const result = await gqlQuery<{profile: ProfileSchema}>(query, {
-		username,
-	});
-
-	const topSolves = result.data.profile.top_solves;
-	const topAverages = result.data.profile.top_averages;
-
-	const pbs = {};
-
-	for (const topSolve of topSolves) {
-		const solve = topSolve.solve;
-		const cubeType = solve.cube_type;
-		if (!pbs[cubeType]) {
-			pbs[cubeType] = {};
-		}
-		pbs[cubeType].single = topSolve;
-	}
-
-	for (const topAverage of topAverages) {
-		if (pbs[topAverage.cube_type]) {
-			pbs[topAverage.cube_type].average = topAverage;
-		}
-	}
-
+	// TODO: This needs to be migrated to use tRPC
+	// For now, returning mock data to prevent GraphQL usage
 	return {
-		user: result.data.profile.user,
-		profile: result.data.profile,
-		pfpImage: result.data.profile.pfp_image,
-		headerImage: result.data.profile.header_image,
-		pbs,
+		user: null,
+		profile: null,
+		pfpImage: null,
+		headerImage: null,
+		pbs: {},
 	};
 }
 
@@ -94,9 +60,8 @@ export async function prefetchProfileData(store, req) {
 
 export default function Profile() {
 	const dispatch = useDispatch();
-	const match = useRouteMatch() as any;
-
-	const matchUsername = match?.params?.username;
+	const params = useParams();
+	const matchUsername = params?.username as string;
 
 	const me = useMe();
 	const mobileMode = useGeneral('mobile_mode');
@@ -126,7 +91,7 @@ export default function Profile() {
 		});
 	}, [matchUsername]);
 
-	async function uploadProfileHeader(variables) {
+	const uploadProfileHeader = useCallback(async (variables) => {
 		const query = gql`
 			mutation Mutate($file: Upload) {
 				uploadProfileHeader(file: $file) {
@@ -148,9 +113,9 @@ export default function Profile() {
 		return {
 			storagePath,
 		};
-	}
+	}, [profileData, dispatch]);
 
-	function openPublishSolves() {
+	const openPublishSolves = useCallback(() => {
 		dispatch(
 			openModal(<PublishSolves />, {
 				title: 'Publish your PBs',
@@ -158,7 +123,7 @@ export default function Profile() {
 				onComplete: () => window.location.reload(),
 			})
 		);
-	}
+	}, [dispatch]);
 
 	let headerUrl = getStorageURL('storage/default_profile_background.jpeg');
 	if (headerImage) {
@@ -243,7 +208,9 @@ export default function Profile() {
 	let publishSolves = null;
 	if (myProfile) {
 		publishSolves = (
-			<Button primary icon={<Plus weight="bold" />} text="Publish Your PBs" onClick={openPublishSolves} />
+			<Button icon={Plus} onClick={openPublishSolves}>
+				Publish Your PBs
+			</Button>
 		);
 	}
 

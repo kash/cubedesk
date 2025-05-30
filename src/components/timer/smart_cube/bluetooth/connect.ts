@@ -1,0 +1,108 @@
+import GAN from './gan';
+import Giiker from './giiker';
+import Particula from './particula';
+import SmartCube from './smart_cube';
+
+interface BluetoothRequestDeviceFilter {
+	name?: string;
+	namePrefix?: string;
+	services?: string[];
+}
+
+export default class Connect extends SmartCube {
+	device: BluetoothDevice | null = null;
+
+	connect = (): void => {
+		if (!window.navigator || !window.navigator.bluetooth) {
+			throw new Error('Bluetooth not supported');
+		}
+
+		window.navigator.bluetooth
+			.requestDevice({
+				filters: [
+					{namePrefix: 'Gi'},
+					{namePrefix: 'Mi Smart Magic Cube'},
+					{namePrefix: 'GAN'},
+					{namePrefix: 'Gan'},
+					{namePrefix: 'gan'},
+					{namePrefix: 'GoCube'},
+					{namePrefix: 'Rubiks'},
+
+					// Giiker
+					{services: ['0000aadb-0000-1000-8000-00805f9b34fb']},
+					{services: ['0000aaaa-0000-1000-8000-00805f9b34fb']},
+					{services: ['0000fe95-0000-1000-8000-00805f9b34fb']},
+
+					// Gan
+					{services: ['0000fff0-0000-1000-8000-00805f9b34fb']},
+					{services: ['00001805-0000-1000-8000-00805f9b34fb']},
+				],
+				optionalServices: [
+					'0000180a-0000-1000-8000-00805f9b34fb',
+					'0000180f-0000-1000-8000-00805f9b34fb',
+					'9fa480e0-4967-4542-9390-d343dc5d04ae',
+					'00001805-0000-1000-8000-00805f9b34fb',
+					'd0611e78-bbb4-4591-a5f8-487910ae4366',
+					'6e400001-b5a3-f393-e0a9-e50e24dc4179',
+					'f95a48e6-a721-11e9-a2a3-022ae2dbcce4',
+
+					'battery_service',
+					'generic_access',
+					'device_information',
+					...(Particula.opServices || []),
+
+					// GAN
+					'0000fff0-0000-1000-8000-00805f9b34fb',
+					'0000fff5-0000-1000-8000-00805f9b34fb',
+					'0000fff7-0000-1000-8000-00805f9b34fb',
+					'0000fff2-0000-1000-8000-00805f9b34fb',
+					'0000fff3-0000-1000-8000-00805f9b34fb',
+					'0000180a-0000-1000-8000-00805f9b34fb',
+					'00002a23-0000-1000-8000-00805f9b34fb',
+					'00002a28-0000-1000-8000-00805f9b34fb',
+					'8653000a-43e6-47b7-9cb0-5fc21d4ae340',
+					'00000010-0000-fff7-fff6-fff5fff4fff0',
+
+					'00001805-0000-1000-8000-00805f9b34fb',
+				],
+			})
+			.then((device) => {
+				this.device = device;
+
+				this.alertConnecting();
+
+				if (
+					device.name &&
+					(device.name.startsWith('Gi') || device.name.startsWith('Mi Smart Magic Cube'))
+				) {
+					const cube = new Giiker(this.device);
+					cube.init();
+				} else if (device.name && device.name.toLowerCase().startsWith('gan')) {
+					const cube = new GAN(this.device);
+					cube.init();
+				} else if (
+					device.name &&
+					(device.name.startsWith('GoCube') || device.name.startsWith('Rubiks'))
+				) {
+					const cube = new Particula(this.device);
+					cube.init();
+				} else {
+					// HANDLE unsupported cube
+					return Promise.resolve();
+				}
+			})
+			.catch((error) => {
+				console.error('Failed to connect to bluetooth device:', error);
+				this.alertDisconnected();
+			});
+	};
+
+	disconnect = (): void => {
+		if (!this.device || !this.device.gatt) {
+			return;
+		}
+		this.device.gatt.disconnect();
+		this.device = null;
+		this.alertDisconnected();
+	};
+}

@@ -1,6 +1,7 @@
 # CLAUDE.md - Sonar Project Guide
 
 ## Commands
+
 - **Development**: `pnpm dev` - Start dev server
 - **Lint**: `pnpm lint` - Run ESLint and find unused exports
 - **Build**: `pnpm build` - Build production version
@@ -8,6 +9,7 @@
 - **DB Migration**: `npx prisma format && npx prisma generate && npx prisma migrate dev` - Run after updating schema.prisma file (NEVER manually modify migration files in migrations/)
 
 ## Code Style
+
 - **Naming**: Use camelCase for variables/functions, PascalCase for classes/components
 - **Imports**: Group imports by external/internal, sort alphabetically
 - **Components**: Use functional React components with hooks
@@ -25,5 +27,9 @@
 - **Linting**: From now on, use pnpm lint for linting
 - **Dialogs**: Don't use confirm(), instead, use ConfirmDialog (which is under components/common)
 
+- Import from "@/" if possible (instead of relative import).
+- Don't spread properties inside the method signature. Instead, do it on the first line of the function.
+
 ## Project Structure
+
 The codebase follows Next.js conventions with TypeScript and Prisma ORM.

@@ -1,10 +1,10 @@
-import React, {isValidElement, ReactElement, ReactNode, useState} from 'react';
-import './GenericInput.scss';
-import block from '../../../styles/bem';
 import CSS from 'csstype';
-import InputLegend from '../old_input/input_legend/InputLegend';
-import InputInfo from '../old_input/input_info/InputInfo';
+import './GenericInput.scss';
+import React, {isValidElement, ReactElement, ReactNode, useState} from 'react';
+import block from '../../../styles/bem';
 import Error from '../old_error/Error';
+import InputInfo from '../old_input/input_info/InputInfo';
+import InputLegend from '../old_input/input_legend/InputLegend';
 
 const b = block('common-generic-input');
 
@@ -36,7 +36,9 @@ export interface GenericInputProps<T extends HTMLElement> {
 
 export type InputProps<T extends GenericInputProps<any>> = Omit<T, 'input' | 'inputWrapper'>;
 
-export default function GenericInput<T extends HTMLInputElement>(props: GenericInputProps<T>): ReactElement {
+export default function GenericInput<T extends HTMLInputElement>(
+	props: GenericInputProps<T>,
+): ReactElement {
 	const {
 		info,
 		legend,
@@ -90,7 +92,7 @@ export default function GenericInput<T extends HTMLInputElement>(props: GenericI
 
 	let inputWithProps: ReactNode = input;
 	if (isValidElement(input)) {
-		inputWithProps = React.cloneElement(input as JSX.Element, {
+		inputWithProps = React.cloneElement(input as ReactElement, {
 			value: val,
 			type,
 			name,

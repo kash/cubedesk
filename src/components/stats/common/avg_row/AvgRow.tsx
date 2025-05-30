@@ -1,14 +1,14 @@
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import './AvgRow.scss';
-import block from '../../../../styles/bem';
+import {useDispatch} from 'react-redux';
+import {openModal} from '../../../../lib/actions/general';
 import {getCurrentAverage} from '../../../../lib/db/solves/stats/solves/average/average';
-import {StatsContext} from '../../Stats';
 import {getAveragePB} from '../../../../lib/db/solves/stats/solves/average/average_pb';
 import {SolveStat} from '../../../../lib/db/solves/stats/solves/caching';
 import {getTimeString} from '../../../../lib/util/time';
-import {useDispatch} from 'react-redux';
+import block from '../../../../styles/bem';
 import HistoryModal from '../../../modules/history/history_modal/HistoryModal';
-import {openModal} from '../../../../lib/actions/general';
+import {StatsContext} from '../../Stats';
 
 const b = block('avg-row');
 
@@ -33,7 +33,7 @@ export default function AvgRow(props: Props) {
 
 	const localCount = count.toLocaleString();
 
-	function openSolveModal() {
+	const openSolveModal = useCallback(() => {
 		if (!avg) {
 			return;
 		}
@@ -41,14 +41,15 @@ export default function AvgRow(props: Props) {
 		const descPrefix = pb ? 'Best ' : '';
 		const desc = descPrefix + `Average of ${localCount}`;
 		dispatch(openModal(<HistoryModal solves={avg.solves} description={desc} />));
-	}
+	}, [avg, pb, localCount, dispatch]);
 
 	const bestSpan = pb ? <span className={b('blue')}>Best</span> : null;
 
 	return (
 		<div className={b()}>
 			<p className={b('desc')}>
-				{bestSpan} {pb ? 'a' : 'A'}verage of <span className={b('blue')}>{count.toLocaleString()}</span>
+				{bestSpan} {pb ? 'a' : 'A'}verage of{' '}
+				<span className={b('blue')}>{count.toLocaleString()}</span>
 			</p>
 			<button onClick={openSolveModal} className={b('value')}>
 				{getTimeString(avg?.time)}

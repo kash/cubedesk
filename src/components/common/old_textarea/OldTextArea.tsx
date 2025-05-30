@@ -18,7 +18,17 @@ interface Props {
 const b = block('common-textarea');
 
 export default function OldTextArea(props: Props) {
-	const {fullWidth, name, maxLength, placeholder, legend: legendText, disabled, onFocus, onBlur, onChange} = props;
+	const {
+		fullWidth,
+		name,
+		maxLength,
+		placeholder,
+		legend: legendText,
+		disabled,
+		onFocus,
+		onBlur,
+		onChange,
+	} = props;
 
 	const [value, setValue] = useState(props.value || '');
 
@@ -50,7 +60,9 @@ export default function OldTextArea(props: Props) {
 	let maxLengthSpan = null;
 	if (maxLength) {
 		maxLengthSpan = (
-			<span className={b('max-length', {over: value.length >= maxLength})}>{maxLength - value.length}</span>
+			<span className={b('max-length', {over: value.length >= maxLength})}>
+				{maxLength - value.length}
+			</span>
 		);
 	}
 

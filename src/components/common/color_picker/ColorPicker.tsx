@@ -1,13 +1,16 @@
-import React, {useEffect} from 'react';
-import {ColorPicker as ColorPalette, toColor, useColor} from 'react-color-palette';
+import {Button} from '@/components/ui/button';
+import React, {useCallback, useEffect} from 'react';
 import './ColorPicker.scss';
-import block from '../../../styles/bem';
+import {ColorPicker as ColorPalette, toColor, useColor} from 'react-color-palette';
 import {Color} from 'react-color-palette/lib/interfaces/Color.interface';
-import {useToggle} from '../../../lib/util/hooks/useToggle';
 import {useWindowClickAwayListener} from '../../../lib/util/hooks/useListener';
-import Button from '../button/Button';
 import {useTheme} from '../../../lib/util/hooks/useTheme';
-import {getAnyColorStringAsRawRgbString, getAnyColorStringAsRgb} from '../../../lib/util/themes/theme_util';
+import {useToggle} from '../../../lib/util/hooks/useToggle';
+import {
+	getAnyColorStringAsRawRgbString,
+	getAnyColorStringAsRgb,
+} from '../../../lib/util/themes/theme_util';
+import block from '../../../styles/bem';
 
 const b = block('common-color-picker');
 
@@ -42,25 +45,28 @@ export default function ColorPicker(props: Props) {
 		}
 	});
 
-	function colorChange(c: Color) {
+	const colorChange = useCallback((c: Color) => {
 		setColor(c);
-	}
+	}, [setColor]);
 
 	let resetButton = null;
 	if (resetToRgb && !hideReset) {
-		resetButton = (
-			<Button
-				hidden={resetToRgb.replace(/\s/g, '') === getAnyColorStringAsRawRgbString(color)}
-				text="Reset"
-				warning
-				flat
-				onClick={() => {
-					const newColor = toColor('rgb', getAnyColorStringAsRgb(resetToRgb));
-					setColor(newColor);
-					onChange(getAnyColorStringAsRawRgbString(newColor));
-				}}
-			/>
-		);
+		const isHidden = resetToRgb.replace(/\s/g, '') === getAnyColorStringAsRawRgbString(color);
+		if (!isHidden) {
+			resetButton = (
+				<Button
+					variant="outline"
+					className="border-orange-500 text-orange-500 hover:bg-orange-50"
+					onClick={() => {
+						const newColor = toColor('rgb', getAnyColorStringAsRgb(resetToRgb));
+						setColor(newColor);
+						onChange(getAnyColorStringAsRawRgbString(newColor));
+					}}
+				>
+					Reset
+				</Button>
+			);
+		}
 	}
 
 	return (

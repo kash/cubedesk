@@ -4,7 +4,7 @@ import fs from 'fs';
 import Handlebars from 'handlebars';
 import mjml2html from 'mjml';
 import {createEmailLog} from '../models/email_log';
-import {UserAccount} from '../schemas/UserAccount.schema';
+import {UserAccount} from '@/types/user-account';
 
 const ses = new SES({region: 'us-west-2'});
 

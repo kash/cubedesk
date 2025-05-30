@@ -1,7 +1,7 @@
+import {TimerModuleType} from '@/components/timer/@types/enums';
+import {CustomCubeType} from '@/generated/zod';
+import {APP_THEME_PRESETS} from '@/lib/util/themes/theme_consts';
 import {getSettingsDb, SettingValue} from './init';
-import {CustomCubeType} from '../../../../client/@types/generated/graphql';
-import {TimerModuleType} from '../../../components/timer/@types/enums';
-import {APP_THEME_PRESETS} from '../../util/themes/theme_consts';
 
 export type TimerLayoutPosition = 'bottom' | 'left' | 'right';
 
@@ -126,7 +126,10 @@ export function getSettings(): AllSettings {
 
 	let settingsData: any = settingsDb?.data;
 	if (!settingsDb || !settingsData) {
-		settingsData = Object.keys(defaultSettings).map((key) => ({id: key, value: defaultSettings[key]}));
+		settingsData = Object.keys(defaultSettings).map((key) => ({
+			id: key,
+			value: defaultSettings[key],
+		}));
 	}
 	settingsData.forEach((setting) => {
 		settings[setting.id] = setting.value;

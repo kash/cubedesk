@@ -1,21 +1,21 @@
-import React, {ReactNode, useContext} from 'react';
-import {CaretDown} from 'phosphor-react';
-import {TimerModuleDropdownOptions, TimerModuleType} from '../@types/enums';
-import {FooterModuleData, TimerCustomModuleOptions} from '../@types/interfaces';
-import History from '../../modules/history/History';
-import LastSolve from '../../modules/last_solve/LastSolve';
-import Scramble from '../../modules/scramble/ScrambleVisual';
-import TimeChart from '../../modules/time_chart/TimeChart';
-import TimeDistro from '../../modules/time_distro/TimeDistro';
-import SolvesPerDay from '../../modules/solves_per_day/SolvesPerDay';
+import {CaretDown} from '@phosphor-icons/react/dist/ssr';
 import {snakeCase} from 'change-case';
+import React, {ReactNode, useCallback, useContext} from 'react';
+import {setSetting} from '../../../lib/db/settings/update';
+import {useMe} from '../../../lib/util/hooks/useMe';
+import {useSettings} from '../../../lib/util/hooks/useSettings';
 import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import ProOnly from '../../common/pro_only/ProOnly';
-import {TimerContext} from '../Timer';
-import {setSetting} from '../../../lib/db/settings/update';
-import {useSettings} from '../../../lib/util/hooks/useSettings';
-import {useMe} from '../../../lib/util/hooks/useMe';
+import History from '../../modules/history/History';
+import LastSolve from '../../modules/last_solve/LastSolve';
 import QuickStats from '../../modules/quick_stats/QuickStats';
+import Scramble from '../../modules/scramble/ScrambleVisual';
+import SolvesPerDay from '../../modules/solves_per_day/SolvesPerDay';
+import TimeChart from '../../modules/time_chart/TimeChart';
+import TimeDistro from '../../modules/time_distro/TimeDistro';
+import {TimerModuleDropdownOptions, TimerModuleType} from '../@types/enums';
+import {FooterModuleData, TimerCustomModuleOptions} from '../@types/interfaces';
+import {TimerContext} from '../Timer';
 
 interface Props {
 	index: number;
@@ -36,7 +36,7 @@ export default function TimerModule(props: Props) {
 		return <div className="">{moduleType}</div>;
 	}
 
-	function selectVisual(newModuleType: TimerModuleType) {
+	const selectVisual = useCallback((newModuleType: TimerModuleType) => {
 		const newTimerModules = [...timerModules];
 		if (newTimerModules.length <= index) {
 			newTimerModules.push(newModuleType);
@@ -44,7 +44,7 @@ export default function TimerModule(props: Props) {
 			newTimerModules[index] = newModuleType;
 		}
 		setSetting('timer_modules', newTimerModules);
-	}
+	}, [timerModules, index]);
 
 	const moduleMap: Record<TimerModuleType, FooterModuleData> = {
 		[TimerModuleType.HISTORY]: {
@@ -93,7 +93,9 @@ export default function TimerModule(props: Props) {
 		{label: 'None', value: TimerModuleType.NONE},
 	];
 
-	const currentModuleName = moduleDropdownOptions.find((option) => option.value === moduleType)?.label;
+	const currentModuleName = moduleDropdownOptions.find(
+		(option) => option.value === moduleType,
+	)?.label;
 
 	let visual: FooterModuleData;
 	if (customOptions?.customBody) {

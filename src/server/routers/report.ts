@@ -110,17 +110,17 @@ export function resolveReportsOfUserId(userId: string) {
 }
 
 export const reportRouter = createTRPCRouter({
-	reports: modProcedure
-		.output(z.array(ReportSummarySchema))
-		.query(async () => {
-			return getUnresolvedReports();
-		}),
+	reports: modProcedure.output(z.array(ReportSummarySchema)).query(async () => {
+		return getUnresolvedReports();
+	}),
 
 	reportProfile: userProcedure
-		.input(z.object({
-			userId: z.string(),
-			reason: z.string(),
-		}))
+		.input(
+			z.object({
+				userId: z.string(),
+				reason: z.string(),
+			}),
+		)
 		.output(ReportSchema)
 		.mutation(async ({ctx, input}) => {
 			const user = await getUserById(input.userId);
@@ -137,9 +137,11 @@ export const reportRouter = createTRPCRouter({
 		}),
 
 	resolveReports: modProcedure
-		.input(z.object({
-			userId: z.string(),
-		}))
+		.input(
+			z.object({
+				userId: z.string(),
+			}),
+		)
 		.output(z.number())
 		.mutation(async ({input}) => {
 			const res = await resolveReportsOfUserId(input.userId);

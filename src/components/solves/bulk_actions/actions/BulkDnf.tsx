@@ -1,56 +1,50 @@
-import React, {useMemo} from 'react';
-import {openModal} from '@/lib/actions/general';
-import ConfirmModal from '@/components/common/confirm_modal/ConfirmModal';
-import {toastSuccess} from '@/lib/util/toast';
-import {Solve} from '@/server/schemas/Solve.schema';
-import {useDispatch} from 'react-redux';
-import Button from '@/components/common/button/Button';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {initAllSolves} from '@/components/layout/init';
+import {Button} from '@/components/ui/button';
+import {Solve} from '@/generated/zod';
+import {toastSuccess} from '@/lib/util/toast';
 import {api} from '@/trpc/react';
+import React, {useCallback, useMemo} from 'react';
 
 interface Props {
-  disabled?: boolean;
-  solves: Solve[];
+	disabled?: boolean;
+	solves: Solve[];
 }
 
 export default function BulkDnfSolvesButton(props: Props) {
-  const {solves, disabled} = props;
-  const dispatch = useDispatch();
-  
-  const dnfMutation = api.bulkActions.dnfSolves.useMutation({
-    onSuccess: async (updateCount) => {
-      await initAllSolves(true);
-      const solvesDNFed = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
-      toastSuccess(`Successfully DNF'd ${solvesDNFed}.`);
-    }
-  });
+	const {solves, disabled} = props;
 
-  const solveIds = useMemo(() => {
-    return solves.map((solve) => solve.id);
-  }, [solves, solves?.length]);
+	const dnfMutation = api.bulkActions.dnfSolves.useMutation({
+		onSuccess: async (updateCount) => {
+			await initAllSolves(true);
+			const solvesDNFed = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
+			toastSuccess(`Successfully DNF'd ${solvesDNFed}.`);
+		},
+	});
 
-  function onClick() {
-    const solvesToDnf = `${solves.length.toLocaleString()} solve${solves.length === 1 ? '' : 's'}`;
+	const solveIds = useMemo(() => {
+		return solves.map((solve) => solve.id);
+	}, [solves]);
 
-    dispatch(
-      openModal(
-        <ConfirmModal
-          proOnly
-          buttonText={`DNF ${solvesToDnf}`}
-          title="Bulk DNF solves"
-          description="You are about to DNF the selected solves. This is irreversible. Be careful."
-          infoBoxes={[{label: 'Solves', value: solves.length.toLocaleString()}]}
-          triggerAction={run}
-        />
-      )
-    );
+	const solvesToDnf = `${solves.length.toLocaleString()} solve${solves.length === 1 ? '' : 's'}`;
 
-    async function run() {
-      await dnfMutation.mutateAsync({
-        solveIds,
-      });
-    }
-  }
+	const run = useCallback(async () => {
+		await dnfMutation.mutateAsync({
+			solveIds,
+		});
+	}, [dnfMutation, solveIds]);
 
-  return <Button disabled={disabled || dnfMutation.isPending} text="Mark DNF" gray onClick={onClick} />;
+	return (
+		<ConfirmDialog
+			title="Bulk DNF solves"
+			description="You are about to DNF the selected solves. This is irreversible. Be careful."
+			buttonText={`DNF ${solvesToDnf}`}
+			infoBoxes={[{label: 'Solves', value: solves.length.toLocaleString()}]}
+			triggerAction={run}
+		>
+			<Button disabled={disabled || dnfMutation.isPending} variant="secondary">
+				Mark DNF
+			</Button>
+		</ConfirmDialog>
+	);
 }

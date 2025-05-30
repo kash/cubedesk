@@ -1,5 +1,0 @@
-{
-	"ignore": ["/*.scss/"],
-	"poll": true,
-	"respawn": true
-}

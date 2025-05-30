@@ -1,7 +1,7 @@
 import React from 'react';
 import './MobileNav.scss';
-import {List} from 'phosphor-react';
-import {useRouteMatch} from 'react-router-dom';
+import {List} from '@phosphor-icons/react/dist/ssr';
+import {usePathname} from 'next/navigation';
 import Logo from '../../../common/logo/Logo';
 import {NAV_LINKS} from '../Nav';
 import Notifications from '../notifications/Notifications';
@@ -12,7 +12,7 @@ import Dropdown from '../../../common/inputs/dropdown/Dropdown';
 
 export default function MobileNav() {
 	const me = useMe();
-	const match = useRouteMatch();
+	const pathname = usePathname();
 
 	const moduleColor = useTheme('module_color');
 
@@ -44,7 +44,7 @@ export default function MobileNav() {
 							link: link.link,
 							text: link.name,
 							icon: link.icon,
-							disabled: link.match.test(match.path),
+							disabled: link.match.test(pathname),
 						}))}
 					/>
 				</div>

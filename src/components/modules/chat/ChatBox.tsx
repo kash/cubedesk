@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {useDispatch} from 'react-redux';
 import './ChatBox.scss';
@@ -11,7 +11,7 @@ import block from '../../../styles/bem';
 import {MatchUpdateChat} from '../../../lib/shared/match/types';
 import {useSocketListener} from '../../../lib/util/hooks/useSocketListener';
 import {GameType} from '../../../shared/match/consts';
-import {Match} from '../../../server/schemas/Match.schema';
+import {Match} from '@/generated/zod';
 
 const b = block('chat-box');
 
@@ -35,37 +35,30 @@ export default function ChatBox(props: Props) {
 	const messageInput = useRef<HTMLTextAreaElement>();
 	const chatList = useRef<HTMLDivElement>();
 
-	useSocketListener('newMatchChatMessage', addMessage, [messages]);
-
-	useEffect(() => {
-		setMessages(() => props.messages);
-		scrollToBottomOfList();
-	}, [props.messages]);
-
-	function handleMessageChange(e) {
+	const handleMessageChange = useCallback((e) => {
 		setMessage(e.target.value);
-	}
+	}, []);
 
-	function onFocus() {
+	const onFocus = useCallback(() => {
 		dispatch(setTimerDisabled(true));
 		setMessageFocused(true);
-	}
+	}, [dispatch]);
 
-	function onBlur() {
+	const onBlur = useCallback(() => {
 		dispatch(setTimerDisabled(false));
 		setMessageFocused(false);
-	}
+	}, [dispatch]);
 
-	function textBoxHeightChange(height: number) {
+	const scrollToBottomOfList = useCallback(() => {
+		chatList.current.scrollTop = chatList.current.scrollHeight;
+	}, []);
+
+	const textBoxHeightChange = useCallback((height: number) => {
 		setTextBoxHeight(height);
 		setTimeout(scrollToBottomOfList);
-	}
+	}, [scrollToBottomOfList])
 
-	function scrollToBottomOfList() {
-		chatList.current.scrollTop = chatList.current.scrollHeight;
-	}
-
-	function handleMessageKeyPress(e) {
+	const handleMessageKeyPress = useCallback((e) => {
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault();
 
@@ -86,9 +79,9 @@ export default function ChatBox(props: Props) {
 				message: cleanMessage,
 			});
 		}
-	}
+	}, [message, match.id, match.match_session_id])
 
-	function aggMessages() {
+	const aggMessages = useCallback(() => {
 		const output = [];
 		let temp = [];
 
@@ -114,9 +107,9 @@ export default function ChatBox(props: Props) {
 		}
 
 		return output;
-	}
+	}, [messages])
 
-	function addMessage(chat: MatchUpdateChat) {
+	const addMessage = useCallback((chat: MatchUpdateChat) => {
 		const messagesCopy = [...messages];
 
 		for (const msg of messages) {
@@ -129,7 +122,14 @@ export default function ChatBox(props: Props) {
 		messagesCopy.push(chat);
 		setMessages(messagesCopy);
 		setTimeout(scrollToBottomOfList);
-	}
+	}, [messages, scrollToBottomOfList]);
+
+	useSocketListener('newMatchChatMessage', addMessage, [messages]);
+
+	useEffect(() => {
+		setMessages(() => props.messages);
+		scrollToBottomOfList();
+	}, [props.messages, scrollToBottomOfList]);
 
 	const chatMessages = [...aggMessages()].map((m) => <ChatMessage user={m.user} messages={m.messages} key={m.id} />);
 

@@ -18,7 +18,7 @@ export async function getAllAirtableResults<T>(table: string): Promise<T[]> {
 			const response = await getAirtableResults(table, offset);
 			results = results.concat(response.records.map((r) => r.fields));
 			offset = response.offset;
-		} catch (e) {
+		} catch (e: unknown) {
 			logger.error('Could not fetch data from Airtable', {
 				error: e,
 				table,

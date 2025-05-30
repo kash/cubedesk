@@ -1,6 +1,11 @@
 import React, {ReactNode, useContext} from 'react';
+import {
+	isTwo,
+	processSmartTurns,
+	rawTurnIsSame,
+	reverseScramble,
+} from '../../../../../lib/util/smart_scramble';
 import block from '../../../../../styles/bem';
-import {isTwo, processSmartTurns, rawTurnIsSame, reverseScramble} from '../../../../../lib/util/smart_scramble';
 import {TimerContext} from '../../../Timer';
 
 const b = block('timer-scramble');
@@ -21,9 +26,19 @@ export default function SmartScramble() {
 		let green = false;
 		let orange = false;
 		let red = false;
-		if (!failedMoves.length && smartScramble.length > i && smartTurn === turn && !orangeMiddle) {
+		if (
+			!failedMoves.length &&
+			smartScramble.length > i &&
+			smartTurn === turn &&
+			!orangeMiddle
+		) {
 			green = true;
-		} else if (smartScramble.length > i && rawTurnIsSame(smartTurn, turn) && isTwo(turn) && !orangeMiddle) {
+		} else if (
+			smartScramble.length > i &&
+			rawTurnIsSame(smartTurn, turn) &&
+			isTwo(turn) &&
+			!orangeMiddle
+		) {
 			orange = true;
 			orangeMiddle = true;
 		} else if (smartScramble.length > i) {

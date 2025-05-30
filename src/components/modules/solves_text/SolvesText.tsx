@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import './SolvesText.scss';
 import block from '../../../styles/bem';
-import {Download} from 'phosphor-react';
-import Button, {CommonType} from '../../common/button/Button';
+import {Download} from '@phosphor-icons/react/dist/ssr';
+import {Button} from '@/components/ui/button';
 import CopyText from '../../common/copy_text/CopyText';
 import dayjs from 'dayjs';
 import {getTimeString} from '../../../lib/util/time';
 import Checkbox from '../../common/checkbox/Checkbox';
 import fileDownload from 'js-file-download';
 import {getCubeTypeName} from '../../../lib/util/cubes/util';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 
 const b = block('solves-text');
 

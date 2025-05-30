@@ -1,10 +1,9 @@
-import {useLocation} from 'react-router-dom';
+import {useSearchParams} from 'next/navigation';
 
 export function useUrlParam(param: string): string {
-	const location = useLocation();
-	const params = new URLSearchParams(location.search);
+	const searchParams = useSearchParams();
 
-	return params.get(param);
+	return searchParams.get(param);
 }
 
 export function useUrlParamNumber(param: string): number {
@@ -16,7 +15,7 @@ export function useUrlParamNumber(param: string): number {
 
 	try {
 		return parseInt(val, 10);
-	} catch (e) {
+	} catch (e: unknown) {
 		return null;
 	}
 }

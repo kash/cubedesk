@@ -1,56 +1,50 @@
-import React, {useMemo} from 'react';
-import {openModal} from '@/lib/actions/general';
-import ConfirmModal from '@/components/common/confirm_modal/ConfirmModal';
-import {toastSuccess} from '@/lib/util/toast';
-import {Solve} from '@/server/schemas/Solve.schema';
-import {useDispatch} from 'react-redux';
-import Button from '@/components/common/button/Button';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {initAllSolves} from '@/components/layout/init';
+import {Button} from '@/components/ui/button';
+import {Solve} from '@/generated/zod';
+import {toastSuccess} from '@/lib/util/toast';
 import {api} from '@/trpc/react';
+import React, {useCallback, useMemo} from 'react';
 
 interface Props {
-  disabled?: boolean;
-  solves: Solve[];
+	disabled?: boolean;
+	solves: Solve[];
 }
 
 export default function BulkPlusTwoSolvesButton(props: Props) {
-  const {solves, disabled} = props;
-  const dispatch = useDispatch();
-  
-  const plusTwoMutation = api.bulkActions.plusTwoSolves.useMutation({
-    onSuccess: async (updateCount) => {
-      await initAllSolves(true);
-      const solvesPlusTwo = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
-      toastSuccess(`Successfully +2'd ${solvesPlusTwo}.`);
-    }
-  });
+	const {solves, disabled} = props;
 
-  const solveIds = useMemo(() => {
-    return solves.map((solve) => solve.id);
-  }, [solves, solves?.length]);
+	const plusTwoMutation = api.bulkActions.plusTwoSolves.useMutation({
+		onSuccess: async (updateCount) => {
+			await initAllSolves(true);
+			const solvesPlusTwo = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
+			toastSuccess(`Successfully +2'd ${solvesPlusTwo}.`);
+		},
+	});
 
-  function onClick() {
-    const solvesToPlusTwo = `${solves.length.toLocaleString()} solve${solves.length === 1 ? '' : 's'}`;
+	const solveIds = useMemo(() => {
+		return solves.map((solve) => solve.id);
+	}, [solves]);
 
-    dispatch(
-      openModal(
-        <ConfirmModal
-          proOnly
-          buttonText={`+2 ${solvesToPlusTwo}`}
-          title="Bulk +2 solves"
-          description="You are about to +2 the selected solves. This is irreversible. Be careful."
-          infoBoxes={[{label: 'Solves', value: solves.length.toLocaleString()}]}
-          triggerAction={run}
-        />
-      )
-    );
+	const solvesToPlusTwo = `${solves.length.toLocaleString()} solve${solves.length === 1 ? '' : 's'}`;
 
-    async function run() {
-      await plusTwoMutation.mutateAsync({
-        solveIds,
-      });
-    }
-  }
+	const run = useCallback(async () => {
+		await plusTwoMutation.mutateAsync({
+			solveIds,
+		});
+	}, [plusTwoMutation, solveIds]);
 
-  return <Button disabled={disabled || plusTwoMutation.isPending} text="Mark +2" gray onClick={onClick} />;
+	return (
+		<ConfirmDialog
+			title="Bulk +2 solves"
+			description="You are about to +2 the selected solves. This is irreversible. Be careful."
+			buttonText={`+2 ${solvesToPlusTwo}`}
+			infoBoxes={[{label: 'Solves', value: solves.length.toLocaleString()}]}
+			triggerAction={run}
+		>
+			<Button disabled={disabled || plusTwoMutation.isPending} variant="secondary">
+				Mark +2
+			</Button>
+		</ConfirmDialog>
+	);
 }

@@ -1,5 +1,5 @@
+import {Button} from '@/components/ui/button';
 import React, {useEffect, useState} from 'react';
-import Button from '../../common/button/Button';
 
 export default function MicAccess() {
 	const [status, setStatus] = useState(null);
@@ -48,5 +48,14 @@ export default function MicAccess() {
 		disabled = false;
 	}
 
-	return <Button onClick={clickAllow} primary text="Give Mic Access" disabled={disabled} info={info} error={error} />;
+	return (
+		<Button
+			onClick={clickAllow}
+			primary
+			text="Give Mic Access"
+			disabled={disabled}
+			info={info}
+			error={error}
+		/>
+	);
 }

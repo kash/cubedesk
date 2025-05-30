@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import './FeatureGrid.scss';
 import block from '../../../../styles/bem';
 
@@ -8,7 +8,7 @@ interface GridItem {
 	title: string;
 	description: string;
 	iconColor?: string;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	imgSrc: string;
 	imgAlt: string;
 }

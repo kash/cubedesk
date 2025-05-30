@@ -1,7 +1,7 @@
 import React from 'react';
 import './TopNav.scss';
 import block from '../../../styles/bem';
-import Button from '../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import {useTheme} from '../../../lib/util/hooks/useTheme';
 import {resourceUri} from '../../../lib/util/storage';
 

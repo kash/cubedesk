@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import Button, {ButtonProps, CommonType} from '../button/Button';
+import {useWindowListener} from '../../../lib/util/hooks/useListener';
+import Button, {ButtonProps} from '../button/Button';
+import { Input } from '@/components/ui/input';
+import InputWrapper from '@/components/common/InputWrapper';
 import {IModalProps} from '../modal/Modal';
 import ModalHeader from '../modal/modal_header/ModalHeader';
-import Input from '../inputs/input/Input';
-import {useWindowListener} from '../../../lib/util/hooks/useListener';
 import ProOnly from '../pro_only/ProOnly';
 
 interface ConfirmModalInfoBox {
@@ -23,8 +24,17 @@ export interface ConfirmModalProps extends IModalProps {
 }
 
 export default function ConfirmModal(props: ConfirmModalProps) {
-	const {buttonProps, infoBoxes, proOnly, title, description, triggerAction, buttonText, hideInput, onComplete} =
-		props;
+	const {
+		buttonProps,
+		infoBoxes,
+		proOnly,
+		title,
+		description,
+		triggerAction,
+		buttonText,
+		hideInput,
+		onComplete,
+	} = props;
 
 	const [confirm, setConfirm] = useState('');
 	const [error, setError] = useState('');
@@ -61,7 +71,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
 		let res;
 		try {
 			res = await triggerAction();
-		} catch (e) {
+		} catch (e: unknown) {
 			setError(e.message);
 			setLoading(false);
 			return;
@@ -73,13 +83,14 @@ export default function ConfirmModal(props: ConfirmModalProps) {
 	}
 
 	let input = (
-		<Input
-			placeholder="confirm"
-			info={`Type "confirm" to proceed`}
-			onChange={handleChange}
-			name="confirm"
-			value={confirm}
-		/>
+		<InputWrapper info={`Type "confirm" to proceed`}>
+			<Input
+				placeholder="confirm"
+				onChange={handleChange}
+				name="confirm"
+				value={confirm}
+			/>
+		</InputWrapper>
 	);
 
 	let disabled = confirm.toLowerCase() !== 'confirm';
@@ -91,10 +102,10 @@ export default function ConfirmModal(props: ConfirmModalProps) {
 	let infoBoxContainer = null;
 	if (infoBoxes && infoBoxes.length) {
 		infoBoxContainer = (
-			<div className="grid grid-cols-3 gap-2 mb-8 divide-y-2 divide-button divide-solid">
+			<div className="divide-button mb-8 grid grid-cols-3 gap-2 divide-y-2 divide-solid">
 				{infoBoxes.map((box) => (
 					<div className="bg-error/90 flex flex-col self-center rounded-lg p-4">
-						<span className="text-2xl font-bold text-text">{box.value}</span>
+						<span className="text-text text-2xl font-bold">{box.value}</span>
 						<span className="text-md text-text/70">{box.label}</span>
 					</div>
 				))}

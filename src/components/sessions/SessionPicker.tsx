@@ -1,11 +1,11 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {CaretDown} from 'phosphor-react';
-import {setCubeType, setCurrentSession} from '../../lib/db/settings/update';
+import {CaretDown} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {fetchSessionById, fetchSessions} from '../../lib/db/sessions/query';
+import {setCubeType, setCurrentSession} from '../../lib/db/settings/update';
 import {fetchLastCubeTypeForSession} from '../../lib/db/solves/query';
 import {useSettings} from '../../lib/util/hooks/useSettings';
+import {Session} from '@/generated/zod';
 import Dropdown from '../common/inputs/dropdown/Dropdown';
-import {Session} from '../../server/schemas/Session.schema';
 
 interface Props {
 	stateless?: boolean;
@@ -34,9 +34,9 @@ export default function SessionPicker(props: Props) {
 			disabled: selectedSession?.id === ses.id,
 			onClick: () => switchSession(ses),
 		}));
-	}, [selectedSession]);
+	}, [selectedSession, switchSession]);
 
-	function switchSession(session: Session) {
+	const switchSession = useCallback((session: Session) => {
 		setSelectedSession(session);
 		if (onChange) {
 			onChange(session);
@@ -50,7 +50,7 @@ export default function SessionPicker(props: Props) {
 
 		const lastCubeType = fetchLastCubeTypeForSession(session.id);
 		setCubeType(lastCubeType || '333');
-	}
+	}, [onChange, stateless]);
 
 	let sessionName = 'Select Session';
 	if (selectedSession && !hideSessionName) {

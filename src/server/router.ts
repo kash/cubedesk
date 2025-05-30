@@ -28,9 +28,17 @@ import { unsubEmailsRouter } from './routers/unsub-emails';
 import { userAccountRouter } from './routers/user-account';
 import { userSearchRouter } from './routers/user-search';
 import { authRouter } from './routers/auth';
+import { profileRouter } from './routers/profile';
+import { notificationRouter } from './routers/notification';
+import { smartDeviceRouter } from './routers/smart-device';
+import { wcaRouter } from './routers/wca';
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
+  profile: profileRouter,
+  notification: notificationRouter,
+  smartDevice: smartDeviceRouter,
+  wca: wcaRouter,
   adView: adViewRouter,
   customTrainer: customTrainerRouter,
   customTrainerLike: customTrainerLikeRouter,

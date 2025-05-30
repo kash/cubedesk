@@ -1,11 +1,11 @@
+import {Button} from '@/components/ui/button';
+import {Solve} from '@/generated/zod';
+import {Session} from '@/generated/zod';
 import React, {useState} from 'react';
-import Button from '../../../common/button/Button';
-import SessionPicker from '../../../sessions/SessionPicker';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {getBasicPlural} from '../../../../lib/util/strings/plural';
 import {IModalProps} from '../../../common/modal/Modal';
 import ModalHeader from '../../../common/modal/modal_header/ModalHeader';
-import {getBasicPlural} from '../../../../lib/util/strings/plural';
-import {Session} from '../../../../server/schemas/Session.schema';
+import SessionPicker from '../../../sessions/SessionPicker';
 
 interface Props extends IModalProps {
 	solves: Solve[];
@@ -13,12 +13,12 @@ interface Props extends IModalProps {
 
 export default function SessionSelector(props: Props) {
 	const {solves, onComplete} = props;
-	const [session, setSession] = useState<Session>(null);
+	const [session, setSession] = useState<Session | null>(null);
 
 	let selectedSession = null;
 	if (session) {
 		selectedSession = (
-			<p className="mb-5 mt-4 text-2xl table text-text border-b-4 border-solid border-text/20">
+			<p className="text-text border-text/20 mt-4 mb-5 table border-b-4 border-solid text-2xl">
 				Move <span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
 				<span className="text-warning">{session.name}</span>
 			</p>
@@ -27,12 +27,17 @@ export default function SessionSelector(props: Props) {
 
 	return (
 		<div>
-			<ModalHeader title="Move solves" description="Select a session to move the selected solves to" />
+			<ModalHeader
+				title="Move solves"
+				description="Select a session to move the selected solves to"
+			/>
 			<div className="mb-6">
 				<SessionPicker stateless onChange={(ses) => setSession(ses)} />
 			</div>
 			{selectedSession}
-			<Button large onClick={() => onComplete(session)} disabled={!session} primary text="Continue" />
+			<Button onClick={() => onComplete(session)} disabled={!session}>
+				Continue
+			</Button>
 		</div>
 	);
 }

@@ -1,7 +1,7 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import QuickStatsBlock from '../QuickStatsBlock';
 import {getQuickStatsGridSizes, saveStatsModuleBlocks, STATS_GRID_SIZE} from '../util';
-import Button from '../../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import CustomizeStatsEditor from './CustomizeStatsEditor';
 import HorizontalLine from '../../../common/horizontal_line/HorizontalLine';
 import {StatsModuleBlock} from '../../../../lib/types/stats';
@@ -34,7 +34,13 @@ export default function CustomizeStats(props: Props) {
 
 	const blocks = [];
 
-	function addBlockToGrid() {
+	const saveStatsBlockChanges = useCallback(() => {
+		saveStatsModuleBlocks().catch((e) => {
+			toastError(e.message);
+		});
+	}, []);
+
+	const addBlockToGrid = useCallback(() => {
 		if (!canAddBlocks) {
 			return;
 		}
@@ -44,9 +50,9 @@ export default function CustomizeStats(props: Props) {
 		dispatch(addStatsModuleBlock(newBlock));
 		saveStatsBlockChanges();
 		setSelectedIndex(setNewIndex);
-	}
+	}, [canAddBlocks, blockCount, dispatch, saveStatsBlockChanges])
 
-	function removeStatsBlock(index: number) {
+	const removeStatsBlock = useCallback((index: number) => {
 		if (blockCount <= 1) {
 			return;
 		}
@@ -55,18 +61,12 @@ export default function CustomizeStats(props: Props) {
 		setSelectedIndex(newIndex);
 		dispatch(removeStatsModuleBlock(index));
 		saveStatsBlockChanges();
-	}
+	}, [blockCount, selectedIndex, dispatch, saveStatsBlockChanges])
 
-	function saveStatsBlockChanges() {
-		saveStatsModuleBlocks().catch((e) => {
-			toastError(e.message);
-		});
-	}
-
-	function selectStatsBlock(e, index: number) {
+	const selectStatsBlock = useCallback((e, index: number) => {
 		e.preventDefault();
 		setSelectedIndex(index);
-	}
+	}, [])
 
 	for (let i = 0; i < blockCount; i++) {
 		const colSpan = blockSizes[i][0];

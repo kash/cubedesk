@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react';
-import PageTitle from '../common/page_title/PageTitle';
+import React, {ReactElement, ReactNode} from 'react';
+import PageTitle from '@/components/common/page-title/PageTitle';
 
 interface Props {
-	children: ReactElement;
+	children: ReactNode;
 }
 
 export default function PlayWrapper(props: Props) {

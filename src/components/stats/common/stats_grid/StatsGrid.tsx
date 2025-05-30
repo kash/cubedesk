@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import './StatsGrid.scss';
-import block from '../../../../styles/bem';
 import CSS from 'csstype';
+import './StatsGrid.scss';
+import React, {ReactNode} from 'react';
+import block from '../../../../styles/bem';
 import ProOnly from '../../../common/pro_only/ProOnly';
 
 const b = block('stats-grid');

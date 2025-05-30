@@ -1,7 +1,7 @@
 import React from 'react';
 import './ManageSmartCubes.scss';
-import Empty from '../../../common/empty/Empty';
 import block from '../../../../styles/bem';
+import Empty from '../../../common/empty/Empty';
 
 const b = block('manage-smart-cubes');
 

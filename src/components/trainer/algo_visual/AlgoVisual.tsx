@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
-import './AlgoVisual.scss';
-import {useSettings} from '../../../lib/util/hooks/useSettings';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
-import block from '../../../styles/bem';
 import CSS from 'csstype';
+import './AlgoVisual.scss';
+import React, {useMemo} from 'react';
+import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
+import {useSettings} from '../../../lib/util/hooks/useSettings';
+import block from '../../../styles/bem';
 
 const b = block('cube-image');
 
@@ -60,7 +60,7 @@ export default function AlgoVisual(props: Props) {
 						style={{
 							backgroundColor,
 						}}
-					/>
+					/>,
 				);
 
 				index++;
@@ -92,7 +92,12 @@ export default function AlgoVisual(props: Props) {
 					const off = sub;
 
 					const backgroundColor = cubeColors[off] || '#3F464F';
-					cubelets.push(<span key={`cubeNumber-${off}${backgroundColor}`} style={{backgroundColor}} />);
+					cubelets.push(
+						<span
+							key={`cubeNumber-${off}${backgroundColor}`}
+							style={{backgroundColor}}
+						/>,
+					);
 
 					sub += 1;
 				}
@@ -108,7 +113,7 @@ export default function AlgoVisual(props: Props) {
 					}}
 				>
 					{cubelets}
-				</div>
+				</div>,
 			);
 		}
 

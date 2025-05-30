@@ -1,12 +1,14 @@
 'use client';
 
-import React, {useEffect} from 'react';
-import {logOut} from '../../lib/util/auth/logout';
+import {useEffect} from 'react';
+import {api} from '@/trpc/react';
 
 export default function ForceSignOut() {
-  useEffect(() => {
-    logOut();
-  }, []);
+	const logOut = api.auth.logout.useMutation();
 
-  return null;
+	useEffect(() => {
+		logOut.mutate();
+	}, []);
+
+	return null;
 }

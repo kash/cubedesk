@@ -58,7 +58,7 @@ export async function getAuthedProps<T>(
 		if (user) {
 			return user;
 		}
-	} catch (e) {
+	} catch (e: unknown) {
 		console.error(e);
 	}
 

@@ -9,7 +9,7 @@ import {openModal} from '../../actions/general';
 import ConfirmModal from '../../../components/common/confirm_modal/ConfirmModal';
 import {checkForPB} from './stats/solves/pb';
 import {getSetting} from '../settings/query';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 import {checkForWorst} from './stats/solves/worst';
 import {sanitizeSolve} from '../../../shared/solve';
 import {checkForCurrentAverageUpdate} from './stats/solves/cache/average_cache';
@@ -62,7 +62,7 @@ export async function createSolveDb(solveInput: Solve) {
 			if (!response.ok) {
 				throw new Error('Failed to create solve');
 			}
-		} catch (e) {
+		} catch (e: unknown) {
 			toastError('Could not save solve. Please check your connection.');
 		}
 	} else {
@@ -96,7 +96,7 @@ async function createDemoSolve(solve: Solve) {
 		if (!response.ok) {
 			throw new Error('Failed to create demo solve');
 		}
-	} catch (e) {
+	} catch (e: unknown) {
 		toastError('Could not save solve. Please check your connection.');
 	}
 }
@@ -130,7 +130,7 @@ export async function deleteSolveDb(solve: Solve, confirmed: boolean = false) {
 			await api.solve.deleteSolve.mutate({
 				id: solve.id,
 			});
-		} catch (e) {
+		} catch (e: unknown) {
 			toastError('Could not delete solve. Please check your connection.');
 		}
 	}
@@ -158,7 +158,7 @@ export async function updateSolveDb(solve: Solve, input: Partial<Solve> = {}, up
 					time: solve.time,
 				},
 			});
-		} catch (e) {
+		} catch (e: unknown) {
 			toastError('Could not update solve. Please check your connection.');
 		}
 	}

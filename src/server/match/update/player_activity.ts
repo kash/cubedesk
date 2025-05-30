@@ -44,7 +44,7 @@ export class PlayerActivity {
 				} else if (maxSolveTimeRes?.warning || maxInactiveRes?.warning) {
 					await matchCacher.setForfeitWarningSent(player.userId, true);
 				}
-			} catch (e) {
+			} catch (e: unknown) {
 				console.error(e);
 			}
 		}

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import './Challenger.scss';
-import {Placeholder, WifiSlash, Check, Clock, X, Trophy} from 'phosphor-react';
+import {Placeholder, WifiSlash, Check, Clock, X, Trophy} from '@phosphor-icons/react/dist/ssr';
 import {addEventListener} from '../../../../../lib/util/event_handler';
 import {getTimeString} from '../../../../../lib/util/time';
 import Avatar from '../../../../common/avatar/Avatar';
@@ -10,8 +10,8 @@ import {MatchClientEvent} from '../../../../../lib/shared/match/events';
 import block from '../../../../../styles/bem';
 import {MatchStanding, PlayerStatus} from '../../../../../lib/shared/match/types';
 import {MatchContext} from '../../../match/Match';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
-import {PublicUserAccount} from '../../../../../server/schemas/UserAccount.schema';
+import {Solve} from '@/generated/zod';
+import {PublicUserAccount} from '@/types/user-account';
 import {useMe} from '../../../../../lib/util/hooks/useMe';
 
 const b = block('challenger');

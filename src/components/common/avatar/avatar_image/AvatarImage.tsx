@@ -1,11 +1,12 @@
 import React from 'react';
 import './AvatarImage.scss';
-import {getStorageURL, resourceUri} from '../../../../lib/util/storage';
-import block from '../../../../styles/bem';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../../server/schemas/UserAccount.schema';
-import ProBadge from '../pro_badge/ProBadge';
-import {Profile} from '../../../../server/schemas/Profile.schema';
 import {isNotPro, isPro} from '../../../../lib/util/pro';
+import {getStorageURL, resourceUri} from '../../../../lib/util/storage';
+import {Profile} from '@/generated/zod';
+import {PublicUserAccount, UserAccount} from '@/types/user-account';
+import {UserAccountForAdmin} from '@/types/admin';
+import block from '../../../../styles/bem';
+import ProBadge from '../pro_badge/ProBadge';
 
 const b = block('avatar-image');
 
@@ -82,7 +83,7 @@ export default function AvatarImage(props: Props) {
 				{proBadge}
 				<div className={b('body', {large, small, tiny})}>
 					<img
-						src={image || getStorageURL(profile?.pfp_image?.storage_path)}
+						src={image || getStorageURL(profile?.pfp_image?.storage_path || '')}
 						alt={`Profile picture of ${user?.username || 'user'}`}
 					/>
 				</div>
@@ -100,7 +101,10 @@ export default function AvatarImage(props: Props) {
 					className={b('body', {default: true, large, pro: isPro(user), small, tiny})}
 					style={{backgroundColor}}
 				>
-					<img alt="Default avatar" src={resourceUri('/images/community/default_avatar.png')} />
+					<img
+						alt="Default avatar"
+						src={resourceUri('/images/community/default_avatar.png')}
+					/>
 				</div>
 			</div>
 		);

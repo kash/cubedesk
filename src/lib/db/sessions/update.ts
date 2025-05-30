@@ -1,31 +1,21 @@
-import {gqlMutateTyped} from '../../../components/api';
-import {getSessionDb} from './init';
-import {emitEvent} from '../../util/event_handler';
+import {Session} from '@/generated/zod';
+import {emitEvent} from '@/lib/util/event_handler';
+import {updateOfflineHash} from '@/lib/util/offline';
+import {api, apiUtils} from '@/trpc/react';
 import {getSolveDb} from '../solves/init';
 import {clearSolveStatCache} from '../solves/stats/solves/caching';
-import {Session} from '../../../server/schemas/Session.schema';
-import {
-	CreateSessionDocument,
-	DeleteSessionDocument,
-	MergeSessionsDocument,
-	ReorderSessionsDocument,
-	UpdateSessionDocument,
-} from '../../../../client/@types/generated/graphql';
+import {getSessionDb} from './init';
 import {fetchSessionById, fetchSessions} from './query';
-import { updateOfflineHash } from "@/lib/util/offline";
 
 export async function createSessionDb(sessionInput: Partial<Session>) {
 	const sessionDb = getSessionDb();
 	let session = sessionInput as Session;
 
 	if (!sessionInput.demo_mode) {
-		const res = await gqlMutateTyped(CreateSessionDocument, {
-			input: {
-				name: session.name,
-			},
+		session = await api.session.createSession.mutate({
+			name: session.name,
+			order: 0,
 		});
-
-		session = res.data.createSession;
 	}
 
 	sessionDb.insert({
@@ -51,7 +41,7 @@ export async function deleteSessionDb(session: Session) {
 	postProcessDbUpdate(session);
 	updateLocalDbOrderValueForAllSessions();
 
-	await gqlMutateTyped(DeleteSessionDocument, {
+	await api.session.deleteSession.mutate({
 		id: session.id,
 	});
 }
@@ -59,7 +49,7 @@ export async function deleteSessionDb(session: Session) {
 export async function reorderSessions(sessionIds: string[]) {
 	updateLocalDbOrderValuesForSessionIds(sessionIds);
 
-	await gqlMutateTyped(ReorderSessionsDocument, {
+	await api.session.reorderSessions.mutate({
 		ids: sessionIds,
 	});
 }
@@ -94,7 +84,7 @@ export async function updateSessionDb(session: Session, input: Partial<Session>)
 	});
 	postProcessDbUpdate(session, false);
 
-	await gqlMutateTyped(UpdateSessionDocument, {
+	await apiUtils.session.updateSession({
 		id: session.id,
 		input: {
 			...input,
@@ -113,21 +103,25 @@ export async function mergeSessionsDb(oldSessionId: string, newSessionId: string
 		},
 		(solve) => {
 			solve.session_id = newSessionId;
-		}
+		},
 	);
 
 	// Next, delete the old session from the local DB
 	const oldSession = fetchSessionById(oldSessionId);
 	const newSession = fetchSessionById(newSessionId);
 
-	sessionsDb.remove(oldSession);
+	if (oldSession) {
+		sessionsDb.remove(oldSession);
+		postProcessDbUpdate(oldSession, true);
+	}
 
-	// Finally, update the database
-	postProcessDbUpdate(oldSession, true);
-	postProcessDbUpdate(newSession, true);
+	if (newSession) {
+		postProcessDbUpdate(newSession, true);
+	}
+
 	updateLocalDbOrderValueForAllSessions();
 
-	await gqlMutateTyped(MergeSessionsDocument, {
+	await api.session.mergeSessions.mutate({
 		oldSessionId,
 		newSessionId,
 	});

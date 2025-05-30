@@ -1,7 +1,7 @@
 'use client';
 
-import SolvePage from '../../../components/solve_page/SolvePage';
+import SolvePage from '../../../components/solve-page/SolvePage';
 
 export default function SolveDetailPage() {
-  return <SolvePage />;
+	return <SolvePage />;
 }

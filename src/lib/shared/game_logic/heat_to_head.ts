@@ -2,9 +2,9 @@ import {PlayerStatus} from '../match/types';
 import {GameSolveRow, PlayerStatusInfo} from '../../../components/play/game/Game';
 import {getTimeString} from '../../util/time';
 import {MatchConst} from '../match/consts';
-import {Solve} from '../../../server/schemas/Solve.schema';
-import {MatchParticipant} from '../../../server/schemas/MatchParticipant.schema';
-import {Match} from '../../../server/schemas/Match.schema';
+import {Solve} from '@/generated/zod';
+import {MatchParticipant} from '@/generated/zod';
+import {Match} from '@/generated/zod';
 
 interface RoundStatus {
 	playerStatus: PlayerStatus;

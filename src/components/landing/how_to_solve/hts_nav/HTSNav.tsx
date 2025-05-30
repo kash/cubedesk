@@ -1,6 +1,6 @@
 import React from 'react';
 import HTSNavItem, {HTSNavItemProps} from './HTSNavItem';
-import {useRouteMatch} from 'react-router-dom';
+import {useParams} from 'next/navigation';
 
 const HTS_NAV_ITEMS: HTSNavItemProps[] = [
 	{id: 'notation', stepNumber: 1, stepName: 'Notation'},
@@ -10,12 +10,12 @@ const HTS_NAV_ITEMS: HTSNavItemProps[] = [
 ];
 
 export default function HTSNav() {
-	const match = useRouteMatch();
+	const params = useParams();
 
 	const navItems = [];
 
 	for (const item of HTS_NAV_ITEMS) {
-		const selected = (match.params as any).stepId === item.id;
+		const selected = params.stepId === item.id;
 
 		navItems.push(<HTSNavItem key={item.stepName} selected={selected} {...item} />);
 	}

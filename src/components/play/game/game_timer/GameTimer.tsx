@@ -1,13 +1,13 @@
-import Modal from '../../../common/modal/Modal';
-import Timer from '../../../timer/Timer';
-import React, {ReactNode, useContext} from 'react';
-import onSolve from '../../helpers/on_solve';
+import Modal from '@/components/common/modal/Modal';
+import Timer from '@/components/timer/Timer';
+import React, {ReactNode, useContext, useCallback} from 'react';
+import onSolve from '@/components/play/helpers/on_solve';
 import {GameContext, getGameLink} from '../Game';
-import Match, {MatchContext} from '../../match/Match';
-import {TimerProps} from '../../../timer/@types/interfaces';
-import {PlayerStatus} from '../../../../lib/shared/match/types';
-import {Match as MatchSchema} from '../../../../../client/@types/generated/graphql';
-import {useMe} from '../../../../lib/util/hooks/useMe';
+import Match, {MatchContext} from '@/components/play/match/Match';
+import {TimerProps} from '@/components/timer/@types/interfaces';
+import {PlayerStatus} from '@/lib/shared/match/types';
+import {Match as MatchSchema} from '@/generated/zod';
+import {useMe} from '@/lib/util/hooks/useMe';
 
 export default function GameTimer() {
 	const context = useContext(GameContext);
@@ -36,9 +36,9 @@ export default function GameTimer() {
 		return null;
 	}
 
-	function updateSolves(solves) {
+	const updateSolves = useCallback((solves) => {
 		setSolves(solves);
-	}
+	}, [setSolves]);
 
 	const visual1Param = visual1;
 	const visual2Param = visual2;
@@ -46,9 +46,9 @@ export default function GameTimer() {
 
 	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match);
 
-	async function timerOnSolve(solve, match?: MatchSchema) {
+	const timerOnSolve = useCallback(async (solve, match?: MatchSchema) => {
 		return onSolve(solve, context, match);
-	}
+	}, [context]);
 
 	const disabled = playerStatus.status === PlayerStatus.Lost;
 

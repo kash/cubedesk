@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import './EloChange.scss';
 import block from '../../../../../styles/bem';
-import {EloLog} from '../../../../../server/schemas/EloLog.schema';
+import {EloLog} from '@/generated/zod';
 
 const b = block('elo-change');
 

@@ -1,4 +1,4 @@
-import React, {ReactNode, useContext, useEffect} from 'react';
+import React, {ReactNode, useContext, useEffect, useCallback} from 'react';
 import {setExistingMatchData} from './events/helpers';
 import {toastError} from '../../../lib/util/toast';
 import {listenForJoinEvents} from './events/join_match';
@@ -27,9 +27,9 @@ export default function Listeners(props: Props) {
 
 	useEffect(() => {
 		setScramble(getScramble());
-	}, [solveIndex, match]);
+	}, [solveIndex, match, getScramble, setScramble]);
 
-	function getScramble() {
+	const getScramble = useCallback(() => {
 		let seed = null;
 
 		if (match) {
@@ -38,7 +38,7 @@ export default function Listeners(props: Props) {
 
 		const ct = getCubeTypeInfoById(cubeType);
 		return getNewScramble(ct.scramble, seed);
-	}
+	}, [match, solveIndex, cubeType]);
 
 	handleOpenMatchLink();
 	relayOpponentEvents();

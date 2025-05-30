@@ -1,16 +1,16 @@
 import React, {useMemo} from 'react';
 import './HistoryModal.scss';
-import {AlignLeft} from 'phosphor-react';
+import {AlignLeft} from '@phosphor-icons/react/dist/ssr';
 import block from '../../../../styles/bem';
 import Emblem from '../../../common/emblem/Emblem';
 import History from '../History';
 import {getTimeString} from '../../../../lib/util/time';
 import SolvesText from '../../solves_text/SolvesText';
-import Button, {CommonType} from '../../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import {getCubeTypeInfoById} from '../../../../lib/util/cubes/util';
 import {useToggle} from '../../../../lib/util/hooks/useToggle';
 import Checkbox from '../../../common/checkbox/Checkbox';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 
 const b = block('history-modal');
 

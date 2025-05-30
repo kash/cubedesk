@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {FilterSolvesOptions} from '../../../lib/db/solves/query';
 import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 import {useSolveDb} from '../../../lib/util/hooks/useSolveDb';
-import Button from '../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import QuickStatsBlock from './QuickStatsBlock';
 import {getQuickStatsGridSizes} from './util';
 import {openModal} from '../../../lib/actions/general';

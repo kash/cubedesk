@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
-import Button from '../button/Button';
-import {SlideShowContext} from './SlideShow';
+import {Button} from '@/components/ui/button';
 import classNames from 'classnames';
+import React, {useContext} from 'react';
+import {SlideShowContext} from './SlideShow';
 
 export default function SlideShowButtons() {
 	const {
@@ -31,8 +31,10 @@ export default function SlideShowButtons() {
 	let closeButton = null;
 	if (showCloseButton) {
 		closeButton = (
-			<div className="hover:opacity-100 transition-opacity opacity-60">
-				<Button large transparent onClick={onComplete} text="Close" />
+			<div className="opacity-60 transition-opacity hover:opacity-100">
+				<Button size="lg" variant="ghost" onClick={onComplete}>
+					Close
+				</Button>
 			</div>
 		);
 	}
@@ -47,7 +49,7 @@ export default function SlideShowButtons() {
 	}
 
 	return (
-		<div className="w-full flex flex-row justify-between items-center">
+		<div className="flex w-full flex-row items-center justify-between">
 			<div>{closeButton}</div>
 			<div className="flex flex-row items-center">
 				<div
@@ -55,9 +57,18 @@ export default function SlideShowButtons() {
 						'opacity-0': firstSlide,
 					})}
 				>
-					<Button large transparent onClick={prevSlide} disabled={currentSlideIndex <= 0} text="Prev" />
+					<Button
+						size="lg"
+						variant="ghost"
+						onClick={prevSlide}
+						disabled={currentSlideIndex <= 0}
+					>
+						Prev
+					</Button>
 				</div>
-				<Button primary large onClick={nextSlide} text={nextButtonText} />
+				<Button variant="default" size="lg" onClick={nextSlide}>
+					{nextButtonText}
+				</Button>
 			</div>
 		</div>
 	);

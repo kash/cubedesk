@@ -1,20 +1,9 @@
 import Stripe from 'stripe';
-import {InternalUserAccount} from '../schemas/UserAccount.schema';
 import {updateUserAccountWithParams} from '../models/user_account';
+import {InternalUserAccount} from '@/types/user-account';
 import {logger} from './logger';
 
 // Need these in uppercase because TypeGraphQL automatically converts them to uppercase
-export enum SubscriptionStatus {
-	NONE = 'NONE',
-	ACTIVE = 'ACTIVE',
-	CANCELED = 'CANCELED',
-	INCOMPLETE = 'INCOMPLETE',
-	INCOMPLETE_EXPIRED = 'INCOMPLETE_EXPIRED',
-	PAST_DUE = 'PAST_DUE',
-	TRIALING = 'TRIALING',
-	UNPAID = 'UNPAID',
-	TRIAL_EXPIRED = 'TRIAL_EXPIRED',
-}
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 	apiVersion: '2020-08-27',
@@ -36,7 +25,9 @@ export async function getStripeCustomerByEmail(email: string) {
 	return customers.data[0];
 }
 
-export async function getStripeCustomerSubscriptions(customerId: string): Promise<Stripe.Subscription[]> {
+export async function getStripeCustomerSubscriptions(
+	customerId: string,
+): Promise<Stripe.Subscription[]> {
 	const subs = await stripe.subscriptions.list({
 		customer: customerId,
 		limit: 100,
@@ -67,7 +58,7 @@ export async function cancelAllStripeSubscriptions(user: InternalUserAccount) {
 		if (['active', 'past_due'].includes(sub.status) && !sub.cancel_at_period_end) {
 			try {
 				await cancelStripeSubscription(sub.id);
-			} catch (e) {
+			} catch (e: unknown) {
 				logger.error('Failed to delete subscription.', {
 					subscriptionId: sub.id,
 					userId: user.id,

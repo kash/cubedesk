@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import './StatSection.scss';
-import block from '../../../../styles/bem';
 import CSS from 'csstype';
+import './StatSection.scss';
+import React, {ReactNode} from 'react';
+import block from '../../../../styles/bem';
 import ProOnly from '../../../common/pro_only/ProOnly';
 
 const b = block('stat-section');

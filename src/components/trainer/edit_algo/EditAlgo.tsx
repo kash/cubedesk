@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
 import './EditAlgo.scss';
-import block from '../../../styles/bem';
-import {TrainerAlgorithmExtended} from '../../../lib/db/trainer/init';
-import {IModalProps} from '../../common/modal/Modal';
-import {AlgorithmOverride} from '../../../../client/@types/generated/graphql';
-import {useInput} from '../../../lib/util/hooks/useInput';
-import {deleteTrainerAlgoOverrides, updateTrainerAlgoOverrides} from '../../../lib/db/trainer/operations';
-import Button from '../../common/button/Button';
-import Radio from '../../common/inputs/radio/Radio';
-import TextArea from '../../common/inputs/textarea/TextArea';
-import ModalHeader from '../../common/modal/modal_header/ModalHeader';
-import Input from '../../common/inputs/input/Input';
+import {IModalProps} from '@/components/common/modal/Modal';
+import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
+import {AlgorithmOverride} from '@/generated/zod';
+import {TrainerAlgorithmExtended} from '@/lib/db/trainer/init';
+import {deleteTrainerAlgoOverrides, updateTrainerAlgoOverrides} from '@/lib/db/trainer/operations';
+import {useInput} from '@/lib/util/hooks/useInput';
+import {toastError, toastSuccess} from '@/lib/util/toast';
+import block from '@/styles/bem';
+import React, {useState} from 'react';
 import AlgoVisual from '../algo_visual/AlgoVisual';
-import {toastError, toastSuccess} from '../../../lib/util/toast';
 
 const b = block('edit-algo');
 
@@ -47,7 +46,7 @@ export default function EditAlgo(props: Props) {
 			await updateTrainerAlgoOverrides(algoExt, getOverrides());
 			toastSuccess('Updated trainer algorithm');
 			onComplete();
-		} catch (e) {
+		} catch (e: unknown) {
 			toastError(e);
 			setSaving(false);
 		}
@@ -63,7 +62,7 @@ export default function EditAlgo(props: Props) {
 			setRotate(String(algoExt.rotate || 0));
 			setSolution(algoExt.solution);
 			setScrambles(algoExt.scrambles);
-		} catch (e) {
+		} catch (e: unknown) {
 			toastError(e);
 		} finally {
 			setResetting(false);
@@ -77,11 +76,20 @@ export default function EditAlgo(props: Props) {
 				description="Below, you can override any of the default values for this trainer algorithm. Removing the value will reset it to its default value."
 			/>
 			<div className={b('header')}>
-				<AlgoVisual rotate={parseInt(rotate)} colors={algoExt.colors} cubeType={algoExt.cube_type} />
+				<AlgoVisual
+					rotate={parseInt(rotate)}
+					colors={algoExt.colors}
+					cubeType={algoExt.cube_type}
+				/>
 			</div>
 			<Input legend="Name" value={name} placeholder={algoExt.name} onChange={setName} />
-			<Input legend="Solution" value={solution} placeholder={algoExt.solution} onChange={setSolution} />
-			<TextArea
+			<Input
+				legend="Solution"
+				value={solution}
+				placeholder={algoExt.solution}
+				onChange={setSolution}
+			/>
+			<Textarea
 				optional
 				autoSize
 				legend="Scrambles"
@@ -102,15 +110,14 @@ export default function EditAlgo(props: Props) {
 				]}
 			/>
 			<div className={b('actions')}>
-				<Button text="Save" loading={saving} onClick={saveAlgo} />
-				<Button
-					hidden={!overrides}
-					text="Reset to Defaults"
-					flat
-					danger
-					loading={resetting}
-					onClick={resetToDefaults}
-				/>
+				<Button loading={saving} onClick={saveAlgo}>
+					Save
+				</Button>
+				{overrides && (
+					<Button variant="destructive" loading={resetting} onClick={resetToDefaults}>
+						Reset to Defaults
+					</Button>
+				)}
 			</div>
 		</div>
 	);

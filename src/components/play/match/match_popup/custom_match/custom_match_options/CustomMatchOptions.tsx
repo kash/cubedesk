@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import './CustomMatchOptions.scss';
 import block from '../../../../../../styles/bem';
-import {ArrowRight} from 'phosphor-react';
+import {ArrowRight} from '@phosphor-icons/react/dist/ssr';
 import HorizontalNav from '../../../../../common/horizontal_nav/HorizontalNav';
 import {MatchPopupContext, MatchPopupPage} from '../../MatchPopup';
 import CubePicker from '../../../../../common/cube_picker/CubePicker';
 import {CubeType} from '../../../../../../lib/util/cubes/cube_types';
-import Button from '../../../../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import ProOnly from '../../../../../common/pro_only/ProOnly';
 
 const b = block('custom-match-options');

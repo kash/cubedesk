@@ -1,7 +1,7 @@
 import React from 'react';
 import './HTSContent.scss';
 import HTSNotation from './HTSNotation';
-import {useRouteMatch} from 'react-router-dom';
+import {useParams} from 'next/navigation';
 import block from '../../../../styles/bem';
 
 const b = block('hts-content');
@@ -11,8 +11,8 @@ const CONTENT_COMPONENT_MAP = {
 };
 
 export default function HTSContent() {
-	const match = useRouteMatch();
-	const stepId = (match.params as any).stepId;
+	const params = useParams();
+	const stepId = params.stepId as string;
 
 	const ContentComponent = CONTENT_COMPONENT_MAP[stepId];
 

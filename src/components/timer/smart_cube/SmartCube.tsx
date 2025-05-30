@@ -1,23 +1,23 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import Emblem from '@/components/common/emblem/Emblem';
 import './SmartCube.scss';
-import Emblem from '../../common/emblem/Emblem';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {Button} from '@/components/ui/button';
+import {openModal} from '@/lib/actions/general';
+import {useSettings} from '@/lib/util/hooks/useSettings';
+import {toastError} from '@/lib/util/toast';
+import block from '@/styles/bem';
+import {Bluetooth, DotsThree} from '@phosphor-icons/react/dist/ssr';
+import Cube from 'cubejs';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import BluetoothErrorMessage from '../common/BluetoothErrorMessage';
+import {endTimer, startTimer} from '../helpers/events';
+import {setTimerParams} from '../helpers/params';
+import {TimerContext} from '../Timer';
 import Battery from './battery/Battery';
 import Connect from './bluetooth/connect';
-import {setTimerParams} from '../helpers/params';
-import {Bluetooth, DotsThree} from 'phosphor-react';
-import {preflightChecks} from './preflight';
-import {openModal} from '../../../lib/actions/general';
 import ManageSmartCubes from './manage_smart_cubes/ManageSmartCubes';
-import Cube from 'cubejs';
-import block from '../../../styles/bem';
-import {TimerContext} from '../Timer';
-import {useSettings} from '../../../lib/util/hooks/useSettings';
-import {useDispatch} from 'react-redux';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import Button from '../../common/button/Button';
-import {toastError} from '../../../lib/util/toast';
-import {endTimer, startTimer} from '../helpers/events';
-import BluetoothErrorMessage from '../common/BluetoothErrorMessage';
+import {preflightChecks} from './preflight';
 
 const b = block('smart-cube');
 
@@ -80,10 +80,9 @@ export default function SmartCube() {
 		}
 	}, [smartTurns, smartCubeConnecting, smartSolvedState]);
 
-	function initVisualCube() {
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const initVisualCube = useCallback(() => {
 		const RubiksCube = require('./visual').default;
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 		const {materials} = require('./visual');
 
 		if (turnInterval.current) {
@@ -96,19 +95,26 @@ export default function SmartCube() {
 			canvasRef.current.width = 200;
 			canvasRef.current.height = 200;
 
-			cube.current = new RubiksCube(canvasRef.current, materials.classic, 0, '400px', '400px', smartCurrentState);
+			cube.current = new RubiksCube(
+				canvasRef.current,
+				materials.classic,
+				0,
+				'400px',
+				'400px',
+				smartCurrentState,
+			);
 		}
 
 		setTimeout(() => {
 			initCubeTurner();
 		}, 500);
-	}
+	}, [smartCurrentState, initCubeTurner]);
 
-	function cubeIsSolved() {
+	const cubeIsSolved = useCallback(() => {
 		return cubejs.current.asString() === smartSolvedState;
-	}
+	}, [smartSolvedState]);
 
-	function checkForStartAfterTurn() {
+	const checkForStartAfterTurn = useCallback(() => {
 		if (useSpaceWithSmartCube) {
 			return;
 		}
@@ -131,37 +137,51 @@ export default function SmartCube() {
 			});
 			resetMoves();
 		}
-	}
+	}, [useSpaceWithSmartCube, scrambleCompletedAt, smartTurns, scramble, resetMoves]);
 
-	function addTurn(...t) {
-		checkForStartAfterTurn();
-		turns.current = [...turns.current, ...t];
-	}
+	const addTurn = useCallback(
+		(...t) => {
+			checkForStartAfterTurn();
+			turns.current = [...turns.current, ...t];
+		},
+		[checkForStartAfterTurn],
+	);
 
-	function resetMoves(markSolved: boolean = false) {
-		if (timeStartedAt) {
-			endTimer(context, null, {
-				inspection_time: inspectionTime,
-				smart_device_id: smartDeviceId,
-				is_smart_cube: true,
-				smart_turn_count: smartTurns.length,
-				smart_turns: JSON.stringify(smartTurns),
-			});
-		}
-
-		setTimerParams({
-			smartSolvedState: markSolved ? cubejs.current.asString() : smartSolvedState,
-			smartTurns: [],
-		});
-
-		setTimeout(() => {
-			if (markSolved) {
-				initVisualCube();
+	const resetMoves = useCallback(
+		(markSolved: boolean = false) => {
+			if (timeStartedAt) {
+				endTimer(context, null, {
+					inspection_time: inspectionTime,
+					smart_device_id: smartDeviceId,
+					is_smart_cube: true,
+					smart_turn_count: smartTurns.length,
+					smart_turns: JSON.stringify(smartTurns),
+				});
 			}
-		}, 50);
-	}
 
-	function initCubeTurner() {
+			setTimerParams({
+				smartSolvedState: markSolved ? cubejs.current.asString() : smartSolvedState,
+				smartTurns: [],
+			});
+
+			setTimeout(() => {
+				if (markSolved) {
+					initVisualCube();
+				}
+			}, 50);
+		},
+		[
+			timeStartedAt,
+			context,
+			inspectionTime,
+			smartDeviceId,
+			smartTurns,
+			smartSolvedState,
+			initVisualCube,
+		],
+	);
+
+	const initCubeTurner = useCallback(() => {
 		turnInterval.current = setInterval(() => {
 			if (document.hasFocus()) {
 				if (turns.current.length > turnIndex.current) {
@@ -172,9 +192,9 @@ export default function SmartCube() {
 				}
 			}
 		}, 60);
-	}
+	}, [execTurn]);
 
-	function execTurn() {
+	const execTurn = useCallback(() => {
 		let turn = turns.current[turnIndex.current];
 
 		const prime = !(turn.indexOf("'") > -1);
@@ -220,23 +240,24 @@ export default function SmartCube() {
 		}
 
 		turnIndex.current += 1;
-	}
+	}, []);
 
-	async function connectBluetooth() {
+	const connectBluetooth = useCallback(async () => {
 		try {
-			const bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
+			const bluetoothAvailable =
+				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				connect.current.connect();
 			} else {
 				dispatch(openModal(<BluetoothErrorMessage />));
 			}
-		} catch (e) {
+		} catch (e: unknown) {
 			toastError('Web Bluetooth API error' + (e ? `: ${e}` : ''));
 			// chrome://flags/#enable-experimental-web-platform-features
 		}
-	}
+	}, [dispatch]);
 
-	function disconnectBluetooth() {
+	const disconnectBluetooth = useCallback(() => {
 		connect.current.disconnect();
 		setTimerParams({
 			smartCanStart: false,
@@ -245,15 +266,15 @@ export default function SmartCube() {
 			smartTurns: [],
 			smartDeviceId: '',
 		});
-	}
+	}, []);
 
-	function toggleManageSmartCubes() {
+	const toggleManageSmartCubes = useCallback(() => {
 		dispatch(
 			openModal(<ManageSmartCubes />, {
 				title: 'Manage smart cubes',
-			})
+			}),
 		);
-	}
+	}, [dispatch]);
 
 	let actionButton = null;
 	const dropdown = (
@@ -275,7 +296,11 @@ export default function SmartCube() {
 					disabled: !!timeStartedAt,
 					onClick: disconnectBluetooth,
 				},
-				{text: 'Manage smart cubes', disabled: !!timeStartedAt, onClick: toggleManageSmartCubes},
+				{
+					text: 'Manage smart cubes',
+					disabled: !!timeStartedAt,
+					onClick: toggleManageSmartCubes,
+				},
 			]}
 		/>
 	);
@@ -284,13 +309,13 @@ export default function SmartCube() {
 	let emblem;
 	if (smartCubeConnecting) {
 		emblem = <Emblem small orange icon={<Bluetooth />} />;
-		actionButton = <Button text="Connecting..." disabled />;
+		actionButton = <Button disabled>Connecting...</Button>;
 		battery = null;
 	} else if (smartCubeConnected) {
 		emblem = <Emblem small green icon={<Bluetooth />} />;
 	} else {
 		emblem = <Emblem small red icon={<Bluetooth />} />;
-		actionButton = <Button text="Connect" onClick={connectBluetooth} />;
+		actionButton = <Button onClick={connectBluetooth}>Connect</Button>;
 		battery = null;
 	}
 

@@ -1,17 +1,17 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {getTimeString} from '../../../lib/util/time';
-import './TimeDisplay.scss';
-import Manual from './manual/Manual';
-import {preflightChecks} from '../smart_cube/preflight';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '../../../lib/db/settings/update';
+import './TimeDisplay.scss';
 import {useGeneral} from '../../../lib/util/hooks/useGeneral';
-import {smartCubeSelected} from '../helpers/util';
-import {TimerContext} from '../Timer';
-import block from '../../../styles/bem';
 import {useSettings} from '../../../lib/util/hooks/useSettings';
-import StartInstructions from './start_instructions/StartInstructions';
-import StackMat from './stackmat/StackMat';
+import {getTimeString} from '../../../lib/util/time';
+import block from '../../../styles/bem';
+import {smartCubeSelected} from '../helpers/util';
+import {preflightChecks} from '../smart_cube/preflight';
+import {TimerContext} from '../Timer';
 import GanTimer from './gantimer/GanTimer';
+import Manual from './manual/Manual';
+import StackMat from './stackmat/StackMat';
+import StartInstructions from './start_instructions/StartInstructions';
 
 const b = block('time-display');
 const bi = block('timer-bottom-info');
@@ -53,17 +53,7 @@ export default function TimeDisplay() {
 		timerTimeSize *= MOBILE_FONT_SIZE_MULTIPLIER;
 	}
 
-	useEffect(() => {
-		if (timerCounter.current && !solving && finalTime) {
-			stopInterval();
-		} else if (!timerCounter.current && timeStartedAt) {
-			startInterval();
-		} if (!solving && finalTime < 0) {
-			setTime(0);
-		}
-	}, [solving, finalTime, timeStartedAt]);
-
-	function stopInterval() {
+	const stopInterval = useCallback(() => {
 		timerLocked.current = true;
 
 		if (finalTime < 0) {
@@ -79,9 +69,9 @@ export default function TimeDisplay() {
 		if (zeroOutTimeAfterSolve) {
 			setTime(0);
 		}
-	}
+	}, [finalTime, zeroOutTimeAfterSolve]);
 
-	function startInterval() {
+	const startInterval = useCallback(() => {
 		if (timerCounter.current) {
 			return;
 		}
@@ -95,7 +85,18 @@ export default function TimeDisplay() {
 			const runningTime = (now.getTime() - timeStartedAt.getTime()) / 1000;
 			setTime(runningTime);
 		}, 10);
-	}
+	}, [solving, finalTime, timeStartedAt]);
+
+	useEffect(() => {
+		if (timerCounter.current && !solving && finalTime) {
+			stopInterval();
+		} else if (!timerCounter.current && timeStartedAt) {
+			startInterval();
+		}
+		if (!solving && finalTime < 0) {
+			setTime(0);
+		}
+	}, [solving, finalTime, timeStartedAt, stopInterval, startInterval])
 
 	if (manualEntry && timerType !== 'smart') {
 		return <Manual />;
@@ -148,7 +149,10 @@ export default function TimeDisplay() {
 	let body = (
 		<>
 			<h1
-				style={{fontSize: timerTimeSize + 'px', fontFamily: timerFontFamily + ', monospace'}}
+				style={{
+					fontSize: timerTimeSize + 'px',
+					fontFamily: timerFontFamily + ', monospace',
+				}}
 				className={b({
 					gray: inInspection,
 					green: canStart,

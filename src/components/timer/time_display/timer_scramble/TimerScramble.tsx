@@ -1,19 +1,19 @@
-import React, {ReactNode, useContext, useEffect, useRef} from 'react';
+import {Button} from '@/components/ui/button';
 import './TimerScramble.scss';
-import {ArrowClockwise, Lock, PencilSimple} from 'phosphor-react';
+import {ArrowClockwise, Lock, PencilSimple} from '@phosphor-icons/react/dist/ssr';
+import React, {ReactNode, useCallback, useContext, useEffect, useRef} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import CopyText from '../../../common/copy_text/CopyText';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '../../../../lib/db/settings/update';
-import {useGeneral} from '../../../../lib/util/hooks/useGeneral';
-import Button from '../../../common/button/Button';
-import {TimerContext} from '../../Timer';
-import block from '../../../../styles/bem';
-import {resetScramble} from '../../helpers/scramble';
-import SmartScramble from './smart_scramble/SmartScramble';
-import {setTimerParam} from '../../helpers/params';
-import {smartCubeSelected} from '../../helpers/util';
-import {useSettings} from '../../../../lib/util/hooks/useSettings';
 import {setSetting} from '../../../../lib/db/settings/update';
+import {useGeneral} from '../../../../lib/util/hooks/useGeneral';
+import {useSettings} from '../../../../lib/util/hooks/useSettings';
+import block from '../../../../styles/bem';
+import CopyText from '../../../common/copy_text/CopyText';
+import {setTimerParam} from '../../helpers/params';
+import {resetScramble} from '../../helpers/scramble';
+import {smartCubeSelected} from '../../helpers/util';
+import {TimerContext} from '../../Timer';
+import SmartScramble from './smart_scramble/SmartScramble';
 
 const b = block('timer-scramble');
 
@@ -44,7 +44,7 @@ export default function TimerScramble() {
 		}
 	}, [cubeType, sessionId]);
 
-	function toggleScrambleLock() {
+	const toggleScrambleLock = useCallback(() => {
 		if (editScramble) {
 			setTimerParam('editScramble', false);
 		}
@@ -53,9 +53,9 @@ export default function TimerScramble() {
 		const lockedScramble = scrambleLocked ? null : scramble;
 
 		setSetting('locked_scramble', lockedScramble);
-	}
+	}, [editScramble, scrambleLocked, scramble])
 
-	function toggleEditScramble() {
+	const toggleEditScramble = useCallback(() => {
 		setTimerParam('editScramble', !editScramble);
 
 		setTimeout(() => {
@@ -63,12 +63,12 @@ export default function TimerScramble() {
 				scrambleInput.current.focus();
 			}
 		});
-	}
+	}, [editScramble])
 
-	function handleScrambleChange(e) {
+	const handleScrambleChange = useCallback((e) => {
 		e.preventDefault();
 		setTimerParam('scramble', e.target.value);
-	}
+	}, [])
 
 	const isSmart = smartCubeSelected(context);
 

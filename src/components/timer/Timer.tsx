@@ -1,25 +1,25 @@
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
+import {useGeneral} from '@/lib/util/hooks/useGeneral';
+import {useWindowListener} from '@/lib/util/hooks/useListener';
 import './Timer.scss';
-import {ArrowRight} from 'phosphor-react';
-import HeaderControl from './header_control/HeaderControl';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {useSettings} from '@/lib/util/hooks/useSettings';
+import {isNotPro} from '@/lib/util/pro';
+import {getStorageURL} from '@/lib/util/storage';
+import block from '@/styles/bem';
+import {ArrowRight} from '@phosphor-icons/react/dist/ssr';
+import Link from 'next/link';
+import React, {createContext, ReactNode, useCallback, useEffect, useState} from 'react';
+import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
+import {TimerProps, TimerStore} from './@types/interfaces';
 import TimerFooter from './footer/TimerFooter';
+import HeaderControl from './header_control/HeaderControl';
+import {initTimer} from './helpers/init';
+import {listenForPbEvents} from './helpers/pb';
+import {stopAllTimers} from './helpers/timers';
+import KeyWatcher from './key_watcher/KeyWatcher';
+import SmartCube from './smart_cube/SmartCube';
 import TimeDisplay from './time_display/TimeDisplay';
 import TimerScramble from './time_display/timer_scramble/TimerScramble';
-import KeyWatcher from './key_watcher/KeyWatcher';
-import {TimerProps, TimerStore} from './@types/interfaces';
-import {getStorageURL} from '../../lib/util/storage';
-import block from '../../styles/bem';
-import {useGeneral} from '../../lib/util/hooks/useGeneral';
-import {useMe} from '../../lib/util/hooks/useMe';
-import {initTimer} from './helpers/init';
-import {stopAllTimers} from './helpers/timers';
-import {useSettings} from '../../lib/util/hooks/useSettings';
-import {listenForPbEvents} from './helpers/pb';
-import {useWindowListener} from '../../lib/util/hooks/useListener';
-import SmartCube from './smart_cube/SmartCube';
-import {Link} from 'react-router-dom';
-import {isNotPro} from '../../lib/util/pro';
 
 const b = block('timer');
 
@@ -80,23 +80,23 @@ export default function Timer(props: TimerProps) {
 			});
 			toggleHtmlOverflow('unset');
 		};
-	}, []);
+	}, [dispatch, context, toggleHtmlOverflow, windowResize]);
 
-	function toggleHtmlOverflow(value: string) {
+	const toggleHtmlOverflow = useCallback((value: string) => {
 		const html = document.querySelector('html');
 
 		if (html) {
 			html.style.overflow = value;
 		}
-	}
+	}, []);
 
-	function windowResize() {
+	const windowResize = useCallback(() => {
 		if (window.innerHeight <= 780 && !heightSmall) {
 			setHeightSmall(true);
 		} else if (window.innerHeight > 780 && heightSmall) {
 			setHeightSmall(false);
 		}
-	}
+	}, [heightSmall]);
 
 	let smartCubeVisual: ReactNode = null;
 	if (timerType === 'smart' && cubeType === '333') {
@@ -111,7 +111,7 @@ export default function Timer(props: TimerProps) {
 	if (isNotPro(me)) {
 		timerFooterAd = (
 			<div className={b('get-pro')}>
-				<Link to="/account/pro">
+				<Link href="/account/pro">
 					Support development and get Pro <ArrowRight weight="fill" />
 				</Link>
 			</div>

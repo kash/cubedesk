@@ -1,15 +1,15 @@
-import React, {createContext, ReactNode, useState} from 'react';
+import {reactState} from '@/client/@types/react';
 import './ImportData.scss';
-import {reactState} from '../../../../../client/@types/react';
-import {SessionInput, SolveInput} from '../../../../../client/@types/generated/graphql';
-import ProcessData from './process/ProcessData';
+import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import {SessionInput, SolveInput} from '@/generated/zod';
+import block from '@/styles/bem';
+import React, {createContext, ReactNode, useState} from 'react';
 import CsTimerInstructions from './instructions/CsTimerInstructions';
-import {parseCubeDeskData} from './parse_data/cubedesk';
 import CubeDeskInstructions from './instructions/CubeDeskInstructions';
-import ModalHeader from '../../../common/modal/modal_header/ModalHeader';
-import block from '../../../../styles/bem';
-import ReviewImport from './review_import/ReviewImport';
 import {parseCsTimerData} from './parse_data/cstimer';
+import {parseCubeDeskData} from './parse_data/cubedesk';
+import ProcessData from './process/ProcessData';
+import ReviewImport from './review_import/ReviewImport';
 
 const b = block('import-data');
 

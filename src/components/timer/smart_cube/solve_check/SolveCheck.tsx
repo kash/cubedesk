@@ -1,9 +1,9 @@
-import React from 'react';
+import {Button} from '@/components/ui/button';
 import './SolveCheck.scss';
-import Button from '../../../common/button/Button';
-import {IModalProps} from '../../../common/modal/Modal';
-import block from '../../../../styles/bem';
+import React from 'react';
 import {resourceUri} from '../../../../lib/util/storage';
+import block from '../../../../styles/bem';
+import {IModalProps} from '../../../common/modal/Modal';
 
 const b = block('smart-cube-solve-check');
 
@@ -11,7 +11,9 @@ export default function SolveCheck(props: IModalProps) {
 	return (
 		<div className={b()}>
 			<img src={resourceUri('/images/rubiks_cube_solve.svg')} alt="Solved speed cube" />
-			<Button text="My cube is solved" primary onClick={props.onComplete} />
+			<Button variant="primary" onClick={props.onComplete}>
+				My cube is solved
+			</Button>
 		</div>
 	);
 }

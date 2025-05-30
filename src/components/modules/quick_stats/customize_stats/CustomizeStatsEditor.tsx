@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import HorizontalNav from '../../../common/horizontal_nav/HorizontalNav';
 import {useToggle} from '../../../../lib/util/hooks/useToggle';
-import {Check} from 'phosphor-react';
-import Input from '../../../common/inputs/input/Input';
+import {Check} from '@phosphor-icons/react/dist/ssr';
+import { Input } from '@/components/ui/input';
+import InputWrapper from '@/components/common/InputWrapper';
 import Checkbox from '../../../common/checkbox/Checkbox';
 import InputLegend from '../../../common/inputs/input/input_legend/InputLegend';
 import colorPalette, {ColorName} from '../../../../shared/colors';
@@ -13,7 +14,7 @@ import {getStatsBlockDescription, saveStatsModuleBlocks} from '../util';
 import {useDispatch} from 'react-redux';
 import {updateStatsModuleBlock} from '../../../../lib/actions/stats';
 import Tag from '../../../common/tag/Tag';
-import Button from '../../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import FormSection from '../../../common/form/FormSection';
 
 interface Props {
@@ -72,7 +73,7 @@ export default function CustomizeStatsEditor(props: Props) {
 			try {
 				await saveStatsModuleBlocks();
 				setSavedStatus('saved');
-			} catch (e) {
+			} catch (e: unknown) {
 				setError('Could not save to server. Please try again later.');
 			}
 		}, 100);
@@ -82,15 +83,26 @@ export default function CustomizeStatsEditor(props: Props) {
 		}, 2000);
 	}, [colorName, index, session, statType, averageCountInt, sortBy]);
 
-	function selectStatType(val: string) {
+	const selectStatType = useCallback((val: string) => {
 		setStatType(val as any);
 
 		if (val !== 'average' && sortBy === 'current') {
 			setSortBy('best');
 		}
-	}
+	}, [sortBy])
 
-	function toggleSetAverageAll() {
+	const blurAverageCount = useCallback(() => {
+		setError(null);
+
+		try {
+			const avgInt = parseInt(averageCount, 10);
+			setAverageCountInt(avgInt);
+		} catch (e: unknown) {
+			setError('Changes not saved. Average count must be a number between 3 and 10,000.');
+		}
+	}, [averageCount]);
+
+	const toggleSetAverageAll = useCallback(() => {
 		const newAverageAll = !averageAll;
 
 		if (newAverageAll) {
@@ -100,32 +112,21 @@ export default function CustomizeStatsEditor(props: Props) {
 
 		setAverageAll(newAverageAll);
 		blurAverageCount();
-	}
+	}, [averageAll, blurAverageCount])
 
-	function blurAverageCount() {
-		setError(null);
-
-		try {
-			const avgInt = parseInt(averageCount, 10);
-			setAverageCountInt(avgInt);
-		} catch (e) {
-			setError('Changes not saved. Average count must be a number between 3 and 10,000.');
-		}
-	}
-
-	function onSelectColor(colorName: ColorName) {
+	const onSelectColor = useCallback((colorName: ColorName) => {
 		if (!colorNames.includes(colorName)) {
 			setError('Changes not saved. Invalid color name.');
 			return;
 		}
 
 		setColorName(colorName);
-	}
+	}, [colorNames])
 
-	function selectPresetAverageOf(num: number) {
+	const selectPresetAverageOf = useCallback((num: number) => {
 		setAverageCount(String(num));
 		setAverageCountInt(num);
-	}
+	}, [])
 
 	let averageCountDiv = null;
 	if (statType === 'average') {

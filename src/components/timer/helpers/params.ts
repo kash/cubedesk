@@ -1,6 +1,6 @@
-import {TimerStore} from '../@types/interfaces';
 import {setTimerParamsAction} from '../../../lib/actions/timer';
 import {getStore} from '../../store';
+import {TimerStore} from '../@types/interfaces';
 
 export function setTimerParam<T extends keyof TimerStore>(key: T, value: TimerStore[T]) {
 	setTimerParams({

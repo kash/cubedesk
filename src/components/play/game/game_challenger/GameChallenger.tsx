@@ -1,12 +1,12 @@
 import ActivePlayers from '../../match/active_players/ActivePlayers';
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import {GameContext} from '../Game';
 import block from '../../../../styles/bem';
 import {openModal} from '../../../../lib/actions/general';
 import MatchPopup from '../../match/match_popup/MatchPopup';
 import {useDispatch} from 'react-redux';
 import {getGameMetaData} from '../../Play';
-import Button from '../../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import {socketClient} from '../../../../lib/util/socket/socketio';
 
 const b = block('games-intro-challenge');
@@ -23,7 +23,7 @@ export default function GameChallenger() {
 	const minPlayers = 2;
 	const maxPlayers = 2;
 
-	function openMatch(joinLobby: boolean) {
+	const openMatch = useCallback((joinLobby: boolean) => {
 		dispatch(
 			openModal(
 				<MatchPopup
@@ -41,7 +41,7 @@ export default function GameChallenger() {
 				}
 			)
 		);
-	}
+	}, [dispatch, gameType, gameTypeData.name, minPlayers, maxPlayers]);
 
 	let joinLobbyButton = null;
 	const challengeButton = <Button flat primary text="Challenge" large fullWidth onClick={() => openMatch(false)} />;

@@ -1,7 +1,7 @@
 import Cube from 'cubejs';
 import {chunk} from 'lodash';
-import algorithms from '../../../lib/util/algorithms/algorithms';
 import {reverseTurns} from './turns';
+import algorithms from '@/lib/util/algorithms/algorithms';
 
 const OLL_KEY = '3_oll';
 const PLL_KEY = '3_pll';
@@ -91,7 +91,7 @@ function llSimilar(ll1: string, ll2: string) {
 }
 
 function getTopRowLayerFromState(state: string) {
-	const parts = chunk(state.replace(/X/g, ''), 9);
+	const parts: string[][] = chunk(state.replace(/X/g, ''), 9);
 
 	const output = parts.map((part) => {
 		return part.slice(0, 3).join('');

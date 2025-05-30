@@ -1,9 +1,9 @@
-import React, {ReactNode, useState} from 'react';
+import {Button} from '@/components/ui/button';
 import './WelcomeScreen.scss';
-import block from '../../styles/bem';
-import Button from '../common/button/Button';
-import {IModalProps} from '../common/modal/Modal';
+import React, {ReactNode, useState} from 'react';
 import {resourceUri} from '../../lib/util/storage';
+import block from '../../styles/bem';
+import {IModalProps} from '../common/modal/Modal';
 
 const b = block('welcome-screen');
 
@@ -37,13 +37,17 @@ const PAGES: WelcomePage[] = [
 export default function WelcomeScreen(props: IModalProps) {
 	const [pageIndex, setPageIndex] = useState(0);
 
-	function closeModal() {
-		props.onComplete(null);
-	}
+	const {onComplete} = props;
 
-	function nextPage() {
-		setPageIndex(pageIndex + 1);
-	}
+	const closeModal = React.useCallback(() => {
+		if (onComplete) {
+			onComplete(null);
+		}
+	}, [onComplete]);
+
+	const nextPage = React.useCallback(() => {
+		setPageIndex((i) => i + 1);
+	}, []);
 
 	const page = PAGES[pageIndex];
 	const pageDiv = (
@@ -58,9 +62,9 @@ export default function WelcomeScreen(props: IModalProps) {
 	const isLastPage = pageIndex === PAGES.length - 1;
 	let nextButton;
 	if (isLastPage) {
-		nextButton = <Button onClick={closeModal} text="Start Cubing!" />;
+		nextButton = <Button onClick={closeModal}>Start Cubing!</Button>;
 	} else {
-		nextButton = <Button text="Next" onClick={nextPage} />;
+		nextButton = <Button onClick={nextPage}>Next</Button>;
 	}
 
 	return (

@@ -4,7 +4,7 @@ import { initSettingsDb } from '../db/settings/init';
 import { initSessionCollection } from '../db/sessions/init';
 import { initSolvesCollection } from '../db/solves/init';
 import { Dispatch } from 'redux';
-import { UserAccount } from '../../server/schemas/UserAccount.schema';
+import { UserAccount } from '@/types/user-account';
 import { generateId } from '../../shared/code';
 import { getStore } from '../../components/store';
 import { setGeneral } from '../actions/general';
@@ -52,7 +52,7 @@ export async function initAppData(me: UserAccount, dispatch: Dispatch<any>, call
     if (!passed) {
       try {
         await clearOfflineData();
-      } catch (e) {
+      } catch (e: unknown) {
         console.error(e);
       }
       initLokiDb({
@@ -79,7 +79,7 @@ export async function initAppData(me: UserAccount, dispatch: Dispatch<any>, call
       initSolvesCollection();
 
       updateOfflineHash(true);
-    } catch (e) {
+    } catch (e: unknown) {
       console.error(e);
     }
 

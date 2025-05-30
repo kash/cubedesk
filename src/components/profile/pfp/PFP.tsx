@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import {connect, useDispatch} from 'react-redux';
 import './PFP.scss';
-import UploadCover from '../../common/upload_cover/UploadCover';
-import AvatarImage from '../../common/avatar/avatar_image/AvatarImage';
-import {getStorageURL} from '../../../lib/util/storage';
-import {Image, Profile} from '../../../../client/@types/generated/graphql';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '../../api';
-import {getMe} from '../../../lib/actions/account';
+import UploadCover from '@/components/common/upload_cover/UploadCover';
+import AvatarImage from '@/components/common/avatar/avatar_image/AvatarImage';
+import {getStorageURL} from '@/lib/util/storage';
+import {Image, Profile} from '@/generated/zod';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {getMe} from '@/lib/actions/account';
 
 interface Props {
 	allowChange?: boolean;
@@ -22,21 +20,9 @@ export default function PFP(props: Props) {
 	const me = useMe();
 
 	async function uploadProfilePicture(variables) {
-		const query = gql`
-			mutation Mutate($file: Upload) {
-				uploadProfilePicture(file: $file) {
-					id
-					storage_path
-				}
-			}
-		`;
-
-		const res = await gqlMutate<{uploadProfilePicture: Image}>(query, variables);
-		const storagePath = res.data.uploadProfilePicture.storage_path;
-
-		dispatch(getMe());
+		// TODO: Migrate to tRPC upload endpoint
 		return {
-			storagePath,
+			storagePath: null,
 		};
 	}
 

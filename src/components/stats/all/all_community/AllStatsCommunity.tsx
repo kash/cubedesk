@@ -1,9 +1,9 @@
+import {StatsContext} from '@/components/stats/Stats';
+import {CaretDoubleUp, Eye, Hash} from '@phosphor-icons/react/dist/ssr';
 import React, {useContext} from 'react';
-import {StatsContext} from '../../Stats';
-import {CaretDoubleUp, Hash, Eye} from 'phosphor-react';
-import StatsGrid from '../../common/stats_grid/StatsGrid';
 import MatchStats from '../../common/match_stats/MatchStats';
 import NumberBlock from '../../common/number_block/NumberBlock';
+import StatsGrid from '../../common/stats_grid/StatsGrid';
 
 export default function AllStatsCommunity() {
 	const context = useContext(StatsContext);

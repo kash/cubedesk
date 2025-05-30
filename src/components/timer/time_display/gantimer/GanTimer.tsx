@@ -1,16 +1,15 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {ITimerContext, TimerContext} from '../../Timer';
-import {Bluetooth} from 'phosphor-react';
-import Emblem from '../../../common/emblem/Emblem';
-import {startTimer, endTimer, startInspection, cancelInspection} from '../../helpers/events';
-import {setTimerParams} from '../../helpers/params';
-import {useSettings} from '../../../../lib/util/hooks/useSettings';
+import {Bluetooth} from '@phosphor-icons/react/dist/ssr';
+import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from 'gan-web-bluetooth';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {openModal} from '../../../../lib/actions/general';
-import BluetoothErrorMessage from '../../common/BluetoothErrorMessage';
-
 import {SubscriptionLike} from 'rxjs';
-import {GanTimerConnection, GanTimerEvent, GanTimerState, connectGanTimer} from 'gan-web-bluetooth';
+import {openModal} from '../../../../lib/actions/general';
+import {useSettings} from '../../../../lib/util/hooks/useSettings';
+import Emblem from '../../../common/emblem/Emblem';
+import BluetoothErrorMessage from '../../common/BluetoothErrorMessage';
+import {cancelInspection, endTimer, startInspection, startTimer} from '../../helpers/events';
+import {setTimerParams} from '../../helpers/params';
+import {ITimerContext, TimerContext} from '../../Timer';
 
 // Since this component is singleton and should never have multiple instances,
 // also will never be used in different contexts, we won't pollute context
@@ -29,14 +28,7 @@ export default function GanTimer() {
 		contextRef.current = context;
 	}, [context]);
 
-	// Subscribe/unsubscribe to GAN Smart Timer events when component being mounted/unmounted
-	useEffect(() => {
-		subs = conn?.events$.subscribe(handleTimerEvent);
-		setConnected(!!conn);
-		return () => subs?.unsubscribe();
-	}, []);
-
-	function handleTimerEvent(event: GanTimerEvent) {
+	const handleTimerEvent = useCallback((event: GanTimerEvent) => {
 		switch (event.state) {
 			case GanTimerState.HANDS_ON:
 				setTimerParams({canStart: false, spaceTimerStarted: 1});
@@ -55,7 +47,11 @@ export default function GanTimer() {
 				endTimer(contextRef.current, event.recordedTime.asTimestamp);
 				break;
 			case GanTimerState.IDLE:
-				if (!inspectionEnabled || contextRef.current.inInspection || contextRef.current.finalTime > 0) {
+				if (
+					!inspectionEnabled ||
+					contextRef.current.inInspection ||
+					contextRef.current.finalTime > 0
+				) {
 					cancelInspection();
 					setTimerParams({spaceTimerStarted: 0, canStart: false, finalTime: -1});
 				} else {
@@ -66,25 +62,35 @@ export default function GanTimer() {
 				setConnected(false);
 				break;
 		}
-	}
+	}, [inspectionEnabled]);
 
-	async function handleConnectButton() {
+	// Subscribe/unsubscribe to GAN Smart Timer events when component being mounted/unmounted
+	useEffect(() => {
+		subs = conn?.events$.subscribe(handleTimerEvent);
+		setConnected(!!conn);
+		return () => subs?.unsubscribe();
+	}, [handleTimerEvent]);
+
+	const handleConnectButton = useCallback(async () => {
 		if (conn) {
 			conn.disconnect();
 			conn = null;
 			setConnected(false);
 		} else {
-			const bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
+			const bluetoothAvailable =
+				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				conn = await connectGanTimer();
-				conn.events$.subscribe((evt) => evt.state == GanTimerState.DISCONNECT && (conn = null));
+				conn.events$.subscribe(
+					(evt) => evt.state == GanTimerState.DISCONNECT && (conn = null),
+				);
 				subs = conn.events$.subscribe(handleTimerEvent);
 				setConnected(true);
 			} else {
 				dispatch(openModal(<BluetoothErrorMessage />));
 			}
 		}
-	}
+	}, [dispatch, handleTimerEvent])
 
 	return (
 		<div onClick={handleConnectButton} style={{userSelect: 'none', cursor: 'pointer'}}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 
 export interface HTSNavItemProps {
 	id: string;
@@ -17,7 +17,7 @@ export default function HTSNavItem(props: HTSNavItemProps) {
 	}
 
 	return (
-		<Link to={`/how-to-solve/${id}`} className={classes.join(' ')}>
+		<Link href={`/how-to-solve/${id}`} className={classes.join(' ')}>
 			<span className="mr-1 opacity-70 text-inherit">{stepNumber}.</span>
 			<span>{stepName}</span>
 		</Link>

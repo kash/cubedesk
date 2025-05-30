@@ -1,11 +1,11 @@
-import React from 'react';
+import {Button} from '@/components/ui/button';
 import './ReportSummary.scss';
+import {api} from '@/trpc/react';
+import React, {useCallback} from 'react';
+import {getDateFromNow} from '../../../../lib/util/dates';
 import block from '../../../../styles/bem';
 import Avatar from '../../../common/avatar/Avatar';
 import Tag from '../../../common/tag/Tag';
-import {getDateFromNow} from '../../../../lib/util/dates';
-import Button from '../../../common/button/Button';
-import {api} from '@/trpc/react';
 
 const b = block('admin-report-summary');
 
@@ -18,7 +18,9 @@ export default function ReportSummary(props: Props) {
 
 	const resolveReportsMutation = api.report.resolveReports.useMutation();
 
-	const rows = reportSummary.reports?.map((report: any) => <SingleReport key={report.id} report={report} />);
+	const rows = reportSummary.reports?.map((report: any) => (
+		<SingleReport key={report.id} report={report} />
+	));
 	const count = reportSummary.count;
 	const topInfo = (
 		<div className={b('top-info')}>
@@ -28,11 +30,11 @@ export default function ReportSummary(props: Props) {
 		</div>
 	);
 
-	function markAsResolved() {
+	const markAsResolved = useCallback(() => {
 		resolveReportsMutation.mutate({
 			userId: reportSummary.user.id,
 		});
-	}
+	}, [resolveReportsMutation, reportSummary.user.id]);
 
 	if (resolveReportsMutation.isSuccess) {
 		return null;

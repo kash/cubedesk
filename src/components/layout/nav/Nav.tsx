@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, ReactNode, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
-import {Link, useRouteMatch} from 'react-router-dom';
+import {usePathname} from 'next/navigation';
+import Link from 'next/link';
 import './Nav.scss';
 import {setSetting} from '../../../lib/db/settings/update';
 import {setGeneral} from '../../../lib/actions/general';
@@ -15,7 +16,7 @@ import {
 	Wrench,
 	Timer,
 	ArrowRight,
-} from 'phosphor-react';
+} from '@phosphor-icons/react/dist/ssr';
 import Notifications from './notifications/Notifications';
 import Logo from '../../common/logo/Logo';
 import MobileNav from './mobile_nav/MobileNav';
@@ -27,7 +28,7 @@ import block from '../../../styles/bem';
 import AccountDropdown from './account_dropdown/AccountDropdown';
 import {useMe} from '../../../lib/util/hooks/useMe';
 import NavLink from './NavLink';
-import Button from '../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import LoginNav from './LoginNav';
 import {resourceUri} from '../../../lib/util/storage';
 
@@ -35,7 +36,7 @@ const b = block('nav');
 
 export interface NavLinkProps {
 	name: string;
-	icon: JSX.Element;
+	icon: ReactNode;
 	match: RegExp;
 	link: string;
 	newTag?: boolean;
@@ -99,7 +100,7 @@ export const NAV_LINKS: NavLinkProps[] = [
 export default function Nav() {
 	const dispatch = useDispatch();
 
-	const match = useRouteMatch();
+	const pathname = usePathname();
 	const me = useMe();
 
 	const focusMode = useSettings('focus_mode');
@@ -109,13 +110,7 @@ export default function Nav() {
 	const mobileMode = useGeneral('mobile_mode');
 	const forceNavCollapsed = useGeneral('force_nav_collapsed');
 
-	useWindowListener('resize', windowResize, [navCollapsed, mobileMode, forceNavCollapsed]);
-
-	useEffect(() => {
-		windowResize();
-	}, []);
-
-	function windowResize() {
+	const windowResize = useCallback(() => {
 		if (window.innerWidth <= 1080 && !forceNavCollapsed) {
 			dispatch(setGeneral('force_nav_collapsed', true));
 		} else if (window.innerWidth > 1080 && forceNavCollapsed) {
@@ -127,16 +122,18 @@ export default function Nav() {
 		} else if (window.innerWidth > 750 && mobileMode) {
 			dispatch(setGeneral('mobile_mode', false));
 		}
-	}
+	}, [dispatch, forceNavCollapsed, mobileMode]);
 
-	function toggleCollapse() {
+	const toggleCollapse = useCallback(() => {
 		setSetting('nav_collapsed', !navCollapsed);
-	}
+	}, [navCollapsed]);
 
-	let pathname = '';
-	if (match) {
-		pathname = match.path;
-	}
+	useWindowListener('resize', windowResize, [navCollapsed, mobileMode, forceNavCollapsed]);
+
+	useEffect(() => {
+		windowResize();
+	}, [windowResize]);
+
 
 	const navClosed = navCollapsed || forceNavCollapsed;
 
@@ -161,7 +158,7 @@ export default function Nav() {
 	if (!me?.is_pro && !navClosed) {
 		getPro = (
 			<Link
-				to="/account/pro"
+				href="/account/pro"
 				className="mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded bg-primary py-2 px-3"
 			>
 				<div className="flex flex-row items-center gap-1 font-bold text-tmo-primary">
@@ -223,17 +220,18 @@ export default function Nav() {
 								name="Globe"
 							/>
 						</div>
-						<Button
-							large
-							iconFirst
-							hidden={forceNavCollapsed}
-							text={navCollapsed ? '' : 'Collapse'}
-							icon={navCollapsed ? <ArrowRight weight="fill" /> : <ArrowLeft weight="fill" />}
-							transparent
-							className={b('collapse-button')}
-							type="button"
-							onClick={toggleCollapse}
-						/>
+						{!forceNavCollapsed && (
+							<Button
+								size="lg"
+								variant="ghost"
+								className={b('collapse-button')}
+								type="button"
+								onClick={toggleCollapse}
+							>
+								{navCollapsed ? <ArrowRight weight="fill" /> : <ArrowLeft weight="fill" />}
+								{!navCollapsed && 'Collapse'}
+							</Button>
+						)}
 					</div>
 				</div>
 			</div>

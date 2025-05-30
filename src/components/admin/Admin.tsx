@@ -1,7 +1,7 @@
 import React from 'react';
 import './Admin.scss';
 import block from '../../styles/bem';
-import PageTitle from '../common/page_title/PageTitle';
+import PageTitle from '../common/page-title/PageTitle';
 import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
 
 const b = block('admin');

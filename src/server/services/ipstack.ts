@@ -26,7 +26,7 @@ export function getLocationFromIp(ip: string): Promise<IfConfig> {
 
 			try {
 				resolve(JSON.parse(body));
-			} catch (e) {
+			} catch (e: unknown) {
 				logger.error('Could not parse location from IP', {
 					body
 				});

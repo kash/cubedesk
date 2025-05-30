@@ -1,4 +1,4 @@
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 import {clearSingleSolveStatCache, fetchAllSolveCaches} from '../caching';
 import {getAveragePB} from '../average/average_pb';
 import {getCurrentAverage} from '../average/average';

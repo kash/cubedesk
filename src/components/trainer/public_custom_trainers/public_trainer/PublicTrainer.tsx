@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import Avatar from '@/components/common/avatar/Avatar';
 import './PublicTrainer.scss';
-import {ThumbsDown, ThumbsUp, Download} from 'phosphor-react';
-import AlgoVisual from '../../algo_visual/AlgoVisual';
-import {toastError, toastSuccess} from '../../../../lib/util/toast';
+import AlgoVisual from '@/components/trainer/algo_visual/AlgoVisual';
+import {Button} from '@/components/ui/button';
+import {CustomTrainer} from '@/generated/zod';
+import {toastError, toastSuccess} from '@/lib/util/toast';
+import block from '@/styles/bem';
+import {api} from '@/trpc/react';
+import {Download, ThumbsDown, ThumbsUp} from '@phosphor-icons/react/dist/ssr';
+import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
-import Avatar from '../../../common/avatar/Avatar';
-import { CustomTrainer } from '@/generated/zod';
-import block from '../../../../styles/bem';
-import Button from '../../../common/button/Button';
-import { api } from '@/trpc/react';
 
 const b = block('public-trainer');
 
@@ -49,8 +49,8 @@ export default function PublicTrainer(props: Props) {
 		if (liked) {
 			// Unlike the trainer
 			try {
-				await unlikeMutation.mutateAsync({ 
-					custom_trainer_id: id 
+				await unlikeMutation.mutateAsync({
+					trainerId: id,
 				});
 				setLikes(likes - 1);
 				setLiked(false);
@@ -61,9 +61,9 @@ export default function PublicTrainer(props: Props) {
 		} else {
 			// Like the trainer
 			try {
-				await likeMutation.mutateAsync({ 
-					custom_trainer_id: id, 
-					creator_id: userId 
+				await likeMutation.mutateAsync({
+					tainerId: id,
+					creator_id: userId,
 				});
 				setLikes(likes + 1);
 				setLiked(true);
@@ -81,13 +81,15 @@ export default function PublicTrainer(props: Props) {
 
 		try {
 			await downloadMutation.mutateAsync({
-				source_trainer_id: id,
+				sourceId: id,
 				creator_id: userId,
 			});
 
 			setDownloaded(true);
-			toastSuccess('Successfully downloaded trainer. You can find it under your Trainer -> Custom Trainer');
-		} catch (e) {
+			toastSuccess(
+				'Successfully downloaded trainer. You can find it under your Trainer -> Custom Trainer',
+			);
+		} catch (e: unknown) {
 			console.error(e);
 			toastError('Failed to download trainer');
 		}
@@ -113,20 +115,16 @@ export default function PublicTrainer(props: Props) {
 				</div>
 			</div>
 			<div className={b('actions')}>
-				<Button
-					icon={liked ? <ThumbsUp /> : <ThumbsDown />}
-					onClick={likeTrainer}
-					text={`${likes} Like${likes === 1 ? '' : 's'}`}
-					gray
-					primary={liked}
-				/>
-				<Button
-					icon={<Download weight="bold" />}
-					text={downloadedFinal ? 'Downloaded' : 'Download'}
-					disabled={downloadedFinal}
-					hidden={trainerOwnedByUser}
-					onClick={downloadTrainer}
-				/>
+				<Button onClick={likeTrainer} variant={liked ? 'default' : 'secondary'}>
+					{liked ? <ThumbsUp className="mr-2" /> : <ThumbsDown className="mr-2" />}
+					{`${likes} Like${likes === 1 ? '' : 's'}`}
+				</Button>
+				{!trainerOwnedByUser && (
+					<Button disabled={downloadedFinal} onClick={downloadTrainer} variant="default">
+						<Download weight="bold" className="mr-2" />
+						{downloadedFinal ? 'Downloaded' : 'Download'}
+					</Button>
+				)}
 			</div>
 		</div>
 	);

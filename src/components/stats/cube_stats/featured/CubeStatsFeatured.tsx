@@ -1,19 +1,19 @@
-import React, {useContext, useMemo} from 'react';
+import {CalendarBlank, Hash, Timer, Trophy} from '@phosphor-icons/react/dist/ssr';
 import './CubeStatsFeatured.scss';
-import {Timer, Hash, Trophy, CalendarBlank} from 'phosphor-react';
-import block from '../../../../styles/bem';
-import NumberBlock from '../../common/number_block/NumberBlock';
-import ScrambleVisual from '../../../modules/scramble/ScrambleVisual';
-import {getDateFromNow} from '../../../../lib/util/dates';
-import {StatsContext} from '../../Stats';
-import {getSinglePB} from '../../../../lib/db/solves/stats/solves/single/single_pb';
-import {getTotalSolveCount, getTotalSolveTime} from '../../../../lib/db/solves/stats/count';
-import {useSolveDb} from '../../../../lib/util/hooks/useSolveDb';
-import {getTimeString} from '../../../../lib/util/time';
+import React, {useContext, useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 import {openModal} from '../../../../lib/actions/general';
-import SolveInfo from '../../../solve_info/SolveInfo';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {getTotalSolveCount, getTotalSolveTime} from '../../../../lib/db/solves/stats/count';
+import {getSinglePB} from '../../../../lib/db/solves/stats/solves/single/single_pb';
+import {getDateFromNow} from '../../../../lib/util/dates';
+import {useSolveDb} from '../../../../lib/util/hooks/useSolveDb';
+import {getTimeString} from '../../../../lib/util/time';
+import {Solve} from '@/generated/zod';
+import block from '../../../../styles/bem';
+import ScrambleVisual from '../../../modules/scramble/ScrambleVisual';
+import SolveInfo from '../../../solve-info/SolveInfo';
+import NumberBlock from '../../common/number_block/NumberBlock';
+import {StatsContext} from '../../Stats';
 
 const b = block('stats-featured');
 

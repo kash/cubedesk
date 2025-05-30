@@ -1,7 +1,7 @@
 import React from 'react';
 import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
-import {useRouteMatch} from 'react-router-dom';
-import PageTitle from '../common/page_title/PageTitle';
+import {usePathname} from 'next/navigation';
+import PageTitle from '../common/page-title/PageTitle';
 import block from '../../styles/bem';
 
 const b = block('account-nav');
@@ -40,7 +40,8 @@ const TABS = [
 ];
 
 export default function AccountNav() {
-	const page = useRouteMatch().path.split('/').pop();
+	const pathname = usePathname();
+	const page = pathname.split('/').pop();
 
 	return (
 		<div className={b()}>

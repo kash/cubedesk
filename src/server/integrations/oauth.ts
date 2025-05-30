@@ -1,8 +1,8 @@
 import {createIntegration, getIntegration, updateIntegration} from '../models/integration';
 import axios from 'axios';
-import {InternalUserAccount, UserAccount} from '../schemas/UserAccount.schema';
+import {InternalUserAccount, UserAccount} from '@/types/user-account';
 import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../shared/integration';
-import {Integration} from '../schemas/Integration.schema';
+import {Integration} from '@/generated/zod';
 import {updateUserProfile} from '../models/profile';
 import {getDiscordMe, updateStripeCustomerWithDiscordMetadata} from './discord';
 import Discord from '../services/discord';
@@ -110,7 +110,7 @@ async function getNewAuthToken(integration: Integration) {
 		});
 
 		return int.auth_token;
-	} catch (e) {
+	} catch (e: unknown) {
 		return null;
 	}
 }

@@ -1,5 +1,5 @@
-import {GeneralAllParams} from '../util/hooks/useGeneral';
 import {IModalProps} from '../../components/common/modal/Modal';
+import {GeneralAllParams} from '../util/hooks/useGeneral';
 
 export function openSlideShowModal(body, options: IModalProps = {}) {
 	options = {

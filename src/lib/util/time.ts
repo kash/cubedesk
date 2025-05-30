@@ -1,5 +1,5 @@
 import {getSetting} from '../db/settings/query';
-import {Solve} from '../../server/schemas/Solve.schema';
+import {Solve} from '@/generated/zod';
 
 export function getNumberToDecimalPoints(number: number, decimalPoints: number): number {
 	const pow = Math.pow(10, decimalPoints);

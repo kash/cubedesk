@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './ActivePlayers.scss';
-import {socketClient} from '../../../../lib/util/socket/socketio';
-import {GameType} from '../../../../../client/@types/generated/graphql';
-import {SocketConst} from '../../../../lib/shared/socket_costs';
+import {socketClient} from '@/lib/util/socket/socketio';
+import {GameType} from '@/shared/match/consts';
+import {SocketConst} from '@/lib/shared/socket_costs';
 
 interface Props {
 	matchType: GameType;

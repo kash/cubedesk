@@ -1,8 +1,8 @@
-import {getPrisma} from '../database';
-import {MatchSession, MatchSessionInput} from '../schemas/MatchSession.schema';
+import {MatchSession} from '@/generated/zod';
+import {getPrismaClient} from '@/server/services/database';
 
 export async function getMatchSessionById(id: string): Promise<MatchSession> {
-	return getPrisma().matchSession.findUnique({
+	return getPrismaClient().matchSession.findUnique({
 		where: {
 			id,
 		},
@@ -51,7 +51,7 @@ export async function createMatchSession(
 	input: MatchSessionInput,
 	createdBy,
 	customMatch: boolean = false,
-	rated: boolean = false
+	rated: boolean = false,
 ): Promise<MatchSession> {
 	return getPrisma().matchSession.create({
 		data: {

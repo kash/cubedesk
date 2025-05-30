@@ -1,7 +1,7 @@
 export function getLocalStorage(key: string) {
 	try {
 		return JSON.parse(localStorage.getItem(key));
-	} catch (e) {
+	} catch (e: unknown) {
 		const val = localStorage.getItem(key);
 		if (val === 'true') {
 			return true;

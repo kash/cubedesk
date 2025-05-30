@@ -2,8 +2,8 @@ import {EventEmitter} from 'events';
 import {useEffect, useRef} from 'react';
 import {TrainerAlgorithmExtended} from '../db/trainer/init';
 import {SettingValue} from '../db/settings/init';
-import {Session} from '../../server/schemas/Session.schema';
-import {Solve} from '../../server/schemas/Solve.schema';
+import {Session} from '@/generated/zod';
+import {Solve} from '@/generated/zod';
 
 const ee = new EventEmitter();
 

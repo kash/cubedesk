@@ -1,21 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {X, Plus, Timer, Check} from 'phosphor-react';
-import {addFriendship, removeFriendship} from '../../../lib/actions/account';
-import {toastSuccess} from '../../../lib/util/toast';
-import {gqlMutate, gqlMutateTyped, gqlQueryTyped} from '../../api';
-import Button, {ButtonProps} from '../../common/button/Button';
-import {
-	FriendshipRequest as FriendshipRequestSchema,
-	AcceptFriendshipRequestDocument,
-	DeleteFriendshipRequestDocument,
-	UnfriendDocument,
-	ReceivedFriendshipRequestsFromUserDocument,
-	SentFriendshipRequestsToUserDocument,
-	SendFriendshipRequestDocument,
-} from '../../../../client/@types/generated/graphql';
+import React, {useCallback, useEffect, useState} from 'react';
+import {X, Plus, Timer, Check} from '@phosphor-icons/react/dist/ssr';
+import {addFriendship, removeFriendship} from '@/lib/actions/account';
+import {toastSuccess} from '@/lib/util/toast';
+import {Button} from '@/components/ui/button';
+import {Icon} from '@phosphor-icons/react';
+import {FriendshipRequest as FriendshipRequestSchema, PublicUserAccount} from '@/generated/zod';
 import {useDispatch, useSelector} from 'react-redux';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {api} from '@/trpc/react';
 
 interface Props {
 	user: PublicUserAccount;
@@ -37,36 +29,31 @@ export default function FriendshipRequest(props: Props) {
 	const [friendRequestReceived, setFriendRequestReceived] = useState(props.friendRequestReceived);
 	const [overFriendButton, setOverFriendButton] = useState(false);
 
+	const {data: sentData} = api.friendship.receivedFriendshipRequestsFromUser.useQuery(
+		{userId: user.id},
+		{enabled: fetchData}
+	);
+	const {data: receivedData} = api.friendship.sentFriendshipRequestsToUser.useQuery(
+		{userId: user.id},
+		{enabled: fetchData}
+	);
+
 	useEffect(() => {
-		getFriendshipRequests(user.id).then(({sentRequest, receivedRequest}) => {
+		if (sentData && receivedData) {
 			setLoading(false);
-			setFriendRequestSent(sentRequest);
-			setFriendRequestReceived(receivedRequest);
-		});
-	}, []);
+			setFriendRequestSent(sentData[0] || null);
+			setFriendRequestReceived(receivedData[0] || null);
+		}
+	}, [sentData, receivedData]);
 
-	async function getFriendshipRequests(userId: string) {
-		const vars = {
-			userId,
-		};
+	const sendFriendshipRequestMutation = api.friendship.sendFriendshipRequest.useMutation();
+	const acceptFriendshipRequestMutation = api.friendship.acceptFriendshipRequest.useMutation();
+	const deleteFriendshipRequestMutation = api.friendship.deleteFriendshipRequest.useMutation();
+	const unfriendMutation = api.friendship.unfriend.useMutation();
 
-		const [sent, requested] = await Promise.all([
-			gqlQueryTyped(ReceivedFriendshipRequestsFromUserDocument, vars),
-			gqlQueryTyped(SentFriendshipRequestsToUserDocument, vars),
-		]);
-
-		const setReqs = sent.data.receivedFriendshipRequestsFromUser;
-		const requestedReqs = requested.data.sentFriendshipRequestsToUser;
-
-		const sentRequest = setReqs && setReqs.length ? setReqs[0] : null;
-		const receivedRequest = requestedReqs && requestedReqs.length ? requestedReqs[0] : null;
-
-		return {sentRequest, receivedRequest};
-	}
-
-	async function friendshipButton() {
+	const friendshipButton = useCallback(async () => {
 		if (friends[user.id]) {
-			await gqlMutate(UnfriendDocument, {
+			await unfriendMutation.mutateAsync({
 				targetUserId: user.id,
 			});
 
@@ -76,7 +63,7 @@ export default function FriendshipRequest(props: Props) {
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
 		} else if (friendRequestSent) {
-			await gqlMutate(DeleteFriendshipRequestDocument, {
+			await deleteFriendshipRequestMutation.mutateAsync({
 				friendshipRequestId: friendRequestSent.id,
 			});
 
@@ -85,82 +72,81 @@ export default function FriendshipRequest(props: Props) {
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
 		} else if (friendRequestReceived) {
-			const res = await gqlMutateTyped(AcceptFriendshipRequestDocument, {
+			const res = await acceptFriendshipRequestMutation.mutateAsync({
 				friendshipRequestId: friendRequestReceived.id,
 			});
 
 			toastSuccess(`Accepted ${user.username}'s friend request`);
-			dispatch(addFriendship(res.data.acceptFriendshipRequest));
+			dispatch(addFriendship(res));
 
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
 		} else {
-			const request = await gqlMutateTyped(SendFriendshipRequestDocument, {
+			const request = await sendFriendshipRequestMutation.mutateAsync({
 				toUserId: user.id,
 			});
 
 			toastSuccess(`Friend request sent to ${user.username}`);
 
 			setFriendRequestReceived(null);
-			setFriendRequestSent(request.data.sendFriendshipRequest);
+			setFriendRequestSent(request);
 		}
-	}
+	}, [friends, user.id, user.username, unfriendMutation, dispatch, friendRequestSent, deleteFriendshipRequestMutation, friendRequestReceived, acceptFriendshipRequestMutation, sendFriendshipRequestMutation]);
 
-	function getFriendButtonParams(): ButtonProps {
-		let friendButtonParams: ButtonProps = {
-			text: 'Add Friend',
-			icon: <Plus weight="bold" />,
-			gray: true,
-		};
-
+	const getFriendButtonParams = useCallback((): {text: string; icon: Icon; variant: 'default' | 'secondary' | 'destructive'} => {
 		if (friends[user.id]) {
-			friendButtonParams = {
-				text: 'Friends',
-				icon: <Check weight="bold" />,
-				gray: true,
-			};
-
 			if (overFriendButton) {
-				friendButtonParams = {
+				return {
 					text: 'Remove Friend',
-					icon: <X weight="bold" />,
-					danger: true,
+					icon: X,
+					variant: 'destructive',
 				};
 			}
+			return {
+				text: 'Friends',
+				icon: Check,
+				variant: 'secondary',
+			};
 		} else if (friendRequestReceived) {
-			friendButtonParams = {
+			return {
 				text: 'Accept Friend Request',
-				icon: <Plus weight="bold" />,
-				primary: true,
+				icon: Plus,
+				variant: 'default',
 			};
 		} else if (friendRequestSent) {
-			friendButtonParams = {
-				text: 'Friend Request Sent',
-				icon: <Timer weight="bold" />,
-				warning: true,
-			};
-
 			if (overFriendButton) {
-				friendButtonParams = {
+				return {
 					text: 'Cancel Friend Request',
-					icon: <X weight="bold" />,
-					danger: true,
+					icon: X,
+					variant: 'destructive',
 				};
 			}
+			return {
+				text: 'Friend Request Sent',
+				icon: Timer,
+				variant: 'destructive',
+			};
 		}
 
-		return friendButtonParams;
-	}
+		return {
+			text: 'Add Friend',
+			icon: Plus,
+			variant: 'secondary',
+		};
+	}, [friends, user.id, overFriendButton, friendRequestReceived, friendRequestSent]);
 
 	const friendButtonParams = getFriendButtonParams();
 
 	let friendButton = (
 		<Button
 			onClick={friendshipButton}
-			onMouseOver={() => setOverFriendButton(true)}
-			onMouseOut={() => setOverFriendButton(false)}
-			{...friendButtonParams}
-		/>
+			onMouseEnter={() => setOverFriendButton(true)}
+			onMouseLeave={() => setOverFriendButton(false)}
+			variant={friendButtonParams.variant}
+			icon={friendButtonParams.icon}
+		>
+			{friendButtonParams.text}
+		</Button>
 	);
 
 	if (loading || !user || !me || user.id === me.id) {

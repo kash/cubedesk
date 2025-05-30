@@ -1,12 +1,12 @@
 import confetti from 'canvas-confetti';
+import {getSetting} from '../../../lib/db/settings/query';
+import {FilterSolvesOptions} from '../../../lib/db/solves/query';
+import {getAveragePB} from '../../../lib/db/solves/stats/solves/average/average_pb';
+import {getSinglePB} from '../../../lib/db/solves/stats/solves/single/single_pb';
+import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
 import {useEventListener} from '../../../lib/util/event_handler';
 import {ITimerContext} from '../Timer';
-import {getSinglePB} from '../../../lib/db/solves/stats/solves/single/single_pb';
-import {getAveragePB} from '../../../lib/db/solves/stats/solves/average/average_pb';
-import {FilterSolvesOptions} from '../../../lib/db/solves/query';
 import {displayTimerAlert} from './notification';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
-import {getSetting} from '../../../lib/db/settings/query';
 
 let lastConfetti: Date = null;
 
@@ -38,7 +38,7 @@ export function listenForPbEvents(context: ITimerContext) {
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType.name} Single PB!`);
 		},
-		[context.cubeType]
+		[context.cubeType],
 	);
 
 	useEventListener(
@@ -47,7 +47,7 @@ export function listenForPbEvents(context: ITimerContext) {
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType.name} Average of 5 PB!`);
 		},
-		[context.cubeType]
+		[context.cubeType],
 	);
 
 	useEventListener(
@@ -56,7 +56,7 @@ export function listenForPbEvents(context: ITimerContext) {
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType.name} Single and Average of 5 PB!`);
 		},
-		[context.cubeType]
+		[context.cubeType],
 	);
 }
 

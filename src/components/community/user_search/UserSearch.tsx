@@ -1,8 +1,8 @@
-import React from 'react';
-import ProfileRow from '../profile_row/ProfileRow';
-import FriendshipRequest from '../../profile/friendship_request/FriendshipRequest';
-import PaginatedList from '../../common/paginated_list/PaginatedList';
 import {api} from '@/trpc/react';
+import React, {useCallback} from 'react';
+import PaginatedList from '../../common/paginated_list/PaginatedList';
+import FriendshipRequest from '../../profile/friendship_request/FriendshipRequest';
+import ProfileRow from '../profile_row/ProfileRow';
 
 interface Props {
 	query: string;
@@ -11,7 +11,7 @@ interface Props {
 export default function UserSearch(props: Props) {
 	const {query} = props;
 
-	async function fetchData(pageArgs: { page: number; pageSize: number }) {
+	const fetchData = useCallback(async (pageArgs: {page: number; pageSize: number}) => {
 		const result = await api.userSearch.search.query({
 			page: pageArgs.page,
 			pageSize: pageArgs.pageSize,
@@ -19,11 +19,11 @@ export default function UserSearch(props: Props) {
 		});
 
 		return result;
-	}
+	}, [query]);
 
 	return (
 		<div className="w-full p-2">
-			<div className="w-full max-w-4xl mx-auto">
+			<div className="mx-auto w-full max-w-4xl">
 				<PaginatedList<any>
 					searchQuery={query}
 					fetchData={fetchData}

@@ -1,8 +1,9 @@
 import {getIntegrationGetMe} from './oauth';
-import {InternalUserAccount, UserAccount} from '../schemas/UserAccount.schema';
 import {logger} from '../services/logger';
 import Discord from '../services/discord';
 import {getStripeCustomerById, stripe} from '../services/stripe';
+import {UserAccount} from '@/types/user-account';
+import {InternalUserAccount} from '@/types/user-account';
 
 interface DiscordMe {
 	id: string;
@@ -31,7 +32,7 @@ export async function fetchDiscordInfo(user: UserAccount) {
 		const userIsPro = await Discord.userHasRole(userDiscordId, 'Pro');
 
 		await Discord.removeRoleFromUser(userDiscordId, 'Pro');
-	} catch (e) {
+	} catch (e: unknown) {
 		logger.error('Could not fetch Discord info for user.', {
 			error: e,
 			userId: user.id,
@@ -39,7 +40,10 @@ export async function fetchDiscordInfo(user: UserAccount) {
 	}
 }
 
-export async function updateStripeCustomerWithDiscordMetadata(user: InternalUserAccount, discordId: string) {
+export async function updateStripeCustomerWithDiscordMetadata(
+	user: InternalUserAccount,
+	discordId: string,
+) {
 	if (!user.stripe_customer_id) {
 		return;
 	}

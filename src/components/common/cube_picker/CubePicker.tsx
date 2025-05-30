@@ -1,9 +1,13 @@
+import {Cube} from '@phosphor-icons/react/dist/ssr';
 import React from 'react';
-import Dropdown, {DropdownProps} from '../inputs/dropdown/Dropdown';
-import {getAllCubeTypeNames, getDefaultCubeTypeNames, getCubeTypeInfoById} from '../../../lib/util/cubes/util';
-import {Cube} from 'phosphor-react';
-import {IDropdownOption} from '../inputs/dropdown/dropdown_option/DropdownOption';
 import {CubeType} from '../../../lib/util/cubes/cube_types';
+import {
+	getAllCubeTypeNames,
+	getCubeTypeInfoById,
+	getDefaultCubeTypeNames,
+} from '../../../lib/util/cubes/util';
+import Dropdown, {DropdownProps} from '../inputs/dropdown/Dropdown';
+import {IDropdownOption} from '../inputs/dropdown/dropdown_option/DropdownOption';
 
 interface Props {
 	value: string;
@@ -42,7 +46,12 @@ export default function CubePicker(props: Props) {
 		const ct = getCubeTypeInfoById(name);
 		const disabled = ct?.id === value;
 
-		if (!name || !ct || (excludeOtherCubeType && name === 'other') || (excludeSelected && disabled)) {
+		if (
+			!name ||
+			!ct ||
+			(excludeOtherCubeType && name === 'other') ||
+			(excludeSelected && disabled)
+		) {
 			continue;
 		}
 

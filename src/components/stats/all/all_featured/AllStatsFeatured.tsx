@@ -1,13 +1,13 @@
+import {ArrowFatLinesUp, Hash, Timer} from '@phosphor-icons/react/dist/ssr';
 import React, {useContext, useMemo} from 'react';
-import {ArrowFatLinesUp, Hash, Timer} from 'phosphor-react';
-import {StatsContext} from '../../Stats';
-import {useSolveDb} from '../../../../lib/util/hooks/useSolveDb';
 import {fetchAllCubeTypesSolved} from '../../../../lib/db/solves/query';
-import {getCubeTypeInfoById} from '../../../../lib/util/cubes/util';
 import {getTotalSolveCount, getTotalSolveTime} from '../../../../lib/db/solves/stats/count';
-import NumberBlock from '../../common/number_block/NumberBlock';
+import {getCubeTypeInfoById} from '../../../../lib/util/cubes/util';
+import {useSolveDb} from '../../../../lib/util/hooks/useSolveDb';
 import {getTimeString} from '../../../../lib/util/time';
+import NumberBlock from '../../common/number_block/NumberBlock';
 import StatsGrid from '../../common/stats_grid/StatsGrid';
+import {StatsContext} from '../../Stats';
 
 export default function AllStatsFeatured() {
 	const context = useContext(StatsContext);
@@ -16,7 +16,7 @@ export default function AllStatsFeatured() {
 
 	const cubeTypes = useMemo(() => {
 		return fetchAllCubeTypesSolved();
-	}, [context.filterOptions, solveUpdate]);
+	}, []);
 
 	let topCubeType = null;
 	if (cubeTypes.length) {
@@ -24,12 +24,12 @@ export default function AllStatsFeatured() {
 	}
 
 	const totalSolves = useMemo(() => {
-		return getTotalSolveCount(context.filterOptions);
-	}, [context.filterOptions, solveUpdate]);
+		return getTotalSolveCount();
+	}, []);
 
 	const timeSpentCubing = useMemo(() => {
-		return getTotalSolveTime(context.filterOptions);
-	}, [context.filterOptions, solveUpdate]);
+		return getTotalSolveTime();
+	}, []);
 
 	return (
 		<StatsGrid rows={2} columns={2}>

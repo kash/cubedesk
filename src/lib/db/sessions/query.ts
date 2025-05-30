@@ -1,6 +1,6 @@
-import {getSessionDb} from './init';
-import {fetchSolves} from '../solves/query';
-import {Session} from '../../../server/schemas/Session.schema';
+import {Session} from '@/generated/zod';
+import {getSessionDb} from '@/lib/db/sessions/init';
+import {fetchSolves} from '@/lib/db/solves/query';
 
 interface FetchSessionOptions {
 	id?: string;
@@ -30,6 +30,7 @@ export function fetchSessions(options: FetchSessionOptions = {}) {
 
 				return bDate.getTime() - aDate.getTime();
 			}
+			return 0;
 		})
 		.data();
 }
@@ -45,7 +46,9 @@ export function getCubeTypesFromSession(session: Session) {
 	});
 
 	for (const solve of solves) {
-		types.add(solve.cube_type);
+		if (solve.cube_type) {
+			types.add(solve.cube_type);
+		}
 	}
 
 	return Array.from(types);

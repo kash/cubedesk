@@ -1,6 +1,6 @@
-import React, {ReactNode} from 'react';
+import {CheckSquare, Info, Warning, WarningOctagon} from '@phosphor-icons/react/dist/ssr';
 import './AlertContainer.scss';
-import {CheckSquare, Warning, WarningOctagon, Info} from 'phosphor-react';
+import React, {ReactNode} from 'react';
 import block from '../../../styles/bem';
 import Loading from '../loading/Loading';
 

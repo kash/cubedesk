@@ -1,12 +1,12 @@
-import React, {ReactNode, useMemo, useState} from 'react';
+import React, {ReactNode, useMemo, useState, useCallback} from 'react';
 import './MatchOver.scss';
 import block from '../../../../styles/bem';
-import {Sword} from 'phosphor-react';
-import Button from '../../../common/button/Button';
+import {Sword} from '@phosphor-icons/react/dist/ssr';
+import {Button} from '@/components/ui/button';
 import Avatar from '../../../common/avatar/Avatar';
 import {useMe} from '../../../../lib/util/hooks/useMe';
 import {socketClient} from '../../../../lib/util/socket/socketio';
-import {Match} from '../../../../server/schemas/Match.schema';
+import {Match} from '@/generated/zod';
 import Lobby from '../match_popup/lobby/Lobby';
 import {IModalProps} from '../../../common/modal/Modal';
 import EloChange from './elo_change/EloChange';
@@ -60,7 +60,7 @@ export default function MatchOver(props: Props) {
 
 	const isWinner = winner?.id === me.id;
 
-	function requestRematch() {
+	const requestRematch = useCallback(() => {
 		if (rematchRequested) {
 			return;
 		}
@@ -68,11 +68,11 @@ export default function MatchOver(props: Props) {
 		socketClient().emit('playerJoinedRematchQueue', match.id);
 
 		setRematchRequested(true);
-	}
+	}, [rematchRequested, match.id]);
 
-	function exitModal() {
+	const exitModal = useCallback(() => {
 		exitMatch();
-	}
+	}, [exitMatch]);
 
 	if (newMatch) {
 		return (

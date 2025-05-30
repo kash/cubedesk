@@ -1,8 +1,8 @@
 import React from 'react';
-import {ArrowRight} from 'phosphor-react';
+import {ArrowRight} from '@phosphor-icons/react/dist/ssr';
 import HTSNav from './hts_nav/HTSNav';
 import HTSContent from './hts_content/HTSContent';
-import Button from '../../common/button/Button';
+import {Button} from '@/components/ui/button';
 
 export default function HTSLearn() {
 	return (

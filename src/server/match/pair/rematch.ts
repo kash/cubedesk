@@ -1,4 +1,4 @@
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/generated/zod';
 import {getRematchRoomName} from '../match';
 import {pairPlayersInRoom} from './start_match';
 import MatchTypeLogic from '../match_types/match_type_interface';

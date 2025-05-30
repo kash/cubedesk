@@ -1,34 +1,21 @@
-import React, {useEffect} from 'react';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
 import './ActiveMembership.scss';
-import block from '../../../../styles/bem';
-import Button from '../../../common/button/Button';
-import {Star} from 'phosphor-react';
-import ProFeatureList from '../pro_card/pro_feature_list/ProFeatureList';
-import Module from '../../../common/module/Module';
-import {getDateFromNow} from '../../../../lib/util/dates';
-import {triggerConfetti} from '../../../timer/helpers/pb';
-import {toastSuccess} from '../../../../lib/util/toast';
+import Module from '@/components/common/module/Module';
+import {triggerConfetti} from '@/components/timer/helpers/pb';
+import {Button} from '@/components/ui/button';
+import {getDateFromNow} from '@/lib/util/dates';
+import {toastSuccess} from '@/lib/util/toast';
+import block from '@/styles/bem';
 import {api} from '@/trpc/react';
+import {Membership} from '@/types/memebership';
+import {Star} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback, useEffect} from 'react';
+import ProFeatureList from '../pro_card/pro_feature_list/ProFeatureList';
 
 const b = block('active-membership');
 
 interface Props {
-	membership: {
-		status: string;
-		current_period_end: number;
-		cancel_at_period_end: boolean;
-		canceled_at: number;
-		ended_at: number;
-		days_until_due: number;
-		start_date: number;
-		pricing: {
-			id: string;
-			currency: string;
-			interval: string;
-			interval_count: number;
-			unit_amount: number;
-		};
-	};
+	membership: Membership;
 }
 
 export default function ActiveMembership(props: Props) {
@@ -54,10 +41,10 @@ export default function ActiveMembership(props: Props) {
 		}
 	}, []);
 
-	async function cancelMembership() {
+	const cancelMembership = useCallback(async () => {
 		await cancelMemMut.mutateAsync();
 		window.location.reload();
-	}
+	}, [cancelMemMut]);
 
 	let cancelBlock = null;
 	if (cancelAtPeriodEnd) {
@@ -73,18 +60,16 @@ export default function ActiveMembership(props: Props) {
 				</div>
 				{cancelBlock}
 				<ProFeatureList />
-				<Button
-					hidden={!!cancelAtPeriodEnd}
-					confirmModalProps={{
-						title: 'Cancel Membership',
-						description: "Be careful here. You're about to cancel your Pro membership.",
-						buttonText: 'Cancel Membership',
-						triggerAction: cancelMembership,
-					}}
-					flat
-					danger
-					text="Cancel Membership"
-				/>
+				{!cancelAtPeriodEnd && (
+					<ConfirmDialog
+						title="Cancel Membership"
+						description="Be careful here. You're about to cancel your Pro membership."
+						buttonText="Cancel Membership"
+						triggerAction={cancelMembership}
+					>
+						<Button variant="destructive">Cancel Membership</Button>
+					</ConfirmDialog>
+				)}
 			</div>
 		</Module>
 	);

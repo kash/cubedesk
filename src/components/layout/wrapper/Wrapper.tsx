@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect} from 'react';
+import React, {ReactNode, useEffect, useCallback} from 'react';
 import Nav, {NAV_LINKS} from '../nav/Nav';
 import './Wrapper.scss';
 import {ToastContainer} from 'react-toastify';
@@ -8,7 +8,7 @@ import {useSettings} from '../../../lib/util/hooks/useSettings';
 import {updateThemeColors} from '../themes';
 import {useMe} from '../../../lib/util/hooks/useMe';
 import DemoWarning from './DemoWarning';
-import {useRouteMatch} from 'react-router-dom';
+import {usePathname} from 'next/navigation';
 import DemoRestricted from './DemoRestricted';
 
 const b = block('body');
@@ -23,7 +23,7 @@ export default function Wrapper(props: Props) {
 	const {hideTopNav, noPadding} = props;
 
 	const me = useMe();
-	const match = useRouteMatch();
+	const pathname = usePathname();
 
 	const appLoaded = useGeneral('app_loaded');
 	const navCollapsed = useSettings('nav_collapsed');
@@ -43,26 +43,34 @@ export default function Wrapper(props: Props) {
 		}
 
 		updateThemeColors();
-	}, [appLoaded, buttonColor, primaryColor, secondaryColor, backgroundColor, moduleColor, textColor]);
+	}, [
+		appLoaded,
+		buttonColor,
+		primaryColor,
+		secondaryColor,
+		backgroundColor,
+		moduleColor,
+		textColor,
+	]);
 
-	let nav = <Nav />;
+	let nav: ReactNode = <Nav />;
 	if (hideTopNav) {
 		nav = null;
 	}
 
-	function isPageAuthBlocked() {
+	const isPageAuthBlocked = useCallback(() => {
 		if (me) {
 			return false;
 		}
 
 		for (const navLink of NAV_LINKS) {
-			if (navLink.loginRequired && match.path.match(navLink.match)) {
+			if (navLink.loginRequired && pathname.match(navLink.match)) {
 				return true;
 			}
 		}
 
 		return false;
-	}
+	}, [me, pathname]);
 
 	let body = props.children;
 	if (isPageAuthBlocked()) {

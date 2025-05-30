@@ -3,12 +3,12 @@ import './TargetSession.scss';
 import History from '../../../../modules/history/History';
 import Avatar from '../../../../common/avatar/Avatar';
 import Emblem from '../../../../common/emblem/Emblem';
-import LinkButton from '../../../../common/button/LinkButton';
+import Link from 'next/link';
 import {useDispatch} from 'react-redux';
 import {openModal} from '../../../../../lib/actions/general';
 import {getGameLink} from '../../../game/Game';
-import Button from '../../../../common/button/Button';
-import {GameSession} from '../../../../../server/schemas/Game.schema';
+import {Button} from '@/components/ui/button';
+import {GameSession} from '@/generated/zod';
 import {GameType} from '../../../../../shared/match/consts';
 
 interface Props {
@@ -41,7 +41,11 @@ export default function TargetSession(props: Props) {
 	if (session.match) {
 		let rejoin = null;
 		if (!session.match.ended_at) {
-			rejoin = <LinkButton to={`${getGameLink(gameType)}/${session.match.link_code}`} text="Rejoin Match" />;
+			rejoin = (
+				<Link href={`${getGameLink(gameType)}/${session.match.link_code}`}>
+					<Button>Rejoin Match</Button>
+				</Link>
+			);
 		}
 
 		players = (
@@ -72,7 +76,7 @@ export default function TargetSession(props: Props) {
 				<span>{new Date(session.created_at).toLocaleString()}</span>
 			</div>
 			<div className="cd-community__sessions__session__actions">
-				<Button onClick={openSolves} text="View Solves" />
+				<Button onClick={openSolves}>View Solves</Button>
 			</div>
 			{players}
 		</div>

@@ -13,7 +13,7 @@ export function initSearch() {
 				password: process.env.ELASTICSEARCH_ELASTIC_PASSWORD,
 			},
 		});
-	} catch (e) {
+	} catch (e: unknown) {
 		console.error('Could not initiate Elasticsearch client');
 	}
 }

@@ -1,6 +1,6 @@
-import Loki from 'lokijs';
 import _ from 'lodash';
-import LokiIndexDbAdaptor from 'lokijs/src/loki-indexed-adapter.js';
+import Loki from 'lokijs';
+import LokiIndexDbAdaptor from 'lokijs/src/loki-indexed-adapter';
 
 export interface LokiFetchOptions {
 	sortBy?: string;

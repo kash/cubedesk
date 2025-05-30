@@ -1,8 +1,8 @@
 import React from 'react';
 import './ProfileElo.scss';
-import block from '../../../styles/bem';
-import {EloRating} from '../../../../client/@types/generated/graphql';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
+import block from '@/styles/bem';
+import {EloRating} from '@/generated/zod';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
 
 const b = block('profile-elo');
 

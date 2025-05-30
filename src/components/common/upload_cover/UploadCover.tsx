@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import Dropzone from 'react-dropzone';
+import {CloudArrowUp} from '@phosphor-icons/react/dist/ssr';
+import React, {useCallback, useState} from 'react';
 import './UploadCover.scss';
-import {CloudArrowUp} from 'phosphor-react';
-import block from '../../../styles/bem';
+import Dropzone from 'react-dropzone';
 import {toastError} from '../../../lib/util/toast';
+import block from '../../../styles/bem';
 import LoadingIcon from '../LoadingIcon';
 
 const b = block('common-upload-cover');
@@ -17,7 +17,7 @@ export default function UploadCover(props: Props) {
 	const {allowGif, upload} = props;
 	const [loading, setLoading] = useState(false);
 
-	async function onDrop(files) {
+	const onDrop = useCallback(async (files) => {
 		if (loading) {
 			return;
 		}
@@ -35,7 +35,7 @@ export default function UploadCover(props: Props) {
 		});
 
 		setLoading(false);
-	}
+	}, [loading, upload]);
 
 	let coverIcon = <CloudArrowUp weight="bold" />;
 
@@ -45,7 +45,11 @@ export default function UploadCover(props: Props) {
 
 	return (
 		<div className={b({loading})}>
-			<Dropzone maxFiles={1} accept={['.png', '.jpeg', '.jpg'].concat(allowGif ? ['.gif'] : [])} onDrop={onDrop}>
+			<Dropzone
+				maxFiles={1}
+				accept={['.png', '.jpeg', '.jpg'].concat(allowGif ? ['.gif'] : [])}
+				onDrop={onDrop}
+			>
 				{({getRootProps, getInputProps}) => (
 					<div {...getRootProps()} className={b('body')}>
 						<input {...getInputProps()} />

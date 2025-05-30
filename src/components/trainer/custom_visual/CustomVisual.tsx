@@ -1,8 +1,8 @@
-import React from 'react';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
 import './CustomVisual.scss';
-import block from '../../../styles/bem';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
 import CSS from 'csstype';
+import React from 'react';
+import block from '../../../styles/bem';
 
 const b = block('custom-visual');
 
@@ -127,7 +127,7 @@ export default function CustomVisual(props: Props) {
 					}}
 				>
 					{cubelets}
-				</div>
+				</div>,
 			);
 		}
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import './ThemeOptions.scss';
-import block from '../../../../styles/bem';
-import SettingRow from '../../setting/row/SettingRow';
-import ColorPicker from '../../../common/color_picker/ColorPicker';
-import {useSettings} from '../../../../lib/util/hooks/useSettings';
-import {setSetting} from '../../../../lib/db/settings/update';
-import ThemeOption from './theme_option/ThemeOption';
 import {AllSettings, getDefaultSetting} from '../../../../lib/db/settings/query';
+import {setSetting} from '../../../../lib/db/settings/update';
+import {useSettings} from '../../../../lib/util/hooks/useSettings';
+import block from '../../../../styles/bem';
+import ColorPicker from '../../../common/color_picker/ColorPicker';
+import SettingRow from '../../setting/row/SettingRow';
+import ThemeOption from './theme_option/ThemeOption';
 
 const b = block('settings-theme-options');
 

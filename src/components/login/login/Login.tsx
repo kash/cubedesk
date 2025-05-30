@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useCallback, useState} from 'react';
+import Link from 'next/link';
 import {getRedirectLink, getSignUpLink} from '../../../lib/util/auth/login';
-import Input from '../../common/inputs/input/Input';
+import {Input} from '@/components/ui/input';
+import {InputWrapper} from '@/components/common/InputWrapper';
 import block from '../../../styles/bem';
-import Button from '../../common/button/Button';
+import {Button} from '@/components/ui/button';
 import {useInput} from '../../../lib/util/hooks/useInput';
 import {api} from '@/trpc/react';
 
@@ -16,7 +17,7 @@ export default function Login() {
 
 	const loginMutation = api.auth.login.useMutation();
 
-	async function login(e) {
+	const login = useCallback(async (e) => {
 		e.preventDefault();
 
 		if (loginMutation.isPending) {
@@ -34,18 +35,27 @@ export default function Login() {
 		} catch (err) {
 			setError(err.message);
 		}
-	}
+	}, [loginMutation, email, password]);
 
 	return (
 		<div className={b()}>
 			<form onSubmit={login}>
-				<Input type="email" onChange={setEmail} value={email} name="email" legend="Email" />
-				<Input onChange={setPassword} type="password" value={password} name="password" legend="Password" />
-				<Link to="/forgot">Forgot password</Link>
-				<Button loading={loginMutation.isPending} type="submit" error={error} large primary text="Log In" />
+				<InputWrapper label="Email">
+					<Input type="email" onChange={setEmail} value={email} name="email" />
+				</InputWrapper>
+				<InputWrapper label="Password">
+					<Input onChange={setPassword} type="password" value={password} name="password" />
+				</InputWrapper>
+				<Link href="/forgot">Forgot password</Link>
+				<div>
+					<Button loading={loginMutation.isPending} type="submit" size="lg">
+						Log In
+					</Button>
+					{error && <p className="text-sm text-red-600 mt-1">{error}</p>}
+				</div>
 			</form>
 			<p>
-				Don't have an account? <Link to={getSignUpLink()}>Sign up</Link>
+				Don't have an account? <Link href={getSignUpLink()}>Sign up</Link>
 			</p>
 		</div>
 	);

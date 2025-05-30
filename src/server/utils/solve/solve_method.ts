@@ -1,7 +1,7 @@
 import Cube from 'cubejs';
 import {processSmartTurns, SmartTurn} from '../../../lib/util/smart_scramble';
-import {getLLState, reverseTurns} from './turns';
 import {getMatchingOLLState, getMatchingPLLState} from './ll_states';
+import {getLLState, reverseTurns} from './turns';
 
 export function getSolveSteps(turns) {
 	const SOLVED_STATE = 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB';
@@ -182,10 +182,19 @@ export function getSolveSteps(turns) {
 		}
 	}
 
-	function setStep(completedAt: number, side: string, name: string, index: number, parent: string, moves: SmartTurn[], turnsIndex: number, options?: {
-		ollCaseKey?: string
-		pllCaseKey?: string
-	}) {
+	function setStep(
+		completedAt: number,
+		side: string,
+		name: string,
+		index: number,
+		parent: string,
+		moves: SmartTurn[],
+		turnsIndex: number,
+		options?: {
+			ollCaseKey?: string;
+			pllCaseKey?: string;
+		},
+	) {
 		sides = [side];
 		const time = (completedAt - lastStepCompletedAt) / 1000;
 
@@ -257,7 +266,15 @@ export function getSolveSteps(turns) {
 					continue;
 				}
 
-				setStep(completedAt, base, stepName, slotCounter - 1, 'f2l', [...tempTurns], turnIndex + index);
+				setStep(
+					completedAt,
+					base,
+					stepName,
+					slotCounter - 1,
+					'f2l',
+					[...tempTurns],
+					turnIndex + index,
+				);
 				tempTurns = [];
 				cornerMem[corner] = true;
 				slotCounter += 1;

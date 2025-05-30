@@ -1,9 +1,9 @@
+import {Button} from '@/components/ui/button';
+import {CaretDown} from '@phosphor-icons/react/dist/ssr';
 import React, {useEffect, useState} from 'react';
-import {CaretDown} from 'phosphor-react';
 import {setSetting} from '../../../lib/db/settings/update';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import {useSettings} from '../../../lib/util/hooks/useSettings';
-import Button from '../../common/button/Button';
+import Dropdown from '../../common/inputs/dropdown/Dropdown';
 import {IModalProps} from '../../common/modal/Modal';
 import ModalHeader from '../../common/modal/modal_header/ModalHeader';
 
@@ -109,7 +109,15 @@ export default function StackMatPicker(props: IModalProps) {
 					}))}
 				/>
 			</div>
-			<Button large glow text="Save" primary disabled={disabled} onClick={saveSelectedAudio} error={error} />
+			<Button
+				large
+				glow
+				text="Save"
+				primary
+				disabled={disabled}
+				onClick={saveSelectedAudio}
+				error={error}
+			/>
 		</div>
 	);
 }

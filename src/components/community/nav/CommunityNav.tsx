@@ -1,12 +1,12 @@
+import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import { Input } from '@/components/ui/input';
+import PageTitle from '@/components/common/page-title/PageTitle';
+import block from '@/styles/bem';
+import {MagnifyingGlass} from '@phosphor-icons/react/dist/ssr';
+import {usePathname} from 'next/navigation';
 import React, {useContext} from 'react';
-import HorizontalNav from '../../common/horizontal_nav/HorizontalNav';
-import {useRouteMatch} from 'react-router-dom';
-import {CommunityContext} from '../Community';
-import block from '../../../styles/bem';
-import Input from '../../common/inputs/input/Input';
-import PageTitle from '../../common/page_title/PageTitle';
 import {useDispatch} from 'react-redux';
-import {MagnifyingGlass} from 'phosphor-react';
+import {CommunityContext} from '../Community';
 
 const TABS = [
 	{
@@ -27,9 +27,10 @@ export default function CommunityNav() {
 	const dispatch = useDispatch();
 	const {userSearchQuery, setUserSearchQuery} = useContext(CommunityContext);
 
-	const page = useRouteMatch().path.split('/')[2];
+	const pathname = usePathname();
+	const page = pathname.split('/')[2];
 
-	function handleQueryChange(e) {
+	function handleQueryChange(e: string) {
 		setUserSearchQuery(e);
 	}
 
@@ -39,12 +40,15 @@ export default function CommunityNav() {
 				<div className={b('nav-list')}>
 					<HorizontalNav tabId={page} tabs={TABS} />
 					<div className={b('search-input')}>
-						<Input
-							icon={<MagnifyingGlass />}
-							placeholder="Search for username"
-							value={userSearchQuery}
-							onChange={handleQueryChange}
-						/>
+						<div className="relative">
+							<MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+							<Input
+								placeholder="Search for username"
+								className="pl-10"
+								value={userSearchQuery}
+								onChange={(e) => handleQueryChange(e.target.value)}
+							/>
+						</div>
 					</div>
 				</div>
 			</PageTitle>

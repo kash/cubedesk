@@ -1,11 +1,11 @@
-import {getLocationFromIp} from '../services/ipstack';
+import {getLocationFromIp} from '@/server/services/ipstack';
 import {v4 as uuid} from 'uuid';
-import {hashPassword} from '../utils/password';
+import {hashPassword} from '@/server/utils/password';
 import {Prisma} from '@prisma/client';
-import {getPrisma} from '../database';
+import {getPrisma} from '@/server/services/database';
 import dayjs from 'dayjs';
-import {createMetricLog} from './metric_log';
-import {MetricLogType} from '../@types/enums';
+import {createMetricLog} from '@/server/models/metric_log';
+import {MetricLogType} from '@/server/@types/enums';
 import {UserAccount} from '@/generated/zod';
 import {UserAccount as PrismaUserAccount} from '@prisma/client';
 
@@ -13,9 +13,9 @@ import {UserAccount as PrismaUserAccount} from '@prisma/client';
 type InternalUserAccount = PrismaUserAccount;
 type PublicUserAccount = Omit<PrismaUserAccount, 'password'>;
 // TODO: Replace with TRPCError when needed
-import {ErrorCode} from '../constants/errors';
-import {logger} from '../services/logger';
-import {getActiveBanLogsByUserId} from './ban_log';
+import {ErrorCode} from '@/server/constants/errors';
+import {logger} from '@/server/services/logger';
+import {getActiveBanLogsByUserId} from '@/server/models/ban_log';
 
 export const publicUserInclude = {
 	select: {
@@ -279,7 +279,7 @@ export async function deleteUserAccount(user: UserAccount): Promise<UserAccount 
 
 	try {
 		await getPrisma().$transaction(txs);
-	} catch (e) {
+	} catch (e: unknown) {
 		if (e instanceof Error) {
 			throw new Error((e as Error).message);
 		}
@@ -305,7 +305,7 @@ export async function createUserAccount(
 	try {
 		const location = await getLocationFromIp(ip);
 		country = location.country_iso || 'NONE';
-	} catch (e) {
+	} catch (e: unknown) {
 		logger.error('Could not get location for IP', {
 			ip,
 			error: e,

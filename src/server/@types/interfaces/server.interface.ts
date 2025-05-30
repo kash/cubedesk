@@ -1,6 +1,5 @@
 import {PrismaClient} from '@prisma/client';
-import express from 'express';
-import {InternalUserAccount, UserAccount} from '../../schemas/UserAccount.schema';
+import {UserAccount} from '@/generated/zod';
 import {NotificationType} from '../enums';
 
 export interface NotificationData {
@@ -20,10 +19,4 @@ export interface NotificationInput {
 	sendEmail: boolean;
 }
 
-export interface GraphQLContext {
-	ipAddress: string;
-	user: InternalUserAccount;
-	req: express.Request;
-	res: express.Response;
-	prisma: PrismaClient;
-}
+// GraphQLContext removed - using tRPC instead

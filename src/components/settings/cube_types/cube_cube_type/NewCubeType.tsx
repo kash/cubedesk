@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import {Button} from '@/components/ui/button';
 import './NewCubeType.scss';
-import block from '../../../../styles/bem';
-import {useInput} from '../../../../lib/util/hooks/useInput';
+import React, {useState} from 'react';
 import {ScrambleType} from '../../../../lib/util/cubes/cube_scrambles';
-import {IModalProps} from '../../../common/modal/Modal';
-import Input from '../../../common/inputs/input/Input';
-import Button from '../../../common/button/Button';
-import ScramblePicker from '../../../common/scramble_picker/ScramblePicker';
+import {useInput} from '../../../../lib/util/hooks/useInput';
+import block from '../../../../styles/bem';
 import {api} from '../../../../trpc/react';
+import Input from '../../../common/inputs/input/Input';
+import {IModalProps} from '../../../common/modal/Modal';
 import ModalHeader from '../../../common/modal/modal_header/ModalHeader';
+import ScramblePicker from '../../../common/scramble_picker/ScramblePicker';
 
 const b = block('new-cube-type');
 
@@ -37,7 +37,7 @@ export default function NewCubeType(props: IModalProps) {
 
 			props.onComplete();
 			window.location.reload(); // Refresh to get updated custom cube types
-		} catch (e) {
+		} catch (e: unknown) {
 			setLoading(false);
 			setError(e.message);
 		}

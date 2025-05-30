@@ -1,6 +1,6 @@
 import {updateMatchParticipant} from '../../models/match_participation';
 import {getMatchById} from '../../models/match';
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/generated/zod';
 import MatchTypeLogic from '../match_types/match_type_interface';
 import {emitMatchUpdate} from './send';
 import {MatchStanding, MatchUpdate, PlayerStatus} from '../../../lib/shared/match/types';

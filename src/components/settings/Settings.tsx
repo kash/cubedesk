@@ -1,11 +1,10 @@
-import React, {ReactNode} from 'react';
+import {usePathname} from 'next/navigation';
 import './Settings.scss';
-import HorizontalNav, {HorizontalNavTab} from '../common/horizontal_nav/HorizontalNav';
-import Appearance from './appearance/Appearance';
+import React, {ReactNode} from 'react';
 import {useGeneral} from '../../lib/util/hooks/useGeneral';
-import PageTitle from '../common/page_title/PageTitle';
-import {useRouteMatch} from 'react-router-dom';
 import block from '../../styles/bem';
+import HorizontalNav, {HorizontalNavTab} from '../common/horizontal_nav/HorizontalNav';
+import PageTitle from '../common/page-title/PageTitle';
 
 const b = block('settings');
 
@@ -21,7 +20,8 @@ interface Props {
 
 export default function Settings(props: Props) {
 	const {children} = props;
-	const page = useRouteMatch().path.split('/').pop();
+	const pathname = usePathname();
+	const page = pathname.split('/').pop();
 	const mobileMode = useGeneral('mobile_mode');
 
 	return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import './SignUpButton.scss';
-import {ArrowRight} from 'phosphor-react';
+import {ArrowRight} from '@phosphor-icons/react/dist/ssr';
 import block from '../../../../styles/bem';
 
 const b = block('landing-signup-button');

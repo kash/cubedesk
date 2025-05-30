@@ -1,19 +1,19 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './CustomMatch.scss';
-import block from '../../../../../styles/bem';
-import {ArrowRight, Eye} from 'phosphor-react';
-import CopyText from '../../../../common/copy_text/CopyText';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '../../../../api';
-import {getGameMetaData} from '../../../Play';
+import block from '@/styles/bem';
+import {ArrowRight, Eye} from '@phosphor-icons/react/dist/ssr';
+import CopyText from '@/components/common/copy_text/CopyText';
+import {getGameMetaData} from '@/components/play/Play';
 import {MatchPopupContext} from '../MatchPopup';
-import Loading from '../../../../common/loading/Loading';
-import Button from '../../../../common/button/Button';
-import {toastError} from '../../../../../lib/util/toast';
-import {getCubeTypeInfoById} from '../../../../../lib/util/cubes/util';
-import Tag from '../../../../common/tag/Tag';
-import {GameType} from '../../../../../shared/match/consts';
-import {Match} from '../../../../../server/schemas/Match.schema';
+import Loading from '@/components/common/loading/Loading';
+import {Button} from '@/components/ui/button';
+import {toastError} from '@/lib/util/toast';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
+import Tag from '@/components/common/tag/Tag';
+import {GameType} from '@/shared/match/consts';
+import {Match} from '@/generated/zod';
+import {api} from '@/trpc/react';
+import Link from 'next/link';
 
 const b = block('custom-match');
 
@@ -40,6 +40,8 @@ export default function CustomMatch() {
 		setShowChallengeLink(!showChallengeLink);
 	}
 
+	const createMatchMutation = api.match.createMatchWithNewSession.useMutation();
+
 	async function createChallenge() {
 		if (creatingLink) {
 			return;
@@ -47,31 +49,17 @@ export default function CustomMatch() {
 
 		setCreatingLink(true);
 
-		const query = gql`
-			mutation Mutate($input: MatchSessionInput) {
-				createMatchWithNewSession(input: $input) {
-					id
-					link_code
-					spectate_code
-				}
-			}
-		`;
-
 		try {
-			const res = await gqlMutate<{createMatchWithNewSession: Match}>(query, {
-				input: {
-					min_players: minPlayers,
-					max_players: maxPlayers,
-					cube_type: cubeType,
-					match_type: matchType,
-				},
+			const newMatch = await createMatchMutation.mutateAsync({
+				min_players: minPlayers,
+				max_players: maxPlayers,
+				cube_type: cubeType,
+				match_type: matchType,
 			});
-
-			const newMatch = res.data.createMatchWithNewSession;
 
 			setMatch(newMatch);
 			setCreatingLink(false);
-		} catch (e) {
+		} catch (e: unknown) {
 			console.error(e);
 			toastError(e);
 		}
@@ -116,11 +104,12 @@ export default function CustomMatch() {
 					<div className={b('link')}>{getMatchLinkBody()}</div>
 					<div className={b('actions')}>
 						<Button
-							text="Show Link"
 							onClick={toggleShowChallengeLink}
-							icon={<Eye weight="bold" />}
-							white={showChallengeLink}
-						/>
+							variant={showChallengeLink ? "outline" : "secondary"}
+						>
+							<Eye weight="bold" className="mr-2" />
+							Show Link
+						</Button>
 						<CopyText
 							buttonProps={{
 								text: 'Copy Link',
@@ -139,7 +128,12 @@ export default function CustomMatch() {
 						}}
 						text={spectateLink}
 					/>
-					<Button icon={<ArrowRight />} primary glow large text="Join Match" to={matchLink} />
+					<Link href={matchLink}>
+						<Button variant="default" size="lg">
+							<ArrowRight className="mr-2" />
+							Join Match
+						</Button>
+					</Link>
 				</div>
 			</div>
 		);

@@ -3,7 +3,7 @@ import {RemoteSocket, Socket} from 'socket.io';
 import {createRedisKey, getValueFromRedis, keyExistsInRedis, RedisNamespace, setKeyInRedis} from '../services/redis';
 import {getMeWithCookieString} from '../utils/auth';
 import {MatchConst} from '../../lib/shared/match/consts';
-import {PublicUserAccount} from '../schemas/UserAccount.schema';
+import {PublicUserAccount} from '@/types/user-account';
 import {DefaultEventsMap} from 'socket.io/dist/typed-events';
 
 export type SocketType = Socket | RemoteSocket<DefaultEventsMap, any>;

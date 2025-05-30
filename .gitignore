@@ -10,3 +10,5 @@ build
 client/@types/generated
 .envrc
 .tool-versions
+*.tsbuildinfo
+next-env.d.ts

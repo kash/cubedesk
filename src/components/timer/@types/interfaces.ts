@@ -1,10 +1,10 @@
 import {ReactComponentElement, ReactNode} from 'react';
-import {Match} from '../../../../client/@types/generated/graphql';
-import {ChallengerProps} from '../../play/target/challengers/challenger/Challenger';
+import {Match} from '@/generated/zod';
+import {ChallengerProps} from '@/components/play/target/challengers/challenger/Challenger';
 import {TimerModuleDropdownOptions, TimerModuleType} from './enums';
 import {ITimerContext} from '../Timer';
-import {TimerLayoutPosition} from '../../../lib/db/settings/query';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {TimerLayoutPosition} from '@/lib/db/settings/query';
+import {Solve} from '@/generated/zod';
 
 interface TimerHeaderOptions {
 	hide?: boolean; // Hides the whole header

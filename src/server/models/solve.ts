@@ -1,15 +1,15 @@
 import {v4 as uuid} from 'uuid';
-import {getPrisma} from '../database';
+import {getPrisma} from '@/server/services/database';
 import uniqid from 'uniqid';
-import {publicUserInclude} from './user_account';
+import {publicUserInclude} from '@/server/models/user_account';
 import {Solve} from '@/generated/zod';
 import {UserAccount as PrismaUserAccount, Solve as PrismaSolve} from '@prisma/client';
 
 // Temporary types during migration
 type SolveInput = Partial<PrismaSolve>;
 type UserAccount = PrismaUserAccount;
-import {generateRandomCode} from '../../shared/code';
-import {sanitizeSolve} from '../../shared/solve';
+import {generateRandomCode} from '@/shared/code';
+import {sanitizeSolve} from '@/shared/solve';
 
 export function deleteTrainingSolves(id, user) {
 	return getPrisma().solve.deleteMany({

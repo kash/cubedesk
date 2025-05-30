@@ -1,4 +1,4 @@
-import {AlgorithmOverride} from '../../../../client/@types/generated/graphql';
+import {AlgorithmOverride} from '@/generated/zod';
 import {updateTrainerDb} from './update';
 import {TrainerAlgorithmExtended} from './init';
 import {fetchTrainerAlgorithmById} from './query';

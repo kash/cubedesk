@@ -1,9 +1,9 @@
 import React from 'react';
-import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from './timers';
-import block from '../../../styles/bem';
-import {setTimerParam, setTimerParams} from './params';
-import Tag, {TagProps} from '../../common/tag/Tag';
 import {getTimerStore} from '../../../lib/util/store/getTimer';
+import block from '../../../styles/bem';
+import Tag, {TagProps} from '../../common/tag/Tag';
+import {setTimerParam, setTimerParams} from './params';
+import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from './timers';
 
 const b = block('timer-notif');
 
@@ -35,7 +35,7 @@ export function displayTimerAlert(tagProps: TagProps, dontHide?: boolean) {
 					className: b({out: true}),
 				}),
 			});
-		}, HIDE_NOTIF_TIMEOUT)
+		}, HIDE_NOTIF_TIMEOUT),
 	);
 }
 

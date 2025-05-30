@@ -1,8 +1,8 @@
 import React from 'react';
-import './Empty.scss';
-import block from '../../../styles/bem';
-import {useTheme} from '../../../lib/util/hooks/useTheme';
-import {resourceUri} from '../../../lib/util/storage';
+import '@/components/common/empty/Empty.scss';
+import block from '@/styles/bem';
+import {useTheme} from '@/lib/util/hooks/useTheme';
+import {resourceUri} from '@/lib/util/storage';
 
 const b = block('empty');
 

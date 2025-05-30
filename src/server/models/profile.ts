@@ -1,6 +1,6 @@
-import {getPrisma} from '../database';
-import {Profile} from '../schemas/Profile.schema';
-import {publicUserInclude} from './user_account';
+import {getPrisma} from '@/server/services/database';
+import {Profile} from '@/generated/zod';
+import {publicUserInclude} from '@/server/models/user_account';
 
 export function getUserProfile(user): Promise<Profile> {
 	return getPrisma().profile.findUnique({

@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProofCard.scss';
-import {Link, Quotes} from 'phosphor-react';
+import {Link, Quotes} from '@phosphor-icons/react/dist/ssr';
 import block from '../../../../../styles/bem';
 import {resourceUri} from '../../../../../lib/util/storage';
 

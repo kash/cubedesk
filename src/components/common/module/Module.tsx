@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import './Module.scss';
-import block from '../../../styles/bem';
 import CSS from 'csstype';
+import './Module.scss';
+import React, {ReactNode} from 'react';
+import block from '../../../styles/bem';
 
 const b = block('module');
 

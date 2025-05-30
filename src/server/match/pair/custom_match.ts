@@ -1,4 +1,4 @@
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/generated/zod';
 import {getMatchPlayersRoomName, userExistsInMatch} from '../match';
 import {getClientsInRoom, getDetailedClientInfo, isClientInRoom, joinRoom} from '../util';
 import MatchTypeLogic from '../match_types/match_type_interface';

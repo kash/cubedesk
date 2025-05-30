@@ -22,7 +22,7 @@ export async function deleteImage(image) {
 				id: image.id,
 			},
 		});
-	} catch (e) {
+	} catch (e: unknown) {
 		logger.warn('Could not find image to delete.', {
 			image,
 			error: e,

@@ -35,7 +35,7 @@ export default class Discord {
 				return guild.members.fetch(discordUserId);
 			}
 			return member;
-		} catch (e) {
+		} catch (e: unknown) {
 			logger.warn(`Could not get Discord member from Guild.`, {
 				discordUserId,
 				error: e,

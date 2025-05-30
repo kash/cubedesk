@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useCallback, useContext} from 'react';
 import './ProcessData.scss';
-import block from '../../../../../styles/bem';
 import {useDropzone} from 'react-dropzone';
-import {ImportDataContext} from '../ImportData';
 import {toastError} from '../../../../../lib/util/toast';
+import block from '../../../../../styles/bem';
 import ImportSection from '../import_section/ImportSection';
+import {ImportDataContext} from '../ImportData';
 
 const b = block('process-data');
 
@@ -23,7 +23,16 @@ export default function ProcessData() {
 		return null;
 	}
 
-	function onDrop(files: File[]) {
+	const parseData = useCallback((txt: string) => {
+		try {
+			const importData = timerImportData.getImportableData(txt, context);
+			context.setImportableData(importData);
+		} catch (e: unknown) {
+			toastError(e.message);
+		}
+	}, [timerImportData, context]);
+
+	const onDrop = useCallback((files: File[]) => {
 		if (!files || !files.length) {
 			toastError('Invalid file. Please try again.');
 			return;
@@ -38,16 +47,7 @@ export default function ProcessData() {
 			parseData(txt);
 		});
 		reader.readAsText(file);
-	}
-
-	function parseData(txt: string) {
-		try {
-			const importData = timerImportData.getImportableData(txt, context);
-			context.setImportableData(importData);
-		} catch (e) {
-			toastError(e.message);
-		}
-	}
+	}, [context, parseData]);
 
 	return (
 		<div className={b()}>

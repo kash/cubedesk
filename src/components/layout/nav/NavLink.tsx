@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import Tag from '../../common/tag/Tag';
-import {Lock} from 'phosphor-react';
+import {Lock} from '@phosphor-icons/react/dist/ssr';
 import {useMe} from '../../../lib/util/hooks/useMe';
 import {NavLinkProps} from './Nav';
 
@@ -57,7 +57,7 @@ export default function NavLink(props: Props) {
 	return (
 		<div className={wrapperClasses.join(' ')}>
 			<div className="relative">
-				<Link to={link} className={linkClasses.join(' ')}>
+				<Link href={link} className={linkClasses.join(' ')}>
 					<span className="text-xl">{icon}</span>
 					{navLabel}
 				</Link>

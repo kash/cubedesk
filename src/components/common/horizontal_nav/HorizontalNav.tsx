@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import {Button} from '@/components/ui/button';
 import './HorizontalNav.scss';
-import {Link} from 'react-router-dom';
-import block from '../../../styles/bem';
+import block from '@/styles/bem';
+import Link from 'next/link';
+import React, {useEffect, useState} from 'react';
 import InputLegend from '../inputs/input/input_legend/InputLegend';
-import Button from '../button/Button';
 
 const b = block('common-horizontal-nav');
 
@@ -27,7 +27,7 @@ export default function HorizontalNav(props: Props) {
 	const {onChange, legend, showBackgroundForUnselectedTabs} = props;
 
 	const [tabs, setTabs] = useState<HorizontalNavTab[]>([]);
-	const [selectedTab, setSelectedTab] = useState<HorizontalNavTab>(null);
+	const [selectedTab, setSelectedTab] = useState<HorizontalNavTab | null>(null);
 
 	useEffect(() => {
 		setTabs(props.tabs);
@@ -64,19 +64,34 @@ export default function HorizontalNav(props: Props) {
 			continue;
 		}
 
-		output.push(
-			<Button
-				to={tab.link}
-				key={tab.id}
-				type="button"
-				gray={unselected}
-				large
-				primary={selected}
-				glow={selected}
-				text={tab.value}
-				onClick={() => clickTab(tab)}
-			/>
-		);
+		if (tab.link) {
+			output.push(
+				<Link key={tab.id} href={tab.link}>
+					<Button
+						type="button"
+						variant={selected ? 'default' : unselected ? 'secondary' : 'ghost'}
+						size="lg"
+						className={selected ? 'shadow-lg' : ''}
+						onClick={() => clickTab(tab)}
+					>
+						{tab.value}
+					</Button>
+				</Link>,
+			);
+		} else {
+			output.push(
+				<Button
+					key={tab.id}
+					type="button"
+					variant={selected ? 'default' : unselected ? 'secondary' : 'ghost'}
+					size="lg"
+					className={selected ? 'shadow-lg' : ''}
+					onClick={() => clickTab(tab)}
+				>
+					{tab.value}
+				</Button>,
+			);
+		}
 	}
 
 	let legendDiv = null;

@@ -1,9 +1,9 @@
+import {CaretDown} from '@phosphor-icons/react/dist/ssr';
 import React from 'react';
-import Dropdown, {DropdownProps} from '../inputs/dropdown/Dropdown';
-import {CaretDown} from 'phosphor-react';
-import {getScrambleTypeById, getAllScrambleTypeNames} from '../../../lib/util/cubes/util';
-import {IDropdownOption} from '../inputs/dropdown/dropdown_option/DropdownOption';
 import {ScrambleType} from '../../../lib/util/cubes/cube_scrambles';
+import {getAllScrambleTypeNames, getScrambleTypeById} from '../../../lib/util/cubes/util';
+import Dropdown, {DropdownProps} from '../inputs/dropdown/Dropdown';
+import {IDropdownOption} from '../inputs/dropdown/dropdown_option/DropdownOption';
 
 interface Props {
 	value: string;
@@ -16,8 +16,15 @@ interface Props {
 }
 
 export default function ScramblePicker(props: Props) {
-	const {value, scrambleTypes, handlePrefix, excludeSelected, onChange, dropdownProps, excludeOtherScrambleType} =
-		props;
+	const {
+		value,
+		scrambleTypes,
+		handlePrefix,
+		excludeSelected,
+		onChange,
+		dropdownProps,
+		excludeOtherScrambleType,
+	} = props;
 
 	let scrambleTypeNames: string[];
 	if (scrambleTypes) {
@@ -31,7 +38,12 @@ export default function ScramblePicker(props: Props) {
 		const st = getScrambleTypeById(name);
 		const selected = st?.id === value;
 
-		if (!name || !st || (excludeOtherScrambleType && name === 'other') || (excludeSelected && selected)) {
+		if (
+			!name ||
+			!st ||
+			(excludeOtherScrambleType && name === 'other') ||
+			(excludeSelected && selected)
+		) {
 			continue;
 		}
 

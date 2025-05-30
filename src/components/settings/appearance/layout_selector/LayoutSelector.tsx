@@ -1,11 +1,11 @@
-import React from 'react';
+import {Button} from '@/components/ui/button';
 import './LayoutSelector.scss';
-import {AlignRightSimple, AlignBottomSimple, AlignLeftSimple} from 'phosphor-react';
+import {AlignBottomSimple, AlignLeftSimple, AlignRightSimple} from '@phosphor-icons/react/dist/ssr';
+import React from 'react';
+import {TimerLayoutPosition} from '../../../../lib/db/settings/query';
 import {setSetting} from '../../../../lib/db/settings/update';
 import {useSettings} from '../../../../lib/util/hooks/useSettings';
 import block from '../../../../styles/bem';
-import Button from '../../../common/button/Button';
-import {TimerLayoutPosition} from '../../../../lib/db/settings/query';
 
 const b = block('settings-layout-selector');
 

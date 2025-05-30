@@ -1,43 +1,23 @@
 import React, {useMemo, useState} from 'react';
 import './PbCard.scss';
-import {getTimeString} from '../../../lib/util/time';
-import Scramble from '../../modules/scramble/ScrambleVisual';
-import SolveInfo from '../../solve_info/SolveInfo';
-import {getCubeTypeInfoById} from '../../../lib/util/cubes/util';
-import block from '../../../styles/bem';
-import {PublicUserAccount, TopAverage, TopSolve} from '../../../../client/@types/generated/graphql';
+import {getTimeString} from '@/lib/util/time';
+import Scramble from '@/components/modules/scramble/ScrambleVisual';
+import SolveInfo from '@/components/solve-info/SolveInfo';
+import {getCubeTypeInfoById} from '@/lib/util/cubes/util';
+import block from '@/styles/bem';
 import {useDispatch} from 'react-redux';
-import {openModal} from '../../../lib/actions/general';
-import HistoryModal from '../../modules/history/history_modal/HistoryModal';
-import Tag from '../../common/tag/Tag';
-import {getAverage} from '../../../lib/db/solves/stats/solves/average/average';
-import Button from '../../common/button/Button';
-import {gql, useMutation} from '@apollo/client';
-import {toastError} from '../../../lib/util/toast';
-import {useMe} from '../../../lib/util/hooks/useMe';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {openModal} from '@/lib/actions/general';
+import HistoryModal from '@/components/modules/history/history_modal/HistoryModal';
+import Tag from '@/components/common/tag/Tag';
+import {getAverage} from '@/lib/db/solves/stats/solves/average/average';
+import {Button} from '@/components/ui/button';
+import {toastError} from '@/lib/util/toast';
+import {useMe} from '@/lib/util/hooks/useMe';
+import {Solve, PublicUserAccount, TopAverage, TopSolve} from '@/generated/zod';
+import {api} from '@/trpc/react';
 
 const b = block('profile-pb-card');
 
-const DELETE_TOP_SOLVE_MUTATION = gql`
-	mutation Mutation($id: String) {
-		deleteTopSolve(id: $id) {
-			id
-		}
-	}
-`;
-
-const DELETE_TOP_AVERAGE_MUTATION = gql`
-	mutation Mutation($id: String) {
-		deleteTopAverage(id: $id) {
-			id
-		}
-	}
-`;
-
-type deleteVarInput = {
-	id: string;
-};
 
 interface Props {
 	solves: Solve[];
@@ -56,12 +36,8 @@ export default function PbCard(props: Props) {
 	const me = useMe();
 	const [deleted, setDeleted] = useState(false);
 
-	const [deleteSolveMut, deleteSolveMutData] = useMutation<{deleteTopSolve: TopSolve}, deleteVarInput>(
-		DELETE_TOP_SOLVE_MUTATION
-	);
-	const [deleteAvgMut, deleteAvgMutData] = useMutation<{deleteTopSolve: TopAverage}, deleteVarInput>(
-		DELETE_TOP_AVERAGE_MUTATION
-	);
+	const deleteSolveMut = api.leaderboards.deleteTopSolve.useMutation();
+	const deleteAvgMut = api.leaderboards.deleteTopAverage.useMutation();
 
 	const cubeType = useMemo(() => getCubeTypeInfoById(firstSolve.cube_type), []);
 	const time = useMemo(() => {
@@ -79,8 +55,11 @@ export default function PbCard(props: Props) {
 		} else {
 			dispatch(
 				openModal(
-					<HistoryModal solves={solves} description={`Average of ${solves.length} by ${user.username}`} />
-				)
+					<HistoryModal
+						solves={solves}
+						description={`Average of ${solves.length} by ${user.username}`}
+					/>,
+				),
 			);
 		}
 	}
@@ -91,21 +70,17 @@ export default function PbCard(props: Props) {
 
 		try {
 			if (single) {
-				await deleteSolveMut({
-					variables: {
-						id: topRecord.id,
-					},
+				await deleteSolveMut.mutateAsync({
+					id: topRecord.id,
 				});
 			} else {
-				await deleteAvgMut({
-					variables: {
-						id: topRecord.id,
-					},
+				await deleteAvgMut.mutateAsync({
+					id: topRecord.id,
 				});
 			}
 
 			setDeleted(true);
-		} catch (e) {
+		} catch (e: unknown) {
 			toastError(e);
 		}
 	}
@@ -119,12 +94,12 @@ export default function PbCard(props: Props) {
 		actions = (
 			<div className={b('actions')}>
 				<Button
-					loading={deleteAvgMutData.loading || deleteSolveMutData.loading}
-					text="Remove"
-					danger
-					flat
+					loading={deleteAvgMut.isLoading || deleteSolveMut.isLoading}
+					variant="destructive"
 					onClick={deletePb}
-				/>
+				>
+					Remove
+				</Button>
 			</div>
 		);
 	}
