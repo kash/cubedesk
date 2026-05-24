@@ -1,5 +1,5 @@
 import {Field, InputType, ObjectType} from 'type-graphql';
-import {GameType as DbGameType} from '@prisma/client';
+import {GameType as DbGameType} from '@/generated/prisma/client';
 import {GameType} from '../../shared/match/consts';
 
 @ObjectType()

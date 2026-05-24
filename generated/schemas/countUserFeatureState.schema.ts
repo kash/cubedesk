@@ -1,0 +1,10 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { UserFeatureStateOrderByWithRelationInputObjectSchema as UserFeatureStateOrderByWithRelationInputObjectSchema } from './objects/UserFeatureStateOrderByWithRelationInput.schema';
+import { UserFeatureStateWhereInputObjectSchema as UserFeatureStateWhereInputObjectSchema } from './objects/UserFeatureStateWhereInput.schema';
+import { UserFeatureStateWhereUniqueInputObjectSchema as UserFeatureStateWhereUniqueInputObjectSchema } from './objects/UserFeatureStateWhereUniqueInput.schema';
+import { UserFeatureStateCountAggregateInputObjectSchema as UserFeatureStateCountAggregateInputObjectSchema } from './objects/UserFeatureStateCountAggregateInput.schema';
+
+export const UserFeatureStateCountSchema: z.ZodType<Prisma.UserFeatureStateCountArgs> = z.object({ orderBy: z.union([UserFeatureStateOrderByWithRelationInputObjectSchema, UserFeatureStateOrderByWithRelationInputObjectSchema.array()]).optional(), where: UserFeatureStateWhereInputObjectSchema.optional(), cursor: UserFeatureStateWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), UserFeatureStateCountAggregateInputObjectSchema ]).optional() }).strict() as unknown as z.ZodType<Prisma.UserFeatureStateCountArgs>;
+
+export const UserFeatureStateCountZodSchema = z.object({ orderBy: z.union([UserFeatureStateOrderByWithRelationInputObjectSchema, UserFeatureStateOrderByWithRelationInputObjectSchema.array()]).optional(), where: UserFeatureStateWhereInputObjectSchema.optional(), cursor: UserFeatureStateWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), UserFeatureStateCountAggregateInputObjectSchema ]).optional() }).strict();

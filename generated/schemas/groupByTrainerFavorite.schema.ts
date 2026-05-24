@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { TrainerFavoriteWhereInputObjectSchema as TrainerFavoriteWhereInputObjectSchema } from './objects/TrainerFavoriteWhereInput.schema';
+import { TrainerFavoriteOrderByWithAggregationInputObjectSchema as TrainerFavoriteOrderByWithAggregationInputObjectSchema } from './objects/TrainerFavoriteOrderByWithAggregationInput.schema';
+import { TrainerFavoriteScalarWhereWithAggregatesInputObjectSchema as TrainerFavoriteScalarWhereWithAggregatesInputObjectSchema } from './objects/TrainerFavoriteScalarWhereWithAggregatesInput.schema';
+import { TrainerFavoriteScalarFieldEnumSchema } from './enums/TrainerFavoriteScalarFieldEnum.schema';
+import { TrainerFavoriteCountAggregateInputObjectSchema as TrainerFavoriteCountAggregateInputObjectSchema } from './objects/TrainerFavoriteCountAggregateInput.schema';
+import { TrainerFavoriteMinAggregateInputObjectSchema as TrainerFavoriteMinAggregateInputObjectSchema } from './objects/TrainerFavoriteMinAggregateInput.schema';
+import { TrainerFavoriteMaxAggregateInputObjectSchema as TrainerFavoriteMaxAggregateInputObjectSchema } from './objects/TrainerFavoriteMaxAggregateInput.schema';
+
+export const TrainerFavoriteGroupBySchema: z.ZodType<Prisma.TrainerFavoriteGroupByArgs> = z.object({ where: TrainerFavoriteWhereInputObjectSchema.optional(), orderBy: z.union([TrainerFavoriteOrderByWithAggregationInputObjectSchema, TrainerFavoriteOrderByWithAggregationInputObjectSchema.array()]).optional(), having: TrainerFavoriteScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(TrainerFavoriteScalarFieldEnumSchema), _count: z.union([ z.literal(true), TrainerFavoriteCountAggregateInputObjectSchema ]).optional(), _min: TrainerFavoriteMinAggregateInputObjectSchema.optional(), _max: TrainerFavoriteMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.TrainerFavoriteGroupByArgs>;
+
+export const TrainerFavoriteGroupByZodSchema = z.object({ where: TrainerFavoriteWhereInputObjectSchema.optional(), orderBy: z.union([TrainerFavoriteOrderByWithAggregationInputObjectSchema, TrainerFavoriteOrderByWithAggregationInputObjectSchema.array()]).optional(), having: TrainerFavoriteScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(TrainerFavoriteScalarFieldEnumSchema), _count: z.union([ z.literal(true), TrainerFavoriteCountAggregateInputObjectSchema ]).optional(), _min: TrainerFavoriteMinAggregateInputObjectSchema.optional(), _max: TrainerFavoriteMaxAggregateInputObjectSchema.optional() }).strict();

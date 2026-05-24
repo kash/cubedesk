@@ -1,0 +1,9 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { AlgorithmOverrideSelectObjectSchema as AlgorithmOverrideSelectObjectSchema } from './objects/AlgorithmOverrideSelect.schema';
+import { AlgorithmOverrideIncludeObjectSchema as AlgorithmOverrideIncludeObjectSchema } from './objects/AlgorithmOverrideInclude.schema';
+import { AlgorithmOverrideWhereUniqueInputObjectSchema as AlgorithmOverrideWhereUniqueInputObjectSchema } from './objects/AlgorithmOverrideWhereUniqueInput.schema';
+
+export const AlgorithmOverrideDeleteOneSchema: z.ZodType<Prisma.AlgorithmOverrideDeleteArgs> = z.object({ select: AlgorithmOverrideSelectObjectSchema.optional(), include: AlgorithmOverrideIncludeObjectSchema.optional(), where: AlgorithmOverrideWhereUniqueInputObjectSchema }).strict() as unknown as z.ZodType<Prisma.AlgorithmOverrideDeleteArgs>;
+
+export const AlgorithmOverrideDeleteOneZodSchema = z.object({ select: AlgorithmOverrideSelectObjectSchema.optional(), include: AlgorithmOverrideIncludeObjectSchema.optional(), where: AlgorithmOverrideWhereUniqueInputObjectSchema }).strict();

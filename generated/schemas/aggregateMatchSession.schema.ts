@@ -1,0 +1,14 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { MatchSessionOrderByWithRelationInputObjectSchema as MatchSessionOrderByWithRelationInputObjectSchema } from './objects/MatchSessionOrderByWithRelationInput.schema';
+import { MatchSessionWhereInputObjectSchema as MatchSessionWhereInputObjectSchema } from './objects/MatchSessionWhereInput.schema';
+import { MatchSessionWhereUniqueInputObjectSchema as MatchSessionWhereUniqueInputObjectSchema } from './objects/MatchSessionWhereUniqueInput.schema';
+import { MatchSessionCountAggregateInputObjectSchema as MatchSessionCountAggregateInputObjectSchema } from './objects/MatchSessionCountAggregateInput.schema';
+import { MatchSessionMinAggregateInputObjectSchema as MatchSessionMinAggregateInputObjectSchema } from './objects/MatchSessionMinAggregateInput.schema';
+import { MatchSessionMaxAggregateInputObjectSchema as MatchSessionMaxAggregateInputObjectSchema } from './objects/MatchSessionMaxAggregateInput.schema';
+import { MatchSessionAvgAggregateInputObjectSchema as MatchSessionAvgAggregateInputObjectSchema } from './objects/MatchSessionAvgAggregateInput.schema';
+import { MatchSessionSumAggregateInputObjectSchema as MatchSessionSumAggregateInputObjectSchema } from './objects/MatchSessionSumAggregateInput.schema';
+
+export const MatchSessionAggregateSchema: z.ZodType<Prisma.MatchSessionAggregateArgs> = z.object({ orderBy: z.union([MatchSessionOrderByWithRelationInputObjectSchema, MatchSessionOrderByWithRelationInputObjectSchema.array()]).optional(), where: MatchSessionWhereInputObjectSchema.optional(), cursor: MatchSessionWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), MatchSessionCountAggregateInputObjectSchema ]).optional(), _min: MatchSessionMinAggregateInputObjectSchema.optional(), _max: MatchSessionMaxAggregateInputObjectSchema.optional(), _avg: MatchSessionAvgAggregateInputObjectSchema.optional(), _sum: MatchSessionSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.MatchSessionAggregateArgs>;
+
+export const MatchSessionAggregateZodSchema = z.object({ orderBy: z.union([MatchSessionOrderByWithRelationInputObjectSchema, MatchSessionOrderByWithRelationInputObjectSchema.array()]).optional(), where: MatchSessionWhereInputObjectSchema.optional(), cursor: MatchSessionWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), MatchSessionCountAggregateInputObjectSchema ]).optional(), _min: MatchSessionMinAggregateInputObjectSchema.optional(), _max: MatchSessionMaxAggregateInputObjectSchema.optional(), _avg: MatchSessionAvgAggregateInputObjectSchema.optional(), _sum: MatchSessionSumAggregateInputObjectSchema.optional() }).strict();

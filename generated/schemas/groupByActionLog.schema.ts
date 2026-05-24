@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { ActionLogWhereInputObjectSchema as ActionLogWhereInputObjectSchema } from './objects/ActionLogWhereInput.schema';
+import { ActionLogOrderByWithAggregationInputObjectSchema as ActionLogOrderByWithAggregationInputObjectSchema } from './objects/ActionLogOrderByWithAggregationInput.schema';
+import { ActionLogScalarWhereWithAggregatesInputObjectSchema as ActionLogScalarWhereWithAggregatesInputObjectSchema } from './objects/ActionLogScalarWhereWithAggregatesInput.schema';
+import { ActionLogScalarFieldEnumSchema } from './enums/ActionLogScalarFieldEnum.schema';
+import { ActionLogCountAggregateInputObjectSchema as ActionLogCountAggregateInputObjectSchema } from './objects/ActionLogCountAggregateInput.schema';
+import { ActionLogMinAggregateInputObjectSchema as ActionLogMinAggregateInputObjectSchema } from './objects/ActionLogMinAggregateInput.schema';
+import { ActionLogMaxAggregateInputObjectSchema as ActionLogMaxAggregateInputObjectSchema } from './objects/ActionLogMaxAggregateInput.schema';
+
+export const ActionLogGroupBySchema: z.ZodType<Prisma.ActionLogGroupByArgs> = z.object({ where: ActionLogWhereInputObjectSchema.optional(), orderBy: z.union([ActionLogOrderByWithAggregationInputObjectSchema, ActionLogOrderByWithAggregationInputObjectSchema.array()]).optional(), having: ActionLogScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(ActionLogScalarFieldEnumSchema), _count: z.union([ z.literal(true), ActionLogCountAggregateInputObjectSchema ]).optional(), _min: ActionLogMinAggregateInputObjectSchema.optional(), _max: ActionLogMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ActionLogGroupByArgs>;
+
+export const ActionLogGroupByZodSchema = z.object({ where: ActionLogWhereInputObjectSchema.optional(), orderBy: z.union([ActionLogOrderByWithAggregationInputObjectSchema, ActionLogOrderByWithAggregationInputObjectSchema.array()]).optional(), having: ActionLogScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(ActionLogScalarFieldEnumSchema), _count: z.union([ z.literal(true), ActionLogCountAggregateInputObjectSchema ]).optional(), _min: ActionLogMinAggregateInputObjectSchema.optional(), _max: ActionLogMaxAggregateInputObjectSchema.optional() }).strict();

@@ -1,0 +1,15 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { DemoSolveWhereInputObjectSchema as DemoSolveWhereInputObjectSchema } from './objects/DemoSolveWhereInput.schema';
+import { DemoSolveOrderByWithAggregationInputObjectSchema as DemoSolveOrderByWithAggregationInputObjectSchema } from './objects/DemoSolveOrderByWithAggregationInput.schema';
+import { DemoSolveScalarWhereWithAggregatesInputObjectSchema as DemoSolveScalarWhereWithAggregatesInputObjectSchema } from './objects/DemoSolveScalarWhereWithAggregatesInput.schema';
+import { DemoSolveScalarFieldEnumSchema } from './enums/DemoSolveScalarFieldEnum.schema';
+import { DemoSolveCountAggregateInputObjectSchema as DemoSolveCountAggregateInputObjectSchema } from './objects/DemoSolveCountAggregateInput.schema';
+import { DemoSolveMinAggregateInputObjectSchema as DemoSolveMinAggregateInputObjectSchema } from './objects/DemoSolveMinAggregateInput.schema';
+import { DemoSolveMaxAggregateInputObjectSchema as DemoSolveMaxAggregateInputObjectSchema } from './objects/DemoSolveMaxAggregateInput.schema';
+import { DemoSolveAvgAggregateInputObjectSchema as DemoSolveAvgAggregateInputObjectSchema } from './objects/DemoSolveAvgAggregateInput.schema';
+import { DemoSolveSumAggregateInputObjectSchema as DemoSolveSumAggregateInputObjectSchema } from './objects/DemoSolveSumAggregateInput.schema';
+
+export const DemoSolveGroupBySchema: z.ZodType<Prisma.DemoSolveGroupByArgs> = z.object({ where: DemoSolveWhereInputObjectSchema.optional(), orderBy: z.union([DemoSolveOrderByWithAggregationInputObjectSchema, DemoSolveOrderByWithAggregationInputObjectSchema.array()]).optional(), having: DemoSolveScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(DemoSolveScalarFieldEnumSchema), _count: z.union([ z.literal(true), DemoSolveCountAggregateInputObjectSchema ]).optional(), _min: DemoSolveMinAggregateInputObjectSchema.optional(), _max: DemoSolveMaxAggregateInputObjectSchema.optional(), _avg: DemoSolveAvgAggregateInputObjectSchema.optional(), _sum: DemoSolveSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.DemoSolveGroupByArgs>;
+
+export const DemoSolveGroupByZodSchema = z.object({ where: DemoSolveWhereInputObjectSchema.optional(), orderBy: z.union([DemoSolveOrderByWithAggregationInputObjectSchema, DemoSolveOrderByWithAggregationInputObjectSchema.array()]).optional(), having: DemoSolveScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(DemoSolveScalarFieldEnumSchema), _count: z.union([ z.literal(true), DemoSolveCountAggregateInputObjectSchema ]).optional(), _min: DemoSolveMinAggregateInputObjectSchema.optional(), _max: DemoSolveMaxAggregateInputObjectSchema.optional(), _avg: DemoSolveAvgAggregateInputObjectSchema.optional(), _sum: DemoSolveSumAggregateInputObjectSchema.optional() }).strict();

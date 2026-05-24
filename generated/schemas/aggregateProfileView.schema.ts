@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { ProfileViewOrderByWithRelationInputObjectSchema as ProfileViewOrderByWithRelationInputObjectSchema } from './objects/ProfileViewOrderByWithRelationInput.schema';
+import { ProfileViewWhereInputObjectSchema as ProfileViewWhereInputObjectSchema } from './objects/ProfileViewWhereInput.schema';
+import { ProfileViewWhereUniqueInputObjectSchema as ProfileViewWhereUniqueInputObjectSchema } from './objects/ProfileViewWhereUniqueInput.schema';
+import { ProfileViewCountAggregateInputObjectSchema as ProfileViewCountAggregateInputObjectSchema } from './objects/ProfileViewCountAggregateInput.schema';
+import { ProfileViewMinAggregateInputObjectSchema as ProfileViewMinAggregateInputObjectSchema } from './objects/ProfileViewMinAggregateInput.schema';
+import { ProfileViewMaxAggregateInputObjectSchema as ProfileViewMaxAggregateInputObjectSchema } from './objects/ProfileViewMaxAggregateInput.schema';
+
+export const ProfileViewAggregateSchema: z.ZodType<Prisma.ProfileViewAggregateArgs> = z.object({ orderBy: z.union([ProfileViewOrderByWithRelationInputObjectSchema, ProfileViewOrderByWithRelationInputObjectSchema.array()]).optional(), where: ProfileViewWhereInputObjectSchema.optional(), cursor: ProfileViewWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ProfileViewCountAggregateInputObjectSchema ]).optional(), _min: ProfileViewMinAggregateInputObjectSchema.optional(), _max: ProfileViewMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ProfileViewAggregateArgs>;
+
+export const ProfileViewAggregateZodSchema = z.object({ orderBy: z.union([ProfileViewOrderByWithRelationInputObjectSchema, ProfileViewOrderByWithRelationInputObjectSchema.array()]).optional(), where: ProfileViewWhereInputObjectSchema.optional(), cursor: ProfileViewWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ProfileViewCountAggregateInputObjectSchema ]).optional(), _min: ProfileViewMinAggregateInputObjectSchema.optional(), _max: ProfileViewMaxAggregateInputObjectSchema.optional() }).strict();

@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { ChatMessageWhereInputObjectSchema as ChatMessageWhereInputObjectSchema } from './objects/ChatMessageWhereInput.schema';
+import { ChatMessageOrderByWithAggregationInputObjectSchema as ChatMessageOrderByWithAggregationInputObjectSchema } from './objects/ChatMessageOrderByWithAggregationInput.schema';
+import { ChatMessageScalarWhereWithAggregatesInputObjectSchema as ChatMessageScalarWhereWithAggregatesInputObjectSchema } from './objects/ChatMessageScalarWhereWithAggregatesInput.schema';
+import { ChatMessageScalarFieldEnumSchema } from './enums/ChatMessageScalarFieldEnum.schema';
+import { ChatMessageCountAggregateInputObjectSchema as ChatMessageCountAggregateInputObjectSchema } from './objects/ChatMessageCountAggregateInput.schema';
+import { ChatMessageMinAggregateInputObjectSchema as ChatMessageMinAggregateInputObjectSchema } from './objects/ChatMessageMinAggregateInput.schema';
+import { ChatMessageMaxAggregateInputObjectSchema as ChatMessageMaxAggregateInputObjectSchema } from './objects/ChatMessageMaxAggregateInput.schema';
+
+export const ChatMessageGroupBySchema: z.ZodType<Prisma.ChatMessageGroupByArgs> = z.object({ where: ChatMessageWhereInputObjectSchema.optional(), orderBy: z.union([ChatMessageOrderByWithAggregationInputObjectSchema, ChatMessageOrderByWithAggregationInputObjectSchema.array()]).optional(), having: ChatMessageScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(ChatMessageScalarFieldEnumSchema), _count: z.union([ z.literal(true), ChatMessageCountAggregateInputObjectSchema ]).optional(), _min: ChatMessageMinAggregateInputObjectSchema.optional(), _max: ChatMessageMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ChatMessageGroupByArgs>;
+
+export const ChatMessageGroupByZodSchema = z.object({ where: ChatMessageWhereInputObjectSchema.optional(), orderBy: z.union([ChatMessageOrderByWithAggregationInputObjectSchema, ChatMessageOrderByWithAggregationInputObjectSchema.array()]).optional(), having: ChatMessageScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(ChatMessageScalarFieldEnumSchema), _count: z.union([ z.literal(true), ChatMessageCountAggregateInputObjectSchema ]).optional(), _min: ChatMessageMinAggregateInputObjectSchema.optional(), _max: ChatMessageMaxAggregateInputObjectSchema.optional() }).strict();

@@ -1,4 +1,4 @@
-@import '../../../../styles/config';
+@use '../../../../styles/config' as *;
 
 .#{$namespace}-landing-signup-button {
 	box-sizing: border-box;

@@ -2,7 +2,7 @@ import {Field, Float, Int, ObjectType, registerEnumType} from 'type-graphql';
 import {Match} from './Match.schema';
 import {PublicUserAccount} from './UserAccount.schema';
 import {Solve} from './Solve.schema';
-import {GameType as DbGameType} from '@prisma/client';
+import {GameType as DbGameType} from '@/generated/prisma/client';
 import {GameType} from '../../shared/match/consts';
 
 registerEnumType(GameType, {

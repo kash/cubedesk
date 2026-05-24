@@ -1,0 +1,10 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { AlgorithmOverrideOrderByWithRelationInputObjectSchema as AlgorithmOverrideOrderByWithRelationInputObjectSchema } from './objects/AlgorithmOverrideOrderByWithRelationInput.schema';
+import { AlgorithmOverrideWhereInputObjectSchema as AlgorithmOverrideWhereInputObjectSchema } from './objects/AlgorithmOverrideWhereInput.schema';
+import { AlgorithmOverrideWhereUniqueInputObjectSchema as AlgorithmOverrideWhereUniqueInputObjectSchema } from './objects/AlgorithmOverrideWhereUniqueInput.schema';
+import { AlgorithmOverrideCountAggregateInputObjectSchema as AlgorithmOverrideCountAggregateInputObjectSchema } from './objects/AlgorithmOverrideCountAggregateInput.schema';
+
+export const AlgorithmOverrideCountSchema: z.ZodType<Prisma.AlgorithmOverrideCountArgs> = z.object({ orderBy: z.union([AlgorithmOverrideOrderByWithRelationInputObjectSchema, AlgorithmOverrideOrderByWithRelationInputObjectSchema.array()]).optional(), where: AlgorithmOverrideWhereInputObjectSchema.optional(), cursor: AlgorithmOverrideWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), AlgorithmOverrideCountAggregateInputObjectSchema ]).optional() }).strict() as unknown as z.ZodType<Prisma.AlgorithmOverrideCountArgs>;
+
+export const AlgorithmOverrideCountZodSchema = z.object({ orderBy: z.union([AlgorithmOverrideOrderByWithRelationInputObjectSchema, AlgorithmOverrideOrderByWithRelationInputObjectSchema.array()]).optional(), where: AlgorithmOverrideWhereInputObjectSchema.optional(), cursor: AlgorithmOverrideWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), AlgorithmOverrideCountAggregateInputObjectSchema ]).optional() }).strict();

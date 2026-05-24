@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { UserAccountWhereInputObjectSchema as UserAccountWhereInputObjectSchema } from './objects/UserAccountWhereInput.schema';
+import { UserAccountOrderByWithAggregationInputObjectSchema as UserAccountOrderByWithAggregationInputObjectSchema } from './objects/UserAccountOrderByWithAggregationInput.schema';
+import { UserAccountScalarWhereWithAggregatesInputObjectSchema as UserAccountScalarWhereWithAggregatesInputObjectSchema } from './objects/UserAccountScalarWhereWithAggregatesInput.schema';
+import { UserAccountScalarFieldEnumSchema } from './enums/UserAccountScalarFieldEnum.schema';
+import { UserAccountCountAggregateInputObjectSchema as UserAccountCountAggregateInputObjectSchema } from './objects/UserAccountCountAggregateInput.schema';
+import { UserAccountMinAggregateInputObjectSchema as UserAccountMinAggregateInputObjectSchema } from './objects/UserAccountMinAggregateInput.schema';
+import { UserAccountMaxAggregateInputObjectSchema as UserAccountMaxAggregateInputObjectSchema } from './objects/UserAccountMaxAggregateInput.schema';
+
+export const UserAccountGroupBySchema: z.ZodType<Prisma.UserAccountGroupByArgs> = z.object({ where: UserAccountWhereInputObjectSchema.optional(), orderBy: z.union([UserAccountOrderByWithAggregationInputObjectSchema, UserAccountOrderByWithAggregationInputObjectSchema.array()]).optional(), having: UserAccountScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(UserAccountScalarFieldEnumSchema), _count: z.union([ z.literal(true), UserAccountCountAggregateInputObjectSchema ]).optional(), _min: UserAccountMinAggregateInputObjectSchema.optional(), _max: UserAccountMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.UserAccountGroupByArgs>;
+
+export const UserAccountGroupByZodSchema = z.object({ where: UserAccountWhereInputObjectSchema.optional(), orderBy: z.union([UserAccountOrderByWithAggregationInputObjectSchema, UserAccountOrderByWithAggregationInputObjectSchema.array()]).optional(), having: UserAccountScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(UserAccountScalarFieldEnumSchema), _count: z.union([ z.literal(true), UserAccountCountAggregateInputObjectSchema ]).optional(), _min: UserAccountMinAggregateInputObjectSchema.optional(), _max: UserAccountMaxAggregateInputObjectSchema.optional() }).strict();

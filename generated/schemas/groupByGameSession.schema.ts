@@ -1,0 +1,15 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { GameSessionWhereInputObjectSchema as GameSessionWhereInputObjectSchema } from './objects/GameSessionWhereInput.schema';
+import { GameSessionOrderByWithAggregationInputObjectSchema as GameSessionOrderByWithAggregationInputObjectSchema } from './objects/GameSessionOrderByWithAggregationInput.schema';
+import { GameSessionScalarWhereWithAggregatesInputObjectSchema as GameSessionScalarWhereWithAggregatesInputObjectSchema } from './objects/GameSessionScalarWhereWithAggregatesInput.schema';
+import { GameSessionScalarFieldEnumSchema } from './enums/GameSessionScalarFieldEnum.schema';
+import { GameSessionCountAggregateInputObjectSchema as GameSessionCountAggregateInputObjectSchema } from './objects/GameSessionCountAggregateInput.schema';
+import { GameSessionMinAggregateInputObjectSchema as GameSessionMinAggregateInputObjectSchema } from './objects/GameSessionMinAggregateInput.schema';
+import { GameSessionMaxAggregateInputObjectSchema as GameSessionMaxAggregateInputObjectSchema } from './objects/GameSessionMaxAggregateInput.schema';
+import { GameSessionAvgAggregateInputObjectSchema as GameSessionAvgAggregateInputObjectSchema } from './objects/GameSessionAvgAggregateInput.schema';
+import { GameSessionSumAggregateInputObjectSchema as GameSessionSumAggregateInputObjectSchema } from './objects/GameSessionSumAggregateInput.schema';
+
+export const GameSessionGroupBySchema: z.ZodType<Prisma.GameSessionGroupByArgs> = z.object({ where: GameSessionWhereInputObjectSchema.optional(), orderBy: z.union([GameSessionOrderByWithAggregationInputObjectSchema, GameSessionOrderByWithAggregationInputObjectSchema.array()]).optional(), having: GameSessionScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(GameSessionScalarFieldEnumSchema), _count: z.union([ z.literal(true), GameSessionCountAggregateInputObjectSchema ]).optional(), _min: GameSessionMinAggregateInputObjectSchema.optional(), _max: GameSessionMaxAggregateInputObjectSchema.optional(), _avg: GameSessionAvgAggregateInputObjectSchema.optional(), _sum: GameSessionSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.GameSessionGroupByArgs>;
+
+export const GameSessionGroupByZodSchema = z.object({ where: GameSessionWhereInputObjectSchema.optional(), orderBy: z.union([GameSessionOrderByWithAggregationInputObjectSchema, GameSessionOrderByWithAggregationInputObjectSchema.array()]).optional(), having: GameSessionScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(GameSessionScalarFieldEnumSchema), _count: z.union([ z.literal(true), GameSessionCountAggregateInputObjectSchema ]).optional(), _min: GameSessionMinAggregateInputObjectSchema.optional(), _max: GameSessionMaxAggregateInputObjectSchema.optional(), _avg: GameSessionAvgAggregateInputObjectSchema.optional(), _sum: GameSessionSumAggregateInputObjectSchema.optional() }).strict();

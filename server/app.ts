@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import 'ignore-styles';
 import 'reflect-metadata';
 import express from 'express';
@@ -36,7 +37,6 @@ import Discord from './services/discord';
 import {initCronJobs} from './services/cron';
 import {initWebhookListeners, initWebhookListenersRaw} from './webhooks';
 import {exposeResourcesForSearchEngines} from './middlewares/search_engines';
-import {initSearch} from './services/search';
 
 initPrisma();
 
@@ -65,7 +65,6 @@ process.on('SIGINT', () => {
 });
 
 // Initialize logging
-initSearch();
 initLogger();
 
 // This must be before the bodyparser before RAW data needs to be passed to Stripe

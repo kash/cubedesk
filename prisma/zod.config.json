@@ -1,0 +1,25 @@
+{
+    "$schema": "../node_modules/prisma-zod-generator/lib/config/schema.json",
+    "mode": "custom",
+    "pureModels": true,
+    "pureModelsLean": true,
+    "addSelectType": false,
+    "addIncludeType": false,
+    "optionalFieldBehavior": "nullable",
+    "naming": {
+        "pureModel": {
+            "typeSuffix": ""
+        }
+    },
+    "variants": {
+        "pure": {
+            "enabled": false
+        },
+        "input": {
+            "enabled": false
+        },
+        "result": {
+            "enabled": false
+        }
+    }
+}

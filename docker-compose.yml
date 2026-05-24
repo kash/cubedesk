@@ -1,13 +1,13 @@
 services:
 
   app-builder:
-    image: node:16
+    image: node:24
     working_dir: /app
     volumes:
       - ./:/app
       - npm_cache:/root/.npm
-      - yarn_cache:/usr/local/share/.cache
-    command: yarn build
+      - pnpm_cache:/root/.local/share/pnpm
+    command: pnpm run build
     depends_on:
       - redis
       - postgres
@@ -22,7 +22,7 @@ services:
       - 3000:3000
     extends:
       service: app-builder
-    command: yarn server
+    command: pnpm run server
 
   install:
     extends:
@@ -35,7 +35,7 @@ services:
     command:
       - |
         set -e
-        yarn
+        pnpm install
         npx prisma format
         npx prisma generate
         npx prisma migrate dev
@@ -63,4 +63,4 @@ volumes:
   postgres_data:
   redis_data:
   npm_cache:
-  yarn_cache:
+  pnpm_cache:

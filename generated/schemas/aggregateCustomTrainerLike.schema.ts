@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { CustomTrainerLikeOrderByWithRelationInputObjectSchema as CustomTrainerLikeOrderByWithRelationInputObjectSchema } from './objects/CustomTrainerLikeOrderByWithRelationInput.schema';
+import { CustomTrainerLikeWhereInputObjectSchema as CustomTrainerLikeWhereInputObjectSchema } from './objects/CustomTrainerLikeWhereInput.schema';
+import { CustomTrainerLikeWhereUniqueInputObjectSchema as CustomTrainerLikeWhereUniqueInputObjectSchema } from './objects/CustomTrainerLikeWhereUniqueInput.schema';
+import { CustomTrainerLikeCountAggregateInputObjectSchema as CustomTrainerLikeCountAggregateInputObjectSchema } from './objects/CustomTrainerLikeCountAggregateInput.schema';
+import { CustomTrainerLikeMinAggregateInputObjectSchema as CustomTrainerLikeMinAggregateInputObjectSchema } from './objects/CustomTrainerLikeMinAggregateInput.schema';
+import { CustomTrainerLikeMaxAggregateInputObjectSchema as CustomTrainerLikeMaxAggregateInputObjectSchema } from './objects/CustomTrainerLikeMaxAggregateInput.schema';
+
+export const CustomTrainerLikeAggregateSchema: z.ZodType<Prisma.CustomTrainerLikeAggregateArgs> = z.object({ orderBy: z.union([CustomTrainerLikeOrderByWithRelationInputObjectSchema, CustomTrainerLikeOrderByWithRelationInputObjectSchema.array()]).optional(), where: CustomTrainerLikeWhereInputObjectSchema.optional(), cursor: CustomTrainerLikeWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), CustomTrainerLikeCountAggregateInputObjectSchema ]).optional(), _min: CustomTrainerLikeMinAggregateInputObjectSchema.optional(), _max: CustomTrainerLikeMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.CustomTrainerLikeAggregateArgs>;
+
+export const CustomTrainerLikeAggregateZodSchema = z.object({ orderBy: z.union([CustomTrainerLikeOrderByWithRelationInputObjectSchema, CustomTrainerLikeOrderByWithRelationInputObjectSchema.array()]).optional(), where: CustomTrainerLikeWhereInputObjectSchema.optional(), cursor: CustomTrainerLikeWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), CustomTrainerLikeCountAggregateInputObjectSchema ]).optional(), _min: CustomTrainerLikeMinAggregateInputObjectSchema.optional(), _max: CustomTrainerLikeMaxAggregateInputObjectSchema.optional() }).strict();

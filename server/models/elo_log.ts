@@ -1,5 +1,5 @@
 import {getPrisma} from '../database';
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@/generated/prisma/client';
 import {getEloRatingColumnNameFromCubeType} from './elo_rating';
 import {logger} from '../services/logger';
 import {UserAccount} from '../schemas/UserAccount.schema';

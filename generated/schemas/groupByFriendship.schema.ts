@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { FriendshipWhereInputObjectSchema as FriendshipWhereInputObjectSchema } from './objects/FriendshipWhereInput.schema';
+import { FriendshipOrderByWithAggregationInputObjectSchema as FriendshipOrderByWithAggregationInputObjectSchema } from './objects/FriendshipOrderByWithAggregationInput.schema';
+import { FriendshipScalarWhereWithAggregatesInputObjectSchema as FriendshipScalarWhereWithAggregatesInputObjectSchema } from './objects/FriendshipScalarWhereWithAggregatesInput.schema';
+import { FriendshipScalarFieldEnumSchema } from './enums/FriendshipScalarFieldEnum.schema';
+import { FriendshipCountAggregateInputObjectSchema as FriendshipCountAggregateInputObjectSchema } from './objects/FriendshipCountAggregateInput.schema';
+import { FriendshipMinAggregateInputObjectSchema as FriendshipMinAggregateInputObjectSchema } from './objects/FriendshipMinAggregateInput.schema';
+import { FriendshipMaxAggregateInputObjectSchema as FriendshipMaxAggregateInputObjectSchema } from './objects/FriendshipMaxAggregateInput.schema';
+
+export const FriendshipGroupBySchema: z.ZodType<Prisma.FriendshipGroupByArgs> = z.object({ where: FriendshipWhereInputObjectSchema.optional(), orderBy: z.union([FriendshipOrderByWithAggregationInputObjectSchema, FriendshipOrderByWithAggregationInputObjectSchema.array()]).optional(), having: FriendshipScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(FriendshipScalarFieldEnumSchema), _count: z.union([ z.literal(true), FriendshipCountAggregateInputObjectSchema ]).optional(), _min: FriendshipMinAggregateInputObjectSchema.optional(), _max: FriendshipMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.FriendshipGroupByArgs>;
+
+export const FriendshipGroupByZodSchema = z.object({ where: FriendshipWhereInputObjectSchema.optional(), orderBy: z.union([FriendshipOrderByWithAggregationInputObjectSchema, FriendshipOrderByWithAggregationInputObjectSchema.array()]).optional(), having: FriendshipScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(FriendshipScalarFieldEnumSchema), _count: z.union([ z.literal(true), FriendshipCountAggregateInputObjectSchema ]).optional(), _min: FriendshipMinAggregateInputObjectSchema.optional(), _max: FriendshipMaxAggregateInputObjectSchema.optional() }).strict();

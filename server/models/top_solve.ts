@@ -1,6 +1,6 @@
 import {v4 as uuid} from 'uuid';
 import {getPrisma} from '../database';
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@/generated/prisma/client';
 import {getAverage} from '../../client/db/solves/stats/solves/average/average';
 import {UserAccount} from '../schemas/UserAccount.schema';
 import {Solve as SolveClientType} from '../schemas/Solve.schema';

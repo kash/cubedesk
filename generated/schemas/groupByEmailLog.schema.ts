@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { EmailLogWhereInputObjectSchema as EmailLogWhereInputObjectSchema } from './objects/EmailLogWhereInput.schema';
+import { EmailLogOrderByWithAggregationInputObjectSchema as EmailLogOrderByWithAggregationInputObjectSchema } from './objects/EmailLogOrderByWithAggregationInput.schema';
+import { EmailLogScalarWhereWithAggregatesInputObjectSchema as EmailLogScalarWhereWithAggregatesInputObjectSchema } from './objects/EmailLogScalarWhereWithAggregatesInput.schema';
+import { EmailLogScalarFieldEnumSchema } from './enums/EmailLogScalarFieldEnum.schema';
+import { EmailLogCountAggregateInputObjectSchema as EmailLogCountAggregateInputObjectSchema } from './objects/EmailLogCountAggregateInput.schema';
+import { EmailLogMinAggregateInputObjectSchema as EmailLogMinAggregateInputObjectSchema } from './objects/EmailLogMinAggregateInput.schema';
+import { EmailLogMaxAggregateInputObjectSchema as EmailLogMaxAggregateInputObjectSchema } from './objects/EmailLogMaxAggregateInput.schema';
+
+export const EmailLogGroupBySchema: z.ZodType<Prisma.EmailLogGroupByArgs> = z.object({ where: EmailLogWhereInputObjectSchema.optional(), orderBy: z.union([EmailLogOrderByWithAggregationInputObjectSchema, EmailLogOrderByWithAggregationInputObjectSchema.array()]).optional(), having: EmailLogScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(EmailLogScalarFieldEnumSchema), _count: z.union([ z.literal(true), EmailLogCountAggregateInputObjectSchema ]).optional(), _min: EmailLogMinAggregateInputObjectSchema.optional(), _max: EmailLogMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.EmailLogGroupByArgs>;
+
+export const EmailLogGroupByZodSchema = z.object({ where: EmailLogWhereInputObjectSchema.optional(), orderBy: z.union([EmailLogOrderByWithAggregationInputObjectSchema, EmailLogOrderByWithAggregationInputObjectSchema.array()]).optional(), having: EmailLogScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(EmailLogScalarFieldEnumSchema), _count: z.union([ z.literal(true), EmailLogCountAggregateInputObjectSchema ]).optional(), _min: EmailLogMinAggregateInputObjectSchema.optional(), _max: EmailLogMaxAggregateInputObjectSchema.optional() }).strict();

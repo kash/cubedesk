@@ -3,20 +3,25 @@
 	"version": "1.0.0",
 	"description": "CubeDesk's codebase",
 	"main": "server/app.ts",
+	"packageManager": "pnpm@10.9.0",
 	"scripts": {
+		"preinstall": "npx only-allow pnpm",
 		"build": "node esbuild.js",
-		"server": "ts-node-dev --transpile-only --quiet --exit-child ./server/app.ts",
-		"dev": "concurrently \"yarn build\" \"yarn server\" \"graphql-codegen --watch\"",
-		"devs": "HTTPS=true concurrently \"yarn build\" \"yarn server\" \"graphql-codegen --watch\"",
-		"dev2": "PORT=3001 yarn server",
+		"server": "ts-node-dev -r tsconfig-paths/register --transpile-only --quiet --exit-child ./server/app.ts",
+		"dev": "concurrently \"pnpm run build\" \"pnpm run server\" \"graphql-codegen --watch\"",
+		"devs": "HTTPS=true concurrently \"pnpm run build\" \"pnpm run server\" \"graphql-codegen --watch\"",
+		"dev2": "PORT=3001 pnpm run server",
+		"prisma": "prisma format && rm -rf generated/zod && prisma generate && prisma migrate dev",
 		"test": "jest",
+		"lint": "pnpm run lint:eslint",
+		"lint:eslint": "eslint --fix --ignore-pattern='debug/*,__scripts__/*,src/app/*,generated/*,*.mjs,lambda/*' .",
 		"compile-server": "babel server --out-dir ./build/server --extensions \".ts,.js,.jsx,.tsx\" -s --config-file ./prod.babelrc",
 		"compile-client": "babel client --out-dir ./build/client --extensions \".ts,.js,.jsx,.tsx\" -s --config-file ./prod.babelrc",
 		"compile-shared": "babel shared --out-dir ./build/shared --extensions \".ts,.js,.jsx,.tsx\" -s --config-file ./prod.babelrc",
-		"deploy": "graphql-codegen && yarn build && yarn compile-server && yarn compile-client && yarn compile-shared"
+		"deploy": "graphql-codegen && pnpm run build && pnpm run compile-server && pnpm run compile-client && pnpm run compile-shared"
 	},
 	"engines": {
-		"node": "20.x"
+		"node": "24.x"
 	},
 	"jest": {
 		"preset": "ts-jest",
@@ -43,15 +48,17 @@
 		"@aws-sdk/client-cloudfront": "^3.112.0",
 		"@aws-sdk/client-s3-node": "^0.1.0-preview.2",
 		"@aws-sdk/client-ses": "^3.45.0",
-		"@elastic/elasticsearch": "^8.2.1",
 		"@graphql-tools/schema": "^8.3.1",
 		"@graphql-typed-document-node/core": "^3.1.2",
-		"@prisma/client": "^4.11.0",
+		"@prisma/adapter-pg": "^7.0.1",
+		"@prisma/client": "^7.0.1",
 		"@sentry/browser": "^6.3.5",
 		"@sentry/integrations": "^7.8.1",
 		"@sentry/node": "^6.16.1",
 		"@sentry/tracing": "^6.16.1",
 		"@socket.io/redis-adapter": "^7.0.0",
+		"@trpc/client": "^11.17.0",
+		"@trpc/server": "^11.17.0",
 		"@types/redlock": "^4.0.3",
 		"@visx/axis": "^1.3.0",
 		"@visx/curve": "^1.0.0",
@@ -154,7 +161,7 @@
 		"uniqid": "^5.3.0",
 		"uuid": "^8.3.2",
 		"winston": "^3.7.2",
-		"winston-elasticsearch": "^0.17.1"
+		"zod": "^4.0.15"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.12.16",
@@ -215,7 +222,8 @@
 		"postcss-preset-env": "^7.7.2",
 		"prettier": "^2.2.1",
 		"prettier-plugin-tailwindcss": "^0.1.13",
-		"prisma": "^4.11.0",
+		"prisma": "^7.0.1",
+		"prisma-zod-generator": "^2.1.2",
 		"sass": "^1.46.0",
 		"sass-loader": "^12.3.0",
 		"tailwindcss": "^3.1.4",
@@ -223,7 +231,16 @@
 		"ts-loader": "8.3.0",
 		"ts-node": "^10.4.0",
 		"ts-node-dev": "^1.1.8",
-		"typescript": "^4.8.4",
-		"typescript-eslint": "^0.0.1-alpha.0"
+		"tsconfig-paths": "^4.2.0",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^0.0.1-alpha.0",
+		"zod-prisma-types": "^3.2.4"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@prisma/engines",
+			"prisma",
+			"esbuild"
+		]
 	}
 }

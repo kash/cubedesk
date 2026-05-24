@@ -74,7 +74,7 @@ export default function GanTimer() {
 			conn = null;
 			setConnected(false);
 		} else {
-			let bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
+			const bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				conn = await connectGanTimer();
 				conn.events$.subscribe((evt) => evt.state == GanTimerState.DISCONNECT && (conn = null));

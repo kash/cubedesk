@@ -1,0 +1,19 @@
+import * as z from 'zod';
+import type { Prisma } from '../../../../generated/prisma/client';
+import { GameTypeSchema } from '../enums/GameType.schema';
+import { GameOptionsCreateNestedOneWithoutGame_sessionInputObjectSchema as GameOptionsCreateNestedOneWithoutGame_sessionInputObjectSchema } from './GameOptionsCreateNestedOneWithoutGame_sessionInput.schema';
+import { MatchCreateNestedOneWithoutGame_sessionInputObjectSchema as MatchCreateNestedOneWithoutGame_sessionInputObjectSchema } from './MatchCreateNestedOneWithoutGame_sessionInput.schema';
+import { SolveCreateNestedManyWithoutGame_sessionInputObjectSchema as SolveCreateNestedManyWithoutGame_sessionInputObjectSchema } from './SolveCreateNestedManyWithoutGame_sessionInput.schema'
+
+const makeSchema = () => z.object({
+  id: z.string().optional(),
+  game_type: GameTypeSchema,
+  solve_count: z.number().int().optional(),
+  total_time: z.number().optional(),
+  created_at: z.coerce.date().optional(),
+  game_options: z.lazy(() => GameOptionsCreateNestedOneWithoutGame_sessionInputObjectSchema).optional(),
+  match: z.lazy(() => MatchCreateNestedOneWithoutGame_sessionInputObjectSchema).optional(),
+  solves: z.lazy(() => SolveCreateNestedManyWithoutGame_sessionInputObjectSchema).optional()
+}).strict();
+export const GameSessionCreateWithoutUserInputObjectSchema: z.ZodType<Prisma.GameSessionCreateWithoutUserInput> = makeSchema() as unknown as z.ZodType<Prisma.GameSessionCreateWithoutUserInput>;
+export const GameSessionCreateWithoutUserInputObjectZodSchema = makeSchema();

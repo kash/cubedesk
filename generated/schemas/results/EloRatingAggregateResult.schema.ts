@@ -1,0 +1,68 @@
+import * as z from 'zod';
+export const EloRatingAggregateResultSchema = z.object({  _count: z.object({
+    id: z.number(),
+    user_id: z.number(),
+    elo_222_rating: z.number(),
+    elo_333_rating: z.number(),
+    elo_444_rating: z.number(),
+    updated_at: z.number(),
+    created_at: z.number(),
+    elo_overall_rating: z.number(),
+    profile_id: z.number(),
+    games_222_count: z.number(),
+    games_333_count: z.number(),
+    games_444_count: z.number(),
+    games_overall_count: z.number(),
+    profile: z.number(),
+    user: z.number()
+  }).optional(),
+  _sum: z.object({
+    elo_222_rating: z.number().nullable(),
+    elo_333_rating: z.number().nullable(),
+    elo_444_rating: z.number().nullable(),
+    elo_overall_rating: z.number().nullable(),
+    games_222_count: z.number().nullable(),
+    games_333_count: z.number().nullable(),
+    games_444_count: z.number().nullable(),
+    games_overall_count: z.number().nullable()
+  }).nullable().optional(),
+  _avg: z.object({
+    elo_222_rating: z.number().nullable(),
+    elo_333_rating: z.number().nullable(),
+    elo_444_rating: z.number().nullable(),
+    elo_overall_rating: z.number().nullable(),
+    games_222_count: z.number().nullable(),
+    games_333_count: z.number().nullable(),
+    games_444_count: z.number().nullable(),
+    games_overall_count: z.number().nullable()
+  }).nullable().optional(),
+  _min: z.object({
+    id: z.string().nullable(),
+    user_id: z.string().nullable(),
+    elo_222_rating: z.number().int().nullable(),
+    elo_333_rating: z.number().int().nullable(),
+    elo_444_rating: z.number().int().nullable(),
+    updated_at: z.date().nullable(),
+    created_at: z.date().nullable(),
+    elo_overall_rating: z.number().int().nullable(),
+    profile_id: z.string().nullable(),
+    games_222_count: z.number().int().nullable(),
+    games_333_count: z.number().int().nullable(),
+    games_444_count: z.number().int().nullable(),
+    games_overall_count: z.number().int().nullable()
+  }).nullable().optional(),
+  _max: z.object({
+    id: z.string().nullable(),
+    user_id: z.string().nullable(),
+    elo_222_rating: z.number().int().nullable(),
+    elo_333_rating: z.number().int().nullable(),
+    elo_444_rating: z.number().int().nullable(),
+    updated_at: z.date().nullable(),
+    created_at: z.date().nullable(),
+    elo_overall_rating: z.number().int().nullable(),
+    profile_id: z.string().nullable(),
+    games_222_count: z.number().int().nullable(),
+    games_333_count: z.number().int().nullable(),
+    games_444_count: z.number().int().nullable(),
+    games_overall_count: z.number().int().nullable()
+  }).nullable().optional()});

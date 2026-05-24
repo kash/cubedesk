@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { UserFeatureStateOrderByWithRelationInputObjectSchema as UserFeatureStateOrderByWithRelationInputObjectSchema } from './objects/UserFeatureStateOrderByWithRelationInput.schema';
+import { UserFeatureStateWhereInputObjectSchema as UserFeatureStateWhereInputObjectSchema } from './objects/UserFeatureStateWhereInput.schema';
+import { UserFeatureStateWhereUniqueInputObjectSchema as UserFeatureStateWhereUniqueInputObjectSchema } from './objects/UserFeatureStateWhereUniqueInput.schema';
+import { UserFeatureStateCountAggregateInputObjectSchema as UserFeatureStateCountAggregateInputObjectSchema } from './objects/UserFeatureStateCountAggregateInput.schema';
+import { UserFeatureStateMinAggregateInputObjectSchema as UserFeatureStateMinAggregateInputObjectSchema } from './objects/UserFeatureStateMinAggregateInput.schema';
+import { UserFeatureStateMaxAggregateInputObjectSchema as UserFeatureStateMaxAggregateInputObjectSchema } from './objects/UserFeatureStateMaxAggregateInput.schema';
+
+export const UserFeatureStateAggregateSchema: z.ZodType<Prisma.UserFeatureStateAggregateArgs> = z.object({ orderBy: z.union([UserFeatureStateOrderByWithRelationInputObjectSchema, UserFeatureStateOrderByWithRelationInputObjectSchema.array()]).optional(), where: UserFeatureStateWhereInputObjectSchema.optional(), cursor: UserFeatureStateWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), UserFeatureStateCountAggregateInputObjectSchema ]).optional(), _min: UserFeatureStateMinAggregateInputObjectSchema.optional(), _max: UserFeatureStateMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.UserFeatureStateAggregateArgs>;
+
+export const UserFeatureStateAggregateZodSchema = z.object({ orderBy: z.union([UserFeatureStateOrderByWithRelationInputObjectSchema, UserFeatureStateOrderByWithRelationInputObjectSchema.array()]).optional(), where: UserFeatureStateWhereInputObjectSchema.optional(), cursor: UserFeatureStateWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), UserFeatureStateCountAggregateInputObjectSchema ]).optional(), _min: UserFeatureStateMinAggregateInputObjectSchema.optional(), _max: UserFeatureStateMaxAggregateInputObjectSchema.optional() }).strict();

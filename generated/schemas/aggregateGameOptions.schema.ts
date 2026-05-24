@@ -1,0 +1,14 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { GameOptionsOrderByWithRelationInputObjectSchema as GameOptionsOrderByWithRelationInputObjectSchema } from './objects/GameOptionsOrderByWithRelationInput.schema';
+import { GameOptionsWhereInputObjectSchema as GameOptionsWhereInputObjectSchema } from './objects/GameOptionsWhereInput.schema';
+import { GameOptionsWhereUniqueInputObjectSchema as GameOptionsWhereUniqueInputObjectSchema } from './objects/GameOptionsWhereUniqueInput.schema';
+import { GameOptionsCountAggregateInputObjectSchema as GameOptionsCountAggregateInputObjectSchema } from './objects/GameOptionsCountAggregateInput.schema';
+import { GameOptionsMinAggregateInputObjectSchema as GameOptionsMinAggregateInputObjectSchema } from './objects/GameOptionsMinAggregateInput.schema';
+import { GameOptionsMaxAggregateInputObjectSchema as GameOptionsMaxAggregateInputObjectSchema } from './objects/GameOptionsMaxAggregateInput.schema';
+import { GameOptionsAvgAggregateInputObjectSchema as GameOptionsAvgAggregateInputObjectSchema } from './objects/GameOptionsAvgAggregateInput.schema';
+import { GameOptionsSumAggregateInputObjectSchema as GameOptionsSumAggregateInputObjectSchema } from './objects/GameOptionsSumAggregateInput.schema';
+
+export const GameOptionsAggregateSchema: z.ZodType<Prisma.GameOptionsAggregateArgs> = z.object({ orderBy: z.union([GameOptionsOrderByWithRelationInputObjectSchema, GameOptionsOrderByWithRelationInputObjectSchema.array()]).optional(), where: GameOptionsWhereInputObjectSchema.optional(), cursor: GameOptionsWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), GameOptionsCountAggregateInputObjectSchema ]).optional(), _min: GameOptionsMinAggregateInputObjectSchema.optional(), _max: GameOptionsMaxAggregateInputObjectSchema.optional(), _avg: GameOptionsAvgAggregateInputObjectSchema.optional(), _sum: GameOptionsSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.GameOptionsAggregateArgs>;
+
+export const GameOptionsAggregateZodSchema = z.object({ orderBy: z.union([GameOptionsOrderByWithRelationInputObjectSchema, GameOptionsOrderByWithRelationInputObjectSchema.array()]).optional(), where: GameOptionsWhereInputObjectSchema.optional(), cursor: GameOptionsWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), GameOptionsCountAggregateInputObjectSchema ]).optional(), _min: GameOptionsMinAggregateInputObjectSchema.optional(), _max: GameOptionsMaxAggregateInputObjectSchema.optional(), _avg: GameOptionsAvgAggregateInputObjectSchema.optional(), _sum: GameOptionsSumAggregateInputObjectSchema.optional() }).strict();

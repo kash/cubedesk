@@ -1,4 +1,4 @@
-@import '../../../styles/config';
+@use '../../../styles/config' as *;
 
 .#{$namespace}-create-new-session {
 	display: flex;

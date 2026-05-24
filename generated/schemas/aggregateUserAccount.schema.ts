@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { UserAccountOrderByWithRelationInputObjectSchema as UserAccountOrderByWithRelationInputObjectSchema } from './objects/UserAccountOrderByWithRelationInput.schema';
+import { UserAccountWhereInputObjectSchema as UserAccountWhereInputObjectSchema } from './objects/UserAccountWhereInput.schema';
+import { UserAccountWhereUniqueInputObjectSchema as UserAccountWhereUniqueInputObjectSchema } from './objects/UserAccountWhereUniqueInput.schema';
+import { UserAccountCountAggregateInputObjectSchema as UserAccountCountAggregateInputObjectSchema } from './objects/UserAccountCountAggregateInput.schema';
+import { UserAccountMinAggregateInputObjectSchema as UserAccountMinAggregateInputObjectSchema } from './objects/UserAccountMinAggregateInput.schema';
+import { UserAccountMaxAggregateInputObjectSchema as UserAccountMaxAggregateInputObjectSchema } from './objects/UserAccountMaxAggregateInput.schema';
+
+export const UserAccountAggregateSchema: z.ZodType<Prisma.UserAccountAggregateArgs> = z.object({ orderBy: z.union([UserAccountOrderByWithRelationInputObjectSchema, UserAccountOrderByWithRelationInputObjectSchema.array()]).optional(), where: UserAccountWhereInputObjectSchema.optional(), cursor: UserAccountWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), UserAccountCountAggregateInputObjectSchema ]).optional(), _min: UserAccountMinAggregateInputObjectSchema.optional(), _max: UserAccountMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.UserAccountAggregateArgs>;
+
+export const UserAccountAggregateZodSchema = z.object({ orderBy: z.union([UserAccountOrderByWithRelationInputObjectSchema, UserAccountOrderByWithRelationInputObjectSchema.array()]).optional(), where: UserAccountWhereInputObjectSchema.optional(), cursor: UserAccountWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), UserAccountCountAggregateInputObjectSchema ]).optional(), _min: UserAccountMinAggregateInputObjectSchema.optional(), _max: UserAccountMaxAggregateInputObjectSchema.optional() }).strict();

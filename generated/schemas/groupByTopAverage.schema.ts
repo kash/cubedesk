@@ -1,0 +1,15 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { TopAverageWhereInputObjectSchema as TopAverageWhereInputObjectSchema } from './objects/TopAverageWhereInput.schema';
+import { TopAverageOrderByWithAggregationInputObjectSchema as TopAverageOrderByWithAggregationInputObjectSchema } from './objects/TopAverageOrderByWithAggregationInput.schema';
+import { TopAverageScalarWhereWithAggregatesInputObjectSchema as TopAverageScalarWhereWithAggregatesInputObjectSchema } from './objects/TopAverageScalarWhereWithAggregatesInput.schema';
+import { TopAverageScalarFieldEnumSchema } from './enums/TopAverageScalarFieldEnum.schema';
+import { TopAverageCountAggregateInputObjectSchema as TopAverageCountAggregateInputObjectSchema } from './objects/TopAverageCountAggregateInput.schema';
+import { TopAverageMinAggregateInputObjectSchema as TopAverageMinAggregateInputObjectSchema } from './objects/TopAverageMinAggregateInput.schema';
+import { TopAverageMaxAggregateInputObjectSchema as TopAverageMaxAggregateInputObjectSchema } from './objects/TopAverageMaxAggregateInput.schema';
+import { TopAverageAvgAggregateInputObjectSchema as TopAverageAvgAggregateInputObjectSchema } from './objects/TopAverageAvgAggregateInput.schema';
+import { TopAverageSumAggregateInputObjectSchema as TopAverageSumAggregateInputObjectSchema } from './objects/TopAverageSumAggregateInput.schema';
+
+export const TopAverageGroupBySchema: z.ZodType<Prisma.TopAverageGroupByArgs> = z.object({ where: TopAverageWhereInputObjectSchema.optional(), orderBy: z.union([TopAverageOrderByWithAggregationInputObjectSchema, TopAverageOrderByWithAggregationInputObjectSchema.array()]).optional(), having: TopAverageScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(TopAverageScalarFieldEnumSchema), _count: z.union([ z.literal(true), TopAverageCountAggregateInputObjectSchema ]).optional(), _min: TopAverageMinAggregateInputObjectSchema.optional(), _max: TopAverageMaxAggregateInputObjectSchema.optional(), _avg: TopAverageAvgAggregateInputObjectSchema.optional(), _sum: TopAverageSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.TopAverageGroupByArgs>;
+
+export const TopAverageGroupByZodSchema = z.object({ where: TopAverageWhereInputObjectSchema.optional(), orderBy: z.union([TopAverageOrderByWithAggregationInputObjectSchema, TopAverageOrderByWithAggregationInputObjectSchema.array()]).optional(), having: TopAverageScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(TopAverageScalarFieldEnumSchema), _count: z.union([ z.literal(true), TopAverageCountAggregateInputObjectSchema ]).optional(), _min: TopAverageMinAggregateInputObjectSchema.optional(), _max: TopAverageMaxAggregateInputObjectSchema.optional(), _avg: TopAverageAvgAggregateInputObjectSchema.optional(), _sum: TopAverageSumAggregateInputObjectSchema.optional() }).strict();

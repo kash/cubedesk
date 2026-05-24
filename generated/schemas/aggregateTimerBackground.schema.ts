@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { TimerBackgroundOrderByWithRelationInputObjectSchema as TimerBackgroundOrderByWithRelationInputObjectSchema } from './objects/TimerBackgroundOrderByWithRelationInput.schema';
+import { TimerBackgroundWhereInputObjectSchema as TimerBackgroundWhereInputObjectSchema } from './objects/TimerBackgroundWhereInput.schema';
+import { TimerBackgroundWhereUniqueInputObjectSchema as TimerBackgroundWhereUniqueInputObjectSchema } from './objects/TimerBackgroundWhereUniqueInput.schema';
+import { TimerBackgroundCountAggregateInputObjectSchema as TimerBackgroundCountAggregateInputObjectSchema } from './objects/TimerBackgroundCountAggregateInput.schema';
+import { TimerBackgroundMinAggregateInputObjectSchema as TimerBackgroundMinAggregateInputObjectSchema } from './objects/TimerBackgroundMinAggregateInput.schema';
+import { TimerBackgroundMaxAggregateInputObjectSchema as TimerBackgroundMaxAggregateInputObjectSchema } from './objects/TimerBackgroundMaxAggregateInput.schema';
+
+export const TimerBackgroundAggregateSchema: z.ZodType<Prisma.TimerBackgroundAggregateArgs> = z.object({ orderBy: z.union([TimerBackgroundOrderByWithRelationInputObjectSchema, TimerBackgroundOrderByWithRelationInputObjectSchema.array()]).optional(), where: TimerBackgroundWhereInputObjectSchema.optional(), cursor: TimerBackgroundWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), TimerBackgroundCountAggregateInputObjectSchema ]).optional(), _min: TimerBackgroundMinAggregateInputObjectSchema.optional(), _max: TimerBackgroundMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.TimerBackgroundAggregateArgs>;
+
+export const TimerBackgroundAggregateZodSchema = z.object({ orderBy: z.union([TimerBackgroundOrderByWithRelationInputObjectSchema, TimerBackgroundOrderByWithRelationInputObjectSchema.array()]).optional(), where: TimerBackgroundWhereInputObjectSchema.optional(), cursor: TimerBackgroundWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), TimerBackgroundCountAggregateInputObjectSchema ]).optional(), _min: TimerBackgroundMinAggregateInputObjectSchema.optional(), _max: TimerBackgroundMaxAggregateInputObjectSchema.optional() }).strict();

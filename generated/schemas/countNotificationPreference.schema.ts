@@ -1,0 +1,10 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { NotificationPreferenceOrderByWithRelationInputObjectSchema as NotificationPreferenceOrderByWithRelationInputObjectSchema } from './objects/NotificationPreferenceOrderByWithRelationInput.schema';
+import { NotificationPreferenceWhereInputObjectSchema as NotificationPreferenceWhereInputObjectSchema } from './objects/NotificationPreferenceWhereInput.schema';
+import { NotificationPreferenceWhereUniqueInputObjectSchema as NotificationPreferenceWhereUniqueInputObjectSchema } from './objects/NotificationPreferenceWhereUniqueInput.schema';
+import { NotificationPreferenceCountAggregateInputObjectSchema as NotificationPreferenceCountAggregateInputObjectSchema } from './objects/NotificationPreferenceCountAggregateInput.schema';
+
+export const NotificationPreferenceCountSchema: z.ZodType<Prisma.NotificationPreferenceCountArgs> = z.object({ orderBy: z.union([NotificationPreferenceOrderByWithRelationInputObjectSchema, NotificationPreferenceOrderByWithRelationInputObjectSchema.array()]).optional(), where: NotificationPreferenceWhereInputObjectSchema.optional(), cursor: NotificationPreferenceWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), NotificationPreferenceCountAggregateInputObjectSchema ]).optional() }).strict() as unknown as z.ZodType<Prisma.NotificationPreferenceCountArgs>;
+
+export const NotificationPreferenceCountZodSchema = z.object({ orderBy: z.union([NotificationPreferenceOrderByWithRelationInputObjectSchema, NotificationPreferenceOrderByWithRelationInputObjectSchema.array()]).optional(), where: NotificationPreferenceWhereInputObjectSchema.optional(), cursor: NotificationPreferenceWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), NotificationPreferenceCountAggregateInputObjectSchema ]).optional() }).strict();

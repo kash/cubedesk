@@ -224,7 +224,7 @@ export default function SmartCube() {
 
 	async function connectBluetooth() {
 		try {
-			let bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
+			const bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				connect.current.connect();
 			} else {

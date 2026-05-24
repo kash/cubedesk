@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { ChatMessageOrderByWithRelationInputObjectSchema as ChatMessageOrderByWithRelationInputObjectSchema } from './objects/ChatMessageOrderByWithRelationInput.schema';
+import { ChatMessageWhereInputObjectSchema as ChatMessageWhereInputObjectSchema } from './objects/ChatMessageWhereInput.schema';
+import { ChatMessageWhereUniqueInputObjectSchema as ChatMessageWhereUniqueInputObjectSchema } from './objects/ChatMessageWhereUniqueInput.schema';
+import { ChatMessageCountAggregateInputObjectSchema as ChatMessageCountAggregateInputObjectSchema } from './objects/ChatMessageCountAggregateInput.schema';
+import { ChatMessageMinAggregateInputObjectSchema as ChatMessageMinAggregateInputObjectSchema } from './objects/ChatMessageMinAggregateInput.schema';
+import { ChatMessageMaxAggregateInputObjectSchema as ChatMessageMaxAggregateInputObjectSchema } from './objects/ChatMessageMaxAggregateInput.schema';
+
+export const ChatMessageAggregateSchema: z.ZodType<Prisma.ChatMessageAggregateArgs> = z.object({ orderBy: z.union([ChatMessageOrderByWithRelationInputObjectSchema, ChatMessageOrderByWithRelationInputObjectSchema.array()]).optional(), where: ChatMessageWhereInputObjectSchema.optional(), cursor: ChatMessageWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ChatMessageCountAggregateInputObjectSchema ]).optional(), _min: ChatMessageMinAggregateInputObjectSchema.optional(), _max: ChatMessageMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ChatMessageAggregateArgs>;
+
+export const ChatMessageAggregateZodSchema = z.object({ orderBy: z.union([ChatMessageOrderByWithRelationInputObjectSchema, ChatMessageOrderByWithRelationInputObjectSchema.array()]).optional(), where: ChatMessageWhereInputObjectSchema.optional(), cursor: ChatMessageWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ChatMessageCountAggregateInputObjectSchema ]).optional(), _min: ChatMessageMinAggregateInputObjectSchema.optional(), _max: ChatMessageMaxAggregateInputObjectSchema.optional() }).strict();

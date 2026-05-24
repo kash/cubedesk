@@ -1,0 +1,20 @@
+import * as z from 'zod';
+import type { Prisma } from '../../../../generated/prisma/client';
+import { ChatMessageUncheckedCreateNestedManyWithoutMatch_sessionInputObjectSchema as ChatMessageUncheckedCreateNestedManyWithoutMatch_sessionInputObjectSchema } from './ChatMessageUncheckedCreateNestedManyWithoutMatch_sessionInput.schema';
+import { GameOptionsUncheckedCreateNestedOneWithoutMatch_sessionInputObjectSchema as GameOptionsUncheckedCreateNestedOneWithoutMatch_sessionInputObjectSchema } from './GameOptionsUncheckedCreateNestedOneWithoutMatch_sessionInput.schema';
+import { MatchUncheckedCreateNestedManyWithoutMatch_sessionInputObjectSchema as MatchUncheckedCreateNestedManyWithoutMatch_sessionInputObjectSchema } from './MatchUncheckedCreateNestedManyWithoutMatch_sessionInput.schema'
+
+const makeSchema = () => z.object({
+  id: z.string().optional(),
+  min_players: z.number().int().optional(),
+  max_players: z.number().int().optional(),
+  match_type: z.string(),
+  custom_match: z.boolean().optional(),
+  created_at: z.coerce.date().optional(),
+  rated: z.boolean().optional().nullable(),
+  chat_messages: z.lazy(() => ChatMessageUncheckedCreateNestedManyWithoutMatch_sessionInputObjectSchema).optional(),
+  game_options: z.lazy(() => GameOptionsUncheckedCreateNestedOneWithoutMatch_sessionInputObjectSchema).optional(),
+  matches: z.lazy(() => MatchUncheckedCreateNestedManyWithoutMatch_sessionInputObjectSchema).optional()
+}).strict();
+export const MatchSessionUncheckedCreateWithoutCreated_byInputObjectSchema: z.ZodType<Prisma.MatchSessionUncheckedCreateWithoutCreated_byInput> = makeSchema() as unknown as z.ZodType<Prisma.MatchSessionUncheckedCreateWithoutCreated_byInput>;
+export const MatchSessionUncheckedCreateWithoutCreated_byInputObjectZodSchema = makeSchema();

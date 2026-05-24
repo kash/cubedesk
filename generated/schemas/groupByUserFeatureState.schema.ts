@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { UserFeatureStateWhereInputObjectSchema as UserFeatureStateWhereInputObjectSchema } from './objects/UserFeatureStateWhereInput.schema';
+import { UserFeatureStateOrderByWithAggregationInputObjectSchema as UserFeatureStateOrderByWithAggregationInputObjectSchema } from './objects/UserFeatureStateOrderByWithAggregationInput.schema';
+import { UserFeatureStateScalarWhereWithAggregatesInputObjectSchema as UserFeatureStateScalarWhereWithAggregatesInputObjectSchema } from './objects/UserFeatureStateScalarWhereWithAggregatesInput.schema';
+import { UserFeatureStateScalarFieldEnumSchema } from './enums/UserFeatureStateScalarFieldEnum.schema';
+import { UserFeatureStateCountAggregateInputObjectSchema as UserFeatureStateCountAggregateInputObjectSchema } from './objects/UserFeatureStateCountAggregateInput.schema';
+import { UserFeatureStateMinAggregateInputObjectSchema as UserFeatureStateMinAggregateInputObjectSchema } from './objects/UserFeatureStateMinAggregateInput.schema';
+import { UserFeatureStateMaxAggregateInputObjectSchema as UserFeatureStateMaxAggregateInputObjectSchema } from './objects/UserFeatureStateMaxAggregateInput.schema';
+
+export const UserFeatureStateGroupBySchema: z.ZodType<Prisma.UserFeatureStateGroupByArgs> = z.object({ where: UserFeatureStateWhereInputObjectSchema.optional(), orderBy: z.union([UserFeatureStateOrderByWithAggregationInputObjectSchema, UserFeatureStateOrderByWithAggregationInputObjectSchema.array()]).optional(), having: UserFeatureStateScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(UserFeatureStateScalarFieldEnumSchema), _count: z.union([ z.literal(true), UserFeatureStateCountAggregateInputObjectSchema ]).optional(), _min: UserFeatureStateMinAggregateInputObjectSchema.optional(), _max: UserFeatureStateMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.UserFeatureStateGroupByArgs>;
+
+export const UserFeatureStateGroupByZodSchema = z.object({ where: UserFeatureStateWhereInputObjectSchema.optional(), orderBy: z.union([UserFeatureStateOrderByWithAggregationInputObjectSchema, UserFeatureStateOrderByWithAggregationInputObjectSchema.array()]).optional(), having: UserFeatureStateScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(UserFeatureStateScalarFieldEnumSchema), _count: z.union([ z.literal(true), UserFeatureStateCountAggregateInputObjectSchema ]).optional(), _min: UserFeatureStateMinAggregateInputObjectSchema.optional(), _max: UserFeatureStateMaxAggregateInputObjectSchema.optional() }).strict();

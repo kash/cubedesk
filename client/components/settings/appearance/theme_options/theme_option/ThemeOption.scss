@@ -1,4 +1,4 @@
-@import '../../../../../styles/config';
+@use '../../../../../styles/config' as *;
 
 .#{$namespace}-theme-option {
 	border: 4px solid rgb(var(--button-color), 0.9);

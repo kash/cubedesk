@@ -1,4 +1,4 @@
-@import '../../../../styles/config';
+@use '../../../../styles/config' as *;
 
 .#{$namespace}-landing-section-divider {
 	margin: 30px auto;

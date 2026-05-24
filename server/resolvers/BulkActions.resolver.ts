@@ -1,4 +1,4 @@
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@/generated/prisma/client';
 import {Arg, Authorized, Ctx, Int, Mutation, Resolver} from 'type-graphql';
 import {GraphQLContext} from '../@types/interfaces/server.interface';
 import {Role} from '../middlewares/auth';

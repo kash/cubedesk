@@ -1,0 +1,14 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { BadgeTypeOrderByWithRelationInputObjectSchema as BadgeTypeOrderByWithRelationInputObjectSchema } from './objects/BadgeTypeOrderByWithRelationInput.schema';
+import { BadgeTypeWhereInputObjectSchema as BadgeTypeWhereInputObjectSchema } from './objects/BadgeTypeWhereInput.schema';
+import { BadgeTypeWhereUniqueInputObjectSchema as BadgeTypeWhereUniqueInputObjectSchema } from './objects/BadgeTypeWhereUniqueInput.schema';
+import { BadgeTypeCountAggregateInputObjectSchema as BadgeTypeCountAggregateInputObjectSchema } from './objects/BadgeTypeCountAggregateInput.schema';
+import { BadgeTypeMinAggregateInputObjectSchema as BadgeTypeMinAggregateInputObjectSchema } from './objects/BadgeTypeMinAggregateInput.schema';
+import { BadgeTypeMaxAggregateInputObjectSchema as BadgeTypeMaxAggregateInputObjectSchema } from './objects/BadgeTypeMaxAggregateInput.schema';
+import { BadgeTypeAvgAggregateInputObjectSchema as BadgeTypeAvgAggregateInputObjectSchema } from './objects/BadgeTypeAvgAggregateInput.schema';
+import { BadgeTypeSumAggregateInputObjectSchema as BadgeTypeSumAggregateInputObjectSchema } from './objects/BadgeTypeSumAggregateInput.schema';
+
+export const BadgeTypeAggregateSchema: z.ZodType<Prisma.BadgeTypeAggregateArgs> = z.object({ orderBy: z.union([BadgeTypeOrderByWithRelationInputObjectSchema, BadgeTypeOrderByWithRelationInputObjectSchema.array()]).optional(), where: BadgeTypeWhereInputObjectSchema.optional(), cursor: BadgeTypeWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), BadgeTypeCountAggregateInputObjectSchema ]).optional(), _min: BadgeTypeMinAggregateInputObjectSchema.optional(), _max: BadgeTypeMaxAggregateInputObjectSchema.optional(), _avg: BadgeTypeAvgAggregateInputObjectSchema.optional(), _sum: BadgeTypeSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.BadgeTypeAggregateArgs>;
+
+export const BadgeTypeAggregateZodSchema = z.object({ orderBy: z.union([BadgeTypeOrderByWithRelationInputObjectSchema, BadgeTypeOrderByWithRelationInputObjectSchema.array()]).optional(), where: BadgeTypeWhereInputObjectSchema.optional(), cursor: BadgeTypeWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), BadgeTypeCountAggregateInputObjectSchema ]).optional(), _min: BadgeTypeMinAggregateInputObjectSchema.optional(), _max: BadgeTypeMaxAggregateInputObjectSchema.optional(), _avg: BadgeTypeAvgAggregateInputObjectSchema.optional(), _sum: BadgeTypeSumAggregateInputObjectSchema.optional() }).strict();

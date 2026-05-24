@@ -1,0 +1,10 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { FriendshipRequestOrderByWithRelationInputObjectSchema as FriendshipRequestOrderByWithRelationInputObjectSchema } from './objects/FriendshipRequestOrderByWithRelationInput.schema';
+import { FriendshipRequestWhereInputObjectSchema as FriendshipRequestWhereInputObjectSchema } from './objects/FriendshipRequestWhereInput.schema';
+import { FriendshipRequestWhereUniqueInputObjectSchema as FriendshipRequestWhereUniqueInputObjectSchema } from './objects/FriendshipRequestWhereUniqueInput.schema';
+import { FriendshipRequestCountAggregateInputObjectSchema as FriendshipRequestCountAggregateInputObjectSchema } from './objects/FriendshipRequestCountAggregateInput.schema';
+
+export const FriendshipRequestCountSchema: z.ZodType<Prisma.FriendshipRequestCountArgs> = z.object({ orderBy: z.union([FriendshipRequestOrderByWithRelationInputObjectSchema, FriendshipRequestOrderByWithRelationInputObjectSchema.array()]).optional(), where: FriendshipRequestWhereInputObjectSchema.optional(), cursor: FriendshipRequestWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), FriendshipRequestCountAggregateInputObjectSchema ]).optional() }).strict() as unknown as z.ZodType<Prisma.FriendshipRequestCountArgs>;
+
+export const FriendshipRequestCountZodSchema = z.object({ orderBy: z.union([FriendshipRequestOrderByWithRelationInputObjectSchema, FriendshipRequestOrderByWithRelationInputObjectSchema.array()]).optional(), where: FriendshipRequestWhereInputObjectSchema.optional(), cursor: FriendshipRequestWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), FriendshipRequestCountAggregateInputObjectSchema ]).optional() }).strict();

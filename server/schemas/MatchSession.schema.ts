@@ -2,7 +2,7 @@ import {Field, ObjectType, InputType, Int} from 'type-graphql';
 import {PublicUserAccount} from './UserAccount.schema';
 import {MatchParticipant} from './MatchParticipant.schema';
 import {ChatMessage} from './ChatMessage.schema';
-import {GameType as DbGameType} from '@prisma/client';
+import {GameType as DbGameType} from '@/generated/prisma/client';
 import {GameOptions} from './GameOptions.schema';
 import {GameType} from '../../shared/match/consts';
 

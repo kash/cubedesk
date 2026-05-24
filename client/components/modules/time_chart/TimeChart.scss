@@ -1,4 +1,4 @@
-@import '../../../styles/config';
+@use '../../../styles/config' as *;
 
 .#{$namespace}-time-chart {
 	transition: all 0.1s ease-in-out;

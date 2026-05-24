@@ -3,7 +3,7 @@ import {Match} from '../schemas/Match.schema';
 import {PublicUserAccount} from '../schemas/UserAccount.schema';
 import {MatchRoom} from '../../client/shared/match/events';
 import {MatchConst} from '../../client/shared/match/consts';
-import {GameType} from '@prisma/client';
+import {GameType} from '@/generated/prisma/client';
 
 export function getRematchRoomName(match: Match): string {
 	return `${MatchConst.REMATCH_ROOM_PREFIX}${match.id}`;

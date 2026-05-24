@@ -1,0 +1,14 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { CustomTrainerOrderByWithRelationInputObjectSchema as CustomTrainerOrderByWithRelationInputObjectSchema } from './objects/CustomTrainerOrderByWithRelationInput.schema';
+import { CustomTrainerWhereInputObjectSchema as CustomTrainerWhereInputObjectSchema } from './objects/CustomTrainerWhereInput.schema';
+import { CustomTrainerWhereUniqueInputObjectSchema as CustomTrainerWhereUniqueInputObjectSchema } from './objects/CustomTrainerWhereUniqueInput.schema';
+import { CustomTrainerCountAggregateInputObjectSchema as CustomTrainerCountAggregateInputObjectSchema } from './objects/CustomTrainerCountAggregateInput.schema';
+import { CustomTrainerMinAggregateInputObjectSchema as CustomTrainerMinAggregateInputObjectSchema } from './objects/CustomTrainerMinAggregateInput.schema';
+import { CustomTrainerMaxAggregateInputObjectSchema as CustomTrainerMaxAggregateInputObjectSchema } from './objects/CustomTrainerMaxAggregateInput.schema';
+import { CustomTrainerAvgAggregateInputObjectSchema as CustomTrainerAvgAggregateInputObjectSchema } from './objects/CustomTrainerAvgAggregateInput.schema';
+import { CustomTrainerSumAggregateInputObjectSchema as CustomTrainerSumAggregateInputObjectSchema } from './objects/CustomTrainerSumAggregateInput.schema';
+
+export const CustomTrainerAggregateSchema: z.ZodType<Prisma.CustomTrainerAggregateArgs> = z.object({ orderBy: z.union([CustomTrainerOrderByWithRelationInputObjectSchema, CustomTrainerOrderByWithRelationInputObjectSchema.array()]).optional(), where: CustomTrainerWhereInputObjectSchema.optional(), cursor: CustomTrainerWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), CustomTrainerCountAggregateInputObjectSchema ]).optional(), _min: CustomTrainerMinAggregateInputObjectSchema.optional(), _max: CustomTrainerMaxAggregateInputObjectSchema.optional(), _avg: CustomTrainerAvgAggregateInputObjectSchema.optional(), _sum: CustomTrainerSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.CustomTrainerAggregateArgs>;
+
+export const CustomTrainerAggregateZodSchema = z.object({ orderBy: z.union([CustomTrainerOrderByWithRelationInputObjectSchema, CustomTrainerOrderByWithRelationInputObjectSchema.array()]).optional(), where: CustomTrainerWhereInputObjectSchema.optional(), cursor: CustomTrainerWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), CustomTrainerCountAggregateInputObjectSchema ]).optional(), _min: CustomTrainerMinAggregateInputObjectSchema.optional(), _max: CustomTrainerMaxAggregateInputObjectSchema.optional(), _avg: CustomTrainerAvgAggregateInputObjectSchema.optional(), _sum: CustomTrainerSumAggregateInputObjectSchema.optional() }).strict();

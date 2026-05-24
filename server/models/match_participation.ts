@@ -1,5 +1,5 @@
 import {getPrisma} from '../database';
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@/generated/prisma/client';
 import {PublicUserAccount} from '../schemas/UserAccount.schema';
 import {Match} from '../schemas/Match.schema';
 

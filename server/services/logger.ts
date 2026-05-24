@@ -1,16 +1,12 @@
 import winston, {Logger} from 'winston';
-import {ElasticsearchTransport} from 'winston-elasticsearch';
-import {getSearchClient} from './search';
 
 let logger: Logger;
 
 export function initLogger() {
-	const transports = [];
 	const isDev = process.env.ENV === 'development';
 
 	const addFormats = [];
 	if (isDev) {
-		transports.push(new winston.transports.Console());
 		addFormats.push(
 			winston.format.timestamp({
 				format: 'YYYY-MM-DD HH:MM:SS',
@@ -28,14 +24,7 @@ export function initLogger() {
 			})
 		);
 	} else {
-		transports.push(
-			new ElasticsearchTransport({
-				client: getSearchClient(),
-				level: process.env.LOG_LEVEL,
-			})
-		);
-
-		addFormats.push(winston.format.json());
+		addFormats.push(winston.format.timestamp(), winston.format.json());
 	}
 
 	const defaultFormats = [
@@ -52,7 +41,7 @@ export function initLogger() {
 		},
 		exitOnError: false,
 		format: winston.format.combine(...defaultFormats),
-		transports,
+		transports: [new winston.transports.Console()],
 	});
 }
 

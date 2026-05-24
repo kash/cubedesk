@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { CustomCubeTypeOrderByWithRelationInputObjectSchema as CustomCubeTypeOrderByWithRelationInputObjectSchema } from './objects/CustomCubeTypeOrderByWithRelationInput.schema';
+import { CustomCubeTypeWhereInputObjectSchema as CustomCubeTypeWhereInputObjectSchema } from './objects/CustomCubeTypeWhereInput.schema';
+import { CustomCubeTypeWhereUniqueInputObjectSchema as CustomCubeTypeWhereUniqueInputObjectSchema } from './objects/CustomCubeTypeWhereUniqueInput.schema';
+import { CustomCubeTypeCountAggregateInputObjectSchema as CustomCubeTypeCountAggregateInputObjectSchema } from './objects/CustomCubeTypeCountAggregateInput.schema';
+import { CustomCubeTypeMinAggregateInputObjectSchema as CustomCubeTypeMinAggregateInputObjectSchema } from './objects/CustomCubeTypeMinAggregateInput.schema';
+import { CustomCubeTypeMaxAggregateInputObjectSchema as CustomCubeTypeMaxAggregateInputObjectSchema } from './objects/CustomCubeTypeMaxAggregateInput.schema';
+
+export const CustomCubeTypeAggregateSchema: z.ZodType<Prisma.CustomCubeTypeAggregateArgs> = z.object({ orderBy: z.union([CustomCubeTypeOrderByWithRelationInputObjectSchema, CustomCubeTypeOrderByWithRelationInputObjectSchema.array()]).optional(), where: CustomCubeTypeWhereInputObjectSchema.optional(), cursor: CustomCubeTypeWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), CustomCubeTypeCountAggregateInputObjectSchema ]).optional(), _min: CustomCubeTypeMinAggregateInputObjectSchema.optional(), _max: CustomCubeTypeMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.CustomCubeTypeAggregateArgs>;
+
+export const CustomCubeTypeAggregateZodSchema = z.object({ orderBy: z.union([CustomCubeTypeOrderByWithRelationInputObjectSchema, CustomCubeTypeOrderByWithRelationInputObjectSchema.array()]).optional(), where: CustomCubeTypeWhereInputObjectSchema.optional(), cursor: CustomCubeTypeWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), CustomCubeTypeCountAggregateInputObjectSchema ]).optional(), _min: CustomCubeTypeMinAggregateInputObjectSchema.optional(), _max: CustomCubeTypeMaxAggregateInputObjectSchema.optional() }).strict();

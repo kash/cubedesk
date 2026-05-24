@@ -25,7 +25,7 @@ export default function Module(props: Props) {
 
 	return (
 		<div className={b({square})} style={styles}>
-			<div className={b('body')}>{children}</div>
+				<div className={b('body')}>{children}</div>
 		</div>
 	);
 }
