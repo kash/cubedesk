@@ -94,10 +94,10 @@ importers:
         version: 3.1.2
       ajv:
         specifier: ^8.6.2
-        version: 8.17.1
+        version: 8.20.0
       ajv-errors:
         specifier: ^3.0.0
-        version: 3.0.0(ajv@8.17.1)
+        version: 3.0.0(ajv@8.20.0)
       apollo-server:
         specifier: ^2.23.0
         version: 2.26.2(graphql@15.3.0)
@@ -154,7 +154,7 @@ importers:
         version: 2.4.4
       csstype:
         specifier: ^3.0.10
-        version: 3.1.3
+        version: 3.2.3
       cubejs:
         specifier: ^1.3.2
         version: 1.3.2
@@ -350,6 +350,9 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
+      tsconfig-paths:
+        specifier: ^4.2.0
+        version: 4.2.0
       tslib:
         specifier: ^2.5.0
         version: 2.8.1
@@ -570,9 +573,6 @@ importers:
       ts-node-dev:
         specifier: ^1.1.8
         version: 1.1.8(typescript@5.9.3)
-      tsconfig-paths:
-        specifier: ^4.2.0
-        version: 4.2.0
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -3609,9 +3609,6 @@ packages:
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
-  ajv@8.17.1:
-    resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
-
   ajv@8.20.0:
     resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
 
@@ -4566,9 +4563,6 @@ packages:
     resolution: {integrity: sha512-wvlcdIbf6pwKEk7vHj8/Bkc0B4ylXZruLvOgs9doS5eOsOpuodOV2zJChSpkp+pRpYQLQMeF04nr3Z68Sta9jA==}
     engines: {node: '>=8.0.0'}
 
-  csstype@3.1.3:
-    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
-
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
@@ -5343,9 +5337,6 @@ packages:
 
   fast-uri@3.0.6:
     resolution: {integrity: sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==}
-
-  fast-uri@3.1.0:
-    resolution: {integrity: sha512-iPeeDKJSWf4IEOasVVrknXpaBV0IApz/gp7S2bb7Z4Lljbl2MGJRqInZiUrQwV16cpzw/D3S5j5Julj/gT52AA==}
 
   fast-url-parser@1.1.3:
     resolution: {integrity: sha512-5jOCVXADYNuRkKFzNJ0dCCewsZiYo0dz8QNYljkOpFC6r2U4OBmKtvm/Tsuh4w1YYdDqDb31a8TVhBJ2OJKdqQ==}
@@ -9428,15 +9419,17 @@ packages:
 
   uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-compile-cache-lib@3.0.1:
@@ -11643,7 +11636,7 @@ snapshots:
       '@emotion/memoize': 0.9.0
       '@emotion/unitless': 0.10.0
       '@emotion/utils': 1.4.2
-      csstype: 3.1.3
+      csstype: 3.2.3
 
   '@emotion/sheet@1.4.0': {}
 
@@ -12837,7 +12830,7 @@ snapshots:
 
   '@prisma/streams-local@0.1.2':
     dependencies:
-      ajv: 8.17.1
+      ajv: 8.20.0
       better-result: 2.8.2
       env-paths: 3.0.0
       proper-lockfile: 4.1.2
@@ -14168,26 +14161,17 @@ snapshots:
       clean-stack: 2.2.0
       indent-string: 4.0.0
 
-  ajv-errors@3.0.0(ajv@8.17.1):
+  ajv-errors@3.0.0(ajv@8.20.0):
     dependencies:
-      ajv: 8.17.1
-
-  ajv-formats@2.1.1(ajv@8.17.1):
-    optionalDependencies:
-      ajv: 8.17.1
+      ajv: 8.20.0
 
   ajv-formats@2.1.1(ajv@8.20.0):
     optionalDependencies:
       ajv: 8.20.0
 
-  ajv-formats@3.0.1(ajv@8.17.1):
+  ajv-formats@3.0.1(ajv@8.20.0):
     optionalDependencies:
-      ajv: 8.17.1
-
-  ajv-keywords@5.1.0(ajv@8.17.1):
-    dependencies:
-      ajv: 8.17.1
-      fast-deep-equal: 3.1.3
+      ajv: 8.20.0
 
   ajv-keywords@5.1.0(ajv@8.20.0):
     dependencies:
@@ -14201,17 +14185,10 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
-  ajv@8.17.1:
-    dependencies:
-      fast-deep-equal: 3.1.3
-      fast-uri: 3.0.6
-      json-schema-traverse: 1.0.0
-      require-from-string: 2.0.2
-
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.0
+      fast-uri: 3.0.6
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -15428,8 +15405,6 @@ snapshots:
     dependencies:
       css-tree: 1.1.3
 
-  csstype@3.1.3: {}
-
   csstype@3.2.3: {}
 
   cubejs@1.3.2:
@@ -15641,7 +15616,7 @@ snapshots:
   dom-helpers@5.2.1:
     dependencies:
       '@babel/runtime': 7.28.2
-      csstype: 3.1.3
+      csstype: 3.2.3
 
   dom-serializer@1.4.1:
     dependencies:
@@ -16289,8 +16264,6 @@ snapshots:
       fast-decode-uri-component: 1.0.1
 
   fast-uri@3.0.6: {}
-
-  fast-uri@3.1.0: {}
 
   fast-url-parser@1.1.3:
     dependencies:
@@ -19235,8 +19208,8 @@ snapshots:
       '@prisma/internals': 7.8.0(typescript@5.9.3)
       '@types/cors': 2.8.19
       '@types/express': 5.0.6
-      ajv: 8.17.1
-      ajv-formats: 3.0.1(ajv@8.17.1)
+      ajv: 8.20.0
+      ajv-formats: 3.0.1(ajv@8.20.0)
       cors: 2.8.5
       dotenv: 17.4.2
       express: 5.2.1
@@ -19834,9 +19807,9 @@ snapshots:
   schema-utils@4.3.2:
     dependencies:
       '@types/json-schema': 7.0.15
-      ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
-      ajv-keywords: 5.1.0(ajv@8.17.1)
+      ajv: 8.20.0
+      ajv-formats: 2.1.1(ajv@8.20.0)
+      ajv-keywords: 5.1.0(ajv@8.20.0)
 
   schema-utils@4.3.3:
     dependencies:
