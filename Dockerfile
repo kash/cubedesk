@@ -51,7 +51,7 @@ RUN rm -rf build && \
 RUN find ./dist -name "*.map" -type f -delete && \
     find ./build -name "*.map" -type f -delete
 
-RUN aws s3 cp dist s3://cubedesk/dist --recursive --cache-control max-age=604800  && \
+RUN aws s3 sync dist s3://cubedesk/dist --delete --cache-control max-age=604800  && \
     aws s3 sync public s3://cubedesk/static --cache-control max-age=604800
 
 RUN pnpm prune --prod

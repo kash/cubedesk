@@ -13,7 +13,13 @@ function initMatchPairingCronJob() {
 	const job = new CronJob(
 		'*/3 * * * * *',
 		async () => {
-			await matchPlayersInLobby();
+			try {
+				await matchPlayersInLobby();
+			} catch (e) {
+				logger.error('Match pairing cron job failed', {
+					error: e,
+				});
+			}
 		},
 		null,
 		true,
@@ -30,8 +36,14 @@ function initSiteMapGenerationCronJob() {
 	const job = new CronJob(
 		'0 0 */2 * * *',
 		async () => {
-			logger.info('Requesting sitemap to be updated');
-			initSiteMapGeneration();
+			try {
+				logger.info('Requesting sitemap to be updated');
+				await initSiteMapGeneration();
+			} catch (e) {
+				logger.error('Sitemap generation cron job failed', {
+					error: e,
+				});
+			}
 		},
 		null,
 		true,

@@ -38,7 +38,7 @@ require('esbuild')
 		loader: {'.js': 'jsx'},
 		plugins: [
 			sassPlugin({
-				type: 'style',
+				type: 'css',
 				async transform(source) {
 					const {css} = await postcss([tailwindcss, autoprefixer]).process(source, {from: undefined});
 					return css;
