@@ -18,7 +18,8 @@
 		"compile-server": "babel server --out-dir ./build/server --extensions \".ts,.js,.jsx,.tsx\" -s --config-file ./prod.babelrc",
 		"compile-client": "babel client --out-dir ./build/client --extensions \".ts,.js,.jsx,.tsx\" -s --config-file ./prod.babelrc",
 		"compile-shared": "babel shared --out-dir ./build/shared --extensions \".ts,.js,.jsx,.tsx\" -s --config-file ./prod.babelrc",
-		"deploy": "graphql-codegen && pnpm run build && pnpm run compile-server && pnpm run compile-client && pnpm run compile-shared"
+		"compile-generated": "babel generated --out-dir ./build/generated --extensions \".ts,.js\" -s --config-file ./prod.babelrc",
+		"deploy": "graphql-codegen && pnpm run build && pnpm run compile-server && pnpm run compile-client && pnpm run compile-shared && pnpm run compile-generated"
 	},
 	"engines": {
 		"node": "24.x"
@@ -158,6 +159,7 @@
 		"stripe": "^8.211.0",
 		"three": "0.125.0",
 		"tinycolor2": "^1.6.0",
+		"tsconfig-paths": "^4.2.0",
 		"tslib": "^2.5.0",
 		"type-graphql": "^1.1.1",
 		"uniqid": "^5.3.0",
@@ -233,7 +235,6 @@
 		"ts-loader": "8.3.0",
 		"ts-node": "^10.4.0",
 		"ts-node-dev": "^1.1.8",
-		"tsconfig-paths": "^4.2.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^0.0.1-alpha.0",
 		"zod-prisma-types": "^3.2.4"

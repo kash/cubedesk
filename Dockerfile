@@ -59,10 +59,11 @@ RUN pnpm prune --prod
 RUN cp -r ./server/resources/mjml_templates ./build/server/resources/mjml_templates
 RUN cp ./server/resources/not_found.html ./build/server/resources/not_found.html
 
-RUN rm -rf ./client ./server ./shared ./test ./dist ./public && \
+RUN rm -rf ./client ./server ./shared ./test ./dist ./public ./generated && \
     mv ./build/server ./server && \
     mv ./build/client ./client && \
-    mv ./build/shared ./shared
+    mv ./build/shared ./shared && \
+    mv ./build/generated ./generated
 
 FROM node:24-slim
 
@@ -75,4 +76,4 @@ WORKDIR /app
 COPY --from=builder /app /app
 
 EXPOSE 3000
-ENTRYPOINT ["node", "server/app.js"]
+ENTRYPOINT ["node", "-r", "tsconfig-paths/register", "server/app.js"]
