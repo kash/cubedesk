@@ -1,9 +1,0 @@
-import type { Prisma } from '../../../generated/prisma/client';
-import * as z from 'zod';
-import { SettingSelectObjectSchema as SettingSelectObjectSchema } from './objects/SettingSelect.schema';
-import { SettingIncludeObjectSchema as SettingIncludeObjectSchema } from './objects/SettingInclude.schema';
-import { SettingWhereUniqueInputObjectSchema as SettingWhereUniqueInputObjectSchema } from './objects/SettingWhereUniqueInput.schema';
-
-export const SettingFindUniqueOrThrowSchema: z.ZodType<Prisma.SettingFindUniqueOrThrowArgs> = z.object({ select: SettingSelectObjectSchema.optional(), include: SettingIncludeObjectSchema.optional(), where: SettingWhereUniqueInputObjectSchema }).strict() as unknown as z.ZodType<Prisma.SettingFindUniqueOrThrowArgs>;
-
-export const SettingFindUniqueOrThrowZodSchema = z.object({ select: SettingSelectObjectSchema.optional(), include: SettingIncludeObjectSchema.optional(), where: SettingWhereUniqueInputObjectSchema }).strict();
