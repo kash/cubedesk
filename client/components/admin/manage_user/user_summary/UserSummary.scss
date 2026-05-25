@@ -1,4 +1,4 @@
-@import '../../../../styles/config';
+@use '../../../../styles/config' as *;
 
 .#{$namespace}-manage-user-summary {
 	grid-column: span 2;

@@ -1,4 +1,4 @@
-FROM node:20.19-slim AS builder
+FROM node:24-slim AS builder
 
 WORKDIR /app
 
@@ -37,9 +37,11 @@ ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 ENV SENTRY_ORG=cubedesk
 ENV SENTRY_ENVIRONMENT=$ENV
 
-COPY package.json yarn.lock ./
+RUN npm install -g pnpm
 
-RUN yarn --frozen-lockfile
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
@@ -48,7 +50,7 @@ ENV NODE_ENV=production
 RUN rm -rf build && \
     mkdir build && \
     npx prisma generate && \
-    yarn deploy
+    pnpm run deploy
 
 RUN find ./dist -name "*.map" -type f -delete && \
     find ./build -name "*.map" -type f -delete
@@ -66,7 +68,7 @@ RUN rm -rf ./client ./server ./shared ./test ./dist ./public && \
     mv ./build/client ./client && \
     mv ./build/shared ./shared
 
-FROM node:20.19-slim
+FROM node:24-slim
 
 ENV NODE_ENV=production
 RUN apt-get update && \

@@ -1,11 +1,18 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "./node_modules/.prisma/client"
-}
-
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  moduleFormat    = "cjs"
+  previewFeatures = ["fullTextSearchPostgres"]
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "../generated/zod"
+  config   = "prisma/zod.config.json"
 }
 
 model UserAccount {

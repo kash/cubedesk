@@ -1,5 +1,5 @@
 import {getPrisma} from '../database';
-import {MetricLog} from '@prisma/client';
+import {MetricLog} from '@/generated/prisma/client';
 import {v4 as uuid} from 'uuid';
 import {MetricLogType} from '../@types/enums';
 import {UserAccount} from '../schemas/UserAccount.schema';

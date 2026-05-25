@@ -1,5 +1,7 @@
-const postCssPlugin = require('esbuild-style-plugin');
 const {sassPlugin} = require('esbuild-sass-plugin');
+const postcss = require('postcss');
+const tailwindcss = require('tailwindcss');
+const autoprefixer = require('autoprefixer');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const deploying = process.env.DEPLOYING;
@@ -35,13 +37,13 @@ require('esbuild')
 		},
 		loader: {'.js': 'jsx'},
 		plugins: [
-			// sassPlugin({
-			// 	type: 'style',
-			// }),
-			postCssPlugin({
-				postcss: {
-					plugins: [require('tailwindcss'), require('autoprefixer')],
+			sassPlugin({
+				type: 'style',
+				async transform(source) {
+					const {css} = await postcss([tailwindcss, autoprefixer]).process(source, {from: undefined});
+					return css;
 				},
+				silenceDeprecations: ['import'],
 			}),
 		],
 		watch,

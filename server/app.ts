@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import 'ignore-styles';
 import 'reflect-metadata';
 import express from 'express';
@@ -36,7 +37,9 @@ import Discord from './services/discord';
 import {initCronJobs} from './services/cron';
 import {initWebhookListeners, initWebhookListenersRaw} from './webhooks';
 import {exposeResourcesForSearchEngines} from './middlewares/search_engines';
-import {initSearch} from './services/search';
+import {createExpressMiddleware} from '@trpc/server/adapters/express';
+import {appRouter} from './trpc/router';
+import {createTRPCContext} from './trpc/context';
 
 initPrisma();
 
@@ -65,7 +68,6 @@ process.on('SIGINT', () => {
 });
 
 // Initialize logging
-initSearch();
 initLogger();
 
 // This must be before the bodyparser before RAW data needs to be passed to Stripe
@@ -190,6 +192,14 @@ if (!isDev) {
 
 	const path = '/graphql';
 
+	app.use(
+		'/trpc',
+		createExpressMiddleware({
+			router: appRouter,
+			createContext: createTRPCContext,
+		})
+	);
+
 	app.use(graphqlUploadExpress());
 	server.applyMiddleware({app, path});
 
@@ -237,7 +247,7 @@ if (!isDev) {
 })();
 
 app.use((req, res, next) => {
-	if (req.path.startsWith('/graphql')) {
+	if (req.path.startsWith('/graphql') || req.path.startsWith('/trpc')) {
 		return next();
 	}
 

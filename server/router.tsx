@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import thunk from 'redux-thunk';
+import {thunk} from 'redux-thunk';
 import ReactDOM from 'react-dom/server';
 import promise from 'redux-promise-middleware';
 import {applyMiddleware, createStore, Store} from 'redux';
@@ -11,13 +11,37 @@ import htmlTemplate, {HtmlPagePayload} from './html_template';
 import reducers from '../client/reducers/reducers';
 import {initUserAccount} from './models/store';
 
-import {Helmet} from 'react-helmet';
+import {HelmetProvider, HelmetServerState} from 'react-helmet-async';
 import {mapSingleRoute} from '../client/components/map_route';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import {logger} from './services/logger';
 import {ErrorCode} from './constants/errors';
 
 const mappedRoutes: ReactNode[] = [];
+
+function createEmptyHelmetState(): HelmetServerState {
+	const emptyDatum = {
+		toString: () => '',
+		toComponent: () => [],
+	};
+	const emptyAttributes = {
+		toString: () => '',
+		toComponent: () => ({}),
+	};
+
+	return {
+		base: emptyDatum,
+		bodyAttributes: emptyAttributes,
+		htmlAttributes: emptyAttributes,
+		link: emptyDatum,
+		meta: emptyDatum,
+		noscript: emptyDatum,
+		script: emptyDatum,
+		style: emptyDatum,
+		title: emptyDatum,
+		priority: emptyDatum,
+	};
+}
 
 function safeStringify(object) {
 	return JSON.stringify(object)
@@ -37,8 +61,8 @@ function renderFullPage(html, helmet, preloadedState) {
 		html,
 		helmet,
 		cleanState,
-		distBase: process.env.DIST_BASE_URI,
-		resourceBase: process.env.RESOURCES_BASE_URI,
+		distBase: process.env.DIST_BASE_URI || '',
+		resourceBase: process.env.RESOURCES_BASE_URI || '',
 		jsFileName: `${deploymentId}.min.js`,
 		cssFileName: `${deploymentId}.min.css`,
 	};
@@ -51,24 +75,27 @@ function createComponents(req, store) {
 		ssrMode: true,
 		cache: new InMemoryCache(),
 	});
+	const helmetContext: {helmet?: HelmetServerState | null} = {};
 
 	const staticRouter = (
 		<StaticRouter location={req.url} context={{}}>
-			<ApolloProvider client={client}>
-				<Provider store={store}>
-					<Switch>
-						{routes.map((route: {[key: string]: any}) => {
-							route.exact = true;
-							return mapSingleRoute(route);
-						})}
-					</Switch>
-				</Provider>
-			</ApolloProvider>
+			<HelmetProvider context={helmetContext}>
+				<ApolloProvider client={client}>
+					<Provider store={store}>
+						<Switch>
+							{routes.map((route: {[key: string]: any}) => {
+								route.exact = true;
+								return mapSingleRoute(route);
+							})}
+						</Switch>
+					</Provider>
+				</ApolloProvider>
+			</HelmetProvider>
 		</StaticRouter>
 	);
 
 	const markup = ReactDOM.renderToString(staticRouter);
-	const helmet = Helmet.renderStatic();
+	const helmet = helmetContext.helmet || createEmptyHelmetState();
 	const preloaded = store.getState();
 
 	// Get html and minify it
@@ -78,7 +105,7 @@ function createComponents(req, store) {
 
 function appUseRouteForPage(routePath, route: PageContext) {
 	global.app.all(routePath, async (req, res) => {
-		const store = createStore(reducers, {}, applyMiddleware(promise(), thunk));
+		const store = createStore(reducers, {}, applyMiddleware(promise, thunk));
 		const promises: ((store: Store<any>, req: Request) => Promise<any>)[] = route.prefetchData || [];
 		const me = await initUserAccount(store, req);
 
@@ -109,7 +136,7 @@ function appUseRouteForPage(routePath, route: PageContext) {
 		let code = 200;
 		try {
 			await Promise.all(promises.map((f) => f(store, req)));
-		} catch (e) {
+		} catch (e: any) {
 			const errors = e?.graphQLErrors || [];
 
 			for (const graphErr of errors) {

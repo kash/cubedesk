@@ -1,16 +1,7 @@
-import {gql} from '@apollo/client';
-import {gqlMutate} from '../../components/api';
+import {trpc} from '../trpc';
 
 export async function logOut() {
-	const query = gql`
-		mutation Mutate {
-			logOut {
-				id
-			}
-		}
-	`;
-
-	await gqlMutate(query);
+	await trpc.auth.logOut.mutate();
 
 	window.location.href = '/';
 }

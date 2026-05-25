@@ -1,4 +1,4 @@
-import {PrismaClient} from '@prisma/client';
+import {PrismaClient} from '@/generated/prisma/client';
 import express from 'express';
 import {InternalUserAccount, UserAccount} from '../../schemas/UserAccount.schema';
 import {NotificationType} from '../enums';

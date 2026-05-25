@@ -1,7 +1,7 @@
 import {getLocationFromIp} from '../services/ipstack';
 import {v4 as uuid} from 'uuid';
 import {hashPassword} from '../util/password';
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@/generated/prisma/client';
 import {getPrisma} from '../database';
 import dayjs from 'dayjs';
 import {createMetricLog} from './metric_log';

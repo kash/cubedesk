@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {CSSProperties, ReactNode} from 'react';
 import {useDispatch} from 'react-redux';
 import './Session.scss';
 import {DotsThreeOutlineVertical} from 'phosphor-react';
 import {setCubeType, setCurrentSession} from '../../../db/settings/update';
 import {v4 as uuid} from 'uuid';
-import {SortableHandle} from 'react-sortable-hoc';
 import {getDateFromNow} from '../../../util/dates';
 import {fetchLastCubeTypeForSession} from '../../../db/solves/query';
 import {Session as SessionSchema} from '../../../../server/schemas/Session.schema';
@@ -25,13 +24,21 @@ interface Props {
 	selectedSessionId: string;
 	session: SessionSchema;
 	selectSession: (e, id) => void;
+	style?: CSSProperties;
+	isDragging?: boolean;
+	refCallback?: (node: HTMLElement | null) => void;
+	dragHandleProps?: {
+		attributes: any;
+		listeners: any;
+		setActivatorNodeRef: (node: HTMLElement | null) => void;
+	};
 }
 
 export default function Session(props: Props) {
 	const currentSessionId = useSettings('session_id');
 	const dispatch = useDispatch();
 
-	const {session, selectedSessionId, selectSession} = props;
+	const {session, selectedSessionId, selectSession, dragHandleProps, refCallback, style, isDragging} = props;
 
 	const currentSession = fetchSessionById(currentSessionId);
 	const sessionIsSelected = selectedSessionId === session.id;
@@ -45,6 +52,10 @@ export default function Session(props: Props) {
 	}
 
 	async function mergeSessions() {
+		if (!currentSession) {
+			return;
+		}
+
 		dispatch(
 			openModal(
 				<ConfirmModal
@@ -99,7 +110,7 @@ export default function Session(props: Props) {
 		);
 	}
 
-	let dropdown = null;
+	let dropdown: ReactNode = null;
 
 	if (!isCurrentSession) {
 		dropdown = (
@@ -125,22 +136,25 @@ export default function Session(props: Props) {
 		);
 	}
 
-	const DragHandle = SortableHandle(() => (
-		<span tabIndex={0}>
-			<button tabIndex={-1} style={{pointerEvents: 'none'}} className={b('handle')}>
-				<DotsThreeOutlineVertical weight="fill" />
-			</button>
-		</span>
-	));
-
 	return (
 		<div
+			ref={refCallback}
 			key={session.id}
-			className={b({selected: sessionIsSelected})}
+			style={style}
+			className={b({selected: sessionIsSelected, dragging: isDragging})}
 			onClick={(e) => selectSession(e, session.id)}
 		>
 			<div className={b('left')}>
-				<DragHandle />
+				<button
+					ref={dragHandleProps?.setActivatorNodeRef}
+					type="button"
+					className={b('handle')}
+					onClick={(e) => e.stopPropagation()}
+					{...dragHandleProps?.attributes}
+					{...dragHandleProps?.listeners}
+				>
+					<DotsThreeOutlineVertical weight="fill" />
+				</button>
 				<div className={b('info')}>
 					<h4>{session.name}</h4>
 					<span>Created {getDateFromNow(session.created_at)}</span>

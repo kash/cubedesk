@@ -8,8 +8,16 @@ import History from '../modules/history/History';
 import Input from '../common/inputs/input/Input';
 import {openModal} from '../../actions/general';
 import CreateNewSession from './new_session/CreateNewSession';
-import {SortableContainer, SortableElement} from 'react-sortable-hoc';
-import arrayMove from 'array-move';
+import {closestCenter, DndContext, DragEndEvent, PointerSensor, useSensor, useSensors} from '@dnd-kit/core';
+import {restrictToHorizontalAxis, restrictToVerticalAxis} from '@dnd-kit/modifiers';
+import {
+	arrayMove,
+	horizontalListSortingStrategy,
+	SortableContext,
+	useSortable,
+	verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import {CSS} from '@dnd-kit/utilities';
 import Session from './session/Session';
 import {fetchSessionById, fetchSessions, getCubeTypesFromSession} from '../../db/sessions/query';
 import {fetchLastCubeTypeForSession} from '../../db/solves/query';
@@ -26,31 +34,52 @@ import {useSettings} from '../../util/hooks/useSettings';
 
 const b = block('sessions');
 
-const SortableItem = SortableElement(({session, selectedSessionId, selectSession, setSelectedSessionId}) => (
-	<Session
-		setSelectedSessionId={setSelectedSessionId}
-		session={session}
-		selectedSessionId={selectedSessionId}
-		selectSession={selectSession}
-	/>
-));
+function SortableItem({session, selectedSessionId, selectSession, setSelectedSessionId}) {
+	const {attributes, listeners, setActivatorNodeRef, setNodeRef, transform, transition, isDragging} = useSortable({
+		id: session.id,
+	});
+	const style = {
+		transform: CSS.Transform.toString(transform),
+		transition,
+		zIndex: isDragging ? 1 : undefined,
+	};
 
-const SortableList = SortableContainer(({sessions, selectedSessionId, selectSession, setSelectedSessionId}) => {
 	return (
-		<div className={b('list')}>
-			{sessions.map((s, index) => (
-				<SortableItem
-					setSelectedSessionId={setSelectedSessionId}
-					session={s}
-					selectedSessionId={selectedSessionId}
-					selectSession={selectSession}
-					key={s.id}
-					index={index}
-				/>
-			))}
-		</div>
+		<Session
+			setSelectedSessionId={setSelectedSessionId}
+			session={session}
+			selectedSessionId={selectedSessionId}
+			selectSession={selectSession}
+			style={style}
+			isDragging={isDragging}
+			refCallback={setNodeRef}
+			dragHandleProps={{attributes, listeners, setActivatorNodeRef}}
+		/>
 	);
-});
+}
+
+function SortableList({sessions, selectedSessionId, selectSession, setSelectedSessionId, mobileMode}) {
+	const items = sessions.map((s) => s.id);
+
+	return (
+		<SortableContext
+			items={items}
+			strategy={mobileMode ? horizontalListSortingStrategy : verticalListSortingStrategy}
+		>
+			<div className={b('list')}>
+				{sessions.map((s) => (
+					<SortableItem
+						setSelectedSessionId={setSelectedSessionId}
+						session={s}
+						selectedSessionId={selectedSessionId}
+						selectSession={selectSession}
+						key={s.id}
+					/>
+				))}
+			</div>
+		</SortableContext>
+	);
+}
 
 export default function Sessions() {
 	const dispatch = useDispatch();
@@ -87,6 +116,10 @@ export default function Sessions() {
 	}
 
 	function setSessionName(e) {
+		if (!session) {
+			return;
+		}
+
 		updateSessionDb(session, {
 			name: e.target.value,
 		});
@@ -102,7 +135,25 @@ export default function Sessions() {
 		);
 	}
 
-	function onSortEnd({oldIndex, newIndex}) {
+	const sensors = useSensors(
+		useSensor(PointerSensor, {
+			activationConstraint: {
+				distance: 6,
+			},
+		})
+	);
+
+	function onDragEnd({active, over}: DragEndEvent) {
+		if (!over || active.id === over.id) {
+			return;
+		}
+
+		const oldIndex = allSessions.findIndex((s) => s.id === active.id);
+		const newIndex = allSessions.findIndex((s) => s.id === over.id);
+		if (oldIndex === -1 || newIndex === -1) {
+			return;
+		}
+
 		const sessions = arrayMove(allSessions, oldIndex, newIndex);
 		const sessionIds = sessions.map((s) => s.id);
 
@@ -188,15 +239,20 @@ export default function Sessions() {
 				/>
 			</PageTitle>
 			<div className={b('body')}>
-				<SortableList
-					useDragHandle
-					lockAxis={mobileMode ? 'x' : 'y'}
-					selectSession={selectSession}
-					setSelectedSessionId={setSelectedSessionId}
-					sessions={allSessions}
-					selectedSessionId={selectedSessionId}
-					onSortEnd={onSortEnd}
-				/>
+				<DndContext
+					sensors={sensors}
+					collisionDetection={closestCenter}
+					modifiers={[mobileMode ? restrictToHorizontalAxis : restrictToVerticalAxis]}
+					onDragEnd={onDragEnd}
+				>
+					<SortableList
+						mobileMode={mobileMode}
+						selectSession={selectSession}
+						setSelectedSessionId={setSelectedSessionId}
+						sessions={allSessions}
+						selectedSessionId={selectedSessionId}
+					/>
+				</DndContext>
 				<div>{body}</div>
 			</div>
 		</div>

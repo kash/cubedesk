@@ -1,7 +1,7 @@
 import {getPrisma} from '../database';
 import uniqid from 'uniqid';
 import dayjs from 'dayjs';
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@/generated/prisma/client';
 import {v4 as uuid} from 'uuid';
 import {Match} from '../schemas/Match.schema';
 import {MatchSession} from '../schemas/MatchSession.schema';

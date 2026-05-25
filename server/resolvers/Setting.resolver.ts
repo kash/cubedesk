@@ -1,6 +1,6 @@
 import {Arg, Authorized, Ctx, Mutation, Query, Resolver} from 'type-graphql';
 import {GraphQLContext} from '../@types/interfaces/server.interface';
-import {Setting} from '@prisma/client';
+import {Setting} from '@/generated/prisma/client';
 import {Role} from '../middlewares/auth';
 import {Setting as SettingSchema, SettingInput} from '../schemas/Setting.schema';
 import GraphQLError from '../util/graphql_error';

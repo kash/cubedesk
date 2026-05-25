@@ -1,5 +1,5 @@
-@import '../../styles/config';
-@import 'TimerLayout';
+@use '../../styles/config' as *;
+@use 'TimerLayout' as *;
 
 .cd-timer--focused.cd-timer--started {
 	.cd-timer__time__scramble {

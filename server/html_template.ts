@@ -1,9 +1,9 @@
-import {HelmetData} from 'react-helmet';
+import {HelmetServerState} from 'react-helmet-async';
 
 export interface HtmlPagePayload {
 	html: string;
 	cleanState: string;
-	helmet: HelmetData;
+	helmet: HelmetServerState;
 	distBase: string;
 	resourceBase: string;
 	cssFileName: string;

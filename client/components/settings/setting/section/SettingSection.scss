@@ -1,4 +1,4 @@
-@import '../../../../styles/config';
+@use '../../../../styles/config' as *;
 
 .#{$namespace}-setting-section {
 	> .#{$namespace}-setting-row:not(:first-child) {

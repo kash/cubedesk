@@ -1,4 +1,4 @@
-@import '../../../../../styles/config';
+@use '../../../../../styles/config' as *;
 
 .#{$namespace}-dropdown-option {
 	display: flex;

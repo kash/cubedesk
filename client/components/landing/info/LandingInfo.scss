@@ -1,4 +1,4 @@
-@import '../../../styles/config';
+@use '../../../styles/config' as *;
 
 .#{$namespace}-landing-info {
 	h1, h2, h3, h4, h5, p {

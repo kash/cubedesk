@@ -4,8 +4,8 @@ import ModalHeader from '../../common/modal/modal_header/ModalHeader';
 
 export default function BluetoothErrorMessage() {
 
-    let title = <span style={{ color: 'rgb(var(--error-color))' }}>Bluetooth is not available!</span>;
-    let description = <span style={{ color: 'rgb(var(--warning-color))' }}>Check if Bluetooth is enabled on your system.</span>;
+    const title = <span style={{ color: 'rgb(var(--error-color))' }}>Bluetooth is not available!</span>;
+    const description = <span style={{ color: 'rgb(var(--warning-color))' }}>Check if Bluetooth is enabled on your system.</span>;
 
     return (
         <>

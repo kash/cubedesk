@@ -1,4 +1,4 @@
-@import '../../../styles/config';
+@use '../../../styles/config' as *;
 
 .#{$namespace}-common-color-picker {
 	position: relative;

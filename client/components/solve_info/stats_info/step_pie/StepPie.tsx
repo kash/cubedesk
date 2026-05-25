@@ -32,6 +32,12 @@ interface Props {
 	solve: Solve;
 }
 
+interface StepPieDatum {
+	value: string;
+	frequency: number;
+	label: string | number;
+}
+
 export default function StepPie(props: Props) {
 	const {solve} = props;
 
@@ -45,29 +51,34 @@ export default function StepPie(props: Props) {
 		return Math.floor(num * 10) / 10;
 	}
 
-	const data = [];
+	const data: StepPieDatum[] = [];
 	const steps = getSolveStepsWithoutParents(solve);
 
 	for (const step of steps) {
-		let frequency;
+		let frequency = 0;
+		let label: string | number = 0;
 		switch (chartType) {
 			case 'time': {
-				frequency = getTimeString(step.total_time, 1);
+				frequency = step.total_time || 0;
+				label = getTimeString(frequency, 1);
 				break;
 			}
 			case 'tps': {
-				frequency = toSinglePrecision(step.tps);
+				frequency = toSinglePrecision(step.tps || 0);
+				label = frequency;
 				break;
 			}
 			case 'turns': {
-				frequency = step.turn_count;
+				frequency = step.turn_count || 0;
+				label = frequency;
 				break;
 			}
 		}
 
 		data.push({
-			value: STEP_NAME_MAP[step.step_name],
+			value: STEP_NAME_MAP[step.step_name || ''] || '',
 			frequency,
+			label,
 		});
 	}
 
@@ -107,7 +118,7 @@ export default function StepPie(props: Props) {
 											const {value} = arc.data;
 											const [centroidX, centroidY] = pie.path.centroid(arc);
 											const hasSpaceForLabel = arc.endAngle - arc.startAngle >= 0.1;
-											const arcPath = pie.path(arc);
+											const arcPath = pie.path(arc) || undefined;
 											const arcFill = getLetterFrequencyColor(value);
 											return (
 												<g key={`arc-${value}-${index}`}>
@@ -159,7 +170,7 @@ export default function StepPie(props: Props) {
 																textAnchor="middle"
 																pointerEvents="none"
 															>
-																({arc.data.frequency}
+																({arc.data.label}
 																{chartType === 'time' ? 's' : ''})
 															</text>
 														</g>

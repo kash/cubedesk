@@ -1,19 +1,44 @@
 {
+	"ts-node": {
+		"require": ["tsconfig-paths/register"],
+		"compilerOptions": {
+			"module": "CommonJS",
+			"moduleResolution": "Node"
+		}
+	},
 	"compilerOptions": {
-		"target": "es2018",
-		"module": "commonjs",
-		"jsx": "react",
-		"noEmit": false,
-		"checkJs": false,
+		"target": "ES2017",
 		"allowJs": true,
-		"outDir": "server-build",
-		"skipLibCheck": true,
-		"esModuleInterop": true,
+		"checkJs": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
 		"allowSyntheticDefaultImports": true,
 		"noImplicitAny": false,
-		"moduleResolution": "node",
-		"lib": ["es2018", "esnext.asynciterable", "DOM"],
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"ESNext"
+		],
+		"strict": true,
+		"strictNullChecks": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "bundler",
+		"module": "ESNext",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"incremental": true,
 		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true
+		"emitDecoratorMetadata": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/generated/*": [
+				"./generated/*"
+			],
+			"@/*": [
+				"./src/*"
+			],
+		}
 	}
 }

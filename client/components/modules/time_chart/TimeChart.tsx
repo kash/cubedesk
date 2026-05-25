@@ -19,6 +19,11 @@ import {useTheme} from '../../../util/hooks/useTheme';
 
 const b = block('time-chart');
 
+interface ChartDatum {
+	index: number;
+	value: number;
+}
+
 interface Props {
 	dummy?: boolean;
 	filterOptions: FilterSolvesOptions;
@@ -39,7 +44,7 @@ export default function TimeChart(props: Props) {
 		return getChartData(filterOptions);
 	}, [filterStr, filterOptions]);
 
-	let data = [...memoData];
+	let data: ChartDatum[] = [...memoData];
 	if (dummy || !data || !data.length) {
 		data = dummyData;
 		chartColor = moduleColor.themeHexOpposite;
@@ -47,15 +52,16 @@ export default function TimeChart(props: Props) {
 	}
 
 	// data accessors
-	const getX = (d) => d.index;
-	const getY = (d) => d.value;
+	const getX = (d: ChartDatum) => d.index;
+	const getY = (d: ChartDatum) => d.value;
 
-	const minY = min(data, getY);
-	const maxY = max(data, getY);
+	const minY = min(data, getY) || 0;
+	const maxY = max(data, getY) || 0;
+	const maxX = max(data, getX) || 0;
 
 	// scales
 	const xScale = scaleTime({
-		domain: [0, max(data, getX)],
+		domain: [0, maxX],
 	});
 
 	const yScale = scaleLinear<number>({
@@ -96,7 +102,10 @@ export default function TimeChart(props: Props) {
 									fontWeight: 400,
 									textAnchor: 'middle',
 								})}
-								tickFormat={(d) => getTimeString(d as number, d > 10 ? 0 : undefined)}
+								tickFormat={(d) => {
+									const value = Number(d);
+									return getTimeString(value, value > 10 ? 0 : undefined);
+								}}
 								left={-17}
 								top={10}
 								strokeWidth={0}

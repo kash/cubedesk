@@ -1,4 +1,4 @@
-@import '../../../styles/config';
+@use '../../../styles/config' as *;
 
 .#{$namespace}-bar-graph {
 	position: relative;
