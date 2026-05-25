@@ -3,17 +3,13 @@ FROM node:24-slim AS builder
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y  \
+    apt-get install -y --no-install-recommends \
         openssl \
         zip \
-        python3 \
-        python3-pip \
-        python3-setuptools \
-        groff \
-        less && \
-    pip3 install --upgrade pip && \
+        awscli \
+        ca-certificates && \
     apt-get clean && \
-    pip3 --no-cache-dir install --upgrade awscli
+    rm -rf /var/lib/apt/lists/*
 
 ARG ENV
 ARG AWS_ACCESS_KEY_ID
@@ -37,7 +33,7 @@ ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 ENV SENTRY_ORG=cubedesk
 ENV SENTRY_ENVIRONMENT=$ENV
 
-RUN npm install -g pnpm
+RUN corepack enable
 
 COPY package.json pnpm-lock.yaml ./
 
@@ -58,7 +54,7 @@ RUN find ./dist -name "*.map" -type f -delete && \
 RUN aws s3 cp dist s3://cubedesk/dist --recursive --cache-control max-age=604800  && \
     aws s3 sync public s3://cubedesk/static --cache-control max-age=604800
 
-RUN npm prune --production
+RUN pnpm prune --prod
 
 RUN cp -r ./server/resources/mjml_templates ./build/server/resources/mjml_templates
 RUN cp ./server/resources/not_found.html ./build/server/resources/not_found.html
