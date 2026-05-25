@@ -68,22 +68,15 @@ jobs:
 
         steps:
             - name: Checkout Latest Repo
-              uses: actions/checkout@main
-
-            - name: Setup Nodejs and npm
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "20"
+              uses: actions/checkout@v4
 
             - name: Setup pnpm
               uses: pnpm/action-setup@v4
-              with:
-                  version: latest
 
             - name: Setup Nodejs with pnpm caching
               uses: actions/setup-node@v4
               with:
-                  node-version: "20"
+                  node-version: "24"
                   cache: pnpm
 
             - name: Get timestamp
@@ -92,7 +85,7 @@ jobs:
 
             - name: Generate unique id
               id: deployment-id
-              run: echo "::set-output name=id::$(uuidgen)"
+              run: echo "id=$(uuidgen)" >> "$GITHUB_OUTPUT"
 
             - name: Run string replace
               uses: frabert/replace-string-action@master
@@ -104,7 +97,7 @@ jobs:
                   flags: 'g'
 
             - name: Set release name
-              run: echo '::set-output name=RELEASE_NAME::release-${{ steps.format-time.outputs.replaced }}'
+              run: echo "RELEASE_NAME=release-${{ steps.format-time.outputs.replaced }}" >> "$GITHUB_OUTPUT"
               id: release-name
 
             - name: Create Env File
@@ -135,7 +128,7 @@ jobs:
                   echo RELEASE_NAME=${{ steps.release-name.outputs.RELEASE_NAME }} >> .env
 
             - name: Configure AWS credentials
-              uses: aws-actions/configure-aws-credentials@v1
+              uses: aws-actions/configure-aws-credentials@v4
               with:
                   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -156,7 +149,7 @@ jobs:
 
             - name: Login to Amazon ECR
               id: login-ecr
-              uses: aws-actions/amazon-ecr-login@v1
+              uses: aws-actions/amazon-ecr-login@v2
 
             - name: Build, tag, and push image to Amazon ECR
               env:
@@ -180,13 +173,13 @@ jobs:
                   sed -i -e 's/{{ECR_IMAGE_NAME}}/${{ inputs.ECR_IMAGE_NAME }}/g' Dockerrun.aws.json
                   zip deploy.zip Dockerrun.aws.json .ebextensions .platform -r
 
-            - name: GitHub Action for npx
-              uses: mikeal/npx@1.0.0
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
 
             - name: Generate prisma
               run: |
-                  npx prisma@4.11.0 generate
-                  npx prisma@4.11.0 migrate deploy
+                  pnpm exec prisma generate
+                  pnpm exec prisma migrate deploy
 
             - name: Deploy to EB
               uses: einaregilsson/beanstalk-deploy@v14
