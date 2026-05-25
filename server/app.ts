@@ -41,7 +41,7 @@ import {createExpressMiddleware} from '@trpc/server/adapters/express';
 import {appRouter} from './trpc/router';
 import {createTRPCContext} from './trpc/context';
 
-initPrisma();
+// initPrisma();
 
 colors.enable();
 global.colors = colors;
