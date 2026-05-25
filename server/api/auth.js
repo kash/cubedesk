@@ -25,10 +25,6 @@ const mutateActions = {
 
 		return sanitizeUser(user);
 	},
-	logOut: async (_, params, {res, user}) => {
-		res.clearCookie('session');
-		return sanitizeUser(user);
-	},
 };
 
 module.exports = {

@@ -1,5 +1,5 @@
-import {SolveMethodStep} from '../../../@types/generated/graphql';
 import {Solve} from '../../../../server/schemas/Solve.schema';
+import {SolveMethodStep} from '../../../../server/schemas/SolveStepMethod.schema';
 
 export interface SolveStepWithChildren {
 	step: SolveMethodStep;
@@ -7,10 +7,10 @@ export interface SolveStepWithChildren {
 }
 
 export function getSolveStepsWithChildren(solve: Solve): SolveStepWithChildren[] {
-	const steps = [];
-	const children = [];
+	const steps: SolveStepWithChildren[] = [];
+	const children: SolveMethodStep[] = [];
 
-	for (const step of solve.solve_method_steps) {
+	for (const step of solve.solve_method_steps || []) {
 		if (step.parent_name) {
 			children.push(step);
 		} else {
@@ -23,7 +23,7 @@ export function getSolveStepsWithChildren(solve: Solve): SolveStepWithChildren[]
 
 	for (const child of children) {
 		for (const [index, step] of steps.entries()) {
-			if (step.step_name === child.parent_name) {
+			if (step.step.step_name === child.parent_name) {
 				steps[index].children.push(child);
 				break;
 			}
@@ -33,8 +33,8 @@ export function getSolveStepsWithChildren(solve: Solve): SolveStepWithChildren[]
 	return steps;
 }
 
-export function getSolveStepsWithoutParents(solve: Solve) {
-	const output = [];
+export function getSolveStepsWithoutParents(solve: Solve): SolveMethodStep[] {
+	const output: SolveMethodStep[] = [];
 	const steps = getSolveStepsWithChildren(solve);
 
 	for (const step of steps) {

@@ -37,6 +37,9 @@ import Discord from './services/discord';
 import {initCronJobs} from './services/cron';
 import {initWebhookListeners, initWebhookListenersRaw} from './webhooks';
 import {exposeResourcesForSearchEngines} from './middlewares/search_engines';
+import {createExpressMiddleware} from '@trpc/server/adapters/express';
+import {appRouter} from './trpc/router';
+import {createTRPCContext} from './trpc/context';
 
 initPrisma();
 
@@ -189,6 +192,14 @@ if (!isDev) {
 
 	const path = '/graphql';
 
+	app.use(
+		'/trpc',
+		createExpressMiddleware({
+			router: appRouter,
+			createContext: createTRPCContext,
+		})
+	);
+
 	app.use(graphqlUploadExpress());
 	server.applyMiddleware({app, path});
 
@@ -236,7 +247,7 @@ if (!isDev) {
 })();
 
 app.use((req, res, next) => {
-	if (req.path.startsWith('/graphql')) {
+	if (req.path.startsWith('/graphql') || req.path.startsWith('/trpc')) {
 		return next();
 	}
 
