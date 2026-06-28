@@ -1,25 +1,21 @@
 import React, {useContext} from 'react';
-import './AllStats.scss';
-import block from '../../../styles/bem';
-import StatSection from '../common/stat_section/StatSection';
-import StatModule from '../common/stat_module/StatModule';
-import SubStats from '../common/sub_stats/SubStats';
-import SolvesPerDay from '../../modules/solves_per_day/SolvesPerDay';
-import AllStatsFeatured from './all_featured/AllStatsFeatured';
-import AllStatsCommunity from './all_community/AllStatsCommunity';
-import CubeDistro from '../../modules/cube_distro/CubeDistro';
-import {useMe} from '../../../util/hooks/useMe';
-import {StatsContext} from '../Stats';
-import {isNotPro} from '../../../util/pro';
-
-const b = block('overall-stats');
+import StatSection from '@/components/stats/common/StatSection';
+import StatModule from '@/components/stats/common/StatModule';
+import SubStats from '@/components/stats/common/SubStats';
+import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
+import AllStatsFeatured from '@/components/stats/all/AllStatsFeatured';
+import AllStatsCommunity from '@/components/stats/all/AllStatsCommunity';
+import CubeDistro from '@/components/modules/cube-distro/CubeDistro';
+import {useMe} from '@/util/hooks/useMe';
+import {StatsContext} from '@/components/stats/Stats';
+import {isNotPro} from '@/util/pro';
 
 export default function AllStats() {
 	const me = useMe();
 	const {filterOptions} = useContext(StatsContext);
 
 	return (
-		<div className={b()}>
+		<div className="grid w-full auto-rows-[350px] grid-cols-[repeat(auto-fill,minmax(500px,1fr))] gap-[30px]">
 			<StatSection title="Overview">
 				<AllStatsFeatured />
 			</StatSection>

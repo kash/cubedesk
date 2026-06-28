@@ -37,8 +37,13 @@
 				"./generated/*"
 			],
 			"@/*": [
-				"./src/*"
-			],
+				"./client/*"
+			]
 		}
-	}
+	},
+	"exclude": [
+		"build",
+		"dist",
+		"node_modules"
+	]
 }

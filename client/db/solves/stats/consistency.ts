@@ -1,5 +1,5 @@
 import {fetchSolves, FilterSolvesOptions} from '../query';
-import {BarGraphData} from '../../../components/modules/bar_graph/BarGraph';
+import {BarGraphData} from '../../../components/modules/bar-graph/BarGraph';
 import dayjs from 'dayjs';
 
 export function getSolveCountByDateData(filter: FilterSolvesOptions): BarGraphData[] {

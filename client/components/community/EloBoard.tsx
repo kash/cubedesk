@@ -1,9 +1,9 @@
 import React from 'react';
-import {EloLeaderboardsDocument} from '../../@types/generated/graphql';
-import EloRow from './EloRow';
-import Header from '../layout/header/Header';
-import PaginatedList from '../common/paginated_list/PaginatedList';
-import {gqlQueryTyped} from '../api';
+import {EloLeaderboardsDocument} from '@/@types/generated/graphql';
+import EloRow from '@/components/community/EloRow';
+import Header from '@/components/layout/Header';
+import PaginatedList from '@/components/common/paginated_list/PaginatedList';
+import {gqlQueryTyped} from '@/components/api';
 import {PaginationArgs} from '../../../server/schemas/Pagination.schema';
 import {EloRating, PaginatedEloLeaderboards} from '../../../server/schemas/EloRating.schema';
 
@@ -19,7 +19,7 @@ export default function EloBoard() {
 			}
 		);
 
-		return res.data.eloLeaderboards;
+		return res.data.eloLeaderboards as unknown as PaginatedEloLeaderboards;
 	}
 
 	return (

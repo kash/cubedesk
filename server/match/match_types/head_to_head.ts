@@ -1,5 +1,5 @@
 import MatchTypeLogic from './match_type_interface';
-import {getHeadToHeadPlayerStatusInfo} from '../../../client/shared/game_logic/heat_to_head';
+import {getHeadToHeadPlayerStatusInfo} from '../../../client/shared/game-logic/head-to-head';
 import {MatchParticipant} from '../../schemas/MatchParticipant.schema';
 import {Match} from '../../schemas/Match.schema';
 import {GameType} from '../../../shared/match/consts';

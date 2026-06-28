@@ -1,7 +1,7 @@
 import React from 'react';
-import Timer from './Timer';
-import {useSettings} from '../../util/hooks/useSettings';
-import {useSolveDb} from '../../util/hooks/useSolveDb';
+import Timer from '@/components/timer/Timer';
+import {useSettings} from '@/util/hooks/useSettings';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
 
 export default function DefaultTimer() {
 	const cubeType = useSettings('cube_type');

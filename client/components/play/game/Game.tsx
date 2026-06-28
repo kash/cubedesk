@@ -1,23 +1,21 @@
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import './Game.scss';
-import {getGameMetaData} from '../Play';
+import {getGameMetaData} from '@/components/play/Play';
 import {useDispatch} from 'react-redux';
-import {openModal} from '../../../actions/general';
-import TargetSessions from '../target/target_sessions/TargetSessions';
-import {getExistingMatch} from '../helpers/match';
+import {openModal} from '@/actions/general';
+import TargetSessions from '@/components/play/target/target-sessions/TargetSessions';
+import {getExistingMatch} from '@/components/play/helpers/match';
 import {useRouteMatch} from 'react-router-dom';
-import GameChallenger from './game_challenger/GameChallenger';
-import GameTimer from './game_timer/GameTimer';
-import {reactState} from '../../../@types/react';
-import {useMe} from '../../../util/hooks/useMe';
-import {PlayerStatus} from '../../../shared/match/types';
-import Button from '../../common/button/Button';
-import {getNewScramble} from '../../timer/helpers/scramble';
-import {getCubeTypeInfoById} from '../../../util/cubes/util';
+import GameChallenger from '@/components/play/game/GameChallenger';
+import GameTimer from '@/components/play/game/GameTimer';
+import {reactState} from '@/@types/react';
+import {useMe} from '@/util/hooks/useMe';
+import {PlayerStatus} from '@/shared/match/types';
+import Button from '@/components/common/button/Button';
+import {getNewScramble} from '@/components/timer/helpers/scramble';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {Solve} from '../../../../server/schemas/Solve.schema';
 import {Match} from '../../../../server/schemas/Match.schema';
 import {GameType} from '../../../../shared/match/consts';
-import classNames from 'classnames';
 
 export interface GameSolveRow {
 	id: string;
@@ -66,8 +64,8 @@ export interface IGameContext extends GameProps {
 	setScramble: reactState<string>;
 	solves: Solve[];
 	setSolves: reactState<Solve[]>;
-	sessionId: string;
-	setSessionId: reactState<string>;
+	sessionId: string | null;
+	setSessionId: reactState<string | null>;
 	matchOpen: boolean;
 	setMatchOpen: reactState<boolean>;
 	cubeType: string;
@@ -76,12 +74,12 @@ export interface IGameContext extends GameProps {
 	// More
 	toggleTimer: () => void;
 	closeTimer: () => void;
-	linkCode: string;
+	linkCode?: string;
 	updateScramble: () => void;
 	retrySolve: () => void;
 }
 
-export const GameContext = createContext<IGameContext>(null);
+export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 export function getGameLink(gameType: GameType, linkCode?: string) {
 	const gameMetaData = getGameMetaData(gameType);
@@ -111,7 +109,7 @@ export default function Game(props: GameProps) {
 	const [timeIndex, setTimeIndex] = useState(0);
 	const [scramble, setScramble] = useState('');
 	const [solves, setSolves] = useState<Solve[]>([]);
-	const [sessionId, setSessionId] = useState(null);
+	const [sessionId, setSessionId] = useState<string | null>(null);
 	const [matchOpen, setMatchOpen] = useState(false);
 
 	const dispatch = useDispatch();
@@ -195,7 +193,7 @@ export default function Game(props: GameProps) {
 		retrySolve,
 	};
 
-	let playButton = (
+	let playButton: ReactNode = (
 		<Button fullWidth large primary onClick={toggleTimer}>
 			Play {name}
 		</Button>
@@ -212,7 +210,7 @@ export default function Game(props: GameProps) {
 				<div className="flex h-full flex-col justify-between">
 					<div className="flex flex-col items-start gap-3" style={{color}}>
 						<div className="flex flex-row items-center gap-2">
-							<i className={classNames(icon, 'text-4xl')} />
+							<span className="text-4xl leading-none">{icon}</span>
 							<h2 className="text-4xl">{name}</h2>
 						</div>
 						<p className="text-xl">{description}</p>

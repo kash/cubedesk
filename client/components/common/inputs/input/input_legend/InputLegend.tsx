@@ -1,7 +1,8 @@
 import React from 'react';
-import './InputLegend.scss';
+
 import block from '../../../../../styles/bem';
 import Tag from '../../../tag/Tag';
+import './InputLegend.scss';
 
 const b = block('common-input-legend');
 

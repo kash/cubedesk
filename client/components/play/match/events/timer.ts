@@ -1,6 +1,6 @@
-import {useEventListener} from '../../../../util/event_handler';
-import {socketClient} from '../../../../util/socket/socketio';
-import {MatchContext} from '../Match';
+import {useEventListener} from '@/util/event_handler';
+import {socketClient} from '@/util/socket/socketio';
+import {MatchContext} from '@/components/play/match/Match';
 import {useContext} from 'react';
 
 export function listenForTimerEvents() {

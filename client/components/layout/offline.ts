@@ -1,10 +1,10 @@
-import {deleteLocalStorage, getLocalStorage, setLocalStorage} from '../../util/data/local_storage';
+import {deleteLocalStorage, getLocalStorage, setLocalStorage} from '@/util/data/local_storage';
 import {gql} from '@apollo/client';
-import {gqlMutate} from '../api';
-import {UserAccount} from '../../@types/generated/graphql';
+import {gqlMutate} from '@/components/api';
+import {UserAccount} from '@/@types/generated/graphql';
 import {v4 as uuid} from 'uuid';
-import {getLokiDb, initLokiDb} from '../../db/lokijs';
-import {initSolvesCollection} from '../../db/solves/init';
+import {getLokiDb, initLokiDb} from '@/db/lokijs';
+import {initSolvesCollection} from '@/db/solves/init';
 
 export async function initOfflineData(me, callback) {
 	const offlineData = !(await shouldFetchDataFromDb(me));

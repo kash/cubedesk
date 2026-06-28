@@ -1,10 +1,6 @@
 import React from 'react';
-import './Admin.scss';
-import block from '../../styles/bem';
-import PageTitle from '../common/page_title/PageTitle';
-import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
-
-const b = block('admin');
+import PageTitle from '@/components/common/page_title/PageTitle';
+import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
 
 const TABS = [
 	{
@@ -29,7 +25,7 @@ export default function Admin(props: Props) {
 	const page = path.split('/')[2];
 
 	return (
-		<div className={b()}>
+		<div>
 			<PageTitle pageName="Admin">
 				<HorizontalNav tabId={page} tabs={TABS} />
 			</PageTitle>

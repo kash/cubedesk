@@ -44,7 +44,6 @@ export function initApollo() {
 		ssrMode: typeof window === 'undefined',
 		credentials: 'same-origin',
 		link,
-		uri,
 	});
 
 	return client;

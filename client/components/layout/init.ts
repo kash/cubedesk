@@ -5,28 +5,28 @@ import {
 	SESSION_FRAGMENT,
 	SETTING_FRAGMENT,
 	STATS_MODULE_BLOCK_FRAGMENT,
-} from '../../util/graphql/fragments';
-import {gqlQuery, removeTypename} from '../api';
-import {initSessionCollection, initSessionDb} from '../../db/sessions/init';
+} from '@/util/graphql/fragments';
+import {gqlQuery, removeTypename} from '@/components/api';
+import {initSessionCollection, initSessionDb} from '@/db/sessions/init';
 import {Dispatch} from 'redux';
-import {addFriendships} from '../../actions/account';
-import {clearOfflineData, initOfflineData, updateOfflineHash} from './offline';
-import {initSettingsDb, SettingValue} from '../../db/settings/init';
-import {getDefaultSettings} from '../../db/settings/query';
-import {initLokiDb} from '../../db/lokijs';
-import {initSolveDb, initSolvesCollection} from '../../db/solves/init';
-import {initTrainerData} from '../trainer/util/init';
-import {getNewScramble} from '../timer/helpers/scramble';
+import {addFriendships} from '@/actions/account';
+import {clearOfflineData, initOfflineData, updateOfflineHash} from '@/components/layout/offline';
+import {initSettingsDb, SettingValue} from '@/db/settings/init';
+import {getDefaultSettings} from '@/db/settings/query';
+import {initLokiDb} from '@/db/lokijs';
+import {initSolveDb, initSolvesCollection} from '@/db/solves/init';
+import {initTrainerData} from '@/components/trainer/util/init';
+import {getNewScramble} from '@/components/timer/helpers/scramble';
 import {Solve} from '../../../server/schemas/Solve.schema';
 import {StatsModule} from '../../../server/schemas/StatsModule.schema';
-import {initStatsModuleStore} from '../../actions/stats';
+import {initStatsModuleStore} from '@/actions/stats';
 import {Session} from '../../../server/schemas/Session.schema';
 import {Setting} from '../../../server/schemas/Setting.schema';
 import {Friendship} from '../../../server/schemas/Friendship.schema';
 import {UserAccount} from '../../../server/schemas/UserAccount.schema';
-import {getAllLocalSettings} from '../../db/settings/local';
-import {getStore} from '../store';
-import {setGeneral} from '../../actions/general';
+import {getAllLocalSettings} from '@/db/settings/local';
+import {getStore} from '@/components/store';
+import {setGeneral} from '@/actions/general';
 import {generateId} from '../../../shared/code';
 
 export function initAnonymousAppData(callback) {

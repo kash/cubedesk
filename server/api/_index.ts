@@ -1,6 +1,6 @@
 import * as solve from './solve';
 import * as userAccount from './user_account';
-import * as auth from './auth';
+	import * as auth from './auth';
 import * as timerBackground from './timer_background';
 import * as forgotPassword from './forgot_password';
 import * as profile from './profile';

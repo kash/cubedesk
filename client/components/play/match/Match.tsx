@@ -1,31 +1,30 @@
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import './Match.scss';
-import {isSocketConnected, socketClient} from '../../../util/socket/socketio';
-import Modal from '../../common/modal/Modal';
-import Timer from '../../timer/Timer';
-import ChatBox from '../../modules/chat/ChatBox';
+import {isSocketConnected, socketClient} from '@/util/socket/socketio';
+import Modal from '@/components/common/modal/Modal';
+import Timer from '@/components/timer/Timer';
+import ChatBox from '@/components/modules/chat/ChatBox';
 import {Match as MatchSchema} from '../../../../server/schemas/Match.schema';
-import {TimerProps} from '../../timer/@types/interfaces';
-import {reactState} from '../../../@types/react';
-import Listeners from './Listeners';
-import {MatchConst} from '../../../shared/match/consts';
-import {ChallengerProps} from '../target/challengers/challenger/Challenger';
-import {openModal} from '../../../actions/general';
-import History from '../../modules/history/History';
-import {updateMatchState} from './helpers/state';
-import {GameContext} from '../game/Game';
-import {useMe} from '../../../util/hooks/useMe';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import {getMatchLinkBase} from './match_popup/custom_match/CustomMatch';
-import {toastSuccess} from '../../../util/toast';
+import {TimerProps} from '@/components/timer/@types/interfaces';
+import {reactState} from '@/@types/react';
+import Listeners from '@/components/play/match/Listeners';
+import {MatchConst} from '@/shared/match/consts';
+import {ChallengerProps} from '@/components/play/target/challengers/Challenger';
+import {openModal} from '@/actions/general';
+import History from '@/components/modules/history/History';
+import {updateMatchState} from '@/components/play/match/helpers/state';
+import {GameContext} from '@/components/play/game/Game';
+import {useMe} from '@/util/hooks/useMe';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {getMatchLinkBase} from '@/components/play/match/match-popup/custom-match/CustomMatch';
+import {toastSuccess} from '@/util/toast';
 import {Prohibit, CaretDown, Copy, Flag} from 'phosphor-react';
-import {copyText} from '../../common/copy_text/CopyText';
-import MatchOver from './match_over/MatchOver';
+import {copyText} from '@/components/common/copy_text/CopyText';
+import MatchOver from '@/components/play/match/match-over/MatchOver';
 import {MatchSession} from '../../../../server/schemas/MatchSession.schema';
 import {PublicUserAccount} from '../../../../server/schemas/UserAccount.schema';
 import {GameType} from '../../../../shared/match/consts';
-import {Solve} from '../../../@types/generated/graphql';
+import {Solve} from '@/@types/generated/graphql';
 
 interface MatchProps {
 	matchPath: string;
@@ -319,7 +318,7 @@ export default function Match(props: MatchProps) {
 	return (
 		<MatchContext.Provider value={context}>
 			<Listeners>
-				<div className="cd-match">{timer}</div>;
+				<div>{timer}</div>;
 			</Listeners>
 		</MatchContext.Provider>
 	);

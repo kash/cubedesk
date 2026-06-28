@@ -1,10 +1,11 @@
 import React, {isValidElement, ReactElement, ReactNode, useState} from 'react';
-import './GenericInput.scss';
+
 import block from '../../../styles/bem';
 import CSS from 'csstype';
 import InputLegend from '../old_input/input_legend/InputLegend';
 import InputInfo from '../old_input/input_info/InputInfo';
 import Error from '../old_error/Error';
+import './GenericInput.scss';
 
 const b = block('common-generic-input');
 

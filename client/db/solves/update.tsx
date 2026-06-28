@@ -14,7 +14,7 @@ import {getSetting} from '../settings/query';
 import {Solve} from '../../../server/schemas/Solve.schema';
 import {checkForWorst} from './stats/solves/worst';
 import {sanitizeSolve} from '../../../shared/solve';
-import {checkForCurrentAverageUpdate} from './stats/solves/cache/average_cache';
+import {checkForCurrentAverageUpdate} from './stats/solves/cache/average-cache';
 
 export async function createSolveDb(solveInput: Solve) {
 	const solveDb = getSolveDb();

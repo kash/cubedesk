@@ -2,7 +2,10 @@
 	"name": "cubedesk",
 	"version": "1.0.0",
 	"description": "CubeDesk's codebase",
+	"author": "Kash Goudarzi",
+	"license": "CubeDesk, Inc. All Rights Reserved",
 	"main": "server/app.ts",
+	"type": "module",
 	"packageManager": "pnpm@10.9.0",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
@@ -28,6 +31,8 @@
 		"preset": "ts-jest",
 		"testEnvironment": "node",
 		"moduleNameMapper": {
+			"^@/generated/(.*)$": "<rootDir>/generated/$1",
+			"^@/(.*)$": "<rootDir>/client/$1",
 			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
 			"\\.(css|less|scss|sass)$": "identity-obj-proxy"
 		},
@@ -41,9 +46,6 @@
 			"./server/__test__/jest.setup.ts"
 		]
 	},
-	"private": true,
-	"author": "Kash Goudarzi",
-	"license": "CubeDesk, Inc. All Rights Reserved",
 	"dependencies": {
 		"@apollo/client": "^3.3.13",
 		"@aws-sdk/client-cloudfront": "^3.112.0",
@@ -216,7 +218,13 @@
 		"esbuild": "^0.15.16",
 		"esbuild-sass-plugin": "^2.6.0",
 		"esbuild-style-plugin": "^1.6.0",
-		"eslint": "7.14.0",
+		"@eslint/js": "^9.39.1",
+		"eslint": "^9.39.1",
+		"eslint-config-prettier": "^9.1.2",
+		"eslint-plugin-perfectionist": "^3.9.1",
+		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-react-hooks": "^5.2.0",
+		"eslint-plugin-unused-imports": "^4.3.0",
 		"jest": "^28.1.0",
 		"jest-mock-extended": "^2.0.6",
 		"mini-css-extract-plugin": "^2.4.4",

@@ -1,7 +1,8 @@
 import React from 'react';
-import './Switch.scss';
+
 import block from '../../../styles/bem';
 import InputLegend from '../inputs/input/input_legend/InputLegend';
+import './Switch.scss';
 
 const b = block('common-switch');
 

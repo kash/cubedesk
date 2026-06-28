@@ -1,21 +1,23 @@
 import React, {ReactNode, useContext} from 'react';
+import classNames from 'classnames';
 import {CaretDown} from 'phosphor-react';
-import {TimerModuleDropdownOptions, TimerModuleType} from '../@types/enums';
-import {FooterModuleData, TimerCustomModuleOptions} from '../@types/interfaces';
-import History from '../../modules/history/History';
-import LastSolve from '../../modules/last_solve/LastSolve';
-import Scramble from '../../modules/scramble/ScrambleVisual';
-import TimeChart from '../../modules/time_chart/TimeChart';
-import TimeDistro from '../../modules/time_distro/TimeDistro';
-import SolvesPerDay from '../../modules/solves_per_day/SolvesPerDay';
+import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
+import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
+import History from '@/components/modules/history/History';
+import LastSolve from '@/components/modules/last-solve/LastSolve';
+import Scramble from '@/components/modules/scramble/ScrambleVisual';
+import TimeChart from '@/components/modules/time-chart/TimeChart';
+import TimeDistro from '@/components/modules/time-distro/TimeDistro';
+import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
 import {snakeCase} from 'change-case';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import ProOnly from '../../common/pro_only/ProOnly';
-import {TimerContext} from '../Timer';
-import {setSetting} from '../../../db/settings/update';
-import {useSettings} from '../../../util/hooks/useSettings';
-import {useMe} from '../../../util/hooks/useMe';
-import QuickStats from '../../modules/quick_stats/QuickStats';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import ProOnly from '@/components/common/pro_only/ProOnly';
+import {TimerContext} from '@/components/timer/Timer';
+import {setSetting} from '@/db/settings/update';
+import {useSettings} from '@/util/hooks/useSettings';
+import {useMe} from '@/util/hooks/useMe';
+import QuickStats from '@/components/modules/quick-stats/QuickStats';
+import {useGeneral} from '@/util/hooks/useGeneral';
 
 interface Props {
 	index: number;
@@ -29,6 +31,7 @@ export default function TimerModule(props: Props) {
 	const me = useMe();
 	const context = useContext(TimerContext);
 	const {scramble, cubeType, solvesFilter} = context;
+	const mobileMode = useGeneral('mobile_mode');
 
 	const timerModules = useSettings('timer_modules');
 
@@ -104,7 +107,7 @@ export default function TimerModule(props: Props) {
 	}
 
 	let dropdown: ReactNode = (
-		<div className="absolute z-40 opacity-0 group-hover:opacity-100">
+		<div className={classNames('absolute z-40 opacity-0 group-hover:opacity-100', mobileMode && 'left-0 top-[-40px] !opacity-100')}>
 			<Dropdown
 				openLeft
 				noMargin
@@ -127,9 +130,32 @@ export default function TimerModule(props: Props) {
 		dropdown = null;
 	}
 
-	const wrapperClass = ['group', 'h-full', 'w-full', 'p-3', 'overflow-hidden'];
+	const wrapperClass = [
+		'group',
+		'relative',
+		'box-border',
+		'h-full',
+		'w-full',
+		'overflow-hidden',
+		'border-[5px]',
+		'border-transparent',
+		'p-2.5',
+	];
 	if (index % 2 !== 0) {
 		wrapperClass.push('rounded-lg', 'border-4', 'border-tmo-background/10', 'bg-tm-module/10');
+	}
+	if (mobileMode) {
+		wrapperClass.push('!h-[270px]', '!overflow-visible');
+		if (index > 0) {
+			wrapperClass.push('hidden');
+		}
+	}
+	if (context.timerLayout === 'left' || context.timerLayout === 'right') {
+		if (index === 2) {
+			wrapperClass.push('[@media(max-height:850px)]:!hidden');
+		} else if (index === 1) {
+			wrapperClass.push('[@media(max-height:600px)]:!hidden');
+		}
 	}
 
 	return (

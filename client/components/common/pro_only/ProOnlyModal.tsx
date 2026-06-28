@@ -1,7 +1,7 @@
 import React from 'react';
 import block from '../../../styles/bem';
 import ModalHeader from '../modal/modal_header/ModalHeader';
-import ProCard from '../../account/membership/pro_card/ProCard';
+import ProCard from '../../account/membership/pro-card/ProCard';
 
 const b = block('pro-only-modal');
 

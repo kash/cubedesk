@@ -37,7 +37,7 @@ export function toastWarning(message: string) {
 	toast.warning(message, toastOptions);
 }
 
-export function toastError(message: string | Error) {
+export function toastError(message: string | Error | unknown) {
 	let msg = message;
 	if (message instanceof Error) {
 		msg = message.message

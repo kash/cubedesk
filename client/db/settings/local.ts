@@ -1,6 +1,6 @@
 import {AllSettings, getDefaultSettings} from './query';
-import {getLocalStorage, setLocalStorageObject} from '../../util/data/local_storage';
-import {getMe} from '../../components/store';
+import {getLocalStorage, setLocalStorageObject} from '@/util/data/local_storage';
+import { getMe } from "@/components/store";
 
 export function getAllLocalSettings(userId: string): AllSettings {
 	clearDemoUserSettings();

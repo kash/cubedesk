@@ -1,19 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {useDispatch} from 'react-redux';
-import './ChatBox.scss';
-import ChatMessage from './message/ChatMessage';
-import {setTimerDisabled} from '../../../actions/timer';
-import {socketClient} from '../../../util/socket/socketio';
-import {cleanBadWords} from '../../../util/strings/chat_filter';
-import {MatchConst} from '../../../shared/match/consts';
-import block from '../../../styles/bem';
-import {MatchUpdateChat} from '../../../shared/match/types';
-import {useSocketListener} from '../../../util/hooks/useSocketListener';
+import ChatMessage from '@/components/modules/chat/ChatMessage';
+import {setTimerDisabled} from '@/actions/timer';
+import {socketClient} from '@/util/socket/socketio';
+import {cleanBadWords} from '@/util/strings/chat_filter';
+import {MatchConst} from '@/shared/match/consts';
+import {MatchUpdateChat} from '@/shared/match/types';
+import {useSocketListener} from '@/util/hooks/useSocketListener';
 import {GameType} from '../../../../shared/match/consts';
 import {Match} from '../../../../server/schemas/Match.schema';
-
-const b = block('chat-box');
 
 interface Props {
 	disabled?: boolean;
@@ -132,9 +128,27 @@ export default function ChatBox(props: Props) {
 	}
 
 	const chatMessages = [...aggMessages()].map((m) => <ChatMessage user={m.user} messages={m.messages} key={m.id} />);
+	const textBoxClasses = [
+		'box-border',
+		'w-full',
+		'resize-none',
+		'overflow-hidden',
+		'rounded-md',
+		'border-2',
+		'border-solid',
+		'bg-button',
+		'p-[7px]',
+		'text-base',
+		'text-tmo-button',
+		'transition-all',
+		'duration-100',
+		'ease-in-out',
+		messageFocused ? 'opacity-100' : 'opacity-80',
+		message.length > MatchConst.MAX_CHAT_MESSAGE_LENGTH ? 'border-error' : 'border-transparent',
+	];
 
 	let textArea = (
-		<div className={b('wrapper')}>
+		<div className="box-border flex w-full items-center justify-center p-[5px]">
 			<TextareaAutosize
 				onChange={handleMessageChange}
 				onFocus={onFocus}
@@ -146,10 +160,7 @@ export default function ChatBox(props: Props) {
 				maxRows={4}
 				placeholder="Send message..."
 				ref={messageInput}
-				className={b('textbox', {
-					focused: messageFocused,
-					error: message.length > MatchConst.MAX_CHAT_MESSAGE_LENGTH,
-				})}
+				className={textBoxClasses.join(' ')}
 			/>
 		</div>
 	);
@@ -159,8 +170,8 @@ export default function ChatBox(props: Props) {
 	}
 
 	return (
-		<div className={b()}>
-			<div className={b('list')} ref={chatList}>
+		<div className="relative grid h-full w-full grid-rows-[auto_min-content]">
+			<div className="box-border flex w-full flex-col gap-3 overflow-auto px-[5px] pt-[5px]" ref={chatList}>
 				{chatMessages}
 			</div>
 			{textArea}

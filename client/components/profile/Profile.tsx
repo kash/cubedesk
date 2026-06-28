@@ -1,35 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import './Profile.scss';
+import classNames from 'classnames';
 import {CircleWavyCheck, Plus} from 'phosphor-react';
 import {gql} from '@apollo/client';
-import {gqlMutate, gqlQuery} from '../api';
-import {PROFILE_FRAGMENT} from '../../util/graphql/fragments';
-import PbCard from './pb_card/PbCard';
-import PFP from './pfp/PFP';
-import UploadCover from '../common/upload_cover/UploadCover';
-import About from './about/About';
-import {setSsrValue} from '../../actions/ssr';
-import Header from '../layout/header/Header';
-import WCA from './wca/WCA';
-import FriendshipRequest from './friendship_request/FriendshipRequest';
-import Avatar from '../common/avatar/Avatar';
-import {getStorageURL} from '../../util/storage';
-import {Image, Profile as ProfileSchema, PublicUserAccount, TopAverage, TopSolve} from '../../@types/generated/graphql';
+import {gqlMutate, gqlQuery} from '@/components/api';
+import {PROFILE_FRAGMENT} from '@/util/graphql/fragments';
+import PbCard from '@/components/profile/PbCard';
+import PFP from '@/components/profile/PFP';
+import UploadCover from '@/components/common/upload_cover/UploadCover';
+import About from '@/components/profile/About';
+import {setSsrValue} from '@/actions/ssr';
+import Header from '@/components/layout/Header';
+import WCA from '@/components/profile/WCA';
+import FriendshipRequest from '@/components/profile/FriendshipRequest';
+import Avatar from '@/components/common/avatar/Avatar';
+import {getStorageURL} from '@/util/storage';
+import {Image, Profile as ProfileSchema, PublicUserAccount, TopAverage, TopSolve} from '@/@types/generated/graphql';
 import {useRouteMatch} from 'react-router-dom';
-import {useSsr} from '../../util/hooks/useSsr';
-import block from '../../styles/bem';
-import {useMe} from '../../util/hooks/useMe';
-import {useGeneral} from '../../util/hooks/useGeneral';
-import {getMe} from '../../actions/account';
-import ProfileElo from './elo/ProfileElo';
-import AvatarDropdown from '../common/avatar/avatar_dropdown/AvatarDropdown';
-import {openModal} from '../../actions/general';
-import PublishSolves from './publish_solves/PublishSolves';
-import Button from '../common/button/Button';
-import LoadingIcon from '../common/LoadingIcon';
-
-const b = block('profile');
+import {useSsr} from '@/util/hooks/useSsr';
+import {useMe} from '@/util/hooks/useMe';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {getMe} from '@/actions/account';
+import ProfileElo from '@/components/profile/ProfileElo';
+import AvatarDropdown from '@/components/common/avatar/avatar_dropdown/AvatarDropdown';
+import {openModal} from '@/actions/general';
+import PublishSolves from '@/components/profile/PublishSolves';
+import Button from '@/components/common/button/Button';
+import LoadingIcon from '@/components/common/LoadingIcon';
 
 interface IProfileData {
 	user: PublicUserAccount;
@@ -54,18 +51,25 @@ export async function getProfileData(username: string): Promise<IProfileData> {
 		}
 	`;
 
-	const result = await gqlQuery<{profile: ProfileSchema}>(query, {
+	const result = await gqlQuery<{profile: ProfileSchema}>(
+		query,
+		{
 		username,
-	});
+		} as any
+	);
 
-	const topSolves = result.data.profile.top_solves;
-	const topAverages = result.data.profile.top_averages;
+	const topSolves = result.data.profile.top_solves || [];
+	const topAverages = result.data.profile.top_averages || [];
 
 	const pbs = {};
 
 	for (const topSolve of topSolves) {
+		if (!topSolve?.solve?.cube_type) {
+			continue;
+		}
+
 		const solve = topSolve.solve;
-		const cubeType = solve.cube_type;
+		const cubeType = solve.cube_type as string;
 		if (!pbs[cubeType]) {
 			pbs[cubeType] = {};
 		}
@@ -73,23 +77,28 @@ export async function getProfileData(username: string): Promise<IProfileData> {
 	}
 
 	for (const topAverage of topAverages) {
-		if (pbs[topAverage.cube_type]) {
-			pbs[topAverage.cube_type].average = topAverage;
+		if (!topAverage?.cube_type) {
+			continue;
+		}
+
+		const cubeType = topAverage.cube_type as string;
+		if (pbs[cubeType]) {
+			pbs[cubeType].average = topAverage;
 		}
 	}
 
 	return {
-		user: result.data.profile.user,
+		user: result.data.profile.user as PublicUserAccount,
 		profile: result.data.profile,
-		pfpImage: result.data.profile.pfp_image,
-		headerImage: result.data.profile.header_image,
+		pfpImage: result.data.profile.pfp_image || undefined,
+		headerImage: result.data.profile.header_image || undefined,
 		pbs,
 	};
 }
 
 export async function prefetchProfileData(store, req) {
 	const profileData = await getProfileData(req.params.username);
-	return store.dispatch(setSsrValue(profileData.user.username, profileData));
+	return store.dispatch(setSsrValue(profileData.user.username as string, profileData));
 }
 
 export default function Profile() {
@@ -112,7 +121,7 @@ export default function Profile() {
 
 	useEffect(() => {
 		if (profileData && profileData?.user?.username === matchUsername) {
-			return null;
+			return;
 		}
 
 		if (!loading) {
@@ -137,13 +146,13 @@ export default function Profile() {
 		`;
 
 		const res = await gqlMutate<{uploadProfileHeader: Image}>(query, variables);
-		const storagePath = res.data.uploadProfileHeader.storage_path;
+		const storagePath = res.data?.uploadProfileHeader?.storage_path || '';
 
 		const newProfileData = {...profileData};
-		newProfileData.headerImage = res.data.uploadProfileHeader;
+		newProfileData.headerImage = res.data?.uploadProfileHeader;
 		setProfileData(newProfileData);
 
-		dispatch(getMe());
+		dispatch(getMe() as any);
 
 		return {
 			storagePath,
@@ -160,14 +169,14 @@ export default function Profile() {
 		);
 	}
 
-	let headerUrl = getStorageURL('storage/default_profile_background.jpeg');
+	let headerUrl = getStorageURL('storage/default_profile_background.jpeg') || '';
 	if (headerImage) {
-		headerUrl = getStorageURL(headerImage.storage_path);
+		headerUrl = getStorageURL(headerImage.storage_path || '') || '';
 	}
 
 	if (loading) {
 		return (
-			<div className={b({loading})}>
+			<div className="flex min-h-[300px] items-center justify-center text-[1.8rem] text-text">
 				<LoadingIcon />
 			</div>
 		);
@@ -175,12 +184,12 @@ export default function Profile() {
 
 	const topCubeTypes = Object.keys(pbs);
 
-	const pbCards = [];
+	const pbCards: React.ReactNode[] = [];
 	for (const ct of topCubeTypes) {
-		let solves = [];
+		let solves: any[] = [];
 		const pb = pbs[ct];
 
-		let topRecord = null;
+		let topRecord: any = null;
 		if (pb?.single) {
 			solves = [pb.single.solve];
 			topRecord = pb.single;
@@ -190,57 +199,63 @@ export default function Profile() {
 			topRecord = pb.average;
 		}
 
-		pbCards.push(<PbCard key={pb.single.id} solves={solves} topRecord={topRecord} user={user} />);
+		pbCards.push(<PbCard key={topRecord.id} solves={solves} topRecord={topRecord} user={user as any} />);
 	}
 
 	const myProfile = user.id === me?.id;
 
-	let pfp = (
-		<div className={b('pfp')}>
+	let pfp: React.ReactNode = (
+		<div className="relative z-10 flex flex-row items-center">
 			<PFP profile={profile} allowChange={myProfile} />;
-			<div className={b('name')}>
-				<h2>
+			<div
+				className={classNames('relative -top-1 ml-5', {
+					'group-hover/profile-header:hidden': myProfile,
+				})}
+			>
+				<h2 className="flex flex-row items-center text-[4rem] font-bold text-text [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
 					{user.username}
-					{user.verified ? <CircleWavyCheck weight="fill" /> : null}
+					{user.verified ? <CircleWavyCheck className="ml-[15px] table text-[2.5rem] text-info" weight="fill" /> : null}
 				</h2>
-				<h3>Joined on {new Date(user.created_at).toLocaleDateString()}</h3>
+				<h3 className="text-[1.2rem] text-text opacity-90 [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
+					Joined on {new Date(user.created_at).toLocaleDateString()}
+				</h3>
 			</div>
 		</div>
 	);
 
 	if (mobileMode) {
 		pfp = (
-			<div className={b('pfp', {mobile: mobileMode})}>
-				<Avatar user={user} profile={profile} />
+			<div className="relative z-10 flex flex-row items-center">
+				<Avatar user={user as any} profile={profile as any} />
 			</div>
 		);
 	}
 
-	let eloBody = null;
+	let eloBody: React.ReactNode = null;
 
 	if (user?.elo_rating) {
 		eloBody = (
 			<>
-				<hr />
+				<hr className="mx-auto my-[30px] h-1 w-full border-0 bg-tmo-background/[0.08]" />
 				<ProfileElo eloRating={user.elo_rating} />
 			</>
 		);
 	}
 
-	let pbsDiv = null;
+	let pbsDiv: React.ReactNode = null;
 	if (pbCards.length) {
 		pbsDiv = (
 			<>
-				<hr />
-				<div>
+				<hr className="mx-auto my-[30px] h-1 w-full border-0 bg-tmo-background/[0.08]" />
+				<div className="my-[35px]">
 					<h2>Personal Bests</h2>
-					<div className={b('pbs')}>{pbCards}</div>
+					<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">{pbCards}</div>
 				</div>
 			</>
 		);
 	}
 
-	let publishSolves = null;
+	let publishSolves: React.ReactNode = null;
 	if (myProfile) {
 		publishSolves = (
 			<Button primary icon={<Plus weight="bold" />} text="Publish Your PBs" onClick={openPublishSolves} />
@@ -248,27 +263,35 @@ export default function Profile() {
 	}
 
 	return (
-		<div className={b('wrapper', {standalone: !me, mobile: mobileMode})}>
+		<div
+			className={classNames({
+				'box-border min-h-screen bg-background pb-[150px] pt-[100px]': !me,
+			})}
+		>
 			<Header
 				path={`/profile/${username}`}
 				title={user.username + ' Profile | CubeDesk'}
 				description={`Check out ${user.username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more`}
 			/>
-			<div className={b({me: myProfile})}>
-				<div className={b('header')}>
+			<div
+				className={classNames('flex flex-col items-center pb-[100px]', {
+					'mx-auto w-[95%] max-w-[1000px]': !me,
+				})}
+			>
+				<div className="group/profile-header relative mb-[7px] flex h-[300px] w-full max-w-[1500px] flex-row items-center box-border p-[25px]">
 					<WCA myProfile={myProfile} user={user} />
 					{pfp}
-					<div className={b('background')}>
+					<div className="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-[15px] bg-black">
 						{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
 
-						<img src={headerUrl} alt="Header photo" />
+						<img className="h-full w-full object-cover opacity-50" src={headerUrl} alt="Header photo" />
 					</div>
 				</div>
-				<div className={b('content')}>
-					<div className={b('header-actions')}>
-						<FriendshipRequest user={user} fetchData />
+				<div className="relative mx-auto w-full max-w-[1200px]">
+					<div className="absolute right-0 top-0 z-[1000] flex flex-row justify-end gap-2.5">
+						<FriendshipRequest user={user as any} fetchData />
 						{publishSolves}
-						<AvatarDropdown user={user} />
+						<AvatarDropdown user={user as any} />
 					</div>
 					<About profile={profile} />
 					{eloBody}

@@ -1,15 +1,15 @@
-import {MatchStanding, MatchUpdate, PlayerStatus} from '../../../../shared/match/types';
-import {MatchClientEvent} from '../../../../shared/match/events';
+import {MatchStanding, MatchUpdate, PlayerStatus} from '@/shared/match/types';
+import {MatchClientEvent} from '@/shared/match/events';
 import {useContext} from 'react';
-import {MatchContext} from '../Match';
-import {useMe} from '../../../../util/hooks/useMe';
-import {useSocketListener} from '../../../../util/hooks/useSocketListener';
-import {triggerConfetti} from '../../../timer/helpers/pb';
-import {displayTimerAlert, removeTimerNotifications} from '../../../timer/helpers/notification';
-import {updateMatchState} from '../helpers/state';
-import {GameContext} from '../../game/Game';
-import {emitEvent} from '../../../../util/event_handler';
-import {getMatchClientEvent} from '../../../../shared/match/client_events';
+import {MatchContext} from '@/components/play/match/Match';
+import {useMe} from '@/util/hooks/useMe';
+import {useSocketListener} from '@/util/hooks/useSocketListener';
+import {triggerConfetti} from '@/components/timer/helpers/pb';
+import {displayTimerAlert, removeTimerNotifications} from '@/components/timer/helpers/notification';
+import {updateMatchState} from '@/components/play/match/helpers/state';
+import {GameContext} from '@/components/play/game/Game';
+import {emitEvent} from '@/util/event_handler';
+import {getMatchClientEvent} from '@/shared/match/client-events';
 
 export function listenForMatchUpdates() {
 	const gameContext = useContext(GameContext);

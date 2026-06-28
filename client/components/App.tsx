@@ -15,6 +15,7 @@ import {setStore} from './store';
 import {initApollo} from './api';
 
 import 'react-toastify/dist/ReactToastify.css';
+import '../styles/index.scss';
 
 const preloadedState = JSON.parse(window.__STORE__);
 const store = createStore(reducers, preloadedState, applyMiddleware(promise, thunk));
@@ -24,8 +25,8 @@ setStore(store);
 
 delete window.__STORE__;
 
-import '../styles/index.scss';
-import {mapSingleRoute} from './map_route';
+
+import {mapSingleRoute} from './map-route';
 import {ApolloProvider} from '@apollo/client';
 
 Sentry.init({

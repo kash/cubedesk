@@ -1,7 +1,7 @@
 import React from 'react';
 import {Lock} from 'phosphor-react';
-import Button from '../../common/button/Button';
-import Tag from '../../common/tag/Tag';
+import Button from '@/components/common/button/Button';
+import Tag from '@/components/common/tag/Tag';
 
 export default function DemoRestricted() {
 	return (

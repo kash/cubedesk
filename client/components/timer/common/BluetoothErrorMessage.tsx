@@ -1,6 +1,6 @@
 
 import React from 'react';
-import ModalHeader from '../../common/modal/modal_header/ModalHeader';
+import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
 
 export default function BluetoothErrorMessage() {
 

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import './Sessions.scss';
+import classNames from 'classnames';
 import {Plus} from 'phosphor-react';
-import CubePicker from '../common/cube_picker/CubePicker';
-import TimeChart from '../modules/time_chart/TimeChart';
-import History from '../modules/history/History';
-import Input from '../common/inputs/input/Input';
-import {openModal} from '../../actions/general';
-import CreateNewSession from './new_session/CreateNewSession';
+import CubePicker from '@/components/common/cube_picker/CubePicker';
+import TimeChart from '@/components/modules/time-chart/TimeChart';
+import History from '@/components/modules/history/History';
+import Input from '@/components/common/inputs/input/Input';
+import {openModal} from '@/actions/general';
+import CreateNewSession from '@/components/sessions/CreateNewSession';
 import {closestCenter, DndContext, DragEndEvent, PointerSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {restrictToHorizontalAxis, restrictToVerticalAxis} from '@dnd-kit/modifiers';
 import {
@@ -18,23 +18,21 @@ import {
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import Session from './session/Session';
-import {fetchSessionById, fetchSessions, getCubeTypesFromSession} from '../../db/sessions/query';
-import {fetchLastCubeTypeForSession} from '../../db/solves/query';
-import {reorderSessions, updateSessionDb} from '../../db/sessions/update';
-import {useGeneral} from '../../util/hooks/useGeneral';
-import block from '../../styles/bem';
-import {useSessionDb} from '../../util/hooks/useSessionDb';
-import {CubeType} from '../../util/cubes/cube_types';
-import PageTitle from '../common/page_title/PageTitle';
-import Button from '../common/button/Button';
-import Module from '../common/module/Module';
-import TimeDistro from '../modules/time_distro/TimeDistro';
-import {useSettings} from '../../util/hooks/useSettings';
+import Session from '@/components/sessions/Session';
+import {fetchSessionById, fetchSessions, getCubeTypesFromSession} from '@/db/sessions/query';
+import {fetchLastCubeTypeForSession} from '@/db/solves/query';
+import {reorderSessions, updateSessionDb} from '@/db/sessions/update';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useSessionDb} from '@/util/hooks/useSessionDb';
+import {CubeType} from '@/util/cubes/cube_types';
+import PageTitle from '@/components/common/page_title/PageTitle';
+import Button from '@/components/common/button/Button';
+import Module from '@/components/common/module/Module';
+import TimeDistro from '@/components/modules/time-distro/TimeDistro';
+import {useSettings} from '@/util/hooks/useSettings';
+import block from '@/styles/bem';
 
-const b = block('sessions');
-
-function SortableItem({session, selectedSessionId, selectSession, setSelectedSessionId}) {
+function SortableItem({session, selectedSessionId, selectSession, setSelectedSessionId, mobileMode}) {
 	const {attributes, listeners, setActivatorNodeRef, setNodeRef, transform, transition, isDragging} = useSortable({
 		id: session.id,
 	});
@@ -52,6 +50,7 @@ function SortableItem({session, selectedSessionId, selectSession, setSelectedSes
 			selectSession={selectSession}
 			style={style}
 			isDragging={isDragging}
+			className={mobileMode ? 'mr-2.5 w-auto min-w-[250px]' : undefined}
 			refCallback={setNodeRef}
 			dragHandleProps={{attributes, listeners, setActivatorNodeRef}}
 		/>
@@ -66,13 +65,14 @@ function SortableList({sessions, selectedSessionId, selectSession, setSelectedSe
 			items={items}
 			strategy={mobileMode ? horizontalListSortingStrategy : verticalListSortingStrategy}
 		>
-			<div className={b('list')}>
+			<div className={mobileMode ? 'flex h-full flex-row overflow-x-scroll' : 'h-[calc(100vh_-_230px)] overflow-auto'}>
 				{sessions.map((s) => (
 					<SortableItem
 						setSelectedSessionId={setSelectedSessionId}
 						session={s}
 						selectedSessionId={selectedSessionId}
 						selectSession={selectSession}
+						mobileMode={mobileMode}
 						key={s.id}
 					/>
 				))}
@@ -174,9 +174,9 @@ export default function Sessions() {
 
 	// TODO NOW fix session stats. Replace with QuickStats with proper options
 	const body = (
-		<div className={b('info')}>
+		<div>
 			<Module>
-				<div className={b('info-header')}>
+				<div className="col-span-2 flex items-center justify-between">
 					<Input
 						type="text"
 						noMargin
@@ -186,7 +186,7 @@ export default function Sessions() {
 						value={session.name}
 						onChange={setSessionName}
 					/>
-					<div className={b('info-actions')}>
+					<div className="flex flex-row flex-wrap justify-end gap-2">
 						<CubePicker
 							handlePrefix="Stats for "
 							excludeSelected
@@ -203,17 +203,17 @@ export default function Sessions() {
 					</div>
 				</div>
 			</Module>
-			<div className={b('stats')}>
+			<div className="mt-[30px] grid w-full auto-rows-[300px] grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-5">
 				{/*<Module smallPadding>*/}
 				{/*	<SessionStats filterOptions={fetchFilter} />*/}
 				{/*</Module>*/}
-				<Module smallPadding>
+				<Module smallPadding className="h-full">
 					<History filterOptions={fetchFilter} />
 				</Module>
-				<Module smallPadding>
+				<Module smallPadding className="h-full">
 					<TimeChart filterOptions={fetchFilter} />
 				</Module>
-				<Module smallPadding>
+				<Module smallPadding className="h-full">
 					<TimeDistro filterOptions={fetchFilter} />
 				</Module>
 			</div>
@@ -221,7 +221,7 @@ export default function Sessions() {
 	);
 
 	return (
-		<div className={b({mobile: mobileMode})}>
+		<div className="relative flex h-full flex-col">
 			<PageTitle pageName="Sessions">
 				<Button
 					primary
@@ -238,7 +238,12 @@ export default function Sessions() {
 					icon={<Plus weight="bold" />}
 				/>
 			</PageTitle>
-			<div className={b('body')}>
+			<div
+				className={classNames(
+					'box-border grid h-full w-full gap-5',
+					mobileMode ? 'grid-cols-1 [grid-template-rows:100px_1fr]' : '[grid-template-columns:290px_1fr]'
+				)}
+			>
 				<DndContext
 					sensors={sensors}
 					collisionDetection={closestCenter}

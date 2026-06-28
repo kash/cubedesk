@@ -1,6 +1,6 @@
 import React from 'react';
-import {useMe} from '../../../util/hooks/useMe';
-import {useGeneral} from '../../../util/hooks/useGeneral';
+import {useMe} from '@/util/hooks/useMe';
+import {useGeneral} from '@/util/hooks/useGeneral';
 
 export default function DemoWarning() {
 	const me = useMe();

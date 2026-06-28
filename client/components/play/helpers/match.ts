@@ -1,7 +1,7 @@
 import {gql} from '@apollo/client';
-import {MATCH_FRAGMENT, PUBLIC_USER_WITH_ELO_FRAGMENT} from '../../../util/graphql/fragments';
-import {gqlQuery} from '../../api';
-import {MatchConst} from '../../../shared/match/consts';
+import {MATCH_FRAGMENT, PUBLIC_USER_WITH_ELO_FRAGMENT} from '@/util/graphql/fragments';
+import {gqlQuery} from '@/components/api';
+import {MatchConst} from '@/shared/match/consts';
 import {Match} from '../../../../server/schemas/Match.schema';
 import {MatchSession} from '../../../../server/schemas/MatchSession.schema';
 
@@ -34,7 +34,7 @@ export async function getMatchSession(match) {
 		}
 	`;
 
-	const res = await gqlQuery<MatchSessionQuery>(
+	const res = await gqlQuery<any>(
 		query,
 		{
 			id: match.match_session_id,
@@ -47,9 +47,9 @@ export async function getMatchSession(match) {
 
 export async function getExistingMatch(
 	userId: string, // When null, the first participant will be used
-	linkCode: string,
+	linkCode?: string,
 	forceFetch?: boolean
-): Promise<Match> {
+): Promise<Match | null> {
 	if (!linkCode) {
 		return null;
 	}

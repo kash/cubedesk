@@ -1,0 +1,55 @@
+import React, {ReactNode, useContext} from 'react';
+import {GameContext} from '@/components/play/game/Game';
+import {PlayerStatus} from '@/shared/match/types';
+import {MatchContext} from '@/components/play/match/Match';
+import {useMe} from '@/util/hooks/useMe';
+import Button from '@/components/common/button/Button';
+import Challengers from '@/components/play/target/challengers/Challengers';
+
+// Center module that shows game/match status
+export default function MatchModule() {
+	const gameContext = useContext(GameContext);
+	const matchContext = useContext(MatchContext);
+	const me = useMe();
+
+	const {matchOpen, retrySolve, solves, getPlayerStatusInfo, timeIndex} = gameContext;
+	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match);
+	const status = playerStatus.status;
+
+	let timeAlert: ReactNode;
+	let retryAlert: ReactNode = null;
+
+	switch (status) {
+		case PlayerStatus.Lost: {
+			timeAlert = (
+				<span className="mt-2.5 rounded-[15px] bg-error px-3.5 py-1 text-[0.9rem] font-medium text-white">
+					You completed {solves.length} solve{solves.length === 1 ? '' : 's'}
+				</span>
+			);
+
+			// Can't retry solves in multiplayer
+			if (!matchOpen) {
+				retryAlert = <Button text="Retry failed solve" onClick={retrySolve} />;
+			}
+			break;
+		}
+		case PlayerStatus.Won: {
+			timeAlert = (
+				<span className="mt-2.5 rounded-[15px] bg-success px-3.5 py-1 text-[0.9rem] font-medium text-white">
+					Congrats! You won!
+				</span>
+			);
+			break;
+		}
+	}
+
+	return (
+		<div className="relative box-border grid h-full grid-rows-[40px_1fr] items-center">
+			<div className="flex h-full w-full flex-row items-start justify-between">
+				<span className="text-[1.1rem] font-medium text-text opacity-80">{playerStatus.statusPrompt}</span>
+				<div>{retryAlert}</div>
+			</div>
+			<Challengers />
+		</div>
+	);
+}

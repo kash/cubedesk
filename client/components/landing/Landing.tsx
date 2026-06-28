@@ -1,15 +1,11 @@
 import React from 'react';
-import './Landing.scss';
-import block from '../../styles/bem';
-import LandingNav from './common/landing_nav/LandingNav';
-
-const b = block('landing');
+import LandingNav from '@/components/landing/common/LandingNav';
 
 export default function Landing(props: any) {
 	const {children} = props;
 
 	return (
-		<div className={b()}>
+		<div className="box-border h-full w-full bg-white pt-[50px]">
 			<LandingNav />
 			{children}
 		</div>

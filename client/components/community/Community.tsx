@@ -1,11 +1,7 @@
 import React, {createContext, ReactElement} from 'react';
-import './Community.scss';
-import {useInput} from '../../util/hooks/useInput';
-import CommunityNav from './nav/CommunityNav';
-import UserSearch from './user_search/UserSearch';
-import block from '../../styles/bem';
-
-const b = block('community');
+import {useInput} from '@/util/hooks/useInput';
+import CommunityNav from '@/components/community/CommunityNav';
+import UserSearch from '@/components/community/UserSearch';
 
 interface Props {
 	children: ReactElement;
@@ -19,7 +15,7 @@ export interface ICommunityContext {
 	setUserSearchQuery: reactState<string>;
 }
 
-export const CommunityContext = createContext<ICommunityContext>(null);
+export const CommunityContext = createContext<ICommunityContext>(null as unknown as ICommunityContext);
 
 export default function Community(props: Props) {
 	const [userSearchQuery, setUserSearchQuery] = useInput('');
@@ -38,7 +34,7 @@ export default function Community(props: Props) {
 				setUserSearchQuery,
 			}}
 		>
-			<div className={b()}>
+			<div className="relative">
 				<CommunityNav />
 				{body}
 			</div>

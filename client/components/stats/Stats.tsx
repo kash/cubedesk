@@ -1,20 +1,16 @@
 import React, {createContext, useMemo} from 'react';
-import './Stats.scss';
-import block from '../../styles/bem';
-import {useSolveDb} from '../../util/hooks/useSolveDb';
-import PageTitle from '../common/page_title/PageTitle';
-import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
-import CubeStats from './cube_stats/CubeStats';
-import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '../../db/solves/query';
-import {getCubeTypeInfoById} from '../../util/cubes/util';
-import {CubeType} from '../../util/cubes/cube_types';
-import AllStats from './all/AllStats';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import PageTitle from '@/components/common/page_title/PageTitle';
+import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import CubeStats from '@/components/stats/cube-stats/CubeStats';
+import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {CubeType} from '@/util/cubes/cube_types';
+import AllStats from '@/components/stats/all/AllStats';
 import {gql, useQuery} from '@apollo/client';
-import {Stats as StatsSchema} from '../../@types/generated/graphql';
-import {STATS_FRAGMENT} from '../../util/graphql/fragments';
-import {useMe} from '../../util/hooks/useMe';
-
-const b = block('stats');
+import {Stats as StatsSchema} from '@/@types/generated/graphql';
+import {STATS_FRAGMENT} from '@/util/graphql/fragments';
+import {useMe} from '@/util/hooks/useMe';
 
 const CUBE_TYPE_QUERY_PARAM = 'cubeType';
 const ALL_TAB_ID = 'all';
@@ -105,7 +101,7 @@ export default function Stats() {
 
 	return (
 		<StatsContext.Provider value={context}>
-			<div className={b()}>
+			<div>
 				<PageTitle pageName="Stats">
 					<HorizontalNav tabs={tabs} tabId={tabId} />
 				</PageTitle>

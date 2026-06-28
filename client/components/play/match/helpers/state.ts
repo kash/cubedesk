@@ -1,5 +1,5 @@
-import {IGameContext} from '../../game/Game';
-import {reactState} from '../../../../@types/react';
+import {IGameContext} from '@/components/play/game/Game';
+import {reactState} from '@/@types/react';
 import {Match} from '../../../../../server/schemas/Match.schema';
 import {Solve} from '../../../../../server/schemas/Solve.schema';
 import {MatchSession} from '../../../../../server/schemas/MatchSession.schema';

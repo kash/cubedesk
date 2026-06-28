@@ -1,11 +1,7 @@
 import React, {ReactNode, useState} from 'react';
-import './WelcomeScreen.scss';
-import block from '../../styles/bem';
-import Button from '../common/button/Button';
-import {IModalProps} from '../common/modal/Modal';
-import {resourceUri} from '../../util/storage';
-
-const b = block('welcome-screen');
+import Button from '@/components/common/button/Button';
+import {IModalProps} from '@/components/common/modal/Modal';
+import {resourceUri} from '@/util/storage';
 
 interface WelcomePage {
 	title: ReactNode;
@@ -38,7 +34,7 @@ export default function WelcomeScreen(props: IModalProps) {
 	const [pageIndex, setPageIndex] = useState(0);
 
 	function closeModal() {
-		props.onComplete(null);
+		props.onComplete?.(null);
 	}
 
 	function nextPage() {
@@ -47,7 +43,7 @@ export default function WelcomeScreen(props: IModalProps) {
 
 	const page = PAGES[pageIndex];
 	const pageDiv = (
-		<div className={b('page')}>
+		<div>
 			<h1>{page.title}</h1>
 			<p>{page.description}</p>
 			<img src={page.imgSrc} />
@@ -64,9 +60,9 @@ export default function WelcomeScreen(props: IModalProps) {
 	}
 
 	return (
-		<div className={b()}>
+		<div>
 			{pageDiv}
-			<div className={b('bottom-buttons')}>{nextButton}</div>
+			<div>{nextButton}</div>
 		</div>
 	);
 }

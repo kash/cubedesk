@@ -1,19 +1,15 @@
 import React, {useEffect} from 'react';
-import './Membership.scss';
-import block from '../../../styles/bem';
 import {gql} from '@apollo/client/core';
-import {MembershipOptions, Membership as MembershipType} from '../../../@types/generated/graphql';
+import {MembershipOptions, Membership as MembershipType} from '@/@types/generated/graphql';
 import {useQuery} from '@apollo/client';
-import ProCard from './pro_card/ProCard';
-import Loading from '../../common/loading/Loading';
-import ActiveMembership from './active_membership/ActiveMembership';
-import {MEMBERSHIP_FRAGMENT, MEMBERSHIP_OPTIONS_FRAGMENT} from '../../../util/graphql/fragments';
-import {getMe} from '../../../actions/account';
+import ProCard from '@/components/account/membership/pro-card/ProCard';
+import Loading from '@/components/common/loading/Loading';
+import ActiveMembership from '@/components/account/membership/ActiveMembership';
+import {MEMBERSHIP_FRAGMENT, MEMBERSHIP_OPTIONS_FRAGMENT} from '@/util/graphql/fragments';
+import {getMe} from '@/actions/account';
 import {useDispatch} from 'react-redux';
-import {useMe} from '../../../util/hooks/useMe';
-import {isNotPro, isPro} from '../../../util/pro';
-
-const b = block('membership');
+import {useMe} from '@/util/hooks/useMe';
+import {isNotPro, isPro} from '@/util/pro';
 
 const MEMBERSHIP_QUERY = gql`
 	${MEMBERSHIP_FRAGMENT}
@@ -36,7 +32,7 @@ export const MEMBERSHIP_OPTIONS_QUERY = gql`
 `;
 
 export default function Membership() {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
 	const me = useMe();
 
 	const {data: memData, loading: memDataLoading} = useQuery<{membership: MembershipType}>(MEMBERSHIP_QUERY);
@@ -58,5 +54,5 @@ export default function Membership() {
 		body = <ProCard options={memOpData?.membershipOptions} />;
 	}
 
-	return <div className={b()}>{body}</div>;
+	return <div>{body}</div>;
 }

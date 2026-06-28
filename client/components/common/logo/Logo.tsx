@@ -1,6 +1,7 @@
 import React from 'react';
-import './Logo.scss';
+
 import {resourceUri} from '../../../util/storage';
+import './Logo.scss';
 
 interface LogoProps {
 	large?: boolean;

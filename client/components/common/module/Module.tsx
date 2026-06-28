@@ -1,19 +1,22 @@
 import React, {ReactNode} from 'react';
-import './Module.scss';
+
 import block from '../../../styles/bem';
 import CSS from 'csstype';
+import classNames from 'classnames';
+import './Module.scss';
 
 const b = block('module');
 
 interface Props {
 	children: ReactNode;
+	className?: string;
 	smallPadding?: boolean;
 	padding?: string;
 	square?: boolean;
 }
 
 export default function Module(props: Props) {
-	const {square, padding, children, smallPadding} = props;
+	const {square, padding, children, smallPadding, className} = props;
 
 	const styles: CSS.Properties = {};
 	if (smallPadding) {
@@ -24,7 +27,7 @@ export default function Module(props: Props) {
 	}
 
 	return (
-		<div className={b({square})} style={styles}>
+		<div className={classNames(b({square}), className)} style={styles}>
 				<div className={b('body')}>{children}</div>
 		</div>
 	);

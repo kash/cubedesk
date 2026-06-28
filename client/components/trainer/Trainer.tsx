@@ -1,39 +1,36 @@
 import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
+import classNames from 'classnames';
 import {v4 as uuid} from 'uuid';
-import './Trainer.scss';
 import {Plus, ArrowRight, Star} from 'phosphor-react';
-import PageTitle from '../common/page_title/PageTitle';
+import PageTitle from '@/components/common/page_title/PageTitle';
 import {
 	fetchTrainerAlgorithmCount,
 	fetchTrainerAlgorithmCubeTypes,
 	fetchTrainerAlgorithms,
 	fetchTrainerAlgorithmTypes,
 	FilterTrainerOptions,
-} from '../../db/trainer/query';
+} from '@/db/trainer/query';
 import Chance from 'chance';
-import block from '../../styles/bem';
-import {CubeType} from '../../util/cubes/cube_types';
-import {getCubeTypeInfoById} from '../../util/cubes/util';
-import TrainerAlgo from './trainer_algo/TrainerAlgo';
-import Dropdown from '../common/inputs/dropdown/Dropdown';
-import Empty from '../common/empty/Empty';
+import {CubeType} from '@/util/cubes/cube_types';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import TrainerAlgo from '@/components/trainer/trainer-algo/TrainerAlgo';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import Empty from '@/components/common/empty/Empty';
 import {useRouteMatch} from 'react-router-dom';
-import {useTrainerDb} from '../../util/hooks/useTrainerDb';
-import {openModal} from '../../actions/general';
+import {useTrainerDb} from '@/util/hooks/useTrainerDb';
+import {openModal} from '@/actions/general';
 import memoize from 'memoizee';
-import Timer from '../timer/Timer';
+import Timer from '@/components/timer/Timer';
 import {useDispatch} from 'react-redux';
 import _ from 'lodash';
-import {TrainerAlgorithmExtended} from '../../db/trainer/init';
-import {TimerModuleType} from '../timer/@types/enums';
-import AlgoModule from '../modules/algo_module/AlgoModule';
-import LinkButton from '../common/button/LinkButton';
-import Button, {CommonType} from '../common/button/Button';
-import AddCustom from './add_custom/AddCustom';
-import {useToggle} from '../../util/hooks/useToggle';
+import {TrainerAlgorithmExtended} from '@/db/trainer/init';
+import {TimerModuleType} from '@/components/timer/@types/enums';
+import AlgoModule from '@/components/modules/algo-module/AlgoModule';
+import LinkButton from '@/components/common/button/LinkButton';
+import Button, {CommonType} from '@/components/common/button/Button';
+import AddCustom from '@/components/trainer/add-custom/AddCustom';
+import {useToggle} from '@/util/hooks/useToggle';
 import {Solve} from '../../../server/schemas/Solve.schema';
-
-const b = block('trainer');
 
 export interface ITrainerContext {
 	cubeType: CubeType;
@@ -201,7 +198,7 @@ export default function Trainer() {
 	}, 0);
 
 	if (!loaded) {
-		return <div className={b('loading')} />;
+		return <div />;
 	}
 
 	const context: ITrainerContext = {
@@ -275,9 +272,9 @@ export default function Trainer() {
 
 	return (
 		<TrainerContext.Provider value={context}>
-			<div className={b()}>
+			<div>
 				<PageTitle pageName="Trainer">
-					<div className={b('create-custom')}>
+					<div className="absolute right-0 top-0">
 						<Button
 							primary
 							text="Create New"
@@ -287,8 +284,8 @@ export default function Trainer() {
 							onClick={openCreateCustomTrainer}
 						/>
 					</div>
-					<div className={b('header')}>
-						<div className={b('filter')}>
+					<div className="flex flex-row items-start justify-between">
+						<div className="flex flex-row gap-2.5">
 							<Dropdown openLeft text={context.cubeType.name} options={[...cubeTypeDropdownOptions]} />
 							<Dropdown openLeft text={algoType} options={[...algoTypeDropdownOptions]} />
 							<Button icon={<Star />} white={favsOnly} gray onClick={() => toggleFavsOnly()} />
@@ -308,7 +305,7 @@ export default function Trainer() {
 								]}
 							/>
 						</div>
-						<div className={b('public-trainers')}>
+						<div>
 							<LinkButton
 								noMargin
 								theme={CommonType.WARNING}
@@ -319,7 +316,14 @@ export default function Trainer() {
 						</div>
 					</div>
 				</PageTitle>
-				<div className={b('algos', {empty: !algos?.length})}>{body}</div>
+				<div
+					className={classNames(
+						'grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(400px,1fr))]',
+						!algos?.length && '!grid-cols-1'
+					)}
+				>
+					{body}
+				</div>
 			</div>
 		</TrainerContext.Provider>
 	);

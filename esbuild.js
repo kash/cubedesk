@@ -1,7 +1,8 @@
-const {sassPlugin} = require('esbuild-sass-plugin');
-const postcss = require('postcss');
-const tailwindcss = require('tailwindcss');
-const autoprefixer = require('autoprefixer');
+import {sassPlugin} from 'esbuild-sass-plugin';
+import postcss from 'postcss';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+import esbuild from 'esbuild';
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const deploying = process.env.DEPLOYING;
@@ -23,11 +24,12 @@ if (deploying) {
 	watch = false;
 }
 
-require('esbuild')
+esbuild
 	.build({
 		entryPoints: ['client/components/App.tsx'],
 		outfile: `dist/${deploymentId}.min.js`,
 		bundle: true,
+		tsconfig: 'tsconfig.json',
 		logLevel: 'error',
 		minify: !dev,
 		define: {

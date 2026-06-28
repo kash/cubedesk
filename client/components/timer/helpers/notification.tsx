@@ -1,11 +1,9 @@
 import React from 'react';
-import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from './timers';
-import block from '../../../styles/bem';
-import {setTimerParam, setTimerParams} from './params';
-import Tag, {TagProps} from '../../common/tag/Tag';
-import {getTimerStore} from '../../../util/store/getTimer';
-
-const b = block('timer-notif');
+import classNames from 'classnames';
+import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from '@/components/timer/helpers/timers';
+import {setTimerParam, setTimerParams} from '@/components/timer/helpers/params';
+import Tag, {TagProps} from '@/components/common/tag/Tag';
+import {getTimerStore} from '@/util/store/getTimer';
 
 const HIDE_NOTIF_TIMEOUT = 7000;
 
@@ -13,7 +11,12 @@ const HIDE_NOTIF_TIMEOUT = 7000;
 export function displayTimerAlert(tagProps: TagProps, dontHide?: boolean) {
 	setTimerParams({
 		notification: (
-			<div className={b({static: dontHide})}>
+			<div
+				className={classNames(
+					'absolute top-0 z-[10000] box-border flex w-full -translate-y-full justify-center px-5 opacity-100 transition-all duration-300 ease-in-out',
+					dontHide && 'opacity-100'
+				)}
+			>
 				<Tag glow {...tagProps} />
 			</div>
 		),
@@ -32,7 +35,8 @@ export function displayTimerAlert(tagProps: TagProps, dontHide?: boolean) {
 
 			setTimerParams({
 				notification: React.cloneElement(notification, {
-					className: b({out: true}),
+					className:
+						'absolute top-[30px] z-[10000] box-border flex w-full -translate-y-full justify-center px-5 opacity-0 transition-all duration-300 ease-in-out',
 				}),
 			});
 		}, HIDE_NOTIF_TIMEOUT)

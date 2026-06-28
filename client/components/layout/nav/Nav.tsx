@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link, useRouteMatch} from 'react-router-dom';
-import './Nav.scss';
-import {setSetting} from '../../../db/settings/update';
-import {setGeneral} from '../../../actions/general';
+import {setSetting} from '@/db/settings/update';
+import {setGeneral} from '@/actions/general';
 import {
 	ArrowLeft,
 	Sword,
@@ -16,22 +15,19 @@ import {
 	Timer,
 	ArrowRight,
 } from 'phosphor-react';
-import Notifications from './notifications/Notifications';
-import Logo from '../../common/logo/Logo';
-import MobileNav from './mobile_nav/MobileNav';
-import {useGeneral} from '../../../util/hooks/useGeneral';
-import {useWindowListener} from '../../../util/hooks/useListener';
-import {useSettings} from '../../../util/hooks/useSettings';
-import {useTheme} from '../../../util/hooks/useTheme';
-import block from '../../../styles/bem';
-import AccountDropdown from './account_dropdown/AccountDropdown';
-import {useMe} from '../../../util/hooks/useMe';
-import NavLink from './NavLink';
-import Button from '../../common/button/Button';
-import LoginNav from './LoginNav';
-import {resourceUri} from '../../../util/storage';
-
-const b = block('nav');
+import Notifications from '@/components/layout/nav/notifications/Notifications';
+import Logo from '@/components/common/logo/Logo';
+import MobileNav from '@/components/layout/nav/MobileNav';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useWindowListener} from '@/util/hooks/useListener';
+import {useSettings} from '@/util/hooks/useSettings';
+import {useTheme} from '@/util/hooks/useTheme';
+import AccountDropdown from '@/components/layout/nav/account-dropdown/AccountDropdown';
+import {useMe} from '@/util/hooks/useMe';
+import NavLink from '@/components/layout/nav/NavLink';
+import Button from '@/components/common/button/Button';
+import LoginNav from '@/components/layout/nav/LoginNav';
+import {resourceUri} from '@/util/storage';
 
 export interface NavLinkProps {
 	name: string;
@@ -172,15 +168,55 @@ export default function Nav() {
 		);
 	}
 
+	const navClasses = [
+		'sticky',
+		'left-0',
+		'top-0',
+		'z-[1000]',
+		'box-border',
+		'flex',
+		'h-screen',
+		'h-[100dvh]',
+		navClosed ? 'w-20' : 'w-72',
+		'flex-col',
+		'items-center',
+		'bg-module',
+		'pt-5',
+	];
+
+	const headerClasses = [
+		'mb-2.5',
+		'box-border',
+		'flex',
+		navClosed ? 'flex-col' : 'flex-row',
+		'items-center',
+		navClosed ? 'justify-center' : 'justify-between',
+	];
+	const headerActionsClasses = ['flex', navClosed ? 'flex-col' : 'flex-row', 'items-center', 'gap-2.5'];
+	const socialClasses = [
+		'mx-auto',
+		'mb-2.5',
+		'grid',
+		'w-[95%]',
+		'max-w-[200px]',
+		navClosed ? 'grid-cols-1' : 'grid-cols-5',
+		'gap-[5px]',
+		'box-border',
+	];
+
 	return (
-		<div className={b({collapsed: navClosed})}>
-			<div className={b('wrapper')}>
-				<div className={b('body')}>
-					<div className={b('top-section')}>
-						<div className={b('header')}>
-							<Logo large={true} dark={!moduleColor.isDark} />
-							<Logo dark={!moduleColor.isDark} />
-							<div className={b('header-actions')}>
+		<div className={navClasses.join(' ')}>
+			<div className="box-border flex h-full w-full flex-col justify-center px-5">
+				<div className="flex h-full w-full flex-col justify-between">
+					<div className="flex w-full flex-col justify-center">
+						<div className={headerClasses.join(' ')}>
+							<span className={navClosed ? 'hidden' : 'block'}>
+								<Logo large={true} dark={!moduleColor.isDark} />
+							</span>
+							<span className={navClosed ? 'block' : 'hidden'}>
+								<Logo dark={!moduleColor.isDark} />
+							</span>
+							<div className={headerActionsClasses.join(' ')}>
 								{notifications}
 								<AccountDropdown />
 							</div>
@@ -189,8 +225,8 @@ export default function Nav() {
 						<div className="mt-4">{navLinks}</div>
 						<LoginNav collapsed={navClosed} />
 					</div>
-					<div className={b('bottom-section')}>
-						<div className={b('social')}>
+					<div className="flex flex-col items-center pb-[30px] opacity-70">
+						<div className={socialClasses.join(' ')}>
 							<SocialIcon
 								href="https://discord.gg/wdVbhDnsQV"
 								darkPath={resourceUri('/images/logos/discord_logo_white.svg')}
@@ -230,7 +266,6 @@ export default function Nav() {
 							text={navCollapsed ? '' : 'Collapse'}
 							icon={navCollapsed ? <ArrowRight weight="fill" /> : <ArrowLeft weight="fill" />}
 							transparent
-							className={b('collapse-button')}
 							type="button"
 							onClick={toggleCollapse}
 						/>
@@ -258,8 +293,12 @@ function SocialIcon(props: SocialIconInterface) {
 	}
 
 	return (
-		<a href={href} target="_blank">
-			<img src={path} alt={`${name} logo`} />
+		<a
+			className="box-border flex flex-col items-center justify-center rounded-[5px] bg-transparent p-2 font-semibold opacity-70 transition-all duration-100 ease-in-out hover:bg-tmo-module/10 hover:opacity-100"
+			href={href}
+			target="_blank"
+		>
+			<img className="w-full" src={path} alt={`${name} logo`} />
 		</a>
 	);
 }

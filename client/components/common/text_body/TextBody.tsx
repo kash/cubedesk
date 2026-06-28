@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
-import './TextBody.scss';
+
 import block from '../../../styles/bem';
+import './TextBody.scss';
 
 const b = block('common-text-body');
 

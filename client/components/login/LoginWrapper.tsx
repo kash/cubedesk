@@ -1,19 +1,15 @@
 import React from 'react';
-import Login from './login/Login';
-import SignUp from './sign_up/SignUp';
-import './LoginWrapper.scss';
-import Forgot from './forgot/Forgot';
-import {resourceUri} from '../../util/storage';
+import Login from './Login';
+import SignUp from './SignUp';
+import Forgot from './Forgot';
+import {resourceUri} from '@/util/storage';
 import {useRouteMatch} from 'react-router-dom';
-import block from '../../styles/bem';
-
-const b = block('login');
 
 export default function LoginWrapper() {
 	const match = useRouteMatch();
 	const path = match.path;
 
-	let body = null;
+	let body: React.ReactNode = null;
 	if (path.startsWith('/login')) {
 		body = <Login />;
 	} else if (path.startsWith('/signup')) {
@@ -23,9 +19,13 @@ export default function LoginWrapper() {
 	}
 
 	return (
-		<div className={b('wrapper')}>
+		<div className="flex h-full min-h-screen w-full flex-col items-center justify-start bg-background">
 			<a href="/home">
-				<img src={resourceUri('/images/cube_desk_logo_white.svg')} alt="CubeDesk Logo" />
+				<img
+					className="mb-[30px] mt-[100px] w-[200px]"
+					src={resourceUri('/images/cube_desk_logo_white.svg')}
+					alt="CubeDesk Logo"
+				/>
 			</a>
 			{body}
 		</div>

@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
-import './ModalHeader.scss';
+
 import block from '../../../../styles/bem';
+import './ModalHeader.scss';
 
 const b = block('modal-header');
 

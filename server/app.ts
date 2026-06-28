@@ -5,9 +5,9 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import {getPrisma, initPrisma} from './database';
+import {getPrisma} from './database';
 import requestIp from 'request-ip';
-import {initLogger, logger} from './services/logger';
+	import {initLogger, logger} from './services/logger';
 import {ApolloServer} from 'apollo-server-express';
 import {baseResolvers, baseScalars} from './graphql';
 import * as Sentry from '@sentry/node';
@@ -95,7 +95,7 @@ const gqlTypes: any[] = [];
 const gqlQueries: any[] = [];
 const gqlMutations: any[] = [];
 let gqlMutationActions = {};
-let gqlQueryActions = {};
+	let gqlQueryActions = {};
 
 function parseList(l: {[key: string]: any}) {
 	const modelKeys = [...Object.keys(l)];

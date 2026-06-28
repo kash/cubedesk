@@ -1,6 +1,7 @@
 import React from 'react';
 import './Slider.scss';
 
+
 interface Props {
 	min: number;
 	max: number;

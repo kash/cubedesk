@@ -1,9 +1,0 @@
-@use '../../../../styles/config' as *;
-
-.#{$namespace}-stat-module {
-	background-color: rgb(var(--module-color));
-	border-radius: 20px;
-	padding: 25px;
-	width: 100%;
-	box-sizing: border-box;
-}

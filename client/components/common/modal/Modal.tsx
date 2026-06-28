@@ -1,11 +1,12 @@
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import CSS from 'csstype';
 import {useDispatch} from 'react-redux';
-import './Modal.scss';
+
 import {X} from 'phosphor-react';
 import {closeModal} from '../../../actions/general';
 import ModalHeader from './modal_header/ModalHeader';
 import block from '../../../styles/bem';
+import './Modal.scss';
 
 const b = block('modal');
 

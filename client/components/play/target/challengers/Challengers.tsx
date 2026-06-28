@@ -1,10 +1,6 @@
 import React, {useContext} from 'react';
-import './Challengers.scss';
-import Challenger from './challenger/Challenger';
-import block from '../../../../styles/bem';
-import {MatchContext} from '../../match/Match';
-
-const b = block('timer-challengers');
+import Challenger from '@/components/play/target/challengers/Challenger';
+import {MatchContext} from '@/components/play/match/Match';
 
 export default function Challengers() {
 	const context = useContext(MatchContext);
@@ -16,5 +12,5 @@ export default function Challengers() {
 
 	const body = challengers.map((c) => <Challenger key={c.challenger.id} {...c} />);
 
-	return <div className={b()}>{body}</div>;
+	return <div className="grid h-full w-full grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-2">{body}</div>;
 }

@@ -4,11 +4,11 @@ import {copyText} from '../../copy_text/CopyText';
 import {CaretDown, User, Copy, Flag, Pen, GearSix} from 'phosphor-react';
 import {toastSuccess} from '../../../../util/toast';
 import {openModal} from '../../../../actions/general';
-import UserView from '../../../admin/manage_user/ManageUser';
+import UserView from '../../../admin/manage-user/ManageUser';
 import {useDispatch} from 'react-redux';
 import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../../../server/schemas/UserAccount.schema';
-import ReportUser from '../../../profile/report/ReportUser';
-import EditProfile from '../../../profile/edit_profile/EditProfile';
+import ReportUser from '../../../profile/ReportUser';
+import EditProfile from '../../../profile/EditProfile';
 import {useMe} from '../../../../util/hooks/useMe';
 
 interface Props {

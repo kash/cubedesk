@@ -1,6 +1,5 @@
 import React from 'react';
-import './UnsubEmails.scss';
-import AlertContainer from '../common/alert_container/AlertContainer';
+import AlertContainer from '@/components/common/alert_container/AlertContainer';
 
 export default function UnsubEmails() {
 	const body = (

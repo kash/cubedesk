@@ -12,7 +12,7 @@ import reducers from '../client/reducers/reducers';
 import {initUserAccount} from './models/store';
 
 import {HelmetProvider, HelmetServerState} from 'react-helmet-async';
-import {mapSingleRoute} from '../client/components/map_route';
+import {mapSingleRoute} from '../client/components/map-route';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import {logger} from './services/logger';
 import {ErrorCode} from './constants/errors';

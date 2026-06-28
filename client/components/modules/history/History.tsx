@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactList from 'react-list';
 import {GlobalHotKeys} from 'react-hotkeys';
-import './History.scss';
-import Empty from '../../common/empty/Empty';
-import {HOTKEY_MAP} from '../../../util/timer/hotkeys';
-import {FilterSolvesOptions, fetchSolves, fetchLastSolve} from '../../../db/solves/query';
-import HistorySolveRow from './solve_row/HistorySolveRow';
-import {toggleDnfSolveDb, togglePlusTwoSolveDb, setOkSolveDb} from '../../../db/solves/operations';
-import {deleteSolveDb} from '../../../db/solves/update';
-import {useSolveDb} from '../../../util/hooks/useSolveDb';
-import {Solve} from '../../../@types/generated/graphql';
-import {useGeneral} from '../../../util/hooks/useGeneral';
+import Empty from '@/components/common/empty/Empty';
+import {HOTKEY_MAP} from '@/util/timer/hotkeys';
+import {FilterSolvesOptions, fetchSolves, fetchLastSolve} from '@/db/solves/query';
+import HistorySolveRow from '@/components/modules/history/HistorySolveRow';
+import {toggleDnfSolveDb, togglePlusTwoSolveDb, setOkSolveDb} from '@/db/solves/operations';
+import {deleteSolveDb} from '@/db/solves/update';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {Solve} from '@/@types/generated/graphql';
+import {useGeneral} from '@/util/hooks/useGeneral';
 
 interface Props {
 	solves?: Solve[];
@@ -18,11 +17,12 @@ interface Props {
 	disabled?: boolean;
 	reverseOrder?: boolean;
 	hotKeysEnabled?: boolean;
+	listClassName?: string;
 }
 
 // TODO NOW hotkeys for History
 export default function History(props: Props) {
-	const {solves: parentSolves, reverseOrder, disabled, filterOptions, hotKeysEnabled} = props;
+	const {solves: parentSolves, reverseOrder, disabled, filterOptions, hotKeysEnabled, listClassName} = props;
 
 	useSolveDb();
 	const modals = useGeneral('modals');
@@ -76,7 +76,7 @@ export default function History(props: Props) {
 
 	if (!solves.length) {
 		return (
-			<div className="cd-history">
+			<div className="box-border h-full w-full overflow-visible px-[5px]">
 				<Empty text="No solves yet" />
 			</div>
 		);
@@ -91,9 +91,9 @@ export default function History(props: Props) {
 
 	return (
 		<GlobalHotKeys handlers={HOTKEY_HANDLERS} keyMap={HOTKEY_MAP}>
-			<div className="cd-history">
-				<div className="cd-history__table">
-					<div className="cd-history__list">
+			<div className="box-border h-full w-full overflow-visible px-[5px]">
+				<div className="h-full w-full">
+					<div className={['max-h-full overflow-auto', listClassName].filter(Boolean).join(' ')}>
 						<ReactList itemRenderer={renderSolveRow} length={solves.length} type="uniform" />
 					</div>
 				</div>

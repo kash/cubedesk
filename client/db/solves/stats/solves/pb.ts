@@ -1,8 +1,8 @@
 import {emitEvent} from '../../../../util/event_handler';
 import jsonStr from 'json-stable-stringify';
 import {Solve} from '../../../../../server/schemas/Solve.schema';
-import {checkForAveragePBUpdate} from './cache/average_cache';
-import {checkForSinglePB} from './cache/single_cache';
+import {checkForAveragePBUpdate} from './cache/average-cache';
+import {checkForSinglePB} from './cache/single-cache';
 
 export function checkForPB(solve: Solve, isNew: boolean) {
 	const updatedSinglePbs = checkForSinglePB(solve);

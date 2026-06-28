@@ -1,5 +1,5 @@
 import React, {ReactNode, useEffect, useMemo, useState} from 'react';
-import './Pagination.scss';
+
 import HorizontalNav from '../horizontal_nav/HorizontalNav';
 import Empty from '../empty/Empty';
 import Loading from '../loading/Loading';
@@ -11,6 +11,7 @@ import {useRouteMatch} from 'react-router-dom';
 import block from '../../../styles/bem';
 import Input from '../inputs/input/Input';
 import Button from '../button/Button';
+import './Pagination.scss';
 
 const DEFAULT_PAGE_SIZE = 10;
 

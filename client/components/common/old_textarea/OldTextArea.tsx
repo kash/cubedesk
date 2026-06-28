@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import './TextArea.scss';
+
 import block from '../../../styles/bem';
+import './TextArea.scss';
 
 interface Props {
 	name?: string;

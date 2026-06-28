@@ -1,9 +1,9 @@
-import {getExistingMatch} from '../../helpers/match';
-import {IMatchContext} from '../Match';
-import {IGameContext} from '../../game/Game';
-import {UserAccount} from '../../../../@types/generated/graphql';
-import {socketClient} from '../../../../util/socket/socketio';
-import {updateMatchState} from '../helpers/state';
+import {getExistingMatch} from '@/components/play/helpers/match';
+import {IMatchContext} from '@/components/play/match/Match';
+import {IGameContext} from '@/components/play/game/Game';
+import {UserAccount} from '@/@types/generated/graphql';
+import {socketClient} from '@/util/socket/socketio';
+import {updateMatchState} from '@/components/play/match/helpers/state';
 
 export async function setExistingMatchData(
 	me: UserAccount,

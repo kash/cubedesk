@@ -1,4 +1,4 @@
-import {setTimerParams} from './params';
+import {setTimerParams} from '@/components/timer/helpers/params';
 import {
 	setTimer,
 	stopTimer,
@@ -6,15 +6,15 @@ import {
 	START_TIMEOUT,
 	INSPECTION_TIMEOUT,
 	INSPECTION_INTERVAL
-} from './timers';
-import {emitEvent} from '../../../util/event_handler';
-import {saveSolve} from './save';
-import {resetScramble} from './scramble';
-import {ITimerContext} from '../Timer';
+} from '@/components/timer/helpers/timers';
+import {emitEvent} from '@/util/event_handler';
+import {saveSolve} from '@/components/timer/helpers/save';
+import {resetScramble} from '@/components/timer/helpers/scramble';
+import {ITimerContext} from '@/components/timer/Timer';
 import {SolveInput} from '../../../../server/schemas/Solve.schema';
-import {getSettings} from '../../../db/settings/query';
-import {getTimerStore} from '../../../util/store/getTimer';
-import {resourceUri} from '../../../util/storage';
+import {getSettings} from '@/db/settings/query';
+import {getTimerStore} from '@/util/store/getTimer';
+import {resourceUri} from '@/util/storage';
 
 let endLocked = false;
 

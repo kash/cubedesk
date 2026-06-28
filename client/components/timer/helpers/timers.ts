@@ -1,5 +1,5 @@
-import {TimerStore} from '../@types/interfaces';
-import {setTimerParams} from './params';
+import {TimerStore} from '@/components/timer/@types/interfaces';
+import {setTimerParams} from '@/components/timer/helpers/params';
 
 const timers = {
 	notificationTimeout: null,

@@ -1,6 +1,6 @@
 import React from 'react';
 import {EloRating} from '../../../server/schemas/EloRating.schema';
-import Avatar from '../common/avatar/Avatar';
+import Avatar from '@/components/common/avatar/Avatar';
 import classNames from 'classnames';
 
 interface Props {

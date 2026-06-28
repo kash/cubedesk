@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
-import './PageTitle.scss';
+
 import block from '../../../styles/bem';
+import './PageTitle.scss';
 
 const b = block('page-title');
 

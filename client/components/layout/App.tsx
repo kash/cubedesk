@@ -1,20 +1,19 @@
 import React, {ReactNode, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import './App.scss';
-import Wrapper from './wrapper/Wrapper';
-import LoadingCover from './loading_cover/LoadingCover';
-import Modal from '../common/modal/Modal';
-import {initPageTitleBlink} from '../../util/page_title_blink';
-import Banned from './banned/Banned';
-import TopNav from './top_nav/TopNav';
-import Header from './header/Header';
-import {initAnonymousAppData, initAppData, setBrowserSessionId} from './init';
-import {useGeneral} from '../../util/hooks/useGeneral';
-import {useMe} from '../../util/hooks/useMe';
-import {setGeneral} from '../../actions/general';
-import {updateThemeColors} from './themes';
-import {updateSettingsBasedOnProStatus} from './pro_audit';
-import {initSocketIO} from '../../util/socket/socketio';
+import Wrapper from '@/components/layout/wrapper/Wrapper';
+import LoadingCover from '@/components/layout/LoadingCover';
+import Modal from '@/components/common/modal/Modal';
+import {initPageTitleBlink} from '@/util/page_title_blink';
+import Banned from '@/components/layout/Banned';
+import TopNav from '@/components/layout/TopNav';
+import Header from '@/components/layout/Header';
+import {initAnonymousAppData, initAppData, setBrowserSessionId} from '@/components/layout/init';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useMe} from '@/util/hooks/useMe';
+import {setGeneral} from '@/actions/general';
+import {updateThemeColors} from '@/components/layout/themes';
+import {updateSettingsBasedOnProStatus} from '@/components/layout/pro-audit';
+import {initSocketIO} from '@/util/socket/socketio';
 
 interface Props {
 	path?: string;
@@ -72,7 +71,7 @@ export default function App(props: Props = {}) {
 
 	if (standalone) {
 		return (
-			<div className="cd-app-standalone">
+			<div className="min-h-screen bg-background">
 				{hideTopNav ? null : <TopNav />}
 				{children}
 			</div>

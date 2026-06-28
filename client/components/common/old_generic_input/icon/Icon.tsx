@@ -1,6 +1,7 @@
 import React from 'react';
-import './Icon.scss';
+
 import block from '../../../../styles/bem';
+import './Icon.scss';
 
 const b = block('common-icon');
 

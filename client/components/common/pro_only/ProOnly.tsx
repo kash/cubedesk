@@ -30,7 +30,7 @@ export default function ProOnly(props: Props) {
 	}
 
 	return (
-		<Cover tagText={lockIconOnly ? null : 'Pro Feature'} noPadding={noPadding} onClick={onClick}>
+		<Cover tagText={lockIconOnly ? undefined : 'Pro Feature'} noPadding={noPadding} onClick={onClick}>
 			{children}
 		</Cover>
 	);

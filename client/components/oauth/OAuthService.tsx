@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import {gqlMutate} from '../api';
+import {gqlMutate} from '@/components/api';
 import {gql} from '@apollo/client';
 import {useRouteMatch} from 'react-router-dom';
-import {toastError} from '../../util/toast';
-import {useMe} from '../../util/hooks/useMe';
+import {toastError} from '@/util/toast';
+import {useMe} from '@/util/hooks/useMe';
 
 export default function OAuthService() {
 	const me = useMe();

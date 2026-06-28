@@ -1,9 +1,9 @@
 import {ReactComponentElement, ReactNode} from 'react';
-import {Match} from '../../../@types/generated/graphql';
-import {ChallengerProps} from '../../play/target/challengers/challenger/Challenger';
-import {TimerModuleDropdownOptions, TimerModuleType} from './enums';
-import {ITimerContext} from '../Timer';
-import {TimerLayoutPosition} from '../../../db/settings/query';
+import {Match} from '@/@types/generated/graphql';
+import {ChallengerProps} from '@/components/play/target/challengers/Challenger';
+import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
+import {ITimerContext} from '@/components/timer/Timer';
+import {TimerLayoutPosition} from '@/db/settings/query';
 import {Solve} from '../../../../server/schemas/Solve.schema';
 
 interface TimerHeaderOptions {

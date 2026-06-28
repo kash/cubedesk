@@ -1,8 +1,9 @@
 import React from 'react';
-import './Input.scss';
+
 import block from '../../../styles/bem';
 import GenericInput, {GenericInputProps, InputProps} from '../old_generic_input/GenericInput';
 import Icon from '../old_generic_input/icon/Icon';
+import './Input.scss';
 
 const b = block('common-input');
 

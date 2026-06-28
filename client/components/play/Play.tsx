@@ -1,13 +1,12 @@
 import React from 'react';
 import {Lightning, Sword} from 'phosphor-react';
-import './Play.scss';
 import {GameType} from '../../../shared/match/consts';
-import HeadToHead from './logic/HeadToHead';
-import Elimination from './logic/Elimination';
+import HeadToHead from '@/components/play/logic/HeadToHead';
+import Elimination from '@/components/play/logic/Elimination';
 
 export interface GameMetaData {
 	id: string;
-	icon: JSX.Element;
+	icon: React.ReactElement;
 	description: string;
 	name: string;
 	color: string;

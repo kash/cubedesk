@@ -1,24 +1,20 @@
 import React from 'react';
-import './LandingHome.scss';
-import Feature from '../common/feature/Feature';
+import Feature from '@/components/landing/common/feature/Feature';
 import {TreeEvergreen, ArrowFatLineRight, Users, PaintBrushBroad} from 'phosphor-react';
-import Settings from './settings/Settings';
-import {resourceUri} from '../../../util/storage';
-import block from '../../../styles/bem';
-import LandingHeader from './landing_header/LandingHeader';
-import SignUpBanner from '../common/signup_banner/SignUpBanner';
-import LandingFooter from '../common/landing_footer/LandingFooter';
-import SocialProof from './social_proof/SocialProof';
-import FeatureGrid from '../common/feature_grid/FeatureGrid';
-import FeatureList from '../common/feature_list/FeatureList';
-import SectionDivider from '../common/section_divider/SectionDivider';
-import Header from '../../layout/header/Header';
-
-const b = block('landing-home');
+import Settings from '@/components/landing/home/Settings';
+import {resourceUri} from '@/util/storage';
+import LandingHeader from '@/components/landing/home/LandingHeader';
+import SignUpBanner from '@/components/landing/common/SignUpBanner';
+import LandingFooter from '@/components/landing/common/LandingFooter';
+import SocialProof from '@/components/landing/home/social-proof/SocialProof';
+import FeatureGrid from '@/components/landing/common/FeatureGrid';
+import FeatureList from '@/components/landing/common/FeatureList';
+import SectionDivider from '@/components/landing/common/SectionDivider';
+import Header from '@/components/layout/Header';
 
 export default function LandingHome() {
 	return (
-		<div className={b()}>
+		<div className="relative box-border flex min-h-screen w-full flex-col items-center bg-white pb-[100px]">
 			<Header title="CubeDesk - Rubik's Cube Timer | 1v1 | Trainer" path="/" />
 			<LandingHeader />
 			<FeatureList>

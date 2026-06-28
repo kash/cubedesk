@@ -1,5 +1,5 @@
 import MatchTypeLogic from './match_type_interface';
-import {getEliminationPlayerStatus} from '../../../client/shared/game_logic/elimination';
+import {getEliminationPlayerStatus} from '../../../client/shared/game-logic/elimination';
 import {MatchParticipant} from '../../schemas/MatchParticipant.schema';
 import {Match} from '../../schemas/Match.schema';
 import {GameType} from '../../../shared/match/consts';

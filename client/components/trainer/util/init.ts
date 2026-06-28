@@ -1,13 +1,13 @@
-import {AlgorithmOverride, CustomTrainer, TrainerAlgorithm, TrainerFavorite} from '../../../@types/generated/graphql';
+import {AlgorithmOverride, CustomTrainer, TrainerAlgorithm, TrainerFavorite} from '@/@types/generated/graphql';
 import {gql} from '@apollo/client';
 import {
 	ALGORITHM_OVERRIDE_FRAGMENT,
 	CUSTOM_TRAINER_FRAGMENT,
 	TRAINER_ALGORITHM_FRAGMENT,
 	TRAINER_FAVORITE_FRAGMENT,
-} from '../../../util/graphql/fragments';
-import {gqlQuery} from '../../api';
-import {initTrainerDb} from '../../../db/trainer/init';
+} from '@/util/graphql/fragments';
+import {gqlQuery} from '@/components/api';
+import {initTrainerDb} from '@/db/trainer/init';
 
 export async function initTrainerData() {
 	const data = await Promise.all([
