@@ -150,7 +150,7 @@ export default function TimeDisplay() {
 					mobileMode && 'select-none',
 					inInspection && 'text-text/60',
 					canStart && '!text-success',
-					spaceTimerStarted && '!text-warning',
+					spaceTimerStarted && !canStart && '!text-warning',
 					disabled && 'opacity-20'
 				)}
 			>

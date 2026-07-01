@@ -1,5 +1,10 @@
 import React from 'react';
-import ReactList from 'react-list';
+import ReactListImport from 'react-list';
+
+// esbuild 0.15's CJS interop double-wraps react-list's default export
+// (import_react_list.default ends up being the whole module-exports object,
+// not the class). Unwrap it here so JSX gets the class.
+const ReactList = ((ReactListImport as any).default ?? ReactListImport) as typeof ReactListImport;
 import {GlobalHotKeys} from 'react-hotkeys';
 import Empty from '@/components/common/empty/Empty';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';

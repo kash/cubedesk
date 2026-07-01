@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {setSetting} from '@/db/settings/update';
@@ -16,7 +16,7 @@ import {
 	ArrowRight,
 } from 'phosphor-react';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
-import Logo from '@/components/common/logo/Logo';
+import Logo, { LogoBrandmark, LogoLockup } from '@/components/common/logo/Logo';
 import MobileNav from '@/components/layout/nav/MobileNav';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useWindowListener} from '@/util/hooks/useListener';
@@ -31,7 +31,7 @@ import {resourceUri} from '@/util/storage';
 
 export interface NavLinkProps {
 	name: string;
-	icon: JSX.Element;
+	icon: ReactNode;
 	match: RegExp;
 	link: string;
 	newTag?: boolean;
@@ -140,7 +140,7 @@ export default function Nav() {
 		return null;
 	}
 
-	let notifications = <Notifications />;
+	let notifications: ReactNode = <Notifications />;
 	if (!me) {
 		notifications = null;
 	}
@@ -153,7 +153,7 @@ export default function Nav() {
 		<NavLink {...link} key={link.name} collapsed={navClosed} selected={link.match.test(pathname)} />
 	));
 
-	let getPro = null;
+	let getPro: ReactNode = null;
 	if (!me?.is_pro && !navClosed) {
 		getPro = (
 			<Link
@@ -185,6 +185,7 @@ export default function Nav() {
 	];
 
 	const headerClasses = [
+		'w-full',
 		'mb-2.5',
 		'box-border',
 		'flex',
@@ -210,11 +211,11 @@ export default function Nav() {
 				<div className="flex h-full w-full flex-col justify-between">
 					<div className="flex w-full flex-col justify-center">
 						<div className={headerClasses.join(' ')}>
-							<span className={navClosed ? 'hidden' : 'block'}>
-								<Logo large={true} dark={!moduleColor.isDark} />
+							<span className={navClosed ? 'hidden' : 'block shrink-0'}>
+								<LogoLockup  dark={!moduleColor.isDark} />
 							</span>
-							<span className={navClosed ? 'block' : 'hidden'}>
-								<Logo dark={!moduleColor.isDark} />
+							<span className={navClosed ? 'block shrink-0' : 'hidden'}>
+								<LogoBrandmark dark={!moduleColor.isDark} />
 							</span>
 							<div className={headerActionsClasses.join(' ')}>
 								{notifications}

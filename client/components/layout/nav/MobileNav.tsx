@@ -1,7 +1,7 @@
 import React from 'react';
 import {List} from 'phosphor-react';
 import {useRouteMatch} from 'react-router-dom';
-import Logo from '@/components/common/logo/Logo';
+import Logo, { LogoBrandmark } from '@/components/common/logo/Logo';
 import {NAV_LINKS} from '@/components/layout/nav/Nav';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
 import {logOut} from '@/util/auth/logout';
@@ -49,7 +49,7 @@ export default function MobileNav() {
 				</div>
 				<div className="relative z-[100] flex w-[30%] flex-row justify-center">
 					<a href="/">
-						<Logo large={false} dark={!moduleColor.isDark} />
+						<LogoBrandmark  dark={!moduleColor.isDark} />
 					</a>
 				</div>
 				{navRight}
