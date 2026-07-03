@@ -5,7 +5,6 @@
 	"author": "Kash Goudarzi",
 	"license": "CubeDesk, Inc. All Rights Reserved",
 	"main": "server/app.ts",
-	"type": "module",
 	"packageManager": "pnpm@10.9.0",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
