@@ -1,14 +1,14 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, ReactNode} from 'react';
 import {AlignLeft} from 'phosphor-react';
-import Emblem from '@/components/common/emblem/Emblem';
+import Emblem from '@/components/common/Emblem';
 import History from '@/components/modules/history/History';
 import {getTimeString} from '@/util/time';
 import SolvesText from '@/components/modules/solves-text/SolvesText';
-import Button, {CommonType} from '@/components/common/button/Button';
+import Button, {CommonType} from '@/components/common/Button';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
-import Checkbox from '@/components/common/checkbox/Checkbox';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import Checkbox from '@/components/common/Checkbox';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solves: Solve[];
@@ -22,7 +22,7 @@ export default function HistoryModal(props: Props) {
 	const {description, disabled, time, showAsText} = props;
 	const [showText, toggleShowText] = useToggle(showAsText);
 	const [reverseOrder, toggleReverseOrder] = useToggle(false);
-	const timeString = getTimeString(time);
+	const timeString = time != null ? getTimeString(time) : '';
 
 	const solves = useMemo(() => {
 		return props.solves.sort((a, b) => b.started_at - a.started_at);
@@ -34,7 +34,7 @@ export default function HistoryModal(props: Props) {
 			types.add(solve.cube_type);
 		}
 
-		const output = [];
+		const output: string[] = [];
 		for (const type of types) {
 			const cubeName = getCubeTypeInfoById(type).name;
 			output.push(cubeName);
@@ -47,9 +47,23 @@ export default function HistoryModal(props: Props) {
 
 	let body;
 	if (showText) {
-		body = <SolvesText reverseOrder={reverseOrder} description={description} time={time} solves={solves} />;
+		body = (
+			<SolvesText
+				reverseOrder={reverseOrder}
+				description={description}
+				time={time}
+				solves={solves}
+			/>
+		);
 	} else {
-		body = <History reverseOrder={reverseOrder} disabled={disabled} solves={solves} listClassName="max-h-[500px]" />;
+		body = (
+			<History
+				reverseOrder={reverseOrder}
+				disabled={disabled}
+				solves={solves}
+				listClassName="max-h-[500px]"
+			/>
+		);
 	}
 
 	let timeBody;
@@ -77,7 +91,9 @@ export default function HistoryModal(props: Props) {
 					{description}
 					{timeBody}
 				</h2>
-				<p className="text-[1.1rem]">{new Date(lastSolve.started_at).toLocaleDateString()}</p>
+				<p className="text-[1.1rem]">
+					{new Date(lastSolve.started_at).toLocaleDateString()}
+				</p>
 				<div>
 					{cubeTypes.map((ct) => (
 						<Emblem key={ct} text={ct} />

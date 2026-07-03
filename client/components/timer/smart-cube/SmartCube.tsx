@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import Emblem from '@/components/common/emblem/Emblem';
+import React, {useContext, useEffect, useRef, useState, ReactNode} from 'react';
+import Emblem from '@/components/common/Emblem';
 import Battery from '@/components/timer/smart-cube/battery/Battery';
 import Connect from '@/components/timer/smart-cube/bluetooth/connect';
 import {setTimerParams} from '@/components/timer/helpers/params';
@@ -8,11 +8,12 @@ import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import {openModal} from '@/actions/general';
 import ManageSmartCubes from '@/components/timer/smart-cube/manage-smart-cubes/ManageSmartCubes';
 import Cube from 'cubejs';
+import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {TimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useDispatch} from 'react-redux';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {toastError} from '@/util/toast';
 import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
@@ -22,17 +23,17 @@ export default function SmartCube() {
 
 	const context = useContext(TimerContext);
 
-	const canvasRef = useRef(null);
-	const cube = useRef(null);
+	const canvasRef = useRef<HTMLCanvasElement | null>(null);
+	const cube = useRef<RubiksCube | null>(null);
 	const turnIndex = useRef(0);
-	const turnInterval = useRef(null);
+	const turnInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 	const cubejs = useRef(new Cube());
 	const connect = useRef(new Connect());
 
 	// Turn queue that an interval picks up every 50ms or so
-	const turns = useRef([]);
+	const turns = useRef<string[]>([]);
 
-	const [scrambleCompletedAt, setScrambleCompletedAt] = useState(null);
+	const [scrambleCompletedAt, setScrambleCompletedAt] = useState<Date | null>(null);
 	const [inspectionTime, setInspectionTime] = useState(0);
 
 	const useSpaceWithSmartCube = useSettings('use_space_with_smart_cube');
@@ -76,11 +77,9 @@ export default function SmartCube() {
 		}
 	}, [smartTurns, smartCubeConnecting, smartSolvedState]);
 
-	function initVisualCube() {
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const RubiksCube = require('@/components/timer/smart-cube/visual').default;
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const {materials} = require('@/components/timer/smart-cube/visual');
+	async function initVisualCube() {
+		const {default: RubiksCube, materials} =
+			await import('@/components/timer/smart-cube/visual');
 
 		if (turnInterval.current) {
 			clearInterval(turnInterval.current);
@@ -92,7 +91,14 @@ export default function SmartCube() {
 			canvasRef.current.width = 200;
 			canvasRef.current.height = 200;
 
-			cube.current = new RubiksCube(canvasRef.current, materials.classic, 0, '400px', '400px', smartCurrentState);
+			cube.current = new RubiksCube(
+				canvasRef.current,
+				materials.classic,
+				0,
+				'400px',
+				'400px',
+				smartCurrentState || '',
+			);
 		}
 
 		setTimeout(() => {
@@ -120,7 +126,7 @@ export default function SmartCube() {
 			setTimerParams({
 				smartCanStart: false,
 			});
-		} else if (preflightChecks(smartTurns, scramble)) {
+		} else if (preflightChecks(smartTurns, scramble || '')) {
 			setScrambleCompletedAt(new Date());
 			setTimerParams({
 				smartCanStart: true,
@@ -129,14 +135,14 @@ export default function SmartCube() {
 		}
 	}
 
-	function addTurn(...t) {
+	function addTurn(...t: string[]) {
 		checkForStartAfterTurn();
 		turns.current = [...turns.current, ...t];
 	}
 
 	function resetMoves(markSolved: boolean = false) {
 		if (timeStartedAt) {
-			endTimer(context, null, {
+			endTimer(context, undefined, {
 				inspection_time: inspectionTime,
 				smart_device_id: smartDeviceId,
 				is_smart_cube: true,
@@ -171,6 +177,10 @@ export default function SmartCube() {
 	}
 
 	function execTurn() {
+		if (!cube.current) {
+			return;
+		}
+
 		let turn = turns.current[turnIndex.current];
 
 		const prime = !(turn.indexOf("'") > -1);
@@ -220,7 +230,8 @@ export default function SmartCube() {
 
 	async function connectBluetooth() {
 		try {
-			const bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
+			const bluetoothAvailable =
+				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				connect.current.connect();
 			} else {
@@ -247,11 +258,11 @@ export default function SmartCube() {
 		dispatch(
 			openModal(<ManageSmartCubes />, {
 				title: 'Manage smart cubes',
-			})
+			}),
 		);
 	}
 
-	let actionButton = null;
+	let actionButton: ReactNode = null;
 	const dropdown = (
 		<Dropdown
 			dropdownButtonProps={{
@@ -271,13 +282,17 @@ export default function SmartCube() {
 					disabled: !!timeStartedAt,
 					onClick: disconnectBluetooth,
 				},
-				{text: 'Manage smart cubes', disabled: !!timeStartedAt, onClick: toggleManageSmartCubes},
+				{
+					text: 'Manage smart cubes',
+					disabled: !!timeStartedAt,
+					onClick: toggleManageSmartCubes,
+				},
 			]}
 		/>
 	);
-	let battery = <Battery level={smartCubeBatteryLevel} />;
+	let battery: ReactNode = <Battery level={smartCubeBatteryLevel ?? 0} />;
 
-	let emblem;
+	let emblem: ReactNode;
 	if (smartCubeConnecting) {
 		emblem = <Emblem small orange icon={<Bluetooth />} />;
 		actionButton = <Button text="Connecting..." disabled />;
@@ -293,10 +308,10 @@ export default function SmartCube() {
 	return (
 		<div className="relative flex w-1/2 flex-col items-center">
 			<div className="mb-[5px]">
-				<div className="mb-[-8%] mt-[-8%] [zoom:0.4]">
+				<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
 					<canvas width="200px" height="200px" ref={canvasRef} />
 				</div>
-				<div className="absolute right-[25px] top-[7px] z-[100] flex flex-col items-center gap-2.5">
+				<div className="absolute top-[7px] right-[25px] z-[100] flex flex-col items-center gap-2.5">
 					{battery}
 					{emblem}
 					{dropdown}

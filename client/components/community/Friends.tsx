@@ -1,9 +1,9 @@
 import React from 'react';
-import {FRIENDSHIP_FRAGMENT, FRIENDSHIP_REQUEST_FRAGMENT} from '@/util/graphql/fragments';
 import ProfileRow from '@/components/community/ProfileRow';
-import Pagination, {PaginationTab} from '@/components/common/pagination/Pagination';
+import Pagination, {PaginationTab} from '@/components/common/Pagination';
 import FriendshipRequest from '@/components/profile/FriendshipRequest';
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
+import {trpc} from '@/util/trpc';
+import {PublicUserAccount} from '@/types/user';
 
 const tabIdToOtherUserMap = {
 	friends: 'other_user',
@@ -15,27 +15,21 @@ const tabs: PaginationTab[] = [
 	{
 		id: 'friends',
 		value: 'Friends',
-		dataQueryName: 'friendships',
-		queryFragment: FRIENDSHIP_FRAGMENT,
-		queryFragmentName: 'FriendshipFragment',
+		fetchData: (args) => trpc.friendship.searchFriends.query(args),
 		link: '/community/friends/list',
 		plural: 'friends',
 	},
 	{
 		id: 'received',
 		value: 'Received',
-		dataQueryName: 'friendshipRequestsReceived',
-		queryFragment: FRIENDSHIP_REQUEST_FRAGMENT,
-		queryFragmentName: 'FriendshipRequestFragment',
+		fetchData: (args) => trpc.friendship.searchRequestsReceived.query(args),
 		link: '/community/friends/received',
 		plural: 'received requests',
 	},
 	{
 		id: 'sent',
 		value: 'Sent',
-		dataQueryName: 'friendshipRequestsSent',
-		queryFragment: FRIENDSHIP_REQUEST_FRAGMENT,
-		queryFragmentName: 'FriendshipRequestFragment',
+		fetchData: (args) => trpc.friendship.searchRequestsSent.query(args),
 		link: '/community/friends/sent',
 		plural: 'sent requests',
 	},

@@ -1,8 +1,6 @@
 import React from 'react';
 import {setSsrValue} from '@/actions/ssr';
-import {gql} from '@apollo/client';
-import {SOLVE_WITH_USER_FRAGMENT} from '@/util/graphql/fragments';
-import {gqlQuery} from '@/components/api';
+import {trpc} from '@/util/trpc';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import Header from '@/components/layout/Header';
 import {getTimeString} from '@/util/time';
@@ -11,35 +9,17 @@ import {Store} from 'redux';
 import {Request} from 'express';
 import {useSsr} from '@/util/hooks/useSsr';
 import {useRouteMatch} from 'react-router-dom';
-import {Solve} from '../../../server/schemas/Solve.schema';
-
-interface FetchSolveDataResponse {
-	solveByShareCode: Solve;
-}
+import {Solve} from '@/types/solve';
 
 async function fetchSolveData(shareCode: string) {
-	const query = gql`
-		${SOLVE_WITH_USER_FRAGMENT}
-		query Query($shareCode: String) {
-			solveByShareCode(shareCode: $shareCode) {
-				...SolveWithUserFragment
-			}
-		}
-	`;
+	// Raw client (not hooks): this also runs server-side for SSR prefetch
+	const solve = await trpc.solve.getByShareCode.query({shareCode});
 
-	const res = await gqlQuery(
-		query,
-		{
-			shareCode,
-		},
-		'no-cache'
-	);
-
-	return (res.data as unknown as FetchSolveDataResponse).solveByShareCode;
+	return solve as unknown as Solve;
 }
 
 export async function prefetchSolveData(store: Store<any>, req: Request) {
-	const shareCode: string = req.params.shareCode;
+	const shareCode = String(req.params.shareCode);
 	const solve = await fetchSolveData(shareCode);
 
 	return store.dispatch(setSsrValue(shareCode, solve));

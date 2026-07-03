@@ -2,7 +2,7 @@ import type {CreateExpressContextOptions} from '@trpc/server/adapters/express';
 import requestIp from 'request-ip';
 import {getPrisma} from '../database';
 import {getMe} from '../util/auth';
-import type {InternalUserAccount} from '../schemas/UserAccount.schema';
+import type {InternalUserAccount} from '@/types/user';
 import {TRPCError} from '@trpc/server';
 import {ErrorMessage} from '../constants/errors';
 

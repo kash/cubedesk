@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import classNames from 'classnames';
-import Switch from '@/components/common/switch/Switch';
+import Switch from '@/components/common/Switch';
 import {setSetting} from '@/db/settings/update';
 import {toastError} from '@/util/toast';
 import {useInput} from '@/util/hooks/useInput';
@@ -8,7 +8,7 @@ import Input from '@/components/common/inputs/input/Input';
 import ProOnly from '@/components/common/pro_only/ProOnly';
 import {useSettings} from '@/util/hooks/useSettings';
 import {AllSettings} from '@/db/settings/query';
-import LoggedInOnly from '@/components/common/logged_in_only/LoggedInOnly';
+import LoggedInOnly from '@/components/common/LoggedInOnly';
 
 interface Props {
 	title: string;
@@ -85,17 +85,34 @@ export default function SettingRow(props: Props) {
 
 	let content: ReactNode = (
 		<div
-			className={classNames('flex w-full justify-between', vertical ? 'flex-col justify-start' : 'flex-row')}
+			className={classNames(
+				'flex w-full justify-between',
+				vertical ? 'flex-col justify-start' : 'flex-row',
+			)}
 		>
-			<div className={classNames('box-border table text-left', vertical ? 'mb-2.5 w-full' : 'w-[300px]')}>
+			<div
+				className={classNames(
+					'box-border table text-left',
+					vertical ? 'mb-2.5 w-full' : 'w-[300px]',
+				)}
+			>
 				<legend
-					className={classNames('text-text', sub ? 'text-[1.1rem] font-normal leading-6 opacity-90' : 'text-[1.2rem]')}
+					className={classNames(
+						'text-text',
+						sub ? 'text-[1.1rem] leading-6 font-normal opacity-90' : 'text-[1.2rem]',
+					)}
 				>
 					{title}
 				</legend>
-				{description && <p className="mt-[5px] text-[0.9rem] leading-[1.3rem] text-text opacity-70">{description}</p>}
+				{description && (
+					<p className="text-text mt-[5px] text-[0.9rem] leading-[1.3rem] opacity-70">
+						{description}
+					</p>
+				)}
 			</div>
-			<div className={classNames('flex flex-col items-end', vertical && 'w-full')}>{body}</div>
+			<div className={classNames('flex flex-col items-end', vertical && 'w-full')}>
+				{body}
+			</div>
 		</div>
 	);
 
@@ -109,9 +126,9 @@ export default function SettingRow(props: Props) {
 		<div
 			className={classNames(
 				'mt-[30px] box-border min-h-10 w-full items-start pb-[30px]',
-				!nested && 'mb-5 border-b-[3px] border-tmo-background/10 last:border-b-0',
+				!nested && 'border-tmo-background/10 mb-5 border-b-[3px] last:border-b-0',
 				parent && 'pb-0',
-				nested && 'pl-5'
+				nested && 'pl-5',
 			)}
 		>
 			{content}

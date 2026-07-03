@@ -1,15 +1,13 @@
 import React, {useMemo} from 'react';
 import {openModal} from '../../../../actions/general';
-import ConfirmModal from '../../../common/confirm_modal/ConfirmModal';
+import ConfirmModal from '@/components/common/ConfirmModal';
 import {toastSuccess} from '../../../../util/toast';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 import {useDispatch} from 'react-redux';
-import {useMutation} from '@apollo/client';
-import {Mutation, MutationBulkMoveSolvesToSessionArgs} from '../../../../@types/generated/graphql';
-import {BULK_CHANGE_SOLVES_SESSION_MUT} from '../mutations';
-import Button from '../../../common/button/Button';
+import {trpc} from '@/util/trpc';
+import Button from '../../../common/Button';
 import SessionSelector from './SessionSelector';
-import {Session} from '../../../../../server/schemas/Session.schema';
+import {Session} from '@/types/session';
 import {initAllSolves} from '../../../layout/init';
 
 interface Props {
@@ -20,10 +18,6 @@ interface Props {
 export default function BulkMoveSolvesButton(props: Props) {
 	const {solves, disabled} = props;
 	const dispatch = useDispatch();
-	const [mutate] = useMutation<
-		{bulkMoveSolvesToSession: Mutation['bulkMoveSolvesToSession']},
-		MutationBulkMoveSolvesToSessionArgs
-	>(BULK_CHANGE_SOLVES_SESSION_MUT);
 
 	const solveIds = useMemo(() => {
 		return solves.map((solve) => solve.id);
@@ -44,21 +38,18 @@ export default function BulkMoveSolvesButton(props: Props) {
 						{label: 'New Session', value: session.name},
 					]}
 					triggerAction={run}
-				/>
-			)
+				/>,
+			),
 		);
 
 		async function run() {
-			const res = await mutate({
-				variables: {
-					sessionId: session.id,
-					solveIds,
-				},
+			const updateCount = await trpc.bulkActions.moveSolvesToSession.mutate({
+				sessionId: session.id,
+				solveIds,
 			});
 
 			await initAllSolves(true);
 
-			const updateCount = res.data.bulkMoveSolvesToSession;
 			const solvesMoved = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
 			toastSuccess(`Successfully moved ${solvesMoved} to ${session.name}.`);
 		}
@@ -68,7 +59,7 @@ export default function BulkMoveSolvesButton(props: Props) {
 		dispatch(
 			openModal(<SessionSelector solves={solves} />, {
 				onComplete: onSelectSession,
-			})
+			}),
 		);
 	}
 

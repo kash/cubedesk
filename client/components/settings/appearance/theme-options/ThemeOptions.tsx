@@ -1,6 +1,6 @@
 import React from 'react';
 import SettingRow from '@/components/settings/common/SettingRow';
-import ColorPicker from '@/components/common/color_picker/ColorPicker';
+import ColorPicker from '@/components/common/ColorPicker';
 import {useSettings} from '@/util/hooks/useSettings';
 import {setSetting} from '@/db/settings/update';
 import ThemeOption from '@/components/settings/appearance/theme-options/ThemeOption';

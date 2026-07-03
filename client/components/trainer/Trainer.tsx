@@ -2,7 +2,7 @@ import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'rea
 import classNames from 'classnames';
 import {v4 as uuid} from 'uuid';
 import {Plus, ArrowRight, Star} from 'phosphor-react';
-import PageTitle from '@/components/common/page_title/PageTitle';
+import PageTitle from '@/components/common/PageTitle';
 import {
 	fetchTrainerAlgorithmCount,
 	fetchTrainerAlgorithmCubeTypes,
@@ -15,7 +15,7 @@ import {CubeType} from '@/util/cubes/cube_types';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import TrainerAlgo from '@/components/trainer/trainer-algo/TrainerAlgo';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import Empty from '@/components/common/empty/Empty';
+import Empty from '@/components/common/Empty';
 import {useRouteMatch} from 'react-router-dom';
 import {useTrainerDb} from '@/util/hooks/useTrainerDb';
 import {openModal} from '@/actions/general';
@@ -26,17 +26,20 @@ import _ from 'lodash';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {TimerModuleType} from '@/components/timer/@types/enums';
 import AlgoModule from '@/components/modules/algo-module/AlgoModule';
-import LinkButton from '@/components/common/button/LinkButton';
-import Button, {CommonType} from '@/components/common/button/Button';
+import LinkButton from '@/components/common/LinkButton';
+import Button, {CommonType} from '@/components/common/Button';
 import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import {useToggle} from '@/util/hooks/useToggle';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 export interface ITrainerContext {
 	cubeType: CubeType;
 	algoType: string;
 	filter: FilterTrainerOptions;
-	openTrainer: (trainingSessionType: TrainingSessionType, algo?: TrainerAlgorithmExtended) => void;
+	openTrainer: (
+		trainingSessionType: TrainingSessionType,
+		algo?: TrainerAlgorithmExtended,
+	) => void;
 }
 
 export type TrainingSessionType = 'all' | 'single' | 'favorites';
@@ -78,7 +81,11 @@ export default function Trainer() {
 		filter.favorite = true;
 	}
 
-	const getRandomTrainerAlgo = (filter: FilterTrainerOptions, trainerSessionId: string, index: number) => {
+	const getRandomTrainerAlgo = (
+		filter: FilterTrainerOptions,
+		trainerSessionId: string,
+		index: number,
+	) => {
 		const seed = trainerSessionId + index;
 		const algs = fetchTrainerAlgorithms(filter);
 		const chance = new Chance(seed);
@@ -89,17 +96,28 @@ export default function Trainer() {
 
 	const randomAlgo = memoize(getRandomTrainerAlgo);
 
-	function getCurrentTrainerAlgo(filter: FilterTrainerOptions, trainerSessionId: string, index: number) {
+	function getCurrentTrainerAlgo(
+		filter: FilterTrainerOptions,
+		trainerSessionId: string,
+		index: number,
+	) {
 		return randomAlgo(filter, trainerSessionId, index);
 	}
 
-	function getCustomScramble(filter: FilterTrainerOptions, trainerSessionId: string, index: number) {
+	function getCustomScramble(
+		filter: FilterTrainerOptions,
+		trainerSessionId: string,
+		index: number,
+	) {
 		const algo = randomAlgo(filter, trainerSessionId, index);
 		const scrambles = algo.scrambles.split('\n');
 		return _.sample(scrambles);
 	}
 
-	function openTrainer(trainingSessionType: TrainingSessionType, algo?: TrainerAlgorithmExtended) {
+	function openTrainer(
+		trainingSessionType: TrainingSessionType,
+		algo?: TrainerAlgorithmExtended,
+	) {
 		const sessionFilter = {
 			...filter,
 		};
@@ -150,7 +168,11 @@ export default function Trainer() {
 						},
 						{
 							customBody: (context) => {
-								const ag = getCurrentTrainerAlgo(sessionFilter, sessionId, context.sessionSolveCount);
+								const ag = getCurrentTrainerAlgo(
+									sessionFilter,
+									sessionId,
+									context.sessionSolveCount,
+								);
 								return {
 									module: <AlgoModule algoExt={ag} />,
 								};
@@ -168,8 +190,8 @@ export default function Trainer() {
 				/>,
 				{
 					fullSize: true,
-				}
-			)
+				},
+			),
 		);
 	}
 
@@ -179,7 +201,7 @@ export default function Trainer() {
 			fetchTrainerAlgorithmTypes({
 				cube_type: cubeType,
 			}),
-		[loaded, cubeType]
+		[loaded, cubeType],
 	);
 
 	const algos = useMemo(
@@ -187,7 +209,7 @@ export default function Trainer() {
 			fetchTrainerAlgorithms(filter, {
 				sortBy: 'id',
 			}),
-		[cubeType, algoType, filter, loaded, updateCount]
+		[cubeType, algoType, filter, loaded, updateCount],
 	);
 
 	const favCount = algos.reduce((acc, alg) => {
@@ -228,7 +250,8 @@ export default function Trainer() {
 			}
 		}
 
-		const newAlgType = oldAlgValid || algoType === CUSTOM_TRAINER_ALGO_TYPE ? algoType : DEFAULT_ALGO_TYPE;
+		const newAlgType =
+			oldAlgValid || algoType === CUSTOM_TRAINER_ALGO_TYPE ? algoType : DEFAULT_ALGO_TYPE;
 		setAlgoType(newAlgType);
 		history.replaceState({}, null, window.location.origin + `/trainer/${ct}/${newAlgType}`);
 	}
@@ -274,7 +297,7 @@ export default function Trainer() {
 		<TrainerContext.Provider value={context}>
 			<div>
 				<PageTitle pageName="Trainer">
-					<div className="absolute right-0 top-0">
+					<div className="absolute top-0 right-0">
 						<Button
 							primary
 							text="Create New"
@@ -286,9 +309,22 @@ export default function Trainer() {
 					</div>
 					<div className="flex flex-row items-start justify-between">
 						<div className="flex flex-row gap-2.5">
-							<Dropdown openLeft text={context.cubeType.name} options={[...cubeTypeDropdownOptions]} />
-							<Dropdown openLeft text={algoType} options={[...algoTypeDropdownOptions]} />
-							<Button icon={<Star />} white={favsOnly} gray onClick={() => toggleFavsOnly()} />
+							<Dropdown
+								openLeft
+								text={context.cubeType.name}
+								options={[...cubeTypeDropdownOptions]}
+							/>
+							<Dropdown
+								openLeft
+								text={algoType}
+								options={[...algoTypeDropdownOptions]}
+							/>
+							<Button
+								icon={<Star />}
+								white={favsOnly}
+								gray
+								onClick={() => toggleFavsOnly()}
+							/>
 							<Dropdown
 								text="Train"
 								openLeft
@@ -318,8 +354,8 @@ export default function Trainer() {
 				</PageTitle>
 				<div
 					className={classNames(
-						'grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(400px,1fr))]',
-						!algos?.length && '!grid-cols-1'
+						'grid [grid-template-columns:repeat(auto-fit,minmax(400px,1fr))] gap-5',
+						!algos?.length && '!grid-cols-1',
 					)}
 				>
 					{body}

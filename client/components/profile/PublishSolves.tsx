@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
-import Emblem from '@/components/common/emblem/Emblem';
+import {trpc} from '@/util/trpc';
+import Emblem from '@/components/common/Emblem';
 import {useMe} from '@/util/hooks/useMe';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {IModalProps} from '@/components/common/modal/Modal';
 import {getTimeString} from '@/util/time';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
 import {toastError, toastSuccess} from '@/util/toast';
 
@@ -45,15 +44,7 @@ export default function PublishSolves(props: IModalProps) {
 
 			try {
 				if (pb?.solve && pb.time > 0) {
-					const query = gql`
-						mutation Mutation($solveId: String) {
-							publishTopSolve(solveId: $solveId) {
-								id
-							}
-						}
-					`;
-
-					await gqlMutate(query, {
+					await trpc.leaderboards.publishTopSolve.mutate({
 						solveId: pb.solve.id,
 					});
 
@@ -66,15 +57,7 @@ export default function PublishSolves(props: IModalProps) {
 
 			try {
 				if (ao5Pb && ao5Pb.time > 0) {
-					const query = gql`
-						mutation Mutation($solveIds: [String]) {
-							publishTopAverages(solveIds: $solveIds) {
-								id
-							}
-						}
-					`;
-
-					await gqlMutate(query, {
+					await trpc.leaderboards.publishTopAverages.mutate({
 						solveIds: Array.from(ao5Pb.solveIds),
 					});
 
@@ -112,7 +95,7 @@ export default function PublishSolves(props: IModalProps) {
 				</td>
 				<td>{pb && <Emblem text={getTimeString(pb.time)} />}</td>
 				<td>{ao5pb && <Emblem text={getTimeString(ao5pb.time)} />}</td>
-			</tr>
+			</tr>,
 		);
 	}
 
@@ -120,13 +103,15 @@ export default function PublishSolves(props: IModalProps) {
 	if (!me.username) {
 		exception = (
 			<p>
-				You must <a href="/account/personal-info">set a username</a> before you can publish your times
+				You must <a href="/account/personal-info">set a username</a> before you can publish
+				your times
 			</p>
 		);
 	} else if (!rows.length) {
 		exception = (
 			<p>
-				Your don't have any solves yet. Head over to the <a href="/">Timer Page</a> and start cubing!
+				Your don't have any solves yet. Head over to the <a href="/">Timer Page</a> and
+				start cubing!
 			</p>
 		);
 	}

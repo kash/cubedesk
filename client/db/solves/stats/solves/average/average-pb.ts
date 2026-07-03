@@ -2,7 +2,7 @@ import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '..
 import SortedArray from 'sorted-array';
 import {getAverage} from './average';
 import {fetchSolves, FilterSolvesOptions} from '../../../query';
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 export function getAveragePB(filterOptions: FilterSolvesOptions, count: number) {
 	const cacheKey: SolveCacheKey = {

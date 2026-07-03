@@ -1,10 +1,9 @@
-import {SocketReservedEventsMap} from 'socket.io/dist/socket';
-import {GameOptionsInput} from '../../server/schemas/GameOptions.schema';
-import {PublicUserAccount} from '../../server/schemas/UserAccount.schema';
+import {GameOptionsInput} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
+import {Solve} from '@/types/solve';
 import {MatchInputChatMessage, MatchUpdate, MatchUpdateChat, UpdateRoomInfo} from '../../client/shared/match/types';
-import {Solve} from '../../client/@types/generated/graphql';
 
-export interface ServerToClientEvents extends SocketReservedEventsMap {
+export interface ServerToClientEvents {
 	opponentStartedSolve: (opponent: PublicUserAccount, startedAtUnix: number) => void;
 	opponentEndedSolve: (opponent: PublicUserAccount, endedAtUnix: number, finalTimeMillis: number) => void;
 	newMatchChatMessage: (data: MatchUpdateChat) => void;
@@ -22,7 +21,7 @@ export interface ServerToClientEvents extends SocketReservedEventsMap {
 	solveTakingTooLongWarning: (opponent: PublicUserAccount, secondsToFinish: number) => void;
 }
 
-export interface ClientToServerEvents extends SocketReservedEventsMap {
+export interface ClientToServerEvents {
 	playerJoinedLobby: (gameOptions: GameOptionsInput) => void;
 	playerLeftLobby: () => void;
 	playerEnteredMatch: (matchId: string) => void;

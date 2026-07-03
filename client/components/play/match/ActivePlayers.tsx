@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {socketClient} from '@/util/socket/socketio';
-import {GameType} from '@/@types/generated/graphql';
+import {GameType} from '../../../../shared/match/consts';
 import {SocketConst} from '@/shared/socket_costs';
 
 interface Props {

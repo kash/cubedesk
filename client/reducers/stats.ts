@@ -1,4 +1,4 @@
-import {StatsModule, StatsModuleBlock} from '../../server/schemas/StatsModule.schema';
+import {StatsModule, StatsModuleBlock} from '@/types/stats-module';
 
 function statsModuleBlock(
 	statType: StatsModuleBlock['statType'],

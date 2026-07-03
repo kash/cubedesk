@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {X, Bluetooth} from 'phosphor-react';
 import {getTimeString} from '@/util/time';
 import {useDispatch} from 'react-redux';
@@ -6,8 +6,8 @@ import {openModal} from '@/actions/general';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import {deleteSolveDb} from '@/db/solves/update';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
-import Button from '@/components/common/button/Button';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import Button from '@/components/common/Button';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	index: number;
@@ -44,9 +44,11 @@ export default function HistorySolveRow(props: Props) {
 
 	const time = getTimeString(solveTime);
 
-	let bluetoothIcon = null;
+	let bluetoothIcon: ReactNode = null;
 	if (isSmartCube) {
-		bluetoothIcon = <Bluetooth className="relative top-px ml-2 text-[0.9rem] text-text opacity-60" />;
+		bluetoothIcon = (
+			<Bluetooth className="text-text relative top-px ml-2 text-[0.9rem] opacity-60" />
+		);
 	}
 
 	function getActionClasses(active: boolean) {
@@ -63,7 +65,7 @@ export default function HistorySolveRow(props: Props) {
 			.join(' ');
 	}
 
-	let actions = null;
+	let actions: ReactNode = null;
 	if (!disabled) {
 		actions = (
 			<>
@@ -103,9 +105,14 @@ export default function HistorySolveRow(props: Props) {
 	];
 
 	return (
-		<div className="box-border flex h-9 w-full flex-row items-center justify-between pr-[5px]" key={id}>
-			<div className="min-w-10 pr-[5px] pb-[3px] text-base text-text opacity-60">{(index + 1).toLocaleString()}.</div>
-			<div className="w-[150px] text-base text-text">
+		<div
+			className="box-border flex h-9 w-full flex-row items-center justify-between pr-[5px]"
+			key={id}
+		>
+			<div className="text-text min-w-10 pr-[5px] pb-[3px] text-base opacity-60">
+				{(index + 1).toLocaleString()}.
+			</div>
+			<div className="text-text w-[150px] text-base">
 				<button className={timeClasses.join(' ')} onClick={openSolve}>
 					<span className="border-b-2 border-solid border-transparent pt-[3px] text-base text-inherit group-hover:border-current">
 						{time}
@@ -114,7 +121,7 @@ export default function HistorySolveRow(props: Props) {
 				</button>
 			</div>
 
-			<div className="flex w-[calc(100%_-_190px)] flex-row items-center justify-end gap-2.5 pr-[5px] text-right text-base text-text">
+			<div className="text-text flex w-[calc(100%_-_190px)] flex-row items-center justify-end gap-2.5 pr-[5px] text-right text-base">
 				{actions}
 			</div>
 		</div>

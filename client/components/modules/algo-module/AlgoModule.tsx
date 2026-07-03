@@ -2,12 +2,12 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import {openModal} from '@/actions/general';
 import EditAlgo from '@/components/trainer/EditAlgo';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
 import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
 import {useToggle} from '@/util/hooks/useToggle';
 import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
-import Tag from '@/components/common/tag/Tag';
+import Tag from '@/components/common/Tag';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 
@@ -41,7 +41,11 @@ export default function AlgoModule(props: Props) {
 						{showSolution && <p>{algo.solution}</p>}
 					</div>
 					<div>
-						<AlgoVisual colors={algo.colors} rotate={algo.rotate} cubeType={algo.cube_type} />
+						<AlgoVisual
+							colors={algo.colors ?? undefined}
+							rotate={algo.rotate ?? undefined}
+							cubeType={algo.cube_type}
+						/>
 					</div>
 				</div>
 

@@ -1,35 +1,19 @@
-import React, {useState} from 'react';
-import Tag from '@/components/common/tag/Tag';
-import Switch from '@/components/common/switch/Switch';
-import {MembershipOptions} from '@/@types/generated/graphql';
-import Button, {CommonType} from '@/components/common/button/Button';
-import {gql} from '@apollo/client/core';
+import React, {useEffect, useState} from 'react';
+import Tag from '@/components/common/Tag';
+import Switch from '@/components/common/Switch';
+import Button, {CommonType} from '@/components/common/Button';
 import {ArrowSquareOut} from 'phosphor-react';
-import {useMutation, useQuery} from '@apollo/client';
-import {MEMBERSHIP_OPTIONS_QUERY} from '@/components/account/membership/Membership';
 import ProFeatureList from '@/components/account/membership/pro-card/ProFeatureList';
-import Loading from '@/components/common/loading/Loading';
+import Loading from '@/components/common/Loading';
 import {useMe} from '@/util/hooks/useMe';
-import Module from '@/components/common/module/Module';
+import Module from '@/components/common/Module';
+import {trpc} from '@/util/trpc';
+import {MembershipOptions} from '@/types/membership';
 
 enum MembershipInterval {
 	YEAR = 'year',
 	MONTH = 'month',
 }
-
-interface GenerateBuyLinkMutData {
-	generateBuyLink: string;
-}
-
-interface GenerateBuyLinkMutVars {
-	priceId: string;
-}
-
-const GENERATE_BUY_LINK_MUT = gql`
-	mutation Mutate($priceId: String!) {
-		generateBuyLink(priceId: $priceId)
-	}
-`;
 
 interface Props {
 	options?: MembershipOptions;
@@ -37,20 +21,37 @@ interface Props {
 
 export default function ProCard(props: Props) {
 	const [selInterval, setSelInterval] = useState<MembershipInterval>(MembershipInterval.MONTH);
-	const {data: memOpData, loading} = useQuery<{membershipOptions: MembershipOptions}>(MEMBERSHIP_OPTIONS_QUERY, {
-		skip: !!props.options,
-	});
+	const [fetchedOptions, setFetchedOptions] = useState<MembershipOptions | null>(null);
+	const [loading, setLoading] = useState(!props.options);
+	const [buyLinkLoading, setBuyLinkLoading] = useState(false);
+
+	useEffect(() => {
+		if (props.options) {
+			return;
+		}
+
+		trpc.membership.options
+			.query()
+			.then((res) => {
+				setFetchedOptions(res);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, []);
 
 	const me = useMe();
-	const options = props.options || memOpData?.membershipOptions;
+	const options = props.options || fetchedOptions;
 
 	const yearlySelected = selInterval === MembershipInterval.YEAR;
-	const [genBuyLinkMut, genBuyLinkMutData] = useMutation<GenerateBuyLinkMutData, GenerateBuyLinkMutVars>(
-		GENERATE_BUY_LINK_MUT
-	);
 
 	const selectedOption = options?.[selInterval];
-	if (!selectedOption?.id || selectedOption.unit_amount == null || !selectedOption.interval || loading) {
+	if (
+		!selectedOption?.id ||
+		selectedOption.unit_amount == null ||
+		!selectedOption.interval ||
+		loading
+	) {
 		return <Loading />;
 	}
 	const selectedPriceId = selectedOption.id;
@@ -71,14 +72,17 @@ export default function ProCard(props: Props) {
 			return;
 		}
 
-		const url = await genBuyLinkMut({
-			variables: {
+		setBuyLinkLoading(true);
+		try {
+			const url = await trpc.membership.generateBuyLink.mutate({
 				priceId: selectedPriceId,
-			},
-		});
+			});
 
-		if (url.data?.generateBuyLink) {
-			window.location.href = url.data.generateBuyLink;
+			if (url) {
+				window.location.href = url;
+			}
+		} finally {
+			setBuyLinkLoading(false);
 		}
 	}
 
@@ -93,8 +97,11 @@ export default function ProCard(props: Props) {
 	let upsell;
 	if (selInterval === MembershipInterval.MONTH) {
 		upsell = (
-			<div className="mb-5 mt-4 box-border rounded-2xl px-4 py-1 font-label text-sm font-semibold text-text opacity-70">
-				<button className="border-b-2 border-solid border-secondary p-0 font-label text-sm font-semibold text-secondary" onClick={cycleInterval}>
+			<div className="font-label text-text mt-4 mb-5 box-border rounded-2xl px-4 py-1 text-sm font-semibold opacity-70">
+				<button
+					className="border-secondary font-label text-secondary border-b-2 border-solid p-0 text-sm font-semibold"
+					onClick={cycleInterval}
+				>
 					Switch to yearly
 				</button>{' '}
 				and get 2 months free
@@ -102,7 +109,7 @@ export default function ProCard(props: Props) {
 		);
 	} else {
 		upsell = (
-			<div className="mb-5 mt-4 box-border rounded-2xl px-4 py-1 font-label text-sm font-semibold text-secondary opacity-70">
+			<div className="font-label text-secondary mt-4 mb-5 box-border rounded-2xl px-4 py-1 text-sm font-semibold opacity-70">
 				You're getting 2 months free with yearly!
 			</div>
 		);
@@ -112,24 +119,30 @@ export default function ProCard(props: Props) {
 		<Module>
 			<div className="box-border flex w-full flex-col items-center rounded p-2">
 				<Tag text="PRO" backgroundColor="green" small />
-				<div className="mb-4 mt-5 flex flex-row items-end text-text">
-					<h2 className="mb-0 mr-1.5 text-5xl">
+				<div className="text-text mt-5 mb-4 flex flex-row items-end">
+					<h2 className="mr-1.5 mb-0 text-5xl">
 						<span>$</span>
 						{price || '-'}
 					</h2>
-					<span className="relative -top-2 table font-label text-lg font-semibold text-text opacity-60">/{interval}</span>
+					<span className="font-label text-text relative -top-2 table text-lg font-semibold opacity-60">
+						/{interval}
+					</span>
 				</div>
 				<div className="flex flex-row items-center">
-					<span className="mx-2.5 table font-label text-sm font-semibold text-text">Monthly</span>
+					<span className="font-label text-text mx-2.5 table text-sm font-semibold">
+						Monthly
+					</span>
 					<Switch small onChange={cycleInterval} on={yearlySelected} />
-					<span className="mx-2.5 table font-label text-sm font-semibold text-text">Yearly</span>
+					<span className="font-label text-text mx-2.5 table text-sm font-semibold">
+						Yearly
+					</span>
 				</div>
 				{upsell}
 				<Button
 					fullWidth
 					primary
 					large
-					loading={genBuyLinkMutData.loading}
+					loading={buyLinkLoading}
 					theme={CommonType.PRIMARY}
 					onClick={openBuyLink}
 					text={`Buy Pro - ${buyText}`}
@@ -140,7 +153,7 @@ export default function ProCard(props: Props) {
 					fullWidth
 					primary
 					large
-					loading={genBuyLinkMutData.loading}
+					loading={buyLinkLoading}
 					theme={CommonType.PRIMARY}
 					onClick={openBuyLink}
 					text={`Buy Pro - ${buyText}`}

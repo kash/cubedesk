@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import classNames from 'classnames';
-import {EloLog} from '../../../../../server/schemas/EloLog.schema';
+import {EloLog} from '@/types/elo';
 
 const ELO_CHANGE_ANIMATION_TIME_MS = 900;
 

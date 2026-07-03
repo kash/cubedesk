@@ -1,5 +1,5 @@
 import {fetchSolves, FilterSolvesOptions} from '../query';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 interface SubStats {
 	firstSolve: Solve;

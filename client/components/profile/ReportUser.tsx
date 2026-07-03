@@ -1,50 +1,47 @@
-import React from 'react';
-import {gql} from '@apollo/client/core';
+import React, {useState} from 'react';
 import {toastSuccess} from '@/util/toast';
-import Button from '@/components/common/button/Button';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '../../../server/schemas/UserAccount.schema';
-import {useMutation} from '@apollo/client';
+import Button from '@/components/common/Button';
+import {
+	PublicUserAccount,
+	UserAccount,
+	UserAccountForAdmin,
+} from '@/types/user';
 import {useInput} from '@/util/hooks/useInput';
 import {IModalProps} from '@/components/common/modal/Modal';
-import TextArea from '@/components/common/inputs/textarea/TextArea';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
-import {Profile} from '../../../server/schemas/Profile.schema';
-
-const REPORT_PROFILE_MUTATION = gql`
-	mutation Mutate($userId: String, $reason: String) {
-		reportProfile(userId: $userId, reason: $reason) {
-			id
-		}
-	}
-`;
+import TextArea from '@/components/common/TextArea';
+import ModalHeader from '@/components/common/modal/ModalHeader';
+import {trpc} from '@/util/trpc';
+import {PublicUser} from '@/types/user';
+import {Serialized} from '@/types/serialized';
 
 interface Props extends IModalProps {
-	user?: UserAccountForAdmin | PublicUserAccount | UserAccount;
+	user?: UserAccountForAdmin | PublicUserAccount | UserAccount | Serialized<PublicUser>;
 }
 
 export default function ReportUser(props: Props) {
 	const {user} = props;
 
 	const [reason, setReason] = useInput('');
-	const [reportUser, reportUserData] = useMutation<
-		{reportProfile: Profile},
-		{
-			userId: string;
-			reason: string;
-		}
-	>(REPORT_PROFILE_MUTATION);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | undefined>(undefined);
 
 	async function reportProfile() {
-		if (reportUserData?.loading) {
+		if (loading) {
 			return;
 		}
 
-		await reportUser({
-			variables: {
+		setLoading(true);
+		try {
+			await trpc.report.reportProfile.mutate({
 				userId: user!.id,
 				reason,
-			},
-		});
+			});
+		} catch (e) {
+			setError(e instanceof Error ? e.message : 'Failed to report user');
+			return;
+		} finally {
+			setLoading(false);
+		}
 
 		toastSuccess(`Successfully reported ${user!.username}. We will take care of the rest`);
 
@@ -72,8 +69,8 @@ export default function ReportUser(props: Props) {
 				glow
 				primary
 				disabled={disabled}
-				loading={reportUserData?.loading}
-				error={reportUserData?.error?.message}
+				loading={loading}
+				error={error}
 				text="Report profile"
 				onClick={reportProfile}
 			/>

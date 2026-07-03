@@ -1,10 +1,9 @@
 import {useEventListener} from '@/util/event_handler';
 import {socketClient} from '@/util/socket/socketio';
-import {MatchContext} from '@/components/play/match/Match';
-import {useContext} from 'react';
+import {useMatchContext} from '@/components/play/match/Match';
 
 export function listenForTimerEvents() {
-	const matchContext = useContext(MatchContext);
+	const matchContext = useMatchContext();
 
 	useEventListener(
 		'startTimerEvent',
@@ -14,7 +13,7 @@ export function listenForTimerEvents() {
 			const startedAt = data.timeStartedAt.getTime();
 			socketClient().emit('playerStartedSolve', match?.id, startedAt);
 		},
-		[matchContext?.match]
+		[matchContext.match]
 	);
 
 	useEventListener(
@@ -25,6 +24,6 @@ export function listenForTimerEvents() {
 
 			socketClient().emit('playerEndedSolve', match?.id, data.ended_at, data.time);
 		},
-		[matchContext?.match]
+		[matchContext.match]
 	);
 }

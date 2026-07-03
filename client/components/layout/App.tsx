@@ -80,7 +80,7 @@ export default function App(props: Props = {}) {
 
 	let modalOutput: ReactNode = null;
 	if (modals && modals.length) {
-		const modalList = [];
+		const modalList: ReactNode[] = [];
 		for (let i = 0; i < modals.length; i += 1) {
 			const modal = modals[i];
 

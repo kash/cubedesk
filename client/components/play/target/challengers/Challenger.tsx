@@ -4,13 +4,13 @@ import {Placeholder, WifiSlash, Check, Clock, X, Trophy} from 'phosphor-react';
 import {addEventListener} from '@/util/event_handler';
 import {getTimeString} from '@/util/time';
 import Avatar from '@/components/common/avatar/Avatar';
-import Emblem from '@/components/common/emblem/Emblem';
+import Emblem from '@/components/common/Emblem';
 import {getMatchClientEvent} from '@/shared/match/client-events';
 import {MatchClientEvent} from '@/shared/match/events';
 import {MatchStanding, PlayerStatus} from '@/shared/match/types';
 import {MatchContext} from '@/components/play/match/Match';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
-import {PublicUserAccount} from '../../../../../server/schemas/UserAccount.schema';
+import {Solve} from '@/types/solve';
+import {PublicUserAccount} from '@/types/user';
 import {useMe} from '@/util/hooks/useMe';
 
 export interface ChallengerProps {
@@ -50,15 +50,42 @@ export default function Challenger(props: ChallengerProps) {
 	const userId = challenger.id;
 
 	useEffect(() => {
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.START_OPPONENT_TIME, userId), startTimer);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.STOP_OPPONENT_TIME, userId), stopTimer);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.OPPONENT_SOLVE_UPDATED, userId), updateLastSolve);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.UPDATE_OPPONENT_STATUS, userId), updateStanding);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.OPPONENT_TIME_SAVED, userId), solveAddedToHistory);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.OPPONENT_REJOINED_MATCH, userId), rejoinedMatch);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.OPPONENT_LEFT_MATCH, userId), leaveMatch);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.OPPONENT_FORFEITED_MATCH, userId), forfeitedMatch);
-		addEventListener<any>(getMatchClientEvent(MatchClientEvent.OPPONENT_RESIGNED_MATCH, userId), resignedMatch);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.START_OPPONENT_TIME, userId),
+			startTimer,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.STOP_OPPONENT_TIME, userId),
+			stopTimer,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.OPPONENT_SOLVE_UPDATED, userId),
+			updateLastSolve,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.UPDATE_OPPONENT_STATUS, userId),
+			updateStanding,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.OPPONENT_TIME_SAVED, userId),
+			solveAddedToHistory,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.OPPONENT_REJOINED_MATCH, userId),
+			rejoinedMatch,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.OPPONENT_LEFT_MATCH, userId),
+			leaveMatch,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.OPPONENT_FORFEITED_MATCH, userId),
+			forfeitedMatch,
+		);
+		addEventListener<any>(
+			getMatchClientEvent(MatchClientEvent.OPPONENT_RESIGNED_MATCH, userId),
+			resignedMatch,
+		);
 	}, []);
 
 	function forfeitedMatch() {
@@ -183,12 +210,12 @@ export default function Challenger(props: ChallengerProps) {
 				onSelect(challenger.id);
 			}}
 			className={classNames(
-				'relative box-border flex h-full w-full flex-col justify-between rounded-[5px] border-[3px] border-transparent bg-background p-2.5',
+				'bg-background relative box-border flex h-full w-full flex-col justify-between rounded-[5px] border-[3px] border-transparent p-2.5',
 				{
 					'cursor-pointer': selectable,
 					'border-primary/90': userId === me.id,
 					'border-info': selectedChallengerId === challenger.id,
-				}
+				},
 			)}
 		>
 			<div className="flex flex-row items-start justify-between">
@@ -204,24 +231,27 @@ export default function Challenger(props: ChallengerProps) {
 				</div>
 				<div className="flex flex-col items-end">
 					<div className="mb-[3px] flex flex-col items-end">
-						<span className="mb-0.5 text-center text-[1.7rem] font-bold leading-[1.7rem] text-text">
+						<span className="text-text mb-0.5 text-center text-[1.7rem] leading-[1.7rem] font-bold">
 							{standing?.points || 0}
 						</span>
-						<span className="text-center text-[0.67rem] font-black text-text opacity-60">
+						<span className="text-text text-center text-[0.67rem] font-black opacity-60">
 							POINT{standing?.points === 1 ? '' : 'S'}
 						</span>
 					</div>
 				</div>
 			</div>
-			<div className="mt-[5px] flex flex-row items-center justify-between border-t-2 border-t-tmo-button/10 pt-[5px]">
-				<div className="flex flex-row items-center [zoom:0.7]">
+			<div className="border-t-tmo-button/10 mt-[5px] flex flex-row items-center justify-between border-t-2 pt-[5px]">
+				<div className="flex [zoom:0.7] flex-row items-center">
 					<div className="mr-2 flex">{statusIcon}</div>
 				</div>
 				<div>
 					<span
-						className={classNames("font-['Roboto_Mono',monospace] text-[1.1rem] font-bold text-text opacity-70", {
-							'text-success opacity-100': solving || done,
-						})}
+						className={classNames(
+							"text-text font-['Roboto_Mono',monospace] text-[1.1rem] font-bold opacity-70",
+							{
+								'text-success opacity-100': solving || done,
+							},
+						)}
 					>
 						{timeStr}
 					</span>

@@ -1,5 +1,5 @@
-import {Solve} from '../../../../server/schemas/Solve.schema';
-import {SolveMethodStep} from '../../../../server/schemas/SolveStepMethod.schema';
+import {Solve} from '@/types/solve';
+import {SolveMethodStep} from '@/types/solve';
 
 export interface SolveStepWithChildren {
 	step: SolveMethodStep;

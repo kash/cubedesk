@@ -1,25 +1,25 @@
 import React, {ReactNode, useEffect, useState} from 'react';
-import CubePicker from '@/components/common/cube_picker/CubePicker';
-import Empty from '@/components/common/empty/Empty';
+import CubePicker from '@/components/common/CubePicker';
+import Empty from '@/components/common/Empty';
 import {SortAscending, SortDescending, Share, Funnel} from 'phosphor-react';
 import SolveListRow from '@/components/solves/SolveListRow';
-import Loading from '@/components/common/loading/Loading';
+import Loading from '@/components/common/Loading';
 import {numberWithCommas} from '@/util/strings/util';
 import {fetchSolveCount, fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import jsonStr from 'json-stable-stringify';
 import {CubeType} from '@/util/cubes/cube_types';
-import Button, {CommonType} from '@/components/common/button/Button';
+import Button, {CommonType} from '@/components/common/Button';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/dropdown_option/DropdownOption';
+import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
 import {openModal} from '@/actions/general';
 import HistoryModal from '@/components/modules/history/HistoryModal';
 import {useDispatch} from 'react-redux';
 import {useMe} from '@/util/hooks/useMe';
-import PageTitle from '@/components/common/page_title/PageTitle';
+import PageTitle from '@/components/common/PageTitle';
 import {LokiFetchOptions} from '@/db/lokijs';
-import {Solve} from '../../../server/schemas/Solve.schema';
-import ResultCount from '@/components/common/result_count/ResultCount';
+import {Solve} from '@/types/solve';
+import ResultCount from '@/components/common/ResultCount';
 import BulkActions from '@/components/solves/bulk-actions/BulkActions';
 
 const PAGE_SIZE = 25;
@@ -120,7 +120,15 @@ export default function SolvesList() {
 
 		const byUser = me ? ` by ${me?.username}` : '';
 
-		dispatch(openModal(<HistoryModal showAsText description={`${solveCountText}${byUser}`} solves={list} />));
+		dispatch(
+			openModal(
+				<HistoryModal
+					showAsText
+					description={`${solveCountText}${byUser}`}
+					solves={list}
+				/>,
+			),
+		);
 	}
 
 	function getFilterOptionValue(name: string, key: keyof Solve, not?: boolean): IDropdownOption {
@@ -190,7 +198,13 @@ export default function SolvesList() {
 						text="Sort"
 						openLeft
 						preventCloseOnInnerClick
-						icon={sortInverse ? <SortAscending weight="bold" /> : <SortDescending weight="bold" />}
+						icon={
+							sortInverse ? (
+								<SortAscending weight="bold" />
+							) : (
+								<SortDescending weight="bold" />
+							)
+						}
 						options={[
 							{
 								text: 'Date',
@@ -206,14 +220,23 @@ export default function SolvesList() {
 							},
 							{
 								text: 'Reverse Order',
-								icon: sortInverse ? <SortDescending weight="bold" /> : <SortAscending weight="bold" />,
+								icon: sortInverse ? (
+									<SortDescending weight="bold" />
+								) : (
+									<SortAscending weight="bold" />
+								),
 								// checkbox: true,
 								// on: sortInverse,
 								onClick: toggleSortByOrder,
 							},
 						]}
 					/>
-					<Button disabled={!solves?.length} gray icon={<Share weight="bold" />} onClick={viewAsText} />
+					<Button
+						disabled={!solves?.length}
+						gray
+						icon={<Share weight="bold" />}
+						onClick={viewAsText}
+					/>
 					<div className="grow" />
 					<ResultCount value={solveCountText} />
 				</div>

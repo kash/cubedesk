@@ -1,28 +1,18 @@
 import React from 'react';
-import {gqlQueryTyped} from '@/components/api';
-import {AdminUserSearchDocument} from '@/@types/generated/graphql';
-import {UserAccount} from '../../../server/schemas/UserAccount.schema';
-import PaginatedList from '@/components/common/paginated_list/PaginatedList';
+import {trpc} from '@/util/trpc';
+import PaginatedList from '@/components/common/PaginatedList';
 import ProfileRow from '@/components/community/ProfileRow';
-import {PaginationArgsInput} from '../../../server/schemas/Pagination.schema';
+import {PaginationArgsInput} from '@/types/pagination';
 import Input from '@/components/common/inputs/input/Input';
 import {useInput} from '@/util/hooks/useInput';
+import {PublicUser} from '@/types/user';
+import {Serialized} from '@/types/serialized';
 
 export default function AdminUsers() {
 	const [query, setQuery] = useInput('');
 
 	async function fetchData(pageArgs: PaginationArgsInput) {
-		const res = await gqlQueryTyped(
-			AdminUserSearchDocument,
-			{
-				pageArgs,
-			},
-			{
-				fetchPolicy: 'network-only',
-			}
-		);
-
-		return res.data.adminUserSearch;
+		return trpc.admin.searchUsers.query(pageArgs);
 	}
 
 	return (
@@ -31,7 +21,7 @@ export default function AdminUsers() {
 				<div>
 					<Input value={query} onChange={setQuery} />
 				</div>
-				<PaginatedList<UserAccount>
+				<PaginatedList<Serialized<PublicUser>>
 					searchQuery={query}
 					fetchData={fetchData}
 					getItemRow={(user) => {

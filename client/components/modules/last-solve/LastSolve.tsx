@@ -10,7 +10,7 @@ import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {deleteSolveDb} from '@/db/solves/update';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;
@@ -55,15 +55,19 @@ function LastSolve(props: Props) {
 		deleteSolveDb(dbSolve);
 	}
 
-	const timeClasses = ['text-[2.3rem]', 'font-bold', dnf ? 'text-error' : plusTwo ? 'text-warning' : 'text-text'];
+	const timeClasses = [
+		'text-[2.3rem]',
+		'font-bold',
+		dnf ? 'text-error' : plusTwo ? 'text-warning' : 'text-text',
+	];
 
 	return (
 		<div className="relative flex h-full justify-center">
 			<div className="box-border flex w-full flex-row items-start justify-between">
 				<div className="mb-[15px]">
-					<h5 className="text-[0.9rem] font-medium text-text opacity-70">Last Solve</h5>
+					<h5 className="text-text text-[0.9rem] font-medium opacity-70">Last Solve</h5>
 					<h4 className={timeClasses.join(' ')}>{time}</h4>
-					<h6 className="text-base font-medium text-text opacity-70">{cubeTypeName}</h6>
+					<h6 className="text-text text-base font-medium opacity-70">{cubeTypeName}</h6>
 				</div>
 				<div>
 					<Scramble frontFace width="70px" scramble={scramble} cubeType={cubeType} />

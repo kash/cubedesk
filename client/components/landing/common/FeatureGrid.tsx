@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 interface GridItem {
 	title: string;
 	description: string;
 	iconColor?: string;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	imgSrc: string;
 	imgAlt: string;
 }
@@ -16,12 +16,12 @@ interface Props {
 export default function FeatureGrid(props: Props) {
 	const {gridItems} = props;
 
-	const rows = [];
+	const rows: ReactNode[] = [];
 	for (let i = 0; i < gridItems.length; i++) {
 		const item = gridItems[i];
 		const odd = i % 2 !== 0;
 
-		let iconSpan = null;
+		let iconSpan: ReactNode = null;
 		if (item.icon) {
 			iconSpan = (
 				<span

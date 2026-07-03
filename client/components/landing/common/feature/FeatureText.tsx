@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Check} from 'phosphor-react';
 import SignUpButton from '@/components/landing/common/SignUpButton';
 
 interface FeatureItem {
 	text: string;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 }
 
 export interface IFeatureTextProps {
@@ -14,7 +14,7 @@ export interface IFeatureTextProps {
 	secondaryColor?: string;
 	whiteText?: boolean;
 	vertical?: boolean;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	signUpButton?: boolean;
 	featureList?: FeatureItem[];
 }
@@ -23,10 +23,10 @@ export default function FeatureText(props: IFeatureTextProps) {
 	const {vertical, signUpButton, primaryColor, whiteText, secondaryColor, featureList, title, description, icon} =
 		props;
 
-	let headerD = null;
-	let descriptionD = null;
+	let headerD: ReactNode = null;
+	let descriptionD: ReactNode = null;
 
-	let featureListDiv = null;
+	let featureListDiv: ReactNode = null;
 	if (featureList) {
 		featureListDiv = (
 			<div className="mb-[15px]">

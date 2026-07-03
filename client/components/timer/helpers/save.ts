@@ -3,7 +3,7 @@ import {createSolveDb} from '@/db/solves/update';
 import {ITimerContext} from '@/components/timer/Timer';
 import {emitEvent} from '@/util/event_handler';
 import {setTimerParam} from '@/components/timer/helpers/params';
-import {Solve, SolveInput} from '../../../../server/schemas/Solve.schema';
+import {Solve, SolveInput} from '@/types/solve';
 
 export function saveSolve(
 	context: ITimerContext,

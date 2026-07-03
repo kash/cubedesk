@@ -1,11 +1,10 @@
 import React from 'react';
 import ProfileRow from '@/components/community/ProfileRow';
 import FriendshipRequest from '@/components/profile/FriendshipRequest';
-import PaginatedList from '@/components/common/paginated_list/PaginatedList';
-import {gqlQueryTyped} from '@/components/api';
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
-import {UserSearchDocument} from '@/@types/generated/graphql';
-import {PaginationArgs, PaginationOutput} from '../../../server/schemas/Pagination.schema';
+import PaginatedList from '@/components/common/PaginatedList';
+import {PublicUserAccount} from '@/types/user';
+import {trpc} from '@/util/trpc';
+import {PaginationArgs, PaginationOutput} from '@/types/pagination';
 
 interface Props {
 	query: string;
@@ -15,17 +14,9 @@ export default function UserSearch(props: Props) {
 	const {query} = props;
 
 	async function fetchData(pageArgs: PaginationArgs): Promise<PaginationOutput<PublicUserAccount>> {
-		const res = await gqlQueryTyped(
-			UserSearchDocument,
-			{
-				pageArgs,
-			},
-			{
-				fetchPolicy: 'no-cache',
-			}
-		);
+		const res = await trpc.user.search.query(pageArgs);
 
-		return res.data.userSearch as unknown as PaginationOutput<PublicUserAccount>;
+		return res as unknown as PaginationOutput<PublicUserAccount>;
 	}
 
 	return (

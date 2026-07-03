@@ -1,4 +1,4 @@
-import {InternalUserAccount} from '../schemas/UserAccount.schema';
+import {InternalUserAccount} from '@/types/user';
 import Stripe from 'stripe';
 import {
 	cancelAllStripeSubscriptions,

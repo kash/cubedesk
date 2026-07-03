@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useRef, useState, ReactNode} from 'react';
 import classNames from 'classnames';
 import {convertTimeStringToSeconds} from '@/util/time';
 import {TimerContext} from '@/components/timer/Timer';
@@ -64,7 +64,7 @@ export default function Manual() {
 		setError(manualEntryErr);
 	}
 
-	let input = (
+	let input: ReactNode = (
 		<input
 			ref={manualInput}
 			disabled={disabled}

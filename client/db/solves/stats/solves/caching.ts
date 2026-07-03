@@ -3,7 +3,7 @@ import {getSolveCacheDb} from '../../init';
 import {FilterSolvesOptions} from '../../query';
 import jsonStr from 'json-stable-stringify';
 import {getNumberToDecimalPoints} from '../../../../util/time';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 type CacheType = 'avg_current' | 'avg_pb' | 'avg_worst' | 'single_pb' | 'single_worst';
 

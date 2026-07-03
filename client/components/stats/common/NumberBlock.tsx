@@ -6,7 +6,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {isNotPro} from '@/util/pro';
 
 interface Props {
-	icon: JSX.Element;
+	icon: ReactNode;
 	title: string;
 	color: string;
 	value: string | number;

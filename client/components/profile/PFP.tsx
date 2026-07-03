@@ -1,12 +1,12 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import UploadCover from '@/components/common/upload_cover/UploadCover';
-import AvatarImage from '@/components/common/avatar/avatar_image/AvatarImage';
+import UploadCover from '@/components/common/UploadCover';
+import AvatarImage from '@/components/common/avatar/AvatarImage';
 import {getStorageURL} from '@/util/storage';
-import {Image, Profile} from '@/@types/generated/graphql';
+import {Profile} from '@/types/profile';
 import {useMe} from '@/util/hooks/useMe';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
+import {api} from '@/util/api';
+import {fileToBase64} from '@/util/upload';
 import {getMe} from '@/actions/account';
 
 interface Props {
@@ -20,22 +20,17 @@ export default function PFP(props: Props) {
 	const dispatch = useDispatch();
 	const me = useMe();
 
-	async function uploadProfilePicture(variables): Promise<{storagePath: string}> {
-		const query = gql`
-			mutation Mutate($file: Upload) {
-				uploadProfilePicture(file: $file) {
-					id
-					storage_path
-				}
-			}
-		`;
+	const uploadPfpMutation = api.profile.uploadPfp.useMutation();
 
-		const res = await gqlMutate<{uploadProfilePicture: Image}>(query, variables);
-		const storagePath = res.data?.uploadProfilePicture?.storage_path || '';
+	async function uploadProfilePicture(variables: {file: File}): Promise<{storagePath: string}> {
+		const image = await uploadPfpMutation.mutateAsync({
+			fileName: variables.file.name,
+			data: await fileToBase64(variables.file),
+		});
 
 		dispatch(getMe() as any);
 		return {
-			storagePath,
+			storagePath: image?.storage_path || '',
 		};
 	}
 
@@ -58,7 +53,12 @@ export default function PFP(props: Props) {
 	return (
 		<div className="relative box-border flex h-[150px] w-[150px] items-center justify-center rounded-full bg-[#eee]/30 p-2.5">
 			{cover}
-			<AvatarImage image={imgLink as any} large user={profile?.user as any} profile={profile as any} />
+			<AvatarImage
+				image={imgLink as any}
+				large
+				user={profile?.user as any}
+				profile={profile as any}
+			/>
 		</div>
 	);
 }

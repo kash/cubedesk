@@ -1,11 +1,11 @@
-import winston, {Logger} from 'winston';
+import winston, {Logger, Format} from 'winston';
 
 let logger: Logger;
 
 export function initLogger() {
 	const isDev = process.env.ENV === 'development';
 
-	const addFormats = [];
+	const addFormats: Format[] = [];
 	if (isDev) {
 		addFormats.push(
 			winston.format.timestamp({

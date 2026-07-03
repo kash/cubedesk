@@ -1,8 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {ITimerContext, TimerContext} from '@/components/timer/Timer';
 import {Bluetooth} from 'phosphor-react';
-import Emblem from '@/components/common/emblem/Emblem';
-import {startTimer, endTimer, startInspection, cancelInspection} from '@/components/timer/helpers/events';
+import Emblem from '@/components/common/Emblem';
+import {
+	startTimer,
+	endTimer,
+	startInspection,
+	cancelInspection,
+} from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useDispatch} from 'react-redux';
@@ -55,7 +60,11 @@ export default function GanTimer() {
 				endTimer(contextRef.current, event.recordedTime.asTimestamp);
 				break;
 			case GanTimerState.IDLE:
-				if (!inspectionEnabled || contextRef.current.inInspection || contextRef.current.finalTime > 0) {
+				if (
+					!inspectionEnabled ||
+					contextRef.current.inInspection ||
+					contextRef.current.finalTime > 0
+				) {
 					cancelInspection();
 					setTimerParams({spaceTimerStarted: 0, canStart: false, finalTime: -1});
 				} else {
@@ -74,10 +83,13 @@ export default function GanTimer() {
 			conn = null;
 			setConnected(false);
 		} else {
-			const bluetoothAvailable = !!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
+			const bluetoothAvailable =
+				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				conn = await connectGanTimer();
-				conn.events$.subscribe((evt) => evt.state == GanTimerState.DISCONNECT && (conn = null));
+				conn.events$.subscribe(
+					(evt) => evt.state == GanTimerState.DISCONNECT && (conn = null),
+				);
 				subs = conn.events$.subscribe(handleTimerEvent);
 				setConnected(true);
 			} else {

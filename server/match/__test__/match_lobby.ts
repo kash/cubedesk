@@ -1,4 +1,4 @@
-import {MatchLobby} from '../../schemas/MatchLobby.schema';
+import {MatchLobby} from '@/types/match';
 import {generateId} from '../../../shared/code';
 
 export function testGenerateMatchLobbyRows(count: number, options?: Partial<MatchLobby>) {

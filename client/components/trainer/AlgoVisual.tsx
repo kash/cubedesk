@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, ReactNode} from 'react';
 import classNames from 'classnames';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
@@ -36,7 +36,7 @@ export default function AlgoVisual(props: Props) {
 	}, [imageLink, colors]);
 
 	function get2DCube() {
-		const squares = [];
+		const squares: ReactNode[] = [];
 
 		let index = 0;
 		const cubeWidth = cubeSize + 2;
@@ -80,7 +80,7 @@ export default function AlgoVisual(props: Props) {
 	}
 
 	function get3DCube() {
-		const output = [];
+		const output: ReactNode[] = [];
 		const facePositions = [
 			{
 				className: 'absolute left-[-84px] top-[54px]',
@@ -97,7 +97,7 @@ export default function AlgoVisual(props: Props) {
 		];
 		let sub = 0;
 		for (let j = 0; j < 3; j += 1) {
-			const cubelets = [];
+			const cubelets: ReactNode[] = [];
 			for (let i = 0; i < cubeSize; i += 1) {
 				for (let k = 0; k < cubeSize; k += 1) {
 					const off = sub;

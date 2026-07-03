@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Link, Quotes} from 'phosphor-react';
 import {resourceUri} from '@/util/storage';
 
@@ -23,7 +23,7 @@ const logoNamePathMap = {
 export default function ProofCard(props: Props) {
 	const {quote, username, link, img, title, imgAlt, source} = props;
 
-	let imgTag = null;
+	let imgTag: ReactNode = null;
 	if (img) {
 		imgTag = (
 			<div className="mr-[15px] h-[110px] w-[170px]">
@@ -36,7 +36,7 @@ export default function ProofCard(props: Props) {
 		);
 	}
 
-	let linkIcon = null;
+	let linkIcon: ReactNode = null;
 	if (link) {
 		linkIcon = (
 			<div className="absolute bottom-2.5 right-2.5 text-[1.2rem] text-[#444] opacity-50 transition-all duration-100 ease-in-out group-hover:text-primary group-hover:opacity-100">
@@ -46,7 +46,7 @@ export default function ProofCard(props: Props) {
 	}
 
 	const isQuote = !!quote;
-	let quoteIcon = null;
+	let quoteIcon: ReactNode = null;
 	if (isQuote) {
 		quoteIcon = (
 			<div className="absolute left-[-9px] top-[-4px] text-[1.9rem] text-[#444] opacity-20">

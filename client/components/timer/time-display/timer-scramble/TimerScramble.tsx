@@ -2,10 +2,10 @@ import React, {ReactNode, useContext, useEffect, useRef} from 'react';
 import classNames from 'classnames';
 import {ArrowClockwise, Lock, PencilSimple} from 'phosphor-react';
 import TextareaAutosize from 'react-textarea-autosize';
-import CopyText from '@/components/common/copy_text/CopyText';
+import CopyText from '@/components/common/CopyText';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {TimerContext} from '@/components/timer/Timer';
 import {resetScramble} from '@/components/timer/helpers/scramble';
 import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartScramble';
@@ -82,8 +82,8 @@ export default function TimerScramble() {
 			placeholder={hideScramble ? '' : 'scramble'}
 			ref={scrambleInput}
 			className={classNames(
-				'-z-[100] m-auto table w-[calc(100%_-_20px)] min-w-[100px] resize-none box-border rounded-[7px] border-2 border-transparent bg-transparent p-[7px] text-center ![color:inherit] opacity-100 transition-all duration-100 ease-in-out [font-family:inherit] [line-height:inherit] [text-shadow:0_1px_7px_rgba(0,0,0,0.2)] [-webkit-text-fill-color:rgb(var(--text-color))]',
-				editScramble && '!z-[100] !border-text/20'
+				'-z-[100] m-auto box-border table w-[calc(100%_-_20px)] min-w-[100px] resize-none rounded-[7px] border-2 border-transparent bg-transparent p-[7px] text-center [font-family:inherit] [line-height:inherit] ![color:inherit] opacity-100 transition-all duration-100 ease-in-out [-webkit-text-fill-color:rgb(var(--text-color))] [text-shadow:0_1px_7px_rgba(0,0,0,0.2)]',
+				editScramble && '!border-text/20 !z-[100]',
 			)}
 		/>
 	);
@@ -98,14 +98,14 @@ export default function TimerScramble() {
 			className={classNames(
 				'relative flex w-full flex-col items-center transition-opacity duration-100 ease-in-out',
 				timeStartedAt && (focusMode || mobileMode) && 'hidden',
-				timeStartedAt && 'pointer-events-none opacity-30'
+				timeStartedAt && 'pointer-events-none opacity-30',
 			)}
 		>
 			{notification}
 			<div
 				className={classNames(
-					"mb-[5px] flex w-full max-w-[1200px] flex-row items-center justify-center font-['Roboto_Mono',monospace] !text-text",
-					isSmart && 'w-auto'
+					"!text-text mb-[5px] flex w-full max-w-[1200px] flex-row items-center justify-center font-['Roboto_Mono',monospace]",
+					isSmart && 'w-auto',
 				)}
 				style={{
 					fontSize: timerScrambleSize + 'px',

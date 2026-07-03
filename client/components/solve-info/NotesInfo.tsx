@@ -1,7 +1,7 @@
 import React from 'react';
-import TextArea from '@/components/common/inputs/textarea/TextArea';
+import TextArea from '@/components/common/TextArea';
 import {useInput} from '@/util/hooks/useInput';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	editMode?: boolean;
@@ -14,9 +14,11 @@ export default function NotesInfo(props: Props) {
 
 	const [notes, setNotes] = useInput(solve.notes);
 
-	let notesBody = <p className="my-[7px] w-full p-0 text-left text-text opacity-90">{notes}</p>;
+	let notesBody = <p className="text-text my-[7px] w-full p-0 text-left opacity-90">{notes}</p>;
 	if (!notes) {
-		notesBody = <i className="w-full text-center text-text opacity-70">No notes for this solve</i>;
+		notesBody = (
+			<i className="text-text w-full text-center opacity-70">No notes for this solve</i>
+		);
 	}
 
 	return (

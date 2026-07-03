@@ -3,37 +3,18 @@ import {getTimeString} from '@/util/time';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {PublicUserAccount, TopAverage, TopSolve} from '@/@types/generated/graphql';
+import {PublicUserAccount} from '@/types/user';
+import {TopAverage, TopSolve} from '@/types/top-solve';
 import {useDispatch} from 'react-redux';
 import {openModal} from '@/actions/general';
 import HistoryModal from '@/components/modules/history/HistoryModal';
-import Tag from '@/components/common/tag/Tag';
+import Tag from '@/components/common/Tag';
 import {getAverage} from '@/db/solves/stats/solves/average/average';
-import Button from '@/components/common/button/Button';
-import {gql, useMutation} from '@apollo/client';
+import Button from '@/components/common/Button';
 import {toastError} from '@/util/toast';
+import {trpc} from '@/util/trpc';
 import {useMe} from '@/util/hooks/useMe';
-import {Solve} from '../../../server/schemas/Solve.schema';
-
-const DELETE_TOP_SOLVE_MUTATION = gql`
-	mutation Mutation($id: String) {
-		deleteTopSolve(id: $id) {
-			id
-		}
-	}
-`;
-
-const DELETE_TOP_AVERAGE_MUTATION = gql`
-	mutation Mutation($id: String) {
-		deleteTopAverage(id: $id) {
-			id
-		}
-	}
-`;
-
-type deleteVarInput = {
-	id: string;
-};
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solves: Solve[];
@@ -51,13 +32,7 @@ export default function PbCard(props: Props) {
 	const dispatch = useDispatch();
 	const me = useMe();
 	const [deleted, setDeleted] = useState(false);
-
-	const [deleteSolveMut, deleteSolveMutData] = useMutation<{deleteTopSolve: TopSolve}, deleteVarInput>(
-		DELETE_TOP_SOLVE_MUTATION
-	);
-	const [deleteAvgMut, deleteAvgMutData] = useMutation<{deleteTopSolve: TopAverage}, deleteVarInput>(
-		DELETE_TOP_AVERAGE_MUTATION
-	);
+	const [deleting, setDeleting] = useState(false);
 
 	const cubeType = useMemo(() => getCubeTypeInfoById(firstSolve.cube_type), []);
 	const time = useMemo(() => {
@@ -75,8 +50,11 @@ export default function PbCard(props: Props) {
 		} else {
 			dispatch(
 				openModal(
-					<HistoryModal solves={solves} description={`Average of ${solves.length} by ${user.username}`} />
-				)
+					<HistoryModal
+						solves={solves}
+						description={`Average of ${solves.length} by ${user.username}`}
+					/>,
+				),
 			);
 		}
 	}
@@ -85,24 +63,24 @@ export default function PbCard(props: Props) {
 		e.preventDefault();
 		e.stopPropagation();
 
+		setDeleting(true);
+
 		try {
 			if (single) {
-				await deleteSolveMut({
-					variables: {
-						id: topRecord.id as string,
-					},
+				await trpc.leaderboards.deleteTopSolve.mutate({
+					id: topRecord.id as string,
 				});
 			} else {
-				await deleteAvgMut({
-					variables: {
-						id: topRecord.id as string,
-					},
+				await trpc.leaderboards.deleteTopAverage.mutate({
+					id: topRecord.id as string,
 				});
 			}
 
 			setDeleted(true);
 		} catch (e) {
 			toastError(e);
+		} finally {
+			setDeleting(false);
 		}
 	}
 
@@ -113,14 +91,8 @@ export default function PbCard(props: Props) {
 	let actions: React.ReactNode = null;
 	if (me?.id === user.id) {
 		actions = (
-			<div className="absolute left-2.5 top-0.5">
-				<Button
-					loading={deleteAvgMutData.loading || deleteSolveMutData.loading}
-					text="Remove"
-					danger
-					flat
-					onClick={deletePb}
-				/>
+			<div className="absolute top-0.5 left-2.5">
+				<Button loading={deleting} text="Remove" danger flat onClick={deletePb} />
 			</div>
 		);
 	}
@@ -131,13 +103,13 @@ export default function PbCard(props: Props) {
 
 	return (
 		<button
-			className="relative box-border flex flex-row items-center justify-between rounded-[10px] bg-module p-5 text-left shadow-[0_3px_15px_rgba(0,0,0,0.25)]"
+			className="bg-module relative box-border flex flex-row items-center justify-between rounded-[10px] p-5 text-left shadow-[0_3px_15px_rgba(0,0,0,0.25)]"
 			onClick={openSolve}
 		>
 			{actions}
 			<div>
-				<span className="text-[3rem] font-bold text-text">{getTimeString(time, 2)}</span>
-				<span className="mt-[5px] table text-[0.85rem] text-text opacity-70">
+				<span className="text-text text-[3rem] font-bold">{getTimeString(time, 2)}</span>
+				<span className="text-text mt-[5px] table text-[0.85rem] opacity-70">
 					{new Date(createdAt).toDateString()}
 				</span>
 			</div>

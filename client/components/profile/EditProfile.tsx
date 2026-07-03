@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
+import {api} from '@/util/api';
 import Input from '@/components/common/inputs/input/Input';
-import TextArea from '@/components/common/inputs/textarea/TextArea';
-import Button from '@/components/common/button/Button';
-import {Profile} from '../../../server/schemas/Profile.schema';
+import TextArea from '@/components/common/TextArea';
+import Button from '@/components/common/Button';
+import {Profile} from '@/types/profile';
 
 interface Props {
 	profile: Profile;
@@ -21,16 +20,6 @@ type ProfileForm = {
 	twitterLink: string;
 	redditLink: string;
 };
-
-const UPDATE_PROFILE_MUTATION = gql`
-	mutation Mutate($input: ProfileInput) {
-		updateProfile(input: $input) {
-			bio
-			id
-			three_method
-		}
-	}
-`;
 
 function getInitialForm(profile: Profile): ProfileForm {
 	return {
@@ -50,7 +39,9 @@ export default function EditProfile(props: Props) {
 	const {profile} = props;
 	const [form, setForm] = useState<ProfileForm>(() => getInitialForm(profile));
 	const [error, setError] = useState('');
-	const [loading, setLoading] = useState(false);
+
+	const updateProfileMutation = api.profile.update.useMutation();
+	const loading = updateProfileMutation.isPending;
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
 		const {name, value} = e.target;
@@ -103,7 +94,6 @@ export default function EditProfile(props: Props) {
 			return;
 		}
 
-		setLoading(true);
 		setError('');
 
 		const input = {
@@ -119,14 +109,13 @@ export default function EditProfile(props: Props) {
 		};
 
 		try {
-			await gqlMutate(UPDATE_PROFILE_MUTATION, {
+			await updateProfileMutation.mutateAsync({
 				input,
 			});
 
 			window.location.reload();
 		} catch (e) {
 			setError((e as Error).message);
-			setLoading(false);
 		}
 	}
 

@@ -31,6 +31,7 @@ import LinkedAccounts from '@/components/account/linked-accounts/LinkedAccounts'
 import OAuthService from '@/components/oauth/OAuthService';
 import ForceSignOut from '@/components/login/ForceSignOut';
 import {Store} from 'redux';
+import type {Request} from 'express';
 import Reports from '@/components/admin/reports/Reports';
 import LandingHome from '@/components/landing/home/LandingHome';
 import DefaultTimer from '@/components/timer/DefaultTimer';
@@ -46,7 +47,7 @@ interface PageOptions {
 	admin: boolean;
 	hideTopNav: boolean;
 	noPadding: boolean;
-	prefetchData: ((store: Store<any>, req: Request) => Promise<any>)[];
+	prefetchData?: ((store: Store<any>, req: Request) => Promise<any>)[];
 }
 
 export interface PageContext extends PageOptions {
@@ -71,7 +72,7 @@ function route(
 	admin = false,
 	hideTopNav = false,
 	noPadding = false,
-	prefetchData = null
+	prefetchData: ((store: Store<any>, req: Request) => Promise<any>)[] = []
 ): PageContext {
 	return {
 		path,

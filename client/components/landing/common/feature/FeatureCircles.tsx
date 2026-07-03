@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, ReactNode} from 'react';
 import {sum} from 'lodash';
 import {DecorationPosition} from '@/components/landing/common/feature/Feature';
 import Chance from 'chance';
@@ -44,7 +44,7 @@ export default function FeatureCircles(props: Props) {
 		});
 	}, [seed, count]);
 
-	const circles = [];
+	const circles: ReactNode[] = [];
 	for (let i = 0; i < Math.min(count, positions.length); i++) {
 		const primary = col === 0 && i % 2 === 0;
 		const color = primary ? props.primaryColor : props.secondaryColor;

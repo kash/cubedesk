@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState, ReactNode} from 'react';
 import classNames from 'classnames';
 import {getTimeString} from '@/util/time';
 import Manual from '@/components/timer/time-display/Manual';
@@ -98,7 +98,7 @@ export default function TimeDisplay() {
 	}
 
 	let timeStr;
-	let bottomInfo = null;
+	let bottomInfo: ReactNode = null;
 	if (inspectionOn) {
 		bottomInfo = <StartInstructions>Inspection on</StartInstructions>;
 	}
@@ -141,7 +141,7 @@ export default function TimeDisplay() {
 		}
 	}
 
-	let body = (
+	let body: ReactNode = (
 		<>
 			<h1
 				style={{fontSize: timerTimeSize + 'px', fontFamily: timerFontFamily + ', monospace'}}

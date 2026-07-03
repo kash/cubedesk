@@ -3,8 +3,7 @@ import {setTimerParams} from '@/components/timer/helpers/params';
 import {getStore} from '@/components/store';
 import {turnSmartCube} from '@/actions/timer';
 import {toastError} from '@/util/toast';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
+import {trpc} from '@/util/trpc';
 import {openModal} from '@/actions/general';
 import React from 'react';
 import SolveCheck from '@/components/timer/smart-cube/solve-check/SolveCheck';
@@ -26,18 +25,9 @@ export default class SmartCube {
 	};
 
 	smartCubeInDb = async (server) => {
-		const query = gql`
-			query Query {
-				smartDevices {
-					id
-					device_id
-				}
-			}
-		`;
+		const devices = await trpc.smartDevice.list.query();
 
-		const res = await gqlMutate(query);
-
-		for (const dev of res.data.smartDevices) {
+		for (const dev of devices) {
 			if (dev.device_id === server.device.id) {
 				return dev;
 			}
@@ -47,24 +37,10 @@ export default class SmartCube {
 	};
 
 	addSmartCubeToDb = async (originalName, deviceId) => {
-		const query = gql`
-			mutation Mutate($originalName: String, $deviceId: String) {
-				addNewSmartDevice(originalName: $originalName, deviceId: $deviceId) {
-					id
-					name
-					internal_name
-					device_id
-					created_at
-				}
-			}
-		`;
-
-		const res = await gqlMutate(query, {
+		return await trpc.smartDevice.create.mutate({
 			originalName,
 			deviceId,
 		});
-
-		return res.data.addNewSmartDevice;
 	};
 
 	alertConnected = async (server) => {

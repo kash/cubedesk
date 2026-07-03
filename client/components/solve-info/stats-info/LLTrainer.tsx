@@ -1,7 +1,7 @@
 import React from 'react';
 import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solve: Solve;
@@ -15,19 +15,23 @@ export default function LLTrainer(props: Props) {
 		return null;
 	}
 
-	const ollAlgo = fetchTrainerAlgorithmById(ollPll.oll);
-	const pllAlgo = fetchTrainerAlgorithmById(ollPll.pll);
+	const ollAlgo = ollPll.oll ? fetchTrainerAlgorithmById(ollPll.oll) : null;
+	const pllAlgo = ollPll.pll ? fetchTrainerAlgorithmById(ollPll.pll) : null;
+
+	if (!ollAlgo || !pllAlgo) {
+		return null;
+	}
 
 	return (
 		<div className="flex flex-row items-start">
 			<div className="w-1/2">
 				<h3 className="mb-5 mt-0 text-[1.1rem] font-semibold text-text">OLL</h3>
-				<AlgoVisual colors={ollAlgo.colors} rotate={ollAlgo.rotate} cubeType={ollAlgo.cube_type} />
+				<AlgoVisual colors={ollAlgo.colors ?? undefined} rotate={ollAlgo.rotate ?? undefined} cubeType={ollAlgo.cube_type} />
 				<p className="my-[7px] text-text">{ollAlgo.name}</p>
 			</div>
 			<div className="w-1/2">
 				<h3 className="mb-5 mt-0 text-[1.1rem] font-semibold text-text">PLL</h3>
-				<AlgoVisual colors={pllAlgo.colors} rotate={pllAlgo.rotate} cubeType={pllAlgo.cube_type} />
+				<AlgoVisual colors={pllAlgo.colors ?? undefined} rotate={pllAlgo.rotate ?? undefined} cubeType={pllAlgo.cube_type} />
 				<p className="my-[7px] text-text">{pllAlgo.name}</p>
 			</div>
 		</div>
@@ -35,9 +39,9 @@ export default function LLTrainer(props: Props) {
 }
 
 export function getOllAndPllFromSolve(solve: Solve) {
-	let oll = null;
-	let pll = null;
-	for (const step of solve.solve_method_steps) {
+	let oll: string | null = null;
+	let pll: string | null = null;
+	for (const step of solve.solve_method_steps || []) {
 		if (step.oll_case_key) {
 			oll = step.oll_case_key;
 		}

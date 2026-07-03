@@ -3,7 +3,7 @@ import {SmartTurn} from '../../../client/util/smart_scramble';
 
 export function getReverseTurns(moves: SmartTurn[] | string) {
 	let turns;
-	const output = [];
+	const output: string[] = [];
 
 	if (typeof moves === 'string') {
 		turns = moves.replace(/\(|\)/g, '').split(' ');

@@ -1,6 +1,6 @@
-import {StatsModule, StatsModuleBlock} from '../../server/schemas/StatsModule.schema';
+import {StatsModule, StatsModuleBlock} from '@/types/stats-module';
 
-export function initStatsModuleStore(statsModule: StatsModule) {
+export function initStatsModuleStore(statsModule: StatsModule | null) {
 	return {
 		type: 'INIT_STATS_MODULE',
 		payload: statsModule,

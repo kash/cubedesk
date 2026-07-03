@@ -2,9 +2,9 @@ import {PlayerStatus} from '../match/types';
 import {GameSolveRow, PlayerStatusInfo} from '../../components/play/game/Game';
 import {getTimeString} from '../../util/time';
 import {MatchConst} from '../match/consts';
-import {Solve} from '../../../server/schemas/Solve.schema';
-import {MatchParticipant} from '../../../server/schemas/MatchParticipant.schema';
-import {Match} from '../../../server/schemas/Match.schema';
+import {Solve} from '@/types/solve';
+import {MatchParticipant} from '@/types/match';
+import {Match} from '@/types/match';
 
 interface RoundStatus {
 	playerStatus: PlayerStatus;
@@ -86,9 +86,10 @@ export function getHeadToHeadSolveRowInfo(
 		solve: mySolve as any,
 	};
 
-	if (match && match.participants.length === 2) {
-		const other = match.participants[0].user_id === myId ? match.participants[1] : match.participants[0];
-		const otherSolve = other.solves[timeIndex];
+	if (match?.participants?.length === 2) {
+		const participants = match.participants;
+		const other = participants[0].user_id === myId ? participants[1] : participants[0];
+		const otherSolve = other.solves?.[timeIndex];
 
 		if (otherSolve) {
 			info.targetTime = otherSolve.time;
@@ -104,16 +105,16 @@ export function getHeadToHeadSolveRowInfo(
 
 	// Get standings for all (my) solves
 	const currentRoundStatus = getStatusForSolveIndex(timeIndex, solves, match);
-	if (currentRoundStatus.fastestPlayer) {
+	if (currentRoundStatus.fastestPlayer && currentRoundStatus.fastestSolve) {
 		const fastestTime = getTimeString(currentRoundStatus.fastestSolve.time, 2);
 
 		if (currentRoundStatus.playerStatus === PlayerStatus.Tie) {
 			info.solveDescription = 'Tie';
-		} else if (currentRoundStatus.fastestPlayer.user.id === mySolve.user_id) {
+		} else if (currentRoundStatus.fastestPlayer.user?.id === mySolve.user_id) {
 			info.solveDescription = 'You won!';
-		} else {
+		} else if (currentRoundStatus.fastestPlayer.user) {
 			info.solveDescription = `${currentRoundStatus.fastestPlayer.user.username} won`;
-			if (match.participants.length > 2) {
+			if (match.participants && match.participants.length > 2) {
 				info.solveDescription += ` (${fastestTime})`;
 			}
 		}
@@ -131,13 +132,13 @@ export function getHeadToHeadSolveRowInfo(
 }
 
 function getStatusForSolveIndex(timeIndex: number, solves: Solve[], match: Match): RoundStatus {
-	let fastestPlayer: MatchParticipant = null;
+	let fastestPlayer: MatchParticipant | null = null;
 	let playersDoneCount = 0;
-	const players = match.participants;
+	const players = match.participants ?? [];
 
 	let dnfCount = 0;
 	for (const player of players) {
-		const playerSolves = player.solves;
+		const playerSolves = player.solves ?? [];
 
 		if (playerSolves.length <= timeIndex) {
 			break;
@@ -150,8 +151,12 @@ function getStatusForSolveIndex(timeIndex: number, solves: Solve[], match: Match
 		}
 
 		const playerSolve = playerSolves[timeIndex];
-		const fastestSolve = fastestPlayer.solves[timeIndex];
-		if (!playerSolve.dnf && (fastestSolve.time > playerSolve.time || fastestSolve.dnf)) {
+		const fastestSolve = fastestPlayer.solves?.[timeIndex];
+		if (
+			fastestSolve &&
+			!playerSolve.dnf &&
+			(fastestSolve.time > playerSolve.time || fastestSolve.dnf)
+		) {
 			fastestPlayer = player;
 		}
 		if (playerSolve.dnf) {
@@ -159,13 +164,13 @@ function getStatusForSolveIndex(timeIndex: number, solves: Solve[], match: Match
 		}
 	}
 
-	if (dnfCount === players.length) {
+	if (players.length && dnfCount === players.length) {
 		return {
 			playerStatus: PlayerStatus.Tie,
 		};
 	}
 
-	if (!fastestPlayer || playersDoneCount !== match.participants.length) {
+	if (!fastestPlayer || playersDoneCount !== (match.participants?.length ?? 0)) {
 		if (solves[timeIndex]) {
 			return {
 				playerStatus: PlayerStatus.Waiting,
@@ -178,7 +183,12 @@ function getStatusForSolveIndex(timeIndex: number, solves: Solve[], match: Match
 	}
 
 	const myUserId = solves[0].user_id;
-	const fastestSolve = fastestPlayer.solves[timeIndex];
+	const fastestSolve = fastestPlayer.solves?.[timeIndex];
+	if (!fastestSolve) {
+		return {
+			playerStatus: PlayerStatus.Playing,
+		};
+	}
 	let playerStatus: PlayerStatus;
 
 	if (fastestPlayer.user_id === myUserId) {

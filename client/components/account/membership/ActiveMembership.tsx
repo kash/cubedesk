@@ -1,20 +1,13 @@
 import React, {ReactNode, useEffect} from 'react';
-import {Membership} from '@/@types/generated/graphql';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {Star} from 'phosphor-react';
-import {useMutation} from '@apollo/client';
-import {gql} from '@apollo/client/core';
 import ProFeatureList from '@/components/account/membership/pro-card/ProFeatureList';
-import Module from '@/components/common/module/Module';
+import Module from '@/components/common/Module';
 import {getDateFromNow} from '@/util/dates';
 import {triggerConfetti} from '@/components/timer/helpers/pb';
 import {toastSuccess} from '@/util/toast';
-
-const CANCEL_MEM_MUT = gql`
-	mutation Mutate {
-		cancelMembership
-	}
-`;
+import {trpc} from '@/util/trpc';
+import {Membership} from '@/types/membership';
 
 interface Props {
 	membership: Membership;
@@ -22,7 +15,6 @@ interface Props {
 
 export default function ActiveMembership(props: Props) {
 	const {membership} = props;
-	const [cancelMemMut] = useMutation(CANCEL_MEM_MUT);
 
 	const cancelAtPeriodEnd = membership.cancel_at_period_end;
 	const currentPeriodEnd = membership.current_period_end;
@@ -44,20 +36,20 @@ export default function ActiveMembership(props: Props) {
 	}, []);
 
 	async function cancelMembership() {
-		await cancelMemMut();
+		await trpc.membership.cancel.mutate();
 		window.location.reload();
 	}
 
 	let cancelBlock: ReactNode = null;
 	if (cancelAtPeriodEnd && currentPeriodEnd) {
 		const endsAt = getDateFromNow(currentPeriodEnd * 1000);
-		cancelBlock = <div className="font-bold text-error">Membership ends {endsAt}</div>;
+		cancelBlock = <div className="text-error font-bold">Membership ends {endsAt}</div>;
 	}
 
 	return (
 		<Module>
 			<div className="flex flex-col items-center">
-				<div className="mb-2.5 box-border flex w-full flex-row items-center justify-center rounded-md bg-primary p-4 font-bold text-tmo-primary shadow-md">
+				<div className="bg-primary text-tmo-primary mb-2.5 box-border flex w-full flex-row items-center justify-center rounded-md p-4 font-bold shadow-md">
 					You have a Pro membership! <Star className="ml-1.5" weight="fill" />
 				</div>
 				{cancelBlock}

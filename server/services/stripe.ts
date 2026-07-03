@@ -1,9 +1,10 @@
 import Stripe from 'stripe';
-import {InternalUserAccount} from '../schemas/UserAccount.schema';
+import {InternalUserAccount} from '@/types/user';
 import {updateUserAccountWithParams} from '../models/user_account';
 import {logger} from './logger';
 
-// Need these in uppercase because TypeGraphQL automatically converts them to uppercase
+// Values are stored uppercase in the DB (user_account.pro_status) — do not change casing.
+// types/membership.ts MembershipStatus mirrors this union for the client.
 export enum SubscriptionStatus {
 	NONE = 'NONE',
 	ACTIVE = 'ACTIVE',

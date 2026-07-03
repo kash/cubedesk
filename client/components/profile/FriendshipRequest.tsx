@@ -2,20 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {X, Plus, Timer, Check} from 'phosphor-react';
 import {addFriendship, removeFriendship} from '@/actions/account';
 import {toastSuccess} from '@/util/toast';
-import {gqlMutate, gqlMutateTyped, gqlQueryTyped} from '@/components/api';
-import Button, {ButtonProps} from '@/components/common/button/Button';
-import {
-	FriendshipRequest as FriendshipRequestSchema,
-	AcceptFriendshipRequestDocument,
-	DeleteFriendshipRequestDocument,
-	UnfriendDocument,
-	ReceivedFriendshipRequestsFromUserDocument,
-	SentFriendshipRequestsToUserDocument,
-	SendFriendshipRequestDocument,
-} from '@/@types/generated/graphql';
+import Button, {ButtonProps} from '@/components/common/Button';
+import {FriendshipRequest as FriendshipRequestSchema} from '@/types/friendship';
+import {trpc} from '@/util/trpc';
 import {useDispatch, useSelector} from 'react-redux';
 import {useMe} from '@/util/hooks/useMe';
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
+import {PublicUserAccount} from '@/types/user';
 
 interface Props {
 	user: PublicUserAccount;
@@ -34,11 +26,10 @@ export default function FriendshipRequest(props: Props) {
 
 	const [loading, setLoading] = useState(fetchData);
 	const [friendRequestSent, setFriendRequestSent] = useState<FriendshipRequestSchema | null>(
-		props.friendRequestSent ?? null
+		props.friendRequestSent ?? null,
 	);
-	const [friendRequestReceived, setFriendRequestReceived] = useState<FriendshipRequestSchema | null>(
-		props.friendRequestReceived ?? null
-	);
+	const [friendRequestReceived, setFriendRequestReceived] =
+		useState<FriendshipRequestSchema | null>(props.friendRequestReceived ?? null);
 	const [overFriendButton, setOverFriendButton] = useState(false);
 
 	useEffect(() => {
@@ -50,27 +41,20 @@ export default function FriendshipRequest(props: Props) {
 	}, []);
 
 	async function getFriendshipRequests(userId: string) {
-		const vars = {
-			userId,
-		};
-
-		const [sent, requested] = await Promise.all([
-			gqlQueryTyped(ReceivedFriendshipRequestsFromUserDocument, vars),
-			gqlQueryTyped(SentFriendshipRequestsToUserDocument, vars),
+		const [sentReqs, receivedReqs] = await Promise.all([
+			trpc.friendship.requestsToUser.query({userId}),
+			trpc.friendship.requestsFromUser.query({userId}),
 		]);
 
-		const setReqs = sent.data.receivedFriendshipRequestsFromUser;
-		const requestedReqs = requested.data.sentFriendshipRequestsToUser;
-
-		const sentRequest = setReqs && setReqs.length ? setReqs[0] : null;
-		const receivedRequest = requestedReqs && requestedReqs.length ? requestedReqs[0] : null;
+		const sentRequest = sentReqs && sentReqs.length ? sentReqs[0] : null;
+		const receivedRequest = receivedReqs && receivedReqs.length ? receivedReqs[0] : null;
 
 		return {sentRequest, receivedRequest};
 	}
 
 	async function friendshipButton() {
 		if (friends[user.id]) {
-			await gqlMutate(UnfriendDocument, {
+			await trpc.friendship.unfriend.mutate({
 				targetUserId: user.id,
 			});
 
@@ -80,7 +64,7 @@ export default function FriendshipRequest(props: Props) {
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
 		} else if (friendRequestSent) {
-			await gqlMutate(DeleteFriendshipRequestDocument, {
+			await trpc.friendship.deleteRequest.mutate({
 				friendshipRequestId: friendRequestSent.id,
 			});
 
@@ -89,24 +73,24 @@ export default function FriendshipRequest(props: Props) {
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
 		} else if (friendRequestReceived) {
-			const res = await gqlMutateTyped(AcceptFriendshipRequestDocument, {
-				friendshipRequestId: friendRequestReceived.id as string,
+			const friendship = await trpc.friendship.acceptRequest.mutate({
+				friendshipRequestId: friendRequestReceived.id,
 			});
 
 			toastSuccess(`Accepted ${user.username}'s friend request`);
-			dispatch(addFriendship(res.data?.acceptFriendshipRequest as any));
+			dispatch(addFriendship(friendship));
 
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
 		} else {
-			const request = await gqlMutateTyped(SendFriendshipRequestDocument, {
+			const request = await trpc.friendship.sendRequest.mutate({
 				toUserId: user.id,
 			});
 
 			toastSuccess(`Friend request sent to ${user.username}`);
 
 			setFriendRequestReceived(null);
-			setFriendRequestSent(request.data?.sendFriendshipRequest ?? null);
+			setFriendRequestSent(request);
 		}
 	}
 

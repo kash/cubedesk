@@ -2,22 +2,23 @@ import React, {ReactNode, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Trash, Eye, User} from 'phosphor-react';
 import Avatar from '@/components/common/avatar/Avatar';
-import {DocumentNode, gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
+import {trpc} from '@/util/trpc';
 import {getTimeString} from '@/util/time';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import {openModal} from '@/actions/general';
 import ReportUser from '@/components/profile/ReportUser';
 import {useMe} from '@/util/hooks/useMe';
-import {Solve} from '../../../server/schemas/Solve.schema';
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
+import {Solve} from '@/types/solve';
+import {PublicUserAccount} from '@/types/user';
+import {PublicUser} from '@/types/user';
+import {Serialized} from '@/types/serialized';
 import classNames from 'classnames';
 
 interface ProfileRowProps {
 	solve?: Solve;
 	index?: number;
-	user: PublicUserAccount;
+	user: PublicUserAccount | Serialized<PublicUser>;
 	recordType?: 'top_solve' | 'top_average';
 	openSolve?: any;
 	getRightMessage?: ReactNode;
@@ -42,29 +43,15 @@ export default function ProfileRow(props: ProfileRowProps) {
 	}
 
 	async function deleteSolve() {
-		let query;
-
-		if (recordType === 'top_solve') {
-			query = gql`
-				mutation Mutate($id: String) {
-					deleteTopSolve(id: $id) {
-						id
-					}
-				}
-			`;
-		} else if (recordType === 'top_average') {
-			query = gql`
-				mutation Mutate($id: String) {
-					deleteTopAverage(id: $id) {
-						id
-					}
-				}
-			`;
+		if (!solveId) {
+			return;
 		}
 
-		await gqlMutate(query as DocumentNode, {
-			id: solveId,
-		});
+		if (recordType === 'top_solve') {
+			await trpc.leaderboards.deleteTopSolve.mutate({id: solveId});
+		} else if (recordType === 'top_average') {
+			await trpc.leaderboards.deleteTopAverage.mutate({id: solveId});
+		}
 
 		setDeleted(true);
 	}
@@ -129,7 +116,7 @@ export default function ProfileRow(props: ProfileRowProps) {
 		>
 			<div className="flex w-2/5 flex-row items-center">
 				{indexSpan}
-				<Avatar showOptions small={mobileMode} profile={user.profile} user={user} />
+				<Avatar showOptions small={mobileMode} user={user} />
 			</div>
 			{solveRow}
 			<div className="flex w-2/5 flex-row items-center justify-end text-right">

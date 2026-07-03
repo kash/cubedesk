@@ -11,7 +11,7 @@ import {emitEvent} from '@/util/event_handler';
 import {saveSolve} from '@/components/timer/helpers/save';
 import {resetScramble} from '@/components/timer/helpers/scramble';
 import {ITimerContext} from '@/components/timer/Timer';
-import {SolveInput} from '../../../../server/schemas/Solve.schema';
+import {SolveInput} from '@/types/solve';
 import {getSettings} from '@/db/settings/query';
 import {getTimerStore} from '@/util/store/getTimer';
 import {resourceUri} from '@/util/storage';

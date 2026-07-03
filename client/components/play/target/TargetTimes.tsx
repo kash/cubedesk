@@ -7,13 +7,14 @@ import SolveInfo from '@/components/solve-info/SolveInfo';
 import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
 import {PlayerStatus} from '@/shared/match/types';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {socketClient} from '@/util/socket/socketio';
 import {updateSolveDb} from '@/db/solves/update';
 import {useMe} from '@/util/hooks/useMe';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
-const solveInfoClasses = 'flex flex-row items-center p-0 text-right text-base font-bold whitespace-pre';
+const solveInfoClasses =
+	'flex flex-row items-center p-0 text-right text-base font-bold whitespace-pre';
 
 interface Props {
 	reverse?: boolean;
@@ -41,7 +42,7 @@ export default function TargetTimes(props: Props) {
 			{
 				dnf: true,
 			},
-			false
+			false,
 		);
 
 		if (match) {
@@ -60,7 +61,7 @@ export default function TargetTimes(props: Props) {
 			{
 				plus_two: true,
 			},
-			false
+			false,
 		);
 
 		if (match) {
@@ -80,7 +81,7 @@ export default function TargetTimes(props: Props) {
 			me.id,
 			i,
 			solves,
-			match
+			match,
 		);
 		const failed = solveStatus === PlayerStatus.Lost;
 
@@ -122,7 +123,7 @@ export default function TargetTimes(props: Props) {
 							flat
 							white
 							warning={solve.plus_two}
-							className="mr-[5px] opacity-30 transition-opacity duration-100 ease-in-out hover:opacity-70 !text-base"
+							className="mr-[5px] !text-base opacity-30 transition-opacity duration-100 ease-in-out hover:opacity-70"
 							onClick={() => plusTwoSolve(solve)}
 						/>
 						<Button
@@ -132,20 +133,28 @@ export default function TargetTimes(props: Props) {
 							text="DNF"
 							hidden={actionsDisabled}
 							danger={solve.dnf}
-							className="mr-[5px] opacity-30 transition-opacity duration-100 ease-in-out hover:opacity-70 !text-base"
+							className="mr-[5px] !text-base opacity-30 transition-opacity duration-100 ease-in-out hover:opacity-70"
 							onClick={() => dnfSolve(solve)}
 						/>
 					</div>
 				);
 			}
 		} else if (targetTime) {
-			solveInfo = <span className={classNames(solveInfoClasses, 'text-text/60')}>/ {getTimeString(targetTime)}</span>;
+			solveInfo = (
+				<span className={classNames(solveInfoClasses, 'text-text/60')}>
+					/ {getTimeString(targetTime)}
+				</span>
+			);
 		}
 
 		const content = (
-			<div className="grid h-[30px] grid-cols-[1fr_135px] flex-row items-center justify-between px-1.5" key={id}>
-				<div className="text-left font-semibold text-text">
-					{indexText} <span className="text-inherit opacity-[0.45]">{solveDescription}</span>
+			<div
+				className="grid h-[30px] grid-cols-[1fr_135px] flex-row items-center justify-between px-1.5"
+				key={id}
+			>
+				<div className="text-text text-left font-semibold">
+					{indexText}{' '}
+					<span className="text-inherit opacity-[0.45]">{solveDescription}</span>
 				</div>
 				<div className="flex flex-row items-center justify-end">
 					{actions}

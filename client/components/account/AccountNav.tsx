@@ -1,7 +1,7 @@
 import React from 'react';
-import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import {useRouteMatch} from 'react-router-dom';
-import PageTitle from '@/components/common/page_title/PageTitle';
+import PageTitle from '@/components/common/PageTitle';
 
 const TABS = [
 	{

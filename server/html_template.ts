@@ -13,6 +13,22 @@ export interface HtmlPagePayload {
 export default (payload: HtmlPagePayload) => {
 	const {html, cleanState, helmet, distBase, resourceBase, cssFileName, jsFileName} = payload;
 
+	const isDev = (process.env.ENV || 'development') === 'development';
+	const assetBase = distBase.replace(/\/$/, '');
+	const assetUri = (fileName: string) => `${assetBase}/${fileName}`;
+	const cssLink = isDev ? '' : `<link rel="stylesheet" href="${assetUri(cssFileName)}">`;
+	const clientScripts = isDev
+		? `<script type="module">
+				import RefreshRuntime from '/@react-refresh';
+				RefreshRuntime.injectIntoGlobalHook(window);
+				window.$RefreshReg$ = () => {};
+				window.$RefreshSig$ = () => (type) => type;
+				window.__vite_plugin_react_preamble_installed__ = true;
+			</script>
+			<script type="module" src="/@vite/client"></script>
+			<script type="module" src="/client/components/App.tsx"></script>`
+		: `<script type="module" src="${assetUri(jsFileName)}"></script>`;
+
 	return `
 		<!DOCTYPE html>
 		<html lang="en">
@@ -23,7 +39,7 @@ export default (payload: HtmlPagePayload) => {
 				<link rel="preconnect" href="https://fonts.gstatic.com">
 				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans&family=JetBrains+Mono&family=Kiwi+Maru&family=Montserrat&family=Poppins&family=Roboto+Mono&family=Space+Mono&display=swap">
 				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,900&display=swap">
-				<link rel="stylesheet" href="${distBase}/${cssFileName}">
+				${cssLink}
 				<link rel="shortcut icon" href="${resourceBase}/favicon.ico" type="image/x-icon">  
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 				<script async defer data-domain="cubedesk.io" src="https://plausible.io/js/plausible.js"></script>
@@ -49,7 +65,7 @@ export default (payload: HtmlPagePayload) => {
 			<script type="text/javascript">
 				window.__STORE__ = ${cleanState};
 			</script>
-			<script src="${distBase}/${jsFileName}"></script>
+			${clientScripts}
 		</html>
 	`;
 };

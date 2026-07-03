@@ -17,7 +17,7 @@ interface Props {
 export default function StatSection(props: Props) {
 	const {title, minWidth, proOnly, description, children, className, rowSpan, colSpan} = props;
 
-	let desc = null;
+	let desc: ReactNode = null;
 	if (description) {
 		desc = <p>{description}</p>;
 	}

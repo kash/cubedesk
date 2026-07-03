@@ -1,7 +1,6 @@
 import {deleteLocalStorage, getLocalStorage, setLocalStorage} from '@/util/data/local_storage';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
-import {UserAccount} from '@/@types/generated/graphql';
+import {trpc} from '@/util/trpc';
+import {UserAccount} from '@/types/user';
 import {v4 as uuid} from 'uuid';
 import {getLokiDb, initLokiDb} from '@/db/lokijs';
 import {initSolvesCollection} from '@/db/solves/init';
@@ -54,17 +53,11 @@ export async function updateOfflineHash(nonInternal = false) {
 		}
 	});
 
-	const query = gql`
-		mutation Mutate($hash: String!) {
-			updateOfflineHash(hash: $hash)
-		}
-	`;
-
 	try {
 		const hash = uuid();
 		setLocalStorage('offlineHash', hash);
 
-		await gqlMutate(query, {
+		await trpc.user.updateOfflineHash.mutate({
 			hash,
 		});
 	} catch (e) {

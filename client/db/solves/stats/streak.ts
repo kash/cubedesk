@@ -50,7 +50,7 @@ export function getSolveStreak(filter: FilterSolvesOptions): SolveStreak {
 	let tempStreakStart = new Date(start);
 	let tempStreakEnd = new Date(end);
 
-	const solvesPerSession = [];
+	const solvesPerSession: number[] = [];
 
 	while (end.getTime() > firstSolveTime) {
 		let dayCount = 0;

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {IModalProps} from '@/components/common/modal/Modal';
-import {AlgorithmOverride} from '@/@types/generated/graphql';
+import {AlgorithmOverrideInput} from '@/types/trainer';
 import {useInput} from '@/util/hooks/useInput';
 import {deleteTrainerAlgoOverrides, updateTrainerAlgoOverrides} from '@/db/trainer/operations';
-import Button from '@/components/common/button/Button';
-import Radio from '@/components/common/inputs/radio/Radio';
-import TextArea from '@/components/common/inputs/textarea/TextArea';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import Button from '@/components/common/Button';
+import Radio from '@/components/common/Radio';
+import TextArea from '@/components/common/TextArea';
+import ModalHeader from '@/components/common/modal/ModalHeader';
 import Input from '@/components/common/inputs/input/Input';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
 import {toastError, toastSuccess} from '@/util/toast';
@@ -28,7 +28,7 @@ export default function EditAlgo(props: Props) {
 	const [solution, setSolution] = useInput(overrides?.solution || algoExt.solution || '');
 	const [scrambles, setScrambles] = useInput(overrides?.scrambles || algoExt.scrambles || '');
 
-	function getOverrides(): AlgorithmOverride {
+	function getOverrides(): AlgorithmOverrideInput {
 		return {
 			name,
 			solution,
@@ -42,7 +42,7 @@ export default function EditAlgo(props: Props) {
 		try {
 			await updateTrainerAlgoOverrides(algoExt, getOverrides());
 			toastSuccess('Updated trainer algorithm');
-			onComplete();
+			onComplete?.();
 		} catch (e) {
 			toastError(e);
 			setSaving(false);
@@ -72,17 +72,26 @@ export default function EditAlgo(props: Props) {
 				title="Edit Trainer Algorithm"
 				description="Below, you can override any of the default values for this trainer algorithm. Removing the value will reset it to its default value."
 			/>
-			<div className="flex w-full items-center justify-center px-0 pb-5 pt-2.5">
-				<AlgoVisual rotate={parseInt(rotate)} colors={algoExt.colors} cubeType={algoExt.cube_type} />
+			<div className="flex w-full items-center justify-center px-0 pt-2.5 pb-5">
+				<AlgoVisual
+					rotate={parseInt(rotate)}
+					colors={algoExt.colors ?? undefined}
+					cubeType={algoExt.cube_type}
+				/>
 			</div>
-			<Input legend="Name" value={name} placeholder={algoExt.name} onChange={setName} />
-			<Input legend="Solution" value={solution} placeholder={algoExt.solution} onChange={setSolution} />
+			<Input legend="Name" value={name} placeholder={algoExt.name ?? undefined} onChange={setName} />
+			<Input
+				legend="Solution"
+				value={solution}
+				placeholder={algoExt.solution ?? undefined}
+				onChange={setSolution}
+			/>
 			<TextArea
 				optional
 				autoSize
 				legend="Scrambles"
 				value={scrambles}
-				placeholder={algoExt.scrambles}
+				placeholder={algoExt.scrambles ?? undefined}
 				onChange={setScrambles}
 			/>
 			<Radio

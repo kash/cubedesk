@@ -1,51 +1,5 @@
 import {getPrisma} from '../database';
-import {MatchSession, MatchSessionInput} from '../schemas/MatchSession.schema';
-
-export async function getMatchSessionById(id: string): Promise<MatchSession> {
-	return getPrisma().matchSession.findUnique({
-		where: {
-			id,
-		},
-		include: {
-			chat_messages: {
-				orderBy: {
-					created_at: 'asc',
-				},
-				include: {
-					user: {
-						include: {
-							profile: {
-								include: {
-									pfp_image: true,
-								},
-							},
-						},
-					},
-				},
-			},
-			game_options: true,
-			matches: {
-				orderBy: {
-					created_at: 'desc',
-				},
-				include: {
-					participants: {
-						orderBy: {
-							created_at: 'asc',
-						},
-						include: {
-							solves: {
-								orderBy: {
-									created_at: 'desc',
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	});
-}
+import {MatchSession, MatchSessionInput} from '@/types/match';
 
 export async function createMatchSession(
 	input: MatchSessionInput,

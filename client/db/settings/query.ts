@@ -1,5 +1,5 @@
 import {getSettingsDb, SettingValue} from './init';
-import {CustomCubeType} from '../../@types/generated/graphql';
+import type {CustomCubeType} from '@/generated/prisma/client';
 import {TimerModuleType} from '../../components/timer/@types/enums';
 import {APP_THEME_PRESETS} from '../../util/themes/theme_consts';
 

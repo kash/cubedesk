@@ -1,11 +1,12 @@
 import React from 'react';
-import {EloRating} from '../../../server/schemas/EloRating.schema';
+import {EloRatingWithUser} from '@/types/elo';
+import {Serialized} from '@/types/serialized';
 import Avatar from '@/components/common/avatar/Avatar';
 import classNames from 'classnames';
 
 interface Props {
 	rank: number;
-	eloRating: EloRating;
+	eloRating: Serialized<EloRatingWithUser>;
 }
 
 export default function EloRow(props: Props) {

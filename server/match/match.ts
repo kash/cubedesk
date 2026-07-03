@@ -1,6 +1,6 @@
 import {getClientRooms, getDetailedClientInfo} from './util';
-import {Match} from '../schemas/Match.schema';
-import {PublicUserAccount} from '../schemas/UserAccount.schema';
+import {Match} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
 import {MatchRoom} from '../../client/shared/match/events';
 import {MatchConst} from '../../client/shared/match/consts';
 import {GameType} from '@/generated/prisma/client';

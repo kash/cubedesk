@@ -5,9 +5,9 @@ import {Pie} from '@visx/shape';
 import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {scaleOrdinal} from '@visx/scale';
-import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import {getTimeString} from '@/util/time';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 const CHART_TYPES = [
 	{
@@ -99,7 +99,11 @@ export default function StepPie(props: Props) {
 					const radius = Math.min(parent.height, parent.width) / 2;
 
 					return (
-						<svg width={parent.width} height={parent.height} style={{overflow: 'visible'}}>
+						<svg
+							width={parent.width}
+							height={parent.height}
+							style={{overflow: 'visible'}}
+						>
 							<Group top={parent.height / 2} left={parent.width / 2}>
 								<Pie
 									data={data}
@@ -113,7 +117,8 @@ export default function StepPie(props: Props) {
 										pie.arcs.map((arc, index) => {
 											const {value} = arc.data;
 											const [centroidX, centroidY] = pie.path.centroid(arc);
-											const hasSpaceForLabel = arc.endAngle - arc.startAngle >= 0.1;
+											const hasSpaceForLabel =
+												arc.endAngle - arc.startAngle >= 0.1;
 											const arcPath = pie.path(arc) || undefined;
 											const arcFill = getLetterFrequencyColor(value);
 											return (
@@ -125,7 +130,12 @@ export default function StepPie(props: Props) {
 																stdDeviation="5"
 																result="blur"
 															/>
-															<feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+															<feOffset
+																in="blur"
+																dx="0"
+																dy="0"
+																result="offsetBlur"
+															/>
 															<feFlood
 																floodColor="white"
 																floodOpacity="1"

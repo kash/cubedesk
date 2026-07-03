@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Timer, ArrowCounterClockwise, ArrowsClockwise} from 'phosphor-react';
 import StepPie from '@/components/solve-info/stats-info/StepPie';
 import RecognitionChart from '@/components/solve-info/stats-info/RecognitionChart';
 import ExecutionTime from '@/components/solve-info/stats-info/ExecutionTime';
 import LLTrainer, {getOllAndPllFromSolve} from '@/components/solve-info/stats-info/LLTrainer';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solve: Solve;
@@ -18,7 +18,7 @@ export default function StatsInfo(props: Props) {
 	const smartInspectionTime = solve.inspection_time;
 	const tps = Math.floor((smartTurnCount / time) * 10) / 10;
 
-	function getStatCard(icon: JSX.Element, title: string, val: number | string) {
+	function getStatCard(icon: ReactNode, title: string, val: number | string) {
 		return (
 			<div className="box-border rounded-[13px] bg-module p-[15px] text-text">
 				{icon}

@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState, ReactNode} from 'react';
 import {socketClient} from '@/util/socket/socketio';
 import {getGameLink} from '@/components/play/game/Game';
 import {reactState} from '@/@types/react';
@@ -60,7 +60,7 @@ export default function MatchPopup(props: Props) {
 		setCubeType,
 	};
 
-	let body = null;
+	let body: ReactNode = null;
 	switch (page) {
 		case MatchPopupPage.HOME: {
 			body = <JoinOptions />;

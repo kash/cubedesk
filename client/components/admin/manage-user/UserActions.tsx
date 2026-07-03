@@ -1,16 +1,15 @@
 import React from 'react';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
 import {openModal} from '@/actions/general';
-import {PUBLIC_USER_WITH_ELO_FRAGMENT} from '@/util/graphql/fragments';
 import BanUser from '@/components/admin/manage-user/BanUser';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {toastSuccess} from '@/util/toast';
 import {useDispatch} from 'react-redux';
-import {UserAccountForAdmin} from '../../../../server/schemas/UserAccount.schema';
+import {trpc} from '@/util/trpc';
+import {AdminUser} from '@/types/admin';
+import {Serialized} from '@/types/serialized';
 
 interface Props {
-	user: UserAccountForAdmin;
+	user: Serialized<AdminUser>;
 	updateUser: () => void;
 }
 
@@ -21,15 +20,7 @@ export default function UserActions(props: Props) {
 	const banned = user.banned_forever || user.banned_until;
 
 	async function unbanUser() {
-		const query = gql`
-			mutation Mutate($userId: String) {
-				unbanUserAccount(userId: $userId) {
-					id
-				}
-			}
-		`;
-
-		await gqlMutate(query, {
+		await trpc.admin.unbanUser.mutate({
 			userId: user.id,
 		});
 
@@ -38,16 +29,7 @@ export default function UserActions(props: Props) {
 	}
 
 	async function toggleVerifyUser() {
-		const query = gql`
-			${PUBLIC_USER_WITH_ELO_FRAGMENT}
-			mutation Mutate($userId: String, $verified: Boolean) {
-				setVerifiedStatus(userId: $userId, verified: $verified) {
-					...PublicUserWithEloFragment
-				}
-			}
-		`;
-
-		await gqlMutate(query, {
+		await trpc.admin.setVerifiedStatus.mutate({
 			userId: user.id,
 			verified: !user.verified,
 		});
@@ -67,7 +49,7 @@ export default function UserActions(props: Props) {
 			dispatch(
 				openModal(<BanUser user={user} />, {
 					onComplete: updateUser,
-				})
+				}),
 			);
 		}
 	}

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from '@/components/timer/helpers/timers';
 import {setTimerParam, setTimerParams} from '@/components/timer/helpers/params';
-import Tag, {TagProps} from '@/components/common/tag/Tag';
+import Tag, {TagProps} from '@/components/common/Tag';
 import {getTimerStore} from '@/util/store/getTimer';
 
 const HIDE_NOTIF_TIMEOUT = 7000;
@@ -14,7 +14,7 @@ export function displayTimerAlert(tagProps: TagProps, dontHide?: boolean) {
 			<div
 				className={classNames(
 					'absolute top-0 z-[10000] box-border flex w-full -translate-y-full justify-center px-5 opacity-100 transition-all duration-300 ease-in-out',
-					dontHide && 'opacity-100'
+					dontHide && 'opacity-100',
 				)}
 			>
 				<Tag glow {...tagProps} />
@@ -39,7 +39,7 @@ export function displayTimerAlert(tagProps: TagProps, dontHide?: boolean) {
 						'absolute top-[30px] z-[10000] box-border flex w-full -translate-y-full justify-center px-5 opacity-0 transition-all duration-300 ease-in-out',
 				}),
 			});
-		}, HIDE_NOTIF_TIMEOUT)
+		}, HIDE_NOTIF_TIMEOUT),
 	);
 }
 

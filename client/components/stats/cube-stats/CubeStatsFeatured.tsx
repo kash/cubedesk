@@ -11,7 +11,7 @@ import {getTimeString} from '@/util/time';
 import {useDispatch} from 'react-redux';
 import {openModal} from '@/actions/general';
 import SolveInfo from '@/components/solve-info/SolveInfo';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 export default function CubeStatsFeatured() {
 	const dispatch = useDispatch();

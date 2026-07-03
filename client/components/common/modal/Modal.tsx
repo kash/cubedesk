@@ -3,12 +3,9 @@ import CSS from 'csstype';
 import {useDispatch} from 'react-redux';
 
 import {X} from 'phosphor-react';
-import {closeModal} from '../../../actions/general';
-import ModalHeader from './modal_header/ModalHeader';
-import block from '../../../styles/bem';
-import './Modal.scss';
-
-const b = block('modal');
+import {closeModal} from '@/actions/general';
+import ModalHeader from '@/components/common/modal/ModalHeader';
+import {cn} from '@/util/cn';
 
 export interface IModalProps {
 	onComplete?: (data?: any) => void;
@@ -87,9 +84,9 @@ export default function Modal(props: IModalProps) {
 		style.zIndex = zIndex;
 	}
 
-	let closeButton = (
+	let closeButton: ReactNode = (
 		<button
-			className="absolute top-4 right-4 z-40 flex h-8 w-8 items-center justify-center rounded text-xl font-bold text-text hover:bg-tm-background/30"
+			className="text-text hover:bg-tm-background/30 absolute top-4 right-4 z-40 flex h-8 w-8 items-center justify-center rounded text-xl font-bold"
 			type="button"
 			onClick={clickClose}
 		>
@@ -102,9 +99,23 @@ export default function Modal(props: IModalProps) {
 	}
 
 	return (
-		<div className={b({active, fullSize})} style={style}>
-			<div className={b('body')} ref={modalRef}>
-				<div className={b('center')} style={centerStyle}>
+		<div
+			className={cn(
+				'fixed top-0 left-0 z-[100000] h-screen w-screen overflow-auto bg-black/80 opacity-0 transition-all duration-200 ease-in-out',
+				active && 'opacity-100',
+				fullSize && 'h-full w-full',
+			)}
+			style={style}
+		>
+			<div className="h-full w-full overflow-y-auto" ref={modalRef}>
+				<div
+					className={cn(
+						'bg-background relative mx-auto mt-24 mb-12 w-[95%] max-w-[600px] rounded-lg p-6 shadow-md transition-all duration-150 ease-in-out',
+						active && 'mt-12',
+						fullSize && 'm-0 h-full w-full max-w-none rounded-none',
+					)}
+					style={centerStyle}
+				>
 					<ModalHeader title={title} description={description} />
 					{closeButton}
 					{React.cloneElement(children as any, {

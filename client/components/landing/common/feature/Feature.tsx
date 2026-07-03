@@ -40,7 +40,7 @@ export default function Feature(props: Props & IFeatureTextProps) {
 		switchText,
 	} = props;
 
-	let imgD = null;
+	let imgD: ReactNode = null;
 
 	if (imgSrc) {
 		imgD = (
@@ -77,7 +77,7 @@ export default function Feature(props: Props & IFeatureTextProps) {
 		);
 	}
 
-	let dots = null;
+	let dots: ReactNode = null;
 	if (dotsPos) {
 		const dotsPositionClasses = {
 			topLeft: 'left-[-40px] top-0',
@@ -94,7 +94,7 @@ export default function Feature(props: Props & IFeatureTextProps) {
 		);
 	}
 
-	let circles = null;
+	let circles: ReactNode = null;
 	if (circlesPos) {
 		circles = (
 			<FeatureCircles

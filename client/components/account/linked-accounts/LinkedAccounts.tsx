@@ -1,6 +1,6 @@
 import React from 'react';
 import IntegrationService from '@/components/account/linked-accounts/IntegrationService';
-import Module from '@/components/common/module/Module';
+import Module from '@/components/common/Module';
 
 export default function LinkedAccounts() {
 	return (

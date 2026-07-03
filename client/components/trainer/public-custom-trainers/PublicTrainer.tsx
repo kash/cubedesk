@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import {ThumbsDown, ThumbsUp, Download} from 'phosphor-react';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
 import {toastError, toastSuccess} from '@/util/toast';
 import {useSelector} from 'react-redux';
 import Avatar from '@/components/common/avatar/Avatar';
-import {CustomTrainer} from '@/@types/generated/graphql';
-import Button from '@/components/common/button/Button';
+import {CustomTrainerWithUser} from '@/types/trainer';
+import {Serialized} from '@/types/serialized';
+import {trpc} from '@/util/trpc';
+import Button from '@/components/common/Button';
 
 interface Props {
 	downloadedByUser: boolean;
 	likedByUser: boolean;
-	trainer: CustomTrainer;
+	trainer: Serialized<CustomTrainerWithUser>;
 }
 
 export default function PublicTrainer(props: Props) {
@@ -38,31 +38,17 @@ export default function PublicTrainer(props: Props) {
 	const downloadedFinal = downloaded || props.downloadedByUser;
 
 	function likeTrainer() {
-		let query;
 		if (liked) {
-			query = gql`
-				mutation Mutation($customTrainerId: String!) {
-					unlikeCustomTrainer(customTrainerId: $customTrainerId) {
-						id
-					}
-				}
-			`;
 			setLikes(likes - 1);
+			trpc.customTrainer.unlike.mutate({
+				customTrainerId: id!,
+			});
 		} else {
-			query = gql`
-				mutation Mutation($customTrainerId: String!) {
-					likeCustomTrainer(customTrainerId: $customTrainerId) {
-						id
-					}
-				}
-			`;
 			setLikes(likes + 1);
+			trpc.customTrainer.like.mutate({
+				customTrainerId: id!,
+			});
 		}
-		``;
-
-		gqlMutate(query, {
-			customTrainerId: id,
-		});
 
 		setLiked(!liked);
 	}
@@ -72,21 +58,15 @@ export default function PublicTrainer(props: Props) {
 			return;
 		}
 
-		const query = gql`
-			mutation Mutation($sourceId: String!) {
-				downloadCustomTrainer(sourceId: $sourceId) {
-					id
-				}
-			}
-		`;
-
 		try {
-			await gqlMutate(query, {
-				sourceId: id,
+			await trpc.customTrainer.download.mutate({
+				sourceId: id!,
 			});
 
 			setDownloaded(true);
-			toastSuccess('Successfully downloaded trainer. You can find it under your Trainer -> Custom Trainer');
+			toastSuccess(
+				'Successfully downloaded trainer. You can find it under your Trainer -> Custom Trainer',
+			);
 		} catch (e) {
 			console.error(e);
 
@@ -95,13 +75,13 @@ export default function PublicTrainer(props: Props) {
 	}
 
 	return (
-		<div className="relative mb-[15px] box-border w-full gap-2.5 rounded border-2 border-button bg-module p-[15px]">
+		<div className="border-button bg-module relative mb-[15px] box-border w-full gap-2.5 rounded border-2 p-[15px]">
 			<div className="grid w-full grid-cols-[130px_1fr]">
 				<div className="flex items-start justify-center">
-					<AlgoVisual zoom={0.8} colors={colors} cubeType={cubeType} />
+					<AlgoVisual zoom={0.8} colors={colors ?? undefined} cubeType={cubeType} />
 				</div>
 				<div>
-					<div className="mb-2.5 border-b-2 border-button pb-2.5">
+					<div className="border-button mb-2.5 border-b-2 pb-2.5">
 						<h3>{name}</h3>
 						{description ? <p className="mb-0">{description}</p> : null}
 						<div className="mt-2.5">

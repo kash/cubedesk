@@ -1,16 +1,9 @@
-import {gqlMutateTyped} from '../../components/api';
 import {getSessionDb} from './init';
 import {emitEvent} from '../../util/event_handler';
 import {getSolveDb} from '../solves/init';
 import {clearSolveStatCache} from '../solves/stats/solves/caching';
-import {Session} from '../../../server/schemas/Session.schema';
-import {
-	CreateSessionDocument,
-	DeleteSessionDocument,
-	MergeSessionsDocument,
-	ReorderSessionsDocument,
-	UpdateSessionDocument,
-} from '../../@types/generated/graphql';
+import {Session} from '@/types/session';
+import {trpc} from '../../util/trpc';
 import {fetchSessionById, fetchSessions} from './query';
 import {updateOfflineHash} from '../../components/layout/offline';
 
@@ -19,13 +12,9 @@ export async function createSessionDb(sessionInput: Partial<Session>) {
 	let session = sessionInput as Session;
 
 	if (!sessionInput.demo_mode) {
-		const res = await gqlMutateTyped(CreateSessionDocument, {
-			input: {
-				name: session.name,
-			},
+		session = await trpc.session.create.mutate({
+			name: session.name,
 		});
-
-		session = res.data.createSession;
 	}
 
 	sessionDb.insert({
@@ -51,7 +40,7 @@ export async function deleteSessionDb(session: Session) {
 	postProcessDbUpdate(session);
 	updateLocalDbOrderValueForAllSessions();
 
-	await gqlMutateTyped(DeleteSessionDocument, {
+	await trpc.session.delete.mutate({
 		id: session.id,
 	});
 }
@@ -59,7 +48,7 @@ export async function deleteSessionDb(session: Session) {
 export async function reorderSessions(sessionIds: string[]) {
 	updateLocalDbOrderValuesForSessionIds(sessionIds);
 
-	await gqlMutateTyped(ReorderSessionsDocument, {
+	await trpc.session.reorder.mutate({
 		ids: sessionIds,
 	});
 }
@@ -94,10 +83,11 @@ export async function updateSessionDb(session: Session, input: Partial<Session>)
 	});
 	postProcessDbUpdate(session, false);
 
-	await gqlMutateTyped(UpdateSessionDocument, {
+	await trpc.session.update.mutate({
 		id: session.id,
-		input: {
-			...input,
+		data: {
+			name: input.name,
+			order: input.order,
 		},
 	});
 }
@@ -127,7 +117,7 @@ export async function mergeSessionsDb(oldSessionId: string, newSessionId: string
 	postProcessDbUpdate(newSession, true);
 	updateLocalDbOrderValueForAllSessions();
 
-	await gqlMutateTyped(MergeSessionsDocument, {
+	await trpc.session.merge.mutate({
 		oldSessionId,
 		newSessionId,
 	});

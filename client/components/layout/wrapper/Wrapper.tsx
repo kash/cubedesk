@@ -1,5 +1,6 @@
 import React, {ReactNode, useEffect} from 'react';
-import Nav, {NAV_LINKS} from '@/components/layout/nav/Nav';
+import Nav from '@/components/layout/nav/Nav';
+import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import {ToastContainer} from 'react-toastify';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
@@ -39,9 +40,17 @@ export default function Wrapper(props: Props) {
 		}
 
 		updateThemeColors();
-	}, [appLoaded, buttonColor, primaryColor, secondaryColor, backgroundColor, moduleColor, textColor]);
+	}, [
+		appLoaded,
+		buttonColor,
+		primaryColor,
+		secondaryColor,
+		backgroundColor,
+		moduleColor,
+		textColor,
+	]);
 
-	let nav = <Nav />;
+	let nav: ReactNode = <Nav />;
 	if (hideTopNav) {
 		nav = null;
 	}
@@ -75,7 +84,15 @@ export default function Wrapper(props: Props) {
 		gridColumns = 'grid-cols-1';
 	}
 
-	const bodyClasses = ['grid', 'h-full', 'min-h-screen', 'w-full', 'box-border', 'bg-background', gridColumns];
+	const bodyClasses = [
+		'grid',
+		'h-full',
+		'min-h-screen',
+		'w-full',
+		'box-border',
+		'bg-background',
+		gridColumns,
+	];
 	if (mobileMode) {
 		bodyClasses.push('pt-[55px]');
 	}

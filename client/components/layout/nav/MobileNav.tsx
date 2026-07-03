@@ -1,8 +1,8 @@
 import React from 'react';
 import {List} from 'phosphor-react';
 import {useRouteMatch} from 'react-router-dom';
-import Logo, { LogoBrandmark } from '@/components/common/logo/Logo';
-import {NAV_LINKS} from '@/components/layout/nav/Nav';
+import {LogoBrandmark} from '@/components/common/Logo';
+import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
 import {logOut} from '@/util/auth/logout';
 import {useTheme} from '@/util/hooks/useTheme';
@@ -33,7 +33,7 @@ export default function MobileNav() {
 	}
 
 	return (
-		<div className="fixed left-0 top-0 z-[100000] flex h-[55px] w-full justify-center">
+		<div className="fixed top-0 left-0 z-[100000] flex h-[55px] w-full justify-center">
 			<div className="box-border flex w-full items-center justify-between px-[13px]">
 				<div className="relative z-[100] w-[30%]">
 					<Dropdown
@@ -49,12 +49,12 @@ export default function MobileNav() {
 				</div>
 				<div className="relative z-[100] flex w-[30%] flex-row justify-center">
 					<a href="/">
-						<LogoBrandmark  dark={!moduleColor.isDark} />
+						<LogoBrandmark dark={!moduleColor.isDark} />
 					</a>
 				</div>
 				{navRight}
 			</div>
-			<span className="absolute left-0 top-0 z-0 h-full w-full bg-module" />
+			<span className="bg-module absolute top-0 left-0 z-0 h-full w-full" />
 		</div>
 	);
 }

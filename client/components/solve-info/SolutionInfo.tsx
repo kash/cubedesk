@@ -1,12 +1,12 @@
 import React, {ReactNode} from 'react';
 import classNames from 'classnames';
-import CopyText from '@/components/common/copy_text/CopyText';
+import CopyText from '@/components/common/CopyText';
 import {getTimeString} from '@/util/time';
 import {getSolveStepsWithChildren} from '@/components/solve-info/util/solution';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {processSmartTurns} from '@/util/smart_scramble';
-import {SolveMethodStep} from '@/@types/generated/graphql';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {SolveMethodStep} from '@/types/solve';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solve: Solve;
@@ -30,10 +30,10 @@ export default function SolutionInfo(props: Props) {
 			>
 				<div className="flex w-full flex-row items-start justify-between">
 					<div className="flex flex-col items-start">
-						<legend className="mb-0 w-auto font-bold text-text">{STEP_NAME_MAP[step.step_name]}</legend>
+						<legend className="mb-0 w-auto font-bold text-text">{STEP_NAME_MAP[step.step_name] ?? step.step_name}</legend>
 						<div className="mt-1.5 flex flex-row flex-wrap">
 							<span className="mr-3 table border-t-[3px] border-info pt-0.5 text-[0.9rem] font-medium text-text opacity-70">
-								{getTimeString(step.total_time)}s
+								{getTimeString(step.total_time ?? 0)}s
 							</span>
 							<span className="mr-3 table border-t-[3px] border-success pt-0.5 text-[0.9rem] font-medium text-text opacity-70">
 								{step.turn_count} Turns
@@ -45,7 +45,7 @@ export default function SolutionInfo(props: Props) {
 					</div>
 
 					<CopyText
-						text={step.turns}
+						text={step.turns ?? ''}
 						buttonProps={{
 							text: 'Copy moves',
 						}}
@@ -66,9 +66,9 @@ export default function SolutionInfo(props: Props) {
 		true
 	).join(' ');
 
-	const stepsBody = [];
+	const stepsBody: ReactNode[] = [];
 	for (const step of steps) {
-		let children = null;
+		let children: ReactNode = null;
 		if (step.children.length) {
 			children = step.children.map((child) => getStep(child, true));
 		}

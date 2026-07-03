@@ -120,7 +120,7 @@ export default function Timer(props: TimerProps) {
 		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': timerType === 'smart' && cubeType === '333',
 	});
 
-	let timerFooterAd = null;
+	let timerFooterAd: ReactNode = null;
 	if (isNotPro(me)) {
 		timerFooterAd = (
 			<div className="absolute bottom-0 left-1/2 mx-auto mb-1.5 mt-[25px] table -translate-x-1/2">

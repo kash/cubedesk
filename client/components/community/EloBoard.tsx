@@ -1,32 +1,22 @@
 import React from 'react';
-import {EloLeaderboardsDocument} from '@/@types/generated/graphql';
 import EloRow from '@/components/community/EloRow';
 import Header from '@/components/layout/Header';
-import PaginatedList from '@/components/common/paginated_list/PaginatedList';
-import {gqlQueryTyped} from '@/components/api';
-import {PaginationArgs} from '../../../server/schemas/Pagination.schema';
-import {EloRating, PaginatedEloLeaderboards} from '../../../server/schemas/EloRating.schema';
+import PaginatedList from '@/components/common/PaginatedList';
+import {trpc} from '@/util/trpc';
+import {PaginationArgs} from '@/types/pagination';
+import {EloRatingWithUser} from '@/types/elo';
+import {Serialized} from '@/types/serialized';
 
 export default function EloBoard() {
-	async function fetchData(pageArgs: PaginationArgs): Promise<PaginatedEloLeaderboards> {
-		const res = await gqlQueryTyped(
-			EloLeaderboardsDocument,
-			{
-				pageArgs,
-			},
-			{
-				fetchPolicy: 'no-cache',
-			}
-		);
-
-		return res.data.eloLeaderboards as unknown as PaginatedEloLeaderboards;
+	function fetchData(pageArgs: PaginationArgs) {
+		return trpc.leaderboards.elo.query(pageArgs);
 	}
 
 	return (
 		<div className="w-full p-2">
 			<Header path="/community/leaderboards" title="CubeDesk - Leaderboards" />
 			<div className="w-full max-w-4xl mx-auto">
-				<PaginatedList<EloRating>
+				<PaginatedList<Serialized<EloRatingWithUser>>
 					fetchData={fetchData}
 					getItemRow={(data, index) => <EloRow key={data.id} rank={index + 1} eloRating={data} />}
 				/>

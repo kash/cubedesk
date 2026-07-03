@@ -1,31 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, ReactNode} from 'react';
 import Input from '@/components/common/inputs/input/Input';
 import Cube from 'cubejs';
-import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import CubeBuilder from '@/components/trainer/add-custom/CubeBuilder';
-import Checkbox from '@/components/common/checkbox/Checkbox';
-import {gql, useQuery} from '@apollo/client';
-import Loading from '@/components/common/loading/Loading';
-import {CUSTOM_TRAINER_FRAGMENT} from '@/util/graphql/fragments';
-import {CustomTrainer, CustomTrainerCreateInput} from '@/@types/generated/graphql';
+import Checkbox from '@/components/common/Checkbox';
+import Loading from '@/components/common/Loading';
+import {CustomTrainerInput, CustomTrainerWithUser} from '@/types/trainer';
+import {trpc} from '@/util/trpc';
 import {useToggle} from '@/util/hooks/useToggle';
 import {useInput} from '@/util/hooks/useInput';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
-import TextArea from '@/components/common/inputs/textarea/TextArea';
-import Button from '@/components/common/button/Button';
+import ModalHeader from '@/components/common/modal/ModalHeader';
+import TextArea from '@/components/common/TextArea';
+import Button from '@/components/common/Button';
 import {createCustomTrainerDb, updateCustomTrainerDb} from '@/db/trainer/custom';
 import {IModalProps} from '@/components/common/modal/Modal';
-import HorizontalLine from '@/components/common/horizontal_line/HorizontalLine';
-
-const CUSTOM_TRAINER_QUERY = gql`
-	${CUSTOM_TRAINER_FRAGMENT}
-
-	query Query($id: String) {
-		customTrainer(id: $id) {
-			...CustomTrainerFragment
-		}
-	}
-`;
+import HorizontalLine from '@/components/common/HorizontalLine';
 
 interface ColorMap {
 	[key: string]: string;
@@ -52,12 +41,17 @@ export default function AddCustom(props: Props) {
 	const [cubeType, setCubeType] = useState('333');
 	const [threeD, toggleThreeD] = useToggle(false);
 
-	const {data} = useQuery<{customTrainer: CustomTrainer}>(CUSTOM_TRAINER_QUERY, {
-		skip: !editingId,
-		variables: {
-			id: editingId,
-		},
-	});
+	const [data, setData] = useState<CustomTrainerWithUser | null>(null);
+
+	useEffect(() => {
+		if (!editingId) {
+			return;
+		}
+
+		trpc.customTrainer.get.query({id: editingId}).then((trainer) => {
+			setData(trainer as unknown as CustomTrainerWithUser);
+		});
+	}, [editingId]);
 
 	function getColorKey(ct: string, td: boolean) {
 		if (td) {
@@ -71,11 +65,11 @@ export default function AddCustom(props: Props) {
 			setLoading(false);
 		}
 
-		if (!data || !data.customTrainer) {
+		if (!data) {
 			return;
 		}
 
-		const trainer = data.customTrainer;
+		const trainer = data;
 
 		setName(trainer.name);
 		setSolution(trainer.solution);
@@ -92,7 +86,7 @@ export default function AddCustom(props: Props) {
 	}, [data]);
 
 	function getScrambles() {
-		const scrambles = [];
+		const scrambles: string[] = [];
 		const solutions = [solution, ...altSolutions.split('\n')];
 
 		for (const sol of solutions) {
@@ -120,7 +114,7 @@ export default function AddCustom(props: Props) {
 
 		setSaving(true);
 
-		const payload: CustomTrainerCreateInput = {
+		const payload: CustomTrainerInput = {
 			name,
 			solution: solution.trim(),
 			description,
@@ -193,8 +187,12 @@ export default function AddCustom(props: Props) {
 					optional
 					info="These solutions will be reversed and used for scrambles. One per line"
 				/>
-				{data?.customTrainer?.copy_of_id ? null : (
-					<Checkbox checked={privateChecked} text="Make trainer private" onChange={onPrivateChange} />
+				{data?.copy_of_id ? null : (
+					<Checkbox
+						checked={privateChecked}
+						text="Make trainer private"
+						onChange={onPrivateChange}
+					/>
 				)}
 				<HorizontalLine />
 				<div className="flex flex-col">

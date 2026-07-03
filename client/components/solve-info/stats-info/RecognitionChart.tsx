@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import classNames from 'classnames';
 import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {getTimeString} from '@/util/time';
-import {SolveMethodStep} from '@/@types/generated/graphql';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {SolveMethodStep} from '@/types/solve';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solve: Solve;
@@ -38,7 +38,7 @@ export default function RecognitionChart(props: Props) {
 	}
 
 	const steps = getSolveStepsWithoutParents(solve);
-	const output = [];
+	const output: ReactNode[] = [];
 
 	let totalRecTime = 0;
 

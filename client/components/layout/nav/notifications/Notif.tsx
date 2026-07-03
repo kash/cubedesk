@@ -1,11 +1,9 @@
 import {ReactNode, useState} from 'react';
-import {gql} from '@apollo/client';
 import dayjs from 'dayjs';
 import {Sword, User} from 'phosphor-react';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {gqlMutate} from '@/components/api';
-import AvatarImage from '@/components/common/avatar/avatar_image/AvatarImage';
-import {NOTIFICATION_FRAGMENT} from '@/util/graphql/fragments';
+import {api} from '@/util/api';
+import AvatarImage from '@/components/common/avatar/AvatarImage';
 
 dayjs.extend(relativeTime);
 
@@ -19,20 +17,13 @@ interface Props {
 export default function Notif({notif, index, onRead, deleteNotification}: Props) {
 	const [read, setRead] = useState(false);
 
+	const markAsReadMutation = api.notification.markAsRead.useMutation();
+	const deleteMutation = api.notification.delete.useMutation();
+
 	const markAsRead = async () => {
-		await gqlMutate(
-			gql`
-				${NOTIFICATION_FRAGMENT}
-				mutation Mutate($id: String) {
-					markNotificationAsRead(id: $id) {
-						...NotificationFragment
-					}
-				}
-			`,
-			{
-				id: notif.id,
-			}
-		);
+		await markAsReadMutation.mutateAsync({
+			id: notif.id,
+		});
 
 		onRead();
 		setRead(true);
@@ -44,15 +35,7 @@ export default function Notif({notif, index, onRead, deleteNotification}: Props)
 	};
 
 	const handleDelete = async () => {
-		const query = gql`
-			mutation Mutate($id: String) {
-				deleteNotification(id: $id) {
-					id
-				}
-			}
-		`;
-
-		await gqlMutate(query, {
+		await deleteMutation.mutateAsync({
 			id: notif.id,
 		});
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Feature from '@/components/landing/common/feature/Feature';
 
 type SettingOption = {
@@ -18,7 +18,7 @@ const settingOptions: SettingOption[] = [
 ];
 
 export default function Settings() {
-	const options = [];
+	const options: ReactNode[] = [];
 
 	for (let i = 0; i < settingOptions.length; i++) {
 		const option = settingOptions[i];

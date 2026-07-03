@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
 
@@ -34,12 +34,22 @@ export default function TopNav(props: Props) {
 			<div className="mx-auto flex w-[95%] max-w-[1600px] flex-row items-center justify-between text-inherit">
 				<div>
 					<a href="/">
-						<img className="w-[150px]" src={resourceUri(`/images/${logoFile}.svg`)} alt="CubeDesk Logo" />
+						<img
+							className="w-[150px]"
+							src={resourceUri(`/images/${logoFile}.svg`)}
+							alt="CubeDesk Logo"
+						/>
 					</a>
 				</div>
 
 				<div className="flex flex-row items-center gap-5 text-inherit">
-					<Button large textColor={white ? '#444444' : null} to="/login" text="Log In" transparent />
+					<Button
+						large
+						textColor={white ? '#444444' : null}
+						to="/login"
+						text="Log In"
+						transparent
+					/>
 					<Button large primary to="/signup" text="Sign uo" />
 				</div>
 			</div>

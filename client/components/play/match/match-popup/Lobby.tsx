@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {UsersThree} from 'phosphor-react';
 import {socketClient} from '@/util/socket/socketio';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {GameType} from '../../../../../shared/match/consts';
 
 interface Props {
@@ -41,7 +41,7 @@ export default function Lobby(props: Props) {
 
 	return (
 		<div className="flex items-center justify-center">
-			<div className="box-border flex flex-col items-center px-0 pb-2.5 pt-[30px] text-text">
+			<div className="text-text box-border flex flex-col items-center px-0 pt-[30px] pb-2.5">
 				<UsersThree className="mb-[5px] text-[1.2rem]" weight="fill" />
 				<p className="mb-5">Looking for players{dots}</p>
 				<Button text="Cancel" onClick={cancelSearch} />

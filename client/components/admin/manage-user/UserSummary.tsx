@@ -1,5 +1,5 @@
 import React from 'react';
-import {UserAccountSolvesSummary, UserAccountSummary} from '../../../../server/schemas/UserAccount.schema';
+import {UserAccountSolvesSummary, UserAccountSummary} from '@/types/admin';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {getTimeString} from '@/util/time';
 
@@ -31,7 +31,7 @@ export default function UserSummary(props: Props) {
 		}
 
 		return cubeTypes.map((ct, index) => {
-			const cubeType = getCubeTypeInfoById(ct.cube_type);
+			const cubeType = getCubeTypeInfoById(ct.cube_type ?? '');
 
 			return (
 				<div
@@ -41,10 +41,10 @@ export default function UserSummary(props: Props) {
 					<h4>{cubeType.name}</h4>
 					<div className="flex flex-row flex-wrap gap-2.5">
 						{getPill('Solves', ct.count.toLocaleString())}
-						{getPill('Total Time', getTimeString(ct.sum, 2))}
-						{getPill('Average', getTimeString(ct.average, 2))}
-						{getPill('Min Time', getTimeString(ct.min_time, 2))}
-						{getPill('Max Time', getTimeString(ct.max_time, 2))}
+						{getPill('Total Time', getTimeString(ct.sum ?? 0, 2))}
+						{getPill('Average', getTimeString(ct.average ?? 0, 2))}
+						{getPill('Min Time', getTimeString(ct.min_time ?? 0, 2))}
+						{getPill('Max Time', getTimeString(ct.max_time ?? 0, 2))}
 					</div>
 				</div>
 			);

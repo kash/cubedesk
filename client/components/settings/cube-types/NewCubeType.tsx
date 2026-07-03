@@ -3,12 +3,11 @@ import {useInput} from '@/util/hooks/useInput';
 import {ScrambleType} from '@/util/cubes/cube_scrambles';
 import {IModalProps} from '@/components/common/modal/Modal';
 import Input from '@/components/common/inputs/input/Input';
-import Button from '@/components/common/button/Button';
-import ScramblePicker from '@/components/common/scramble_picker/ScramblePicker';
-import {gql} from '@apollo/client/core';
-import {gqlMutate} from '@/components/api';
+import Button from '@/components/common/Button';
+import ScramblePicker from '@/components/common/ScramblePicker';
+import {trpc} from '@/util/trpc';
 import {refreshSettings} from '@/db/settings/update';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import ModalHeader from '@/components/common/modal/ModalHeader';
 
 export default function NewCubeType(props: IModalProps) {
 	const [name, setName] = useInput('');
@@ -24,20 +23,10 @@ export default function NewCubeType(props: IModalProps) {
 		setLoading(true);
 		setError('');
 
-		const query = gql`
-			mutation Mutate($input: CustomCubeTypeInput) {
-				createCustomCubeType(input: $input) {
-					id
-				}
-			}
-		`;
-
 		try {
-			await gqlMutate(query, {
-				input: {
-					name,
-					scramble: scrambleType,
-				},
+			await trpc.customCubeType.create.mutate({
+				name,
+				scramble: scrambleType,
 			});
 
 			await refreshSettings();

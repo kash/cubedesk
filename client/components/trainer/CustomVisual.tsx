@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import classNames from 'classnames';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import CSS from 'csstype';
@@ -25,7 +25,7 @@ export default function CustomVisual(props: Props) {
 	const cubeSize = cubeType.size;
 
 	function get2DCubelets() {
-		const cubelets = [];
+		const cubelets: ReactNode[] = [];
 		const cubeWidth = cubeSize + 2;
 		let sub = 0;
 		for (let i = 0; i < cubeWidth; i += 1) {
@@ -76,7 +76,7 @@ export default function CustomVisual(props: Props) {
 	}
 
 	function get3DCubelets() {
-		const output = [];
+		const output: ReactNode[] = [];
 		const faceTransforms = [
 			'translate(13%, -50%) skew(0, 29deg) rotateY(46deg)',
 			'translate(-50%, calc((100% + 13%) * -1)) rotateX(57deg) rotate(45deg)',
@@ -85,7 +85,7 @@ export default function CustomVisual(props: Props) {
 
 		let sub = 0;
 		for (let j = 0; j < 3; j += 1) {
-			const cubelets = [];
+			const cubelets: ReactNode[] = [];
 			for (let i = 0; i < cubeSize; i += 1) {
 				for (let k = 0; k < cubeSize; k += 1) {
 					const off = sub;

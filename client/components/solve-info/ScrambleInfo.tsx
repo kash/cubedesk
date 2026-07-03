@@ -1,8 +1,8 @@
 import React from 'react';
 import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
-import CopyText from '@/components/common/copy_text/CopyText';
-import TextArea from '@/components/common/inputs/textarea/TextArea';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import CopyText from '@/components/common/CopyText';
+import TextArea from '@/components/common/TextArea';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solve: Solve;
@@ -25,9 +25,17 @@ export default function ScrambleInfo(props: Props) {
 		<div className="flex w-full flex-col items-center">
 			{scrambleBody}
 			{editMode ? (
-				<TextArea fullWidth autoSize value={scramble} name="scramble" onChange={handleChange} />
+				<TextArea
+					fullWidth
+					autoSize
+					value={scramble}
+					name="scramble"
+					onChange={handleChange}
+				/>
 			) : (
-				<p className="mb-[15px] mt-0 text-center font-mono leading-6 text-text opacity-100">{scramble}</p>
+				<p className="text-text mt-0 mb-[15px] text-center font-mono leading-6 opacity-100">
+					{scramble}
+				</p>
 			)}
 			<CopyText
 				buttonProps={{

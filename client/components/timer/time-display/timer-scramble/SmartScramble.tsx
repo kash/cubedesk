@@ -18,7 +18,7 @@ export default function SmartScramble() {
 	const {smartTurns, scramble, smartCanStart} = context;
 
 	const smartScramble = processSmartTurns(smartTurns);
-	const failedMoves = [];
+	const failedMoves: string[] = [];
 	let orangeMiddle = false;
 
 	const scrambleParts = scramble.split(' ');

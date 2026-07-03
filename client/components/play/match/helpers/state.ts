@@ -1,8 +1,8 @@
 import {IGameContext} from '@/components/play/game/Game';
 import {reactState} from '@/@types/react';
-import {Match} from '../../../../../server/schemas/Match.schema';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
-import {MatchSession} from '../../../../../server/schemas/MatchSession.schema';
+import {Match} from '@/types/match';
+import {Solve} from '@/types/solve';
+import {MatchSession} from '@/types/match';
 
 interface ExistingMatch {
 	match: Match;
@@ -16,8 +16,8 @@ export function updateMatchState(
 	matchOver: boolean,
 	userId: string,
 	gameContext: IGameContext,
-	setMatch: reactState<Match>,
-	setMatchSession: reactState<MatchSession>,
+	setMatch: reactState<Match | null>,
+	setMatchSession: reactState<MatchSession | null>,
 	setMatchOver: reactState<boolean>,
 	skipSettingSession?: boolean
 ) {
@@ -28,7 +28,7 @@ export function updateMatchState(
 	setSolves(matchState.solves as any);
 	setTimeIndex(matchState.timeIndex);
 
-	if (!skipSettingSession) {
+	if (!skipSettingSession && match.match_session) {
 		setMatchSession(match.match_session);
 	}
 

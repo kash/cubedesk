@@ -10,31 +10,16 @@ import {
 	InternalUserAccount,
 	PublicUserAccount,
 	UserAccount,
-} from '../schemas/UserAccount.schema';
-import GraphQLError from '../util/graphql_error';
-import {ErrorCode} from '../constants/errors';
+} from '@/types/user';
 import {logger} from '../services/logger';
 import {getActiveBanLogsByUserId} from './ban_log';
+import {publicUserSelect} from '@/types/user';
 
+// Reuses publicUserSelect so integrations stay limited to id/service_name —
+// full rows carry OAuth tokens, and objects fetched with this include are sent
+// to clients over socket.io (matches) and tRPC, where nothing masks fields.
 export const publicUserInclude = {
-	select: {
-		id: true,
-		admin: true,
-		mod: true,
-		created_at: true,
-		username: true,
-		verified: true,
-		is_pro: true,
-		banned_forever: true,
-		banned_until: true,
-		integrations: true,
-		elo_rating: true,
-		profile: {
-			include: {
-				pfp_image: true,
-			},
-		},
-	},
+	select: publicUserSelect,
 };
 
 export function sanitizeUser(user: InternalUserAccount, forPublic = false): UserAccount | PublicUserAccount {
@@ -49,9 +34,9 @@ export function sanitizeUsers(users: InternalUserAccount[], forPublic = false): 
 		}
 
 		// User's password should never go to the front-end
-		delete user.password;
-		delete user.join_ip;
-		delete user.stripe_customer_id;
+		delete (user as Partial<InternalUserAccount>).password;
+		delete (user as Partial<InternalUserAccount>).join_ip;
+		delete (user as Partial<InternalUserAccount>).stripe_customer_id;
 
 		if (forPublic) {
 			return <PublicUserAccount>{
@@ -74,28 +59,20 @@ export function sanitizeUsers(users: InternalUserAccount[], forPublic = false): 
 	return users.map((user) => sanitizeUser({...user}));
 }
 
-export async function getUserByIdOrThrow404(id: string) {
-	const user = await getUserById(id);
-	if (!user) {
-		throw new GraphQLError(ErrorCode.NOT_FOUND, `Could not find user with ID ${id}`);
-	}
-	return user;
-}
-
-export function getUserByStripeCustomerId(stripeCustomerId: string): Promise<InternalUserAccount> {
+export function getUserByStripeCustomerId(stripeCustomerId: string): Promise<InternalUserAccount | null> {
 	return getPrisma().userAccount.findUnique({
 		where: {
 			stripe_customer_id: stripeCustomerId,
 		},
-	});
+	}) as Promise<InternalUserAccount | null>;
 }
 
-export function getUserById(id: string): Promise<InternalUserAccount> {
+export function getUserById(id: string): Promise<InternalUserAccount | null> {
 	return getPrisma().userAccount.findUnique({
 		where: {
 			id,
 		},
-	});
+	}) as Promise<InternalUserAccount | null>;
 }
 
 export async function getUserByIdWithProfile(
@@ -121,12 +98,12 @@ export async function getUserByIdWithProfile(
 		};
 	}
 
-	return await getPrisma().userAccount.findUnique({
+	return (await getPrisma().userAccount.findUnique({
 		where: {
 			id,
 		},
 		include,
-	});
+	})) as InternalUserAccount | null;
 }
 
 export async function adminUserSearch(page: number, query: string): Promise<UserAccount[]> {
@@ -152,7 +129,7 @@ export async function adminUserSearch(page: number, query: string): Promise<User
 		};
 	}
 
-	return await getPrisma().userAccount.findMany({
+	return (await getPrisma().userAccount.findMany({
 		where,
 		orderBy: {
 			created_at: 'desc',
@@ -167,22 +144,24 @@ export async function adminUserSearch(page: number, query: string): Promise<User
 		},
 		skip: page * pageSize,
 		take: pageSize,
-	});
+	})) as UserAccount[];
 }
 
-export async function getUserByEmail(email: string): Promise<UserAccount | null> {
-	return await getPrisma().userAccount.findUnique({
+// Returns the FULL row (password hash + integration OAuth tokens) — never
+// send this to a client without sanitizing/narrowing first
+export async function getUserByEmail(email: string): Promise<InternalUserAccount | null> {
+	return (await getPrisma().userAccount.findUnique({
 		where: {
 			email: email.toLowerCase(),
 		},
 		include: {
 			integrations: true,
 		},
-	});
+	})) as InternalUserAccount | null;
 }
 
 export async function getUserByUsername(username: string): Promise<UserAccount[]> {
-	return await getPrisma().userAccount.findMany({
+	return (await getPrisma().userAccount.findMany({
 		where: {
 			username: {
 				equals: username,
@@ -192,20 +171,20 @@ export async function getUserByUsername(username: string): Promise<UserAccount[]
 		include: {
 			integrations: true,
 		},
-	});
+	})) as UserAccount[];
 }
 
 export async function updateUserAccountPassword(userId: string, password: string): Promise<UserAccount> {
 	const hashedPassword = await hashPassword(password);
 
-	return await getPrisma().userAccount.update({
+	return (await getPrisma().userAccount.update({
 		where: {
 			id: userId,
 		},
 		data: {
 			password: hashedPassword,
 		},
-	});
+	})) as UserAccount;
 }
 
 export async function banUserAccountUntil(user: UserAccount, minutes: number): Promise<UserAccount> {
@@ -258,12 +237,12 @@ export async function updateUserAccountWithParams(
 	userId: string,
 	params: Prisma.UserAccountUncheckedUpdateInput
 ): Promise<UserAccount> {
-	return await getPrisma().userAccount.update({
+	return (await getPrisma().userAccount.update({
 		where: {
 			id: userId,
 		},
 		data: params,
-	});
+	})) as UserAccount;
 }
 
 export async function deleteUserAccount(user: UserAccount): Promise<UserAccount | null> {
@@ -285,6 +264,8 @@ export async function deleteUserAccount(user: UserAccount): Promise<UserAccount 
 
 		return null;
 	}
+
+	return null;
 }
 
 export async function createUserAccount(
@@ -302,7 +283,7 @@ export async function createUserAccount(
 
 	let country = 'NONE';
 	try {
-		const location = await getLocationFromIp(ip);
+		const location = await getLocationFromIp(ip ?? '');
 		country = location.country_iso || 'NONE';
 	} catch (e) {
 		logger.error('Could not get location for IP', {
@@ -313,7 +294,7 @@ export async function createUserAccount(
 
 	const hashedPassword = await hashPassword(password);
 
-	return await getPrisma().userAccount.create({
+	return (await getPrisma().userAccount.create({
 		data: {
 			id: uuid(),
 			first_name: firstName,
@@ -324,5 +305,5 @@ export async function createUserAccount(
 			join_ip: ip || '',
 			join_country: country,
 		},
-	});
+	})) as InternalUserAccount;
 }

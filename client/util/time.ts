@@ -1,5 +1,5 @@
 import {getSetting} from '../db/settings/query';
-import {Solve} from '../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 export function getNumberToDecimalPoints(number: number, decimalPoints: number): number {
 	const pow = Math.pow(10, decimalPoints);
@@ -46,7 +46,7 @@ export function getTimeString(source: number | Solve, decimalPoints?: number, ig
 	}
 
 	// We only want to show up to a depth of 3 (y, m, d or d, h, m)
-	const parts = [];
+	const parts: string[] = [];
 	if (years) {
 		parts.push(`${years}y`);
 	}
@@ -61,7 +61,7 @@ export function getTimeString(source: number | Solve, decimalPoints?: number, ig
 		parts.push(`${num}d`);
 	}
 
-	const lastPart = [];
+	const lastPart: (string | number)[] = [];
 	if (hours) {
 		const num = Math.floor(hours % 24);
 		lastPart.push(num);

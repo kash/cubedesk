@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState, ReactNode} from 'react';
 import {FilterSolvesOptions} from '@/db/solves/query';
-import {StatsModuleBlock} from '../../../../server/schemas/StatsModule.schema';
+import {StatsModuleBlock} from '@/types/stats-module';
 import {getStatsBlockDescription, getStatsBlockValueFromFilter} from '@/components/modules/quick-stats/util';
 import {useColor} from '@/util/hooks/useTheme';
 import {useMe} from '@/util/hooks/useMe';
@@ -139,7 +139,7 @@ function StatDescription(props: DescProps) {
 
 	const {statType, averageCount, sortBy, session} = statOptions;
 
-	const text = [];
+	const text: ReactNode[] = [];
 	if (session) {
 		text.push('ses.');
 	}

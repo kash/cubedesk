@@ -1,27 +1,21 @@
 import React from 'react';
-import {gql} from '@apollo/client/core';
-import {gqlMutate} from '@/components/api';
-import Button from '@/components/common/button/Button';
+import {api} from '@/util/api';
+import Button from '@/components/common/Button';
 
 export default function DangerZone() {
-	async function deleteAccount() {
-		const query = gql`
-			mutation Mutate {
-				deleteUserAccount {
-					id
-				}
-			}
-		`;
+	const deleteAccountMutation = api.user.deleteAccount.useMutation();
 
-		await gqlMutate(query);
+	async function deleteAccount() {
+		await deleteAccountMutation.mutateAsync();
 		window.location.href = '/';
 	}
 
 	return (
 		<div>
 			<p>
-				Be careful here. If you click the button below, you will delete your entire account. All of your solves,
-				sessions, stats, etc. will get deleted forever. Proceed with caution.
+				Be careful here. If you click the button below, you will delete your entire account.
+				All of your solves, sessions, stats, etc. will get deleted forever. Proceed with
+				caution.
 			</p>
 			<Button
 				danger

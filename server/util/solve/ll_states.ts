@@ -17,7 +17,7 @@ function addCaseToOutput(mainKey: string, keys, output) {
 		const solution = llCase.noRotationSolution || llCase.defaultSolution;
 		reverseTurns(cubejs, solution);
 
-		const options = [];
+		const options: string[] = [];
 
 		for (let i = 0; i < 4; i += 1) {
 			cubejs.move('U');

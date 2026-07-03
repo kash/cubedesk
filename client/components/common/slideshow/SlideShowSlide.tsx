@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import SlideShowDots from './SlideShowDots';
 import SlideShowButtons from './SlideShowButtons';
-import TextBody from '../text_body/TextBody';
+import TextBody from '@/components/common/TextBody';
 
 export interface SlideShowSlideProps {
 	imgSrc: string;

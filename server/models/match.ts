@@ -3,11 +3,11 @@ import uniqid from 'uniqid';
 import dayjs from 'dayjs';
 import {Prisma} from '@/generated/prisma/client';
 import {v4 as uuid} from 'uuid';
-import {Match} from '../schemas/Match.schema';
-import {MatchSession} from '../schemas/MatchSession.schema';
+import {Match} from '@/types/match';
+import {MatchSession} from '@/types/match';
 import {MatchConst} from '../../client/shared/match/consts';
 import {publicUserInclude} from './user_account';
-import {PublicUserAccount} from '../schemas/UserAccount.schema';
+import {PublicUserAccount} from '@/types/user';
 import {MatchCacher} from '../match/update/match_cacher';
 
 export function matchInclude(includeChat: boolean): Prisma.MatchInclude {
@@ -80,7 +80,10 @@ export async function getMatchBySpectateCode(code: string, includeChat?: boolean
 		include: matchInclude(includeChat),
 	});
 
-	delete match.link_code;
+	// Spectators must not see the join code
+	if (match) {
+		delete match.link_code;
+	}
 
 	return cleanMatch(match);
 }

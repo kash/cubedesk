@@ -1,8 +1,12 @@
 import React from 'react';
-import {SmartDevice} from '@/@types/generated/graphql';
 
 interface Props {
-	cube: SmartDevice;
+	cube: {
+		id: string;
+		name: string;
+		created_at: Date | string;
+		solves: {id: string}[];
+	};
 }
 
 export default function SmartManage(props: Props) {

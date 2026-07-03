@@ -1,4 +1,4 @@
-import {PaginationArgs, PaginationOutput} from '../../schemas/Pagination.schema';
+import {PaginationArgs, PaginationOutput} from '@/types/pagination';
 import {getPrisma} from '../../database';
 import {logger} from '../../services/logger';
 

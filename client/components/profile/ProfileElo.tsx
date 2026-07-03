@@ -1,5 +1,5 @@
 import React from 'react';
-import {EloRating} from '@/@types/generated/graphql';
+import {EloRating} from '@/types/elo';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 
 interface Props {

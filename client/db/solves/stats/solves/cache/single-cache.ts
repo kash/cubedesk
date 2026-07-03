@@ -1,4 +1,4 @@
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 import {clearSingleSolveStatCache, fetchAllSolveCaches} from '../caching';
 
 export function checkForSinglePB(solve: Solve) {

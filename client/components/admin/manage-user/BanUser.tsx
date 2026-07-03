@@ -1,28 +1,21 @@
-import React from 'react';
-import Checkbox from '@/components/common/checkbox/Checkbox';
+import React, {useState} from 'react';
+import Checkbox from '@/components/common/Checkbox';
 import Input from '@/components/common/inputs/input/Input';
-import Select from '@/components/common/inputs/select/Select';
-import {gql, useMutation} from '@apollo/client';
+import Select from '@/components/common/inputs/Select';
 import {toastSuccess} from '@/util/toast';
-import TextArea from '@/components/common/inputs/textarea/TextArea';
-import Button from '@/components/common/button/Button';
+import TextArea from '@/components/common/TextArea';
+import Button from '@/components/common/Button';
 import {useToggle} from '@/util/hooks/useToggle';
 import {useInput} from '@/util/hooks/useInput';
 import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
-import {BanUserInput} from '../../../../server/schemas/BanLog.schema';
-import {UserAccount, UserAccountForAdmin} from '../../../../server/schemas/UserAccount.schema';
-
-const BAN_USER_MUTATION = gql`
-	mutation Mutate($input: BanUserInput) {
-		banUserAccount(input: $input) {
-			id
-		}
-	}
-`;
+import ModalHeader from '@/components/common/modal/ModalHeader';
+import {trpc} from '@/util/trpc';
+import {UserAccount, UserAccountForAdmin} from '@/types/user';
+import {AdminUser} from '@/types/admin';
+import {Serialized} from '@/types/serialized';
 
 interface Props extends IModalProps {
-	user: UserAccount | UserAccountForAdmin;
+	user: UserAccount | UserAccountForAdmin | Serialized<AdminUser>;
 }
 
 export default function BanUser(props: Props) {
@@ -35,15 +28,8 @@ export default function BanUser(props: Props) {
 	const [reason, setReason] = useInput('');
 	const [forever, toggleForever] = useToggle(false);
 
-	const [banUser, banUserData] = useMutation<
-		{banUserAccount: UserAccount},
-		{
-			input: BanUserInput;
-		}
-	>(BAN_USER_MUTATION);
-
-	const error = banUserData?.error?.message;
-	const loading = banUserData?.loading;
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | undefined>(undefined);
 
 	function getDurationMinutes() {
 		const multipliers = {
@@ -92,17 +78,22 @@ export default function BanUser(props: Props) {
 		}
 
 		const {minutes, durationText} = getDurationMinutes();
-		await banUser({
-			variables: {
-				input: {
-					user_id: user.id,
-					minutes,
-					reason,
-					cheating_in_1v1: cheatingIn1v1,
-					delete_published_solves: deletePublishedSolves,
-				},
-			},
-		});
+
+		setLoading(true);
+		try {
+			await trpc.admin.banUser.mutate({
+				user_id: user.id,
+				minutes,
+				reason,
+				cheating_in_1v1: cheatingIn1v1,
+				delete_published_solves: deletePublishedSolves,
+			});
+		} catch (e) {
+			setError(e instanceof Error ? e.message : 'Failed to ban user');
+			return;
+		} finally {
+			setLoading(false);
+		}
 
 		toastSuccess(`Banned ${user.username} for ${durationText}`);
 		props.onComplete();
@@ -124,7 +115,9 @@ export default function BanUser(props: Props) {
 				legend="Reason (user-facing)"
 				value={reason}
 			/>
-			<div className={`mt-5 grid grid-cols-2 gap-5 ${forever ? 'pointer-events-none opacity-60' : ''}`}>
+			<div
+				className={`mt-5 grid grid-cols-2 gap-5 ${forever ? 'pointer-events-none opacity-60' : ''}`}
+			>
 				<Input
 					disabled={forever}
 					legend="Count"
@@ -154,7 +147,11 @@ export default function BanUser(props: Props) {
 					onChange={() => toggleDeletePublishedSolves()}
 					checked={deletePublishedSolves}
 				/>
-				<Checkbox text="Ban user forever" onChange={() => toggleForever()} checked={forever} />
+				<Checkbox
+					text="Ban user forever"
+					onChange={() => toggleForever()}
+					checked={forever}
+				/>
 				<Checkbox
 					text="User was cheating in 1v1 (refunds ELO)"
 					onChange={() => toggleCheatingIn1v1()}

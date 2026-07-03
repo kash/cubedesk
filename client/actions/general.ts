@@ -41,9 +41,7 @@ export function setGeneral<T extends keyof GeneralAllParams>(key: T, value: Gene
 }
 
 export function closeModal() {
-	return (dispatch) => {
-		dispatch({
-			type: 'CLOSE_MODAL',
-		});
+	return {
+		type: 'CLOSE_MODAL',
 	};
 }

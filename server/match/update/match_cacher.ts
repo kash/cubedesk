@@ -7,9 +7,9 @@ import {
 	RedisNamespace,
 	setKeyInRedis,
 } from '../../services/redis';
-import {MatchParticipant} from '../../schemas/MatchParticipant.schema';
+import {MatchParticipant} from '@/types/match';
 import {logger} from '../../services/logger';
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/types/match';
 
 export class MatchCacher {
 	matchId: string;
@@ -97,7 +97,7 @@ export class MatchCacher {
 	async constructMatchCacheFromScratch(): Promise<MatchCache> {
 		const match = await getMatchById(this.matchId);
 
-		const playerCaches = [];
+		const playerCaches: MatchPlayerCache[] = [];
 		for (const player of match.participants) {
 			const matchPlayerCache = this.constructMatchPlayerCache(player);
 			playerCaches.push(matchPlayerCache);

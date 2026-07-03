@@ -1,11 +1,12 @@
 import React, {createContext, ReactNode, useState} from 'react';
 import {reactState} from '@/@types/react';
-import {SessionInput, SolveInput} from '@/@types/generated/graphql';
+import {SolveInput} from '@/types/solve';
+import {SessionInput} from '@/types/session';
 import ProcessData from '@/components/settings/data/import-data/ProcessData';
 import CsTimerInstructions from '@/components/settings/data/import-data/instructions/CsTimerInstructions';
 import {parseCubeDeskData} from '@/components/settings/data/import-data/parse-data/cubedesk';
 import CubeDeskInstructions from '@/components/settings/data/import-data/instructions/CubeDeskInstructions';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import ModalHeader from '@/components/common/modal/ModalHeader';
 import ReviewImport from '@/components/settings/data/import-data/ReviewImport';
 import {parseCsTimerData} from '@/components/settings/data/import-data/parse-data/cstimer';
 
@@ -97,7 +98,8 @@ export default function ImportData(props: Props) {
 				<ModalHeader
 					title={
 						<>
-							Import data from <span>{timerImportData.name}</span>
+							Import data from{' '}
+							<span className="text-secondary">{timerImportData.name}</span>
 						</>
 					}
 				/>

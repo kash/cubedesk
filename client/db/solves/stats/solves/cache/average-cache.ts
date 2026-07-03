@@ -1,4 +1,4 @@
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 import {clearSingleSolveStatCache, fetchAllSolveCaches} from '../caching';
 import {getAveragePB} from '../average/average-pb';
 import {getCurrentAverage} from '../average/average';
@@ -14,11 +14,11 @@ export function checkForAveragePBUpdate(solve: Solve, isNew: boolean) {
 
 	const updatedPbs: typeof cached = [];
 	for (const cach of cached) {
-		if (isNew) {
+		if (isNew && cach.averageCount != null) {
 			const best = getAveragePB(cach.filterOptions, cach.averageCount);
 			const avg = getCurrentAverage(cach.filterOptions, cach.averageCount);
 
-			if (avg.time < best.time && avg.time >= 0) {
+			if (avg && best && avg.time < best.time && avg.time >= 0) {
 				updatedPbs.push(cach);
 			}
 		}
@@ -52,11 +52,11 @@ export function checkForAverageWorstUpdate(solve: Solve, isNew: boolean) {
 
 	const updatedWorsts: typeof cached = [];
 	for (const cach of cached) {
-		if (isNew) {
+		if (isNew && cach.averageCount != null) {
 			const worst = getAverageWorst(cach.filterOptions, cach.averageCount);
 			const avg = getCurrentAverage(cach.filterOptions, cach.averageCount);
 
-			if (avg.time > worst.time && avg.time >= 0) {
+			if (avg && worst && avg.time > worst.time && avg.time >= 0) {
 				updatedWorsts.push(cach);
 			}
 		}

@@ -2,8 +2,8 @@ import {v4 as uuid} from 'uuid';
 import {getPrisma} from '../database';
 import {Prisma} from '@/generated/prisma/client';
 import {getAverage} from '../../client/db/solves/stats/solves/average/average';
-import {UserAccount} from '../schemas/UserAccount.schema';
-import {Solve as SolveClientType} from '../schemas/Solve.schema';
+import type {Solve} from '@/generated/prisma/client';
+import {publicUserSelect} from '@/types/user';
 
 export async function deleteAllPublishedSolves(user) {
 	return Promise.all([deleteAllTopSolves(user), deleteAllTopAverages(user)]);
@@ -71,7 +71,7 @@ export function submitTopSolve(user, solve) {
 	});
 }
 
-export function submitTopAverage(user: UserAccount, solves: SolveClientType[]) {
+export function submitTopAverage(user: {id: string}, solves: Array<Pick<Solve, 'id' | 'time' | 'cube_type'>>) {
 	const avg = getAverage(solves);
 
 	const data = {
@@ -101,22 +101,12 @@ export function getUserTopSolves(user) {
 	});
 }
 
+// user must stay a safe select — tRPC has no schema masking, and the old full
+// include leaked password hashes and integration OAuth tokens
 const topSolveInclude = {
 	solve: true,
 	user: {
-		include: {
-			badges: {
-				include: {
-					badge_type: true,
-				},
-			},
-			integrations: true,
-			profile: {
-				include: {
-					pfp_image: true,
-				},
-			},
-		},
+		select: publicUserSelect,
 	},
 };
 
@@ -127,19 +117,7 @@ const topAverageInclude = {
 	solve_4: true,
 	solve_5: true,
 	user: {
-		include: {
-			badges: {
-				include: {
-					badge_type: true,
-				},
-			},
-			integrations: true,
-			profile: {
-				include: {
-					pfp_image: true,
-				},
-			},
-		},
+		select: publicUserSelect,
 	},
 };
 

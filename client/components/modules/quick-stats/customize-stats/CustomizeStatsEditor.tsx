@@ -1,20 +1,23 @@
-import React, {useEffect, useRef, useState} from 'react';
-import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import React, {useEffect, useRef, useState, ReactNode} from 'react';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import {useToggle} from '@/util/hooks/useToggle';
 import {Check} from 'phosphor-react';
 import Input from '@/components/common/inputs/input/Input';
-import Checkbox from '@/components/common/checkbox/Checkbox';
-import InputLegend from '@/components/common/inputs/input/input_legend/InputLegend';
+import Checkbox from '@/components/common/Checkbox';
+import InputLegend from '@/components/common/inputs/input/InputLegend';
 import colorPalette, {ColorName} from '../../../../../shared/colors';
 import CustomizeStatsColor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsColor';
-import {StatsModuleBlock} from '../../../../../server/schemas/StatsModule.schema';
+import {StatsModuleBlock} from '@/types/stats-module';
 import ProOnly from '@/components/common/pro_only/ProOnly';
-import {getStatsBlockDescription, saveStatsModuleBlocks} from '@/components/modules/quick-stats/util';
+import {
+	getStatsBlockDescription,
+	saveStatsModuleBlocks,
+} from '@/components/modules/quick-stats/util';
 import {useDispatch} from 'react-redux';
 import {updateStatsModuleBlock} from '@/actions/stats';
-import Tag from '@/components/common/tag/Tag';
-import Button from '@/components/common/button/Button';
-import FormSection from '@/components/common/form/FormSection';
+import Tag from '@/components/common/Tag';
+import Button from '@/components/common/Button';
+import FormSection from '@/components/common/FormSection';
 
 interface Props {
 	hideRemoveButton?: boolean;
@@ -27,7 +30,7 @@ export default function CustomizeStatsEditor(props: Props) {
 	const {stat, index, removeStatsBlock, hideRemoveButton} = props;
 
 	const effectiveAverageCountStr = String(
-		typeof stat?.averageCount === 'number' ? Math.max(stat.averageCount, 0) : 50
+		typeof stat?.averageCount === 'number' ? Math.max(stat.averageCount, 0) : 50,
 	);
 
 	const dispatch = useDispatch();
@@ -42,7 +45,9 @@ export default function CustomizeStatsEditor(props: Props) {
 	const [session, toggleSession] = useToggle(stat.session);
 	const [colorName, setColorName] = useState<ColorName>(stat.colorName || 'text');
 	const [averageCount, setAverageCount] = useState<string>(effectiveAverageCountStr);
-	const [averageCountInt, setAverageCountInt] = useState<number>(parseInt(effectiveAverageCountStr, 10));
+	const [averageCountInt, setAverageCountInt] = useState<number>(
+		parseInt(effectiveAverageCountStr, 10),
+	);
 
 	const description = getStatsBlockDescription(stat);
 
@@ -127,9 +132,9 @@ export default function CustomizeStatsEditor(props: Props) {
 		setAverageCountInt(num);
 	}
 
-	let averageCountDiv = null;
+	let averageCountDiv: ReactNode = null;
 	if (statType === 'average') {
-		const avgCountClasses = [];
+		const avgCountClasses: string[] = [];
 		if (averageAll) {
 			avgCountClasses.push('pointer-events-none');
 			avgCountClasses.push('opacity-50');
@@ -139,7 +144,11 @@ export default function CustomizeStatsEditor(props: Props) {
 			<FormSection>
 				<InputLegend text="Average by" />
 				<div>
-					<Checkbox text="Overall average" checked={averageAll} onChange={() => toggleSetAverageAll()} />
+					<Checkbox
+						text="Overall average"
+						checked={averageAll}
+						onChange={() => toggleSetAverageAll()}
+					/>
 				</div>
 				<div className="my-2 opacity-80">
 					<Tag text="OR" textColor="text" />
@@ -155,14 +164,54 @@ export default function CustomizeStatsEditor(props: Props) {
 					/>
 					<div className="mt-2 flex flex-row flex-wrap gap-2">
 						<Button round text="5" secondary onClick={() => selectPresetAverageOf(5)} />
-						<Button round text="10" secondary onClick={() => selectPresetAverageOf(10)} />
-						<Button round text="12" secondary onClick={() => selectPresetAverageOf(12)} />
-						<Button round text="25" secondary onClick={() => selectPresetAverageOf(25)} />
-						<Button round text="50" secondary onClick={() => selectPresetAverageOf(50)} />
-						<Button round text="100" secondary onClick={() => selectPresetAverageOf(100)} />
-						<Button round text="250" secondary onClick={() => selectPresetAverageOf(250)} />
-						<Button round text="500" secondary onClick={() => selectPresetAverageOf(500)} />
-						<Button round text="1,000" secondary onClick={() => selectPresetAverageOf(1000)} />
+						<Button
+							round
+							text="10"
+							secondary
+							onClick={() => selectPresetAverageOf(10)}
+						/>
+						<Button
+							round
+							text="12"
+							secondary
+							onClick={() => selectPresetAverageOf(12)}
+						/>
+						<Button
+							round
+							text="25"
+							secondary
+							onClick={() => selectPresetAverageOf(25)}
+						/>
+						<Button
+							round
+							text="50"
+							secondary
+							onClick={() => selectPresetAverageOf(50)}
+						/>
+						<Button
+							round
+							text="100"
+							secondary
+							onClick={() => selectPresetAverageOf(100)}
+						/>
+						<Button
+							round
+							text="250"
+							secondary
+							onClick={() => selectPresetAverageOf(250)}
+						/>
+						<Button
+							round
+							text="500"
+							secondary
+							onClick={() => selectPresetAverageOf(500)}
+						/>
+						<Button
+							round
+							text="1,000"
+							secondary
+							onClick={() => selectPresetAverageOf(1000)}
+						/>
 					</div>
 				</div>
 			</FormSection>
@@ -178,7 +227,7 @@ export default function CustomizeStatsEditor(props: Props) {
 		/>
 	));
 
-	let saveDiv = null;
+	let saveDiv: ReactNode = null;
 	if (savedStatus === 'saved') {
 		saveDiv = <Tag textColor="green" text="Saved" icon={<Check weight="bold" />} />;
 	} else if (savedStatus === 'saving') {
@@ -190,8 +239,8 @@ export default function CustomizeStatsEditor(props: Props) {
 			<div className="absolute top-0 right-0 flex flex-row gap-3">{saveDiv}</div>
 			<div className="flex flex-col">
 				<div className="w-full">
-					<h3 className="w-full text-center capitalize text-text/80">{description}</h3>
-					{error && <p className="mt-2 text-error/80">{error}</p>}
+					<h3 className="text-text/80 w-full text-center capitalize">{description}</h3>
+					{error && <p className="text-error/80 mt-2">{error}</p>}
 				</div>
 				<FormSection removePaddingTop>
 					<HorizontalNav
@@ -221,7 +270,11 @@ export default function CustomizeStatsEditor(props: Props) {
 				</FormSection>
 				<FormSection>
 					<InputLegend text="Options" />
-					<Checkbox text="Session solves only" checked={session} onChange={() => toggleSession()} />
+					<Checkbox
+						text="Session solves only"
+						checked={session}
+						onChange={() => toggleSession()}
+					/>
 				</FormSection>
 				<FormSection>
 					<InputLegend text="Stat color" />

@@ -1,12 +1,9 @@
 import React, {useEffect} from 'react';
-import {gqlMutate} from '@/components/api';
-import {gql} from '@apollo/client';
 import {useRouteMatch} from 'react-router-dom';
 import {toastError} from '@/util/toast';
-import {useMe} from '@/util/hooks/useMe';
+import {trpc} from '@/util/trpc';
 
 export default function OAuthService() {
-	const me = useMe();
 	const match = useRouteMatch() as any;
 	const integrationType = match?.params?.integrationType;
 
@@ -14,18 +11,16 @@ export default function OAuthService() {
 		const urlParams = new URLSearchParams(window.location.search);
 		const code = urlParams.get('code');
 
-		const query = gql`
-			mutation Mutate($code: String!, $integrationType: IntegrationType) {
-				createIntegration(code: $code, integrationType: $integrationType) {
-					id
-				}
-			}
-		`;
+		if (!code) {
+			toastError('Missing authorization code');
+			return;
+		}
 
-		gqlMutate(query, {
-			code,
-			integrationType,
-		})
+		trpc.integration.create
+			.mutate({
+				code,
+				integrationType,
+			})
 			.then(() => {
 				window.location.href = `/account/linked-accounts`;
 			})

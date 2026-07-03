@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import {useRouteMatch} from 'react-router-dom';
 import {CommunityContext} from '@/components/community/Community';
 import Input from '@/components/common/inputs/input/Input';
-import PageTitle from '@/components/common/page_title/PageTitle';
+import PageTitle from '@/components/common/PageTitle';
 import {MagnifyingGlass} from 'phosphor-react';
 
 const TABS = [

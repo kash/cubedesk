@@ -1,11 +1,10 @@
 import {getGameLink} from '@/components/play/game/Game';
-import {useContext} from 'react';
-import {MatchContext} from '@/components/play/match/Match';
+import {useMatchContext} from '@/components/play/match/Match';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
 import {MatchUpdate} from '@/shared/match/types';
 
 export function listenForJoinEvents() {
-	const matchContext = useContext(MatchContext);
+	const matchContext = useMatchContext();
 	const {matchType, match} = matchContext;
 
 	useSocketListener('matchStarted', onJoinMatch, [match]);
@@ -15,7 +14,7 @@ export function listenForJoinEvents() {
 	 */
 	async function onJoinMatch(data: MatchUpdate) {
 		// Checking to see if it's a rematch
-		if (data.match.id !== match.id) {
+		if (match && data.match.id !== match.id) {
 			window.location.href = getGameLink(matchType, data.match.link_code);
 			return;
 		}

@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux';
 import {Warning} from 'phosphor-react';
 import {getDateFromNow} from '@/util/dates';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {logOut} from '@/util/auth/logout';
 
 export default function Banned() {
@@ -12,7 +12,10 @@ export default function Banned() {
 		bannedText = (
 			<p>
 				You account has been{' '}
-				<span className="box-border rounded bg-module p-1 font-semibold text-error">permanently</span> banned
+				<span className="bg-module text-error box-border rounded p-1 font-semibold">
+					permanently
+				</span>{' '}
+				banned
 			</p>
 		);
 	} else {
@@ -20,7 +23,9 @@ export default function Banned() {
 		bannedText = (
 			<p>
 				Ban will be automatically lifted{' '}
-				<span className="box-border rounded bg-module p-1 font-semibold text-error">{until}</span>
+				<span className="bg-module text-error box-border rounded p-1 font-semibold">
+					{until}
+				</span>
 			</p>
 		);
 	}
@@ -34,13 +39,13 @@ export default function Banned() {
 	}
 
 	return (
-		<div className="fixed left-0 top-0 z-[100000000] flex h-screen w-screen items-center justify-center bg-background">
+		<div className="bg-background fixed top-0 left-0 z-[100000000] flex h-screen w-screen items-center justify-center">
 			<div className="flex w-[95%] max-w-[500px] flex-col items-center">
-				<Warning className="mb-[15px] text-[2rem] text-error" weight="bold" />
-				<h4 className="mb-5 mt-[5px] text-[1.3rem] text-text">Account banned</h4>
+				<Warning className="text-error mb-[15px] text-[2rem]" weight="bold" />
+				<h4 className="text-text mt-[5px] mb-5 text-[1.3rem]">Account banned</h4>
 				{bannedText}
-				<div className="mb-5 box-border w-full rounded-[10px] bg-module p-[15px] text-text">
-					<span className="mb-[7px] table font-semibold text-text">Reason</span>
+				<div className="bg-module text-text mb-5 box-border w-full rounded-[10px] p-[15px]">
+					<span className="text-text mb-[7px] table font-semibold">Reason</span>
 					<p className="m-0">{reason}</p>
 				</div>
 				<p>

@@ -3,15 +3,15 @@ import {CaretDown} from 'phosphor-react';
 import {useDispatch} from 'react-redux';
 import ImportData, {ImportDataType} from '@/components/settings/data/import-data/ImportData';
 import fileDownload from 'js-file-download';
-import {gql} from '@apollo/client/core';
-import {gqlMutate, removeTypename} from '@/components/api';
+import {removeTypename} from '@/util/object';
+import {trpc} from '@/util/trpc';
 import {openModal} from '@/actions/general';
 import {fetchSessions} from '@/db/sessions/query';
 import {fetchSolves} from '@/db/solves/query';
 import {toastError, toastSuccess} from '@/util/toast';
 import SettingRow from '@/components/settings/common/SettingRow';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import Button, {CommonType} from '@/components/common/button/Button';
+import Button, {CommonType} from '@/components/common/Button';
 import {clearOfflineData} from '@/components/layout/offline';
 
 export default function DataSettings() {
@@ -20,16 +20,8 @@ export default function DataSettings() {
 	const [exportingData, setExportingData] = useState(false);
 
 	async function resetSettings() {
-		const query = gql`
-			mutation Mutate {
-				resetSettings {
-					id
-				}
-			}
-		`;
-
 		try {
-			await gqlMutate(query);
+			await trpc.setting.reset.mutate();
 			window.location.reload();
 		} catch (e) {
 			toastError((e as Error).message);
@@ -84,15 +76,30 @@ export default function DataSettings() {
 				title="Export solve & session data"
 				description="This data can act as a backup for your solve and sessions data, which can be imported later if needed."
 			>
-				<Button theme={CommonType.GRAY} loading={exportingData} text="Export data" onClick={exportData} />
+				<Button
+					theme={CommonType.GRAY}
+					loading={exportingData}
+					text="Export data"
+					onClick={exportData}
+				/>
 			</SettingRow>
-			<SettingRow loggedInOnly title="Import data" description="Import data from csTimer or CubeDesk">
+			<SettingRow
+				loggedInOnly
+				title="Import data"
+				description="Import data from csTimer or CubeDesk"
+			>
 				<Dropdown
 					text="Import data"
 					icon={<CaretDown weight="bold" />}
 					options={[
-						{text: 'Import from csTimer', onClick: () => openImportModal(ImportDataType.CS_TIMER)},
-						{text: 'Import from CubeDesk', onClick: () => openImportModal(ImportDataType.CUBEDESK)},
+						{
+							text: 'Import from csTimer',
+							onClick: () => openImportModal(ImportDataType.CS_TIMER),
+						},
+						{
+							text: 'Import from CubeDesk',
+							onClick: () => openImportModal(ImportDataType.CUBEDESK),
+						},
 					]}
 				/>
 			</SettingRow>

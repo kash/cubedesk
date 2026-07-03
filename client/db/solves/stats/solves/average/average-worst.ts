@@ -2,7 +2,7 @@ import {fetchSolves, FilterSolvesOptions} from '../../../query';
 import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
 import SortedArray from 'sorted-array';
 import {getAverage} from './average';
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 export function getAverageWorst(filterOptions: FilterSolvesOptions, count: number) {
 	const cacheKey: SolveCacheKey = {

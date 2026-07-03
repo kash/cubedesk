@@ -1,7 +1,7 @@
 import React from 'react';
-import AvatarImage from '@/components/common/avatar/avatar_image/AvatarImage';
+import AvatarImage from '@/components/common/avatar/AvatarImage';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/dropdown_option/DropdownOption';
+import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
 import {logOut} from '@/util/auth/logout';
 import {useMe} from '@/util/hooks/useMe';
 

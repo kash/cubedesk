@@ -14,7 +14,7 @@ export function validateStrongPassword(pass: string, confirmPassword?: string): 
 	const cap1Check = /[A-Z]+/.test(pass);
 	const lower1Check = /[a-z]+/.test(pass);
 	const confirmMatches = typeof confirmPassword === 'undefined' || (pass === confirmPassword && !!pass);
-	const errMsg = [];
+	const errMsg: string[] = [];
 
 	if (!confirmMatches) {
 		errMsg.push('Passwords do not match');

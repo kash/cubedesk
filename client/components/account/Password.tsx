@@ -1,37 +1,21 @@
 import React, {useState} from 'react';
-import {gql} from '@apollo/client/core';
 import {validateStrongPassword} from '@/util/auth/password';
-import PasswordStrength from '@/components/common/password_strength/PasswordStrength';
+import PasswordStrength from '@/components/common/PasswordStrength';
 import Input from '@/components/common/inputs/input/Input';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {useInput} from '@/util/hooks/useInput';
-import {useMutation} from '@apollo/client';
-import {UserAccount} from '@/@types/generated/graphql';
+import {api} from '@/util/api';
 import {toastSuccess} from '@/util/toast';
-
-const UPDATE_PASSWORD_MUTATION = gql`
-	mutation Mutate($oldPassword: String!, $newPassword: String!) {
-		updateUserPassword(old_password: $oldPassword, new_password: $newPassword) {
-			id
-		}
-	}
-`;
 
 export default function Password() {
 	const [oldPassword, setOldPassword] = useInput('');
 	const [password, setPassword] = useInput('');
 	const [error, setError] = useState('');
 
-	const [updatePassword, updatePasswordData] = useMutation<
-		{updateUserPassword: UserAccount},
-		{
-			oldPassword: string;
-			newPassword: string;
-		}
-	>(UPDATE_PASSWORD_MUTATION);
+	const updatePasswordMutation = api.user.updatePassword.useMutation();
 
 	async function changePassword() {
-		if (updatePasswordData?.loading) {
+		if (updatePasswordMutation.isPending) {
 			return;
 		}
 
@@ -42,11 +26,9 @@ export default function Password() {
 		}
 
 		try {
-			await updatePassword({
-				variables: {
-					oldPassword,
-					newPassword: password,
-				},
+			await updatePasswordMutation.mutateAsync({
+				old_password: oldPassword,
+				new_password: password,
 			});
 
 			toastSuccess('Successfully updated password');
@@ -57,7 +39,12 @@ export default function Password() {
 
 	return (
 		<div>
-			<Input type="password" value={oldPassword} legend="Current Password" onChange={setOldPassword} />
+			<Input
+				type="password"
+				value={oldPassword}
+				legend="Current Password"
+				onChange={setOldPassword}
+			/>
 			<Input type="password" value={password} legend="New Password" onChange={setPassword} />
 			<PasswordStrength password={password} />
 			<Button
@@ -66,7 +53,7 @@ export default function Password() {
 				large
 				text="Change Password"
 				error={error}
-				loading={updatePasswordData?.loading}
+				loading={updatePasswordMutation.isPending}
 				onClick={changePassword}
 			/>
 		</div>

@@ -1,9 +1,18 @@
 import React from 'react';
-import {CaretUp, CaretDown, Confetti, Sword, DiscordLogo, Tree, ChartLineUp, HeartStraight} from 'phosphor-react';
+import {
+	CaretUp,
+	CaretDown,
+	Confetti,
+	Sword,
+	DiscordLogo,
+	Tree,
+	ChartLineUp,
+	HeartStraight,
+} from 'phosphor-react';
 import classNames from 'classnames';
 import ProFeature from '@/components/account/membership/pro-card/ProFeature';
 import {useToggle} from '@/util/hooks/useToggle';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {resourceUri} from '@/util/storage';
 
 export default function ProFeatureList() {
@@ -15,7 +24,7 @@ export default function ProFeatureList() {
 
 	return (
 		<div className="w-full">
-			<div className="mb-2.5 mt-5 flex flex-row items-end justify-between">
+			<div className="mt-5 mb-2.5 flex flex-row items-end justify-between">
 				<h4 className="mb-0">Features</h4>
 				<Button
 					white
@@ -77,7 +86,7 @@ export default function ProFeatureList() {
 					name="And more!"
 				>
 					<div>
-						<ul className="box-border list-disc pl-5 text-text">
+						<ul className="text-text box-border list-disc pl-5">
 							<li>Pro badge on CubeDesk</li>
 							<li className="mt-1.5">Change nickname on Discord</li>
 							<li className="mt-1.5">Priority email/Discord support</li>

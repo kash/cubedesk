@@ -1,7 +1,6 @@
 import React, {ReactNode} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {resourceUri} from '@/util/storage';
-import process from 'process';
 
 interface Props {
 	path: string;

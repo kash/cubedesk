@@ -1,33 +1,31 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
+import {api} from '@/util/api';
+import {fileToBase64} from '@/util/upload';
 import {getMe} from '@/actions/account';
-import UploadCover from '@/components/common/upload_cover/UploadCover';
+import UploadCover from '@/components/common/UploadCover';
 import {useMe} from '@/util/hooks/useMe';
 import {getStorageURL} from '@/util/storage';
-import Button from '@/components/common/button/Button';
-import {TimerBackground as TimerBackgroundSchema} from '@/@types/generated/graphql';
+import Button from '@/components/common/Button';
 
 export default function TimerBackground() {
 	const dispatch = useDispatch();
 	const me = useMe();
 
-	const [loading, setLoading] = useState(false);
-	const [image, setImage] = useState<string>(getStorageURL(me?.timer_background?.storage_path || '') || '');
+	const [image, setImage] = useState<string>(
+		getStorageURL(me?.timer_background?.storage_path || '') || '',
+	);
 
-	async function uploadTimerBackground(variables: {file: any}) {
-		const query = gql`
-			mutation Mutate($file: Upload) {
-				uploadTimerBackground(file: $file) {
-					id
-					storage_path
-				}
-			}
-		`;
+	const uploadMutation = api.timerBackground.upload.useMutation();
+	const deleteMutation = api.timerBackground.delete.useMutation();
 
-		const res = await gqlMutate(query, variables);
-		const storagePath = ((res.data as any)?.uploadTimerBackground as TimerBackgroundSchema)?.storage_path || '';
+	async function uploadTimerBackground(variables: {file: File}) {
+		const background = await uploadMutation.mutateAsync({
+			fileName: variables.file.name,
+			data: await fileToBase64(variables.file),
+		});
+
+		const storagePath = background?.storage_path || '';
 		const url = getStorageURL(storagePath) || '';
 
 		setImage(url);
@@ -39,40 +37,31 @@ export default function TimerBackground() {
 	}
 
 	async function resetBackgroundImage() {
-		if (loading) {
+		if (deleteMutation.isPending) {
 			return;
 		}
 
-		setLoading(true);
-
-		const query = gql`
-			mutation Mutate {
-				deleteTimerBackground {
-					id
-				}
-			}
-		`;
-
-		await gqlMutate(query);
+		await deleteMutation.mutateAsync();
 
 		setImage('');
-		setLoading(false);
 		dispatch(getMe() as any);
 	}
 
 	return (
 		<div>
-			<div className="relative mb-2 h-[130px] w-[200px] cursor-pointer overflow-hidden rounded-[7px] border-[3px] border-tmo-background/40">
+			<div className="border-tmo-background/40 relative mb-2 h-[130px] w-[200px] cursor-pointer overflow-hidden rounded-[7px] border-[3px]">
 				<UploadCover upload={uploadTimerBackground} />
 				{image ? (
 					<img
-						className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover"
+						className="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover"
 						src={image}
 						alt="Timer background"
 					/>
 				) : null}
 			</div>
-			{image ? <Button flat text="Reset background" danger onClick={resetBackgroundImage} /> : null}
+			{image ? (
+				<Button flat text="Reset background" danger onClick={resetBackgroundImage} />
+			) : null}
 		</div>
 	);
 }

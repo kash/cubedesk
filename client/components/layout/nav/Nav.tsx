@@ -3,20 +3,9 @@ import {useDispatch} from 'react-redux';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {setSetting} from '@/db/settings/update';
 import {setGeneral} from '@/actions/general';
-import {
-	ArrowLeft,
-	Sword,
-	ChartPie,
-	LadderSimple,
-	Users,
-	ListBullets,
-	Rows,
-	Wrench,
-	Timer,
-	ArrowRight,
-} from 'phosphor-react';
+import {ArrowLeft, ArrowRight} from 'phosphor-react';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
-import Logo, { LogoBrandmark, LogoLockup } from '@/components/common/logo/Logo';
+import {LogoBrandmark, LogoLockup} from '@/components/common/Logo';
 import MobileNav from '@/components/layout/nav/MobileNav';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useWindowListener} from '@/util/hooks/useListener';
@@ -25,72 +14,11 @@ import {useTheme} from '@/util/hooks/useTheme';
 import AccountDropdown from '@/components/layout/nav/account-dropdown/AccountDropdown';
 import {useMe} from '@/util/hooks/useMe';
 import NavLink from '@/components/layout/nav/NavLink';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import LoginNav from '@/components/layout/nav/LoginNav';
 import {resourceUri} from '@/util/storage';
-
-export interface NavLinkProps {
-	name: string;
-	icon: ReactNode;
-	match: RegExp;
-	link: string;
-	newTag?: boolean;
-	loginRequired?: boolean;
-}
-
-export const NAV_LINKS: NavLinkProps[] = [
-	{
-		name: 'Timer',
-		icon: <Timer weight="bold" />,
-		match: /(^\/$|^$)|(^\/demo$|^$)/,
-		link: '/',
-	},
-	{
-		name: '1v1',
-		icon: <Sword weight="bold" />,
-		match: /^\/play/,
-		link: '/play',
-		loginRequired: true,
-	},
-	{
-		name: 'Stats',
-		icon: <ChartPie weight="bold" />,
-		match: /^\/stats/,
-		link: '/stats',
-	},
-	{
-		name: 'Community',
-		icon: <Users weight="bold" />,
-		match: /^\/community|\/user\//,
-		link: '/community/leaderboards',
-	},
-	{
-		name: 'Trainer',
-		icon: <LadderSimple weight="bold" />,
-		match: /^\/trainer/,
-		link: '/trainer/333/OLL',
-		loginRequired: true,
-	},
-	{
-		name: 'Solves',
-		icon: <ListBullets weight="bold" />,
-		match: /^\/solves/,
-		link: '/solves',
-	},
-	{
-		name: 'Sessions',
-		icon: <Rows weight="bold" />,
-		match: /^\/sessions/,
-		link: '/sessions',
-		loginRequired: true,
-	},
-	{
-		name: 'Settings',
-		icon: <Wrench weight="bold" />,
-		match: /^\/settings/,
-		link: '/settings/timer',
-	},
-];
+import {cn} from '@/util/cn';
+import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 
 export default function Nav() {
 	const dispatch = useDispatch();
@@ -150,7 +78,12 @@ export default function Nav() {
 	}
 
 	const navLinks = NAV_LINKS.map((link) => (
-		<NavLink {...link} key={link.name} collapsed={navClosed} selected={link.match.test(pathname)} />
+		<NavLink
+			{...link}
+			key={link.name}
+			collapsed={navClosed}
+			selected={link.match.test(pathname)}
+		/>
 	));
 
 	let getPro: ReactNode = null;
@@ -158,9 +91,9 @@ export default function Nav() {
 		getPro = (
 			<Link
 				to="/account/pro"
-				className="mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded bg-primary py-2 px-3"
+				className="bg-primary mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded px-3 py-2"
 			>
-				<div className="flex flex-row items-center gap-1 font-bold text-tmo-primary">
+				<div className="text-tmo-primary flex flex-row items-center gap-1 font-bold">
 					<span className="table">Get CubeDesk Pro</span>
 					<ArrowRight weight="bold" />
 				</div>
@@ -193,7 +126,12 @@ export default function Nav() {
 		'items-center',
 		navClosed ? 'justify-center' : 'justify-between',
 	];
-	const headerActionsClasses = ['flex', navClosed ? 'flex-col' : 'flex-row', 'items-center', 'gap-2.5'];
+	const headerActionsClasses = [
+		'flex',
+		navClosed ? 'flex-col' : 'flex-row',
+		'items-center',
+		'gap-2.5',
+	];
 	const socialClasses = [
 		'mx-auto',
 		'mb-2.5',
@@ -211,12 +149,20 @@ export default function Nav() {
 				<div className="flex h-full w-full flex-col justify-between">
 					<div className="flex w-full flex-col justify-center">
 						<div className={headerClasses.join(' ')}>
-							<span className={navClosed ? 'hidden' : 'block shrink-0'}>
-								<LogoLockup  dark={!moduleColor.isDark} />
-							</span>
-							<span className={navClosed ? 'block shrink-0' : 'hidden'}>
+							<div
+								className={cn('flex w-[120px]', {
+									hidden: navClosed,
+								})}
+							>
+								<LogoLockup dark={!moduleColor.isDark} />
+							</div>
+							<div
+								className={cn('mb-5 flex w-[23px]', {
+									hidden: !navClosed,
+								})}
+							>
 								<LogoBrandmark dark={!moduleColor.isDark} />
-							</span>
+							</div>
 							<div className={headerActionsClasses.join(' ')}>
 								{notifications}
 								<AccountDropdown />
@@ -246,7 +192,6 @@ export default function Nav() {
 								lightPath={resourceUri('/images/logos/reddit_logo_black.svg')}
 								name="Reddit"
 							/>
-
 							<SocialIcon
 								href="https://github.com/kash/cubedesk"
 								darkPath={resourceUri('/images/logos/github_logo_white.svg')}
@@ -265,7 +210,13 @@ export default function Nav() {
 							iconFirst
 							hidden={forceNavCollapsed}
 							text={navCollapsed ? '' : 'Collapse'}
-							icon={navCollapsed ? <ArrowRight weight="fill" /> : <ArrowLeft weight="fill" />}
+							icon={
+								navCollapsed ? (
+									<ArrowRight weight="fill" />
+								) : (
+									<ArrowLeft weight="fill" />
+								)
+							}
 							transparent
 							type="button"
 							onClick={toggleCollapse}
@@ -295,7 +246,7 @@ function SocialIcon(props: SocialIconInterface) {
 
 	return (
 		<a
-			className="box-border flex flex-col items-center justify-center rounded-[5px] bg-transparent p-2 font-semibold opacity-70 transition-all duration-100 ease-in-out hover:bg-tmo-module/10 hover:opacity-100"
+			className="hover:bg-tmo-module/10 box-border flex flex-col items-center justify-center rounded-[5px] bg-transparent p-2 font-semibold opacity-70 transition-all duration-100 ease-in-out hover:opacity-100"
 			href={href}
 			target="_blank"
 		>

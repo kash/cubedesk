@@ -1,5 +1,4 @@
 import eslint from '@eslint/js';
-import next from '@next/eslint-plugin-next';
 import prettier from 'eslint-config-prettier';
 import perfectionist from 'eslint-plugin-perfectionist';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -16,7 +15,7 @@ export default [
 	...tseslint.configs.recommended,
 	prettier,
 	{
-		ignores: ['*.config.*', '.next/', '**/generated/'],
+		ignores: ['*.config.*',  '**/generated/'],
 	},
 	{
 		languageOptions: {
@@ -27,7 +26,6 @@ export default [
 		},
 		plugins: {
 			perfectionist: perfectionist,
-			'@next/next': next,
 			'react-hooks': reactHooks,
 			'unused-imports': unusedImports,
 			react: react,
@@ -38,7 +36,6 @@ export default [
 			'perfectionist/sort-named-imports': 'error',
 			'no-async-promise-executor': 'off',
 			'react/no-unescaped-entities': 'off',
-			'@next/next/no-img-element': 'off',
 			'react-hooks/exhaustive-deps': 'error',
 			'@typescript-eslint/switch-exhaustiveness-check': 'error',
 			'@typescript-eslint/no-explicit-any': 'off',

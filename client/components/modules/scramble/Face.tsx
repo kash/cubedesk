@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {flatten} from 'lodash';
 import {COLOR_MAP} from '@/components/modules/scramble/ScrambleVisual';
 import CSS from 'csstype';
@@ -17,9 +17,9 @@ export default function Face(props: Props) {
 		return <div className="grid h-full max-h-full w-full max-w-full gap-[3px]" />;
 	}
 
-	let content = [];
+	const content: ReactNode[] = [];
 	for (let i = 0; i < size; i += 1) {
-		const body = [];
+		const body: ReactNode[] = [];
 		for (let k = 0; k < size; k += 1) {
 			body.push(null);
 		}

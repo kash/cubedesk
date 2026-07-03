@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	color?: string;
@@ -16,7 +16,7 @@ export default function SectionDivider(props: Props) {
 	const opacityStep = 0.8 / lines;
 	const widthStep = 0.4 / lines;
 
-	const body = [];
+	const body: ReactNode[] = [];
 	for (let i = 0; i < lines; i++) {
 		let index = i;
 		if (reversed) {

@@ -3,7 +3,7 @@ import {GameContext} from '@/components/play/game/Game';
 import {PlayerStatus} from '@/shared/match/types';
 import {MatchContext} from '@/components/play/match/Match';
 import {useMe} from '@/util/hooks/useMe';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import Challengers from '@/components/play/target/challengers/Challengers';
 
 // Center module that shows game/match status
@@ -22,7 +22,7 @@ export default function MatchModule() {
 	switch (status) {
 		case PlayerStatus.Lost: {
 			timeAlert = (
-				<span className="mt-2.5 rounded-[15px] bg-error px-3.5 py-1 text-[0.9rem] font-medium text-white">
+				<span className="bg-error mt-2.5 rounded-[15px] px-3.5 py-1 text-[0.9rem] font-medium text-white">
 					You completed {solves.length} solve{solves.length === 1 ? '' : 's'}
 				</span>
 			);
@@ -35,7 +35,7 @@ export default function MatchModule() {
 		}
 		case PlayerStatus.Won: {
 			timeAlert = (
-				<span className="mt-2.5 rounded-[15px] bg-success px-3.5 py-1 text-[0.9rem] font-medium text-white">
+				<span className="bg-success mt-2.5 rounded-[15px] px-3.5 py-1 text-[0.9rem] font-medium text-white">
 					Congrats! You won!
 				</span>
 			);
@@ -46,7 +46,9 @@ export default function MatchModule() {
 	return (
 		<div className="relative box-border grid h-full grid-rows-[40px_1fr] items-center">
 			<div className="flex h-full w-full flex-row items-start justify-between">
-				<span className="text-[1.1rem] font-medium text-text opacity-80">{playerStatus.statusPrompt}</span>
+				<span className="text-text text-[1.1rem] font-medium opacity-80">
+					{playerStatus.statusPrompt}
+				</span>
 				<div>{retryAlert}</div>
 			</div>
 			<Challengers />

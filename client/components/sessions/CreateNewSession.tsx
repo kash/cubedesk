@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import Input from '@/components/common/inputs/input/Input';
 import {setCubeType, setCurrentSession} from '@/db/settings/update';
-import CubePicker from '@/components/common/cube_picker/CubePicker';
+import CubePicker from '@/components/common/CubePicker';
 import {createSessionDb} from '@/db/sessions/update';
 import {IModalProps} from '@/components/common/modal/Modal';
 import {toastError} from '@/util/toast';
 import {useInput} from '@/util/hooks/useInput';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {CubeType} from '@/util/cubes/cube_types';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
+import ModalHeader from '@/components/common/modal/ModalHeader';
 
 export default function CreateNewSession(props: IModalProps) {
 	const {onComplete} = props;

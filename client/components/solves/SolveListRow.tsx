@@ -4,12 +4,12 @@ import {useDispatch} from 'react-redux';
 import {getTimeString} from '@/util/time';
 import {openModal} from '@/actions/general';
 import SolveInfo from '@/components/solve-info/SolveInfo';
-import Emblem from '@/components/common/emblem/Emblem';
+import Emblem from '@/components/common/Emblem';
 import {getDateFromNow} from '@/util/dates';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import {getCubeTypeName} from '@/util/cubes/util';
-import Tag from '@/components/common/tag/Tag';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import Tag from '@/components/common/Tag';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solve: Solve;
@@ -50,27 +50,32 @@ export default function SolveListRow(props: Props) {
 
 	return (
 		<div
-			className="relative mb-[15px] grid cursor-pointer grid-cols-3 rounded-[5px] bg-module p-5"
+			className="bg-module relative mb-[15px] grid cursor-pointer grid-cols-3 rounded-[5px] p-5"
 			onClick={openSolve}
 		>
 			<div>
 				<h4
 					className={classNames(
-						'text-[1.6rem] font-bold text-text',
+						'text-text text-[1.6rem] font-bold',
 						dnf && '!text-error',
-						plusTwo && '!text-warning'
+						plusTwo && '!text-warning',
 					)}
 				>
 					{time}
 				</h4>
-				<span className="table text-[0.9rem] text-text opacity-80">{createdAt}</span>
+				<span className="text-text table text-[0.9rem] opacity-80">{createdAt}</span>
 			</div>
 			<div className="-mt-2.5 flex w-full items-center justify-center">
 				<Emblem text={cubeType} />
 			</div>
 			<div className="flex w-full justify-end">
 				<div>
-					<Scramble frontFace width="60px" scramble={scramble} cubeType={solve.cube_type} />
+					<Scramble
+						frontFace
+						width="60px"
+						scramble={scramble}
+						cubeType={solve.cube_type}
+					/>
 				</div>
 			</div>
 			<div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 flex-row gap-[5px]">

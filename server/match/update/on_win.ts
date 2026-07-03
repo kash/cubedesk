@@ -1,5 +1,5 @@
 import {updateMatch} from '../../models/match';
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/types/match';
 import {EloUpdatePayload, calculateNewElo} from '../pair/elo/calc_elo';
 import {getUserEloRatingByCubeType, incrementGameCountForCubeType, updateEloRating} from '../../models/elo_rating';
 import {createEloLog} from '../../models/elo_log';

@@ -1,13 +1,13 @@
 import {v4 as uuid} from 'uuid';
 import {IImportDataContext, ImportableData} from '@/components/settings/data/import-data/ImportData';
-import {Session} from '@/@types/generated/graphql';
+import {SessionInput} from '@/types/session';
 import {fetchSessions} from '@/db/sessions/query';
 import {parseCubeDeskLegacyData} from '@/components/settings/data/import-data/parse-data/cubedesk-legacy';
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 interface CubeDeskExportSchema {
 	solves: Solve[];
-	sessions: Session[];
+	sessions: SessionInput[];
 }
 
 export function parseCubeDeskData(txt: string, context: IImportDataContext): ImportableData {
@@ -25,11 +25,11 @@ export function parseCubeDeskData(txt: string, context: IImportDataContext): Imp
 		throw new Error('Invalid import file. Please make sure this is a valid file exported from CubeDesk');
 	}
 
-	const sessions: Session[] = [];
+	const sessions: SessionInput[] = [];
 
 	const oldNewSessionMap: Record<string, string> = {};
 	for (const session of importedData.sessions) {
-		const newSession: Session = {
+		const newSession: SessionInput = {
 			id: uuid(),
 			name: session.name,
 		};

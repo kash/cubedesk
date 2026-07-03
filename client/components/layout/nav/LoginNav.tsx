@@ -1,6 +1,6 @@
 import React from 'react';
 import {SignIn} from 'phosphor-react';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {useMe} from '@/util/hooks/useMe';
 
 interface Props {

@@ -1,16 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, ReactNode} from 'react';
 import {getTimeString} from '@/util/time';
 import {Cube, Bluetooth} from 'phosphor-react';
-import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import ScrambleInfo from '@/components/solve-info/ScrambleInfo';
 import SolutionInfo from '@/components/solve-info/SolutionInfo';
 import StatsInfo from '@/components/solve-info/stats-info/StatsInfo';
 import NotesInfo from '@/components/solve-info/NotesInfo';
-import {gql} from '@apollo/client';
-import {gqlQuery} from '@/components/api';
-import Loading from '@/components/common/loading/Loading';
-import {SOLVE_WITH_USER_FRAGMENT} from '@/util/graphql/fragments';
-import CopyText from '@/components/common/copy_text/CopyText';
+import {api} from '@/util/api';
+import Loading from '@/components/common/Loading';
+import CopyText from '@/components/common/CopyText';
 import Avatar from '@/components/common/avatar/Avatar';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {fetchSolve} from '@/db/solves/query';
@@ -18,9 +16,9 @@ import {deleteSolveDb, updateSolveDb} from '@/db/solves/update';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {IModalProps} from '@/components/common/modal/Modal';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import Button from '@/components/common/button/Button';
-import Tag from '@/components/common/tag/Tag';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import Button from '@/components/common/Button';
+import Tag from '@/components/common/Tag';
+import {Solve} from '@/types/solve';
 import {getFullFormattedDate} from '@/util/dates';
 import {demoUser} from '@/components/solve-info/demo-user';
 
@@ -42,6 +40,8 @@ export default function SolveInfo(props: Props) {
 	const [editMode, setEditMode] = useState(false);
 	const [dbSolve, setDbSolve] = useState<Solve>(null);
 
+	const utils = api.useUtils();
+
 	useSolveDb();
 	useEffect(() => {
 		if (demoSolve) {
@@ -57,27 +57,9 @@ export default function SolveInfo(props: Props) {
 	}
 
 	function updateSolve() {
-		const query = gql`
-			${SOLVE_WITH_USER_FRAGMENT}
-
-			query Query($id: String) {
-				solve(id: $id) {
-					...SolveWithUserFragment
-				}
-			}
-		`;
-
-		const solveQuery = gqlQuery<{solve: Solve}>(
-			query,
-			{
-				id: solveId,
-			},
-			'no-cache'
-		);
-
-		solveQuery.then((res) => {
+		utils.solve.get.fetch({id: solveId}).then((res) => {
 			setDbSolve(fetchSolve(solveId));
-			setSolve(res.data.solve);
+			setSolve(res as unknown as Solve);
 			setLoading(false);
 		});
 	}
@@ -147,7 +129,7 @@ export default function SolveInfo(props: Props) {
 
 	const infoBody = pageMap[page];
 
-	let editButton = (
+	let editButton: ReactNode = (
 		<Button
 			text={editMode ? 'Save' : 'Edit'}
 			gray
@@ -156,9 +138,11 @@ export default function SolveInfo(props: Props) {
 		/>
 	);
 
-	let plusTwoButton = <Button gray text="+2" disabled={disabled} onClick={togglePlusTwo} warning={plusTwo} />;
-	let dnfButton = <Button gray text="DNF" disabled={disabled} onClick={toggleDnf} danger={dnf} />;
-	let deleteButton = <Button gray title="Delete solve" text="Delete" onClick={deleteSolve} />;
+	let plusTwoButton: ReactNode = (
+		<Button gray text="+2" disabled={disabled} onClick={togglePlusTwo} warning={plusTwo} />
+	);
+	let dnfButton: ReactNode = <Button gray text="DNF" disabled={disabled} onClick={toggleDnf} danger={dnf} />;
+	let deleteButton: ReactNode = <Button gray title="Delete solve" text="Delete" onClick={deleteSolve} />;
 
 	if (disabled) {
 		deleteButton = null;
@@ -201,7 +185,7 @@ export default function SolveInfo(props: Props) {
 		},
 	];
 
-	let shareLink = null;
+	let shareLink: ReactNode = null;
 	if (typeof window !== 'undefined') {
 		shareLink = (
 			<CopyText
@@ -217,7 +201,7 @@ export default function SolveInfo(props: Props) {
 
 	return (
 		<div className="relative pt-5">
-			<div className="absolute right-[45px] top-0 flex w-[calc(100%_-_45px)] flex-row items-center justify-between">
+			<div className="absolute top-0 right-[45px] flex w-[calc(100%_-_45px)] flex-row items-center justify-between">
 				<div className="flex flex-row gap-2.5">{shareLink}</div>
 				<div className="flex flex-row gap-2.5">
 					{deleteButton}
@@ -225,8 +209,10 @@ export default function SolveInfo(props: Props) {
 				</div>
 			</div>
 			<div>
-				<h2 className="mb-0 mt-5 w-full text-center font-mono text-[4.3rem] font-bold text-text">{time}</h2>
-				<div className="mx-auto mb-[25px] mt-5 flex w-full flex-col items-center border-b-2 border-button pb-[25px]">
+				<h2 className="text-text mt-5 mb-0 w-full text-center font-mono text-[4.3rem] font-bold">
+					{time}
+				</h2>
+				<div className="border-button mx-auto mt-5 mb-[25px] flex w-full flex-col items-center border-b-2 pb-[25px]">
 					<Avatar small user={user} hideBadges profile={user?.profile} />
 					<div className="mt-[15px] flex flex-row items-center gap-2.5">
 						{isSmartCube ? (
@@ -239,12 +225,18 @@ export default function SolveInfo(props: Props) {
 							/>
 						) : null}
 
-						<Tag icon={<Cube weight="bold" />} backgroundColor="button" text={cubeTypeInfo.name} />
+						<Tag
+							icon={<Cube weight="bold" />}
+							backgroundColor="button"
+							text={cubeTypeInfo.name}
+						/>
 						{plusTwoButton}
 						{dnfButton}
 					</div>
 					<div className="w-full pt-5">
-						<span className="m-auto table text-sm text-text/60">{getFullFormattedDate(endedAt)}</span>
+						<span className="text-text/60 m-auto table text-sm">
+							{getFullFormattedDate(endedAt)}
+						</span>
 					</div>
 				</div>
 				<div className="flex flex-col items-center">

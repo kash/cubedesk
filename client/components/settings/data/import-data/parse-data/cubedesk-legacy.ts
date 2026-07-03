@@ -1,8 +1,8 @@
 import {v4 as uuid} from 'uuid';
 import {IImportDataContext, ImportableData} from '@/components/settings/data/import-data/ImportData';
-import {Session} from '@/@types/generated/graphql';
+import {SessionInput} from '@/types/session';
 import {fetchSessions} from '@/db/sessions/query';
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 type LegacySession = {
 	id: string;
@@ -37,12 +37,12 @@ export function parseCubeDeskLegacyData(txt: string, context: IImportDataContext
 
 	const sessionIds = Object.keys(sessionMap);
 
-	const sessions: Session[] = [];
+	const sessions: SessionInput[] = [];
 	let solves: Solve[] = [];
 	for (const id of sessionIds) {
 		const session = sessionMap[id];
 
-		const newSession: Session = {
+		const newSession: SessionInput = {
 			id: uuid(),
 			name: session.name,
 		};
@@ -63,7 +63,7 @@ export function parseCubeDeskLegacyData(txt: string, context: IImportDataContext
 	};
 }
 
-function getSessionSolves(newSession: Session, sessionMap: LegacySession) {
+function getSessionSolves(newSession: SessionInput, sessionMap: LegacySession) {
 	const cubeTypes = Object.keys(sessionMap.solves);
 
 	const output: Solve[] = [];

@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
-import HorizontalNav, {HorizontalNavTab} from '@/components/common/horizontal_nav/HorizontalNav';
-import PageTitle from '@/components/common/page_title/PageTitle';
+import HorizontalNav, {HorizontalNavTab} from '@/components/common/HorizontalNav';
+import PageTitle from '@/components/common/PageTitle';
 import {useRouteMatch} from 'react-router-dom';
 
 const TABS: HorizontalNavTab[] = [

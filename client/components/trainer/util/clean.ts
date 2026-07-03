@@ -1,9 +1,8 @@
-// We can just use TrainerAlgorithm because it can get messed up between the ones that have the overrides and the ones
-// that do not
-import {TrainerAlgorithm} from '@/@types/generated/graphql';
+import {TrainerAlgorithmRecord} from '@/types/trainer';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 
-export interface TrainerAlgorithmClean extends TrainerAlgorithm {
+// Overrides flattened back into the record; no `overrides` key
+export interface TrainerAlgorithmClean extends TrainerAlgorithmRecord {
 	favorite?: boolean;
 }
 

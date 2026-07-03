@@ -1,11 +1,11 @@
 import React, {ReactNode, useMemo, useState} from 'react';
 import classNames from 'classnames';
 import {Sword} from 'phosphor-react';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import Avatar from '@/components/common/avatar/Avatar';
 import {useMe} from '@/util/hooks/useMe';
 import {socketClient} from '@/util/socket/socketio';
-import {Match} from '../../../../../server/schemas/Match.schema';
+import {Match} from '@/types/match';
 import Lobby from '@/components/play/match/match-popup/Lobby';
 import {IModalProps} from '@/components/common/modal/Modal';
 import EloChange from '@/components/play/match/match-over/EloChange';
@@ -90,7 +90,7 @@ export default function MatchOver(props: Props) {
 					: 'border-transparent',
 				{
 					'mr-2.5': index !== participants.length - 1,
-				}
+				},
 			)}
 		>
 			<Avatar hideBadges showEloType="333" target="_blank" vertical user={player.user} />
@@ -121,7 +121,7 @@ export default function MatchOver(props: Props) {
 	}
 
 	if (endedBy) {
-		endedBy = <span className="text-base text-text opacity-80">{endedBy}</span>;
+		endedBy = <span className="text-text text-base opacity-80">{endedBy}</span>;
 	}
 
 	let rematchText = 'Rematch';
@@ -135,11 +135,11 @@ export default function MatchOver(props: Props) {
 
 	const headerClass = classNames(
 		'absolute flex h-[100px] w-full flex-col items-center justify-center py-[50px]',
-		match.aborted ? 'bg-tm-background/10' : isWinner ? 'bg-success/10' : 'bg-tm-background/30'
+		match.aborted ? 'bg-tm-background/10' : isWinner ? 'bg-success/10' : 'bg-tm-background/30',
 	);
 	const swordClass = classNames(
 		'relative z-[1000] mt-[170px] box-border flex h-[60px] w-[60px] items-center justify-center rounded-full text-[1.8rem] text-white shadow-[0_2px_20px_rgba(0,0,0,0.3)]',
-		match.aborted ? 'bg-button' : isWinner ? 'bg-success' : 'bg-error'
+		match.aborted ? 'bg-button' : isWinner ? 'bg-success' : 'bg-error',
 	);
 
 	return (
@@ -154,11 +154,20 @@ export default function MatchOver(props: Props) {
 				<Sword />
 			</div>
 			<EloChange userId={me.id} eloLogs={match.elo_log} />
-			<div className="my-10 grid w-[90%] grid-cols-2 gap-2.5 [grid-auto-rows:130px]">{players}</div>
+			<div className="my-10 grid w-[90%] [grid-auto-rows:130px] grid-cols-2 gap-2.5">
+				{players}
+			</div>
 			<div className="flex flex-col items-center pb-5">
 				<div className="mb-[15px] flex flex-row flex-wrap gap-[15px]">
 					<Button gray large text="Join Lobby" onClick={() => setNewMatch(true)} />
-					<Button primary glow large text={rematchText} disabled={rematchDisabled} onClick={requestRematch} />
+					<Button
+						primary
+						glow
+						large
+						text={rematchText}
+						disabled={rematchDisabled}
+						onClick={requestRematch}
+					/>
 				</div>
 				<Button text="Exit" onClick={exitModal} flat white />
 			</div>

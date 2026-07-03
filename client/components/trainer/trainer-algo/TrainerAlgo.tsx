@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import classNames from 'classnames';
 import {CaretRight, Pencil, Trash} from 'phosphor-react';
-import Button from '@/components/common/button/Button';
-import Module from '@/components/common/module/Module';
+import Button from '@/components/common/Button';
+import Module from '@/components/common/Module';
 import {CUSTOM_TRAINER_ALGO_TYPE, TrainerContext} from '@/components/trainer/Trainer';
 import {openModal} from '@/actions/general';
 import {useDispatch} from 'react-redux';
@@ -13,7 +13,7 @@ import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
 import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import {deleteCustomTrainer} from '@/db/trainer/custom';
-import {CustomTrainer} from '@/@types/generated/graphql';
+
 import CustomVisual from '@/components/trainer/CustomVisual';
 
 interface Props {
@@ -23,7 +23,7 @@ interface Props {
 export default function TrainerAlgo(props: Props) {
 	const dispatch = useDispatch();
 
-	const algoExt = props.algoExt as CustomTrainer & TrainerAlgorithmExtended;
+	const algoExt = props.algoExt;
 
 	const algo = cleanTrainerAlgorithm(algoExt);
 	const context = useContext(TrainerContext);
@@ -47,13 +47,16 @@ export default function TrainerAlgo(props: Props) {
 		}
 	}
 
-	let originalBy = null;
+	let originalBy: React.ReactNode = null;
 	if (isCustom && algoExt.copy_of) {
 		const copyUsername = algoExt.copy_of.user.username;
 		originalBy = (
-			<div className="mb-2 text-[0.9rem] text-text opacity-70">
+			<div className="text-text mb-2 text-[0.9rem] opacity-70">
 				Original by{' '}
-				<Link className="inline border-b-2 border-text text-inherit" to={`/user/${copyUsername}`}>
+				<Link
+					className="border-text inline border-b-2 text-inherit"
+					to={`/user/${copyUsername}`}
+				>
 					{copyUsername}
 				</Link>
 			</div>
@@ -70,7 +73,12 @@ export default function TrainerAlgo(props: Props) {
 						<p className="font-mono">{algo.solution}</p>
 					</div>
 					<div className="flex flex-row gap-2">
-						<Button onClick={openTrainer} primary text="Start Training" icon={<CaretRight />} />
+						<Button
+							onClick={openTrainer}
+							primary
+							text="Start Training"
+							icon={<CaretRight />}
+						/>
 						<TrainerFavButton algoExt={algoExt} />
 						<Button onClick={editAlgo} gray icon={<Pencil />} />
 						<Button
@@ -90,14 +98,14 @@ export default function TrainerAlgo(props: Props) {
 				<div
 					className={classNames(
 						'box-border flex w-[100px] items-center justify-center',
-						algoExt.three_d && '-mt-5'
+						algoExt.three_d && '-mt-5',
 					)}
 				>
 					<CustomVisual
 						cubeletSize={20}
-						colors={algoExt.colors}
+						colors={algoExt.colors ?? ''}
 						threeD={algoExt.three_d}
-						rotate={algo.rotate}
+						rotate={algo.rotate ?? undefined}
 						cubeType={algoExt.cube_type}
 					/>
 				</div>

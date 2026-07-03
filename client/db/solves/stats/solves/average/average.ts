@@ -1,7 +1,7 @@
 // Not providing a count will result in getting the average for all solves for this cube type
 import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
 import {fetchSolves, FilterSolvesOptions} from '../../../query';
-import {Solve} from '../../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 export function getCurrentAverage(filterOptions: FilterSolvesOptions, count: number = -1) {
 	const cacheKey: SolveCacheKey = {
@@ -42,7 +42,7 @@ export function getCurrentAverage(filterOptions: FilterSolvesOptions, count: num
 	return cacheSolveStat(cacheKey, result);
 }
 
-function getSolveTime(solve: Solve | number): number {
+function getSolveTime(solve: Pick<Solve, 'time'> | number): number {
 	if (typeof solve === 'number') {
 		return solve;
 	} else {
@@ -55,7 +55,7 @@ function getSolveTime(solve: Solve | number): number {
  * @param list - List of Solve objects
  * @param isSorted - If list is already sorted, skip sorting and save on compute
  */
-export function getAverage(list: Solve[] | number[], isSorted: boolean = false): number {
+export function getAverage(list: Array<Pick<Solve, 'time'>> | number[], isSorted: boolean = false): number {
 	if (!list || !list.length) {
 		return 0;
 	}

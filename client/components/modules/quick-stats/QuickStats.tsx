@@ -1,13 +1,13 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, ReactNode} from 'react';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
 import {getQuickStatsGridSizes} from '@/components/modules/quick-stats/util';
 import {openModal} from '@/actions/general';
 import CustomizeStats from '@/components/modules/quick-stats/customize-stats/CustomizeStats';
-import {StatsModuleBlock} from '../../../../server/schemas/StatsModule.schema';
+import {StatsModuleBlock} from '@/types/stats-module';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;
@@ -27,7 +27,7 @@ export default function QuickStats(props: Props) {
 	const classes = ['grid', `grid-rows-4`, `grid-cols-4`, 'gap-1', 'w-full', 'h-full'];
 	const className = classes.join(' ');
 
-	const blocks = [];
+	const blocks: ReactNode[] = [];
 
 	for (let i = 0; i < blockCount; i++) {
 		const statsBlock = statsModuleBlocks[i];
@@ -48,7 +48,7 @@ export default function QuickStats(props: Props) {
 					colSpan={colSpan}
 					rowSpan={rowSpan}
 				/>
-			</div>
+			</div>,
 		);
 	}
 
@@ -57,14 +57,14 @@ export default function QuickStats(props: Props) {
 			openModal(<CustomizeStats filterOptions={filterOptions} />, {
 				title: 'Customize Stats',
 				description: 'Customize this here and now',
-			})
+			}),
 		);
 	}
 
 	return (
-		<div className="w-full h-full relative group">
+		<div className="group relative h-full w-full">
 			<div className={className}>{blocks}</div>
-			<div className="absolute top-0 right-0 group-hover:opacity-100 opacity-0">
+			<div className="absolute top-0 right-0 opacity-0 group-hover:opacity-100">
 				<Button onClick={openCustomizer} text="Customize Stats" secondary glow />
 			</div>
 		</div>

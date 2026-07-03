@@ -1,6 +1,6 @@
 import React from 'react';
-import AvatarImage from '@/components/common/avatar/avatar_image/AvatarImage';
-import {PublicUserAccount} from '../../../../server/schemas/UserAccount.schema';
+import AvatarImage from '@/components/common/avatar/AvatarImage';
+import {PublicUserAccount} from '@/types/user';
 
 interface Props {
 	user: PublicUserAccount;

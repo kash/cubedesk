@@ -1,34 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import LinkButton from '@/components/common/button/LinkButton';
-import Emblem from '@/components/common/emblem/Emblem';
-import {gql} from '@apollo/client';
+import LinkButton from '@/components/common/LinkButton';
+import Emblem from '@/components/common/Emblem';
 import {Check} from 'phosphor-react';
-import {gqlQuery} from '@/components/api';
+import {trpc} from '@/util/trpc';
+import {WcaAccount} from '@/types/integration';
 
 interface Props {
 	myProfile?: boolean;
 	user?: any;
 }
-
-type WcaMe = {
-	id: string;
-	url?: string | null;
-	country_iso2?: string | null;
-	wca_id?: string | null;
-	created_at?: string | null;
-};
-
-const WCA_ME_QUERY = gql`
-	query Query {
-		wcaMe {
-			id
-			url
-			country_iso2
-			wca_id
-			created_at
-		}
-	}
-`;
 
 function getWcaIntegration(user?: any) {
 	for (const integration of user?.integrations || []) {
@@ -43,17 +23,17 @@ function getWcaIntegration(user?: any) {
 const WCA = Object.assign(
 	function WCA(props: Props) {
 		const {myProfile, user} = props;
-		const [wcaMe, setWcaMe] = useState<WcaMe | null>(null);
+		const [wcaMe, setWcaMe] = useState<WcaAccount | null>(null);
 		const wcaInt = getWcaIntegration(user);
 
 		useEffect(() => {
 			let mounted = true;
 
 			async function fetchWcaMe() {
-				const res = await gqlQuery<{wcaMe: WcaMe | null}>(WCA_ME_QUERY);
+				const res = await trpc.integration.wcaMe.query();
 
 				if (mounted) {
-					setWcaMe(res.data.wcaMe);
+					setWcaMe(res);
 				}
 			}
 
@@ -85,9 +65,9 @@ const WCA = Object.assign(
 			body = <LinkButton text="Link WCA Account" to={link} />;
 		}
 
-		return <div className="absolute right-[15px] top-[15px] z-10">{body}</div>;
+		return <div className="absolute top-[15px] right-[15px] z-10">{body}</div>;
 	},
-	{getWcaIntegration}
+	{getWcaIntegration},
 );
 
 export default WCA;

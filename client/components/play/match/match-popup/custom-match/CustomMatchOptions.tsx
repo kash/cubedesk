@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import {ArrowRight} from 'phosphor-react';
-import HorizontalNav from '@/components/common/horizontal_nav/HorizontalNav';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import {MatchPopupContext, MatchPopupPage} from '@/components/play/match/match-popup/MatchPopup';
-import CubePicker from '@/components/common/cube_picker/CubePicker';
+import CubePicker from '@/components/common/CubePicker';
 import {CubeType} from '@/util/cubes/cube_types';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import ProOnly from '@/components/common/pro_only/ProOnly';
 
 export default function CustomMatchOptions() {
@@ -27,7 +27,7 @@ export default function CustomMatchOptions() {
 	return (
 		<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">
 			<ProOnly noPadding>
-				<div className="box-border flex flex-col items-start rounded border-[3px] border-tmo-module/10 p-[15px]">
+				<div className="border-tmo-module/10 box-border flex flex-col items-start rounded border-[3px] p-[15px]">
 					<div className="mb-1">
 						<h3>Cube Type</h3>
 					</div>
@@ -48,12 +48,12 @@ export default function CustomMatchOptions() {
 				</div>
 			</ProOnly>
 			<ProOnly noPadding>
-				<div className="box-border flex flex-col items-start rounded border-[3px] border-tmo-module/10 p-[15px]">
+				<div className="border-tmo-module/10 box-border flex flex-col items-start rounded border-[3px] p-[15px]">
 					<div className="mb-1">
 						<h3>Players</h3>
 						<p>
-							The number of players who will be playing in this match. Note that these many players *must*
-							join before the match can start.
+							The number of players who will be playing in this match. Note that these
+							many players *must* join before the match can start.
 						</p>
 					</div>
 					<HorizontalNav
@@ -67,7 +67,14 @@ export default function CustomMatchOptions() {
 				</div>
 			</ProOnly>
 			<div className="mt-5 w-full justify-end">
-				<Button onClick={createMatch} text="Create custom match" icon={<ArrowRight />} primary glow large />
+				<Button
+					onClick={createMatch}
+					text="Create custom match"
+					icon={<ArrowRight />}
+					primary
+					glow
+					large
+				/>
 			</div>
 		</div>
 	);

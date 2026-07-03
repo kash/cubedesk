@@ -5,7 +5,7 @@ import {openModal} from '@/actions/general';
 import MatchPopup from '@/components/play/match/match-popup/MatchPopup';
 import {useDispatch} from 'react-redux';
 import {getGameMetaData} from '@/components/play/Play';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {socketClient} from '@/util/socket/socketio';
 
 export default function GameChallenger() {
@@ -35,17 +35,21 @@ export default function GameChallenger() {
 					onClose: () => {
 						socketClient().emit('playerLeftLobby');
 					},
-				}
-			)
+				},
+			),
 		);
 	}
 
 	let joinLobbyButton: React.ReactNode = null;
-	const challengeButton = <Button flat primary text="Challenge" large fullWidth onClick={() => openMatch(false)} />;
+	const challengeButton = (
+		<Button flat primary text="Challenge" large fullWidth onClick={() => openMatch(false)} />
+	);
 
 	// Custom styling on plain button when multiplayer only
 	if (multiplayerOnly) {
-		joinLobbyButton = <Button primary large fullWidth text="Join Lobby" onClick={() => openMatch(true)} />;
+		joinLobbyButton = (
+			<Button primary large fullWidth text="Join Lobby" onClick={() => openMatch(true)} />
+		);
 	}
 
 	return (

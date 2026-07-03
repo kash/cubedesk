@@ -2,7 +2,7 @@ import React from 'react';
 import {AlignRightSimple, AlignBottomSimple, AlignLeftSimple} from 'phosphor-react';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {TimerLayoutPosition} from '@/db/settings/query';
 
 export default function LayoutSelector() {

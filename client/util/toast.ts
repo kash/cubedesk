@@ -11,20 +11,6 @@ const toastOptions: ToastOptions = {
 	progress: undefined,
 };
 
-export function toastAlertGqlResult(result, successMessage) {
-	if (!result.errors) {
-		toastSuccess(successMessage);
-	} else {
-		toastErrorGqlResult(result);
-	}
-}
-
-export function toastErrorGqlResult(result) {
-	for (const error of result?.errors || []) {
-		toastError(error.message);
-	}
-}
-
 export function toastDismiss() {
 	toast.dismiss();
 }

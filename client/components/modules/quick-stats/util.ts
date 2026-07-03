@@ -1,22 +1,21 @@
 import {FilterSolvesOptions} from '@/db/solves/query';
 import colorPalette, {ColorName} from '../../../../shared/colors';
 import {AppTheme} from '@/util/hooks/useTheme';
-import {StatsModuleBlock} from '../../../../server/schemas/StatsModule.schema';
+import {StatsModuleBlock} from '@/types/stats-module';
 import {getStore} from '@/components/store';
 import {getWorstTime} from '@/db/solves/stats/solves/single/single-worst';
 import {SolveStat} from '@/db/solves/stats/solves/caching';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
 import {getCurrentAverage} from '@/db/solves/stats/solves/average/average';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
+import {trpc} from '@/util/trpc';
 import {getCubeTypeInfo} from '@/util/cubes/util';
 
 export const STATS_GRID_SIZE = 4;
 
 export function getStatsBlockDescription(statsOptions: StatsModuleBlock, filterOptions: FilterSolvesOptions = {}) {
 	const solvesFilter = {...filterOptions};
-	const description = [];
+	const description: string[] = [];
 
 	if (statsOptions.sortBy === 'worst' && statsOptions.statType === 'single') {
 		description.push('worst');
@@ -92,17 +91,7 @@ export async function saveStatsModuleBlocks() {
 		return;
 	}
 
-	const query = gql`
-		mutation updateStatsModuleBlocks($blocks: [StatsModuleBlockInput]) {
-			updateStatsModuleBlocks(blocks: $blocks) {
-				blocks {
-					colorName
-				}
-			}
-		}
-	`;
-
-	await gqlMutate(query, {
+	await trpc.stats.updateModuleBlocks.mutate({
 		blocks,
 	});
 }

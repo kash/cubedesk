@@ -1,9 +1,0 @@
-@use '../../../../../styles/config' as *;
-
-.#{$namespace}-common-info {
-    opacity: 0.6;
-    color: rgb(var(--text-color));
-    display: table;
-    font-family: $defaultFontFamily;
-    font-size: 0.85rem;
-}

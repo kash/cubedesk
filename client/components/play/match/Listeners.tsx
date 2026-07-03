@@ -5,7 +5,7 @@ import {listenForJoinEvents} from '@/components/play/match/events/join-match';
 import {listenForConnectEvent} from '@/components/play/match/events/reconnect';
 import {listenForTimerEvents} from '@/components/play/match/events/timer';
 import {relayOpponentEvents} from '@/components/play/match/events/opponent';
-import {MatchContext} from '@/components/play/match/Match';
+import {useMatchContext} from '@/components/play/match/Match';
 import {handleOpenMatchLink} from '@/components/play/match/events/open-match';
 import {listenForMatchUpdates} from '@/components/play/match/events/update';
 import {GameContext} from '@/components/play/game/Game';
@@ -22,7 +22,7 @@ interface Props {
 export default function Listeners(props: Props) {
 	const me = useMe();
 	const gameContext = useContext(GameContext);
-	const matchContext = useContext(MatchContext);
+	const matchContext = useMatchContext();
 	const {solveIndex, matchLoaded, setScramble, match, cubeType} = matchContext;
 
 	useEffect(() => {
@@ -30,7 +30,7 @@ export default function Listeners(props: Props) {
 	}, [solveIndex, match]);
 
 	function getScramble() {
-		let seed = null;
+		let seed: number | undefined;
 
 		if (match) {
 			seed = getHashCode(match.id) + solveIndex;

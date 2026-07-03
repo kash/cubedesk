@@ -2,8 +2,8 @@ import {EventEmitter} from 'events';
 import {useEffect, useRef} from 'react';
 import {TrainerAlgorithmExtended} from '../db/trainer/init';
 import {SettingValue} from '../db/settings/init';
-import {Session} from '../../server/schemas/Session.schema';
-import {Solve} from '../../server/schemas/Solve.schema';
+import {Session} from '@/types/session';
+import {Solve} from '@/types/solve';
 
 const ee = new EventEmitter();
 
@@ -15,8 +15,8 @@ export interface ClientEvent {
 	sessionsDbUpdatedEvent: Session;
 	solveDbUpdatedEvent: Solve;
 	settingsDbUpdatedEvent: SettingValue;
-	trainerDbUpdatedEvent: TrainerAlgorithmExtended;
-	trainerDbDeletedEvent: TrainerAlgorithmExtended;
+	trainerDbUpdatedEvent: Partial<TrainerAlgorithmExtended> | null;
+	trainerDbDeletedEvent: Partial<TrainerAlgorithmExtended> | null;
 	singlePbEvent: string; // Cube type
 	avgPbEvent: string; // Cube type
 	singleAndAvgPbEvent: string; // Cube type

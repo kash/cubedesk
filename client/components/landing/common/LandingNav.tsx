@@ -4,7 +4,7 @@ import {resourceUri} from '@/util/storage';
 import {useWindowListener} from '@/util/hooks/useListener';
 import {ColorName} from '../../../../shared/colors';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/dropdown_option/DropdownOption';
+import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
 import {CaretDown} from 'phosphor-react';
 
 const MAX_NAV_WIDTH = 1200;
@@ -80,13 +80,19 @@ export default function LandingNav(props: Props) {
 	}
 
 	const dropDownOptions: IDropdownOption[] = [];
-	const showNavLinks = [];
+	const showNavLinks: React.ReactNode[] = [];
 
 	for (const nav of NAV_REST_LINKS) {
 		const {dropDownOnly, label, link, color, permanent} = nav;
 
 		if (permanent || (!navSmall && !dropDownOnly)) {
-			const linkClasses = ['border-b-2', 'border-solid', 'font-label', 'text-base', 'font-bold'];
+			const linkClasses = [
+				'border-b-2',
+				'border-solid',
+				'font-label',
+				'text-base',
+				'font-bold',
+			];
 
 			if (color) {
 				linkClasses.push(`text-${color}-500`);
@@ -95,7 +101,7 @@ export default function LandingNav(props: Props) {
 			showNavLinks.push(
 				<a key={link} href={link} className={linkClasses.join(' ')}>
 					{label}
-				</a>
+				</a>,
 			);
 		} else {
 			dropDownOptions.push({
@@ -108,7 +114,7 @@ export default function LandingNav(props: Props) {
 	return (
 		<div
 			className={[
-				'fixed left-0 top-0 z-[10000] box-border w-full border-b-2 border-solid bg-white py-[14px] text-[#444] transition-all duration-100 ease-in-out',
+				'fixed top-0 left-0 z-[10000] box-border w-full border-b-2 border-solid bg-white py-[14px] text-[#444] transition-all duration-100 ease-in-out',
 				scrolled ? 'border-[#eee]' : 'border-transparent',
 			].join(' ')}
 		>

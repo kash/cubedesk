@@ -1,7 +1,7 @@
 import React from 'react';
 import 'seedrandom';
 import {thunk} from 'redux-thunk';
-import {hydrateRoot} from 'react-dom/client';
+import {createRoot, hydrateRoot} from 'react-dom/client';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
 import promise from 'redux-promise-middleware';
@@ -12,22 +12,20 @@ import {HelmetProvider} from 'react-helmet-async';
 import {routes} from './layout/Routes';
 import reducers from '../reducers/reducers';
 import {setStore} from './store';
-import {initApollo} from './api';
+import {TRPCProvider} from '../util/api';
 
 import 'react-toastify/dist/ReactToastify.css';
-import '../styles/index.scss';
+import '../styles/index.css';
 
 const preloadedState = JSON.parse(window.__STORE__);
 const store = createStore(reducers, preloadedState, applyMiddleware(promise, thunk));
 
-const apolloClient = initApollo();
 setStore(store);
 
 delete window.__STORE__;
 
 
 import {mapSingleRoute} from './map-route';
-import {ApolloProvider} from '@apollo/client';
 
 Sentry.init({
 	dsn: 'https://feee16c821834f408ae2453577b10f9e@o637154.ingest.sentry.io/5756098',
@@ -37,9 +35,10 @@ Sentry.init({
 	tracesSampleRate: 1.0,
 });
 
-hydrateRoot(
-	document.getElementById('app')!,
-	<ApolloProvider client={apolloClient}>
+const appNode = document.getElementById('app')!;
+
+const tree = (
+	<TRPCProvider>
 		<HelmetProvider>
 			<Provider store={store as any}>
 				<BrowserRouter>
@@ -47,6 +46,13 @@ hydrateRoot(
 				</BrowserRouter>
 			</Provider>
 		</HelmetProvider>
-	</ApolloProvider>
+	</TRPCProvider>
 );
+
+// Dev serves an empty shell (no SSR), so client-render instead of hydrate.
+if (process.env.ENV === 'development') {
+	createRoot(appNode).render(tree);
+} else {
+	hydrateRoot(appNode, tree);
+}
 /* eslint-enable */

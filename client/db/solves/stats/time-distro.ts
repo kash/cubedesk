@@ -29,7 +29,7 @@ export function getTimeDistro(filter: FilterSolvesOptions, buckets: number) {
 	const bucketSize = roundNumber((max - min) / buckets);
 
 	let solveStart = 0;
-	const data = [];
+	const data: {x: string; y: number}[] = [];
 
 	function getRangeStr(range: number) {
 		let dec = range < 10 ? 1 : 0;

@@ -1,6 +1,4 @@
-import {PrismaClient} from '@/generated/prisma/client';
-import express from 'express';
-import {InternalUserAccount, UserAccount} from '../../schemas/UserAccount.schema';
+import {EmailableUser} from '@/types/user';
 import {NotificationType} from '../enums';
 
 export interface NotificationData {
@@ -15,15 +13,7 @@ export interface NotificationData {
 }
 
 export interface NotificationInput {
-	triggeringUser: UserAccount;
-	user: UserAccount;
+	triggeringUser: EmailableUser;
+	user: EmailableUser;
 	sendEmail: boolean;
-}
-
-export interface GraphQLContext {
-	ipAddress: string;
-	user: InternalUserAccount;
-	req: express.Request;
-	res: express.Response;
-	prisma: PrismaClient;
 }

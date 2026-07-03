@@ -3,11 +3,11 @@ import {DetailedClientInfo, getDetailedClientInfo, joinRoom, leaveAllMatchRooms,
 import {createMatchSession} from '../../models/match_session';
 import {createMatch, updateMatch} from '../../models/match';
 import {sendMatchUpdateById} from '../update/standings';
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/types/match';
 import {createMatchParticipant} from '../../models/match_participation';
-import {MatchSession} from '../../schemas/MatchSession.schema';
+import {MatchSession} from '@/types/match';
 import {emitMatchUpdate} from '../update/send';
-import {GameOptionsInput} from '../../schemas/GameOptions.schema';
+import {GameOptionsInput} from '@/types/match';
 import {createGameOptions} from '../../models/game_options';
 import {logger} from '../../services/logger';
 import {GameType} from '../../../shared/match/consts';

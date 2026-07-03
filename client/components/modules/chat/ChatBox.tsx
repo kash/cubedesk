@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {useDispatch} from 'react-redux';
 import ChatMessage from '@/components/modules/chat/ChatMessage';
@@ -9,7 +9,14 @@ import {MatchConst} from '@/shared/match/consts';
 import {MatchUpdateChat} from '@/shared/match/types';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
 import {GameType} from '../../../../shared/match/consts';
-import {Match} from '../../../../server/schemas/Match.schema';
+import {Match} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
+
+interface AggregatedChat {
+	user: PublicUserAccount;
+	id: string;
+	messages: string[];
+}
 
 interface Props {
 	disabled?: boolean;
@@ -28,8 +35,8 @@ export default function ChatBox(props: Props) {
 	const [messageFocused, setMessageFocused] = useState(false);
 	const [messages, setMessages] = useState<MatchUpdateChat[]>(props.messages);
 
-	const messageInput = useRef<HTMLTextAreaElement>();
-	const chatList = useRef<HTMLDivElement>();
+	const messageInput = useRef<HTMLTextAreaElement>(null);
+	const chatList = useRef<HTMLDivElement>(null);
 
 	useSocketListener('newMatchChatMessage', addMessage, [messages]);
 
@@ -58,7 +65,9 @@ export default function ChatBox(props: Props) {
 	}
 
 	function scrollToBottomOfList() {
-		chatList.current.scrollTop = chatList.current.scrollHeight;
+		if (chatList.current) {
+			chatList.current.scrollTop = chatList.current.scrollHeight;
+		}
 	}
 
 	function handleMessageKeyPress(e) {
@@ -85,8 +94,8 @@ export default function ChatBox(props: Props) {
 	}
 
 	function aggMessages() {
-		const output = [];
-		let temp = [];
+		const output: AggregatedChat[] = [];
+		let temp: MatchUpdateChat[] = [];
 
 		for (const msg of messages) {
 			if (temp.length && temp[temp.length - 1].user.id !== msg.user.id) {
@@ -147,7 +156,7 @@ export default function ChatBox(props: Props) {
 		message.length > MatchConst.MAX_CHAT_MESSAGE_LENGTH ? 'border-error' : 'border-transparent',
 	];
 
-	let textArea = (
+	let textArea: ReactNode = (
 		<div className="box-border flex w-full items-center justify-center p-[5px]">
 			<TextareaAutosize
 				onChange={handleMessageChange}

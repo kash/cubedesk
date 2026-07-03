@@ -1,4 +1,4 @@
-import {Profile} from '../schemas/Profile.schema';
+import {Profile} from '@/types/profile';
 import fs from 'fs';
 import {acquireRedisLock, createRedisKey, RedisNamespace} from './redis';
 import {getPrisma} from '../database';
@@ -183,7 +183,7 @@ async function fetchAndGenerateSiteMapForAllProfiles() {
 	let offset = 0;
 	let batchIndex = 0;
 	let lastUserProfileBatch: Profile[] = [];
-	const processedUrls = [];
+	const processedUrls: string[] = [];
 
 	do {
 		if (lastUserProfileBatch && lastUserProfileBatch.length) {
@@ -201,7 +201,7 @@ async function fetchAndGenerateSiteMapForAllProfiles() {
 }
 
 async function processUserProfileBatch(batchIndex: number, profiles: Profile[]) {
-	const urlsToStore = [];
+	const urlsToStore: SiteMapUrl[] = [];
 
 	for (const profile of profiles) {
 		urlsToStore.push(getSchemaFromProfile(profile));

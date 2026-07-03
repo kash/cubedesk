@@ -1,9 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
 import classNames from 'classnames';
-import {MagnifyingGlassPlus, FrameCorners, CrosshairSimple, Keyboard, Plus, X, CaretDown} from 'phosphor-react';
+import {
+	MagnifyingGlassPlus,
+	FrameCorners,
+	CrosshairSimple,
+	Keyboard,
+	Plus,
+	X,
+	CaretDown,
+} from 'phosphor-react';
 import {GlobalHotKeys} from 'react-hotkeys';
 import {setCubeType, setSetting} from '@/db/settings/update';
-import CubePicker from '@/components/common/cube_picker/CubePicker';
+import CubePicker from '@/components/common/CubePicker';
 import SessionSwitcher from '@/components/sessions/SessionPicker';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
 import CreateNewSession from '@/components/sessions/CreateNewSession';
@@ -14,7 +22,7 @@ import {toggleSetting} from '@/db/settings/update';
 import {useDispatch} from 'react-redux';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {smartCubeSelected} from '@/components/timer/helpers/util';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import StackMatPicker from '@/components/settings/stackmat-picker/StackMatPicker';
 import {TIMER_INPUT_TYPE_NAMES} from '@/components/settings/timer/TimerSettings';
 import {useSettings} from '@/util/hooks/useSettings';
@@ -165,7 +173,9 @@ export default function HeaderControl() {
 	);
 
 	if (focusMode) {
-		topRightButton = <Button noMargin transparent icon={<X />} onClick={() => toggleSetting('focus_mode')} />;
+		topRightButton = (
+			<Button noMargin transparent icon={<X />} onClick={() => toggleSetting('focus_mode')} />
+		);
 	}
 
 	return (
@@ -174,7 +184,7 @@ export default function HeaderControl() {
 				className={classNames(
 					'absolute top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
 					mobileMode && 'top-[55px] !p-2.5',
-					context.timeStartedAt && 'pointer-events-none opacity-30'
+					context.timeStartedAt && 'pointer-events-none opacity-30',
 				)}
 			>
 				<div className="flex flex-row items-start justify-start gap-2.5">

@@ -6,9 +6,8 @@ import {getAllCubeTypes, getScrambleTypeById} from '@/util/cubes/util';
 import {openModal} from '@/actions/general';
 import NewCubeType from '@/components/settings/cube-types/NewCubeType';
 import {CubeType} from '@/util/cubes/cube_types';
-import Button from '@/components/common/button/Button';
-import {gql} from '@apollo/client/core';
-import {gqlMutate} from '@/components/api';
+import Button from '@/components/common/Button';
+import {trpc} from '@/util/trpc';
 import {useSettings} from '@/util/hooks/useSettings';
 
 export default function CubeTypes() {
@@ -21,15 +20,7 @@ export default function CubeTypes() {
 	}
 
 	async function deleteCubeType(cubeType: CubeType) {
-		const query = gql`
-			mutation Mutate($id: String) {
-				deleteCustomCubeType(id: $id) {
-					id
-				}
-			}
-		`;
-
-		await gqlMutate(query, {
+		await trpc.customCubeType.delete.mutate({
 			id: cubeType.id,
 		});
 
@@ -65,14 +56,19 @@ export default function CubeTypes() {
 						}}
 					/>
 				</td>
-			</tr>
+			</tr>,
 		);
 	}
 
 	return (
 		<div>
 			<div className="flex w-full items-center justify-center py-5">
-				<Button text="Create New" primary icon={<Plus weight="bold" />} onClick={addCustomCubeType} />
+				<Button
+					text="Create New"
+					primary
+					icon={<Plus weight="bold" />}
+					onClick={addCustomCubeType}
+				/>
 			</div>
 			<div className="mt-2.5">
 				<table className="cd-table">

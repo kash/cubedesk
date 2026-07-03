@@ -1,5 +1,5 @@
 import {getIntegrationGetMe} from './oauth';
-import {InternalUserAccount, UserAccount} from '../schemas/UserAccount.schema';
+import {InternalUserAccount, UserAccount} from '@/types/user';
 import {logger} from '../services/logger';
 import Discord from '../services/discord';
 import {getStripeCustomerById, stripe} from '../services/stripe';

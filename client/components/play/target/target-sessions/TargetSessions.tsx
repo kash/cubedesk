@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {gql} from '@apollo/client';
-import {gqlQuery} from '@/components/api';
 import TargetSession from '@/components/play/target/target-sessions/TargetSession';
-import Empty from '@/components/common/empty/Empty';
-import {GAME_SESSION_FRAGMENT} from '@/util/graphql/fragments';
+import Empty from '@/components/common/Empty';
 import {getGameMetaData} from '@/components/play/Play';
-import ModalHeader from '@/components/common/modal/modal_header/ModalHeader';
-import {GameSession} from '../../../../../server/schemas/Game.schema';
+import ModalHeader from '@/components/common/modal/ModalHeader';
 import {GameType} from '../../../../../shared/match/consts';
 import LoadingIcon from '@/components/common/LoadingIcon';
+import {trpc} from '@/util/trpc';
+import {Serialized} from '@/types/serialized';
+import {GameSessionWithRelations} from '@/types/game';
 
 interface Props {
 	gameType: GameType;
@@ -18,25 +17,11 @@ export default function TargetSessions(props: Props) {
 	const {gameType} = props;
 	const {name} = getGameMetaData(gameType);
 
-	const [sessions, setSessions] = useState<GameSession[] | null>(null);
+	const [sessions, setSessions] = useState<Serialized<GameSessionWithRelations>[] | null>(null);
 
 	useEffect(() => {
-		interface GameSessionQuery {
-			gameSessions: GameSession[];
-		}
-
-		const query = gql`
-			${GAME_SESSION_FRAGMENT}
-
-			query Query {
-				gameSessions {
-					...GameSessionFragment
-				}
-			}
-		`;
-
-		gqlQuery<GameSessionQuery>(query).then((res) => {
-			setSessions(res.data.gameSessions);
+		trpc.game.sessions.query().then((res) => {
+			setSessions(res);
 		});
 	}, []);
 
@@ -45,7 +30,7 @@ export default function TargetSessions(props: Props) {
 		body = (
 			<div className="max-h-[500px] overflow-y-auto">
 				{sessions.map((s) => (
-					<TargetSession session={s} gameType={gameType} />
+					<TargetSession key={s.id} session={s} gameType={gameType} />
 				))}
 			</div>
 		);
@@ -53,7 +38,7 @@ export default function TargetSessions(props: Props) {
 		body = <Empty text="You don't have any sessions at the moment" />;
 	} else {
 		body = (
-			<div className="mx-auto mb-[100px] mt-[70px] text-2xl text-text">
+			<div className="text-text mx-auto mt-[70px] mb-[100px] text-2xl">
 				<LoadingIcon />
 			</div>
 		);

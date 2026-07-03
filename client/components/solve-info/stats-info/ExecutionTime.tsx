@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {getTimeString} from '@/util/time';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
-import {Solve} from '../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 interface Props {
 	solve: Solve;
@@ -12,7 +12,7 @@ export default function ExecutionTime(props: Props) {
 	const {solve} = props;
 
 	const steps = getSolveStepsWithoutParents(solve);
-	const parts = [];
+	const parts: ReactNode[] = [];
 
 	let totalTime = 0;
 	for (const step of steps) {

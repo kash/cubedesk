@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import classNames from 'classnames';
 import {CircleWavyCheck, Plus} from 'phosphor-react';
-import {gql} from '@apollo/client';
-import {gqlMutate, gqlQuery} from '@/components/api';
-import {PROFILE_FRAGMENT} from '@/util/graphql/fragments';
+import {trpc} from '@/util/trpc';
+import {api} from '@/util/api';
+import {fileToBase64} from '@/util/upload';
 import PbCard from '@/components/profile/PbCard';
 import PFP from '@/components/profile/PFP';
-import UploadCover from '@/components/common/upload_cover/UploadCover';
+import UploadCover from '@/components/common/UploadCover';
 import About from '@/components/profile/About';
 import {setSsrValue} from '@/actions/ssr';
 import Header from '@/components/layout/Header';
@@ -15,17 +15,20 @@ import WCA from '@/components/profile/WCA';
 import FriendshipRequest from '@/components/profile/FriendshipRequest';
 import Avatar from '@/components/common/avatar/Avatar';
 import {getStorageURL} from '@/util/storage';
-import {Image, Profile as ProfileSchema, PublicUserAccount, TopAverage, TopSolve} from '@/@types/generated/graphql';
+import {Image} from '@/types/image';
+import {Profile as ProfileSchema} from '@/types/profile';
+import {PublicUserAccount} from '@/types/user';
+import {TopAverage, TopSolve} from '@/types/top-solve';
 import {useRouteMatch} from 'react-router-dom';
 import {useSsr} from '@/util/hooks/useSsr';
 import {useMe} from '@/util/hooks/useMe';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {getMe} from '@/actions/account';
 import ProfileElo from '@/components/profile/ProfileElo';
-import AvatarDropdown from '@/components/common/avatar/avatar_dropdown/AvatarDropdown';
+import AvatarDropdown from '@/components/common/avatar/AvatarDropdown';
 import {openModal} from '@/actions/general';
 import PublishSolves from '@/components/profile/PublishSolves';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import LoadingIcon from '@/components/common/LoadingIcon';
 
 interface IProfileData {
@@ -42,24 +45,11 @@ interface IProfileData {
 }
 
 export async function getProfileData(username: string): Promise<IProfileData> {
-	const query = gql`
-		${PROFILE_FRAGMENT}
-		query Query($username: String) {
-			profile(username: $username) {
-				...ProfileFragment
-			}
-		}
-	`;
+	// Raw client (not hooks): this also runs server-side for SSR prefetch
+	const profileData = (await trpc.profile.get.query({username})) as unknown as ProfileSchema;
 
-	const result = await gqlQuery<{profile: ProfileSchema}>(
-		query,
-		{
-		username,
-		} as any
-	);
-
-	const topSolves = result.data.profile.top_solves || [];
-	const topAverages = result.data.profile.top_averages || [];
+	const topSolves = profileData.top_solves || [];
+	const topAverages = profileData.top_averages || [];
 
 	const pbs = {};
 
@@ -88,10 +78,10 @@ export async function getProfileData(username: string): Promise<IProfileData> {
 	}
 
 	return {
-		user: result.data.profile.user as PublicUserAccount,
-		profile: result.data.profile,
-		pfpImage: result.data.profile.pfp_image || undefined,
-		headerImage: result.data.profile.header_image || undefined,
+		user: profileData.user as PublicUserAccount,
+		profile: profileData,
+		pfpImage: profileData.pfp_image || undefined,
+		headerImage: profileData.header_image || undefined,
 		pbs,
 	};
 }
@@ -112,6 +102,8 @@ export default function Profile() {
 	const [ssrProfile, setSsrProfile] = useSsr<IProfileData>(matchUsername);
 	const [loading, setLoading] = useState(!ssrProfile);
 	const [profileData, setProfileData] = useState<IProfileData>(ssrProfile);
+
+	const uploadHeaderMutation = api.profile.uploadHeader.useMutation();
 
 	const username = matchUsername;
 	const user = profileData?.user;
@@ -135,27 +127,20 @@ export default function Profile() {
 		});
 	}, [matchUsername]);
 
-	async function uploadProfileHeader(variables) {
-		const query = gql`
-			mutation Mutate($file: Upload) {
-				uploadProfileHeader(file: $file) {
-					id
-					storage_path
-				}
-			}
-		`;
-
-		const res = await gqlMutate<{uploadProfileHeader: Image}>(query, variables);
-		const storagePath = res.data?.uploadProfileHeader?.storage_path || '';
+	async function uploadProfileHeader(variables: {file: File}) {
+		const image = await uploadHeaderMutation.mutateAsync({
+			fileName: variables.file.name,
+			data: await fileToBase64(variables.file),
+		});
 
 		const newProfileData = {...profileData};
-		newProfileData.headerImage = res.data?.uploadProfileHeader;
+		newProfileData.headerImage = (image as unknown as Image) || undefined;
 		setProfileData(newProfileData);
 
 		dispatch(getMe() as any);
 
 		return {
-			storagePath,
+			storagePath: image?.storage_path || '',
 		};
 	}
 
@@ -165,7 +150,7 @@ export default function Profile() {
 				title: 'Publish your PBs',
 				description: 'Please make sure that the solves below are legitimate and yours.',
 				onComplete: () => window.location.reload(),
-			})
+			}),
 		);
 	}
 
@@ -176,7 +161,7 @@ export default function Profile() {
 
 	if (loading) {
 		return (
-			<div className="flex min-h-[300px] items-center justify-center text-[1.8rem] text-text">
+			<div className="text-text flex min-h-[300px] items-center justify-center text-[1.8rem]">
 				<LoadingIcon />
 			</div>
 		);
@@ -199,7 +184,9 @@ export default function Profile() {
 			topRecord = pb.average;
 		}
 
-		pbCards.push(<PbCard key={topRecord.id} solves={solves} topRecord={topRecord} user={user as any} />);
+		pbCards.push(
+			<PbCard key={topRecord.id} solves={solves} topRecord={topRecord} user={user as any} />,
+		);
 	}
 
 	const myProfile = user.id === me?.id;
@@ -212,11 +199,16 @@ export default function Profile() {
 					'group-hover/profile-header:hidden': myProfile,
 				})}
 			>
-				<h2 className="flex flex-row items-center text-[4rem] font-bold text-text [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
+				<h2 className="text-text flex flex-row items-center text-[4rem] font-bold [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
 					{user.username}
-					{user.verified ? <CircleWavyCheck className="ml-[15px] table text-[2.5rem] text-info" weight="fill" /> : null}
+					{user.verified ? (
+						<CircleWavyCheck
+							className="text-info ml-[15px] table text-[2.5rem]"
+							weight="fill"
+						/>
+					) : null}
 				</h2>
-				<h3 className="text-[1.2rem] text-text opacity-90 [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
+				<h3 className="text-text text-[1.2rem] opacity-90 [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
 					Joined on {new Date(user.created_at).toLocaleDateString()}
 				</h3>
 			</div>
@@ -236,7 +228,7 @@ export default function Profile() {
 	if (user?.elo_rating) {
 		eloBody = (
 			<>
-				<hr className="mx-auto my-[30px] h-1 w-full border-0 bg-tmo-background/[0.08]" />
+				<hr className="bg-tmo-background/[0.08] mx-auto my-[30px] h-1 w-full border-0" />
 				<ProfileElo eloRating={user.elo_rating} />
 			</>
 		);
@@ -246,10 +238,12 @@ export default function Profile() {
 	if (pbCards.length) {
 		pbsDiv = (
 			<>
-				<hr className="mx-auto my-[30px] h-1 w-full border-0 bg-tmo-background/[0.08]" />
+				<hr className="bg-tmo-background/[0.08] mx-auto my-[30px] h-1 w-full border-0" />
 				<div className="my-[35px]">
 					<h2>Personal Bests</h2>
-					<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">{pbCards}</div>
+					<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">
+						{pbCards}
+					</div>
 				</div>
 			</>
 		);
@@ -258,14 +252,19 @@ export default function Profile() {
 	let publishSolves: React.ReactNode = null;
 	if (myProfile) {
 		publishSolves = (
-			<Button primary icon={<Plus weight="bold" />} text="Publish Your PBs" onClick={openPublishSolves} />
+			<Button
+				primary
+				icon={<Plus weight="bold" />}
+				text="Publish Your PBs"
+				onClick={openPublishSolves}
+			/>
 		);
 	}
 
 	return (
 		<div
 			className={classNames({
-				'box-border min-h-screen bg-background pb-[150px] pt-[100px]': !me,
+				'bg-background box-border min-h-screen pt-[100px] pb-[150px]': !me,
 			})}
 		>
 			<Header
@@ -278,17 +277,21 @@ export default function Profile() {
 					'mx-auto w-[95%] max-w-[1000px]': !me,
 				})}
 			>
-				<div className="group/profile-header relative mb-[7px] flex h-[300px] w-full max-w-[1500px] flex-row items-center box-border p-[25px]">
+				<div className="group/profile-header relative mb-[7px] box-border flex h-[300px] w-full max-w-[1500px] flex-row items-center p-[25px]">
 					<WCA myProfile={myProfile} user={user} />
 					{pfp}
-					<div className="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-[15px] bg-black">
+					<div className="absolute top-0 left-0 z-0 h-full w-full overflow-hidden rounded-[15px] bg-black">
 						{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
 
-						<img className="h-full w-full object-cover opacity-50" src={headerUrl} alt="Header photo" />
+						<img
+							className="h-full w-full object-cover opacity-50"
+							src={headerUrl}
+							alt="Header photo"
+						/>
 					</div>
 				</div>
 				<div className="relative mx-auto w-full max-w-[1200px]">
-					<div className="absolute right-0 top-0 z-[1000] flex flex-row justify-end gap-2.5">
+					<div className="absolute top-0 right-0 z-[1000] flex flex-row justify-end gap-2.5">
 						<FriendshipRequest user={user as any} fetchData />
 						{publishSolves}
 						<AvatarDropdown user={user as any} />

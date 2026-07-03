@@ -10,11 +10,11 @@ import GameTimer from '@/components/play/game/GameTimer';
 import {reactState} from '@/@types/react';
 import {useMe} from '@/util/hooks/useMe';
 import {PlayerStatus} from '@/shared/match/types';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {Solve} from '../../../../server/schemas/Solve.schema';
-import {Match} from '../../../../server/schemas/Match.schema';
+import {Solve} from '@/types/solve';
+import {Match} from '@/types/match';
 import {GameType} from '../../../../shared/match/consts';
 
 export interface GameSolveRow {
@@ -36,8 +36,18 @@ export interface PlayerStatusInfo {
 	statusPrompt: string;
 }
 
-export type SolveRowInfo = (myId: string, timeIndex: number, solves: Solve[], match?: Match) => GameSolveRow;
-export type PlayerStatusFn = (myId: string, timeIndex: number, solves: Solve[], match?: Match) => PlayerStatusInfo;
+export type SolveRowInfo = (
+	myId: string,
+	timeIndex: number,
+	solves: Solve[],
+	match?: Match,
+) => GameSolveRow;
+export type PlayerStatusFn = (
+	myId: string,
+	timeIndex: number,
+	solves: Solve[],
+	match?: Match,
+) => PlayerStatusInfo;
 
 interface GameProps {
 	gameType: GameType;
@@ -121,7 +131,9 @@ export default function Game(props: GameProps) {
 
 		getExistingMatch(me.id, linkCode, true).then((existingMatch) => {
 			if (existingMatch) {
-				setCubeType(existingMatch?.match_session?.game_options?.cube_type || defaultCubeType);
+				setCubeType(
+					existingMatch?.match_session?.game_options?.cube_type || defaultCubeType,
+				);
 				setMatchOpen(true);
 			}
 		});

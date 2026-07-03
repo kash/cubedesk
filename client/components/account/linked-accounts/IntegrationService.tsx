@@ -1,32 +1,12 @@
-import React, {ReactNode, useMemo} from 'react';
-import {Integration} from '@/@types/generated/graphql';
-import Button from '@/components/common/button/Button';
+import React, {ReactNode, useEffect, useMemo, useState} from 'react';
+import Button from '@/components/common/Button';
 import {Check, ArrowRight} from 'phosphor-react';
-import {gql, useMutation, useQuery} from '@apollo/client';
-import {INTEGRATION_FRAGMENT} from '@/util/graphql/fragments';
-import Loading from '@/components/common/loading/Loading';
+import Loading from '@/components/common/Loading';
 import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../../../shared/integration';
 import {toastError} from '@/util/toast';
-
-const INTEGRATION_QUERY = gql`
-	${INTEGRATION_FRAGMENT}
-
-	query Query($integrationType: IntegrationType!) {
-		integration(integrationType: $integrationType) {
-			...IntegrationFragment
-		}
-	}
-`;
-
-const REVOKE_INTEGRATION_MUTATION = gql`
-	${INTEGRATION_FRAGMENT}
-
-	mutation Mutate($integrationType: IntegrationType!) {
-		deleteIntegration(integrationType: $integrationType) {
-			...IntegrationFragment
-		}
-	}
-`;
+import {trpc} from '@/util/trpc';
+import {SafeIntegration} from '@/types/integration';
+import {Serialized} from '@/types/serialized';
 
 interface Props {
 	integrationType: IntegrationType;
@@ -34,13 +14,21 @@ interface Props {
 
 export default function IntegrationService(props: Props) {
 	const {integrationType} = props;
-	const [revokeMutate] = useMutation(REVOKE_INTEGRATION_MUTATION);
-	const {data, loading} = useQuery<{integration: Integration}>(INTEGRATION_QUERY, {
-		variables: {integrationType},
-	});
+	const [integration, setIntegration] = useState<Serialized<SafeIntegration> | null>(null);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		trpc.integration.get
+			.query({integrationType})
+			.then((res) => {
+				setIntegration(res);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, [integrationType]);
 
 	const service = LINKED_SERVICES[integrationType];
-	const integration = data?.integration;
 
 	const serviceUri = useMemo(() => {
 		return getServiceUri(service);
@@ -67,7 +55,7 @@ export default function IntegrationService(props: Props) {
 
 	async function removeIntegration() {
 		try {
-			await revokeMutate({variables: {integrationType}});
+			await trpc.integration.delete.mutate({integrationType});
 			window.location.reload();
 		} catch (e) {
 			toastError(e);
@@ -99,10 +87,14 @@ export default function IntegrationService(props: Props) {
 	return (
 		<div className="relative flex w-full flex-col items-center">
 			<div className="flex flex-col items-center">
-				<img className="h-auto w-16" alt={`Logo for ${service.name}`} src={service.logoSrc} />
+				<img
+					className="h-auto w-16"
+					alt={`Logo for ${service.name}`}
+					src={service.logoSrc}
+				/>
 				<h4 className="mt-2.5 opacity-90">{service.name}</h4>
 			</div>
-			<div className="mb-2.5 mt-1.5 opacity-70">
+			<div className="mt-1.5 mb-2.5 opacity-70">
 				<p>{service.description}</p>
 			</div>
 			<div className="flex w-full flex-col items-center gap-1.5">

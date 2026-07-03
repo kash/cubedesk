@@ -1,17 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ArrowRight, Eye} from 'phosphor-react';
-import CopyText from '@/components/common/copy_text/CopyText';
-import {gql} from '@apollo/client';
-import {gqlMutate} from '@/components/api';
+import CopyText from '@/components/common/CopyText';
+import {trpc} from '@/util/trpc';
 import {getGameMetaData} from '@/components/play/Play';
 import {MatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
-import Loading from '@/components/common/loading/Loading';
-import Button from '@/components/common/button/Button';
+import Loading from '@/components/common/Loading';
+import Button from '@/components/common/Button';
 import {toastError} from '@/util/toast';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import Tag from '@/components/common/tag/Tag';
+import Tag from '@/components/common/Tag';
 import {GameType} from '../../../../../../shared/match/consts';
-import {Match} from '../../../../../../server/schemas/Match.schema';
+import {Match} from '@/types/match';
 
 export function getMatchLinkBase(gameType: GameType) {
 	const gameMetaData = getGameMetaData(gameType);
@@ -43,29 +42,16 @@ export default function CustomMatch() {
 
 		setCreatingLink(true);
 
-		const query = gql`
-			mutation Mutate($input: MatchSessionInput) {
-				createMatchWithNewSession(input: $input) {
-					id
-					link_code
-					spectate_code
-				}
-			}
-		`;
-
 		try {
-			const res = await gqlMutate<{createMatchWithNewSession: Match}>(query, {
-				input: {
-					min_players: minPlayers,
-					max_players: maxPlayers,
-					cube_type: cubeType,
-					match_type: matchType,
-				},
+			const newMatch = await trpc.match.createWithNewSession.mutate({
+				min_players: minPlayers,
+				max_players: maxPlayers,
+				cube_type: cubeType,
+				match_type: matchType,
 			});
 
-			const newMatch = res.data.createMatchWithNewSession;
-
-			setMatch(newMatch);
+			// CustomMatch only reads id/link_code/spectate_code, which serialize unchanged
+			setMatch(newMatch as unknown as Match);
 			setCreatingLink(false);
 		} catch (e) {
 			console.error(e);
@@ -88,7 +74,7 @@ export default function CustomMatch() {
 		}
 
 		return (
-		<p className="m-0 flex flex-row items-center text-base font-semibold text-tmo-button">
+			<p className="text-tmo-button m-0 flex flex-row items-center text-base font-semibold">
 				{getMatchLinkBase(matchType)}
 				{linkCode}
 			</p>
@@ -104,12 +90,12 @@ export default function CustomMatch() {
 
 		body = (
 			<div className="flex w-full flex-col items-start">
-				<div className="mx-auto mb-[60px] mt-10 flex flex-col items-center">
+				<div className="mx-auto mt-10 mb-[60px] flex flex-col items-center">
 					<div className="mb-[5px] flex w-full flex-row flex-wrap gap-1">
 						<Tag backgroundColor="secondary" text={ct.name} />
 						<Tag backgroundColor="secondary" text={`${minPlayers} Players`} />
 					</div>
-					<div className="mb-[5px] box-border rounded-[5px] bg-button px-[13px] py-[9px]">
+					<div className="bg-button mb-[5px] box-border rounded-[5px] px-[13px] py-[9px]">
 						{getMatchLinkBody()}
 					</div>
 					<div className="flex w-full items-start justify-between">
@@ -137,7 +123,14 @@ export default function CustomMatch() {
 						}}
 						text={spectateLink}
 					/>
-					<Button icon={<ArrowRight />} primary glow large text="Join Match" to={matchLink} />
+					<Button
+						icon={<ArrowRight />}
+						primary
+						glow
+						large
+						text="Join Match"
+						to={matchLink}
+					/>
 				</div>
 			</div>
 		);

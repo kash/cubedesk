@@ -5,7 +5,7 @@ import {fetchSessionById, fetchSessions} from '@/db/sessions/query';
 import {fetchLastCubeTypeForSession} from '@/db/solves/query';
 import {useSettings} from '@/util/hooks/useSettings';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {Session} from '../../../server/schemas/Session.schema';
+import {Session} from '@/types/session';
 
 interface Props {
 	stateless?: boolean;

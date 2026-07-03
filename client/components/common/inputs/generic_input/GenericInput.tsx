@@ -1,14 +1,16 @@
 import React, {ReactElement, ReactNode} from 'react';
-import './GenericInput.scss';
-import block from '../../../../styles/bem';
 import CSS from 'csstype';
-import Error from '../error/Error';
-import InputLegend from '../input/input_legend/InputLegend';
-import InputInfo from '../input/input_info/InputInfo';
-
-const b = block('common-generic-input');
+import Error from '@/components/common/inputs/Error';
+import InputLegend from '@/components/common/inputs/input/InputLegend';
+import InputInfo from '@/components/common/inputs/input/InputInfo';
+import {cn} from '@/util/cn';
 
 const DEFAULT_MAX_WIDTH = 350;
+
+// Shared styles for the raw input/select/textarea elements rendered by leaf
+// input components (Input, TextArea, Select, InputSelect).
+export const inputClassNames =
+	'box-border w-full rounded-md border-none bg-button p-2.5 text-base text-tmo-button transition-all duration-100 ease-in-out placeholder:text-tmo-button/35 focus:border-tmo-button disabled:opacity-60';
 
 export interface GenericInputProps<T extends HTMLElement> {
 	info?: string;
@@ -43,7 +45,9 @@ export type GenericProps<T extends GenericInputProps<any>> = Omit<
 	'value' | 'onChange' | 'onBlur' | 'onFocus' | 'maxLength' | 'disabled' | 'inputWrapper'
 >;
 
-export default function GenericInput<T extends HTMLElement>(props: GenericInputProps<T>): ReactElement {
+export default function GenericInput<T extends HTMLElement>(
+	props: GenericInputProps<T>,
+): ReactElement {
 	const {
 		info,
 		legend,
@@ -73,16 +77,16 @@ export default function GenericInput<T extends HTMLElement>(props: GenericInputP
 		}
 	}
 
-	let headerBody = null;
+	let headerBody: ReactNode = null;
 	if (optional || legend) {
 		headerBody = (
-			<div className={b('header')}>
+			<div className="mb-1.5">
 				<InputLegend optional={optional} tag={tagLegend} text={legend} />
 			</div>
 		);
 	}
 
-	let footer = null;
+	let footer: ReactNode = null;
 	if (error && typeof error === 'string') {
 		footer = <Error text={info} />;
 	} else if (info) {
@@ -90,7 +94,7 @@ export default function GenericInput<T extends HTMLElement>(props: GenericInputP
 	}
 
 	if (footer) {
-		footer = <div className={b('footer')}>{footer}</div>;
+		footer = <div className="mt-1">{footer}</div>;
 	}
 
 	if (maxWidth) {
@@ -114,7 +118,7 @@ export default function GenericInput<T extends HTMLElement>(props: GenericInputP
 	});
 
 	return (
-		<div style={style} className={b({noMargin, fullWidth})}>
+		<div style={style} className={cn({'mb-0': noMargin, 'w-full': fullWidth})}>
 			{headerBody}
 			{inputBody}
 			{footer}

@@ -3,8 +3,8 @@ import {RemoteSocket, Socket} from 'socket.io';
 import {createRedisKey, getValueFromRedis, keyExistsInRedis, RedisNamespace, setKeyInRedis} from '../services/redis';
 import {getMeWithCookieString} from '../util/auth';
 import {MatchConst} from '../../client/shared/match/consts';
-import {PublicUserAccount} from '../schemas/UserAccount.schema';
-import {DefaultEventsMap} from 'socket.io/dist/typed-events';
+import {PublicUserAccount} from '@/types/user';
+import {DefaultEventsMap} from 'socket.io';
 
 export type SocketType = Socket | RemoteSocket<DefaultEventsMap, any>;
 
@@ -22,7 +22,12 @@ export function getBasicUser(user: PublicUserAccount): PublicUserAccount {
 		verified,
 		badges,
 	} = user;
-	const {id: profileId, pfp_image, top_solves, top_averages} = user.profile;
+	const profile = user.profile;
+	if (!profile) {
+		return user;
+	}
+
+	const {id: profileId, pfp_image, top_solves, top_averages} = profile;
 
 	return {
 		id,
@@ -52,18 +57,21 @@ export type DetailedClientInfo = {
 	user: PublicUserAccount;
 };
 
-export async function getClientById(id: string): Promise<SocketType> {
+export async function getClientById(id: string): Promise<SocketType | null> {
 	const clients = await getSocketIO().in(id).fetchSockets();
 
 	if (!clients || !clients.length) {
 		return null;
 	}
 
-	return clients.at(0);
+	return clients.at(0) ?? null;
 }
 
 export async function getDetailedClientInfo(client: SocketType): Promise<DetailedClientInfo> {
 	const user = await getUserFromClient(client);
+	if (!user) {
+		throw new Error(`No user found for client ${client.id}`);
+	}
 
 	return {
 		client,
@@ -99,7 +107,7 @@ export function leaveRoom(client: SocketType, room: string) {
 	updateMyRooms(client);
 }
 
-async function getUserFromClient(client: SocketType): Promise<PublicUserAccount> {
+async function getUserFromClient(client: SocketType): Promise<PublicUserAccount | null> {
 	if (!client) {
 		return null;
 	}
@@ -136,8 +144,12 @@ export async function getUsersInRoom(room: string) {
 	const users: PublicUserAccount[] = [];
 	const clientsInRoom = await getClientsInRoom(room);
 	for (const client of clientsInRoom) {
-		const {user} = await getDetailedClientInfo(client);
-		users.push(user);
+		try {
+			const {user} = await getDetailedClientInfo(client);
+			users.push(user);
+		} catch {
+			// skip clients without a resolvable user
+		}
 	}
 
 	return users;

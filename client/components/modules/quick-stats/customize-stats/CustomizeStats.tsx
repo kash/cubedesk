@@ -1,10 +1,14 @@
 import React, {useMemo, useState} from 'react';
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
-import {getQuickStatsGridSizes, saveStatsModuleBlocks, STATS_GRID_SIZE} from '@/components/modules/quick-stats/util';
-import Button from '@/components/common/button/Button';
+import {
+	getQuickStatsGridSizes,
+	saveStatsModuleBlocks,
+	STATS_GRID_SIZE,
+} from '@/components/modules/quick-stats/util';
+import Button from '@/components/common/Button';
 import CustomizeStatsEditor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsEditor';
-import HorizontalLine from '@/components/common/horizontal_line/HorizontalLine';
-import {StatsModuleBlock} from '../../../../../server/schemas/StatsModule.schema';
+import HorizontalLine from '@/components/common/HorizontalLine';
+import {StatsModuleBlock} from '@/types/stats-module';
 import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 import {addStatsModuleBlock, removeStatsModuleBlock} from '@/actions/stats';
 import {defaultStatsModuleBlocks} from '@/reducers/stats';
@@ -27,12 +31,21 @@ export default function CustomizeStats(props: Props) {
 	const blockCount = statsModuleBlocks.length;
 	const blockSizes = useMemo(() => getQuickStatsGridSizes(blockCount), [blockCount]);
 
-	const classes = ['grid', `grid-rows-4`, 'w-full', 'h-80', `grid-cols-4`, 'gap-1', 'w-full', 'h-full'];
+	const classes = [
+		'grid',
+		`grid-rows-4`,
+		'w-full',
+		'h-80',
+		`grid-cols-4`,
+		'gap-1',
+		'w-full',
+		'h-full',
+	];
 	const className = classes.join(' ');
 
 	const canAddBlocks = blockCount < STATS_GRID_SIZE ** 2;
 
-	const blocks = [];
+	const blocks: React.ReactNode[] = [];
 
 	function addBlockToGrid() {
 		if (!canAddBlocks) {
@@ -40,7 +53,8 @@ export default function CustomizeStats(props: Props) {
 		}
 
 		const setNewIndex = blockCount;
-		const newBlock = defaultStatsModuleBlocks[Math.floor(blockCount % defaultStatsModuleBlocks.length)];
+		const newBlock =
+			defaultStatsModuleBlocks[Math.floor(blockCount % defaultStatsModuleBlocks.length)];
 		dispatch(addStatsModuleBlock(newBlock));
 		saveStatsBlockChanges();
 		setSelectedIndex(setNewIndex);
@@ -80,7 +94,13 @@ export default function CustomizeStats(props: Props) {
 
 		const buttonClasses = ['group', 'relative', 'p-0', 'rounded'];
 		if (selected) {
-			buttonClasses.push('border-solid', 'relative', 'rounded-md', 'border-4', 'border-primary/80');
+			buttonClasses.push(
+				'border-solid',
+				'relative',
+				'rounded-md',
+				'border-4',
+				'border-primary/80',
+			);
 		}
 
 		blocks.push(
@@ -93,7 +113,7 @@ export default function CustomizeStats(props: Props) {
 					gridRow: `span ${rowSpan}`,
 				}}
 			>
-				<div className="w-full h-full pointer-events-none">
+				<div className="pointer-events-none h-full w-full">
 					<QuickStatsBlock
 						statOptions={statOptions}
 						filterOptions={filterOptions}
@@ -101,7 +121,7 @@ export default function CustomizeStats(props: Props) {
 						colSpan={colSpan}
 					/>
 				</div>
-			</button>
+			</button>,
 		);
 	}
 
@@ -112,7 +132,14 @@ export default function CustomizeStats(props: Props) {
 			<div className="mb-4 table w-full">
 				<div className={className}>{blocks}</div>
 				<div className="mx-auto mt-4 table">
-					<Button disabled={!canAddBlocks} glow small primary onClick={addBlockToGrid} text="Add block" />
+					<Button
+						disabled={!canAddBlocks}
+						glow
+						small
+						primary
+						onClick={addBlockToGrid}
+						text="Add block"
+					/>
 				</div>
 			</div>
 			<HorizontalLine />

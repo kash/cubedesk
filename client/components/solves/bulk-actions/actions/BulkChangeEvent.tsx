@@ -1,16 +1,14 @@
 import React, {useMemo} from 'react';
 import {openModal} from '../../../../actions/general';
-import ConfirmModal from '../../../common/confirm_modal/ConfirmModal';
+import ConfirmModal from '@/components/common/ConfirmModal';
 import {toastSuccess} from '../../../../util/toast';
-import {Solve} from '../../../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 import {useDispatch} from 'react-redux';
-import {useMutation} from '@apollo/client';
-import {Mutation, MutationBulkUpdateSolvesCubeTypeArgs} from '../../../../@types/generated/graphql';
-import {BULK_UPDATE_SOLVES_EVENT_MUT} from '../mutations';
+import {trpc} from '@/util/trpc';
 import {CubeType} from '../../../../util/cubes/cube_types';
 import EventTypeSelector from './EventTypeSelector';
 import {initAllSolves} from '../../../layout/init';
-import Button from "client/components/common/button/Button";
+import Button from '@/components/common/Button';
 
 interface Props {
 	disabled?: boolean;
@@ -20,10 +18,6 @@ interface Props {
 export default function BulkChangeEventSolvesButton(props: Props) {
 	const {solves, disabled} = props;
 	const dispatch = useDispatch();
-	const [mutate] = useMutation<
-		{bulkUpdateSolvesCubeType: Mutation['bulkUpdateSolvesCubeType']},
-		MutationBulkUpdateSolvesCubeTypeArgs
-	>(BULK_UPDATE_SOLVES_EVENT_MUT);
 
 	const solveIds = useMemo(() => {
 		return solves.map((solve) => solve.id);
@@ -42,23 +36,22 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 						{label: 'New Event Type', value: cubeType.name},
 					]}
 					triggerAction={run}
-				/>
-			)
+				/>,
+			),
 		);
 
 		async function run() {
-			const res = await mutate({
-				variables: {
-					cubeType: cubeType.id,
-					solveIds,
-				},
+			const updateCount = await trpc.bulkActions.updateCubeType.mutate({
+				cubeType: cubeType.id,
+				solveIds,
 			});
 
 			await initAllSolves(true);
 
-			const updateCount = res.data.bulkUpdateSolvesCubeType;
 			const solvesUpdated = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
-			toastSuccess(`Successfully changed the event type of ${solvesUpdated} to ${cubeType.name}.`);
+			toastSuccess(
+				`Successfully changed the event type of ${solvesUpdated} to ${cubeType.name}.`,
+			);
 		}
 	}
 
@@ -66,7 +59,7 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 		dispatch(
 			openModal(<EventTypeSelector solves={solves} />, {
 				onComplete: onSelectCubeType,
-			})
+			}),
 		);
 	}
 

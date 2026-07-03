@@ -1,5 +1,5 @@
 import React, {ReactNode, useState} from 'react';
-import Button from '@/components/common/button/Button';
+import Button from '@/components/common/Button';
 import {IModalProps} from '@/components/common/modal/Modal';
 import {resourceUri} from '@/util/storage';
 

@@ -1,10 +1,10 @@
 import React, {ReactNode} from 'react';
 import {useDispatch} from 'react-redux';
-import {openModal} from '../../../actions/general';
+import {openModal} from '@/actions/general';
 import ProOnlyModal from './ProOnlyModal';
-import {useMe} from '../../../util/hooks/useMe';
-import {isPro} from '../../../util/pro';
-import Cover from '../cover/Cover';
+import {useMe} from '@/util/hooks/useMe';
+import {isPro} from '@/util/pro';
+import Cover from '@/components/common/Cover';
 
 interface Props {
 	forceShow?: boolean;
