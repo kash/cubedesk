@@ -1,6 +1,6 @@
 {
 	"presets": [
-        "@babel/typescript",
+		"@babel/typescript",
 		"@babel/react",
 		[
 			"@babel/preset-env",
@@ -12,10 +12,20 @@
 		]
 	],
 	"plugins": [
-	    "babel-plugin-transform-typescript-metadata",
-        ["@babel/plugin-proposal-decorators", { "legacy": true }],
-		"@babel/proposal-class-properties",
-		"@babel/proposal-object-rest-spread",
-		["babel-plugin-transform-remove-imports", { "test": "\\.(scss|css)$" }]
+		"babel-plugin-transform-typescript-metadata",
+		[
+			"@babel/plugin-proposal-decorators",
+			{
+				"legacy": true
+			}
+		],
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-transform-object-rest-spread",
+		[
+			"babel-plugin-transform-remove-imports",
+			{
+				"test": "\\.(scss|css)$"
+			}
+		]
 	]
 }

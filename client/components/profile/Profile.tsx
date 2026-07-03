@@ -193,7 +193,7 @@ export default function Profile() {
 
 	let pfp: React.ReactNode = (
 		<div className="relative z-10 flex flex-row items-center">
-			<PFP profile={profile} allowChange={myProfile} />;
+			<PFP profile={profile} allowChange={myProfile} />
 			<div
 				className={classNames('relative -top-1 ml-5', {
 					'group-hover/profile-header:hidden': myProfile,

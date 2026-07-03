@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react';
-import {getLocalStorage} from '@/util/data/local_storage';
-import CSS from 'csstype';
+import React from 'react';
 import LoadingIcon from '@/components/common/LoadingIcon';
 
 interface Props {
@@ -9,24 +7,6 @@ interface Props {
 
 export default function LoadingCover(props: Props) {
 	const {fadeOut} = props;
-
-	const [style, setStyle] = React.useState<CSS.Properties>({});
-
-	useEffect(() => {
-		if (fadeOut || typeof localStorage === 'undefined') return;
-
-		const backgroundColor = getLocalStorage('background_color');
-		const textColor = getLocalStorage('text_color');
-
-		if (backgroundColor && backgroundColor.includes(',')) {
-			style.backgroundColor = `rgb(${backgroundColor})`;
-		}
-		if (textColor && textColor.includes(',')) {
-			style.color = `rgb(${textColor})`;
-		}
-
-		setStyle(style);
-	}, [typeof localStorage]);
 
 	const coverClasses = [
 		'fixed',
@@ -50,7 +30,7 @@ export default function LoadingCover(props: Props) {
 	}
 
 	return (
-		<div style={style} className={coverClasses.join(' ')}>
+		<div className={coverClasses.join(' ')}>
 			<span className="text-[1.7rem] text-inherit">
 				<LoadingIcon />
 			</span>

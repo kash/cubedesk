@@ -1,4 +1,5 @@
 import {HelmetServerState} from 'react-helmet-async';
+import {getBlockingThemeInitScript} from '../client/util/themes/theme_init';
 
 export interface HtmlPagePayload {
 	html: string;
@@ -36,6 +37,20 @@ export default (payload: HtmlPagePayload) => {
 				<meta charset="UTF-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+				<meta name="color-scheme" content="dark light" />
+				<style>
+					html,
+					body {
+						background-color: rgb(18, 20, 28);
+						color: rgb(255, 255, 255);
+					}
+				</style>
+				<script type="text/javascript">
+					window.__STORE__ = ${cleanState};
+				</script>
+				<script type="text/javascript">
+					${getBlockingThemeInitScript()}
+				</script>
 				<link rel="preconnect" href="https://fonts.gstatic.com">
 				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans&family=JetBrains+Mono&family=Kiwi+Maru&family=Montserrat&family=Poppins&family=Roboto+Mono&family=Space+Mono&display=swap">
 				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,900&display=swap">
@@ -62,9 +77,6 @@ export default (payload: HtmlPagePayload) => {
 			<body>
 				<div id="app">${html}</div>
 			</body>
-			<script type="text/javascript">
-				window.__STORE__ = ${cleanState};
-			</script>
 			${clientScripts}
 		</html>
 	`;

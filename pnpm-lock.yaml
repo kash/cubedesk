@@ -357,6 +357,9 @@ importers:
       '@babel/plugin-proposal-decorators':
         specifier: ^7.13.15
         version: 7.29.7(@babel/core@7.29.7)
+      '@babel/plugin-transform-object-rest-spread':
+        specifier: ^7.29.7
+        version: 7.29.7(@babel/core@7.29.7)
       '@babel/plugin-transform-spread':
         specifier: ^7.12.13
         version: 7.29.7(@babel/core@7.29.7)

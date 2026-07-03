@@ -16,8 +16,10 @@ import {TRPCProvider} from '../util/api';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/index.css';
+import {initThemeFromLocalStorage} from '@/util/themes/theme_init';
 
 const preloadedState = JSON.parse(window.__STORE__);
+initThemeFromLocalStorage(preloadedState?.account?.me?.id);
 const store = createStore(reducers, preloadedState, applyMiddleware(promise, thunk));
 
 setStore(store);
