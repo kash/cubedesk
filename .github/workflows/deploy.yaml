@@ -68,37 +68,24 @@ jobs:
 
         steps:
             - name: Checkout Latest Repo
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup pnpm
-              uses: pnpm/action-setup@v4
+              uses: pnpm/action-setup@v6
 
             - name: Setup Nodejs with pnpm caching
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v5
               with:
                   node-version: "24"
                   cache: pnpm
-
-            - name: Get timestamp
-              uses: gerred/actions/current-time@master
-              id: current-time
 
             - name: Generate unique id
               id: deployment-id
               run: echo "id=$(uuidgen)" >> "$GITHUB_OUTPUT"
 
-            - name: Run string replace
-              uses: frabert/replace-string-action@master
-              id: format-time
-              with:
-                  pattern: '[:\.]+'
-                  string: '${{ steps.current-time.outputs.time }}'
-                  replace-with: '-'
-                  flags: 'g'
-
             - name: Set release name
-              run: echo "RELEASE_NAME=release-${{ steps.format-time.outputs.replaced }}" >> "$GITHUB_OUTPUT"
               id: release-name
+              run: echo "RELEASE_NAME=release-$(date -u +'%Y-%m-%dT%H-%M-%SZ')" >> "$GITHUB_OUTPUT"
 
             - name: Create Env File
               run: |
@@ -128,7 +115,7 @@ jobs:
                   echo RELEASE_NAME=${{ steps.release-name.outputs.RELEASE_NAME }} >> .env
 
             - name: Configure AWS credentials
-              uses: aws-actions/configure-aws-credentials@v4
+              uses: aws-actions/configure-aws-credentials@v6
               with:
                   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -136,7 +123,7 @@ jobs:
 
             - name: Get Github action IP
               id: ip
-              uses: haythem/public-ip@v1.2
+              run: echo "ipv4=$(curl -s https://checkip.amazonaws.com)" >> "$GITHUB_OUTPUT"
 
             - name: Setting environment variables..
               run: |
@@ -182,7 +169,7 @@ jobs:
                   pnpm exec prisma migrate deploy
 
             - name: Deploy to EB
-              uses: einaregilsson/beanstalk-deploy@v14
+              uses: einaregilsson/beanstalk-deploy@v23
               with:
                   aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
