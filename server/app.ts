@@ -1,15 +1,10 @@
 import 'dotenv/config';
 import 'ignore-styles';
-import 'reflect-metadata';
 import express from 'express';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import {getPrisma, initPrisma} from './database';
-import requestIp from 'request-ip';
 import {initLogger, logger} from './services/logger';
-import {ApolloServer} from 'apollo-server-express';
-import {baseResolvers, baseScalars} from './graphql';
 import * as Sentry from '@sentry/node';
 import '@sentry/tracing';
 
@@ -17,21 +12,10 @@ import {initLLStates} from './util/solve/ll_states';
 import {initSocket} from './match/init';
 import 'seedrandom';
 import {initMjmlTemplates} from './services/ses';
-import GraphQLError from './util/graphql_error';
 import colors from 'colors';
-import {buildSchema} from 'type-graphql';
-import {mergeSchemas} from '@graphql-tools/schema';
 import {mapPathToPage} from './router';
-import {getMe} from './util/auth';
-import * as resolverList from './resolvers/_resolvers';
-import * as schemaList from './schemas/_schemas';
 import cookieParser from 'cookie-parser';
-import * as models from './api/_index';
 import bodyParser from 'body-parser';
-import {customAuthChecker} from './middlewares/auth';
-import {GraphQLUpload, graphqlUploadExpress} from 'graphql-upload';
-import {ErrorCode, ErrorMessage} from './constants/errors';
-import {printSchema} from 'graphql';
 import {initRedisClient} from './services/redis';
 import Discord from './services/discord';
 import {initCronJobs} from './services/cron';
@@ -59,6 +43,30 @@ BigInt.prototype.toJSON = function() {
 const app = express();
 global.app = app;
 
+async function setupViteMiddleware() {
+	if (!isDev) {
+		return;
+	}
+
+	const {createServer: createViteServer} = await import('vite');
+	const vite = await createViteServer({
+		appType: 'custom',
+		server: {middlewareMode: true},
+	});
+
+	app.use(vite.middlewares);
+}
+
+function setupNotFoundHandler() {
+	app.use((req, res, next) => {
+		if (req.path.startsWith('/trpc')) {
+			return next();
+		}
+
+		res.status(404).sendFile(`${__dirname}/resources/not_found.html`);
+	});
+}
+
 process.once('SIGUSR2', () => {
 	process.kill(process.pid, 'SIGUSR2');
 });
@@ -85,44 +93,8 @@ app.use((req, res, next) => {
 });
 
 if (isDev) {
-	app.use('/dist', express.static(`${__dirname}/../dist`));
 	app.use('/public', express.static(`${__dirname}/../public`));
 }
-
-mapPathToPage();
-
-const gqlTypes: any[] = [];
-const gqlQueries: any[] = [];
-const gqlMutations: any[] = [];
-let gqlMutationActions = {};
-let gqlQueryActions = {};
-
-function parseList(l: {[key: string]: any}) {
-	const modelKeys = [...Object.keys(l)];
-
-	for (const key of modelKeys) {
-		const model = l[key];
-
-		if (!model.gqlType && !model.gqlQuery && !model.gqlMutation && !model.queryActions && !model.mutateActions) {
-			parseList(model);
-			continue;
-		}
-
-		gqlTypes.push(model.gqlType || '');
-		gqlQueries.push(model.gqlQuery || '');
-		gqlMutations.push(model.gqlMutation || '');
-		gqlMutationActions = {
-			...gqlMutationActions,
-			...(model.mutateActions || {})
-		};
-		gqlQueryActions = {
-			...gqlQueryActions,
-			...(model.queryActions || {})
-		};
-	}
-}
-
-parseList(models);
 
 process.on('SIGINT', () => process.exit(1));
 process.on('SIGTERM', () => process.exit());
@@ -141,56 +113,7 @@ if (!isDev) {
 }
 
 (async () => {
-	// TODO remove eventually
-	const oldTypeDef = `
-		${baseScalars}
-		${gqlTypes.join('\n')}
-		
-		type Query { ${gqlQueries.join('\n')} }
-		type Mutation { ${gqlMutations.join('\n')} }
-	`;
-
-	const oldResolver = {
-		...baseResolvers,
-		Upload: GraphQLUpload,
-		Query: {...gqlQueryActions},
-		Mutation: {...gqlMutationActions}
-	};
-
-	const newSchema = await buildSchema({
-		resolvers: Object.values(resolverList) as any,
-		orphanedTypes: Object.values(schemaList) as any,
-		authChecker: customAuthChecker,
-		nullableByDefault: true,
-		validate: {
-			forbidUnknownValues: false
-		}
-	});
-
-	const mergedSchema = mergeSchemas({
-		schemas: [newSchema],
-		typeDefs: oldTypeDef,
-		resolvers: oldResolver
-	});
-
-	// Start server
-	let server: any = new ApolloServer({
-		uploads: false,
-		schema: mergedSchema,
-		playground: isDev,
-		context: async ({req, res}) => {
-			const user = await getMe(req);
-			const ipAddress = requestIp.getClientIp(req);
-
-			if (user && (user.banned_until || user.banned_forever)) {
-				throw new GraphQLError(ErrorCode.FORBIDDEN, ErrorMessage.BANNED);
-			}
-
-			return {user, ipAddress, req, res, prisma: getPrisma()};
-		}
-	});
-
-	const path = '/graphql';
+	let server: any;
 
 	app.use(
 		'/trpc',
@@ -200,23 +123,13 @@ if (!isDev) {
 		})
 	);
 
-	app.use(graphqlUploadExpress());
-	server.applyMiddleware({app, path});
-
 	// Setup code
 	initLLStates();
 	initMjmlTemplates();
 
-	if (isDev) {
-		const schemaStr = printSchema(mergedSchema);
-		fs.writeFile('schema.graphql', schemaStr, (err) => {
-			if (err) {
-				logger.error('Error writing GraphQL schema to file', {
-					error: err
-				});
-			}
-		});
-	}
+	await setupViteMiddleware();
+	mapPathToPage();
+	setupNotFoundHandler();
 
 	if (isDev && process.env.HTTPS === 'true') {
 		const options = {
@@ -245,11 +158,3 @@ if (!isDev) {
 		});
 	}
 })();
-
-app.use((req, res, next) => {
-	if (req.path.startsWith('/graphql') || req.path.startsWith('/trpc')) {
-		return next();
-	}
-
-	res.status(404).sendFile(`${__dirname}/resources/not_found.html`);
-});

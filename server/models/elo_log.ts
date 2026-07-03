@@ -2,10 +2,10 @@ import {getPrisma} from '../database';
 import {Prisma} from '@/generated/prisma/client';
 import {getEloRatingColumnNameFromCubeType} from './elo_rating';
 import {logger} from '../services/logger';
-import {UserAccount} from '../schemas/UserAccount.schema';
+import {UserAccount} from '@/types/user';
 import {getUserById} from './user_account';
 import EloRefundNotification from '../resources/notification_types/elo_refund';
-import {EloLog} from '../schemas/EloLog.schema';
+import {EloLog} from '@/types/elo';
 
 export function createEloLog(input: Prisma.EloLogUncheckedCreateInput) {
 	return getPrisma().eloLog.create({
@@ -14,11 +14,15 @@ export function createEloLog(input: Prisma.EloLogUncheckedCreateInput) {
 }
 
 export async function refundElo(cheaterUserId: string) {
-	const txs = [];
+	const txs: Prisma.PrismaPromise<unknown>[] = [];
 
 	const cheater = await getUserById(cheaterUserId);
+	if (!cheater) {
+		return;
+	}
+
 	const eloLogs = await getAllEloLogsOfOpponentId(cheaterUserId);
-	const validEloLogs = [];
+	const validEloLogs: EloLog[] = [];
 
 	for (const log of eloLogs) {
 		const cubeType = log.cube_type;
@@ -79,7 +83,7 @@ async function notifyVictimsOfEloRefund(cheater: UserAccount, eloLogs: EloLog[])
 		victimMap[eloLog.player_id].numberOfGames++;
 	}
 
-	const notifs = [];
+	const notifs: Promise<unknown>[] = [];
 
 	for (const victimId of Object.keys(victimMap)) {
 		const victimData = victimMap[victimId];

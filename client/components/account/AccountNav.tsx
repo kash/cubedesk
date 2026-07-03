@@ -1,10 +1,7 @@
 import React from 'react';
-import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
+import HorizontalNav from '@/components/common/HorizontalNav';
 import {useRouteMatch} from 'react-router-dom';
-import PageTitle from '../common/page_title/PageTitle';
-import block from '../../styles/bem';
-
-const b = block('account-nav');
+import PageTitle from '@/components/common/PageTitle';
 
 const TABS = [
 	{
@@ -43,7 +40,7 @@ export default function AccountNav() {
 	const page = useRouteMatch().path.split('/').pop();
 
 	return (
-		<div className={b()}>
+		<div className="max-w-none">
 			<PageTitle pageName="Account">
 				<HorizontalNav tabs={TABS} tabId={page} />
 			</PageTitle>

@@ -1,7 +1,7 @@
 import {v4 as uuid} from 'uuid';
 import {getPrisma} from '../database';
-import {UserAccount} from '../schemas/UserAccount.schema';
-import {BanLog} from '../schemas/BanLog.schema';
+import {UserAccount} from '@/types/user';
+import {BanLog} from '@/types/ban-log';
 import { Prisma } from "@/generated/prisma/client";
 
 export async function deactivateAllBanLogs(userId: string): Promise<Prisma.BatchPayload> {

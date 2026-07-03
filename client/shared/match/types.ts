@@ -1,5 +1,5 @@
-import {PublicUserAccount} from '../../../server/schemas/UserAccount.schema';
-import {Match} from '../../../server/schemas/Match.schema';
+import {PublicUserAccount} from '@/types/user';
+import {Match} from '@/types/match';
 
 export enum PlayerStatus {
 	None = 'NONE',

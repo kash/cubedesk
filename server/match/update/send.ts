@@ -1,4 +1,4 @@
-import {Match} from '../../schemas/Match.schema';
+import {Match} from '@/types/match';
 import {getMatchPlayersRoomName, getMatchSpectatorsRoomName} from '../match';
 import {ServerToClientEvents} from '../../../shared/match/socketio.types';
 import {getSocketIO} from '../init';

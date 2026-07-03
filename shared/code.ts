@@ -5,10 +5,10 @@ const LOWER_ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 const UPPER_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const NUMBER_ALPHABET = '0123456789';
 
-const nanoCustom = customAlphabet(`${UPPER_ALPHABET}${LOWER_ALPHABET}${NUMBER_ALPHABET}`, 8)
+const nanoCustom = customAlphabet(`${UPPER_ALPHABET}${LOWER_ALPHABET}${NUMBER_ALPHABET}`, 8);
 
 export function generateRandomCode(length: number): string {
-	const result = [];
+	const result: string[] = [];
 	const characters = `${UPPER_ALPHABET}${NUMBER_ALPHABET}`;
 	const charactersLength = characters.length;
 	for (let i = 0; i < length; i++) {
@@ -18,7 +18,7 @@ export function generateRandomCode(length: number): string {
 }
 
 export function generateRandomString(length: number): string {
-	const result = [];
+	const result: string[] = [];
 	const characters = `${LOWER_ALPHABET}${NUMBER_ALPHABET}`;
 	const charactersLength = characters.length;
 	for (let i = 0; i < length; i++) {

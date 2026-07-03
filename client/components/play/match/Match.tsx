@@ -1,31 +1,31 @@
-import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
+import React, {createContext, useContext, useEffect, useRef, useState, ReactNode} from 'react';
 import {useDispatch} from 'react-redux';
-import './Match.scss';
-import {isSocketConnected, socketClient} from '../../../util/socket/socketio';
-import Modal from '../../common/modal/Modal';
-import Timer from '../../timer/Timer';
-import ChatBox from '../../modules/chat/ChatBox';
-import {Match as MatchSchema} from '../../../../server/schemas/Match.schema';
-import {TimerProps} from '../../timer/@types/interfaces';
-import {reactState} from '../../../@types/react';
-import Listeners from './Listeners';
-import {MatchConst} from '../../../shared/match/consts';
-import {ChallengerProps} from '../target/challengers/challenger/Challenger';
-import {openModal} from '../../../actions/general';
-import History from '../../modules/history/History';
-import {updateMatchState} from './helpers/state';
-import {GameContext} from '../game/Game';
-import {useMe} from '../../../util/hooks/useMe';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import {getMatchLinkBase} from './match_popup/custom_match/CustomMatch';
-import {toastSuccess} from '../../../util/toast';
+import {isSocketConnected, socketClient} from '@/util/socket/socketio';
+import Modal from '@/components/common/modal/Modal';
+import Timer from '@/components/timer/Timer';
+import ChatBox from '@/components/modules/chat/ChatBox';
+import {Match as MatchSchema} from '@/types/match';
+import {TimerProps} from '@/components/timer/@types/interfaces';
+import {reactState} from '@/@types/react';
+import Listeners from '@/components/play/match/Listeners';
+import {MatchConst} from '@/shared/match/consts';
+import {ChallengerProps} from '@/components/play/target/challengers/Challenger';
+import {openModal} from '@/actions/general';
+import History from '@/components/modules/history/History';
+import {updateMatchState} from '@/components/play/match/helpers/state';
+import {GameContext} from '@/components/play/game/Game';
+import {useMe} from '@/util/hooks/useMe';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {getMatchLinkBase} from '@/components/play/match/match-popup/custom-match/CustomMatch';
+import {toastSuccess} from '@/util/toast';
 import {Prohibit, CaretDown, Copy, Flag} from 'phosphor-react';
-import {copyText} from '../../common/copy_text/CopyText';
-import MatchOver from './match_over/MatchOver';
-import {MatchSession} from '../../../../server/schemas/MatchSession.schema';
-import {PublicUserAccount} from '../../../../server/schemas/UserAccount.schema';
+import {copyText} from '@/components/common/CopyText';
+import MatchOver from '@/components/play/match/match-over/MatchOver';
+import {MatchSession} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
 import {GameType} from '../../../../shared/match/consts';
-import {Solve} from '../../../@types/generated/graphql';
+import {Solve} from '@/types/solve';
+import {MatchUpdateChat} from '@/shared/match/types';
 
 interface MatchProps {
 	matchPath: string;
@@ -43,8 +43,8 @@ interface MatchProps {
 
 export interface IMatchContext extends MatchProps {
 	// State
-	scramble: string;
-	setScramble: reactState<string>;
+	scramble: string | null;
+	setScramble: reactState<string | null>;
 	inGame: boolean;
 	setInGame: reactState<boolean>;
 	matchOver: boolean;
@@ -60,10 +60,10 @@ export interface IMatchContext extends MatchProps {
 	setSpectating: reactState<boolean>;
 	hideTimer: boolean;
 	setHideTimer: reactState<boolean>;
-	match: MatchSchema;
-	setMatch: reactState<MatchSchema>;
-	matchSession: MatchSession;
-	setMatchSession: reactState<MatchSession>;
+	match: MatchSchema | null;
+	setMatch: reactState<MatchSchema | null>;
+	matchSession: MatchSession | null;
+	setMatchSession: reactState<MatchSession | null>;
 
 	// More
 	winnerId: React.MutableRefObject<string>;
@@ -72,7 +72,15 @@ export interface IMatchContext extends MatchProps {
 	exitMatch: () => void;
 }
 
-export const MatchContext = createContext<IMatchContext>(null);
+export const MatchContext = createContext<IMatchContext | null>(null);
+
+export function useMatchContext(): IMatchContext {
+	const ctx = useContext(MatchContext);
+	if (!ctx) {
+		throw new Error('useMatchContext must be used within MatchContext.Provider');
+	}
+	return ctx;
+}
 
 export default function Match(props: MatchProps) {
 	const {linkCode, matchType, matchPath, onSolve, timerParams} = props;
@@ -81,17 +89,19 @@ export default function Match(props: MatchProps) {
 	const dispatch = useDispatch();
 	const matchLoaded = useRef(false);
 
-	const [scramble, setScramble] = useState<string>(null);
+	const [scramble, setScramble] = useState<string | null>(null);
 	const [matchOver, setMatchOver] = useState<boolean>(false);
 
 	const [inGame, setInGame] = useState(false);
 	const [timerDisabled, setTimerDisabled] = useState(false);
 	const [spectateQueueSize, setSpectateQueueSize] = useState(0);
 	const [rematchRoomSize, setRematchRoomSize] = useState(0);
-	const [spectating, setSpectating] = useState(linkCode && linkCode.startsWith(MatchConst.SPECTATE_LINK_CODE_PREFIX));
+	const [spectating, setSpectating] = useState(
+		!!(linkCode && linkCode.startsWith(MatchConst.SPECTATE_LINK_CODE_PREFIX))
+	);
 	const [hideTimer, setHideTimer] = useState(false);
-	const [match, setMatch] = useState<MatchSchema>(null);
-	const [matchSession, setMatchSession] = useState<MatchSession>(null);
+	const [match, setMatch] = useState<MatchSchema | null>(null);
+	const [matchSession, setMatchSession] = useState<MatchSession | null>(null);
 
 	const winnerId = useRef('');
 	const watchingPlayerId = useRef('');
@@ -99,19 +109,19 @@ export default function Match(props: MatchProps) {
 	const me = useMe();
 
 	function exitMatch() {
-		history.replaceState({}, null, window.location.origin + matchPath);
+		history.replaceState({}, '', window.location.origin + matchPath);
 		window.location.reload();
 	}
 
 	useEffect(() => {
-		if (matchOver) {
+		if (matchOver && match) {
 			dispatch(
 				openModal(<MatchOver exitMatch={exitMatch} match={match} matchType={matchType} />, {
 					noPadding: true,
 				})
 			);
 		}
-	}, [matchOver]);
+	}, [matchOver, match]);
 
 	// Send heartbeat every 2 seconds
 	useEffect(() => {
@@ -129,7 +139,7 @@ export default function Match(props: MatchProps) {
 
 	function clickChallengerActionButton(challenger: PublicUserAccount, solves: Solve[]) {
 		dispatch(
-			openModal(<History disabled solves={solves} />, {
+			openModal(<History disabled solves={solves as any} />, {
 				width: 600,
 				title: `${challenger.username}'s Times`,
 			})
@@ -144,6 +154,10 @@ export default function Match(props: MatchProps) {
 		}
 
 		for (const player of match.participants) {
+			if (!player.user) {
+				continue;
+			}
+
 			const challengerProps: ChallengerProps = {
 				solves: player.solves || [],
 				challenger: player.user,
@@ -162,7 +176,7 @@ export default function Match(props: MatchProps) {
 				},
 				selectedChallengerId: watchingPlayerId.current,
 				winnerId: winnerId.current,
-				selectable: spectating,
+				selectable: !!spectating,
 				clickChallengerActionButton,
 			};
 
@@ -177,37 +191,53 @@ export default function Match(props: MatchProps) {
 	}
 
 	async function matchOnSolve(solve: Solve) {
-		solve.match_id = match?.id;
-
-		if (onSolve) {
-			await onSolve(solve, match);
+		if (match?.id) {
+			solve.match_id = match.id;
 		}
 
-		socketClient().emit('playerSolveSaved', match?.id, solve);
+		if (onSolve) {
+			await onSolve(solve, match ?? undefined);
+		}
+
+		if (match?.id) {
+			socketClient().emit('playerSolveSaved', match.id, solve as any);
+		}
 	}
 
 	function resignGame() {
-		socketClient().emit('playerResignedMatch', match?.id);
+		if (!match?.id) {
+			return;
+		}
+		socketClient().emit('playerResignedMatch', match.id);
 	}
 
 	function abortGame() {
-		socketClient().emit('playerAbortedMatch', match?.id);
+		if (!match?.id) {
+			return;
+		}
+		socketClient().emit('playerAbortedMatch', match.id);
 	}
 
 	function copySpectateLink() {
+		if (!match?.spectate_code) {
+			return;
+		}
 		const link = getMatchLinkBase(matchType) + match.spectate_code;
 		copyText(link);
 		toastSuccess('Successfully copied Spectate link');
 	}
 
 	function copyPlayLink() {
+		if (!match?.link_code) {
+			return;
+		}
 		const link = getMatchLinkBase(matchType) + match.link_code;
 		copyText(link);
 		toastSuccess('Successfully copied Play link');
 	}
 
 	// Timer
-	let timer = null;
+	let timer: React.ReactNode = null;
 
 	const anySolves = match?.participants?.some((p) => p.solves && p.solves.length);
 
@@ -253,29 +283,40 @@ export default function Match(props: MatchProps) {
 		let timerBody = <div />;
 
 		if (!hideTimer) {
-			params.timerCustomFooterModules[params.timerCustomFooterModules.length - 1] = {
-				hideAllOptions: true,
-				customBody: () => {
-					return {
-						module: (
-							<ChatBox
-								matchType={matchType}
-								messages={matchSession?.chat_messages || []}
-								match={match}
-								disabled={spectating}
-							/>
-						),
-					};
-				},
-			};
+			const footerModules = params.timerCustomFooterModules;
+			if (footerModules?.length) {
+				footerModules[footerModules.length - 1] = {
+					hideAllOptions: true,
+					customBody: () => {
+						const chatMessages: MatchUpdateChat[] = (matchSession?.chat_messages || [])
+							.filter((msg) => msg.user)
+							.map((msg) => ({
+								id: msg.id,
+								message: msg.message,
+								user: msg.user!,
+							}));
+
+						return {
+							module: (
+								<ChatBox
+									matchType={matchType}
+									messages={chatMessages}
+									match={match}
+									disabled={!!spectating}
+								/>
+							),
+						};
+					},
+				};
+			}
 
 			timerBody = (
 				<Timer
 					{...params}
 					onSolve={matchOnSolve}
-					scramble={params.disabled ? ' ' : scramble}
-					disabled={params.disabled || spectating}
-					hideScramble={params.disabled}
+					scramble={params.disabled ? ' ' : scramble || ''}
+					disabled={!!params.disabled || !!spectating}
+					hideScramble={!!params.disabled}
 				/>
 			);
 		}
@@ -319,7 +360,7 @@ export default function Match(props: MatchProps) {
 	return (
 		<MatchContext.Provider value={context}>
 			<Listeners>
-				<div className="cd-match">{timer}</div>;
+				<div>{timer}</div>;
 			</Listeners>
 		</MatchContext.Provider>
 	);

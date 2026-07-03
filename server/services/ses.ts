@@ -4,7 +4,7 @@ import fs from 'fs';
 import Handlebars from 'handlebars';
 import mjml2html from 'mjml';
 import {createEmailLog} from '../models/email_log';
-import {UserAccount} from '../schemas/UserAccount.schema';
+import {EmailableUser} from '@/types/user';
 
 const ses = new SES({region: 'us-west-2'});
 
@@ -28,7 +28,7 @@ export function initMjmlTemplates(): void {
 	});
 }
 
-export async function sendEmailWithTemplate(user: UserAccount, subject: string, template: string, vars: EmailTemplateVars): Promise<SendEmailResponse> {
+export async function sendEmailWithTemplate(user: EmailableUser, subject: string, template: string, vars: EmailTemplateVars): Promise<SendEmailResponse> {
 	let variables = vars || {};
 	const source = mjmlTemplates[template];
 

@@ -107,7 +107,7 @@ export function getSolveSteps(turns) {
 		},
 	};
 
-	let stepTurns = [];
+	let stepTurns: string[] = [];
 	const steps = {
 		cross: null,
 		f2l: null,
@@ -182,7 +182,7 @@ export function getSolveSteps(turns) {
 		}
 	}
 
-	function setStep(completedAt: number, side: string, name: string, index: number, parent: string, moves: SmartTurn[], turnsIndex: number, options?: {
+	function setStep(completedAt: number, side: string, name: string, index: number, parent: string | null, moves: SmartTurn[] | string[], turnsIndex: number, options?: {
 		ollCaseKey?: string
 		pllCaseKey?: string
 	}) {
@@ -226,13 +226,17 @@ export function getSolveSteps(turns) {
 	}
 
 	function populateF2lStages(turnIndex, base) {
+		if (!steps.f2l || !steps.cross) {
+			return;
+		}
+
 		const moves = steps.f2l.turns;
 
 		turnIndex = steps.cross.turns.length;
 
 		reverseTurns(cubejs, moves);
 
-		let tempTurns = [];
+		let tempTurns: string[] = [];
 		const cornerMem = {};
 		let slotCounter = 1;
 
@@ -394,6 +398,9 @@ export function getSolveSteps(turns) {
 				const adjEdgeIndex = edgeAdj[side][adjFace];
 				const adjLocalIndex = getAbsoluteIndexByLocalIndex(adjFace, adjEdgeIndex);
 				const corners = getEdgeAdjacentOffset(adjEdgeIndex);
+				if (!corners) {
+					continue;
+				}
 
 				const leftIndex = adjLocalIndex + corners[0];
 				const rightIndex = adjLocalIndex + corners[1];
@@ -415,6 +422,9 @@ export function getSolveSteps(turns) {
 		const localIndex = getLocalIndexByAbsoluteIndex(absoluteIndex);
 
 		const edgeLocalIndices = getCornerAdjacentOffset(localIndex);
+		if (!edgeLocalIndices) {
+			return false;
+		}
 
 		const side1Index = absoluteIndex + edgeLocalIndices[0];
 		const side2Index = absoluteIndex + edgeLocalIndices[1];

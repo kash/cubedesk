@@ -1,16 +1,16 @@
 import React from 'react';
-import {getTimeString} from '../../../util/time';
-import Slider from '../../common/slider/Slider';
-import LayoutSelector from './layout_selector/LayoutSelector';
-import TimerBackground from './timer_background/TimerBackground';
-import SettingRow from '../setting/row/SettingRow';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
-import SettingSection from '../setting/section/SettingSection';
-import {setSetting} from '../../../db/settings/update';
-import {useSettings} from '../../../util/hooks/useSettings';
-import Button from '../../common/button/Button';
-import ThemeOptions from './theme_options/ThemeOptions';
-import {AllSettings, getDefaultSetting} from '../../../db/settings/query';
+import {getTimeString} from '@/util/time';
+import Slider from '@/components/common/Slider';
+import LayoutSelector from '@/components/settings/appearance/LayoutSelector';
+import TimerBackground from '@/components/settings/appearance/TimerBackground';
+import SettingRow from '@/components/settings/common/SettingRow';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import SettingSection from '@/components/settings/common/SettingSection';
+import {setSetting} from '@/db/settings/update';
+import {useSettings} from '@/util/hooks/useSettings';
+import Button from '@/components/common/Button';
+import ThemeOptions from '@/components/settings/appearance/theme-options/ThemeOptions';
+import {AllSettings, getDefaultSetting} from '@/db/settings/query';
 import {CaretDown} from 'phosphor-react';
 
 const DEFAULT_FONT_FAMILY = 'Roboto Mono';
@@ -62,10 +62,16 @@ export default function Appearance() {
 			>
 				<LayoutSelector />
 			</SettingRow>
-			<SettingRow title="Timer background" description="Change the background color or image of the timer.">
+			<SettingRow
+				title="Timer background"
+				description="Change the background color or image of the timer."
+			>
 				<TimerBackground />
 			</SettingRow>
-			<SettingRow title="Timer font" description="Font of the big timer you see on the timer page">
+			<SettingRow
+				title="Timer font"
+				description="Font of the big timer you see on the timer page"
+			>
 				<Dropdown
 					text={timerFontFamily}
 					noMargin
@@ -84,10 +90,13 @@ export default function Appearance() {
 				/>
 			</SettingRow>
 			<SettingSection>
-				<SettingRow title="Timer font size" description="Font size of the big time you see on the timer page">
+				<SettingRow
+					title="Timer font size"
+					description="Font size of the big time you see on the timer page"
+				>
 					<Slider
 						min={35}
-						value={timerTimeSize}
+						value={String(timerTimeSize)}
 						max={150}
 						onChange={(e) => updateSetting('timer_time_size', e.target.value)}
 					/>
@@ -96,10 +105,12 @@ export default function Appearance() {
 						text="Reset"
 						warning
 						flat
-						onClick={() => updateSetting('timer_time_size', getDefaultSetting('timer_time_size'))}
+						onClick={() =>
+							updateSetting('timer_time_size', getDefaultSetting('timer_time_size'))
+						}
 					/>
 				</SettingRow>
-				<div className="cd-settings__text-size">
+				<div className="w-full py-[30px] pb-[50px] text-center">
 					<h1
 						style={{
 							fontWeight: '500',
@@ -118,7 +129,7 @@ export default function Appearance() {
 				>
 					<Slider
 						min={10}
-						value={timerScrambleSize}
+						value={String(timerScrambleSize)}
 						max={40}
 						onChange={(e) => updateSetting('timer_scramble_size', e.target.value)}
 					/>
@@ -127,11 +138,17 @@ export default function Appearance() {
 						text="Reset"
 						warning
 						flat
-						onClick={() => updateSetting('timer_scramble_size', getDefaultSetting('timer_scramble_size'))}
+						onClick={() =>
+							updateSetting(
+								'timer_scramble_size',
+								getDefaultSetting('timer_scramble_size'),
+							)
+						}
 					/>
 				</SettingRow>
-				<div className="cd-settings__text-size">
+				<div className="w-full py-[30px] pb-[50px] text-center">
 					<h3
+						className="text-text font-['Roboto_Mono',monospace] font-normal"
 						style={{
 							fontSize: `${timerScrambleSize}px`,
 						}}

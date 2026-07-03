@@ -11,33 +11,11 @@ const toastOptions: ToastOptions = {
 	progress: undefined,
 };
 
-export function toastAlertGqlResult(result, successMessage) {
-	if (!result.errors) {
-		toastSuccess(successMessage);
-	} else {
-		toastErrorGqlResult(result);
-	}
-}
-
-export function toastErrorGqlResult(result) {
-	for (const error of result?.errors || []) {
-		toastError(error.message);
-	}
-}
-
-export function toastDismiss() {
-	toast.dismiss();
-}
-
 export function toastSuccess(message: string) {
 	toast.success(message, toastOptions);
 }
 
-export function toastWarning(message: string) {
-	toast.warning(message, toastOptions);
-}
-
-export function toastError(message: string | Error) {
+export function toastError(message: string | Error | unknown) {
 	let msg = message;
 	if (message instanceof Error) {
 		msg = message.message

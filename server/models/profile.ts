@@ -1,5 +1,5 @@
 import {getPrisma} from '../database';
-import {Profile} from '../schemas/Profile.schema';
+import {Profile} from '@/types/profile';
 import {publicUserInclude} from './user_account';
 
 export function getUserProfile(user): Promise<Profile> {
@@ -11,28 +11,6 @@ export function getUserProfile(user): Promise<Profile> {
 			header_image: true,
 			pfp_image: true,
 			user: publicUserInclude
-		},
-	});
-}
-
-export function getProfileById(id) {
-	return getPrisma().profile.findUnique({
-		where: {
-			id,
-		},
-		include: {
-			header_image: true,
-			pfp_image: true,
-			user: {
-				include: {
-					integrations: true,
-					badges: {
-						include: {
-							badge_type: true,
-						},
-					},
-				},
-			},
 		},
 	});
 }

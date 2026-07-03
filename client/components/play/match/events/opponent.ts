@@ -1,7 +1,7 @@
-import {MatchClientEvent} from '../../../../shared/match/events';
-import {getMatchClientEvent} from '../../../../shared/match/client_events';
-import {emitEvent} from '../../../../util/event_handler';
-import {useSocketListener} from '../../../../util/hooks/useSocketListener';
+import {MatchClientEvent} from '@/shared/match/events';
+import {getMatchClientEvent} from '@/shared/match/client-events';
+import {emitEvent} from '@/util/event_handler';
+import {useSocketListener} from '@/util/hooks/useSocketListener';
 
 /**
  * Relays server events to Challenger component via JavaScript events

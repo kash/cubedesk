@@ -1,4 +1,4 @@
-import {Solve} from '../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 
 export function sanitizeSolve(s: Solve): Solve {
 	const solve = {...s};

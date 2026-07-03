@@ -1,13 +1,15 @@
 import {
-	UserAccountForAdmin,
+	AdminUser,
+	adminUserSelect,
 	UserAccountMatchesSummary,
 	UserAccountSolvesSummary,
 	UserAccountSummary,
-} from '../schemas/UserAccount.schema';
+} from '@/types/admin';
+import type {Prisma} from '@/generated/prisma/client';
 import {getPrisma} from '../database';
 import {trainerExceptions} from './solve';
 
-export async function getUserAccountForAdmin(userId: string): Promise<UserAccountForAdmin> {
+export async function getUserAccountForAdmin(userId: string): Promise<AdminUser | null> {
 	const summary = await getUserForAdminSummary(userId);
 	if (!summary) {
 		return null;
@@ -17,35 +19,7 @@ export async function getUserAccountForAdmin(userId: string): Promise<UserAccoun
 		where: {
 			id: userId,
 		},
-		include: {
-			integrations: true,
-			badges: {
-				include: {
-					badge_type: true,
-				},
-			},
-			profile: {
-				include: {
-					pfp_image: true,
-				},
-			},
-			reports_for: {
-				orderBy: {
-					created_at: 'desc',
-				},
-			},
-			bans: {
-				orderBy: {
-					created_at: 'desc',
-				},
-			},
-			chat_messages: {
-				orderBy: {
-					created_at: 'desc',
-				},
-			},
-			settings: true,
-		},
+		select: adminUserSelect,
 	});
 
 	if (!userRelations) {
@@ -58,7 +32,7 @@ export async function getUserAccountForAdmin(userId: string): Promise<UserAccoun
 	};
 }
 
-async function getUserForAdminSummary(userId: string): Promise<UserAccountSummary> {
+async function getUserForAdminSummary(userId: string): Promise<UserAccountSummary | null> {
 	const agg = await getPrisma().userAccount.findUnique({
 		where: {
 			id: userId,
@@ -98,7 +72,10 @@ async function getUserForAdminSummary(userId: string): Promise<UserAccountSummar
 	};
 }
 
-async function getUserForAdminSolvesSummary(userId: string, where: any = {}): Promise<UserAccountSolvesSummary[]> {
+async function getUserForAdminSolvesSummary(
+	userId: string,
+	where: Prisma.SolveWhereInput = {}
+): Promise<UserAccountSolvesSummary[]> {
 	const sum = await getPrisma().solve.groupBy({
 		by: ['cube_type'],
 		_avg: {

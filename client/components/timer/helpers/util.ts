@@ -1,5 +1,5 @@
-import {ITimerContext} from '../Timer';
-import {getSetting} from '../../../db/settings/query';
+import {ITimerContext} from '@/components/timer/Timer';
+import {getSetting} from '@/db/settings/query';
 
 export function smartCubeSelected(context: ITimerContext) {
 	const timerType = getSetting('timer_type');

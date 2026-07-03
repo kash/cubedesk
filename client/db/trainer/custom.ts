@@ -1,60 +1,38 @@
-import {getTrainerDb} from './init';
+import {getTrainerDb, TrainerAlgorithmExtended} from './init';
 import {emitEvent} from '../../util/event_handler';
-import {CustomTrainer, CustomTrainerCreateInput} from '../../@types/generated/graphql';
-import {gql} from '@apollo/client/core';
-import {gqlMutate} from '../../components/api';
-import {CUSTOM_TRAINER_FRAGMENT} from '../../util/graphql/fragments';
+import {CustomTrainerInput} from '@/types/trainer';
+import {trpc} from '../../util/trpc';
 
-export async function updateCustomTrainerDb(id: string, input: CustomTrainerCreateInput) {
+export async function updateCustomTrainerDb(id: string, input: CustomTrainerInput) {
 	const trainerDb = getTrainerDb();
 	const trainer = trainerDb.findOne({
 		id,
 	});
-
-	const query = gql`
-		mutation Mutate($id: String, $input: CustomTrainerCreateInput) {
-			updateCustomTrainer(id: $id, data: $input) {
-				id
-			}
-		}
-	`;
 
 	const algo = {
 		...trainer,
 		...input,
 	};
 
-	trainerDb.update(algo);
+	trainerDb.update(algo as TrainerAlgorithmExtended);
 	emitEvent('trainerDbUpdatedEvent', algo);
 
-	return await gqlMutate(query, {
+	return await trpc.customTrainer.update.mutate({
 		id,
-		input,
+		data: input,
 	});
 }
 
-export async function createCustomTrainerDb(trainer: CustomTrainerCreateInput) {
+export async function createCustomTrainerDb(trainer: CustomTrainerInput) {
 	const trainerDb = getTrainerDb();
-
-	const query = gql`
-		${CUSTOM_TRAINER_FRAGMENT}
-
-		mutation Mutate($input: CustomTrainerCreateInput!) {
-			createCustomTrainer(data: $input) {
-				...CustomTrainerFragment
-			}
-		}
-	`;
 
 	emitEvent('trainerDbUpdatedEvent', trainer);
 
-	const res = await gqlMutate<{createCustomTrainer: CustomTrainer}>(query, {
-		input: trainer,
-	});
+	const newTrainer = await trpc.customTrainer.create.mutate(trainer);
 
 	trainerDb.insert({
-		...(res.data.createCustomTrainer as CustomTrainerCreateInput),
-	});
+		...newTrainer,
+	} as unknown as TrainerAlgorithmExtended);
 
 	emitEvent('trainerDbUpdatedEvent', trainer);
 }
@@ -65,18 +43,10 @@ export async function deleteCustomTrainer(id: string) {
 		id,
 	});
 
-	const query = gql`
-		mutation Mutate($id: String) {
-			deleteCustomTrainer(id: $id) {
-				id
-			}
-		}
-	`;
-
 	trainerDb.remove(trainer);
 	emitEvent('trainerDbUpdatedEvent', trainer);
 
-	await gqlMutate(query, {
+	await trpc.customTrainer.delete.mutate({
 		id,
 	});
 }

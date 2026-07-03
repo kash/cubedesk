@@ -1,7 +1,7 @@
 import {getPlayerPairsByGameType} from './elo_matching';
 import {testGenerateMatchLobbyRows} from '../../__test__/match_lobby';
 import * as SocketUtils from '../../util';
-import {MatchLobby} from '../../../schemas/MatchLobby.schema';
+import {MatchLobby} from '@/types/match';
 import {GameType} from '../../../../shared/match/consts';
 
 describe('match players in lobby', () => {

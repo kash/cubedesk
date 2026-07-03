@@ -1,6 +1,11 @@
 import {v4 as uuid} from 'uuid';
 import {getPrisma} from '../database';
-import {UserAccount} from '../schemas/UserAccount.schema';
+
+// Minimal shape so both the schema classes and generated Prisma rows are accepted
+type UserAccount = {
+	id: string;
+	join_country?: string | null;
+};
 
 const GDPR_COUNTRY_CODES = [
 	'AT',

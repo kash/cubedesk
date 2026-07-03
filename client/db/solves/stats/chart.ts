@@ -16,7 +16,7 @@ export function getChartData(filter: FilterSolvesOptions) {
 		}
 	);
 
-	const data = [];
+	const data: {index: number; value: number}[] = [];
 	let index = 0;
 
 	const buckets = Math.floor(solves.length / CHART_BUCKET_SIZE);

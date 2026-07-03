@@ -1,5 +1,3 @@
-import {AppTheme} from '../client/util/hooks/useTheme';
-
 export type ColorName =
 	| 'white'
 	| 'black'
@@ -57,24 +55,6 @@ const sameColorRange = (color: string) => ({
 	800: color,
 	900: color,
 });
-
-export function getColorHexValueFromName(colorName: ColorName, appTheme?: AppTheme): string {
-	if (!colorName || !colorPalette[colorName]) {
-		return undefined;
-	}
-
-	const colorMap = colorPalette[colorName];
-
-	if (!appTheme) {
-		return colorMap[500];
-	}
-
-	if (appTheme.isDark) {
-		return colorMap[400];
-	} else {
-		return colorMap[700];
-	}
-}
 
 const colorPalette: Record<ColorName, ColorValue> = {
 	white: sameColorRange('rgb(255, 255, 255)'),

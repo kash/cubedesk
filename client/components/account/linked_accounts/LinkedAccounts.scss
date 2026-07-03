@@ -1,8 +1,0 @@
-@use '../../../styles/config' as *;
-
-.#{$namespace}-account-linked-accounts {
-	> * {
-		max-width: 300px;
-		margin-bottom: 25px;
-	}
-}

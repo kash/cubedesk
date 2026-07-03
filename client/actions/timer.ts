@@ -27,10 +27,3 @@ export function setTimerDisabled(disabled) {
 		},
 	};
 }
-
-export function setStartEnabled(val) {
-	return {
-		type: 'SET_START_ENABLED',
-		payload: val,
-	};
-}

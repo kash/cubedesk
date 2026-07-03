@@ -1,27 +1,18 @@
-import React, {createContext, useMemo} from 'react';
-import './Stats.scss';
-import block from '../../styles/bem';
-import {useSolveDb} from '../../util/hooks/useSolveDb';
-import PageTitle from '../common/page_title/PageTitle';
-import HorizontalNav from '../common/horizontal_nav/HorizontalNav';
-import CubeStats from './cube_stats/CubeStats';
-import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '../../db/solves/query';
-import {getCubeTypeInfoById} from '../../util/cubes/util';
-import {CubeType} from '../../util/cubes/cube_types';
-import AllStats from './all/AllStats';
-import {gql, useQuery} from '@apollo/client';
-import {Stats as StatsSchema} from '../../@types/generated/graphql';
-import {STATS_FRAGMENT} from '../../util/graphql/fragments';
-import {useMe} from '../../util/hooks/useMe';
-
-const b = block('stats');
+import React, {createContext, useEffect, useMemo, useState} from 'react';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import PageTitle from '@/components/common/PageTitle';
+import HorizontalNav, {HorizontalNavTab} from '@/components/common/HorizontalNav';
+import CubeStats from '@/components/stats/cube-stats/CubeStats';
+import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {CubeType} from '@/util/cubes/cube_types';
+import AllStats from '@/components/stats/all/AllStats';
+import {Stats as StatsSchema} from '@/types/stats';
+import {trpc} from '@/util/trpc';
+import {useMe} from '@/util/hooks/useMe';
 
 const CUBE_TYPE_QUERY_PARAM = 'cubeType';
 const ALL_TAB_ID = 'all';
-
-interface StatsQueryData {
-	stats: StatsSchema;
-}
 
 export interface IStatsContext {
 	all: boolean;
@@ -30,25 +21,20 @@ export interface IStatsContext {
 	filterOptions: FilterSolvesOptions;
 }
 
-const STATS_QUERY = gql`
-	${STATS_FRAGMENT}
-
-	query Query {
-		stats {
-			...StatsFragment
-		}
-	}
-`;
-
 export const StatsContext = createContext<IStatsContext>(null);
 
 export default function Stats() {
 	const me = useMe();
 
-	const {data: statsData} = useQuery<StatsQueryData>(STATS_QUERY, {
-		fetchPolicy: 'no-cache',
-		skip: !me,
-	});
+	const [stats, setStats] = useState<StatsSchema | null>(null);
+
+	useEffect(() => {
+		if (!me) {
+			return;
+		}
+
+		trpc.stats.overview.query().then(setStats);
+	}, [!me]);
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const tabId = urlParams.get(CUBE_TYPE_QUERY_PARAM) || ALL_TAB_ID;
@@ -67,7 +53,7 @@ export default function Stats() {
 		filterOptions.cube_type = tabId;
 	}
 
-	const cubeTypeTabs = cubeTypes.reduce((acc, ct) => {
+	const cubeTypeTabs = cubeTypes.reduce<HorizontalNavTab[]>((acc, ct) => {
 		const cubeType = getCubeTypeInfoById(ct.cube_type);
 		if (!cubeType) {
 			return acc;
@@ -100,12 +86,12 @@ export default function Stats() {
 		all,
 		cubeType: getCubeTypeInfoById(tabId),
 		filterOptions,
-		stats: statsData?.stats || {},
+		stats: stats || ({} as StatsSchema),
 	};
 
 	return (
 		<StatsContext.Provider value={context}>
-			<div className={b()}>
+			<div>
 				<PageTitle pageName="Stats">
 					<HorizontalNav tabs={tabs} tabId={tabId} />
 				</PageTitle>

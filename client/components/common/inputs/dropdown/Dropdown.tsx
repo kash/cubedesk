@@ -1,13 +1,16 @@
 import React, {ReactNode, useState} from 'react';
-import './Dropdown.scss';
-import block from '../../../../styles/bem';
 import CSS from 'csstype';
 import {CaretDown} from 'phosphor-react';
-import DropdownOption, {IDropdownOption} from './dropdown_option/DropdownOption';
-import GenericInput, {GenericInputProps, InputProps} from '../generic_input/GenericInput';
-import Button, {ButtonProps} from '../../button/Button';
+import DropdownOption, {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import GenericInput, {
+	GenericInputProps,
+	InputProps,
+} from '@/components/common/inputs/generic_input/GenericInput';
+import Button, {ButtonProps} from '@/components/common/Button';
+import {cn} from '@/util/cn';
 
-const b = block('common-dropdown');
+// Marker class used by closeDropdown to detect clicks inside the dropdown.
+const DROPDOWN_CLASS = 'cd-common-dropdown';
 
 export interface DropdownProps extends GenericInputProps<HTMLDivElement> {
 	options: IDropdownOption[];
@@ -19,7 +22,7 @@ export interface DropdownProps extends GenericInputProps<HTMLDivElement> {
 	flat?: boolean;
 	openLeft?: boolean;
 	handle?: ReactNode;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	text?: string;
 	dropdownButtonProps?: ButtonProps;
 	fullWidth?: boolean;
@@ -48,7 +51,7 @@ export default function Dropdown(props: InputProps<DropdownProps>) {
 		if (preventCloseOnInnerClick) {
 			let target = e.target;
 			while (target) {
-				if (target && target.classList && target.classList.contains(b())) {
+				if (target && target.classList && target.classList.contains(DROPDOWN_CLASS)) {
 					return;
 				}
 
@@ -81,7 +84,7 @@ export default function Dropdown(props: InputProps<DropdownProps>) {
 		}, 50);
 	}
 
-	let body = null;
+	let body: ReactNode = null;
 
 	if (open) {
 		const style: CSS.Properties = {};
@@ -90,7 +93,17 @@ export default function Dropdown(props: InputProps<DropdownProps>) {
 		}
 
 		body = (
-			<div className={b('body', {up: openUp, left: openLeft, fullwidth: fullWidth})} style={style}>
+			<div
+				className={cn(
+					'bg-button absolute top-[calc(100%+5px)] right-0 z-1000000 box-border flex max-h-96 min-w-40 flex-col overflow-y-auto rounded-md p-1.5 shadow-[0_4px_13px_rgba(0,0,0,0.2)]',
+					{
+						'top-auto bottom-[calc(100%+5px)]': openUp,
+						'right-auto left-0': openLeft,
+						'min-w-full': fullWidth,
+					},
+				)}
+				style={style}
+			>
 				{options.map((op, index) => (
 					<DropdownOption key={`${op.text}-${index}`} option={op} />
 				))}
@@ -110,7 +123,7 @@ export default function Dropdown(props: InputProps<DropdownProps>) {
 	);
 	if (handle) {
 		handleDiv = (
-			<button className={b('custom-handle')} onClick={openDropdown}>
+			<button className="table w-full p-0" onClick={openDropdown}>
 				{handle}
 			</button>
 		);
@@ -120,7 +133,7 @@ export default function Dropdown(props: InputProps<DropdownProps>) {
 		<GenericInput
 			{...props}
 			inputWrapper={() => (
-				<div className={b()}>
+				<div className={cn(DROPDOWN_CLASS, 'relative flex flex-col items-start')}>
 					{handleDiv}
 					{body}
 				</div>

@@ -20,6 +20,7 @@
 			"ESNext"
 		],
 		"strict": true,
+		"strictPropertyInitialization": false,
 		"strictNullChecks": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
@@ -36,9 +37,17 @@
 			"@/generated/*": [
 				"./generated/*"
 			],
-			"@/*": [
-				"./src/*"
+			"@/types/*": [
+				"./types/*"
 			],
+			"@/*": [
+				"./client/*"
+			]
 		}
-	}
+	},
+	"exclude": [
+		"build",
+		"dist",
+		"node_modules"
+	]
 }

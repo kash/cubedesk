@@ -1,32 +1,28 @@
 import React, {ReactNode, useEffect, useState} from 'react';
-import './Solves.scss';
-import CubePicker from '../common/cube_picker/CubePicker';
-import Empty from '../common/empty/Empty';
+import CubePicker from '@/components/common/CubePicker';
+import Empty from '@/components/common/Empty';
 import {SortAscending, SortDescending, Share, Funnel} from 'phosphor-react';
-import SolveListRow from './solve_row/SolveListRow';
-import Loading from '../common/loading/Loading';
-import {numberWithCommas} from '../../util/strings/util';
-import {fetchSolveCount, fetchSolves, FilterSolvesOptions} from '../../db/solves/query';
-import {useSolveDb} from '../../util/hooks/useSolveDb';
+import SolveListRow from '@/components/solves/SolveListRow';
+import Loading from '@/components/common/Loading';
+import {numberWithCommas} from '@/util/strings/util';
+import {fetchSolveCount, fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
 import jsonStr from 'json-stable-stringify';
-import {CubeType} from '../../util/cubes/cube_types';
-import Button, {CommonType} from '../common/button/Button';
-import Dropdown from '../common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '../common/inputs/dropdown/dropdown_option/DropdownOption';
-import block from '../../styles/bem';
-import {openModal} from '../../actions/general';
-import HistoryModal from '../modules/history/history_modal/HistoryModal';
+import {CubeType} from '@/util/cubes/cube_types';
+import Button, {CommonType} from '@/components/common/Button';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import {openModal} from '@/actions/general';
+import HistoryModal from '@/components/modules/history/HistoryModal';
 import {useDispatch} from 'react-redux';
-import {useMe} from '../../util/hooks/useMe';
-import PageTitle from '../common/page_title/PageTitle';
-import {LokiFetchOptions} from '../../db/lokijs';
-import {Solve} from '../../../server/schemas/Solve.schema';
-import ResultCount from '../common/result_count/ResultCount';
-import BulkActions from './bulk_actions/BulkActions';
+import {useMe} from '@/util/hooks/useMe';
+import PageTitle from '@/components/common/PageTitle';
+import {LokiFetchOptions} from '@/db/lokijs';
+import {Solve} from '@/types/solve';
+import ResultCount from '@/components/common/ResultCount';
+import BulkActions from '@/components/solves/bulk-actions/BulkActions';
 
 const PAGE_SIZE = 25;
-
-const b = block('solves-list');
 
 export default function SolvesList() {
 	const dispatch = useDispatch();
@@ -124,7 +120,15 @@ export default function SolvesList() {
 
 		const byUser = me ? ` by ${me?.username}` : '';
 
-		dispatch(openModal(<HistoryModal showAsText description={`${solveCountText}${byUser}`} solves={list} />));
+		dispatch(
+			openModal(
+				<HistoryModal
+					showAsText
+					description={`${solveCountText}${byUser}`}
+					solves={list}
+				/>,
+			),
+		);
 	}
 
 	function getFilterOptionValue(name: string, key: keyof Solve, not?: boolean): IDropdownOption {
@@ -162,7 +166,7 @@ export default function SolvesList() {
 	}
 
 	return (
-		<div className={b()}>
+		<div>
 			<PageTitle pageName="Solves" />
 
 			<div className="container mx-auto flex max-w-2xl flex-col gap-2">
@@ -194,7 +198,13 @@ export default function SolvesList() {
 						text="Sort"
 						openLeft
 						preventCloseOnInnerClick
-						icon={sortInverse ? <SortAscending weight="bold" /> : <SortDescending weight="bold" />}
+						icon={
+							sortInverse ? (
+								<SortAscending weight="bold" />
+							) : (
+								<SortDescending weight="bold" />
+							)
+						}
 						options={[
 							{
 								text: 'Date',
@@ -210,36 +220,45 @@ export default function SolvesList() {
 							},
 							{
 								text: 'Reverse Order',
-								icon: sortInverse ? <SortDescending weight="bold" /> : <SortAscending weight="bold" />,
+								icon: sortInverse ? (
+									<SortDescending weight="bold" />
+								) : (
+									<SortAscending weight="bold" />
+								),
 								// checkbox: true,
 								// on: sortInverse,
 								onClick: toggleSortByOrder,
 							},
 						]}
 					/>
-					<Button disabled={!solves?.length} gray icon={<Share weight="bold" />} onClick={viewAsText} />
+					<Button
+						disabled={!solves?.length}
+						gray
+						icon={<Share weight="bold" />}
+						onClick={viewAsText}
+					/>
 					<div className="grow" />
 					<ResultCount value={solveCountText} />
 				</div>
 				<div className="mb-4">
 					<BulkActions filter={getFinalFilter()} />
 				</div>
-				<div className={b('list')}>{body}</div>
-				<div className={b('pagination')}>
+				<div className="flex w-full flex-col">{body}</div>
+				<div className="mx-auto mt-5 flex flex-row items-center">
 					<Button
 						onClick={prevPage}
 						text="Prev"
 						disabled={page === 0}
-						theme={page > 0 ? CommonType.PRIMARY : null}
+						theme={page > 0 ? CommonType.PRIMARY : undefined}
 					/>
-					<p>
+					<p className="mx-5">
 						Page {page + 1} of {Math.ceil(totalResults / 25) || 1}
 					</p>
 					<Button
 						onClick={nextPage}
 						text="Next"
 						disabled={!moreResults}
-						theme={page > 0 ? CommonType.PRIMARY : null}
+						theme={page > 0 ? CommonType.PRIMARY : undefined}
 					/>
 				</div>
 			</div>

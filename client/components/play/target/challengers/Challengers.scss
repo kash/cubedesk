@@ -1,9 +1,0 @@
-@use '../../../../styles/config' as *;
-
-.#{$namespace}-timer-challengers {
-	width: 100%;
-	height: 100%;
-	display: grid;
-	grid-gap: 0.5rem;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}

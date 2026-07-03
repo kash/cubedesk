@@ -1,12 +1,9 @@
 import React from 'react';
-import './Legal.scss';
-import block from '../../../styles/bem';
-
-const b = block('landing-legal');
+import LegalContent from '@/components/landing/legal/LegalContent';
 
 export default function Privacy() {
 	return (
-		<div className={b()}>
+		<LegalContent>
 			<h1>Privacy Policy</h1>
 			<p>Last updated: May 25, 2021</p>
 			<p>
@@ -1201,6 +1198,6 @@ export default function Privacy() {
 			<ul>
 				<li>By email: kash@cubedesk.io</li>
 			</ul>
-		</div>
+		</LegalContent>
 	);
 }

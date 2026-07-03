@@ -5,14 +5,6 @@ import {v4 as uuid} from 'uuid';
 import {getImageBufferFromFileStream, ImageFileToBuffer} from '../util/image';
 import {logger} from '../services/logger';
 
-export function getImageById(id) {
-	return getPrisma().image.findUnique({
-		where: {
-			id,
-		},
-	});
-}
-
 export async function deleteImage(image) {
 	try {
 		await deleteObject(image.storage_path);

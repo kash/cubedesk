@@ -1,45 +1,37 @@
-import React from 'react';
-import './Reports.scss';
-import block from '../../../styles/bem';
-import {gql, useQuery} from '@apollo/client';
-import {REPORT_SUMMARY_FRAGMENT} from '../../../util/graphql/fragments';
-import {ReportSummary as ReportSummarySchema} from '../../../@types/generated/graphql';
-import Loading from '../../common/loading/Loading';
-import Empty from '../../common/empty/Empty';
-import ReportSummary from './report_summary/ReportSummary';
-
-const b = block('admin-report-list');
-
-const REPORTS_QUERY = gql`
-	${REPORT_SUMMARY_FRAGMENT}
-
-	query Query {
-		reports {
-			...ReportSummaryFragment
-		}
-	}
-`;
+import React, {useEffect, useState} from 'react';
+import Loading from '@/components/common/Loading';
+import Empty from '@/components/common/Empty';
+import ReportSummary from '@/components/admin/reports/ReportSummary';
+import {trpc} from '@/util/trpc';
+import {ReportSummary as ReportSummaryData} from '@/types/report';
+import {Serialized} from '@/types/serialized';
 
 export default function Reports() {
-	const {data, loading} = useQuery<{reports: ReportSummarySchema[]}>(REPORTS_QUERY, {
-		fetchPolicy: 'no-cache',
-	});
+	const [reports, setReports] = useState<Serialized<ReportSummaryData>[] | null>(null);
 
-	if (loading) {
+	useEffect(() => {
+		trpc.report.list.query().then((res) => {
+			setReports(res);
+		});
+	}, []);
+
+	if (!reports) {
 		return (
-			<div className={b({loading})}>
+			<div className="mx-auto w-full max-w-[700px]">
 				<Loading />
 			</div>
 		);
-	} else if (!data?.reports || !data?.reports?.length) {
+	} else if (!reports.length) {
 		return (
-			<div className={b({empty: true})}>
+			<div className="mx-auto w-full max-w-[700px]">
 				<Empty text="No reports to review" />
 			</div>
 		);
 	}
 
-	const reports = data.reports.map((report) => <ReportSummary reportSummary={report} key={report.last_report} />);
+	const rows = reports.map((report) => (
+		<ReportSummary reportSummary={report} key={report.last_report} />
+	));
 
-	return <div className={b()}>{reports}</div>;
+	return <div className="mx-auto w-full max-w-[700px]">{rows}</div>;
 }

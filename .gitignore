@@ -7,6 +7,5 @@ dist
 certs
 .DS_Store
 build
-client/@types/generated
 .envrc
 .tool-versions

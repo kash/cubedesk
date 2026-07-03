@@ -18,14 +18,8 @@ export function processSmartTurns(smartTurns: SmartTurn[], skipCompress: boolean
 	return last;
 }
 
-export function getSmartTurnsAsString(smartTurns: SmartTurn[]) {
-	const output = smartTurns.map(({turn}) => turn);
-
-	return output.join(' ');
-}
-
 function processSmartTurnsHelper(smartTurns: (SmartTurn | string)[], skipCompress: boolean = false) {
-	const output = [];
+	const output: string[] = [];
 
 	let movingIndex = 0;
 	for (let i = 0; i < smartTurns.length; i += 1) {
@@ -70,7 +64,7 @@ function processSmartTurnsHelper(smartTurns: (SmartTurn | string)[], skipCompres
 }
 
 export function reverseScramble(turns: string[]) {
-	const output = [];
+	const output: string[] = [];
 	for (let i = turns.length - 1; i > -1; i -= 1) {
 		let turn = turns[i];
 		if (isPrime(turn)) {

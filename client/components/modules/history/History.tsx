@@ -1,28 +1,42 @@
 import React from 'react';
-import ReactList from 'react-list';
+import ReactListImport from 'react-list';
+
+// react-list's default export gets double-wrapped by CJS interop during dev transforms.
+// (import_react_list.default ends up being the whole module-exports object,
+// not the class). Unwrap it here so JSX gets the class.
+const ReactList = ((ReactListImport as any).default ?? ReactListImport) as typeof ReactListImport;
 import {GlobalHotKeys} from 'react-hotkeys';
-import './History.scss';
-import Empty from '../../common/empty/Empty';
-import {HOTKEY_MAP} from '../../../util/timer/hotkeys';
-import {FilterSolvesOptions, fetchSolves, fetchLastSolve} from '../../../db/solves/query';
-import HistorySolveRow from './solve_row/HistorySolveRow';
-import {toggleDnfSolveDb, togglePlusTwoSolveDb, setOkSolveDb} from '../../../db/solves/operations';
-import {deleteSolveDb} from '../../../db/solves/update';
-import {useSolveDb} from '../../../util/hooks/useSolveDb';
-import {Solve} from '../../../@types/generated/graphql';
-import {useGeneral} from '../../../util/hooks/useGeneral';
+import Empty from '@/components/common/Empty';
+import {HOTKEY_MAP} from '@/util/timer/hotkeys';
+import {FilterSolvesOptions, fetchSolves, fetchLastSolve} from '@/db/solves/query';
+import HistorySolveRow from '@/components/modules/history/HistorySolveRow';
+import {toggleDnfSolveDb, togglePlusTwoSolveDb, setOkSolveDb} from '@/db/solves/operations';
+import {deleteSolveDb} from '@/db/solves/update';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {Solve} from '@/types/solve';
+import {Serialized} from '@/types/serialized';
+import {useGeneral} from '@/util/hooks/useGeneral';
 
 interface Props {
-	solves?: Solve[];
+	// Serialized rows come from tRPC payloads (Dates arrive as ISO strings)
+	solves?: Solve[] | Serialized<Solve>[];
 	filterOptions?: FilterSolvesOptions;
 	disabled?: boolean;
 	reverseOrder?: boolean;
 	hotKeysEnabled?: boolean;
+	listClassName?: string;
 }
 
 // TODO NOW hotkeys for History
 export default function History(props: Props) {
-	const {solves: parentSolves, reverseOrder, disabled, filterOptions, hotKeysEnabled} = props;
+	const {
+		solves: parentSolves,
+		reverseOrder,
+		disabled,
+		filterOptions,
+		hotKeysEnabled,
+		listClassName,
+	} = props;
 
 	useSolveDb();
 	const modals = useGeneral('modals');
@@ -46,7 +60,14 @@ export default function History(props: Props) {
 		}
 
 		const solve = solves[solveIndex];
-		return <HistorySolveRow disabled={disabled} key={solve.id} index={displayIndex} solve={solve} />;
+		return (
+			<HistorySolveRow
+				disabled={disabled}
+				key={solve.id}
+				index={displayIndex}
+				solve={solve}
+			/>
+		);
 	}
 
 	function getLastSolve() {
@@ -76,7 +97,7 @@ export default function History(props: Props) {
 
 	if (!solves.length) {
 		return (
-			<div className="cd-history">
+			<div className="box-border h-full w-full overflow-visible px-[5px]">
 				<Empty text="No solves yet" />
 			</div>
 		);
@@ -91,10 +112,18 @@ export default function History(props: Props) {
 
 	return (
 		<GlobalHotKeys handlers={HOTKEY_HANDLERS} keyMap={HOTKEY_MAP}>
-			<div className="cd-history">
-				<div className="cd-history__table">
-					<div className="cd-history__list">
-						<ReactList itemRenderer={renderSolveRow} length={solves.length} type="uniform" />
+			<div className="box-border h-full w-full overflow-visible px-[5px]">
+				<div className="h-full w-full">
+					<div
+						className={['max-h-full overflow-auto', listClassName]
+							.filter(Boolean)
+							.join(' ')}
+					>
+						<ReactList
+							itemRenderer={renderSolveRow}
+							length={solves.length}
+							type="uniform"
+						/>
 					</div>
 				</div>
 			</div>

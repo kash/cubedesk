@@ -1,19 +1,19 @@
 import React, {ReactNode, useContext, useEffect} from 'react';
-import {setExistingMatchData} from './events/helpers';
-import {toastError} from '../../../util/toast';
-import {listenForJoinEvents} from './events/join_match';
-import {listenForConnectEvent} from './events/reconnect';
-import {listenForTimerEvents} from './events/timer';
-import {relayOpponentEvents} from './events/opponent';
-import {MatchContext} from './Match';
-import {handleOpenMatchLink} from './events/open_match';
-import {listenForMatchUpdates} from './events/update';
-import {GameContext} from '../game/Game';
-import {useMe} from '../../../util/hooks/useMe';
-import {getHashCode} from '../../../util/strings/util';
-import {getCubeTypeInfoById} from '../../../util/cubes/util';
-import {getNewScramble} from '../../timer/helpers/scramble';
-import {listenForMatchWarnings} from './events/warnings';
+import {setExistingMatchData} from '@/components/play/match/events/helpers';
+import {toastError} from '@/util/toast';
+import {listenForJoinEvents} from '@/components/play/match/events/join-match';
+import {listenForConnectEvent} from '@/components/play/match/events/reconnect';
+import {listenForTimerEvents} from '@/components/play/match/events/timer';
+import {relayOpponentEvents} from '@/components/play/match/events/opponent';
+import {useMatchContext} from '@/components/play/match/Match';
+import {handleOpenMatchLink} from '@/components/play/match/events/open-match';
+import {listenForMatchUpdates} from '@/components/play/match/events/update';
+import {GameContext} from '@/components/play/game/Game';
+import {useMe} from '@/util/hooks/useMe';
+import {getHashCode} from '@/util/strings/util';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getNewScramble} from '@/components/timer/helpers/scramble';
+import {listenForMatchWarnings} from '@/components/play/match/events/warnings';
 
 interface Props {
 	children: ReactNode;
@@ -22,7 +22,7 @@ interface Props {
 export default function Listeners(props: Props) {
 	const me = useMe();
 	const gameContext = useContext(GameContext);
-	const matchContext = useContext(MatchContext);
+	const matchContext = useMatchContext();
 	const {solveIndex, matchLoaded, setScramble, match, cubeType} = matchContext;
 
 	useEffect(() => {
@@ -30,7 +30,7 @@ export default function Listeners(props: Props) {
 	}, [solveIndex, match]);
 
 	function getScramble() {
-		let seed = null;
+		let seed: number | undefined;
 
 		if (match) {
 			seed = getHashCode(match.id) + solveIndex;

@@ -1,12 +1,9 @@
 import React from 'react';
-import './Legal.scss';
-import block from '../../../styles/bem';
-
-const b = block('landing-legal');
+import LegalContent from '@/components/landing/legal/LegalContent';
 
 export default function Terms() {
 	return (
-		<div className={b()}>
+		<LegalContent>
 			<h1>Terms and Conditions</h1>
 			<p>Last updated: May 25, 2021</p>
 			<p>Please read these terms and conditions carefully before using Our Service.</p>
@@ -504,6 +501,6 @@ export default function Terms() {
 			<ul>
 				<li>By email: kash@cubedesk.io</li>
 			</ul>
-		</div>
+		</LegalContent>
 	);
 }

@@ -1,44 +1,45 @@
-import App from './App';
-import Sessions from '../sessions/Sessions';
-import Stats from '../stats/Stats';
-import Settings from '../settings/Settings';
-import LoginWrapper from '../login/LoginWrapper';
-import Trainer from '../trainer/Trainer';
-import Account from '../account/Account';
-import Password from '../account/password/Password';
-import DangerZone from '../account/danger_zone/DangerZone';
-import PersonalInfo from '../account/personal_info/PersonalInfo';
-import Community from '../community/Community';
-import Elimination from '../play/logic/Elimination';
-import Solves from '../solves/SolvesList';
-import Profile, {prefetchProfileData} from '../profile/Profile';
-import Admin from '../admin/Admin';
-import SolvePage, {prefetchSolveData} from '../solve_page/SolvePage';
-import Friends from '../community/friends/Friends';
-import NotificationPreferences from '../account/notification_preferences/NotificationPreferences';
-import Play from '../play/Play';
-import PublicCustomTrainers from '../trainer/public_custom_trainers/PublicCustomTrainers';
-import HeadToHead from '../play/logic/HeadToHead';
-import Privacy from '../landing/legal/Privacy';
-import Terms from '../landing/legal/Terms';
-import Landing from '../landing/Landing';
-import PlayWrapper from '../play/PlayWrapper';
-import Appearance from '../settings/appearance/Appearance';
-import TimerSettings from '../settings/timer/TimerSettings';
-import DataSettings from '../settings/data/DataSettings';
-import Membership from '../account/membership/Membership';
-import LinkedAccounts from '../account/linked_accounts/LinkedAccounts';
-import OAuthService from '../oauth/OAuthService';
-import ForceSignOut from '../login/force_sign_out/ForceSignOut';
+import App from '@/components/layout/App';
+import Sessions from '@/components/sessions/Sessions';
+import Stats from '@/components/stats/Stats';
+import Settings from '@/components/settings/Settings';
+import LoginWrapper from '@/components/login/LoginWrapper';
+import Trainer from '@/components/trainer/Trainer';
+import Account from '@/components/account/Account';
+import Password from '@/components/account/Password';
+import DangerZone from '@/components/account/DangerZone';
+import PersonalInfo from '@/components/account/PersonalInfo';
+import Community from '@/components/community/Community';
+import Elimination from '@/components/play/logic/Elimination';
+import Solves from '@/components/solves/SolvesList';
+import Profile, {prefetchProfileData} from '@/components/profile/Profile';
+import Admin from '@/components/admin/Admin';
+import SolvePage, {prefetchSolveData} from '@/components/solve-page/SolvePage';
+import Friends from '@/components/community/Friends';
+import NotificationPreferences from '@/components/account/NotificationPreferences';
+import Play from '@/components/play/Play';
+import PublicCustomTrainers from '@/components/trainer/public-custom-trainers/PublicCustomTrainers';
+import HeadToHead from '@/components/play/logic/HeadToHead';
+import Privacy from '@/components/landing/legal/Privacy';
+import Terms from '@/components/landing/legal/Terms';
+import Landing from '@/components/landing/Landing';
+import PlayWrapper from '@/components/play/PlayWrapper';
+import Appearance from '@/components/settings/appearance/Appearance';
+import TimerSettings from '@/components/settings/timer/TimerSettings';
+import DataSettings from '@/components/settings/data/import-data/DataSettings';
+import Membership from '@/components/account/membership/Membership';
+import LinkedAccounts from '@/components/account/linked-accounts/LinkedAccounts';
+import OAuthService from '@/components/oauth/OAuthService';
+import ForceSignOut from '@/components/login/ForceSignOut';
 import {Store} from 'redux';
-import Reports from '../admin/reports/Reports';
-import LandingHome from '../landing/home/LandingHome';
-import DefaultTimer from '../timer/DefaultTimer';
-import AdminUsers from '../admin/users/AdminUsers';
-import UnsubEmails from '../unsub/UnsubEmails';
-import EloBoard from '../community/EloBoard';
-import DemoTimer from '../timer/DemoTimer';
-import AboutCubeDesk from '../landing/about/AboutCubeDesk';
+import type {Request} from 'express';
+import Reports from '@/components/admin/reports/Reports';
+import LandingHome from '@/components/landing/home/LandingHome';
+import DefaultTimer from '@/components/timer/DefaultTimer';
+import AdminUsers from '@/components/admin/AdminUsers';
+import UnsubEmails from '@/components/unsub/UnsubEmails';
+import EloBoard from '@/components/community/EloBoard';
+import DemoTimer from '@/components/timer/DemoTimer';
+import AboutCubeDesk from '@/components/landing/about/AboutCubeDesk';
 
 interface PageOptions {
 	restricted: boolean;
@@ -46,7 +47,7 @@ interface PageOptions {
 	admin: boolean;
 	hideTopNav: boolean;
 	noPadding: boolean;
-	prefetchData: ((store: Store<any>, req: Request) => Promise<any>)[];
+	prefetchData?: ((store: Store<any>, req: Request) => Promise<any>)[];
 }
 
 export interface PageContext extends PageOptions {
@@ -71,7 +72,7 @@ function route(
 	admin = false,
 	hideTopNav = false,
 	noPadding = false,
-	prefetchData = null
+	prefetchData: ((store: Store<any>, req: Request) => Promise<any>)[] = []
 ): PageContext {
 	return {
 		path,

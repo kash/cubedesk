@@ -1,6 +1,5 @@
 import bodyParser from 'body-parser';
 import stripeWebhookListener from './stripe';
-import mailchimpWebhookListener from './mailchimp';
 
 export function initWebhookListeners() {
 

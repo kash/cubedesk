@@ -1,9 +1,0 @@
-@use '../../../../styles/config' as *;
-
-.#{$namespace}-common-error {
-	display: table;
-	font-size: 0.85rem;
-	color: $primaryRed;
-	font-family: $defaultFontFamily;
-	margin-top: 5px;
-}

@@ -1,9 +1,0 @@
-@use '../../../../styles/config' as *;
-
-.#{$namespace}-sub-stats {
-	display: grid;
-    grid-template-columns: 1fr 1fr;
-	grid-template-rows: repeat(3, 1fr);
-    grid-gap: 10px;
-	height: 100%;
-}

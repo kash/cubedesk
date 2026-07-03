@@ -1,12 +1,7 @@
 import React, {ReactNode} from 'react';
-import './Feature.scss';
-import SignUpButton from '../signup_button/SignUpButton';
-import block from '../../../../styles/bem';
 import CSS from 'csstype';
-import FeatureText, {IFeatureTextProps} from './feature_text/FeatureText';
-import FeatureCircles from './feature_circles/FeatureCircles';
-
-const b = block('landing-feature');
+import FeatureText, {IFeatureTextProps} from '@/components/landing/common/feature/FeatureText';
+import FeatureCircles from '@/components/landing/common/feature/FeatureCircles';
 
 export type DecorationPosition = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
@@ -45,10 +40,18 @@ export default function Feature(props: Props & IFeatureTextProps) {
 		switchText,
 	} = props;
 
-	let imgD = null;
+	let imgD: ReactNode = null;
 
 	if (imgSrc) {
-		imgD = <img className={className} src={imgSrc} alt={imgAlt} />;
+		imgD = (
+			<img
+				className={['relative z-10 block w-full box-border rounded-[13px] leading-none', className || ''].join(
+					' '
+				)}
+				src={imgSrc}
+				alt={imgAlt}
+			/>
+		);
 	}
 
 	const borderStyle: CSS.Properties = {
@@ -58,11 +61,14 @@ export default function Feature(props: Props & IFeatureTextProps) {
 	let visual = children;
 	if (!children) {
 		visual = (
-			<div className={b('img')}>
+			<div className="relative z-10 w-full">
 				<div
-					className={b('img-border', {
-						shadow,
-					})}
+					className={[
+						'relative z-[100] m-auto box-border w-full rounded-[17px] bg-transparent p-[7px]',
+						shadow
+							? 'shadow-[0_5px_25px_rgba(0,0,0,0.1),0_8px_30px_rgba(0,0,0,0.1),0_12px_35px_rgba(0,0,0,0.1)]'
+							: '',
+					].join(' ')}
 					style={borderStyle}
 				>
 					{imgD}
@@ -71,12 +77,24 @@ export default function Feature(props: Props & IFeatureTextProps) {
 		);
 	}
 
-	let dots = null;
+	let dots: ReactNode = null;
 	if (dotsPos) {
-		dots = <span style={{color: primaryColor}} className={b('img-dots', {pos: dotsPos}).mix('pattern-dots-xl')} />;
+		const dotsPositionClasses = {
+			topLeft: 'left-[-40px] top-0',
+			topRight: 'right-[-40px] top-0',
+			bottomLeft: 'bottom-0 left-[-40px]',
+			bottomRight: 'bottom-0 right-[-40px]',
+		};
+
+		dots = (
+			<span
+				style={{color: primaryColor}}
+				className={`pattern-dots-xl absolute z-0 h-[45%] w-[45%] rotate-45 ${dotsPositionClasses[dotsPos]}`}
+			/>
+		);
 	}
 
-	let circles = null;
+	let circles: ReactNode = null;
 	if (circlesPos) {
 		circles = (
 			<FeatureCircles
@@ -89,24 +107,39 @@ export default function Feature(props: Props & IFeatureTextProps) {
 		);
 	}
 
+	const bodyClasses = [
+		'flex w-[95%] max-w-[1400px] items-center justify-between max-[1000px]:flex-col-reverse',
+		vertical ? 'flex-col-reverse' : switchText ? 'flex-row-reverse' : 'flex-row',
+	].join(' ');
+
+	const visualClasses = [
+		'flex items-center justify-center max-[1000px]:w-full',
+		vertical ? 'mt-[30px] w-full' : 'w-[60%]',
+	].join(' ');
+
+	const textClasses = [
+		'max-[1000px]:mb-[50px] max-[1000px]:w-full',
+		vertical ? 'mb-0 w-full' : 'w-1/3',
+	].join(' ');
+
 	return (
 		<div
-			className={b({
-				switch: switchText,
-				odd,
-				dark,
-				vertical,
-			}).mix(className)}
+			className={[
+				'flex w-full items-center justify-center overflow-hidden py-[100px] max-[1000px]:py-[50px]',
+				odd ? 'bg-[#f6f6f6]' : '',
+				dark ? 'bg-[#121a24]' : '',
+				className || '',
+			].join(' ')}
 		>
-			<div className={b('body')}>
-				<div className={b('visual')}>
-					<div className={b('visual-body')}>
+			<div className={bodyClasses}>
+				<div className={visualClasses}>
+					<div className="relative flex max-w-[1000px] items-center justify-center">
 						{visual}
 						{dots}
 						{circles}
 					</div>
 				</div>
-				<div className={b('text')}>
+				<div className={textClasses}>
 					<FeatureText whiteText={dark} {...props} />
 				</div>
 			</div>

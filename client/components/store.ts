@@ -1,5 +1,5 @@
 import {Store} from 'redux';
-import {UserAccount} from '../../server/schemas/UserAccount.schema';
+import {UserAccount} from '@/types/user';
 
 let store: Store<any>;
 

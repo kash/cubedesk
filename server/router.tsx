@@ -12,10 +12,11 @@ import reducers from '../client/reducers/reducers';
 import {initUserAccount} from './models/store';
 
 import {HelmetProvider, HelmetServerState} from 'react-helmet-async';
-import {mapSingleRoute} from '../client/components/map_route';
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import {mapSingleRoute} from '../client/components/map-route';
+import {TRPCProvider} from '../client/util/api';
 import {logger} from './services/logger';
 import {ErrorCode} from './constants/errors';
+import type {Request} from 'express';
 
 const mappedRoutes: ReactNode[] = [];
 
@@ -70,17 +71,25 @@ function renderFullPage(html, helmet, preloadedState) {
 	return htmlTemplate(payload);
 }
 
+const isDev = (process.env.ENV || 'development') === 'development';
+
 function createComponents(req, store) {
-	const client = new ApolloClient({
-		ssrMode: true,
-		cache: new InMemoryCache(),
-	});
+	// In dev we skip server-side rendering entirely and ship an empty shell. The
+	// client bundle renders everything (see App.tsx using createRoot in dev). This
+	// keeps client component code out of the render path so editing a component no
+	// longer forces a full server restart — only Vite rebuilds + browser reloads.
+	if (isDev) {
+		const preloaded = store.getState();
+		const fullHtml = renderFullPage('', createEmptyHelmetState(), preloaded);
+		return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
+	}
+
 	const helmetContext: {helmet?: HelmetServerState | null} = {};
 
 	const staticRouter = (
 		<StaticRouter location={req.url} context={{}}>
 			<HelmetProvider context={helmetContext}>
-				<ApolloProvider client={client}>
+				<TRPCProvider>
 					<Provider store={store}>
 						<Switch>
 							{routes.map((route: {[key: string]: any}) => {
@@ -89,7 +98,7 @@ function createComponents(req, store) {
 							})}
 						</Switch>
 					</Provider>
-				</ApolloProvider>
+				</TRPCProvider>
 			</HelmetProvider>
 		</StaticRouter>
 	);
@@ -137,14 +146,10 @@ function appUseRouteForPage(routePath, route: PageContext) {
 		try {
 			await Promise.all(promises.map((f) => f(store, req)));
 		} catch (e: any) {
-			const errors = e?.graphQLErrors || [];
-
-			for (const graphErr of errors) {
-				const errCode = graphErr?.extensions?.code;
-				if (errCode === ErrorCode.NOT_FOUND) {
-					res.status(404).sendFile(`${__dirname}/resources/not_found.html`);
-					return;
-				}
+			// TRPCClientError from an SSR prefetch (e.g. unknown profile or solve)
+			if (e?.data?.code === ErrorCode.NOT_FOUND) {
+				res.status(404).sendFile(`${__dirname}/resources/not_found.html`);
+				return;
 			}
 		}
 

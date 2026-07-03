@@ -1,9 +1,10 @@
 import Stripe from 'stripe';
-import {InternalUserAccount} from '../schemas/UserAccount.schema';
+import {InternalUserAccount} from '@/types/user';
 import {updateUserAccountWithParams} from '../models/user_account';
 import {logger} from './logger';
 
-// Need these in uppercase because TypeGraphQL automatically converts them to uppercase
+// Values are stored uppercase in the DB (user_account.pro_status) — do not change casing.
+// types/membership.ts MembershipStatus mirrors this union for the client.
 export enum SubscriptionStatus {
 	NONE = 'NONE',
 	ACTIVE = 'ACTIVE',
@@ -22,18 +23,6 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 export function getStripeCustomerById(stripeCustomerId: string): Promise<Stripe.Customer> {
 	return stripe.customers.retrieve(stripeCustomerId) as Promise<Stripe.Customer>;
-}
-
-export async function getStripeCustomerByEmail(email: string) {
-	const customers = await stripe.customers.list({
-		email,
-	});
-
-	if (!customers || customers.data.length) {
-		return null;
-	}
-
-	return customers.data[0];
 }
 
 export async function getStripeCustomerSubscriptions(customerId: string): Promise<Stripe.Subscription[]> {
@@ -80,7 +69,7 @@ export async function cancelAllStripeSubscriptions(user: InternalUserAccount) {
 	return subs;
 }
 
-export async function cancelStripeSubscription(subscriptionId: string) {
+async function cancelStripeSubscription(subscriptionId: string) {
 	return stripe.subscriptions.update(subscriptionId, {
 		cancel_at_period_end: true,
 	});

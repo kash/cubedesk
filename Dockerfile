@@ -59,11 +59,12 @@ RUN pnpm prune --prod
 RUN cp -r ./server/resources/mjml_templates ./build/server/resources/mjml_templates
 RUN cp ./server/resources/not_found.html ./build/server/resources/not_found.html
 
-RUN rm -rf ./client ./server ./shared ./test ./dist ./public ./generated && \
+RUN rm -rf ./client ./server ./shared ./test ./dist ./public ./generated ./types && \
     mv ./build/server ./server && \
     mv ./build/client ./client && \
     mv ./build/shared ./shared && \
-    mv ./build/generated ./generated
+    mv ./build/generated ./generated && \
+    mv ./build/types ./types
 
 FROM node:24-slim
 

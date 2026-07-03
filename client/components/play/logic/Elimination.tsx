@@ -1,9 +1,9 @@
 import React from 'react';
-import TargetTimes from '../target/target_times/TargetTimes';
-import TargetStatus from '../target/target_status/TargetStatus';
-import Game from '../game/Game';
-import {getEliminationPlayerStatus, getEliminationSolveRowInfo} from '../../../shared/game_logic/elimination';
-import ScrambleVisual from '../../modules/scramble/ScrambleVisual';
+import TargetTimes from '@/components/play/target/TargetTimes';
+import TargetStatus from '@/components/play/target/TargetStatus';
+import Game from '@/components/play/game/Game';
+import {getEliminationPlayerStatus, getEliminationSolveRowInfo} from '@/shared/game-logic/elimination';
+import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
 import {GameType} from '../../../../shared/match/consts';
 
 export default function Elimination() {

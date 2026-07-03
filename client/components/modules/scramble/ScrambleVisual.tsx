@@ -1,11 +1,7 @@
 import React, {useMemo} from 'react';
-import './ScrambleVisual.scss';
-import {layoutScramble} from '../../../util/vendor/scramble_layout';
-import Face from './face/Face';
-import block from '../../../styles/bem';
-import {getCubeTypeInfoById, getScrambleTypeById} from '../../../util/cubes/util';
-
-const b = block('scramble-visual');
+import {layoutScramble} from '@/util/vendor/scramble_layout';
+import Face from '@/components/modules/scramble/Face';
+import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
 
 export const COLOR_MAP = {
 	O: '#FF9826',
@@ -54,7 +50,7 @@ export default function ScrambleVisual(props: Props) {
 
 	const supported = scrambleIsSupported(cubeScramble?.id);
 	if (!supported) {
-		return <div className={b('invalid')}>No visual</div>;
+		return <div className="flex h-full w-full items-center justify-center text-text opacity-50">No visual</div>;
 	}
 
 	if (!visual) {
@@ -63,15 +59,18 @@ export default function ScrambleVisual(props: Props) {
 
 	if (frontFace) {
 		return (
-			<div className={b('wrapper')}>
+			<div className="flex h-full w-full items-center justify-center">
 				<Face width={width} key={`6-${cubeSize}`} size={cubeSize} data={visual.F} />
 			</div>
 		);
 	}
 
 	return (
-		<div className={b('wrapper')}>
-			<div className={b()} key={`body-${cubeSize}`}>
+		<div className="flex h-full w-full items-center justify-center">
+			<div
+				className="grid aspect-[4/3] w-full max-w-[320px] grid-cols-4 grid-rows-3 gap-[3%]"
+				key={`body-${cubeSize}`}
+			>
 				<Face width={width} key={`1-${cubeSize}`} />
 				<Face width={width} key={`2-${cubeSize}`} size={cubeSize} data={visual.U} />
 				<Face width={width} key={`3-${cubeSize}`} />

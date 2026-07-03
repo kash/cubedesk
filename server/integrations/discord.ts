@@ -1,7 +1,5 @@
 import {getIntegrationGetMe} from './oauth';
-import {InternalUserAccount, UserAccount} from '../schemas/UserAccount.schema';
-import {logger} from '../services/logger';
-import Discord from '../services/discord';
+import {InternalUserAccount, UserAccount} from '@/types/user';
 import {getStripeCustomerById, stripe} from '../services/stripe';
 
 interface DiscordMe {
@@ -19,24 +17,6 @@ interface DiscordMe {
 
 export function getDiscordMe(user: UserAccount): Promise<DiscordMe> {
 	return getIntegrationGetMe('discord', user);
-}
-
-export async function fetchDiscordInfo(user: UserAccount) {
-	try {
-		const discordMe = await getDiscordMe(user);
-		const userDiscordId = discordMe.id;
-
-		const userInGuild = await Discord.getUserInGuild(userDiscordId);
-		const userRoles = await Discord.getUserRoles(userDiscordId);
-		const userIsPro = await Discord.userHasRole(userDiscordId, 'Pro');
-
-		await Discord.removeRoleFromUser(userDiscordId, 'Pro');
-	} catch (e) {
-		logger.error('Could not fetch Discord info for user.', {
-			error: e,
-			userId: user.id,
-		});
-	}
 }
 
 export async function updateStripeCustomerWithDiscordMetadata(user: InternalUserAccount, discordId: string) {

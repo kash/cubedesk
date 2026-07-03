@@ -1,17 +1,14 @@
 import React, {ReactNode, useEffect} from 'react';
-import Nav, {NAV_LINKS} from '../nav/Nav';
-import './Wrapper.scss';
+import Nav from '@/components/layout/nav/Nav';
+import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import {ToastContainer} from 'react-toastify';
-import block, {blockNamespace} from '../../../styles/bem';
-import {useGeneral} from '../../../util/hooks/useGeneral';
-import {useSettings} from '../../../util/hooks/useSettings';
-import {updateThemeColors} from '../themes';
-import {useMe} from '../../../util/hooks/useMe';
-import DemoWarning from './DemoWarning';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useSettings} from '@/util/hooks/useSettings';
+import {updateThemeColors} from '@/components/layout/themes';
+import {useMe} from '@/util/hooks/useMe';
+import DemoWarning from '@/components/layout/wrapper/DemoWarning';
 import {useRouteMatch} from 'react-router-dom';
-import DemoRestricted from './DemoRestricted';
-
-const b = block('body');
+import DemoRestricted from '@/components/layout/wrapper/DemoRestricted';
 
 interface Props {
 	noPadding?: boolean;
@@ -43,9 +40,17 @@ export default function Wrapper(props: Props) {
 		}
 
 		updateThemeColors();
-	}, [appLoaded, buttonColor, primaryColor, secondaryColor, backgroundColor, moduleColor, textColor]);
+	}, [
+		appLoaded,
+		buttonColor,
+		primaryColor,
+		secondaryColor,
+		backgroundColor,
+		moduleColor,
+		textColor,
+	]);
 
-	let nav = <Nav />;
+	let nav: ReactNode = <Nav />;
 	if (hideTopNav) {
 		nav = null;
 	}
@@ -69,19 +74,40 @@ export default function Wrapper(props: Props) {
 		body = <DemoRestricted />;
 	}
 
+	let gridColumns = 'grid-cols-[18rem_1fr]';
+
+	if (navCollapsed || forceNavCollapsed) {
+		gridColumns = 'grid-cols-[80px_1fr]';
+	}
+
+	if (focusMode || mobileMode) {
+		gridColumns = 'grid-cols-1';
+	}
+
+	const bodyClasses = [
+		'grid',
+		'h-full',
+		'min-h-screen',
+		'w-full',
+		'box-border',
+		'bg-background',
+		gridColumns,
+	];
+	if (mobileMode) {
+		bodyClasses.push('pt-[55px]');
+	}
+
+	const contentClasses = ['relative', 'w-full'];
+	if (!noPadding) {
+		contentClasses.push('box-border', 'p-[30px]');
+	}
+
 	return (
-		<div className={blockNamespace}>
+		<div className="cd">
 			<ToastContainer />
-			<div
-				className={b({
-					navCollapsed: navCollapsed || forceNavCollapsed,
-					full: focusMode,
-					mobile: mobileMode,
-					noPadding,
-				})}
-			>
+			<div className={bodyClasses.join(' ')}>
 				{nav}
-				<div className={b('content')}>
+				<div className={contentClasses.join(' ')}>
 					<DemoWarning />
 					{body}
 				</div>

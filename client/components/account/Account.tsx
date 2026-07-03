@@ -1,9 +1,5 @@
 import React from 'react';
-import './Account.scss';
-import AccountNav from './AccountNav';
-import block from '../../styles/bem';
-
-const b = block('account');
+import AccountNav from '@/components/account/AccountNav';
 
 interface Props {
 	children: React.ReactNode;
@@ -11,9 +7,9 @@ interface Props {
 
 export default function Account(props: Props) {
 	return (
-		<div className={b()}>
+		<div className="w-full">
 			<AccountNav />
-			<div>{props.children}</div>
+			<div className="mt-4 w-full max-w-sm">{props.children}</div>
 		</div>
 	);
 }

@@ -1,11 +1,11 @@
 import {acquireRedisLock, createRedisKey, RedisNamespace} from '../../services/redis';
 import {getPrisma} from '../../database';
-import {GameOptionsInput} from '../../schemas/GameOptions.schema';
-import {PublicUserAccount} from '../../schemas/UserAccount.schema';
+import {GameOptionsInput} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
 import {getUserEloRatingByCubeType} from '../../models/elo_rating';
 import {Socket} from 'socket.io';
 import {getPlayerPairsByGameType} from './elo/elo_matching';
-import {MatchLobby} from '../../schemas/MatchLobby.schema';
+import {MatchLobby} from '@/types/match';
 import {pairPlayersInRoom} from './start_match';
 import {getClientById} from '../util';
 import {GameType} from '../../../shared/match/consts';
@@ -79,7 +79,7 @@ export async function matchPlayersInLobby() {
 		return null;
 	}
 
-	const matchPromises = [];
+	const matchPromises: ReturnType<typeof matchPlayersByGameType>[] = [];
 
 	for (const gameType of gameTypes) {
 		matchPromises.push(matchPlayersByGameType(gameType as GameType));
@@ -101,10 +101,14 @@ async function matchPlayersByGameType(gameType: GameType) {
 	const recs = await fetchMatchLobbyRecords(gameType);
 	const {pair, remove} = await getPlayerPairsByGameType(gameType, recs);
 
-	const playerPairs = [];
+	const playerPairs: ReturnType<typeof pairPlayersInRoom>[] = [];
 	for (const p of pair) {
 		const client1 = await getClientById(p[0].client_id);
 		const client2 = await getClientById(p[1].client_id);
+
+		if (!client1 || !client2) {
+			continue;
+		}
 
 		playerPairs.push(
 			pairPlayersInRoom(gameType, [client1, client2], {
@@ -116,7 +120,7 @@ async function matchPlayersByGameType(gameType: GameType) {
 
 	await Promise.allSettled(playerPairs);
 
-	const removeRecs = [];
+	const removeRecs: ReturnType<typeof deleteMatchLobbyRecord>[] = [];
 	for (const r of remove) {
 		removeRecs.push(deleteMatchLobbyRecord(r));
 	}

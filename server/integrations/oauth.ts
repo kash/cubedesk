@@ -1,8 +1,8 @@
 import {createIntegration, getIntegration, updateIntegration} from '../models/integration';
 import axios from 'axios';
-import {InternalUserAccount, UserAccount} from '../schemas/UserAccount.schema';
+import {InternalUserAccount, UserAccount} from '@/types/user';
 import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../shared/integration';
-import {Integration} from '../schemas/Integration.schema';
+import {Integration} from '@/types/integration';
 import {updateUserProfile} from '../models/profile';
 import {getDiscordMe, updateStripeCustomerWithDiscordMetadata} from './discord';
 import Discord from '../services/discord';

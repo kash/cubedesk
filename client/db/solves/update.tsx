@@ -1,20 +1,19 @@
 import React from 'react';
-import {gql} from '@apollo/client/core';
-import {gqlMutate} from '../../components/api';
+import {trpc} from '../../util/trpc';
 import {getSolveDb} from './init';
 import {emitEvent} from '../../util/event_handler';
 import {clearSolveStatCache} from './stats/solves/caching';
 import {toastError} from '../../util/toast';
 import {getStore} from '../../components/store';
 import {openModal} from '../../actions/general';
-import ConfirmModal from '../../components/common/confirm_modal/ConfirmModal';
+import ConfirmModal from '@/components/common/ConfirmModal';
 import {checkForPB} from './stats/solves/pb';
 import {updateOfflineHash} from '../../components/layout/offline';
 import {getSetting} from '../settings/query';
-import {Solve} from '../../../server/schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 import {checkForWorst} from './stats/solves/worst';
 import {sanitizeSolve} from '../../../shared/solve';
-import {checkForCurrentAverageUpdate} from './stats/solves/cache/average_cache';
+import {checkForCurrentAverageUpdate} from './stats/solves/cache/average-cache';
 
 export async function createSolveDb(solveInput: Solve) {
 	const solveDb = getSolveDb();
@@ -27,18 +26,8 @@ export async function createSolveDb(solveInput: Solve) {
 	postProcessDbUpdate(solve, true);
 
 	if (!solve.demo_mode) {
-		const query = gql`
-			mutation Mutate($input: SolveInput) {
-				createSolve(input: $input) {
-					id
-				}
-			}
-		`;
-
 		try {
-			await gqlMutate(query, {
-				input: solve,
-			});
+			await trpc.solve.create.mutate(solve);
 		} catch (e) {
 			toastError('Could not save solve. Please check your connection.');
 		}
@@ -48,26 +37,16 @@ export async function createSolveDb(solveInput: Solve) {
 }
 
 async function createDemoSolve(solve: Solve) {
-	const query = gql`
-		mutation Mutate($input: DemoSolveInput) {
-			createDemoSolve(input: $input) {
-				id
-			}
-		}
-	`;
-
 	const browserSessionId = getStore().getState()?.general?.browser_session_id;
 
 	try {
-		await gqlMutate(query, {
-			input: {
-				raw_time: solve.raw_time,
-				cube_type: solve.cube_type,
-				scramble: solve.scramble,
-				started_at: solve.started_at,
-				ended_at: solve.ended_at,
-				demo_session_id: browserSessionId,
-			},
+		await trpc.demoSolve.create.mutate({
+			raw_time: solve.raw_time,
+			cube_type: solve.cube_type,
+			scramble: solve.scramble,
+			started_at: solve.started_at,
+			ended_at: solve.ended_at,
+			demo_session_id: browserSessionId,
 		});
 	} catch (e) {
 		toastError('Could not save solve. Please check your connection.');
@@ -99,16 +78,8 @@ export async function deleteSolveDb(solve: Solve, confirmed: boolean = false) {
 	postProcessDbUpdate(solve, false);
 
 	if (!solve.demo_mode) {
-		const query = gql`
-			mutation Mutate($id: String) {
-				deleteSolve(id: $id) {
-					id
-				}
-			}
-		`;
-
 		try {
-			await gqlMutate(query, {
+			await trpc.solve.delete.mutate({
 				id: solve.id,
 			});
 		} catch (e) {
@@ -131,16 +102,8 @@ export async function updateSolveDb(solve: Solve, input: Partial<Solve> = {}, up
 	}
 
 	if (!solve.demo_mode) {
-		const query = gql`
-			mutation Mutate($id: String, $input: SolveInput) {
-				updateSolve(id: $id, input: $input) {
-					id
-				}
-			}
-		`;
-
 		try {
-			await gqlMutate(query, {
+			await trpc.solve.update.mutate({
 				id: solve.id,
 				input: {
 					...input,

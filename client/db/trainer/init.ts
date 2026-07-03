@@ -1,9 +1,16 @@
 import _ from 'lodash';
 import {getLokiDb} from '../lokijs';
-import {AlgorithmOverride, CustomTrainer, TrainerAlgorithm, TrainerFavorite} from '../../@types/generated/graphql';
+import {
+	AlgorithmOverrideInput,
+	CustomTrainerWithUser,
+	TrainerAlgorithm,
+	TrainerAlgorithmRecord,
+	TrainerFavorite,
+} from '@/types/trainer';
+import {Serialized} from '@/types/serialized';
 
-export interface TrainerAlgorithmExtended extends TrainerAlgorithm {
-	overrides?: AlgorithmOverride;
+export interface TrainerAlgorithmExtended extends TrainerAlgorithmRecord {
+	overrides?: AlgorithmOverrideInput | null;
 	favorite?: boolean;
 }
 
@@ -23,10 +30,10 @@ function initTrainerCollection() {
 }
 
 export function initTrainerDb(
-	customAlgos: CustomTrainer[],
+	customAlgos: Array<Serialized<CustomTrainerWithUser>>,
 	algos: TrainerAlgorithm[],
-	overrides: AlgorithmOverride[],
-	favorites: TrainerFavorite[]
+	overrides: AlgorithmOverrideInput[],
+	favorites: Array<Serialized<TrainerFavorite>>
 ) {
 	if (typeof window === 'undefined') {
 		return;
@@ -38,11 +45,11 @@ export function initTrainerDb(
 	const faves = _.chain(favorites).keyBy('cube_key').value();
 
 	for (const algo of [...algos, ...customAlgos]) {
-		const insert = {
+		const insert: TrainerAlgorithmExtended = {
 			...algo,
 			overrides: null,
 			favorite: false,
-		} as TrainerAlgorithmExtended;
+		};
 
 		const overrides = overrideMap[algo.id];
 		if (overrides) {

@@ -2,14 +2,13 @@ import jwt from 'jsonwebtoken';
 import {getUserById, getUserByIdWithProfile, updateUserAccountWithParams} from '../models/user_account';
 import {getOrCreateUserProfile} from '../models/profile';
 import {deactivateAllBanLogs} from '../models/ban_log';
-import GraphQLError from './graphql_error';
-import {Request} from 'express-serve-static-core';
-import {UserAccount} from '../schemas/UserAccount.schema';
-import {ErrorCode} from '../constants/errors';
+import {Request} from 'express';
+import {InternalUserAccount, UserAccount} from '@/types/user';
 
 const jwtSecret = (process as any).env.JWT_SECRET as string;
 
-export async function getMe(req: Request) {
+// Returns the FULL user row (password hash, tokens) for server-side use only
+export async function getMe(req: Request): Promise<InternalUserAccount | null> {
 	const session = req.cookies.session;
 
 	if (!session) {
@@ -47,7 +46,7 @@ export async function getMe(req: Request) {
 	return null;
 }
 
-export async function getMeWithCookieString(cookies: string | any): Promise<UserAccount> {
+export async function getMeWithCookieString(cookies: string | any): Promise<UserAccount | null> {
 	if (!cookies || typeof cookies !== 'string' || !cookies.trim()) {
 		return null;
 	}
@@ -88,16 +87,6 @@ export async function getMeWithCookieString(cookies: string | any): Promise<User
 		}
 	} catch (e) {
 		return null;
-	}
-}
-
-export function checkLoggedIn(user: UserAccount, admin: boolean = false) {
-	if (!user) {
-		throw new GraphQLError(ErrorCode.UNAUTHENTICATED, 'You must be logged in to perform this action');
-	}
-
-	if (admin && !user.admin) {
-		throw new GraphQLError(ErrorCode.FORBIDDEN, 'You do not have permission to perform this action');
 	}
 }
 

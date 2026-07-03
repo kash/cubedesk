@@ -1,10 +1,10 @@
-import {fetchSessionById} from '../../../db/sessions/query';
-import {createSessionDb} from '../../../db/sessions/update';
-import {setSetting} from '../../../db/settings/update';
-import {ITimerContext} from '../Timer';
+import {fetchSessionById} from '@/db/sessions/query';
+import {createSessionDb} from '@/db/sessions/update';
+import {setSetting} from '@/db/settings/update';
+import {ITimerContext} from '@/components/timer/Timer';
 import {Dispatch} from 'redux';
-import {getCubeTypeInfoById} from '../../../util/cubes/util';
-import {getSetting} from '../../../db/settings/query';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getSetting} from '@/db/settings/query';
 
 // Creates session if none exist already
 export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext) {

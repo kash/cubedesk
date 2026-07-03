@@ -1,7 +1,0 @@
-@use '../../../styles/config' as *;
-
-.#{$namespace}-membership {
-	&__active {
-		background-color: green;
-	}
-}

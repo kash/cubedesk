@@ -1,62 +1,52 @@
-import React, {useEffect} from 'react';
-import './Membership.scss';
-import block from '../../../styles/bem';
-import {gql} from '@apollo/client/core';
-import {MembershipOptions, Membership as MembershipType} from '../../../@types/generated/graphql';
-import {useQuery} from '@apollo/client';
-import ProCard from './pro_card/ProCard';
-import Loading from '../../common/loading/Loading';
-import ActiveMembership from './active_membership/ActiveMembership';
-import {MEMBERSHIP_FRAGMENT, MEMBERSHIP_OPTIONS_FRAGMENT} from '../../../util/graphql/fragments';
-import {getMe} from '../../../actions/account';
+import React, {useEffect, useState} from 'react';
+import ProCard from '@/components/account/membership/pro-card/ProCard';
+import Loading from '@/components/common/Loading';
+import ActiveMembership from '@/components/account/membership/ActiveMembership';
+import {getMe} from '@/actions/account';
 import {useDispatch} from 'react-redux';
-import {useMe} from '../../../util/hooks/useMe';
-import {isNotPro, isPro} from '../../../util/pro';
-
-const b = block('membership');
-
-const MEMBERSHIP_QUERY = gql`
-	${MEMBERSHIP_FRAGMENT}
-
-	query Query {
-		membership {
-			...MembershipFragment
-		}
-	}
-`;
-
-export const MEMBERSHIP_OPTIONS_QUERY = gql`
-	${MEMBERSHIP_OPTIONS_FRAGMENT}
-
-	query Query {
-		membershipOptions {
-			...MembershipOptionsFragment
-		}
-	}
-`;
+import {useMe} from '@/util/hooks/useMe';
+import {isNotPro, isPro} from '@/util/pro';
+import {trpc} from '@/util/trpc';
+import {Membership as MembershipType, MembershipOptions} from '@/types/membership';
 
 export default function Membership() {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
 	const me = useMe();
 
-	const {data: memData, loading: memDataLoading} = useQuery<{membership: MembershipType}>(MEMBERSHIP_QUERY);
-	const {data: memOpData} = useQuery<{membershipOptions: MembershipOptions}>(MEMBERSHIP_OPTIONS_QUERY);
+	const [membership, setMembership] = useState<MembershipType | null>(null);
+	const [membershipLoading, setMembershipLoading] = useState(true);
+	const [membershipOptions, setMembershipOptions] = useState<MembershipOptions | null>(null);
+
+	useEffect(() => {
+		trpc.membership.get
+			.query()
+			.then((res) => {
+				setMembership(res);
+			})
+			.finally(() => {
+				setMembershipLoading(false);
+			});
+
+		trpc.membership.options.query().then((res) => {
+			setMembershipOptions(res);
+		});
+	}, []);
 
 	useEffect(() => {
 		dispatch(getMe());
 
-		if (memData?.membership && memData.membership.status === 'ACTIVE' && isNotPro(me)) {
+		if (membership && membership.status === 'ACTIVE' && isNotPro(me)) {
 			dispatch(getMe());
 		}
-	}, [isPro(me), memData?.membership]);
+	}, [isPro(me), membership]);
 
 	let body = <Loading />;
 
-	if (memData?.membership?.status === 'ACTIVE') {
-		body = <ActiveMembership membership={memData.membership} />;
-	} else if (memOpData?.membershipOptions && !memDataLoading) {
-		body = <ProCard options={memOpData?.membershipOptions} />;
+	if (membership?.status === 'ACTIVE') {
+		body = <ActiveMembership membership={membership} />;
+	} else if (membershipOptions && !membershipLoading) {
+		body = <ProCard options={membershipOptions} />;
 	}
 
-	return <div className={b()}>{body}</div>;
+	return <div>{body}</div>;
 }

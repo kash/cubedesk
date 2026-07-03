@@ -1,8 +1,7 @@
-import {AlgorithmOverride} from '../../@types/generated/graphql';
+import {AlgorithmOverrideInput} from '@/types/trainer';
 import {updateTrainerDb} from './update';
 import {TrainerAlgorithmExtended} from './init';
-import {gql} from '@apollo/client/core';
-import {gqlMutate} from '../../components/api';
+import {trpc} from '../../util/trpc';
 import {fetchTrainerAlgorithmById} from './query';
 
 export async function deleteTrainerAlgoOverrides(algo: TrainerAlgorithmExtended) {
@@ -10,16 +9,8 @@ export async function deleteTrainerAlgoOverrides(algo: TrainerAlgorithmExtended)
 		return;
 	}
 
-	const query = gql`
-		mutation Mutate($algoKey: String) {
-			deleteAlgorithmOverride(algoKey: $algoKey) {
-				id
-			}
-		}
-	`;
-
-	await gqlMutate(query, {
-		algoKey: algo.id,
+	await trpc.trainer.deleteAlgorithmOverride.mutate({
+		algoKey: algo.id!,
 	});
 
 	updateTrainerDb(algo, {
@@ -27,7 +18,7 @@ export async function deleteTrainerAlgoOverrides(algo: TrainerAlgorithmExtended)
 	});
 }
 
-export async function updateTrainerAlgoOverrides(algo: TrainerAlgorithmExtended, overrides: AlgorithmOverride = {}) {
+export async function updateTrainerAlgoOverrides(algo: TrainerAlgorithmExtended, overrides: AlgorithmOverrideInput = {}) {
 	if (!algo) {
 		return;
 	}
@@ -37,16 +28,8 @@ export async function updateTrainerAlgoOverrides(algo: TrainerAlgorithmExtended,
 		...(overrides || {}),
 	};
 
-	const query = gql`
-		mutation Mutate($algoKey: String, $input: AlgorithmOverrideInput) {
-			updateAlgorithmOverride(algoKey: $algoKey, input: $input) {
-				id
-			}
-		}
-	`;
-
-	await gqlMutate(query, {
-		algoKey: algo.id,
+	await trpc.trainer.updateAlgorithmOverride.mutate({
+		algoKey: algo.id!,
 		input: overrides,
 	});
 
@@ -62,29 +45,13 @@ export function toggleTrainerAlgoFavorite(algo: TrainerAlgorithmExtended) {
 
 	if (algo.favorite) {
 		// Delete if already exists
-		const query = gql`
-			mutation Mutate($cubeKey: String) {
-				deleteTrainerFavorite(cubeKey: $cubeKey) {
-					id
-				}
-			}
-		`;
-
-		gqlMutate(query, {
-			cubeKey: algo.id,
+		trpc.trainer.deleteFavorite.mutate({
+			cubeKey: algo.id!,
 		});
 	} else {
 		// Create if doesn't exist
-		const query = gql`
-			mutation Mutate($cubeKey: String) {
-				createTrainerFavorite(cubeKey: $cubeKey) {
-					id
-				}
-			}
-		`;
-
-		gqlMutate(query, {
-			cubeKey: algo.id,
+		trpc.trainer.createFavorite.mutate({
+			cubeKey: algo.id!,
 		});
 	}
 

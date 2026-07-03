@@ -1,0 +1,138 @@
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 100;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Thin.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Thin.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 200;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Light.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Light.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 300;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Regular.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Medium.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Medium.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 500;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora SemiBold.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora SemiBold.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 600;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Bold.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 700;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora ExtraBold.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora ExtraBold.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 800;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Black.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora Black.woff") format("woff");
+}
+@font-face {
+  font-family: "Kontora";
+  font-style: normal;
+  font-weight: 900;
+  src: url("https://cdn.cubedesk.io/fonts/Kontora/Kontora ExtraBlack.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Kontora/Kontora ExtraBlack.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: normal;
+  font-weight: 100;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Thin.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Thin.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: italic;
+  font-weight: 100;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Thin Italic.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Thin Italic.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: normal;
+  font-weight: 200;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Light.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Light.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: italic;
+  font-weight: 200;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Light Italic.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Light Italic.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: normal;
+  font-weight: 300;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Regular.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: italic;
+  font-weight: 300;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Regular Italic.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Regular Italic.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Medium.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Medium.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: italic;
+  font-weight: 400;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Medium Italic.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Medium Italic.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: normal;
+  font-weight: 500;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion SemiBold.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion SemiBold.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: italic;
+  font-weight: 500;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion SemiBold Italic.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion SemiBold Italic.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: normal;
+  font-weight: 600;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Bold.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: italic;
+  font-weight: 600;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Bold Italic.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Bold Italic.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: normal;
+  font-weight: 700;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Black.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Black.woff") format("woff");
+}
+@font-face {
+  font-family: "Gelion";
+  font-style: italic;
+  font-weight: 700;
+  src: url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Black Italic.woff2") format("woff2"), url("https://cdn.cubedesk.io/fonts/Gelion/Gelion Black Italic.woff") format("woff");
+}

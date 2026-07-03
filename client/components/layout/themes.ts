@@ -1,7 +1,7 @@
 
 import tinycolor from 'tinycolor2';
-import {AllSettings, getSetting} from '../../db/settings/query';
-import {getAnyColorStringAsRawRgbString, getAnyColorStringAsRgbString} from '../../util/themes/theme_util';
+import {AllSettings, getSetting} from '@/db/settings/query';
+import {getAnyColorStringAsRawRgbString, getAnyColorStringAsRgbString} from '@/util/themes/theme_util';
 
 const userDefinedColorsVar: Partial<Record<string, string>> = {
 	primary_color: '--primary-color',

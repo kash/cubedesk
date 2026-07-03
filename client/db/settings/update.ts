@@ -1,8 +1,5 @@
-import {Setting} from '../../@types/generated/graphql';
-import {gql} from '@apollo/client';
-import {SETTING_FRAGMENT} from '../../util/graphql/fragments';
-import {gqlMutate, gqlQuery} from '../../components/api';
 import {snakeCase} from 'change-case';
+import {trpc} from '../../util/trpc';
 import {AllSettings, getSetting} from './query';
 import {getSettingsDb, SettingValue} from './init';
 import {updateOfflineHash} from '../../components/layout/offline';
@@ -10,7 +7,6 @@ import {emitEvent} from '../../util/event_handler';
 import {setLocalSettingValue} from './local';
 
 export const MOBILE_FONT_SIZE_MULTIPLIER = 0.75;
-export const MIN_MOBILE_FREEZE_TIME = 0.45;
 
 export function setCurrentSession(id: string) {
 	return setSetting('session_id', id);
@@ -21,24 +17,15 @@ export function setCubeType(cubeType: string) {
 }
 
 export async function refreshSettings() {
-	const query = gql`
-		${SETTING_FRAGMENT}
+	const settingsDb = getSettingsDb();
+	const settings = await trpc.setting.get.query();
 
-		query Query {
-			settings {
-				...SettingsFragment
-			}
-		}
-	`;
-
-	interface SettingsData {
-		settings: Setting;
+	if (!settings) {
+		return;
 	}
 
-	const settingsDb = getSettingsDb();
-	const res = await gqlQuery<SettingsData>(query);
-	for (const key of Object.keys(res.data.settings)) {
-		const value = res.data.settings[key];
+	for (const key of Object.keys(settings)) {
+		const value = settings[key];
 		const setVal = settingsDb.findOne({
 			id: key,
 		});
@@ -70,8 +57,8 @@ export function setSetting<T extends keyof AllSettings>(key: T, value: AllSettin
 async function updatePartialSettings(payload: Partial<AllSettings>) {
 	const settingsDb = getSettingsDb();
 
-	const localSettingUpdates = [];
-	const apiSettingUpdates = [];
+	const localSettingUpdates: SettingValue[] = [];
+	const apiSettingUpdates: SettingValue[] = [];
 
 	for (const key of Object.keys(payload)) {
 		const value = payload[key];
@@ -106,34 +93,18 @@ function setSettingLocal(setVals: SettingValue[]) {
 }
 
 async function setSettingApi(setVals: SettingValue[]) {
-	const gqlPayload = {};
+	const payload = {};
 
 	for (const setVal of setVals) {
-		gqlPayload[snakeCase(setVal.id)] = setVal.value;
+		payload[snakeCase(setVal.id)] = setVal.value;
 	}
 
 	// Terminate if no keys to set
-	if (!Object.keys(gqlPayload).length) {
+	if (!Object.keys(payload).length) {
 		return;
 	}
 
-	const promises: Promise<any>[] = [updateOfflineHash()];
-
-	const query = gql`
-		mutation Mutate($input: SettingInput) {
-			setSetting(input: $input) {
-				id
-			}
-		}
-	`;
-
-	promises.push(
-		gqlMutate(query, {
-			input: gqlPayload,
-		})
-	);
-
-	await Promise.all(promises);
+	await Promise.all([updateOfflineHash(), trpc.setting.set.mutate(payload)]);
 }
 
 function emitSettingUpdateEvent(setVals: SettingValue[]) {

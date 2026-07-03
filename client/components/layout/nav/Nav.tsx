@@ -1,100 +1,24 @@
-import React, {useEffect} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link, useRouteMatch} from 'react-router-dom';
-import './Nav.scss';
-import {setSetting} from '../../../db/settings/update';
-import {setGeneral} from '../../../actions/general';
-import {
-	ArrowLeft,
-	Sword,
-	ChartPie,
-	LadderSimple,
-	Users,
-	ListBullets,
-	Rows,
-	Wrench,
-	Timer,
-	ArrowRight,
-} from 'phosphor-react';
-import Notifications from './notifications/Notifications';
-import Logo from '../../common/logo/Logo';
-import MobileNav from './mobile_nav/MobileNav';
-import {useGeneral} from '../../../util/hooks/useGeneral';
-import {useWindowListener} from '../../../util/hooks/useListener';
-import {useSettings} from '../../../util/hooks/useSettings';
-import {useTheme} from '../../../util/hooks/useTheme';
-import block from '../../../styles/bem';
-import AccountDropdown from './account_dropdown/AccountDropdown';
-import {useMe} from '../../../util/hooks/useMe';
-import NavLink from './NavLink';
-import Button from '../../common/button/Button';
-import LoginNav from './LoginNav';
-import {resourceUri} from '../../../util/storage';
-
-const b = block('nav');
-
-export interface NavLinkProps {
-	name: string;
-	icon: JSX.Element;
-	match: RegExp;
-	link: string;
-	newTag?: boolean;
-	loginRequired?: boolean;
-}
-
-export const NAV_LINKS: NavLinkProps[] = [
-	{
-		name: 'Timer',
-		icon: <Timer weight="bold" />,
-		match: /(^\/$|^$)|(^\/demo$|^$)/,
-		link: '/',
-	},
-	{
-		name: '1v1',
-		icon: <Sword weight="bold" />,
-		match: /^\/play/,
-		link: '/play',
-		loginRequired: true,
-	},
-	{
-		name: 'Stats',
-		icon: <ChartPie weight="bold" />,
-		match: /^\/stats/,
-		link: '/stats',
-	},
-	{
-		name: 'Community',
-		icon: <Users weight="bold" />,
-		match: /^\/community|\/user\//,
-		link: '/community/leaderboards',
-	},
-	{
-		name: 'Trainer',
-		icon: <LadderSimple weight="bold" />,
-		match: /^\/trainer/,
-		link: '/trainer/333/OLL',
-		loginRequired: true,
-	},
-	{
-		name: 'Solves',
-		icon: <ListBullets weight="bold" />,
-		match: /^\/solves/,
-		link: '/solves',
-	},
-	{
-		name: 'Sessions',
-		icon: <Rows weight="bold" />,
-		match: /^\/sessions/,
-		link: '/sessions',
-		loginRequired: true,
-	},
-	{
-		name: 'Settings',
-		icon: <Wrench weight="bold" />,
-		match: /^\/settings/,
-		link: '/settings/timer',
-	},
-];
+import {setSetting} from '@/db/settings/update';
+import {setGeneral} from '@/actions/general';
+import {ArrowLeft, ArrowRight} from 'phosphor-react';
+import Notifications from '@/components/layout/nav/notifications/Notifications';
+import {LogoBrandmark, LogoLockup} from '@/components/common/Logo';
+import MobileNav from '@/components/layout/nav/MobileNav';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useWindowListener} from '@/util/hooks/useListener';
+import {useSettings} from '@/util/hooks/useSettings';
+import {useTheme} from '@/util/hooks/useTheme';
+import AccountDropdown from '@/components/layout/nav/account-dropdown/AccountDropdown';
+import {useMe} from '@/util/hooks/useMe';
+import NavLink from '@/components/layout/nav/NavLink';
+import Button from '@/components/common/Button';
+import LoginNav from '@/components/layout/nav/LoginNav';
+import {resourceUri} from '@/util/storage';
+import {cn} from '@/util/cn';
+import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 
 export default function Nav() {
 	const dispatch = useDispatch();
@@ -144,7 +68,7 @@ export default function Nav() {
 		return null;
 	}
 
-	let notifications = <Notifications />;
+	let notifications: ReactNode = <Notifications />;
 	if (!me) {
 		notifications = null;
 	}
@@ -154,17 +78,22 @@ export default function Nav() {
 	}
 
 	const navLinks = NAV_LINKS.map((link) => (
-		<NavLink {...link} key={link.name} collapsed={navClosed} selected={link.match.test(pathname)} />
+		<NavLink
+			{...link}
+			key={link.name}
+			collapsed={navClosed}
+			selected={link.match.test(pathname)}
+		/>
 	));
 
-	let getPro = null;
+	let getPro: ReactNode = null;
 	if (!me?.is_pro && !navClosed) {
 		getPro = (
 			<Link
 				to="/account/pro"
-				className="mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded bg-primary py-2 px-3"
+				className="bg-primary mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded px-3 py-2"
 			>
-				<div className="flex flex-row items-center gap-1 font-bold text-tmo-primary">
+				<div className="text-tmo-primary flex flex-row items-center gap-1 font-bold">
 					<span className="table">Get CubeDesk Pro</span>
 					<ArrowRight weight="bold" />
 				</div>
@@ -172,15 +101,69 @@ export default function Nav() {
 		);
 	}
 
+	const navClasses = [
+		'sticky',
+		'left-0',
+		'top-0',
+		'z-[1000]',
+		'box-border',
+		'flex',
+		'h-screen',
+		'h-[100dvh]',
+		navClosed ? 'w-20' : 'w-72',
+		'flex-col',
+		'items-center',
+		'bg-module',
+		'pt-5',
+	];
+
+	const headerClasses = [
+		'w-full',
+		'mb-2.5',
+		'box-border',
+		'flex',
+		navClosed ? 'flex-col' : 'flex-row',
+		'items-center',
+		navClosed ? 'justify-center' : 'justify-between',
+	];
+	const headerActionsClasses = [
+		'flex',
+		navClosed ? 'flex-col' : 'flex-row',
+		'items-center',
+		'gap-2.5',
+	];
+	const socialClasses = [
+		'mx-auto',
+		'mb-2.5',
+		'grid',
+		'w-[95%]',
+		'max-w-[200px]',
+		navClosed ? 'grid-cols-1' : 'grid-cols-5',
+		'gap-[5px]',
+		'box-border',
+	];
+
 	return (
-		<div className={b({collapsed: navClosed})}>
-			<div className={b('wrapper')}>
-				<div className={b('body')}>
-					<div className={b('top-section')}>
-						<div className={b('header')}>
-							<Logo large={true} dark={!moduleColor.isDark} />
-							<Logo dark={!moduleColor.isDark} />
-							<div className={b('header-actions')}>
+		<div className={navClasses.join(' ')}>
+			<div className="box-border flex h-full w-full flex-col justify-center px-5">
+				<div className="flex h-full w-full flex-col justify-between">
+					<div className="flex w-full flex-col justify-center">
+						<div className={headerClasses.join(' ')}>
+							<div
+								className={cn('flex w-[120px]', {
+									hidden: navClosed,
+								})}
+							>
+								<LogoLockup dark={!moduleColor.isDark} />
+							</div>
+							<div
+								className={cn('mb-5 flex w-[23px]', {
+									hidden: !navClosed,
+								})}
+							>
+								<LogoBrandmark dark={!moduleColor.isDark} />
+							</div>
+							<div className={headerActionsClasses.join(' ')}>
 								{notifications}
 								<AccountDropdown />
 							</div>
@@ -189,8 +172,8 @@ export default function Nav() {
 						<div className="mt-4">{navLinks}</div>
 						<LoginNav collapsed={navClosed} />
 					</div>
-					<div className={b('bottom-section')}>
-						<div className={b('social')}>
+					<div className="flex flex-col items-center pb-[30px] opacity-70">
+						<div className={socialClasses.join(' ')}>
 							<SocialIcon
 								href="https://discord.gg/wdVbhDnsQV"
 								darkPath={resourceUri('/images/logos/discord_logo_white.svg')}
@@ -209,7 +192,6 @@ export default function Nav() {
 								lightPath={resourceUri('/images/logos/reddit_logo_black.svg')}
 								name="Reddit"
 							/>
-
 							<SocialIcon
 								href="https://github.com/kash/cubedesk"
 								darkPath={resourceUri('/images/logos/github_logo_white.svg')}
@@ -228,9 +210,14 @@ export default function Nav() {
 							iconFirst
 							hidden={forceNavCollapsed}
 							text={navCollapsed ? '' : 'Collapse'}
-							icon={navCollapsed ? <ArrowRight weight="fill" /> : <ArrowLeft weight="fill" />}
+							icon={
+								navCollapsed ? (
+									<ArrowRight weight="fill" />
+								) : (
+									<ArrowLeft weight="fill" />
+								)
+							}
 							transparent
-							className={b('collapse-button')}
 							type="button"
 							onClick={toggleCollapse}
 						/>
@@ -258,8 +245,12 @@ function SocialIcon(props: SocialIconInterface) {
 	}
 
 	return (
-		<a href={href} target="_blank">
-			<img src={path} alt={`${name} logo`} />
+		<a
+			className="hover:bg-tmo-module/10 box-border flex flex-col items-center justify-center rounded-[5px] bg-transparent p-2 font-semibold opacity-70 transition-all duration-100 ease-in-out hover:opacity-100"
+			href={href}
+			target="_blank"
+		>
+			<img className="w-full" src={path} alt={`${name} logo`} />
 		</a>
 	);
 }

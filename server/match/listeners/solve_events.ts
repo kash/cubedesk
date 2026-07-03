@@ -2,7 +2,7 @@ import {getDetailedClientInfo} from '../util';
 import {getMatchById} from '../../models/match';
 import {sendMatchUpdate} from '../update/standings';
 import {emitMatchUpdate} from '../update/send';
-import {Solve} from '../../schemas/Solve.schema';
+import {Solve} from '@/types/solve';
 import {SocketClient} from '../init';
 import {MatchCacher} from '../update/match_cacher';
 

@@ -9,7 +9,7 @@ import {
 	setKeyInRedis,
 } from '../../services/redis';
 import {getAllAirtableResults} from '../../services/airtable';
-import {TrainerAlgorithm} from '../../schemas/TrainerAlgorithm.schema';
+import {TrainerAlgorithm} from '@/types/trainer';
 
 dayjs.extend(utc);
 

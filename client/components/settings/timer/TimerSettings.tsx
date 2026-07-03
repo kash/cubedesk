@@ -1,16 +1,16 @@
-import React from 'react';
-import MicAccess from '../mic_access/MicAccess';
-import StackMatPicker from '../stackmat_picker/StackMatPicker';
-import {openModal} from '../../../actions/general';
-import CubeTypes from '../cube_types/CubeTypes';
-import SettingRow from '../setting/row/SettingRow';
-import Dropdown from '../../common/inputs/dropdown/Dropdown';
+import React, {ReactNode} from 'react';
+import MicAccess from '@/components/settings/mic-access/MicAccess';
+import StackMatPicker from '@/components/settings/stackmat-picker/StackMatPicker';
+import {openModal} from '@/actions/general';
+import CubeTypes from '@/components/settings/cube-types/CubeTypes';
+import SettingRow from '@/components/settings/common/SettingRow';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import {useDispatch} from 'react-redux';
-import SettingSection from '../setting/section/SettingSection';
-import Button, {CommonType} from '../../common/button/Button';
-import {setSetting} from '../../../db/settings/update';
-import {useSettings} from '../../../util/hooks/useSettings';
-import {AllSettings} from '../../../db/settings/query';
+import SettingSection from '@/components/settings/common/SettingSection';
+import Button, {CommonType} from '@/components/common/Button';
+import {setSetting} from '@/db/settings/update';
+import {useSettings} from '@/util/hooks/useSettings';
+import {AllSettings} from '@/db/settings/query';
 
 export const TIMER_INPUT_TYPE_NAMES = {
 	keyboard: 'Keyboard',
@@ -37,7 +37,7 @@ export default function TimerSettings() {
 				title: 'Manage Cube Types',
 				description:
 					"You can use custom scramble types for special events that aren't listed by default. For example 8x8 or Examinx.",
-			})
+			}),
 		);
 	}
 
@@ -49,11 +49,15 @@ export default function TimerSettings() {
 		return TIMER_INPUT_TYPE_NAMES[tt];
 	}
 
-	let inspectionBody = null;
+	let inspectionBody: ReactNode = null;
 	if (inspection) {
 		inspectionBody = (
 			<>
-				<SettingRow title="Inspection time (s)" settingName="inspection_delay" isNumberInput />
+				<SettingRow
+					title="Inspection time (s)"
+					settingName="inspection_delay"
+					isNumberInput
+				/>
 				<SettingRow
 					title="Play sound"
 					description="Announce when 8 and 12 seconds have lapsed"
@@ -72,7 +76,10 @@ export default function TimerSettings() {
 
 	return (
 		<>
-			<SettingRow title="Timer decimal points" description="How many decimal points to show on the timer page">
+			<SettingRow
+				title="Timer decimal points"
+				description="How many decimal points to show on the timer page"
+			>
 				<Dropdown
 					icon={null}
 					text={`${timerDecimalPoints} decimal point${timerDecimalPoints === 1 ? '' : 's'}`}
@@ -102,8 +109,16 @@ export default function TimerSettings() {
 				isNumberInput
 				step={0.1}
 			/>
-			<SettingRow loggedInOnly title="Cube Types" description="Add custom cube types with or without scrambles">
-				<Button theme={CommonType.GRAY} text="Manage Cube Types" onClick={toggleCubeTypes} />
+			<SettingRow
+				loggedInOnly
+				title="Cube Types"
+				description="Add custom cube types with or without scrambles"
+			>
+				<Button
+					theme={CommonType.GRAY}
+					text="Manage Cube Types"
+					onClick={toggleCubeTypes}
+				/>
 			</SettingRow>
 			<SettingRow
 				title="Use space bar with smart cubes"
@@ -111,7 +126,11 @@ export default function TimerSettings() {
 				settingName="use_space_with_smart_cube"
 				isSwitch
 			/>
-			<SettingRow title="Hide time when solving" settingName="hide_time_when_solving" isSwitch />
+			<SettingRow
+				title="Hide time when solving"
+				settingName="hide_time_when_solving"
+				isSwitch
+			/>
 			<SettingRow
 				title="Zero out time after solve"
 				description="Instead of showing the time of your last solve, the timer will reset to 0.00 after a solve."
@@ -152,10 +171,16 @@ export default function TimerSettings() {
 					title="StackMat Options"
 					description="These options will be used when your timer input type is set to StackMat"
 				/>
-				<SettingRow sub title="Allow access to microphone (that's how Stackmat transmits data)">
+				<SettingRow
+					sub
+					title="Allow access to microphone (that's how Stackmat transmits data)"
+				>
 					<MicAccess />
 				</SettingRow>
-				<SettingRow sub title={`Select your Stackmat device. Usually called "USB Audio Device"`}>
+				<SettingRow
+					sub
+					title={`Select your Stackmat device. Usually called "USB Audio Device"`}
+				>
 					<Button
 						gray
 						primary={!stackMatId}

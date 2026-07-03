@@ -1,0 +1,166 @@
+.ReactTable {
+  font-size: 0.9rem;
+  border: none;
+}
+.ReactTable .rt-table {
+  overflow: visible !important;
+}
+.ReactTable .rt-tbody {
+  overflow: visible;
+}
+.ReactTable .rt-tbody > div {
+  position: relative;
+}
+.ReactTable .rt-tbody > div:not(:last-of-type) > div {
+  border-bottom: 2px solid rgb(var(--button-color));
+}
+.ReactTable .rt-tr {
+  align-items: center;
+  font-family: roboto, helvetica, arial, sans-serif;
+  position: relative;
+  display: flex;
+}
+.ReactTable .rt-tr .rt-th.-cursor-pointer,
+.ReactTable .rt-tr .-sort-asc,
+.ReactTable .rt-tr .-sort-desc {
+  position: relative;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+.ReactTable .rt-tr .rt-th.-cursor-pointer:after,
+.ReactTable .rt-tr .-sort-asc:after,
+.ReactTable .rt-tr .-sort-desc:after {
+  font-size: 1rem;
+  position: absolute;
+  font-weight: bold;
+  right: 30px;
+  font-family: FontAwesome;
+  top: 29%;
+  transform: translate(0, -50%);
+}
+.ReactTable .rt-tr .rt-th.-cursor-pointer:after {
+  content: "\f0dc";
+  color: #ddd;
+}
+.ReactTable .rt-tr .-sort-asc:after {
+  content: "\f0d8" !important;
+  color: rgb(var(--secondary-color)) !important;
+}
+.ReactTable .rt-tr .-sort-desc {
+  border: none !important;
+}
+.ReactTable .rt-tr .-sort-desc:after {
+  content: "\f0d7" !important;
+  color: rgb(var(--secondary-color)) !important;
+}
+.ReactTable .rt-tr-group {
+  border: none !important;
+  position: relative;
+  z-index: 1;
+}
+.ReactTable .rt-thead {
+  overflow: hidden;
+  border-bottom: 3px solid rgb(var(--button-color));
+}
+.ReactTable .rt-thead .rt-tr {
+  padding: 0 !important;
+}
+.ReactTable .rt-thead .rt-th {
+  padding-top: 0 !important;
+}
+.ReactTable .rt-thead .rt-th:first-of-type {
+  box-sizing: border-box !important;
+}
+.ReactTable .rt-thead.-header {
+  box-shadow: none !important;
+}
+.ReactTable .-pagination {
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 50px auto 0;
+  justify-content: center;
+  color: rgb(var(--text-color));
+}
+.ReactTable .-pagination .-pageInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: inherit;
+}
+.ReactTable .-pagination .-pageInfo input {
+  background-color: rgb(var(--module-color));
+  padding: 5px 4px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 7px;
+  border: none;
+  color: rgb(var(--text-color));
+  width: 50px;
+}
+.ReactTable .-pagination .-pageInfo .-totalPages {
+  margin-left: 5px;
+  color: inherit;
+  font-weight: bold;
+}
+.ReactTable .-pagination .-center {
+  margin: 0 40px;
+  color: inherit;
+}
+.ReactTable .-pagination .-next button,
+.ReactTable .-pagination .-previous button {
+  background-color: rgb(var(--button-color));
+  color: white;
+  padding: 6px 7px;
+  border-radius: 5px;
+}
+.ReactTable .-loading {
+  display: none;
+}
+.ReactTable .rt-th {
+  box-sizing: border-box;
+  font-weight: 500 !important;
+  font-size: 0.9rem;
+  text-align: left;
+  color: rgb(var(--text-color));
+  border-right: none !important;
+  padding: 13px 5px !important;
+}
+.ReactTable .rt-th div,
+.ReactTable .rt-th span {
+  font: inherit;
+  color: inherit;
+}
+.ReactTable .rt-th i {
+  margin-right: 7px;
+}
+.ReactTable .-sort-asc,
+.ReactTable .-sort-desc {
+  color: rgb(var(--secondary-color));
+}
+.ReactTable .rt-td {
+  font-size: 0.87rem;
+  padding: 15px 5px;
+  color: rgb(var(--text-color));
+  font-weight: 500;
+  box-sizing: border-box;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: none !important;
+}
+.ReactTable .rt-td > a {
+  text-decoration: underline;
+  text-overflow: ellipsis;
+}
+.ReactTable .rt-td > a:hover {
+  color: rgb(var(--secondary-color));
+}
+.ReactTable .rt-resizable-header-content {
+  font-weight: bold;
+  color: #333;
+  font-size: 0.9rem;
+}

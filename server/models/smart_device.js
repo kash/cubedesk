@@ -9,17 +9,6 @@ export function getSmartDeviceById(id) {
 	});
 }
 
-export function getSmartDevices(user) {
-	return getPrisma().smartDevice.findMany({
-		where: {
-			user_id: user.id,
-		},
-		include: {
-			solves: true
-		}
-	});
-}
-
 export function deleteSmartDevice(id) {
 	return getPrisma().smartDevice.delete({
 		where: {

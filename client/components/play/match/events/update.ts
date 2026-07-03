@@ -1,19 +1,19 @@
-import {MatchStanding, MatchUpdate, PlayerStatus} from '../../../../shared/match/types';
-import {MatchClientEvent} from '../../../../shared/match/events';
+import {MatchStanding, MatchUpdate, PlayerStatus} from '@/shared/match/types';
+import {MatchClientEvent} from '@/shared/match/events';
 import {useContext} from 'react';
-import {MatchContext} from '../Match';
-import {useMe} from '../../../../util/hooks/useMe';
-import {useSocketListener} from '../../../../util/hooks/useSocketListener';
-import {triggerConfetti} from '../../../timer/helpers/pb';
-import {displayTimerAlert, removeTimerNotifications} from '../../../timer/helpers/notification';
-import {updateMatchState} from '../helpers/state';
-import {GameContext} from '../../game/Game';
-import {emitEvent} from '../../../../util/event_handler';
-import {getMatchClientEvent} from '../../../../shared/match/client_events';
+import {useMatchContext} from '@/components/play/match/Match';
+import {useMe} from '@/util/hooks/useMe';
+import {useSocketListener} from '@/util/hooks/useSocketListener';
+import {triggerConfetti} from '@/components/timer/helpers/pb';
+import {displayTimerAlert, removeTimerNotifications} from '@/components/timer/helpers/notification';
+import {updateMatchState} from '@/components/play/match/helpers/state';
+import {GameContext} from '@/components/play/game/Game';
+import {emitEvent} from '@/util/event_handler';
+import {getMatchClientEvent} from '@/shared/match/client-events';
 
 export function listenForMatchUpdates() {
 	const gameContext = useContext(GameContext);
-	const matchContext = useContext(MatchContext);
+	const matchContext = useMatchContext();
 	const me = useMe();
 	const {
 		watchingPlayerId,
@@ -36,7 +36,7 @@ export function listenForMatchUpdates() {
 	]);
 
 	function onMatchUpdate(data: MatchUpdate) {
-		if (data.match.id !== matchContext.match.id) {
+		if (data.match.id !== matchContext.match?.id) {
 			return;
 		}
 
@@ -52,7 +52,12 @@ export function listenForMatchUpdates() {
 			myId = watchingPlayerId.current;
 		} else if (spectating) {
 			const firstPlayer = match.participants?.length ? match.participants[0] : null;
-			watchingPlayerId.current = firstPlayer?.user_id;
+			watchingPlayerId.current = firstPlayer?.user_id ?? '';
+			myId = watchingPlayerId.current ?? myId;
+		}
+
+		if (!myId) {
+			return;
 		}
 
 		for (const stand of standings) {
@@ -114,7 +119,7 @@ export function listenForMatchUpdates() {
 			match: {match_session: matchSession},
 		} = data;
 
-		const {min_players: minPlayers} = matchSession;
+		const minPlayers = matchSession?.min_players ?? 0;
 
 		const matchStarted = match.started_at;
 		const matchEnded = match.ended_at;

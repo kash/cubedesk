@@ -1,17 +1,13 @@
 import {getPrisma} from '../database';
 import Notification from '../resources/notification_types/notification';
-import {UserAccount} from '../schemas/UserAccount.schema';
-import {Notification as NotificationSchema} from '../schemas/Notification.schema';
+import {UserAccount, publicUserSelect} from '@/types/user';
+import {Notification as NotificationSchema} from '@/types/notification';
 
+// triggering_user must stay a safe select — tRPC has no schema masking, and a
+// full include would send that user's password hash to the client
 const notificationInclude = {
 	triggering_user: {
-		include: {
-			profile: {
-				include: {
-					pfp_image: true,
-				},
-			},
-		},
+		select: publicUserSelect,
 	},
 };
 
