@@ -1,4 +1,3 @@
-import {getClientRooms, getDetailedClientInfo} from './util';
 import {Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
 import {MatchRoom} from '../../client/shared/match/events';
@@ -17,10 +16,6 @@ export function getMatchPlayersRoomName(match: Match): string {
 	return `${MatchConst.PLAYERS_ROOM_PREFIX}${match.id}`;
 }
 
-export function getMatchPlayersRoomNameByMatchId(matchId: string): string {
-	return `${MatchConst.PLAYERS_ROOM_PREFIX}${matchId}`;
-}
-
 export function getMatchIdFromPlayersRoom(roomName: string): string {
 	if (!roomName || roomName.indexOf(MatchConst.PLAYERS_ROOM_PREFIX) < 0) {
 		return null;
@@ -31,18 +26,6 @@ export function getMatchIdFromPlayersRoom(roomName: string): string {
 
 export function getLobbyRoomName(eventName: GameType, key: MatchRoom) {
 	return eventName + key;
-}
-
-// Returns list of clients in match
-export async function isClientInAnyMatch(client) {
-	const {user} = await getDetailedClientInfo(client);
-	if (!user) {
-		return false;
-	}
-
-	const rooms = getClientRooms(client);
-
-	return rooms.some((room) => room.startsWith(MatchConst.PLAYERS_ROOM_PREFIX));
 }
 
 export function userExistsInMatch(match: Match, user: PublicUserAccount): boolean {

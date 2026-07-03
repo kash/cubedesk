@@ -15,28 +15,6 @@ export function getUserProfile(user): Promise<Profile> {
 	});
 }
 
-export function getProfileById(id) {
-	return getPrisma().profile.findUnique({
-		where: {
-			id,
-		},
-		include: {
-			header_image: true,
-			pfp_image: true,
-			user: {
-				include: {
-					integrations: true,
-					badges: {
-						include: {
-							badge_type: true,
-						},
-					},
-				},
-			},
-		},
-	});
-}
-
 export function updateUserProfile(profile, data) {
 	return getPrisma().profile.update({
 		where: {

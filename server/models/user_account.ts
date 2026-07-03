@@ -106,47 +106,6 @@ export async function getUserByIdWithProfile(
 	})) as InternalUserAccount | null;
 }
 
-export async function adminUserSearch(page: number, query: string): Promise<UserAccount[]> {
-	const pageSize = 50;
-
-	let where = {};
-	if (query) {
-		where = {
-			OR: [
-				{
-					username: {
-						contains: query,
-						mode: 'insensitive',
-					},
-				},
-				{
-					email: {
-						contains: query,
-						mode: 'insensitive',
-					},
-				},
-			],
-		};
-	}
-
-	return (await getPrisma().userAccount.findMany({
-		where,
-		orderBy: {
-			created_at: 'desc',
-		},
-		include: {
-			integrations: true,
-			badges: {
-				include: {
-					badge_type: true,
-				},
-			},
-		},
-		skip: page * pageSize,
-		take: pageSize,
-	})) as UserAccount[];
-}
-
 // Returns the FULL row (password hash + integration OAuth tokens) — never
 // send this to a client without sanitizing/narrowing first
 export async function getUserByEmail(email: string): Promise<InternalUserAccount | null> {

@@ -121,52 +121,6 @@ const topAverageInclude = {
 	},
 };
 
-export function getTopSolve(id) {
-	return getPrisma().topSolve.findUnique({
-		where: {
-			id,
-		},
-		include: topSolveInclude,
-	});
-}
-
-const notBannedWhere = {
-	user: {
-		banned_forever: false,
-	},
-	OR: [
-		{
-			user: {
-				banned_until: null,
-			},
-		},
-		{
-			user: {
-				banned_until: {
-					lt: new Date(),
-				},
-			},
-		},
-	],
-};
-
-export function getTopSolves(cubeType, page) {
-	const pageSize = 50;
-
-	return getPrisma().topSolve.findMany({
-		where: {
-			cube_type: cubeType,
-			...notBannedWhere,
-		},
-		orderBy: {
-			time: 'asc',
-		},
-		include: topSolveInclude,
-		skip: page * pageSize,
-		take: pageSize,
-	});
-}
-
 export function getUserTopAverages(user) {
 	return getPrisma().topAverage.findMany({
 		where: {
@@ -176,31 +130,5 @@ export function getUserTopAverages(user) {
 			time: 'asc',
 		},
 		include: topAverageInclude,
-	});
-}
-
-export function getTopAverage(id) {
-	return getPrisma().topAverage.findUnique({
-		where: {
-			id,
-		},
-		include: topAverageInclude,
-	});
-}
-
-export function getTopAverages(cubeType, page) {
-	const pageSize = 50;
-
-	return getPrisma().topAverage.findMany({
-		where: {
-			cube_type: cubeType,
-			...notBannedWhere,
-		},
-		orderBy: {
-			time: 'asc',
-		},
-		include: topAverageInclude,
-		skip: page * pageSize,
-		take: pageSize,
 	});
 }

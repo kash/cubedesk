@@ -7,7 +7,6 @@ import {emitEvent} from '../../util/event_handler';
 import {setLocalSettingValue} from './local';
 
 export const MOBILE_FONT_SIZE_MULTIPLIER = 0.75;
-export const MIN_MOBILE_FREEZE_TIME = 0.45;
 
 export function setCurrentSession(id: string) {
 	return setSetting('session_id', id);

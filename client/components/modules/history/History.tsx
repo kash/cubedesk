@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactListImport from 'react-list';
 
-// esbuild 0.15's CJS interop double-wraps react-list's default export
+// react-list's default export gets double-wrapped by CJS interop during dev transforms.
 // (import_react_list.default ends up being the whole module-exports object,
 // not the class). Unwrap it here so JSX gets the class.
 const ReactList = ((ReactListImport as any).default ?? ReactListImport) as typeof ReactListImport;

@@ -111,11 +111,6 @@ export async function getValueFromRedis({key}: generatedRedisKey): Promise<strin
 	return client.get(key);
 }
 
-export async function getKeyTTLFromRedis({key}: generatedRedisKey): Promise<number> {
-	const client = getRedisPubClient();
-	return client.ttl(key);
-}
-
 export async function setKeyInRedis({key}: generatedRedisKey, value: string, expireSeconds?: number): Promise<string> {
 	const client = getRedisPubClient();
 	const res = await client.set(key, value);

@@ -37,7 +37,7 @@ export default function Face(props: Props) {
 		);
 	}
 
-	content = flatten(content);
+	const flattenedContent = flatten(content);
 
 	const style: CSS.Properties = {gridTemplateColumns: `repeat(${size}, 1fr)`};
 	if (width) {
@@ -47,7 +47,7 @@ export default function Face(props: Props) {
 
 	return (
 		<div className="grid max-h-full max-w-full gap-[3px]" style={style}>
-			{content}
+			{flattenedContent}
 		</div>
 	);
 }

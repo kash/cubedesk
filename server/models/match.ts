@@ -7,10 +7,9 @@ import {Match} from '@/types/match';
 import {MatchSession} from '@/types/match';
 import {MatchConst} from '../../client/shared/match/consts';
 import {publicUserInclude} from './user_account';
-import {PublicUserAccount} from '@/types/user';
 import {MatchCacher} from '../match/update/match_cacher';
 
-export function matchInclude(includeChat: boolean): Prisma.MatchInclude {
+function matchInclude(includeChat: boolean): Prisma.MatchInclude {
 	let matchSessionInclude = {};
 
 	if (includeChat) {
@@ -59,17 +58,6 @@ export async function getMatchById(id: string, includeChat?: boolean) {
 	});
 
 	return cleanMatch(match);
-}
-
-export async function getUserMatchCount(user: PublicUserAccount) {
-	return getPrisma().matchParticipant.aggregate({
-		_count: {
-			id: true,
-		},
-		where: {
-			user_id: user.id,
-		},
-	});
 }
 
 export async function getMatchBySpectateCode(code: string, includeChat?: boolean) {

@@ -25,18 +25,6 @@ export function getStripeCustomerById(stripeCustomerId: string): Promise<Stripe.
 	return stripe.customers.retrieve(stripeCustomerId) as Promise<Stripe.Customer>;
 }
 
-export async function getStripeCustomerByEmail(email: string) {
-	const customers = await stripe.customers.list({
-		email,
-	});
-
-	if (!customers || customers.data.length) {
-		return null;
-	}
-
-	return customers.data[0];
-}
-
 export async function getStripeCustomerSubscriptions(customerId: string): Promise<Stripe.Subscription[]> {
 	const subs = await stripe.subscriptions.list({
 		customer: customerId,
@@ -81,7 +69,7 @@ export async function cancelAllStripeSubscriptions(user: InternalUserAccount) {
 	return subs;
 }
 
-export async function cancelStripeSubscription(subscriptionId: string) {
+async function cancelStripeSubscription(subscriptionId: string) {
 	return stripe.subscriptions.update(subscriptionId, {
 		cancel_at_period_end: true,
 	});

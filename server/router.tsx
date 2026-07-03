@@ -77,7 +77,7 @@ function createComponents(req, store) {
 	// In dev we skip server-side rendering entirely and ship an empty shell. The
 	// client bundle renders everything (see App.tsx using createRoot in dev). This
 	// keeps client component code out of the render path so editing a component no
-	// longer forces a full server restart — only esbuild rebuilds + browser reloads.
+	// longer forces a full server restart — only Vite rebuilds + browser reloads.
 	if (isDev) {
 		const preloaded = store.getState();
 		const fullHtml = renderFullPage('', createEmptyHelmetState(), preloaded);

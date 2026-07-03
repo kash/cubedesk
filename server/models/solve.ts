@@ -8,90 +8,6 @@ import {UserAccount} from '@/types/user';
 import {generateRandomCode} from '../../shared/code';
 import {sanitizeSolve} from '../../shared/solve';
 
-export function deleteTrainingSolves(id, user) {
-	return getPrisma().solve.deleteMany({
-		where: {
-			user_id: user.id,
-			trainer_name: id,
-		},
-	});
-}
-
-export const trainerExceptions = [
-	{
-		trainer_name: undefined,
-	},
-	{
-		trainer_name: null,
-	},
-	{
-		trainer_name: '',
-	},
-];
-
-export function getFilteredSolveList(user, filters, orderBy, offset, limit) {
-	return Promise.all([
-		getPrisma().solve.count({
-			where: {
-				user_id: user.id,
-				from_timer: true,
-				AND: filters,
-			},
-		}),
-		getPrisma().solve.findMany({
-			where: {
-				user_id: user.id,
-				from_timer: true,
-				AND: filters,
-			},
-			skip: offset,
-			take: limit,
-			orderBy,
-		}),
-	]);
-}
-
-export function deleteAllTrainingSolves(user) {
-	return getPrisma().solve.deleteMany({
-		where: {
-			AND: [{user_id: user.id}],
-			NOT: trainerExceptions,
-		},
-	});
-}
-
-export function deleteAllSolvesByCubeType(cubeType, user) {
-	return getPrisma().solve.deleteMany({
-		where: {
-			user_id: user.id,
-			cube_type: cubeType,
-			from_timer: true,
-		},
-	});
-}
-
-export function getSolveTimesForCubeType(user, cubeType) {
-	return getPrisma().solve.deleteMany({
-		select: {
-			time: true,
-		},
-		where: {
-			user_id: user.id,
-			cube_type: cubeType,
-			from_timer: true,
-		},
-	});
-}
-
-export function deleteAllSolves(user) {
-	return getPrisma().solve.deleteMany({
-		where: {
-			user_id: user.id,
-			from_timer: true,
-		},
-	});
-}
-
 export function getSolveByShareCode(shareCode) {
 	return getPrisma().solve.findUnique({
 		where: {
@@ -190,22 +106,6 @@ export function bulkCreateSolves(user: UserAccount, solves: SolveInput[]) {
 
 	return getPrisma().solve.createMany({
 		data,
-	});
-}
-
-export function addShareCodeToSolve(solve: Solve) {
-	if (solve.share_code) {
-		return;
-	}
-	const shareCode = generateRandomCode(8);
-
-	return getPrisma().solve.update({
-		where: {
-			id: solve.id,
-		},
-		data: {
-			share_code: shareCode,
-		},
 	});
 }
 

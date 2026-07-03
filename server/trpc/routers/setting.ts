@@ -1,7 +1,7 @@
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 import {protectedProcedure, router} from '../trpc';
-import {getSettingsByUserId, updateSettings} from '../../models/settings';
+import {getSettingsByUserId, resetSetting, updateSettings} from '../../models/settings';
 
 const settingInputSchema = z
 	.object({
@@ -51,5 +51,5 @@ export const settingRouter = router({
 		return updateSettings(ctx.user.id, data);
 	}),
 
-	reset: protectedProcedure.mutation(({ctx}) => getSettingsByUserId(ctx.user.id)),
+	reset: protectedProcedure.mutation(({ctx}) => resetSetting(ctx.user.id)),
 });

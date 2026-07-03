@@ -22,16 +22,6 @@ export async function deleteTimerBackground(background) {
 	});
 }
 
-export function uploadTimerBackgroundWithHex(user, hex) {
-	return getPrisma().timerBackground.create({
-		data: {
-			id: uuid(),
-			hex,
-			user_id: user.id,
-		},
-	});
-}
-
 export async function uploadTimerBackgroundWithFile(user, fileName, fileStream) {
 	const fileType = fileName.split('.').pop().toLowerCase();
 	const name = `${generateRandomCode(10)}.${fileType}`;

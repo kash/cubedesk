@@ -84,15 +84,6 @@ export default (state = initialState, action) => {
 			};
 		}
 
-		case 'SET_START_ENABLED': {
-			const {payload} = action;
-
-			return {
-				...state,
-				startEnabled: payload,
-			};
-		}
-
 		default: {
 			return {
 				...initialState,

@@ -8,7 +8,7 @@ import {cn} from '@/util/cn';
 const DEFAULT_MAX_WIDTH = 350;
 
 // Shared styles for the raw input/select/textarea elements rendered by leaf
-// input components (Input, TextArea, Select, InputSelect).
+// input components (Input, TextArea, Select).
 export const inputClassNames =
 	'box-border w-full rounded-md border-none bg-button p-2.5 text-base text-tmo-button transition-all duration-100 ease-in-out placeholder:text-tmo-button/35 focus:border-tmo-button disabled:opacity-60';
 

@@ -1,6 +1,4 @@
 import {FilterSolvesOptions} from '@/db/solves/query';
-import colorPalette, {ColorName} from '../../../../shared/colors';
-import {AppTheme} from '@/util/hooks/useTheme';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {getStore} from '@/components/store';
 import {getWorstTime} from '@/db/solves/stats/solves/single/single-worst';
@@ -94,16 +92,6 @@ export async function saveStatsModuleBlocks() {
 	await trpc.stats.updateModuleBlocks.mutate({
 		blocks,
 	});
-}
-
-export function getStatValueColorHex(colorName: ColorName, appTheme: AppTheme): string {
-	const colorMap = colorPalette[colorName];
-
-	if (appTheme.isDark) {
-		return colorMap[400];
-	} else {
-		return colorMap[700];
-	}
 }
 
 export function getQuickStatsGridSizes(blockCount: number) {

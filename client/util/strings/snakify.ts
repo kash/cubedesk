@@ -1,9 +1,5 @@
 import {snakeCase} from 'change-case';
 
-export function snakifyString(str: string): string {
-	return snakeCase(str);
-}
-
 export function snakifyObject(obj: {[key: string]: any}) {
 	if (!obj || typeof obj !== 'object') {
 		return {};

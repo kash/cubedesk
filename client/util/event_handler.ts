@@ -33,10 +33,6 @@ export function addEventListener<T extends keyof ClientEvent>(
 	ee.on(name, func);
 }
 
-export function removeAllEventListeners(name: keyof ClientEvent) {
-	ee.removeAllListeners(name);
-}
-
 export function removeEventListener(name: keyof ClientEvent, func: any) {
 	ee.removeListener(name, func);
 }

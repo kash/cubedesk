@@ -18,12 +18,6 @@ export function processSmartTurns(smartTurns: SmartTurn[], skipCompress: boolean
 	return last;
 }
 
-export function getSmartTurnsAsString(smartTurns: SmartTurn[]) {
-	const output = smartTurns.map(({turn}) => turn);
-
-	return output.join(' ');
-}
-
 function processSmartTurnsHelper(smartTurns: (SmartTurn | string)[], skipCompress: boolean = false) {
 	const output: string[] = [];
 

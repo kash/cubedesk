@@ -34,17 +34,3 @@ function onWindowFocus() {
 function onWindowBlur() {
 	pageHasFocus = false;
 }
-
-export function blinkPageTitle(message) {
-	if (pageHasFocus) {
-		return;
-	}
-
-	originalPageTitle = document.title;
-	isOldTitle = true;
-
-	changeTitleInterval = setInterval(() => {
-		document.title = isOldTitle ?  message : originalPageTitle;
-		isOldTitle = !isOldTitle;
-	}, 700);
-}

@@ -11,16 +11,8 @@ const toastOptions: ToastOptions = {
 	progress: undefined,
 };
 
-export function toastDismiss() {
-	toast.dismiss();
-}
-
 export function toastSuccess(message: string) {
 	toast.success(message, toastOptions);
-}
-
-export function toastWarning(message: string) {
-	toast.warning(message, toastOptions);
 }
 
 export function toastError(message: string | Error | unknown) {
