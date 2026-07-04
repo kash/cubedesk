@@ -183,7 +183,6 @@ export default function HeaderControl() {
 			<div
 				className={classNames(
 					'absolute top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
-					mobileMode && 'top-[55px] !p-2.5',
 					context.timeStartedAt && 'pointer-events-none opacity-30',
 				)}
 			>

@@ -14,14 +14,11 @@ import {configureHotkeys} from '@/components/timer/helpers/hotkeys';
 import {TimerContext} from '@/components/timer/Timer';
 import {smartCubeSelected} from '@/components/timer/helpers/util';
 import {setTimerParam, setTimerParams} from '@/components/timer/helpers/params';
-import block from '@/styles/bem';
 import {endTimer, resetTimerParams, startTimer, startInspection} from '@/components/timer/helpers/events';
 import {useDocumentListener, useWindowListener} from '@/util/hooks/useListener';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {getSettings} from '@/db/settings/query';
-
-const timerClass = block('timer');
 
 interface Props {
 	children: ReactNode;
@@ -73,7 +70,7 @@ export default function KeyWatcher(props: Props) {
 				return;
 			}
 
-			if (target.classList.contains(timerClass('main'))) {
+			if (target.hasAttribute?.('data-timer-main')) {
 				keydownSpace(e, true);
 				return;
 			}
@@ -86,7 +83,7 @@ export default function KeyWatcher(props: Props) {
 		let target = e.target;
 
 		while (target.parentNode) {
-			if (target.classList.contains(timerClass('main'))) {
+			if (target.hasAttribute?.('data-timer-main')) {
 				keyupSpace(e, true);
 				return;
 			}

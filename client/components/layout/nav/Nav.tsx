@@ -109,7 +109,7 @@ export default function Nav() {
 		'box-border',
 		'flex',
 		'h-screen',
-		'h-[100dvh]',
+		'supports-[height:100dvh]:h-dvh',
 		navClosed ? 'w-20' : 'w-72',
 		'flex-col',
 		'items-center',

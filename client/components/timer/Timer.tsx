@@ -109,7 +109,7 @@ export default function Timer(props: TimerProps) {
 	const mainClass = classNames(
 		'relative flex w-full select-none items-center justify-center',
 		mobileMode &&
-			'select-none border-b-[3px] border-dashed border-tmo/30 [-webkit-touch-callout:none] [-webkit-user-select:none]',
+			'select-none border-b-[3px] border-dashed border-tmo-background/30 [-webkit-touch-callout:none] [-webkit-user-select:none]',
 		sideLayout && '!h-[calc(100vh_-_70px)]'
 	);
 	const mainCenterClass = classNames('flex w-full flex-col items-center', {
@@ -126,7 +126,7 @@ export default function Timer(props: TimerProps) {
 			<div className="absolute bottom-0 left-1/2 mx-auto mb-1.5 mt-[25px] table -translate-x-1/2">
 				<Link
 					to="/account/pro"
-					className="flex flex-row items-center gap-[5px] border-b-[3px] border-primary/60 pb-0.5 text-base text-tmo"
+					className="flex flex-row items-center gap-[5px] border-b-[3px] border-primary/60 pb-0.5 text-base text-tmo-module"
 				>
 					Support development and get Pro <ArrowRight weight="fill" />
 				</Link>
@@ -135,7 +135,7 @@ export default function Timer(props: TimerProps) {
 	}
 
 	const timeBar = (
-		<div className={mainClass}>
+		<div data-timer-main className={mainClass}>
 			<div className={mainCenterClass}>
 				<TimerScramble />
 				<div className={mainTimeClass}>
@@ -175,8 +175,10 @@ export default function Timer(props: TimerProps) {
 	return (
 		<div
 			className={classNames(
-				'relative mx-auto box-border flex h-screen h-dvh flex-col justify-end pb-[calc(10px_+_env(safe-area-inset-bottom))] text-text',
-				mobileMode && 'h-[calc(100vh_-_55px)] h-[calc(100dvh_-_55px)]'
+				'relative mx-auto box-border flex flex-col justify-end pb-[calc(10px_+_env(safe-area-inset-bottom))] text-text',
+				mobileMode
+					? 'h-[calc(100vh_-_55px)] supports-[height:100dvh]:h-[calc(100dvh_-_55px)]'
+					: 'h-screen supports-[height:100dvh]:h-dvh'
 			)}
 		>
 			<TimerContext.Provider value={context}>
@@ -187,14 +189,14 @@ export default function Timer(props: TimerProps) {
 							'z-10 box-border grid h-[calc(100vh_-_55px)] w-full gap-[15px]',
 							context.focusMode && !mobileMode
 								? '!grid-cols-[1fr] !grid-rows-none'
-								: timerStarted && mobileMode
-									? '!grid-cols-[1fr]'
-									: timerLayout === 'left'
-										? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
-										: timerLayout === 'right'
-											? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[1fr] !px-2.5 !pb-2.5'
+								: timerLayout === 'left'
+									? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
+									: timerLayout === 'right'
+										? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[1fr] !px-2.5 !pb-2.5'
+										: hideMobileTimerFooter && mobileMode
+											? 'grid-rows-[1fr_50px]'
 											: 'grid-rows-[1fr_300px]',
-							hideMobileTimerFooter && mobileMode && 'grid-rows-[1fr_50px]'
+							timerStarted && mobileMode && '!grid-cols-[1fr]'
 						)}
 					>
 						{body}
