@@ -170,8 +170,7 @@ export default function TimeDisplay() {
 			className={classNames(
 				'relative z-[1] flex w-full flex-col items-center justify-center p-0',
 				smartCubeSelected(context) && 'w-1/2',
-				mobileMode &&
-					'mt-[50px] box-border select-none rounded-[5px] border-[5px] border-dashed border-button pb-[3vh]',
+				mobileMode && 'select-none',
 				context.focusMode && 'h-screen !pt-0'
 			)}
 		>

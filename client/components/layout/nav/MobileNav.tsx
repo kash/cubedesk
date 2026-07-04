@@ -48,7 +48,7 @@ export default function MobileNav() {
 					/>
 				</div>
 				<div className="relative z-[100] flex w-[30%] flex-row justify-center">
-					<a href="/">
+					<a className="w-[23px]" href="/">
 						<LogoBrandmark dark={!moduleColor.isDark} />
 					</a>
 				</div>
