@@ -7,4 +7,7 @@ export function exposeResourcesForSearchEngines() {
 	global.app.get('/sitemap.xml', (req, res) => {
 		request('https://cdn.cubedesk.io/site/sitemaps/sitemap.xml').pipe(res);
 	});
+	global.app.get('/favicon.ico', (req, res) => {
+		request('https://cdn.cubedesk.io/static/favicon.ico').pipe(res);
+	});
 }

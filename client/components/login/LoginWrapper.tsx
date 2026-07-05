@@ -20,7 +20,7 @@ export default function LoginWrapper() {
 
 	return (
 		<div className="flex h-full min-h-screen w-full flex-col items-center justify-start bg-background">
-			<a href="/home">
+			<a href="/">
 				<img
 					className="mb-[30px] mt-[100px] w-[200px]"
 					src={resourceUri('/images/cube_desk_logo_white.svg')}

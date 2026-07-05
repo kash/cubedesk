@@ -183,7 +183,7 @@ export default function Nav() {
 								name="GitHub"
 							/>
 							<SocialIcon
-								href="/home"
+								href="/about"
 								darkPath={resourceUri('/images/logos/globe_logo_white.svg')}
 								lightPath={resourceUri('/images/logos/globe_logo_black.svg')}
 								name="Globe"

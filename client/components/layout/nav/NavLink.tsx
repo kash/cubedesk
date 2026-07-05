@@ -11,8 +11,7 @@ interface Props extends NavLinkProps {
 }
 
 export default function NavLink(props: Props) {
-	const {name, icon, newTag, loginRequired, collapsed, selected} = props;
-	let link = props.link;
+	const {name, icon, newTag, loginRequired, collapsed, selected, link} = props;
 
 	const me = useMe();
 
@@ -21,10 +20,6 @@ export default function NavLink(props: Props) {
 		infoTag = <Tag icon={<Lock weight="fill" />} textColor="orange" />;
 	} else if (newTag) {
 		infoTag = <Tag text="new" textColor="orange" />;
-	}
-
-	if (link === '/' && !me) {
-		link = '/demo';
 	}
 
 	const wrapperClasses = ['transition-all', 'group', 'rounded'];

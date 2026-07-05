@@ -14,12 +14,14 @@ export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext)
 	const ct = getCubeTypeInfoById(cubeType);
 
 	if (demoMode) {
-		const session = await createSessionDb({
-			demo_mode: true,
-			name: 'Demo Session',
-			id: 'demo',
-		});
-		setSetting('session_id', session.id);
+		if (!fetchSessionById('demo')) {
+			await createSessionDb({
+				demo_mode: true,
+				name: 'Demo Session',
+				id: 'demo',
+			});
+		}
+		setSetting('session_id', 'demo');
 	} else if (!inModal) {
 		if (!sessionId || (sessionId && !fetchSessionById(sessionId))) {
 			const session = await createSessionDb({
