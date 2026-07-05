@@ -1,6 +1,6 @@
-import {LokiFetchOptions} from '../lokijs';
-import {fetchRecords, fetchUniqueValuesByField} from '../util';
-import {getTrainerDb, TrainerAlgorithmExtended} from './init';
+import {LokiFetchOptions} from '@/db/lokijs';
+import {fetchRecords, fetchUniqueValuesByField} from '@/db/util';
+import {getTrainerDb, TrainerAlgorithmExtended} from '@/db/trainer/init';
 
 export type FilterTrainerOptions = LokiQuery<TrainerAlgorithmExtended>;
 

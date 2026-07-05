@@ -2,7 +2,7 @@ import Button from '@/components/common/Button';
 import {socketClient} from '@/util/socket/socketio';
 import {UsersThree} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
-import {GameType} from '../../../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 interface Props {
 	matchType: GameType;

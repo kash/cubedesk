@@ -1,5 +1,5 @@
 import Cube from 'cubejs';
-import {SmartTurn} from '../../../client/util/smart_scramble';
+import {SmartTurn} from '@/util/smart_scramble';
 
 export function getReverseTurns(moves: (SmartTurn | string)[] | string) {
 	let turns;

@@ -1,4 +1,4 @@
-import type {ColorName} from '../shared/colors';
+import type {ColorName} from '@/shared/colors';
 
 // Stored as JSON in Setting.stats_module_json, so there is no Prisma model for this
 export type StatsModuleBlock = {

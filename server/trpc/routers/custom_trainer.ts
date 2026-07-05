@@ -3,9 +3,9 @@ import {customTrainerInclude, CustomTrainerWithUser} from '@/types/trainer';
 import {publicUserSelect} from '@/types/user';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {generateUUID} from '../../../shared/code';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
-import {protectedProcedure, router} from '../trpc';
+import {generateUUID} from '@/shared/code';
+import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 const customTrainerInputSchema = z.object({
 	solution: z.string(),

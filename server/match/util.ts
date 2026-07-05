@@ -1,10 +1,10 @@
 import {PublicUserAccount} from '@/types/user';
 import {RemoteSocket, Socket} from 'socket.io';
 import {DefaultEventsMap} from 'socket.io';
-import {MatchConst} from '../../client/shared/match/consts';
-import {createRedisKey, getValueFromRedis, keyExistsInRedis, RedisNamespace, setKeyInRedis} from '../services/redis';
-import {getMeWithCookieString} from '../util/auth';
-import {getSocketIO} from './init';
+import {MatchConst} from '@/client/shared/match/consts';
+import {createRedisKey, getValueFromRedis, keyExistsInRedis, RedisNamespace, setKeyInRedis} from '@/server/services/redis';
+import {getMeWithCookieString} from '@/server/util/auth';
+import {getSocketIO} from '@/server/match/init';
 
 export type SocketType = Socket | RemoteSocket<DefaultEventsMap, any>;
 

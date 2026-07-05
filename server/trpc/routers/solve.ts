@@ -2,8 +2,8 @@ import type {Prisma} from '@/generated/prisma/client';
 import type {SolveInput} from '@/types/solve';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {generateRandomString} from '../../../shared/code';
-import {getMatchById} from '../../models/match';
+import {generateRandomString} from '@/shared/code';
+import {getMatchById} from '@/server/models/match';
 import {
 	bulkCreateSolves,
 	createSolve,
@@ -13,15 +13,15 @@ import {
 	getSolveByShareCode,
 	updateSolve,
 	updateSolveLiteral,
-} from '../../models/solve';
-import {createSolveMethodSteps, deleteSolveMethodSteps} from '../../models/solve_method_step';
-import {createSolveView, deleteSolveViewsBySolveId} from '../../models/solve_view';
-import {deleteTopAverage, deleteTopSolveById} from '../../models/top_solve';
-import {updateUserAccountWithParams} from '../../models/user_account';
-import {logger} from '../../services/logger';
-import {serializeSolveTimestamps} from '../../util/serialize';
-import {getSolveSteps} from '../../util/solve/solve_method';
-import {protectedProcedure, publicProcedure, router} from '../trpc';
+} from '@/server/models/solve';
+import {createSolveMethodSteps, deleteSolveMethodSteps} from '@/server/models/solve_method_step';
+import {createSolveView, deleteSolveViewsBySolveId} from '@/server/models/solve_view';
+import {deleteTopAverage, deleteTopSolveById} from '@/server/models/top_solve';
+import {updateUserAccountWithParams} from '@/server/models/user_account';
+import {logger} from '@/server/services/logger';
+import {serializeSolveTimestamps} from '@/server/util/serialize';
+import {getSolveSteps} from '@/server/util/solve/solve_method';
+import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 
 // Mirrors the old MiniSolveFragment so the list payload stays lean
 const miniSolveSelect = {

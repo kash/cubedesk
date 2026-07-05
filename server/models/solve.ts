@@ -3,10 +3,10 @@ import {Solve, SolveInput} from '@/types/solve';
 import {UserAccount} from '@/types/user';
 import uniqid from 'uniqid';
 import {v4 as uuid} from 'uuid';
-import {generateRandomCode} from '../../shared/code';
-import {sanitizeSolve} from '../../shared/solve';
-import {getPrisma} from '../database';
-import {publicUserInclude} from './user_account';
+import {generateRandomCode} from '@/shared/code';
+import {sanitizeSolve} from '@/shared/solve';
+import {getPrisma} from '@/server/database';
+import {publicUserInclude} from '@/server/models/user_account';
 
 // Conditions identifying non-trainer solves; combine with OR
 export const trainerExceptions: Prisma.SolveWhereInput[] = [

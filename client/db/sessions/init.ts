@@ -1,5 +1,5 @@
 import {Session} from '@/types/session';
-import {getLokiDb} from '../lokijs';
+import {getLokiDb} from '@/db/lokijs';
 
 export function getSessionDb(): Collection<Session> {
 	const db = getLokiDb();

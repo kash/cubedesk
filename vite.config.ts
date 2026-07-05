@@ -71,6 +71,9 @@ export default defineConfig({
 		alias: [
 			{find: '@/generated', replacement: path.resolve(rootDir, 'generated')},
 			{find: '@/types', replacement: path.resolve(rootDir, 'types')},
+			{find: '@/server', replacement: path.resolve(rootDir, 'server')},
+			{find: '@/client/shared', replacement: path.resolve(rootDir, 'client/shared')},
+			{find: '@/shared', replacement: path.resolve(rootDir, 'shared')},
 			{find: '@', replacement: path.resolve(rootDir, 'client')},
 			{find: 'client', replacement: path.resolve(rootDir, 'client')},
 			{find: 'generated', replacement: path.resolve(rootDir, 'generated')},

@@ -1,5 +1,5 @@
-import {fetchSingleSolve, FilterSolvesOptions} from '../../../query';
-import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
+import {fetchSingleSolve, FilterSolvesOptions} from '@/db/solves/query';
+import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '@/db/solves/stats/solves/caching';
 
 export function getSinglePB(filterOptions: FilterSolvesOptions) {
 	const cacheKey: SolveCacheKey = {

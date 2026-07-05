@@ -1,9 +1,9 @@
 import {InternalUserAccount, UserAccount} from '@/types/user';
 import {Request} from 'express';
 import jwt from 'jsonwebtoken';
-import {deactivateAllBanLogs} from '../models/ban_log';
-import {getOrCreateUserProfile} from '../models/profile';
-import {getUserById, getUserByIdWithProfile, updateUserAccountWithParams} from '../models/user_account';
+import {deactivateAllBanLogs} from '@/server/models/ban_log';
+import {getOrCreateUserProfile} from '@/server/models/profile';
+import {getUserById, getUserByIdWithProfile, updateUserAccountWithParams} from '@/server/models/user_account';
 
 const jwtSecret = (process as any).env.JWT_SECRET as string;
 

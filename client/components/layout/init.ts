@@ -15,7 +15,7 @@ import {Solve} from '@/types/solve';
 import {UserAccount} from '@/types/user';
 import {trpc} from '@/util/trpc';
 import {Dispatch} from 'redux';
-import {generateId} from '../../../shared/code';
+import {generateId} from '@/shared/code';
 
 export function initAnonymousAppData(callback) {
 	if (typeof window === 'undefined') {

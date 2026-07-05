@@ -1,6 +1,6 @@
-import {getSettings} from '../../db/settings/query';
-import {CUBE_SCRAMBLES, ScrambleType} from './cube_scrambles';
-import {CUBE_TYPES, CubeType} from './cube_types';
+import {getSettings} from '@/db/settings/query';
+import {CUBE_SCRAMBLES, ScrambleType} from '@/util/cubes/cube_scrambles';
+import {CUBE_TYPES, CubeType} from '@/util/cubes/cube_types';
 
 export function getScrambleTypeById(scrambleId: string): ScrambleType | undefined {
 	return CUBE_SCRAMBLES[scrambleId];

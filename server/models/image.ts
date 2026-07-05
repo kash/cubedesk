@@ -1,8 +1,8 @@
-import {generateRandomCode} from '../../shared/code';
-import {getPrisma} from '../database';
-import {logger} from '../services/logger';
-import {deleteObject, uploadObject} from '../services/storage';
-import {getImageBufferFromFileStream, ImageFileToBuffer} from '../util/image';
+import {generateRandomCode} from '@/shared/code';
+import {getPrisma} from '@/server/database';
+import {logger} from '@/server/services/logger';
+import {deleteObject, uploadObject} from '@/server/services/storage';
+import {getImageBufferFromFileStream, ImageFileToBuffer} from '@/server/util/image';
 
 export async function deleteImage(image) {
 	try {

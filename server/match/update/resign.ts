@@ -1,9 +1,9 @@
 import {FullMatch, Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
-import {updateMatch} from '../../models/match';
-import {updateMatchParticipant} from '../../models/match_participation';
-import {emitMatchUpdate} from './send';
-import {sendMatchUpdateById} from './standings';
+import {updateMatch} from '@/server/models/match';
+import {updateMatchParticipant} from '@/server/models/match_participation';
+import {emitMatchUpdate} from '@/server/match/update/send';
+import {sendMatchUpdateById} from '@/server/match/update/standings';
 
 export async function resignMatch(match: Match, user: PublicUserAccount, forfeit: boolean = false) {
 	const data = {

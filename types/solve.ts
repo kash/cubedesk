@@ -1,5 +1,5 @@
-import type {SmartDevice} from './smart-device';
-import type {PublicUserAccount} from './user';
+import type {SmartDevice} from '@/types/smart-device';
+import type {PublicUserAccount} from '@/types/user';
 
 // Mirrors solveInputSchema (server/trpc/routers/solve.ts), where every field is nullish
 export interface SolveInput {

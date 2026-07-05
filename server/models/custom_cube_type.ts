@@ -1,4 +1,4 @@
-import {getPrisma} from '../database';
+import {getPrisma} from '@/server/database';
 
 export function getCustomCubeTypesByUserId(userId: string) {
 	return getPrisma().customCubeType.findMany({

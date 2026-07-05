@@ -1,7 +1,8 @@
+import type {Friendship, FriendshipRequest, UserAccount} from '@/generated/prisma/client';
 import {v4 as uuid} from 'uuid';
-import {getPrisma} from '../database';
+import {getPrisma} from '@/server/database';
 
-export function getFriendships(user) {
+export function getFriendships(user: UserAccount) {
 	return getPrisma().friendship.findMany({
 		where: {
 			user_id: user.id,
@@ -9,7 +10,7 @@ export function getFriendships(user) {
 	});
 }
 
-export async function getFriendship(user, targetUser) {
+export async function getFriendship(user: UserAccount, targetUser: UserAccount) {
 	const res = await getPrisma().friendship.findMany({
 		where: {
 			user_id: user.id,
@@ -24,7 +25,7 @@ export async function getFriendship(user, targetUser) {
 	return null;
 }
 
-export async function acceptFriendshipRequest(friendshipRequest) {
+export async function acceptFriendshipRequest(friendshipRequest: FriendshipRequest) {
 	const fromUserId = friendshipRequest.from_id;
 	const toUserId = friendshipRequest.to_id;
 
@@ -58,7 +59,7 @@ export async function acceptFriendshipRequest(friendshipRequest) {
 	return second;
 }
 
-export function getFriendshipRequestById(id) {
+export function getFriendshipRequestById(id: string) {
 	return getPrisma().friendshipRequest.findUnique({
 		where: {
 			id,
@@ -70,7 +71,7 @@ export function getFriendshipRequestById(id) {
 	});
 }
 
-export function createFriendshipRequest(fromUser, toUser) {
+export function createFriendshipRequest(fromUser: UserAccount, toUser: UserAccount) {
 	return getPrisma().friendshipRequest.create({
 		data: {
 			id: uuid(),
@@ -80,7 +81,7 @@ export function createFriendshipRequest(fromUser, toUser) {
 	});
 }
 
-export function deleteFriendshipRequest(friendshipRequest) {
+export function deleteFriendshipRequest(friendshipRequest: FriendshipRequest) {
 	return getPrisma().friendshipRequest.delete({
 		where: {
 			id: friendshipRequest.id,
@@ -88,7 +89,7 @@ export function deleteFriendshipRequest(friendshipRequest) {
 	});
 }
 
-export async function deleteFriendship(friendship, fromUser, toUser) {
+export async function deleteFriendship(friendship: Friendship, fromUser: UserAccount, toUser: UserAccount) {
 	const [first, second] = await getPrisma().$transaction([
 		getPrisma().friendship.deleteMany({
 			where: {

@@ -3,10 +3,10 @@ import {Solve} from '@/types/solve';
 import {trpc} from '@/util/trpc';
 import React, {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
-import {openModal} from '../../../../actions/general';
-import {toastSuccess} from '../../../../util/toast';
-import Button from '../../../common/Button';
-import {initAllSolves} from '../../../layout/init';
+import {openModal} from '@/actions/general';
+import {toastSuccess} from '@/util/toast';
+import Button from '@/components/common/Button';
+import {initAllSolves} from '@/components/layout/init';
 
 interface Props {
 	disabled?: boolean;

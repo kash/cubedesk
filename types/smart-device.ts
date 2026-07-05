@@ -1,5 +1,5 @@
-import type {Solve} from './solve';
-import type {PublicUserAccount} from './user';
+import type {Solve} from '@/types/solve';
+import type {PublicUserAccount} from '@/types/user';
 
 export interface SmartDevice {
 	id: string;

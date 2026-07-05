@@ -11,8 +11,8 @@ import {
 	updateOrderOfSessions,
 	updateOrderOfSessionsForUser,
 	updateSession,
-} from '../../models/session';
-import {protectedProcedure, router} from '../trpc';
+} from '@/server/models/session';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 const sessionInputSchema = z.object({
 	id: z.string().optional(),

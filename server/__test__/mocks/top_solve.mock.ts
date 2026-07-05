@@ -1,5 +1,5 @@
-import {SolveMock} from './solve.mock';
-import {UserMock} from './user.mock';
+import {SolveMock} from '@/server/__test__/mocks/solve.mock';
+import {UserMock} from '@/server/__test__/mocks/user.mock';
 
 export const TopSolveMock = {
 	id: '8963847b-2325-4639-b722-cdfdb501b6d6',

@@ -1,11 +1,11 @@
 import {combineReducers} from 'redux';
-import account from './account';
-import algorithms from './algorithms';
-import general from './general';
-import help from './help';
-import ssr from './ssr';
-import stats from './stats';
-import timer from './timer';
+import account from '@/reducers/account';
+import algorithms from '@/reducers/algorithms';
+import general from '@/reducers/general';
+import help from '@/reducers/help';
+import ssr from '@/reducers/ssr';
+import stats from '@/reducers/stats';
+import timer from '@/reducers/timer';
 
 const rootReducer = combineReducers({
 	timer,

@@ -1,4 +1,4 @@
-import {getBlockingThemeInitScript} from '../client/util/themes/theme_init';
+import {getBlockingThemeInitScript} from '@/util/themes/theme_init';
 
 export interface HtmlPagePayload {
 	html: string;

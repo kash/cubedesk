@@ -4,7 +4,7 @@ import onSolve from '@/components/play/helpers/on-solve';
 import Match, {MatchContext} from '@/components/play/match/Match';
 import {TimerProps} from '@/components/timer/@types/interfaces';
 import Timer from '@/components/timer/Timer';
-import {PlayerStatus} from '@/shared/match/types';
+import {PlayerStatus} from '@/client/shared/match/types';
 import {useMe} from '@/util/hooks/useMe';
 import React, {ReactNode, useContext} from 'react';
 

@@ -11,16 +11,16 @@ import fs from 'fs';
 import http from 'http';
 import 'seedrandom';
 import https from 'https';
-import {initSocket} from './match/init';
-import {exposeResourcesForSearchEngines} from './middlewares/search_engines';
-import {mapPathToPage} from './router';
-import {initCronJobs} from './services/cron';
-import Discord from './services/discord';
-import {initLogger, logger} from './services/logger';
-import {initRedisClient} from './services/redis';
-import {createTRPCContext} from './trpc/context';
-import {appRouter} from './trpc/router';
-import {initLLStates} from './util/solve/ll_states';
+import {initSocket} from '@/server/match/init';
+import {exposeResourcesForSearchEngines} from '@/server/middlewares/search_engines';
+import {mapPathToPage} from '@/server/router';
+import {initCronJobs} from '@/server/services/cron';
+import Discord from '@/server/services/discord';
+import {initLogger, logger} from '@/server/services/logger';
+import {initRedisClient} from '@/server/services/redis';
+import {createTRPCContext} from '@/server/trpc/context';
+import {appRouter} from '@/server/trpc/router';
+import {initLLStates} from '@/server/util/solve/ll_states';
 
 // initPrisma();
 

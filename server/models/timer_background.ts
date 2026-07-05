@@ -1,8 +1,8 @@
 import {v4 as uuid} from 'uuid';
-import {generateRandomCode} from '../../shared/code';
-import {getPrisma} from '../database';
-import {deleteObject, uploadObject} from '../services/storage';
-import {getImageBufferFromFileStream} from '../util/image';
+import {generateRandomCode} from '@/shared/code';
+import {getPrisma} from '@/server/database';
+import {deleteObject, uploadObject} from '@/server/services/storage';
+import {getImageBufferFromFileStream} from '@/server/util/image';
 
 export function getTimerBackground(user) {
 	return getPrisma().timerBackground.findUnique({

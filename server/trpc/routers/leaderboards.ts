@@ -3,7 +3,7 @@ import {EloRatingWithUser, eloRatingWithUserInclude} from '@/types/elo';
 import {publicUserSelect} from '@/types/user';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {getSolve} from '../../models/solve';
+import {getSolve} from '@/server/models/solve';
 import {
 	deleteTopAverage,
 	deleteTopAverageById,
@@ -11,10 +11,10 @@ import {
 	deleteTopSolveById,
 	submitTopAverage,
 	submitTopSolve,
-} from '../../models/top_solve';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
-import {serializeSolveTimestamps} from '../../util/serialize';
-import {protectedProcedure, publicProcedure, router} from '../trpc';
+} from '@/server/models/top_solve';
+import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
+import {serializeSolveTimestamps} from '@/server/util/serialize';
+import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 
 const PAGE_SIZE = 50;
 

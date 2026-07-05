@@ -10,7 +10,7 @@ import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import {ArrowRight, Eye} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
-import {GameType} from '../../../../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 export function getMatchLinkBase(gameType: GameType) {
 	const gameMetaData = getGameMetaData(gameType);

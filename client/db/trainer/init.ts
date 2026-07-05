@@ -7,7 +7,7 @@ import {
 	TrainerFavorite,
 } from '@/types/trainer';
 import _ from 'lodash';
-import {getLokiDb} from '../lokijs';
+import {getLokiDb} from '@/db/lokijs';
 
 export interface TrainerAlgorithmExtended extends TrainerAlgorithmRecord {
 	overrides?: AlgorithmOverrideInput | null;

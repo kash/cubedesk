@@ -1,4 +1,4 @@
-import {resourceUri} from '../client/util/storage';
+import {resourceUri} from '@/util/storage';
 
 export type IntegrationType = 'discord' | 'wca';
 

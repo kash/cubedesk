@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {publicProcedure, router} from '../trpc';
+import {publicProcedure, router} from '@/server/trpc/trpc';
 
 const demoSolveInputSchema = z.object({
 	demo_session_id: z.string(),

@@ -1,5 +1,5 @@
 import {Solve} from '@/types/solve';
-import {updateSolveDb} from './update';
+import {updateSolveDb} from '@/db/solves/update';
 
 export function toggleDnfSolveDb(solve: Solve) {
 	if (!solve) {

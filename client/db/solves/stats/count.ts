@@ -1,4 +1,4 @@
-import {fetchSolves, FilterSolvesOptions} from '../query';
+import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 
 export function getTotalSolveTime(filterOption: FilterSolvesOptions): number {
 	const solves = fetchSolves(filterOption);

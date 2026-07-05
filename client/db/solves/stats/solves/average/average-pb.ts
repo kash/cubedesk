@@ -1,8 +1,8 @@
 import {Solve} from '@/types/solve';
 import SortedArray from '@/util/sorted-array';
-import {fetchSolves, FilterSolvesOptions} from '../../../query';
-import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
-import {getAverage} from './average';
+import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
+import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '@/db/solves/stats/solves/caching';
+import {getAverage} from '@/db/solves/stats/solves/average/average';
 
 export function getAveragePB(filterOptions: FilterSolvesOptions, count: number) {
 	const cacheKey: SolveCacheKey = {

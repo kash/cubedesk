@@ -1,5 +1,5 @@
 import {DeleteObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
-import {logger} from './logger';
+import {logger} from '@/server/services/logger';
 
 const BUCKET_NAME = 'cubedesk';
 

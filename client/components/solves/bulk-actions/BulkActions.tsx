@@ -1,14 +1,14 @@
 import jsonStr from 'json-stable-stringify';
 import React, {useMemo} from 'react';
-import {fetchSolves, FilterSolvesOptions} from '../../../db/solves/query';
-import {useSolveDb} from '../../../util/hooks/useSolveDb';
-import {getBasicPlural} from '../../../util/strings/plural';
-import BulkChangeEventSolvesButton from './actions/BulkChangeEvent';
-import BulkDeleteSolvesButton from './actions/BulkDelete';
-import BulkDnfSolvesButton from './actions/BulkDnf';
-import BulkMoveSolvesButton from './actions/BulkMove';
-import BulkOkSolvesButton from './actions/BulkOk';
-import BulkPlusTwoSolvesButton from './actions/BulkPlusTwo';
+import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {getBasicPlural} from '@/util/strings/plural';
+import BulkChangeEventSolvesButton from '@/components/solves/bulk-actions/actions/BulkChangeEvent';
+import BulkDeleteSolvesButton from '@/components/solves/bulk-actions/actions/BulkDelete';
+import BulkDnfSolvesButton from '@/components/solves/bulk-actions/actions/BulkDnf';
+import BulkMoveSolvesButton from '@/components/solves/bulk-actions/actions/BulkMove';
+import BulkOkSolvesButton from '@/components/solves/bulk-actions/actions/BulkOk';
+import BulkPlusTwoSolvesButton from '@/components/solves/bulk-actions/actions/BulkPlusTwo';
 
 interface Props {
 	filter: FilterSolvesOptions;

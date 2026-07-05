@@ -1,5 +1,5 @@
 import EloRank from 'elo-rank';
-import {UserEloForCubeType} from '../../../models/elo_rating';
+import {UserEloForCubeType} from '@/server/models/elo_rating';
 
 export enum EloConst {
 	// ELO

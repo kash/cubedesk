@@ -10,12 +10,12 @@ import {BrowserRouter, Switch} from 'react-router-dom';
 import {applyMiddleware, createStore} from 'redux';
 import promise from 'redux-promise-middleware';
 import {thunk} from 'redux-thunk';
-import reducers from '../reducers/reducers';
-import {TRPCProvider} from '../util/api';
-import {routes} from './layout/Routes';
+import reducers from '@/reducers/reducers';
+import {TRPCProvider} from '@/util/api';
+import {routes} from '@/components/layout/Routes';
 import 'react-toastify/dist/ReactToastify.css';
-import '../styles/index.css';
-import {setStore} from './store';
+import '@/styles/index.css';
+import {setStore} from '@/components/store';
 
 const preloadedState = JSON.parse(window.__STORE__);
 initThemeFromLocalStorage(preloadedState?.account?.me?.id);
@@ -26,7 +26,7 @@ setStore(store);
 delete window.__STORE__;
 
 
-import {mapSingleRoute} from './map-route';
+import {mapSingleRoute} from '@/components/map-route';
 
 Sentry.init({
 	dsn: 'https://feee16c821834f408ae2453577b10f9e@o637154.ingest.sentry.io/5756098',

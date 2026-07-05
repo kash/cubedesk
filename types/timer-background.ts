@@ -1,4 +1,4 @@
-import type {PublicUserAccount} from './user';
+import type {PublicUserAccount} from '@/types/user';
 
 export interface TimerBackground {
 	id: string;

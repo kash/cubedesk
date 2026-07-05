@@ -4,11 +4,11 @@ import {Solve} from '@/types/solve';
 import {trpc} from '@/util/trpc';
 import React, {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
-import {openModal} from '../../../../actions/general';
-import {CubeType} from '../../../../util/cubes/cube_types';
-import {toastSuccess} from '../../../../util/toast';
-import {initAllSolves} from '../../../layout/init';
-import EventTypeSelector from './EventTypeSelector';
+import {openModal} from '@/actions/general';
+import {CubeType} from '@/util/cubes/cube_types';
+import {toastSuccess} from '@/util/toast';
+import {initAllSolves} from '@/components/layout/init';
+import EventTypeSelector from '@/components/solves/bulk-actions/actions/EventTypeSelector';
 
 interface Props {
 	disabled?: boolean;

@@ -1,4 +1,4 @@
-import {Consts} from '../shared/consts';
+import {Consts} from '@/client/shared/consts';
 
 export function getStorageURL(path: string | null | undefined): string | null {
 	if (!path) {

@@ -1,5 +1,5 @@
 import {v4 as uuid} from 'uuid';
-import {getPrisma} from '../database';
+import {getPrisma} from '@/server/database';
 
 // Minimal shape so both the schema classes and generated Prisma rows are accepted
 type UserAccount = {

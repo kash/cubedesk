@@ -1,5 +1,5 @@
 import {Solve} from '@/types/solve';
-import {clearSingleSolveStatCache, fetchAllSolveCaches} from '../caching';
+import {clearSingleSolveStatCache, fetchAllSolveCaches} from '@/db/solves/stats/solves/caching';
 
 export function checkForSinglePB(solve: Solve) {
 	const cached = fetchAllSolveCaches({

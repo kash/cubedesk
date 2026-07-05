@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button';
 import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
-import {PlayerStatus} from '@/shared/match/types';
+import {PlayerStatus} from '@/client/shared/match/types';
 import {useMe} from '@/util/hooks/useMe';
 import classNames from 'classnames';
 import React, {ReactNode, useContext} from 'react';

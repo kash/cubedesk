@@ -2,9 +2,9 @@ import type {InternalUserAccount} from '@/types/user';
 import type {CreateExpressContextOptions} from '@trpc/server/adapters/express';
 import {TRPCError} from '@trpc/server';
 import requestIp from 'request-ip';
-import {ErrorMessage} from '../constants/errors';
-import {getPrisma} from '../database';
-import {getMe} from '../util/auth';
+import {ErrorMessage} from '@/server/constants/errors';
+import {getPrisma} from '@/server/database';
+import {getMe} from '@/server/util/auth';
 
 export async function createTRPCContext({req, res}: CreateExpressContextOptions) {
 	const user = await getMe(req);

@@ -1,7 +1,7 @@
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {getSettingsByUserId, resetSetting, updateSettings} from '../../models/settings';
-import {protectedProcedure, router} from '../trpc';
+import {getSettingsByUserId, resetSetting, updateSettings} from '@/server/models/settings';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 const settingInputSchema = z
 	.object({

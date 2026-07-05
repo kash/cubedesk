@@ -9,9 +9,9 @@ import {
 	getAllBadgeTypes,
 	getBadgeTypeById,
 	userHasBadge,
-} from '../../models/badge';
-import {getUserById} from '../../models/user_account';
-import {adminProcedure, router} from '../trpc';
+} from '@/server/models/badge';
+import {getUserById} from '@/server/models/user_account';
+import {adminProcedure, router} from '@/server/trpc/trpc';
 
 const badgeTypeInput = z.object({
 	name: z.string().min(1).max(50),

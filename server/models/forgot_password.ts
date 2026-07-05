@@ -1,8 +1,9 @@
+import type {ForgotPassword, UserAccount} from '@/generated/prisma/client';
 import {v4 as uuid} from 'uuid';
-import {generateRandomCode} from '../../shared/code';
-import {getPrisma} from '../database';
+import {generateRandomCode} from '@/shared/code';
+import {getPrisma} from '@/server/database';
 
-export function getForgotPassword(user) {
+export function getForgotPassword(user: UserAccount) {
 	return getPrisma().forgotPassword.findMany({
 		where: {
 			user_id: user.id,
@@ -14,7 +15,7 @@ export function getForgotPassword(user) {
 	});
 }
 
-export function createForgotPassword(user) {
+export function createForgotPassword(user: UserAccount) {
 	return getPrisma().forgotPassword.create({
 		data: {
 			id: uuid(),
@@ -24,7 +25,7 @@ export function createForgotPassword(user) {
 	});
 }
 
-export function claimForgotPassword(forgotPassword) {
+export function claimForgotPassword(forgotPassword: ForgotPassword) {
 	return getPrisma().forgotPassword.update({
 		where: {
 			id: forgotPassword.id,

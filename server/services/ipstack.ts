@@ -1,4 +1,4 @@
-import {logger} from './logger';
+import {logger} from '@/server/services/logger';
 
 interface IfConfig {
 	ip: string;

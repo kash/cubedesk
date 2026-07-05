@@ -1,5 +1,5 @@
 import {MatchLobby} from '@/types/match';
-import {generateId} from '../../../shared/code';
+import {generateId} from '@/shared/code';
 
 export function testGenerateMatchLobbyRows(count: number, options?: Partial<MatchLobby>) {
 	const objects: MatchLobby[] = [];

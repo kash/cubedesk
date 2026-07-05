@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useEventListener} from '../event_handler';
+import {useEventListener} from '@/util/event_handler';
 
 export function useSolveDb() {
 	const [changeCounter, setChangeCounter] = useState(0);

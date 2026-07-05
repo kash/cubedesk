@@ -13,8 +13,8 @@ import {getMatchLinkBase} from '@/components/play/match/match-popup/custom-match
 import {ChallengerProps} from '@/components/play/target/challengers/Challenger';
 import {TimerProps} from '@/components/timer/@types/interfaces';
 import Timer from '@/components/timer/Timer';
-import {MatchConst} from '@/shared/match/consts';
-import {MatchUpdateChat} from '@/shared/match/types';
+import {MatchConst} from '@/client/shared/match/consts';
+import {MatchUpdateChat} from '@/client/shared/match/types';
 import {Match as MatchSchema} from '@/types/match';
 import {MatchSession} from '@/types/match';
 import {Solve} from '@/types/solve';
@@ -25,7 +25,7 @@ import {toastSuccess} from '@/util/toast';
 import {CaretDown, Copy, Flag, Prohibit} from 'phosphor-react';
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {GameType} from '../../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 interface MatchProps {
 	matchPath: string;

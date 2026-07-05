@@ -1,6 +1,6 @@
-import {acquireRedisLock, createRedisKey, RedisNamespace} from '../../services/redis';
-import {SocketClient} from '../init';
-import {PlayerActivity} from '../update/player_activity';
+import {acquireRedisLock, createRedisKey, RedisNamespace} from '@/server/services/redis';
+import {SocketClient} from '@/server/match/init';
+import {PlayerActivity} from '@/server/match/update/player_activity';
 
 const MATCH_ACTIVITY_PROCESSING_TTL_MS = 1000;
 

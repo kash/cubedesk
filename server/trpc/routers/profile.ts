@@ -2,13 +2,13 @@ import type {ReadStream} from 'fs';
 import {TRPCError} from '@trpc/server';
 import {Readable} from 'stream';
 import {z} from 'zod';
-import {deleteImage, uploadImageWithFile} from '../../models/image';
-import {getOrCreateUserProfile, updateUserProfile} from '../../models/profile';
-import {createProfileView} from '../../models/profile_view';
-import {getUserTopAverages, getUserTopSolves} from '../../models/top_solve';
-import {getUserByUsername} from '../../models/user_account';
-import {serializeSolveTimestamps} from '../../util/serialize';
-import {protectedProcedure, publicProcedure, router} from '../trpc';
+import {deleteImage, uploadImageWithFile} from '@/server/models/image';
+import {getOrCreateUserProfile, updateUserProfile} from '@/server/models/profile';
+import {createProfileView} from '@/server/models/profile_view';
+import {getUserTopAverages, getUserTopSolves} from '@/server/models/top_solve';
+import {getUserByUsername} from '@/server/models/user_account';
+import {serializeSolveTimestamps} from '@/server/util/serialize';
+import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 
 const profileInput = z.object({
 	bio: z.string().nullish(),

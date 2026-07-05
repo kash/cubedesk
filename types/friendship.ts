@@ -3,7 +3,7 @@ import type {
 	Friendship as PrismaFriendship,
 	FriendshipRequest as PrismaFriendshipRequest,
 } from '@/generated/prisma/client';
-import {publicUserSelect} from './user';
+import {publicUserSelect} from '@/types/user';
 
 // Dates arrive as ISO strings over tRPC (no transformer is configured)
 export type Friendship = Omit<PrismaFriendship, 'created_at'> & {

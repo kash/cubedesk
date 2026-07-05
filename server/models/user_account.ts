@@ -7,13 +7,13 @@ import {
 import {publicUserSelect} from '@/types/user';
 import dayjs from 'dayjs';
 import {v4 as uuid} from 'uuid';
-import {MetricLogType} from '../@types/enums';
-import {getPrisma} from '../database';
-import {getLocationFromIp} from '../services/ipstack';
-import {logger} from '../services/logger';
-import {hashPassword} from '../util/password';
-import {getActiveBanLogsByUserId} from './ban_log';
-import {createMetricLog} from './metric_log';
+import {MetricLogType} from '@/server/@types/enums';
+import {getPrisma} from '@/server/database';
+import {getLocationFromIp} from '@/server/services/ipstack';
+import {logger} from '@/server/services/logger';
+import {hashPassword} from '@/server/util/password';
+import {getActiveBanLogsByUserId} from '@/server/models/ban_log';
+import {createMetricLog} from '@/server/models/metric_log';
 
 // Reuses publicUserSelect so integrations stay limited to id/service_name —
 // full rows carry OAuth tokens, and objects fetched with this include are sent

@@ -1,9 +1,9 @@
 import {GameOptionsInput} from '@/types/match';
 import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
-import {MatchInputChatMessage, MatchUpdate, MatchUpdateChat, UpdateRoomInfo} from '../../client/shared/match/types';
-import {SocketConst} from '../../client/shared/socket_costs';
-import {GameType} from './consts';
+import {MatchInputChatMessage, MatchUpdate, MatchUpdateChat, UpdateRoomInfo} from '@/client/shared/match/types';
+import {SocketConst} from '@/client/shared/socket_costs';
+import {GameType} from '@/shared/match/consts';
 
 export interface RoomSizeInfo {
 	lobby?: number;

@@ -1,4 +1,4 @@
-import {getLokiDb} from '../lokijs';
+import {getLokiDb} from '@/db/lokijs';
 
 export interface SettingValue {
 	id: string;

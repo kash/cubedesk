@@ -9,12 +9,12 @@ import {
 	getFriendship,
 	getFriendshipRequestById,
 	getFriendships,
-} from '../../models/friendship';
-import {getUserById} from '../../models/user_account';
-import FriendRequestNotification from '../../resources/notification_types/friend_request';
-import FriendRequestAcceptNotification from '../../resources/notification_types/friend_request_accept';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
-import {protectedProcedure, router} from '../trpc';
+} from '@/server/models/friendship';
+import {getUserById} from '@/server/models/user_account';
+import FriendRequestNotification from '@/server/resources/notification_types/friend_request';
+import FriendRequestAcceptNotification from '@/server/resources/notification_types/friend_request_accept';
+import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 const paginationInputSchema = z.object({
 	page: z.number().int().min(0).default(0),

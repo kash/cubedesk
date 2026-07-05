@@ -16,7 +16,7 @@ import {useToggle} from '@/util/hooks/useToggle';
 import {Check} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import colorPalette, {ColorName} from '../../../../../shared/colors';
+import colorPalette, {ColorName} from '@/shared/colors';
 
 interface Props {
 	hideRemoveButton?: boolean;

@@ -1,4 +1,4 @@
-import {LokiFetchOptions} from './lokijs';
+import {LokiFetchOptions} from '@/db/lokijs';
 
 export function cleanFilterOptions<T extends object>(options: T): T {
 	const keys = Object.keys(options || {});
