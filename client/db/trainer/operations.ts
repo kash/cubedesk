@@ -56,6 +56,9 @@ export function toggleTrainerAlgoFavorite(algo: TrainerAlgorithmExtended) {
 	}
 
 	const dbAlgo = fetchTrainerAlgorithmById(algo.id);
+	if (!dbAlgo) {
+		return;
+	}
 
 	updateTrainerDb(dbAlgo, {
 		favorite: !algo.favorite,

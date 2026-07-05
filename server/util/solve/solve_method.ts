@@ -3,6 +3,20 @@ import {processSmartTurns, SmartTurn} from '../../../client/util/smart_scramble'
 import {getMatchingOLLState, getMatchingPLLState} from './ll_states';
 import {getLLState, reverseTurns} from './turns';
 
+export interface SolveStepData {
+	index: number;
+	parentName: string | null;
+	skipped: boolean;
+	turns: (SmartTurn | string)[];
+	recognitionTime: number;
+	tps: number;
+	turnsString: string;
+	turnCount: number;
+	time: number;
+	ollCaseKey?: string;
+	pllCaseKey?: string;
+}
+
 export function getSolveSteps(turns) {
 	const SOLVED_STATE = 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB';
 
@@ -108,7 +122,7 @@ export function getSolveSteps(turns) {
 	};
 
 	let stepTurns: string[] = [];
-	const steps = {
+	const steps: Record<string, SolveStepData | null> = {
 		cross: null,
 		f2l: null,
 		oll: null,
@@ -248,8 +262,9 @@ export function getSolveSteps(turns) {
 				lastStepCompletedAt = completedAt;
 			}
 
-			cubejs.move(turn);
-			tempTurns.push(turn);
+			const turnStr = typeof turn === 'string' ? turn : turn.turn;
+			cubejs.move(turnStr);
+			tempTurns.push(turnStr);
 
 			const state = cubejs.asString();
 

@@ -46,6 +46,10 @@ export default function AvatarDropdown(props: Props) {
 	}
 
 	function editProfile() {
+		if (!profile) {
+			return;
+		}
+
 		dispatch(
 			openModal(<EditProfile profile={profile} />, {
 				title: 'Edit Profile',

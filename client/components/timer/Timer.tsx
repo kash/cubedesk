@@ -14,18 +14,27 @@ import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getStorageURL} from '@/util/storage';
 import classNames from 'classnames';
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '@/reducers/reducers';
 
 export interface ITimerContext extends TimerProps, TimerStore {}
 
-export const TimerContext = createContext<ITimerContext>(null);
+export const TimerContext = createContext<ITimerContext | null>(null);
+
+export function useTimerContext(): ITimerContext {
+	const ctx = useContext(TimerContext);
+	if (!ctx) {
+		throw new Error('useTimerContext must be used within TimerContext.Provider');
+	}
+	return ctx;
+}
 
 export default function Timer(props: TimerProps) {
 	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(true);
-	const timerStore = useSelector((state: RootStateOrAny) => state.timer) as TimerStore;
+	const timerStore = useSelector((state: RootState) => state.timer) as TimerStore;
 	const mobileMode = useGeneral('mobile_mode');
 	const cubeType = useSettings('cube_type');
 	const hideMobileTimerFooter = useSettings('hide_mobile_timer_footer');
@@ -148,7 +157,7 @@ export default function Timer(props: TimerProps) {
 		background = (
 			<img
 				alt="Timer background"
-				src={backgroundUrl}
+				src={backgroundUrl ?? undefined}
 				className="absolute left-1/2 top-1/2 z-0 h-[calc(100%_+_60px)] w-[calc(100%_+_60px)] -translate-x-1/2 -translate-y-1/2 object-cover opacity-70"
 			/>
 		);

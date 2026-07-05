@@ -17,6 +17,10 @@ export function listenForChatEvents(client: SocketClient) {
 		}
 
 		const match = await getMatchById(matchId);
+		if (!match) {
+			return;
+		}
+
 		const {user} = await getDetailedClientInfo(client);
 
 		if (!userExistsInMatch(match, user)) {

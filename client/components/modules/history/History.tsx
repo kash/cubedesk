@@ -80,19 +80,23 @@ export default function History(props: Props) {
 	}
 
 	function okLastSolve() {
-		if (isHotKeysEnabled()) setOkSolveDb(getLastSolve());
+		const lastSolve = getLastSolve();
+		if (isHotKeysEnabled() && lastSolve) setOkSolveDb(lastSolve);
 	}
 
 	function dnfLastSolve() {
-		if (isHotKeysEnabled()) toggleDnfSolveDb(getLastSolve());
+		const lastSolve = getLastSolve();
+		if (isHotKeysEnabled() && lastSolve) toggleDnfSolveDb(lastSolve);
 	}
 
 	function plusTwoLastSolve() {
-		if (isHotKeysEnabled()) togglePlusTwoSolveDb(getLastSolve());
+		const lastSolve = getLastSolve();
+		if (isHotKeysEnabled() && lastSolve) togglePlusTwoSolveDb(lastSolve);
 	}
 
 	function deleteLastSolve() {
-		if (isHotKeysEnabled()) deleteSolveDb(getLastSolve());
+		const lastSolve = getLastSolve();
+		if (isHotKeysEnabled() && lastSolve) deleteSolveDb(lastSolve);
 	}
 
 	if (!solves.length) {

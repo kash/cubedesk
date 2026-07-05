@@ -24,7 +24,7 @@ export function fetchSessions(options: FetchSessionOptions = {}) {
 				return -1;
 			} else if (a.order > b.order) {
 				return 1;
-			} else if (a.order === b.order) {
+			} else {
 				const aDate = new Date(a.created_at);
 				const bDate = new Date(b.created_at);
 

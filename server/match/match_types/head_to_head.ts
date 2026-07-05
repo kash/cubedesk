@@ -1,5 +1,4 @@
-import {MatchParticipant} from '@/types/match';
-import {Match} from '@/types/match';
+import {FullMatch, FullMatchParticipant} from '@/types/match';
 import {getHeadToHeadPlayerStatusInfo} from '../../../client/shared/game-logic/head-to-head';
 import {GameType} from '../../../shared/match/consts';
 import MatchTypeLogic from './match_type_interface';
@@ -14,7 +13,7 @@ export default class HeadToHead implements MatchTypeLogic {
 		};
 	}
 
-	playerStatus(player: MatchParticipant, match: Match) {
+	playerStatus(player: FullMatchParticipant, match: FullMatch) {
 		const solves = player?.solves || [];
 		return getHeadToHeadPlayerStatusInfo(player.user_id, solves.length - 1, solves, match);
 	}

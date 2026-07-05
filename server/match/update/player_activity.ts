@@ -36,7 +36,7 @@ export class PlayerActivity {
 				if (maxSolveTimeRes?.forfeit || maxInactiveRes?.forfeit) {
 					emitMatchUpdate('opponentForfeitedMatch', cachedRes.basicMatch, player.user);
 					const match = await getMatchById(this.matchId);
-					if (match.ended_at) {
+					if (!match || match.ended_at) {
 						break;
 					}
 					await resignMatch(match, player.user, true);
@@ -50,7 +50,7 @@ export class PlayerActivity {
 		}
 	}
 
-	private checkForMaxSolveTime(matchCache: MatchCache, player: MatchPlayerCache): ForfeitCheckResult {
+	private checkForMaxSolveTime(matchCache: MatchCache, player: MatchPlayerCache): ForfeitCheckResult | undefined {
 		const {solving} = player;
 
 		if (!player.solveStartedAt || !solving) {
@@ -85,7 +85,10 @@ export class PlayerActivity {
 		}
 	}
 
-	private checkForMaxInactivityBeforeSolve(matchCache: MatchCache, player: MatchPlayerCache): ForfeitCheckResult {
+	private checkForMaxInactivityBeforeSolve(
+		matchCache: MatchCache,
+		player: MatchPlayerCache
+	): ForfeitCheckResult | undefined {
 		const {solving} = player;
 
 		if (solving || !this.hasLowestSolveCount(matchCache, player)) {

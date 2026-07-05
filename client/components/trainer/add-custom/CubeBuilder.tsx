@@ -8,14 +8,16 @@ const COLORS = ['#FF9826', '#43FF43', '#FF4343', '#246BFD', '#FFFF49', '#FFFFFF'
 
 interface Props {
 	cubeType: string;
-	initColors: string;
+	// Null when the trainer being edited has no stored colors
+	initColors: string | null;
 	threeD: boolean;
 	onUpdate: (colors: string) => void;
 }
 
 export default function CubeBuilder(props: Props) {
 	const {cubeType, initColors, threeD, onUpdate} = props;
-	const cubeTypeInfo = getCubeTypeInfoById(cubeType);
+	// Non-NxN puzzles have no size; the builder then renders no cubelets
+	const cubeSize = getCubeTypeInfoById(cubeType)?.size ?? 0;
 
 	const [colors, setColors] = useState(getDefaultColorList());
 	const [selectedColor, setSelectedColor] = useState(COLORS[0]);
@@ -47,9 +49,9 @@ export default function CubeBuilder(props: Props) {
 
 	function getDefaultColorList() {
 		if (threeD) {
-			return new Array((cubeTypeInfo.size + 2) ** 2 - 4).fill(DEFAULT_COLOR);
+			return new Array((cubeSize + 2) ** 2 - 4).fill(DEFAULT_COLOR);
 		} else {
-			return new Array(cubeTypeInfo.size ** 2 + cubeTypeInfo.size * 4).fill(DEFAULT_COLOR);
+			return new Array(cubeSize ** 2 + cubeSize * 4).fill(DEFAULT_COLOR);
 		}
 	}
 

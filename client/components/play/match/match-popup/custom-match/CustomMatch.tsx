@@ -2,14 +2,14 @@ import Button from '@/components/common/Button';
 import CopyText from '@/components/common/CopyText';
 import Loading from '@/components/common/Loading';
 import Tag from '@/components/common/Tag';
-import {MatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
+import {useMatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
 import {getGameMetaData} from '@/components/play/Play';
 import {Match} from '@/types/match';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import {ArrowRight, Eye} from 'phosphor-react';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {GameType} from '../../../../../../shared/match/consts';
 
 export function getMatchLinkBase(gameType: GameType) {
@@ -20,11 +20,11 @@ export function getMatchLinkBase(gameType: GameType) {
 }
 
 export default function CustomMatch() {
-	const {minPlayers, maxPlayers, cubeType, matchType} = useContext(MatchPopupContext);
+	const {minPlayers, maxPlayers, cubeType, matchType} = useMatchPopupContext();
 
 	const [showChallengeLink, setShowChallengeLink] = useState(false);
 	const [creatingLink, setCreatingLink] = useState(false);
-	const [match, setMatch] = useState<Match>(null);
+	const [match, setMatch] = useState<Match | null>(null);
 
 	// Need another page (?) for when additional options are required for the custom match
 	useEffect(() => {
@@ -59,18 +59,18 @@ export default function CustomMatch() {
 		}
 	}
 
-	function getMatchURL() {
-		return `${getMatchLinkBase(matchType)}${match.link_code}`;
+	function getMatchURL(m: Match) {
+		return `${getMatchLinkBase(matchType)}${m.link_code}`;
 	}
 
-	function getSpectateURL() {
-		return `${getMatchLinkBase(matchType)}${match.spectate_code}`;
+	function getSpectateURL(m: Match) {
+		return `${getMatchLinkBase(matchType)}${m.spectate_code}`;
 	}
 
-	function getMatchLinkBody() {
+	function getMatchLinkBody(m: Match) {
 		let linkCode = '●●●●●●●';
 		if (showChallengeLink) {
-			linkCode = match.link_code;
+			linkCode = m.link_code;
 		}
 
 		return (
@@ -83,8 +83,8 @@ export default function CustomMatch() {
 
 	let body;
 	if (match) {
-		const matchLink = getMatchURL();
-		const spectateLink = getSpectateURL();
+		const matchLink = getMatchURL(match);
+		const spectateLink = getSpectateURL(match);
 
 		const ct = getCubeTypeInfoById(cubeType);
 
@@ -92,11 +92,11 @@ export default function CustomMatch() {
 			<div className="flex w-full flex-col items-start">
 				<div className="mx-auto mt-10 mb-[60px] flex flex-col items-center">
 					<div className="mb-[5px] flex w-full flex-row flex-wrap gap-1">
-						<Tag backgroundColor="secondary" text={ct.name} />
+						<Tag backgroundColor="secondary" text={ct?.name ?? cubeType} />
 						<Tag backgroundColor="secondary" text={`${minPlayers} Players`} />
 					</div>
 					<div className="bg-button mb-[5px] box-border rounded-[5px] px-[13px] py-[9px]">
-						{getMatchLinkBody()}
+						{getMatchLinkBody(match)}
 					</div>
 					<div className="flex w-full items-start justify-between">
 						<Button

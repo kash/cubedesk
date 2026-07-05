@@ -17,7 +17,7 @@ export default function ExecutionTime(props: Props) {
 	let totalTime = 0;
 	for (const step of steps) {
 		totalTime += step.recognition_time;
-		totalTime += step.total_time;
+		totalTime += step.total_time ?? 0;
 	}
 
 	for (const step of steps) {
@@ -40,7 +40,7 @@ export default function ExecutionTime(props: Props) {
 				key={step.step_name}
 				className="mx-px flex flex-col items-center"
 				style={{
-					width: `${(step.total_time / totalTime) * 100}%`,
+					width: `${((step.total_time ?? 0) / totalTime) * 100}%`,
 				}}
 			>
 				<p className="m-0 flex min-h-8 items-end text-center text-[0.85rem] opacity-90">
@@ -48,7 +48,7 @@ export default function ExecutionTime(props: Props) {
 				</p>
 				<span className="mt-[3px] table h-[5px] w-full rounded-[3px] bg-primary" />
 				<p className="m-0 mt-[5px] min-h-8 text-center text-[0.85rem] opacity-70">
-					{getTimeString(step.total_time, 1)}s
+					{getTimeString(step.total_time ?? 0, 1)}s
 				</p>
 			</div>
 		);

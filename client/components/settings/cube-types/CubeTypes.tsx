@@ -41,7 +41,7 @@ export default function CubeTypes() {
 		rows.push(
 			<tr key={cubeType.name}>
 				<td>{cubeType.name}</td>
-				<td>{scramble.name}</td>
+				<td>{scramble?.name ?? cubeType.scramble}</td>
 				<td>
 					<Button
 						gray

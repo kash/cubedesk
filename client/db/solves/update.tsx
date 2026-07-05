@@ -139,8 +139,8 @@ export function updateSolveTime(solve: Solve) {
 	if (solve.dnf) {
 		solve.time = -1;
 	} else if (solve.plus_two) {
-		solve.time = solve.raw_time + 2;
+		solve.time = (solve.raw_time ?? 0) + 2;
 	} else {
-		solve.time = solve.raw_time;
+		solve.time = solve.raw_time ?? 0;
 	}
 }

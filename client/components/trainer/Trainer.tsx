@@ -27,13 +27,13 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import memoize from 'memoizee';
 import {ArrowRight, Plus, Star} from 'phosphor-react';
-import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
+import React, {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
 import {v4 as uuid} from 'uuid';
 
 export interface ITrainerContext {
-	cubeType: CubeType;
+	cubeType?: CubeType;
 	algoType: string;
 	filter: FilterTrainerOptions;
 	openTrainer: (
@@ -43,7 +43,15 @@ export interface ITrainerContext {
 }
 
 export type TrainingSessionType = 'all' | 'single' | 'favorites';
-export const TrainerContext = createContext<ITrainerContext>(null);
+export const TrainerContext = createContext<ITrainerContext | null>(null);
+
+export function useTrainerContext(): ITrainerContext {
+	const ctx = useContext(TrainerContext);
+	if (!ctx) {
+		throw new Error('useTrainerContext must be used within TrainerContext.Provider');
+	}
+	return ctx;
+}
 
 export const CUSTOM_TRAINER_ALGO_TYPE = 'Custom';
 const DEFAULT_ALGO_CUBE_TYPE = '333';
@@ -110,7 +118,7 @@ export default function Trainer() {
 		index: number,
 	) {
 		const algo = randomAlgo(filter, trainerSessionId, index);
-		const scrambles = algo.scrambles.split('\n');
+		const scrambles = (algo.scrambles ?? '').split('\n');
 		return _.sample(scrambles);
 	}
 
@@ -253,13 +261,13 @@ export default function Trainer() {
 		const newAlgType =
 			oldAlgValid || algoType === CUSTOM_TRAINER_ALGO_TYPE ? algoType : DEFAULT_ALGO_TYPE;
 		setAlgoType(newAlgType);
-		history.replaceState({}, null, window.location.origin + `/trainer/${ct}/${newAlgType}`);
+		history.replaceState({}, '', window.location.origin + `/trainer/${ct}/${newAlgType}`);
 	}
 
 	function selectAlgoType(at: string) {
 		setAlgoType(at);
 
-		history.replaceState({}, null, window.location.origin + `/trainer/${cubeType}/${at}`);
+		history.replaceState({}, '', window.location.origin + `/trainer/${cubeType}/${at}`);
 	}
 
 	let body: ReactNode;
@@ -270,7 +278,7 @@ export default function Trainer() {
 	}
 
 	const cubeTypeDropdownOptions = cubeTypes.map((ct) => ({
-		text: getCubeTypeInfoById(ct.value).name,
+		text: getCubeTypeInfoById(ct.value)?.name ?? ct.value,
 		disabled: cubeType === ct.value,
 		onClick: () => selectCubeType(ct.value),
 	}));
@@ -311,7 +319,7 @@ export default function Trainer() {
 						<div className="flex flex-row gap-2.5">
 							<Dropdown
 								openLeft
-								text={context.cubeType.name}
+								text={context.cubeType?.name ?? cubeType}
 								options={[...cubeTypeDropdownOptions]}
 							/>
 							<Dropdown

@@ -33,14 +33,15 @@ export interface EloRating {
 export interface EloLog {
 	id: string;
 	player_id: string;
-	player_new_game_count: string;
-	opponent_id: string;
-	opponent_new_game_count: string;
+	player_new_game_count: number;
+	opponent_id: string | null;
+	opponent_new_game_count: number | null;
 	cube_type: string;
-	match_id: string;
+	match_id: string | null;
 	elo_change: number;
 	player_new_elo_rating: number;
 	opponent_new_elo_rating: number;
+	refunded_at?: Date | null;
 	updated_at: Date;
 	created_at: Date;
 	match?: Match;

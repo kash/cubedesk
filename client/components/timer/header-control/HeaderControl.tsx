@@ -7,7 +7,7 @@ import SessionSwitcher from '@/components/sessions/SessionPicker';
 import StackMatPicker from '@/components/settings/stackmat-picker/StackMatPicker';
 import {TIMER_INPUT_TYPE_NAMES} from '@/components/settings/timer/TimerSettings';
 import {smartCubeSelected} from '@/components/timer/helpers/util';
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {AllSettings} from '@/db/settings/query';
 import {setCubeType, setSetting} from '@/db/settings/update';
 import {toggleSetting} from '@/db/settings/update';
@@ -26,7 +26,7 @@ import {
 	Plus,
 	X,
 } from 'phosphor-react';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {GlobalHotKeys} from 'react-hotkeys';
 import {useDispatch} from 'react-redux';
 
@@ -34,7 +34,7 @@ export default function HeaderControl() {
 	const dispatch = useDispatch();
 
 	const me = useMe();
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 	const {focusMode, cubeType} = context;
 	const headerOptions = context.headerOptions || {};
 
@@ -44,14 +44,16 @@ export default function HeaderControl() {
 	const timerType = useSettings('timer_type');
 
 	const [fullScreenMode, setFullScreenMode] = useState(false);
-	if (screenfull.isEnabled) {
-		useEffect(() => {
-			const updateFullScreenState = () => setFullScreenMode(screenfull.isFullscreen);
-			updateFullScreenState();
-			screenfull.on('change', updateFullScreenState);
-			return () => screenfull.off('change', updateFullScreenState);
-		}, []);
-	}
+	useEffect(() => {
+		if (!screenfull.isEnabled) {
+			return;
+		}
+
+		const updateFullScreenState = () => setFullScreenMode(screenfull.isFullscreen);
+		updateFullScreenState();
+		screenfull.on('change', updateFullScreenState);
+		return () => screenfull.off('change', updateFullScreenState);
+	}, []);
 
 	function toggleCreateNewSession() {
 		dispatch(openModal(<CreateNewSession />));
@@ -95,7 +97,7 @@ export default function HeaderControl() {
 	const cubePicker = !focusMode && !headerOptions.hideCubeType && (
 		<CubePicker
 			dropdownProps={{openLeft: true, noMargin: true}}
-			value={cubeType}
+			value={cubeType ?? ''}
 			onChange={(ct) => changeCubeType(ct.id)}
 		/>
 	);

@@ -43,8 +43,10 @@ export async function deleteCustomTrainer(id: string) {
 		id,
 	});
 
-	trainerDb.remove(trainer);
-	emitEvent('trainerDbUpdatedEvent', trainer);
+	if (trainer) {
+		trainerDb.remove(trainer);
+		emitEvent('trainerDbUpdatedEvent', trainer);
+	}
 
 	await trpc.customTrainer.delete.mutate({
 		id,

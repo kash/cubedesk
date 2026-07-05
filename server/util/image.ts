@@ -13,7 +13,7 @@ export async function getImageBufferFromFileStream(
 	fileStream: () => ReadStream,
 	options: ImageFileToBuffer
 ): Promise<Buffer> {
-	const fileType = fileName.split('.').pop().toLowerCase();
+	const fileType = fileName.split('.').pop()?.toLowerCase() ?? '';
 
 	let mimeType: string = Jimp.MIME_PNG;
 	if (fileType === 'gif') {
@@ -34,14 +34,15 @@ export async function getImageBufferFromFileStream(
 
 async function getFileStreamAsBufferStream(readStream: ReadStream): Promise<Buffer> {
 	return new Promise((resolve, reject) => {
-		readStream.pipe(
-			BufferListStream((err, data) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(data);
-				}
-			})
-		);
+		const bufferStream = BufferListStream((err, data) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(data);
+			}
+		});
+
+		// bl's types don't declare the Node stream interface BufferListStream implements at runtime
+		readStream.pipe(bufferStream as unknown as NodeJS.WritableStream);
 	});
 }

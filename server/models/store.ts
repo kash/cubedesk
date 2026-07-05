@@ -2,8 +2,12 @@ import {getMe} from '../util/auth';
 import {sanitizeUser} from './user_account';
 
 async function setMe(store, req) {
-	const me = sanitizeUser(await getMe(req));
+	const user = await getMe(req);
+	if (!user) {
+		return;
+	}
 
+	const me = sanitizeUser(user);
 	if (!me || !Object.keys(me).length) {
 		return;
 	}

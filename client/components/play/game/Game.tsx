@@ -149,7 +149,7 @@ export default function Game(props: GameProps) {
 			scramble = getScramble(timeIndex);
 		} else {
 			const ct = getCubeTypeInfoById(cubeType);
-			scramble = getNewScramble(ct.scramble);
+			scramble = getNewScramble(ct?.scramble ?? cubeType);
 		}
 
 		setScramble(scramble);

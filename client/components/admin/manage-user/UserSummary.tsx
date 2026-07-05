@@ -31,14 +31,15 @@ export default function UserSummary(props: Props) {
 		}
 
 		return cubeTypes.map((ct, index) => {
-			const cubeType = getCubeTypeInfoById(ct.cube_type ?? '');
+			const cubeTypeId = ct.cube_type ?? '';
+			const cubeType = getCubeTypeInfoById(cubeTypeId);
 
 			return (
 				<div
-					key={`${summaryType}-ss-${cubeType.id}`}
+					key={`${summaryType}-ss-${cubeTypeId}`}
 					className={index < cubeTypes.length - 1 ? 'mb-[15px]' : ''}
 				>
-					<h4>{cubeType.name}</h4>
+					<h4>{cubeType?.name ?? cubeTypeId}</h4>
 					<div className="flex flex-row flex-wrap gap-2.5">
 						{getPill('Solves', ct.count.toLocaleString())}
 						{getPill('Total Time', getTimeString(ct.sum ?? 0, 2))}

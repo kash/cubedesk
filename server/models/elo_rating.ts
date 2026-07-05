@@ -13,6 +13,10 @@ export interface UserEloForCubeType {
 
 export async function createEloRating(userId: string) {
 	const user = await getUserByIdWithProfile(userId);
+	if (!user?.profile) {
+		throw new Error(`Cannot create ELO rating: user ${userId} or their profile not found`);
+	}
+
 	return getPrisma().eloRating.create({
 		data: {
 			user_id: user.id,

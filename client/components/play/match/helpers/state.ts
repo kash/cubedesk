@@ -38,7 +38,7 @@ export function updateMatchState(
 }
 
 function getMatchState(match: Match, userId: string): ExistingMatch {
-	let solves = [];
+	let solves: Solve[] = [];
 
 	const opponentSolves: Record<string, Solve[]> = {};
 
@@ -46,11 +46,11 @@ function getMatchState(match: Match, userId: string): ExistingMatch {
 	const firstUserId = players.length ? players[0].user_id : null;
 	const pickedUserId = userId || firstUserId;
 
-	for (const part of match.participants) {
+	for (const part of players) {
 		if (part.user_id === pickedUserId) {
 			solves = [...(part.solves || [])];
 		} else {
-			opponentSolves[part.user_id] = part.solves;
+			opponentSolves[part.user_id] = part.solves ?? [];
 		}
 	}
 

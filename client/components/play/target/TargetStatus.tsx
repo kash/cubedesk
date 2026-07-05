@@ -13,7 +13,7 @@ export default function TargetStatus() {
 	const me = useMe();
 
 	const {matchOpen, retrySolve, solves, getPlayerStatusInfo, timeIndex} = gameContext;
-	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match);
+	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match ?? undefined);
 	const status = playerStatus.status;
 
 	let timeAlert: ReactNode;

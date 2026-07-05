@@ -43,7 +43,7 @@ export default function GameTimer() {
 	const visual2Param = visual2;
 	const visual3Param = visual3?.(context);
 
-	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match);
+	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match ?? undefined);
 
 	async function timerOnSolve(solve, match?: any) {
 		return onSolve(solve, context, match);

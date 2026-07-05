@@ -68,7 +68,7 @@ function getUpdatedSolves(solves: Solve[], oldNewSessionMap: Record<string, stri
 		if (trainerName) {
 			delete (solve as Partial<Solve>).session_id;
 		} else {
-			const newSessionId = oldNewSessionMap[sessionId];
+			const newSessionId = sessionId && oldNewSessionMap[sessionId];
 			if (newSessionId) {
 				solve.session_id = newSessionId;
 			} else {

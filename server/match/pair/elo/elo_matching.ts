@@ -56,7 +56,7 @@ export async function getPlayerPairsByGameType(gameType: GameType, matchLobby: M
 			return aDiff - bDiff;
 		});
 
-		let pairedUser = null;
+		let pairedUser: MatchLobby | null = null;
 		for (let i = 0; i < eloCandidates.length; i += 1) {
 			const candidate = eloCandidates[i];
 			if (candidate.user_id === rec.user_id || processedUserIds[candidate.user_id]) {

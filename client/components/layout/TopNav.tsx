@@ -45,7 +45,7 @@ export default function TopNav(props: Props) {
 				<div className="flex flex-row items-center gap-5 text-inherit">
 					<Button
 						large
-						textColor={white ? '#444444' : null}
+						textColor={white ? '#444444' : undefined}
 						to="/login"
 						text="Log In"
 						transparent

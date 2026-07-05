@@ -1,4 +1,4 @@
-import {Match} from '@/types/match';
+import {FullMatch} from '@/types/match';
 import {createAdapter} from '@socket.io/redis-adapter';
 import {Server, Socket} from 'socket.io';
 import {GameType} from '../../shared/match/consts';
@@ -22,7 +22,7 @@ export const MatchTypes: Record<GameType, MatchTypeLogic> = {
 	[GameType.ELIMINATION]: new Elimination(),
 };
 
-export function getMatchTypeByMatch(match: Match) {
+export function getMatchTypeByMatch(match: FullMatch) {
 	const mt = match.match_session.match_type;
 	return MatchTypes[mt];
 }

@@ -13,7 +13,7 @@ interface Props extends IModalProps {
 
 export default function SessionSelector(props: Props) {
 	const {solves, onComplete} = props;
-	const [session, setSession] = useState<Session>(null);
+	const [session, setSession] = useState<Session | null>(null);
 
 	let selectedSession: ReactNode = null;
 	if (session) {
@@ -37,7 +37,7 @@ export default function SessionSelector(props: Props) {
 			{selectedSession}
 			<Button
 				large
-				onClick={() => onComplete(session)}
+				onClick={() => onComplete?.(session)}
 				disabled={!session}
 				primary
 				text="Continue"

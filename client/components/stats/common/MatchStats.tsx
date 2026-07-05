@@ -1,10 +1,10 @@
 import StatModule from '@/components/stats/common/StatModule';
-import {StatsContext} from '@/components/stats/Stats';
-import React, {useContext} from 'react';
+import {useStatsContext} from '@/components/stats/Stats';
+import React from 'react';
 import {PieChart} from 'react-minimal-pie-chart';
 
 export default function MatchStats() {
-	const context = useContext(StatsContext);
+	const context = useStatsContext();
 	const {stats} = context;
 
 	let ties = 0;
@@ -31,7 +31,6 @@ export default function MatchStats() {
 							{title: 'Ties', value: ties, color: '#FFFFFF'},
 							{title: 'Losses', value: losses, color: '#CC4C4C'},
 						]}
-						label={null}
 						labelPosition={100}
 						labelStyle={{
 							color: 'white',

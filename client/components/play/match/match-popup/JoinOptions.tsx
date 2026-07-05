@@ -1,9 +1,9 @@
-import {MatchPopupContext, MatchPopupPage} from '@/components/play/match/match-popup/MatchPopup';
+import {MatchPopupPage, useMatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
 import {UserPlus, UsersThree} from 'phosphor-react';
-import React, {useContext} from 'react';
+import React from 'react';
 
 export default function JoinOptions() {
-	const {setPage} = useContext(MatchPopupContext);
+	const {setPage} = useMatchPopupContext();
 
 	return (
 		<div className="mt-5 grid grid-cols-2 gap-[15px]">

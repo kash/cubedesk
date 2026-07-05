@@ -12,9 +12,15 @@ interface Props {
 
 export default function RecognitionChart(props: Props) {
 	const {solve} = props;
-	const rawTime = solve.raw_time;
+	const rawTime = solve.raw_time ?? solve.time;
 
-	function getChartBar(step: SolveMethodStep, percent: number, gray: boolean = false) {
+	// Accepts the narrow shape this helper reads so both real SolveMethodSteps
+	// and the synthetic inspection step can be rendered
+	function getChartBar(
+		step: Pick<SolveMethodStep, 'step_name' | 'recognition_time'>,
+		percent: number,
+		gray: boolean = false
+	) {
 		const recTime = step.recognition_time;
 		const percentString = Math.floor((recTime / rawTime) * 1000) / 100;
 
@@ -56,7 +62,7 @@ export default function RecognitionChart(props: Props) {
 			{getChartBar(
 				{
 					step_name: 'inspection',
-					recognition_time: solve.inspection_time,
+					recognition_time: solve.inspection_time ?? 0,
 				},
 				100,
 				true

@@ -28,7 +28,7 @@ export default function TargetTimes(props: Props) {
 	const me = useMe();
 
 	const {reverse} = props;
-	const match = matchContext?.match;
+	const match = matchContext?.match ?? undefined;
 	const {timeIndex, getSolveRowInfo, solves} = gameContext;
 
 	function openSolve(solve) {

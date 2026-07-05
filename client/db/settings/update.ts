@@ -67,6 +67,10 @@ async function updatePartialSettings(payload: Partial<AllSettings>) {
 			id: key,
 		});
 
+		if (!setVal) {
+			continue;
+		}
+
 		const newVal = {...setVal};
 		newVal.value = value;
 

@@ -16,7 +16,7 @@ export function getMatchPlayersRoomName(match: Match): string {
 	return `${MatchConst.PLAYERS_ROOM_PREFIX}${match.id}`;
 }
 
-export function getMatchIdFromPlayersRoom(roomName: string): string {
+export function getMatchIdFromPlayersRoom(roomName: string): string | null {
 	if (!roomName || roomName.indexOf(MatchConst.PLAYERS_ROOM_PREFIX) < 0) {
 		return null;
 	}

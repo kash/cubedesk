@@ -13,8 +13,8 @@ interface Props {
 export default function StatsInfo(props: Props) {
 	const {solve} = props;
 
-	const time = solve.raw_time;
-	const smartTurnCount = solve.smart_turn_count;
+	const time = solve.raw_time ?? solve.time;
+	const smartTurnCount = solve.smart_turn_count ?? 0;
 	const smartInspectionTime = solve.inspection_time;
 	const tps = Math.floor((smartTurnCount / time) * 10) / 10;
 

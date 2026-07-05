@@ -34,24 +34,39 @@ function LastSolve(props: Props) {
 	const scramble = lastSolve.scramble;
 
 	const time = getTimeString(lastSolve.time);
-	const cubeTypeName = getCubeTypeInfoById(cubeType).name;
+	const cubeTypeName = getCubeTypeInfoById(cubeType)?.name ?? cubeType;
+
+	// Captured after the null check above so the callbacks don't re-narrow lastSolve
+	const solveId = lastSolve.id;
 
 	function plusTwoAction() {
-		const dbSolve = fetchSolve(lastSolve.id);
+		const dbSolve = fetchSolve(solveId);
+		if (!dbSolve) {
+			return;
+		}
+
 		togglePlusTwoSolveDb(dbSolve);
 	}
 
 	function dnfAction() {
-		const dbSolve = fetchSolve(lastSolve.id);
+		const dbSolve = fetchSolve(solveId);
+		if (!dbSolve) {
+			return;
+		}
+
 		toggleDnfSolveDb(dbSolve);
 	}
 
 	function showSolveInfo() {
-		dispatch(openModal(<SolveInfo solveId={lastSolve.id} />));
+		dispatch(openModal(<SolveInfo solveId={solveId} />));
 	}
 
 	function deleteAction() {
-		const dbSolve = fetchSolve(lastSolve.id);
+		const dbSolve = fetchSolve(solveId);
+		if (!dbSolve) {
+			return;
+		}
+
 		deleteSolveDb(dbSolve);
 	}
 

@@ -32,7 +32,7 @@ export default function PaginatedList<T>(props: Props<T>) {
 	useEffect(() => {
 		fetchData({
 			page,
-			searchQuery: searchQuery,
+			searchQuery: searchQuery ?? '',
 			pageSize: DEFAULT_PAGE_SIZE,
 		}).then((result) => {
 			setItems(result.items);

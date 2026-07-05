@@ -91,7 +91,7 @@ export default function PublishSolves(props: IModalProps) {
 		rows.push(
 			<tr key={type.cube_type}>
 				<td>
-					<Emblem text={ct.name} />
+					<Emblem text={ct?.name ?? type.cube_type} />
 				</td>
 				<td>{pb && <Emblem text={getTimeString(pb.time)} />}</td>
 				<td>{ao5pb && <Emblem text={getTimeString(ao5pb.time)} />}</td>

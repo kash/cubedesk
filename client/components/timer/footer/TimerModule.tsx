@@ -8,14 +8,14 @@ import TimeChart from '@/components/modules/time-chart/TimeChart';
 import TimeDistro from '@/components/modules/time-distro/TimeDistro';
 import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
 import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {setSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {snakeCase} from 'change-case';
 import classNames from 'classnames';
 import {CaretDown} from 'phosphor-react';
-import React, {ReactNode, useContext} from 'react';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	index: number;
@@ -26,7 +26,7 @@ interface Props {
 export default function TimerModule(props: Props) {
 	const {index, moduleType, customOptions} = props;
 
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 	const {scramble, cubeType, solvesFilter} = context;
 	const mobileMode = useGeneral('mobile_mode');
 
@@ -46,7 +46,7 @@ export default function TimerModule(props: Props) {
 		setSetting('timer_modules', newTimerModules);
 	}
 
-	const moduleMap: Record<TimerModuleType, FooterModuleData> = {
+	const moduleMap: Partial<Record<TimerModuleType, FooterModuleData>> = {
 		[TimerModuleType.HISTORY]: {
 			module: <History filterOptions={solvesFilter} hotKeysEnabled />,
 		},
@@ -91,7 +91,7 @@ export default function TimerModule(props: Props) {
 	if (customOptions?.customBody) {
 		visual = customOptions.customBody(context);
 	} else {
-		const visualType = customOptions?.moduleType || snakeCase(moduleType);
+		const visualType = customOptions?.moduleType || snakeCase(moduleType ?? '');
 		visual = moduleMap[visualType];
 	}
 

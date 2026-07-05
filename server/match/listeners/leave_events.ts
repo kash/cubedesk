@@ -1,4 +1,4 @@
-import {Match} from '@/types/match';
+import {FullMatch} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
 import {MatchConst} from '../../../client/shared/match/consts';
 import {getMatchById, updateMatch} from '../../models/match';
@@ -20,6 +20,10 @@ export function listenForLeaveEvents(client: SocketClient) {
 	// Player resigns match
 	client.on('playerResignedMatch', async (matchId) => {
 		const match = await getMatchById(matchId);
+		if (!match) {
+			return;
+		}
+
 		const {user} = await getDetailedClientInfo(client);
 		await resignMatch(match, user);
 	});
@@ -27,6 +31,10 @@ export function listenForLeaveEvents(client: SocketClient) {
 	// Player abort match
 	client.on('playerAbortedMatch', async (matchId) => {
 		const match = await getMatchById(matchId);
+		if (!match) {
+			return;
+		}
+
 		const {user} = await getDetailedClientInfo(client);
 		await abortMatch(match, user);
 	});
@@ -80,7 +88,7 @@ export function listenForLeaveEvents(client: SocketClient) {
 		leaveAllRooms(client);
 	}
 
-	function waitForUserToReturn(user: PublicUserAccount, match: Match) {
+	function waitForUserToReturn(user: PublicUserAccount, match: FullMatch) {
 		const matchRoom = getMatchPlayersRoomName(match);
 		let secondsWaited = 0;
 		let endMatchGracePeriodTimeout: NodeJS.Timeout | null = null;
@@ -110,7 +118,7 @@ export function listenForLeaveEvents(client: SocketClient) {
 					clearInterval(int);
 
 					const currentMatch = await getMatchById(match.id);
-					if (currentMatch.ended_at) {
+					if (!currentMatch || currentMatch.ended_at) {
 						return;
 					}
 
@@ -119,7 +127,9 @@ export function listenForLeaveEvents(client: SocketClient) {
 					});
 
 					const newMatch = await getMatchById(match.id);
-					await sendMatchUpdate(newMatch);
+					if (newMatch) {
+						await sendMatchUpdate(newMatch);
+					}
 				}, MatchConst.PLAYERS_LEAVE_END_MATCH_GRACE_PERIOD_SEC * 1000);
 			}
 

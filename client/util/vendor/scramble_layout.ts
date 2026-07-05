@@ -112,7 +112,7 @@ export type ScrambleLayout = {
 	[key: string]: ScrambleCubelet[];
 };
 
-export function layoutScramble(scramble, size): ScrambleLayout {
+export function layoutScramble(scramble, size): ScrambleLayout | null {
 	const moves = splitScramble(scramble).map(parseMove);
 
 	const validMoves = moves.every((move) => move.depth <= Math.floor(size / 2) && DIRECTIONS.includes(move.direction));

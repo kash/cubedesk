@@ -75,8 +75,21 @@ const eventNameMap = {
 	error: nativeAPI.fullscreenerror,
 };
 
+export interface Screenfull {
+	isEnabled: boolean;
+	isFullscreen: boolean;
+	element?: Element;
+	request(element?: Element, options?: FullscreenOptions): Promise<void>;
+	exit(): Promise<void>;
+	toggle(element?: Element, options?: FullscreenOptions): Promise<void>;
+	onchange(callback: () => void): void;
+	onerror(callback: () => void): void;
+	on(event: 'change' | 'error', callback: () => void): void;
+	off(event: 'change' | 'error', callback: () => void): void;
+}
+
 // eslint-disable-next-line import/no-mutable-exports
-let screenfull = {
+let screenfull: Screenfull = {
 	 
 	request(element = document.documentElement, options) {
 		return new Promise((resolve, reject) => {

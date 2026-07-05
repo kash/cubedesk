@@ -5,7 +5,7 @@ import {ColorName} from '../../../../../shared/colors';
 interface Props {
 	selected?: boolean;
 	colorName: ColorName;
-	onSelectColor: (colorHex: string) => void;
+	onSelectColor: (colorName: ColorName) => void;
 }
 
 export default function CustomizeStatsColor(props: Props) {

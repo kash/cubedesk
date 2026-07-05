@@ -33,7 +33,7 @@ export default function CreateNewSession(props: IModalProps) {
 			setCurrentSession(session.id);
 			setCubeType(sessionCubeType);
 
-			onComplete(session);
+			onComplete?.(session);
 		} catch (e) {
 			setLoading(false);
 			toastError('Server Error: Could not create session');

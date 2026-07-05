@@ -1,5 +1,5 @@
 import {Prisma} from '@/generated/prisma/client';
-import {Match} from '@/types/match';
+import {FullMatch} from '@/types/match';
 import {MatchStanding, MatchUpdate, PlayerStatus} from '../../../client/shared/match/types';
 import {getPrisma} from '../../database';
 import {getMatchById} from '../../models/match';
@@ -13,14 +13,18 @@ import {emitMatchUpdate} from './send';
 
 export async function sendMatchUpdateById(matchId: string) {
 	const match = await getMatchById(matchId);
+	if (!match) {
+		return null;
+	}
+
 	return sendMatchUpdate(match);
 }
 
-export async function sendMatchUpdate(match: Match) {
+export async function sendMatchUpdate(match: FullMatch) {
 	const matchType = getMatchTypeByMatch(match);
 	const standings = await getMatchStandings(match, matchType);
 
-	let winnerId = null;
+	let winnerId: string | null = null;
 	const playerUpdateTxs: Prisma.PrismaPromise<unknown>[] = [];
 	const standMap = getMatchStandingsMap(standings);
 
@@ -46,7 +50,7 @@ export async function sendMatchUpdate(match: Match) {
 		match = await updateMatchWithWinner(match, winnerId);
 	}
 
-	const updatedMatch = await getMatchById(match.id);
+	const updatedMatch = (await getMatchById(match.id)) ?? match;
 
 	const spectatorsRoomName = getMatchSpectatorsRoomName(match);
 	const playersRoomName = getMatchPlayersRoomName(match);
@@ -72,7 +76,7 @@ export async function sendMatchUpdate(match: Match) {
 	return payload;
 }
 
-export async function getMatchStandings(match: Match, matchType: MatchTypeLogic): Promise<MatchStanding[]> {
+export async function getMatchStandings(match: FullMatch, matchType: MatchTypeLogic): Promise<MatchStanding[]> {
 	const output: MatchStanding[] = [];
 
 	const allPlayers = match.participants;

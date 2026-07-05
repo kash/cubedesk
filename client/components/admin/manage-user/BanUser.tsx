@@ -96,7 +96,7 @@ export default function BanUser(props: Props) {
 		}
 
 		toastSuccess(`Banned ${user.username} for ${durationText}`);
-		props.onComplete();
+		props.onComplete?.();
 	}
 
 	const disabled = loading || !reason;

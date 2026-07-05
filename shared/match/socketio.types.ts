@@ -2,6 +2,13 @@ import {GameOptionsInput} from '@/types/match';
 import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
 import {MatchInputChatMessage, MatchUpdate, MatchUpdateChat, UpdateRoomInfo} from '../../client/shared/match/types';
+import {SocketConst} from '../../client/shared/socket_costs';
+import {GameType} from './consts';
+
+export interface RoomSizeInfo {
+	lobby?: number;
+	match?: number;
+}
 
 export interface ServerToClientEvents {
 	opponentStartedSolve: (opponent: PublicUserAccount, startedAtUnix: number) => void;
@@ -19,6 +26,7 @@ export interface ServerToClientEvents {
 	lobbyInfoUpdated: (data: UpdateRoomInfo) => void;
 	inactivityBeforeSolveStartsWarning: (opponent: PublicUserAccount, secondsToStart: number) => void;
 	solveTakingTooLongWarning: (opponent: PublicUserAccount, secondsToFinish: number) => void;
+	roomSizeUpdate: (data: Partial<Record<GameType, RoomSizeInfo>>) => void;
 }
 
 export interface ClientToServerEvents {
@@ -39,4 +47,6 @@ export interface ClientToServerEvents {
 	playerJoinedMatchByLinkCode: (linkCode: string) => void;
 	playerJoinedSpectateMode: (spectateCode: string) => void;
 	rejoinMyRooms: (rooms: string[]) => void;
+	[SocketConst.WATCH_ROOM_SIZES]: () => void;
+	[SocketConst.STOP_WATCHING_ROOM_SIZES]: () => void;
 }

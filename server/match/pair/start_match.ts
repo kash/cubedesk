@@ -15,7 +15,7 @@ import {DetailedClientInfo, getDetailedClientInfo, joinRoom, leaveAllMatchRooms,
 export async function pairPlayersInRoom(
 	gameType: GameType,
 	clientsInRoom: SocketType[],
-	gameOptions: GameOptionsInput,
+	gameOptions: GameOptionsInput | null,
 	existingSession?: MatchSession,
 	existingMatch?: Match
 ): Promise<boolean> {
@@ -44,6 +44,10 @@ export async function pairPlayersInRoom(
 		match = await createMatch(existingSession, true);
 	} else {
 		// Neither match or session provided, create a new
+		if (!gameOptions) {
+			throw new Error('gameOptions is required when creating a brand-new match session');
+		}
+
 		try {
 			const matchSession = await createMatchSession(
 				{
@@ -67,6 +71,9 @@ export async function pairPlayersInRoom(
 			logger.error('Error creating match session.', {
 				error: e,
 			});
+
+			// Without a match there is nothing to pair the players into
+			return false;
 		}
 	}
 
@@ -75,7 +82,9 @@ export async function pairPlayersInRoom(
 
 	// Send out the match update
 	const updatePayload = await sendMatchUpdateById(match.id);
-	emitMatchUpdate('matchStarted', match, updatePayload);
+	if (updatePayload) {
+		emitMatchUpdate('matchStarted', match, updatePayload);
+	}
 
 	return true;
 }

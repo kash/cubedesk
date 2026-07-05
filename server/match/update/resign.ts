@@ -1,4 +1,4 @@
-import {Match} from '@/types/match';
+import {FullMatch, Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
 import {updateMatch} from '../../models/match';
 import {updateMatchParticipant} from '../../models/match_participation';
@@ -34,7 +34,7 @@ export async function resignMatch(match: Match, user: PublicUserAccount, forfeit
 	await sendMatchUpdateById(match.id);
 }
 
-export async function abortMatch(match: Match, user: PublicUserAccount) {
+export async function abortMatch(match: FullMatch, user: PublicUserAccount) {
 	const anySolves = match.participants.some((p) => p.solves && p.solves.length);
 
 	if (anySolves) {

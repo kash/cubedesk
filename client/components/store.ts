@@ -11,6 +11,6 @@ export function getStore(): Store<any> {
 	return store;
 }
 
-export function getMe(): UserAccount {
-	return store.getState()?.account?.me;
+export function getMe(): UserAccount | null {
+	return store.getState()?.account?.me ?? null;
 }

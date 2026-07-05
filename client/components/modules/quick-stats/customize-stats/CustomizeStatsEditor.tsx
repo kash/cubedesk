@@ -34,10 +34,10 @@ export default function CustomizeStatsEditor(props: Props) {
 
 	const dispatch = useDispatch();
 	const currentIndex = useRef<number>(null);
-	const saveStatusTimer = useRef<NodeJS.Timeout>();
+	const saveStatusTimer = useRef<NodeJS.Timeout | undefined>(undefined);
 	const [averageAll, setAverageAll] = useState<boolean>(effectiveAverageCountStr === '0');
 	const [savedStatus, setSavedStatus] = useState<null | 'saved' | 'saving'>();
-	const [error, setError] = useState<string>(null);
+	const [error, setError] = useState<string | null>(null);
 	const colorNames = Object.keys(colorPalette) as ColorName[];
 	const [statType, setStatType] = useState(stat.statType);
 	const [sortBy, setSortBy] = useState(stat.sortBy);

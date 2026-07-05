@@ -12,7 +12,7 @@ import {Link} from 'react-router-dom';
 
 interface Props {
 	user?: UserAccountForAdmin | PublicUserAccount | UserAccount | PublicUser | Serialized<PublicUser>;
-	profile?: Profile;
+	profile?: Profile | null;
 	small?: boolean;
 	tiny?: boolean;
 	large?: boolean;
@@ -83,7 +83,7 @@ export default function Avatar(props: Props) {
 		emblems = <Badges small user={user} limit={5} />;
 	}
 
-	const link = user?.username ? `/user/${user.username}` : null;
+	const link = user?.username ? `/user/${user.username}` : '';
 
 	return (
 		<div className="flex flex-col justify-center">

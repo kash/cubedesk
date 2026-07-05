@@ -1,11 +1,15 @@
-import {Solve} from '@/types/solve';
+import {Solve, SolveInput} from '@/types/solve';
 
-export function sanitizeSolve(s: Solve): Solve {
-	const solve = {...s};
+// The shapes sanitizeSolve can normalize: full Solves from the local DB and
+// (partial) SolveInputs headed for the server.
+type SanitizableSolve = Partial<SolveInput> & Pick<Partial<Solve>, 'created_at' | 'demo_mode'>;
+
+export function sanitizeSolve<T extends SanitizableSolve>(s: T): T {
+	const solve: SanitizableSolve = {...s};
 	delete solve.created_at;
 
-	let startedAt: number | bigint = solve.started_at;
-	let endedAt: number | bigint = solve.ended_at;
+	let startedAt: number | bigint | null | undefined = solve.started_at;
+	let endedAt: number | bigint | null | undefined = solve.ended_at;
 	if (startedAt && typeof startedAt === 'string') {
 		startedAt = parseInt(startedAt, 10);
 	}
@@ -46,5 +50,6 @@ export function sanitizeSolve(s: Solve): Solve {
 		solve.from_timer = false;
 	}
 
-	return solve;
+	// The mutations above only normalize values within the input's own shape
+	return solve as T;
 }

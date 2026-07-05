@@ -19,12 +19,12 @@ export default function AlgoVisual(props: Props) {
 
 	const primaryColor = useSettings('primary_color');
 
-	const cubeType = getCubeTypeInfoById(props.cubeType);
-	const cubeSize = cubeType.size;
+	const cubeType = getCubeTypeInfoById(props.cubeType ?? '');
+	const cubeSize = cubeType?.size ?? 0;
 
 	// TODO FUTURE imageLinks
 	const cubeColors: string[] = useMemo(() => {
-		const output = colors.split(',');
+		const output = (colors ?? '').split(',');
 		for (let i = 0; i < output.length; i += 1) {
 			const color = output[i];
 			if (color === '#000000') {
@@ -140,7 +140,8 @@ export default function AlgoVisual(props: Props) {
 		);
 	}
 
-	if (!cubeColors || !cubeColors.length) {
+	// Without a cube size (e.g. non-NxN puzzles) or colors there is nothing to draw
+	if (!colors || !cubeColors.length || (!cubeSize && !icon)) {
 		return null;
 	}
 

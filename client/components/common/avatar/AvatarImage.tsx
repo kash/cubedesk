@@ -52,7 +52,7 @@ const COLORS = [
 
 interface Props {
 	user?: UserAccountForAdmin | PublicUserAccount | UserAccount;
-	profile?: Profile;
+	profile?: Profile | null;
 	image?: string;
 	small?: boolean;
 	tiny?: boolean;
@@ -79,14 +79,15 @@ export default function AvatarImage(props: Props) {
 				<div className={bodyClass}>
 					<img
 						className="h-full w-full object-cover"
-						src={image || getStorageURL(profile?.pfp_image?.storage_path)}
+						src={image || getStorageURL(profile?.pfp_image?.storage_path) || undefined}
 						alt={`Profile picture of ${user?.username || 'user'}`}
 					/>
 				</div>
 			</div>
 		);
 	} else {
-		const lastLetter = user.id[user.id.length - 1];
+		const userId = user?.id ?? '0';
+		const lastLetter = userId[userId.length - 1];
 		const lastIndex = 'abcdefghijklmnopqrstuvwxyz0123456789'.indexOf(lastLetter);
 		const backgroundColor = COLORS[lastIndex];
 

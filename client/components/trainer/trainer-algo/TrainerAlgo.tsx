@@ -4,14 +4,14 @@ import Module from '@/components/common/Module';
 import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import CustomVisual from '@/components/trainer/CustomVisual';
 import EditAlgo from '@/components/trainer/EditAlgo';
-import {CUSTOM_TRAINER_ALGO_TYPE, TrainerContext} from '@/components/trainer/Trainer';
+import {CUSTOM_TRAINER_ALGO_TYPE, useTrainerContext} from '@/components/trainer/Trainer';
 import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
 import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
 import {deleteCustomTrainer} from '@/db/trainer/custom';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import classNames from 'classnames';
 import {CaretRight, Pencil, Trash} from 'phosphor-react';
-import React, {useContext} from 'react';
+import React from 'react';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -25,7 +25,7 @@ export default function TrainerAlgo(props: Props) {
 	const algoExt = props.algoExt;
 
 	const algo = cleanTrainerAlgorithm(algoExt);
-	const context = useContext(TrainerContext);
+	const context = useTrainerContext();
 
 	const isCustom = algoExt.algo_type === CUSTOM_TRAINER_ALGO_TYPE;
 
@@ -33,8 +33,8 @@ export default function TrainerAlgo(props: Props) {
 		context.openTrainer('single', algoExt);
 	}
 
-	function deleteCustom() {
-		deleteCustomTrainer(algoExt.id);
+	async function deleteCustom() {
+		await deleteCustomTrainer(algoExt.id);
 	}
 
 	function editAlgo() {

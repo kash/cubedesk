@@ -66,10 +66,10 @@ export default function ScramblePicker(props: Props) {
 			text={text}
 			legend="Scramble type"
 			icon={<CaretDown />}
-			options={options}
 			openLeft
 			dropdownMaxHeight={300}
 			{...(dropdownProps || {})}
+			options={options}
 		/>
 	);
 }

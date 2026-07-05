@@ -7,7 +7,8 @@ import {FilterSolvesOptions} from '@/db/solves/query';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import React, {ReactNode, useMemo} from 'react';
-import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '@/reducers/reducers';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;
@@ -17,7 +18,7 @@ export default function QuickStats(props: Props) {
 	const {filterOptions} = props;
 	const dispatch = useDispatch();
 
-	const stats = useSelector((state: RootStateOrAny) => state?.stats);
+	const stats = useSelector((state: RootState) => state?.stats);
 	const statsModuleBlocks = stats.blocks as StatsModuleBlock[];
 	const blockCount = statsModuleBlocks.length;
 	const blockSizes = useMemo(() => getQuickStatsGridSizes(blockCount), [blockCount]);

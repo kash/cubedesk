@@ -8,7 +8,7 @@ import {useSocketListener} from '@/util/hooks/useSocketListener';
  */
 export function relayOpponentEvents() {
 	useSocketListener('opponentStartedSolve', (opponent, startedAtUnix) => {
-		const userId = opponent.profile.user_id;
+		const userId = opponent.id;
 		const event = MatchClientEvent.START_OPPONENT_TIME;
 
 		emitEvent<any>(getMatchClientEvent(event, userId), {
@@ -17,7 +17,7 @@ export function relayOpponentEvents() {
 	});
 
 	useSocketListener('opponentLeftMatch', (opponent, secondsToReturn) => {
-		const userId = opponent.profile.user_id;
+		const userId = opponent.id;
 		const event = MatchClientEvent.OPPONENT_LEFT_MATCH;
 
 		emitEvent<any>(getMatchClientEvent(event, userId), {
@@ -26,13 +26,13 @@ export function relayOpponentEvents() {
 	});
 
 	useSocketListener('opponentForfeitedMatch', (opponent) => {
-		const userId = opponent.profile.user_id;
+		const userId = opponent.id;
 		const event = MatchClientEvent.OPPONENT_FORFEITED_MATCH;
 		emitEvent<any>(getMatchClientEvent(event, userId));
 	});
 
 	useSocketListener('opponentSolveUpdated', (opponent, solve) => {
-		const userId = opponent.profile.user_id;
+		const userId = opponent.id;
 		const event = MatchClientEvent.OPPONENT_SOLVE_UPDATED;
 		emitEvent<any>(getMatchClientEvent(event, userId), {
 			solve,
@@ -40,7 +40,7 @@ export function relayOpponentEvents() {
 	});
 
 	useSocketListener('opponentSolveSaved', (opponent, solve) => {
-		const userId = opponent.profile.user_id;
+		const userId = opponent.id;
 		const event = MatchClientEvent.OPPONENT_TIME_SAVED;
 		emitEvent<any>(getMatchClientEvent(event, userId), {
 			solve,
@@ -48,13 +48,13 @@ export function relayOpponentEvents() {
 	});
 
 	useSocketListener('opponentResignedMatch', (opponent) => {
-		const userId = opponent.profile.user_id;
+		const userId = opponent.id;
 		const event = MatchClientEvent.OPPONENT_RESIGNED_MATCH;
 		emitEvent<any>(getMatchClientEvent(event, userId));
 	});
 
 	useSocketListener('opponentEndedSolve', (opponent, endedAtUnix, finalTimeMillis) => {
-		const userId = opponent.profile.user_id;
+		const userId = opponent.id;
 		const event = MatchClientEvent.STOP_OPPONENT_TIME;
 		emitEvent<any>(getMatchClientEvent(event, userId), {
 			endedAt: endedAtUnix,

@@ -37,7 +37,7 @@ export default function Listeners(props: Props) {
 		}
 
 		const ct = getCubeTypeInfoById(cubeType);
-		return getNewScramble(ct.scramble, seed);
+		return getNewScramble(ct?.scramble ?? cubeType, seed);
 	}
 
 	handleOpenMatchLink();

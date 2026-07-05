@@ -22,7 +22,7 @@ export default function HorizontalNav(props: Props) {
 	const {onChange, legend, showBackgroundForUnselectedTabs} = props;
 
 	const [tabs, setTabs] = useState<HorizontalNavTab[]>([]);
-	const [selectedTab, setSelectedTab] = useState<HorizontalNavTab>(null);
+	const [selectedTab, setSelectedTab] = useState<HorizontalNavTab | null>(null);
 
 	useEffect(() => {
 		setTabs(props.tabs);
@@ -52,7 +52,7 @@ export default function HorizontalNav(props: Props) {
 	const output: ReactNode[] = [];
 
 	for (const tab of tabs) {
-		const selected = selectedTab.id === tab.id;
+		const selected = selectedTab?.id === tab.id;
 		const unselected = !selected && showBackgroundForUnselectedTabs;
 
 		if (tab.skip) {

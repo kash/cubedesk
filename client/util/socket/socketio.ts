@@ -12,7 +12,7 @@ export function initSocketIO() {
 		return;
 	}
 
-	socket = io(null, {
+	socket = io({
 		forceNew: true,
 	});
 

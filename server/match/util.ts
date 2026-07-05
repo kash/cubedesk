@@ -135,6 +135,11 @@ export async function getUserFromClient(client: SocketType): Promise<PublicUserA
 	}
 
 	const userJson = await getValueFromRedis(createRedisKey(RedisNamespace.SOCKET_IO_CLIENT_USER, client.id));
+	if (!userJson) {
+		// The key expired between the existence check and the read
+		return null;
+	}
+
 	return JSON.parse(userJson);
 }
 

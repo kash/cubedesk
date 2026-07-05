@@ -34,7 +34,7 @@ export function useWindowClickAwayListener(ignoreClassName: string, handler: Eve
 }
 
 export function useElementListener(elem, eventName, handler: EventHandler, deps: any[] = []) {
-	const savedHandler = useRef<EventHandler>();
+	const savedHandler = useRef<EventHandler | undefined>(undefined);
 
 	useEffect(() => {
 		savedHandler.current = handler;
@@ -45,7 +45,7 @@ export function useElementListener(elem, eventName, handler: EventHandler, deps:
 			return;
 		}
 
-		const eventListener = (event) => savedHandler.current(event);
+		const eventListener = (event) => savedHandler.current?.(event);
 		elem.addEventListener(eventName, eventListener);
 
 		return () => {

@@ -25,7 +25,7 @@ export default function HistoryModal(props: Props) {
 	const timeString = time != null ? getTimeString(time) : '';
 
 	const solves = useMemo(() => {
-		return props.solves.sort((a, b) => b.started_at - a.started_at);
+		return props.solves.sort((a, b) => (b.started_at ?? 0) - (a.started_at ?? 0));
 	}, [props.solves]);
 
 	const cubeTypes = useMemo(() => {
@@ -36,7 +36,7 @@ export default function HistoryModal(props: Props) {
 
 		const output: string[] = [];
 		for (const type of types) {
-			const cubeName = getCubeTypeInfoById(type).name;
+			const cubeName = getCubeTypeInfoById(type)?.name ?? type;
 			output.push(cubeName);
 		}
 
@@ -92,7 +92,7 @@ export default function HistoryModal(props: Props) {
 					{timeBody}
 				</h2>
 				<p className="text-[1.1rem]">
-					{new Date(lastSolve.started_at).toLocaleDateString()}
+					{new Date(lastSolve.started_at ?? 0).toLocaleDateString()}
 				</p>
 				<div>
 					{cubeTypes.map((ct) => (

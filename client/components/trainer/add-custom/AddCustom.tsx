@@ -16,8 +16,9 @@ import {trpc} from '@/util/trpc';
 import Cube from 'cubejs';
 import React, { useEffect, useState} from 'react';
 
+// Values can be null because a stored trainer's colors column is nullable
 interface ColorMap {
-	[key: string]: string;
+	[key: string]: string | null;
 }
 
 interface Props extends IModalProps {
@@ -133,9 +134,9 @@ export default function AddCustom(props: Props) {
 				await createCustomTrainerDb(payload);
 			}
 
-			onComplete();
+			onComplete?.();
 		} catch (e) {
-			setError(e.message);
+			setError(e instanceof Error ? e.message : 'Could not save trainer algorithm');
 			setSaving(false);
 		}
 	}

@@ -100,7 +100,7 @@ export const userRouter = router({
 
 	update: protectedProcedure.input(accountInput).mutation(async ({ctx, input}) => {
 		await validateEmail(input.email, ctx.user.email);
-		await validateUsername(input.username, ctx.user.username);
+		await validateUsername(input.username, ctx.user.username ?? undefined);
 
 		const updated = await updateUserAccount(ctx.user.id, input.first_name, input.last_name, input.email, input.username);
 

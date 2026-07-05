@@ -22,7 +22,7 @@ export default function CustomVisual(props: Props) {
 	const edgeSize = cubeletSize / 2;
 
 	const cubeType = getCubeTypeInfoById(props.cubeType);
-	const cubeSize = cubeType.size;
+	const cubeSize = cubeType?.size ?? 0;
 
 	function get2DCubelets() {
 		const cubelets: ReactNode[] = [];
@@ -90,7 +90,7 @@ export default function CustomVisual(props: Props) {
 				for (let k = 0; k < cubeSize; k += 1) {
 					const off = sub;
 
-					let color = colors[off];
+					let color: string | null = colors[off];
 					if (color === '#000000') {
 						color = null;
 					}
@@ -143,6 +143,11 @@ export default function CustomVisual(props: Props) {
 		}
 
 		return output;
+	}
+
+	// Non-NxN puzzles have no size, so there is no cube to draw
+	if (!cubeSize) {
+		return null;
 	}
 
 	let body;

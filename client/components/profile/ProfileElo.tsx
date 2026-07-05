@@ -25,7 +25,7 @@ export default function ProfileElo(props: Props) {
 				key={ct}
 				className="box-border flex flex-col items-start rounded-[10px] border-4 border-tmo-module/10 bg-module p-5 text-text"
 			>
-				<span className="rounded-[7px] bg-tmo-module/[0.13] px-2 py-1 text-base font-bold">{ctInfo.name}</span>
+				<span className="rounded-[7px] bg-tmo-module/[0.13] px-2 py-1 text-base font-bold">{ctInfo?.name ?? ct}</span>
 				<span className="mt-2.5 text-[2.5rem] font-bold">{eloNum}</span>
 				<span className="text-[0.9rem] font-semibold opacity-70">
 					{gameCount} game{gameCount === 1 ? '' : 's'}

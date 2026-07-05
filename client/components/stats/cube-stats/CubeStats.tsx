@@ -5,11 +5,11 @@ import StatSection from '@/components/stats/common/StatSection';
 import SubStats from '@/components/stats/common/SubStats';
 import CubeStatAverages from '@/components/stats/cube-stats/CubeStatAverages';
 import CubeStatsFeatured from '@/components/stats/cube-stats/CubeStatsFeatured';
-import {StatsContext} from '@/components/stats/Stats';
-import React, {useContext} from 'react';
+import {useStatsContext} from '@/components/stats/Stats';
+import React from 'react';
 
 export default function CubeStats() {
-	const context = useContext(StatsContext);
+	const context = useStatsContext();
 	const filter = context.filterOptions;
 
 	const oneMonth = new Date();

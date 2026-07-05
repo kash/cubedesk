@@ -8,7 +8,7 @@ import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useEventListener} from '@/util/event_handler';
 import confetti from 'canvas-confetti';
 
-let lastConfetti: Date = null;
+let lastConfetti: Date | null = null;
 
 export function listenForPbEvents(context: ITimerContext) {
 	if (context.ignorePbEvents) {
@@ -36,7 +36,7 @@ export function listenForPbEvents(context: ITimerContext) {
 		'singlePbEvent',
 		(ct) => {
 			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType.name} Single PB!`);
+			pbEventCallback(`New ${cubeType?.name ?? ct} Single PB!`);
 		},
 		[context.cubeType]
 	);
@@ -45,7 +45,7 @@ export function listenForPbEvents(context: ITimerContext) {
 		'avgPbEvent',
 		(ct) => {
 			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType.name} Average of 5 PB!`);
+			pbEventCallback(`New ${cubeType?.name ?? ct} Average of 5 PB!`);
 		},
 		[context.cubeType]
 	);
@@ -54,7 +54,7 @@ export function listenForPbEvents(context: ITimerContext) {
 		'singleAndAvgPbEvent',
 		(ct) => {
 			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType.name} Single and Average of 5 PB!`);
+			pbEventCallback(`New ${cubeType?.name ?? ct} Single and Average of 5 PB!`);
 		},
 		[context.cubeType]
 	);

@@ -1,12 +1,12 @@
 import MatchStats from '@/components/stats/common/MatchStats';
 import NumberBlock from '@/components/stats/common/NumberBlock';
 import StatsGrid from '@/components/stats/common/StatsGrid';
-import {StatsContext} from '@/components/stats/Stats';
+import {useStatsContext} from '@/components/stats/Stats';
 import {CaretDoubleUp, Eye, Hash} from 'phosphor-react';
-import React, {useContext} from 'react';
+import React from 'react';
 
 export default function AllStatsCommunity() {
-	const context = useContext(StatsContext);
+	const context = useStatsContext();
 	const {stats} = context;
 
 	const solvesInMatches = stats.match_solve_count || 0;

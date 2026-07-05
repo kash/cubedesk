@@ -19,7 +19,9 @@ type AppThemeOptions =
 	| 'module_color'
 	| 'button_color';
 
-export function useTheme(val: AppThemeOptions): AppTheme {
+export function useTheme(val: AppThemeOptions): AppTheme;
+export function useTheme(val: AppThemeOptions | undefined): AppTheme | null;
+export function useTheme(val: AppThemeOptions | undefined): AppTheme | null {
 	if (!val) {
 		return null;
 	}
@@ -41,7 +43,9 @@ export function useTheme(val: AppThemeOptions): AppTheme {
 	};
 }
 
-export function useColor(colorName: ColorName, backgroundColor?: AppThemeOptions): AppTheme {
+export function useColor(colorName: ColorName, backgroundColor?: AppThemeOptions): AppTheme;
+export function useColor(colorName: ColorName | undefined, backgroundColor?: AppThemeOptions): AppTheme | null;
+export function useColor(colorName: ColorName | undefined, backgroundColor?: AppThemeOptions): AppTheme | null {
 	const theme = useTheme(backgroundColor);
 
 	if (!colorName || !colorPalette[colorName]) {

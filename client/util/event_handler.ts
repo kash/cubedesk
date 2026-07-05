@@ -46,14 +46,14 @@ export function useEventListener<T extends keyof ClientEvent>(
 	handler: (data: ClientEvent[T]) => void,
 	deps: any[] = []
 ) {
-	const savedHandler = useRef<(data: ClientEvent[T]) => void>();
+	const savedHandler = useRef<((data: ClientEvent[T]) => void) | undefined>(undefined);
 
 	useEffect(() => {
 		savedHandler.current = handler;
 	}, [handler]);
 
 	useEffect(() => {
-		const eventListener = (event) => savedHandler.current(event);
+		const eventListener = (event) => savedHandler.current?.(event);
 
 		addEventListener(eventName, eventListener);
 

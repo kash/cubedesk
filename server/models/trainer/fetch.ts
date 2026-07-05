@@ -20,10 +20,10 @@ const AIRTABLE_TRAINER_TABLE = 'Trainer';
 
 export async function fetchTrainerAlgorithms() {
 	const exists = await keyExistsInRedis(redisKey);
+	const cachedResult = exists ? await getValueFromRedis(redisKey) : null;
 
 	let trainerVal: TrainerAlgorithm[];
-	if (exists) {
-		const cachedResult = await getValueFromRedis(redisKey);
+	if (cachedResult) {
 		trainerVal = JSON.parse(cachedResult);
 
 		const shouldUpdate = await shouldUpdateCache();

@@ -1,4 +1,4 @@
-import {Match} from '@/types/match';
+import {FullMatch, Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
 
 export enum PlayerStatus {
@@ -22,7 +22,7 @@ export enum MatchEndedBy {
 export interface MatchPlayerCache {
 	userId: string;
 	lastSolveAt: Date;
-	solveStartedAt: Date;
+	solveStartedAt: Date | null;
 	solving: boolean;
 	solveCount: number;
 	forfeitWarningSent: boolean;
@@ -36,7 +36,7 @@ export interface MatchCache {
 }
 
 export interface MatchStanding {
-	username: string;
+	username: string | null;
 	participantId: string;
 	inRoom: boolean;
 	userId: string;
@@ -56,7 +56,7 @@ export interface MatchInputChatMessage {
 }
 
 export interface MatchUpdate {
-	match: Match;
+	match: FullMatch;
 	standings: MatchStanding[];
 	spectatorCount: number;
 	playersInRoomCount: number;

@@ -5,7 +5,7 @@ import {trpc} from '@/util/trpc';
 const matchCache: Record<string, Match> = {};
 
 export async function getExistingMatch(
-	userId: string, // When null, the first participant will be used
+	userId: string | null, // When null, the first participant will be used
 	linkCode?: string,
 	forceFetch?: boolean
 ): Promise<Match | null> {

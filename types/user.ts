@@ -60,15 +60,16 @@ export interface PublicUserAccount {
 	admin: boolean;
 	mod: boolean;
 	created_at: Date;
-	username: string;
+	username: string | null;
 	verified: boolean;
 	// Not part of publicUserSelect, so most payloads omit it
-	last_solve_at?: Date;
+	last_solve_at?: Date | null;
 	banned_forever: boolean;
-	banned_until?: Date;
-	profile?: Profile;
-	elo_rating?: EloRating;
-	integrations?: Integration[];
+	banned_until?: Date | null;
+	profile?: Profile | null;
+	elo_rating?: EloRating | null;
+	// Only id/service_name are public-safe — full Integration rows contain auth tokens
+	integrations?: Pick<Integration, 'id' | 'service_name'>[];
 	badges?: Badge[];
 	top_solves?: TopSolve[];
 	top_averages?: TopAverage[];
@@ -78,7 +79,7 @@ export interface UserAccount extends PublicUserAccount {
 	email: string;
 	first_name: string;
 	last_name: string;
-	offline_hash: string;
+	offline_hash: string | null;
 	join_country: string;
 	timer_background?: TimerBackground;
 	bans?: BanLog[];

@@ -1,7 +1,7 @@
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {isTwo, processSmartTurns, rawTurnIsSame, reverseScramble} from '@/util/smart_scramble';
 import classNames from 'classnames';
-import React, {ReactNode, useContext} from 'react';
+import React, {ReactNode} from 'react';
 
 function turnClassName({green, orange, red}: {green?: boolean; orange?: boolean; red?: boolean}) {
 	return classNames(
@@ -13,7 +13,7 @@ function turnClassName({green, orange, red}: {green?: boolean; orange?: boolean;
 }
 
 export default function SmartScramble() {
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 
 	const {smartTurns, scramble, smartCanStart} = context;
 
@@ -21,7 +21,7 @@ export default function SmartScramble() {
 	const failedMoves: string[] = [];
 	let orangeMiddle = false;
 
-	const scrambleParts = scramble.split(' ');
+	const scrambleParts = (scramble ?? '').split(' ');
 	let scrambleBody: ReactNode = scrambleParts.map((turn, i) => {
 		const smartTurn = smartScramble[i];
 

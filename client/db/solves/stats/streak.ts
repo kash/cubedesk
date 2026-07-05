@@ -47,8 +47,8 @@ export function getSolveStreak(filter: FilterSolvesOptions): SolveStreak {
 
 	let tempStreak = 0;
 	let tempStreakSolves = 0;
-	let tempStreakStart = new Date(start);
-	let tempStreakEnd = new Date(end);
+	let tempStreakStart: Date | null = new Date(start);
+	let tempStreakEnd: Date | null = new Date(end);
 
 	const solvesPerSession: number[] = [];
 
@@ -56,7 +56,7 @@ export function getSolveStreak(filter: FilterSolvesOptions): SolveStreak {
 		let dayCount = 0;
 		while (solveIndex > -1) {
 			const solve = solves[solveIndex];
-			if (solve.started_at > start.getTime() && solve.ended_at < end.getTime()) {
+			if ((solve.started_at ?? 0) > start.getTime() && (solve.ended_at ?? 0) < end.getTime()) {
 				tempStreakSolves++;
 				dayCount++;
 				solveIndex--;
@@ -83,14 +83,14 @@ export function getSolveStreak(filter: FilterSolvesOptions): SolveStreak {
 				currentStreak = tempStreak;
 				currentEnded = true;
 				currentStreakSolves = tempStreakSolves;
-				currentStartDate = new Date(tempStreakStart);
+				currentStartDate = new Date(tempStreakStart ?? 0);
 			}
 
 			if (tempStreak > highestStreak) {
 				highestStreak = tempStreak;
 				highestStreakSolves = tempStreakSolves;
-				highestStartDate = new Date(tempStreakStart);
-				highestEndDate = new Date(tempStreakEnd);
+				highestStartDate = new Date(tempStreakStart ?? 0);
+				highestEndDate = new Date(tempStreakEnd ?? 0);
 			}
 
 			if (tempStreak > 0) {

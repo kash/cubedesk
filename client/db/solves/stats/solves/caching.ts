@@ -29,7 +29,10 @@ export type SolveStat = SolveCacheKey & {
 
 type FilterSolveStats = LokiQuery<SolveStat>;
 
-function cleanFilterSolvesOptions(filter: FilterSolvesOptions) {
+// Filters get flattened into dotted-key queries, so nested objects (e.g. solve) may be partial
+type SolveStatCacheFilter = FilterSolveStats | {solve: Partial<Solve>};
+
+function cleanFilterSolvesOptions(filter: SolveStatCacheFilter) {
 	for (const key of Object.keys(filter)) {
 		if (filter[key] === undefined || filter[key] === null) {
 			delete filter[key];
@@ -39,8 +42,8 @@ function cleanFilterSolvesOptions(filter: FilterSolvesOptions) {
 	return flatten(filter);
 }
 
-function getCacheKeyString(cacheKey: SolveCacheKey) {
-	return jsonStr(cacheKey);
+function getCacheKeyString(cacheKey: SolveCacheKey): string {
+	return jsonStr(cacheKey) ?? '';
 }
 
 export function fetchSolveCache(cacheKey: SolveCacheKey) {
@@ -74,7 +77,7 @@ export function clearSingleSolveStatCache(cacheStr: string) {
 	}
 }
 
-export function clearSolveStatCache(filter: FilterSolveStats) {
+export function clearSolveStatCache(filter: SolveStatCacheFilter) {
 	const solveCacheDb = getSolveCacheDb();
 
 	solveCacheDb
