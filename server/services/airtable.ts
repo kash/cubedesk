@@ -1,7 +1,9 @@
-import request from 'requestretry';
 import {logger} from './logger';
 
 const AIRTABLE_BASE_ID = 'app7tTyFM9gRZsI95';
+
+const MAX_ATTEMPTS = 3;
+const RETRY_DELAY = 1000;
 
 interface AirtableResponse {
 	records: any[];
@@ -9,7 +11,7 @@ interface AirtableResponse {
 }
 
 export async function getAllAirtableResults<T>(table: string): Promise<T[]> {
-	let offset = null;
+	let offset: string | undefined;
 
 	let results: T[] = [];
 
@@ -24,7 +26,7 @@ export async function getAllAirtableResults<T>(table: string): Promise<T[]> {
 				table,
 				offset,
 			});
-			offset = null;
+			offset = undefined;
 		}
 	} while (offset);
 
@@ -39,27 +41,38 @@ async function getAirtableResults(table: string, offset?: string): Promise<Airta
 	}
 
 	const bearerToken = process.env.AIRTABLE_BEARER_TOKEN;
-	const options = {
-		url,
-		json: true,
-		maxAttempts: 3,
-		retryDelay: 1000,
-		retryStrategy: request.RetryStrategies.HTTPOrNetworkError,
-		headers: {
-			Authorization: `Bearer ${bearerToken}`,
-		},
+	const headers = {
+		Authorization: `Bearer ${bearerToken}`,
 	};
 
-	return new Promise((resolve, reject) => {
-		console.time('Airtable API Call');
-		request(options, (error, response, body) => {
-			if (error) {
-				reject(error);
-				return;
-			}
+	console.time('Airtable API Call');
+	try {
+		return await fetchWithRetry(url, {headers}, MAX_ATTEMPTS);
+	} finally {
+		console.timeEnd('Airtable API Call');
+	}
+}
 
-			console.timeEnd('Airtable API Call');
-			resolve(body);
-		});
-	});
+async function fetchWithRetry(url: string, init: RequestInit, attemptsLeft: number): Promise<AirtableResponse> {
+	try {
+		const response = await fetch(url, init);
+
+		// Retry on server errors (HTTP or network error strategy)
+		if (response.status >= 500 && attemptsLeft > 1) {
+			await delay(RETRY_DELAY);
+			return fetchWithRetry(url, init, attemptsLeft - 1);
+		}
+
+		return (await response.json()) as AirtableResponse;
+	} catch (e) {
+		if (attemptsLeft > 1) {
+			await delay(RETRY_DELAY);
+			return fetchWithRetry(url, init, attemptsLeft - 1);
+		}
+		throw e;
+	}
+}
+
+function delay(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }

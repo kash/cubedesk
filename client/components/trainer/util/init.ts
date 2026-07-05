@@ -1,7 +1,7 @@
-import {AlgorithmOverrideInput, CustomTrainerWithUser, TrainerAlgorithm, TrainerFavorite} from '@/types/trainer';
-import {Serialized} from '@/types/serialized';
-import {trpc} from '@/util/trpc';
 import {initTrainerDb} from '@/db/trainer/init';
+import {Serialized} from '@/types/serialized';
+import {AlgorithmOverrideInput, CustomTrainerWithUser, TrainerFavorite} from '@/types/trainer';
+import {trpc} from '@/util/trpc';
 
 export async function initTrainerData() {
 	const [customAlgos, algos, overrides, favorites] = await Promise.all([

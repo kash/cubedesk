@@ -1,8 +1,8 @@
-import MatchTypeLogic from './match_type_interface';
-import {getHeadToHeadPlayerStatusInfo} from '../../../client/shared/game-logic/head-to-head';
 import {MatchParticipant} from '@/types/match';
 import {Match} from '@/types/match';
+import {getHeadToHeadPlayerStatusInfo} from '../../../client/shared/game-logic/head-to-head';
 import {GameType} from '../../../shared/match/consts';
+import MatchTypeLogic from './match_type_interface';
 
 export default class HeadToHead implements MatchTypeLogic {
 	params() {

@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
-import {getSolveCountByDateData} from '@/db/solves/stats/consistency';
 import BarGraph from '@/components/modules/bar-graph/BarGraph';
-import jsonStr from 'json-stable-stringify';
 import {FilterSolvesOptions} from '@/db/solves/query';
+import {getSolveCountByDateData} from '@/db/solves/stats/consistency';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import jsonStr from 'json-stable-stringify';
+import React, {useMemo} from 'react';
 
 interface Props {
 	days: number;

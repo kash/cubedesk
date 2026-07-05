@@ -1,13 +1,13 @@
-import React, {ReactNode} from 'react';
-import {X, Bluetooth} from 'phosphor-react';
-import {getTimeString} from '@/util/time';
-import {useDispatch} from 'react-redux';
 import {openModal} from '@/actions/general';
-import SolveInfo from '@/components/solve-info/SolveInfo';
-import {deleteSolveDb} from '@/db/solves/update';
-import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import Button from '@/components/common/Button';
+import SolveInfo from '@/components/solve-info/SolveInfo';
+import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
+import {deleteSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
+import {getTimeString} from '@/util/time';
+import {Bluetooth, X} from 'phosphor-react';
+import React, {ReactNode} from 'react';
+import {useDispatch} from 'react-redux';
 
 interface Props {
 	index: number;

@@ -1,11 +1,8 @@
-import {z} from 'zod';
-import {TRPCError} from '@trpc/server';
-import {protectedProcedure, publicProcedure, router} from '../trpc';
 import type {Prisma} from '@/generated/prisma/client';
+import {EloRatingWithUser, eloRatingWithUserInclude} from '@/types/elo';
 import {publicUserSelect} from '@/types/user';
-import {eloRatingWithUserInclude, EloRatingWithUser} from '@/types/elo';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
-import {serializeSolveTimestamps} from '../../util/serialize';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 import {getSolve} from '../../models/solve';
 import {
 	deleteTopAverage,
@@ -15,6 +12,9 @@ import {
 	submitTopAverage,
 	submitTopSolve,
 } from '../../models/top_solve';
+import {getPaginatedResponse} from '../../util/pagination/paginated_response';
+import {serializeSolveTimestamps} from '../../util/serialize';
+import {protectedProcedure, publicProcedure, router} from '../trpc';
 
 const PAGE_SIZE = 50;
 

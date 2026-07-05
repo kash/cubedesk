@@ -1,6 +1,6 @@
-import React from 'react';
 import LandingInfo from '@/components/landing/info/LandingInfo';
 import {resourceUri} from '@/util/storage';
+import React from 'react';
 
 export default function AboutCubeDesk() {
 	return (

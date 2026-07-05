@@ -1,9 +1,9 @@
-import React, {ReactElement, ReactNode} from 'react';
-import CSS from 'csstype';
 import Error from '@/components/common/inputs/Error';
-import InputLegend from '@/components/common/inputs/input/InputLegend';
 import InputInfo from '@/components/common/inputs/input/InputInfo';
+import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {cn} from '@/util/cn';
+import CSS from 'csstype';
+import React, {ReactElement, ReactNode} from 'react';
 
 const DEFAULT_MAX_WIDTH = 350;
 

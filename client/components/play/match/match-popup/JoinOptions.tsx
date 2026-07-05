@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
-import {UsersThree, UserPlus} from 'phosphor-react';
 import {MatchPopupContext, MatchPopupPage} from '@/components/play/match/match-popup/MatchPopup';
+import {UserPlus, UsersThree} from 'phosphor-react';
+import React, {useContext} from 'react';
 
 export default function JoinOptions() {
 	const {setPage} = useContext(MatchPopupContext);

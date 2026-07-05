@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {useInput} from '@/util/hooks/useInput';
-import {ScrambleType} from '@/util/cubes/cube_scrambles';
-import {IModalProps} from '@/components/common/modal/Modal';
-import Input from '@/components/common/inputs/input/Input';
 import Button from '@/components/common/Button';
-import ScramblePicker from '@/components/common/ScramblePicker';
-import {trpc} from '@/util/trpc';
-import {refreshSettings} from '@/db/settings/update';
+import Input from '@/components/common/inputs/input/Input';
+import {IModalProps} from '@/components/common/modal/Modal';
 import ModalHeader from '@/components/common/modal/ModalHeader';
+import ScramblePicker from '@/components/common/ScramblePicker';
+import {refreshSettings} from '@/db/settings/update';
+import {ScrambleType} from '@/util/cubes/cube_scrambles';
+import {useInput} from '@/util/hooks/useInput';
+import {trpc} from '@/util/trpc';
+import React, {useState} from 'react';
 
 export default function NewCubeType(props: IModalProps) {
 	const [name, setName] = useInput('');

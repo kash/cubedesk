@@ -1,6 +1,6 @@
-import Jimp from 'jimp';
 import {BufferListStream} from 'bl';
 import {ReadStream} from 'fs';
+import Jimp from 'jimp';
 
 export interface ImageFileToBuffer {
 	width: number; // -1 for auto

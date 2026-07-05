@@ -1,6 +1,6 @@
+import {useMatchContext} from '@/components/play/match/Match';
 import {MatchConst} from '@/shared/match/consts';
 import {socketClient} from '@/util/socket/socketio';
-import {useMatchContext} from '@/components/play/match/Match';
 
 export function handleOpenMatchLink() {
 	const {matchLoaded, linkCode} = useMatchContext();

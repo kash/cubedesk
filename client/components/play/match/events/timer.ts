@@ -1,6 +1,6 @@
+import {useMatchContext} from '@/components/play/match/Match';
 import {useEventListener} from '@/util/event_handler';
 import {socketClient} from '@/util/socket/socketio';
-import {useMatchContext} from '@/components/play/match/Match';
 
 export function listenForTimerEvents() {
 	const matchContext = useMatchContext();

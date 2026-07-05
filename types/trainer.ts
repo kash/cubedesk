@@ -6,8 +6,8 @@ import type {
 	Prisma,
 	TrainerFavorite,
 } from '@/generated/prisma/client';
-import {publicUserSelect} from './user';
 import {Serialized} from './serialized';
+import {publicUserSelect} from './user';
 
 export type {AlgorithmOverride, CustomTrainer, CustomTrainerDownload, CustomTrainerLike, TrainerFavorite};
 

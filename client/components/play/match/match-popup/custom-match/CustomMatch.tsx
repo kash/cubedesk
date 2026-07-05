@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {ArrowRight, Eye} from 'phosphor-react';
-import CopyText from '@/components/common/CopyText';
-import {trpc} from '@/util/trpc';
-import {getGameMetaData} from '@/components/play/Play';
-import {MatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
-import Loading from '@/components/common/Loading';
 import Button from '@/components/common/Button';
-import {toastError} from '@/util/toast';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import CopyText from '@/components/common/CopyText';
+import Loading from '@/components/common/Loading';
 import Tag from '@/components/common/Tag';
-import {GameType} from '../../../../../../shared/match/consts';
+import {MatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
+import {getGameMetaData} from '@/components/play/Play';
 import {Match} from '@/types/match';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {toastError} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import {ArrowRight, Eye} from 'phosphor-react';
+import React, {useContext, useEffect, useState} from 'react';
+import {GameType} from '../../../../../../shared/match/consts';
 
 export function getMatchLinkBase(gameType: GameType) {
 	const gameMetaData = getGameMetaData(gameType);

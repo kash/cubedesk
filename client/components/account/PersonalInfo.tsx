@@ -1,10 +1,10 @@
-import React from 'react';
-import Input from '@/components/common/inputs/input/Input';
-import {useMe} from '@/util/hooks/useMe';
-import {useInput} from '@/util/hooks/useInput';
-import {api} from '@/util/api';
 import Button from '@/components/common/Button';
+import Input from '@/components/common/inputs/input/Input';
+import {api} from '@/util/api';
+import {useInput} from '@/util/hooks/useInput';
+import {useMe} from '@/util/hooks/useMe';
 import {toastError} from '@/util/toast';
+import React from 'react';
 
 export default function PersonalInfo() {
 	const me = useMe();

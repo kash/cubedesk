@@ -1,9 +1,9 @@
-import {socketClient} from '@/util/socket/socketio';
+import {GameContext} from '@/components/play/game/Game';
 import {setExistingMatchData} from '@/components/play/match/events/helpers';
-import {useContext} from 'react';
 import {useMatchContext} from '@/components/play/match/Match';
 import {useMe} from '@/util/hooks/useMe';
-import {GameContext} from '@/components/play/game/Game';
+import {socketClient} from '@/util/socket/socketio';
+import {useContext} from 'react';
 
 export function listenForConnectEvent() {
 	const me = useMe();

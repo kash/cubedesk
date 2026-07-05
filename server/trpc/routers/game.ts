@@ -1,15 +1,15 @@
-import {z} from 'zod';
-import {TRPCError} from '@trpc/server';
-import {protectedProcedure, router} from '../trpc';
 import {GameType} from '@/generated/prisma/client';
 import {GameSessionWithRelations} from '@/types/game';
-import {serializeSolveTimestamps} from '../../util/serialize';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 import {
 	createGameSession,
 	deleteGameSession,
 	getGameSessionById,
 	getGameSessionsByUserId,
 } from '../../models/game_session';
+import {serializeSolveTimestamps} from '../../util/serialize';
+import {protectedProcedure, router} from '../trpc';
 
 function serializeGameSession(session: GameSessionWithRelations) {
 	return {

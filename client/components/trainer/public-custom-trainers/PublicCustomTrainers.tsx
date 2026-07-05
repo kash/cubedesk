@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import PublicTrainer from '@/components/trainer/public-custom-trainers/PublicTrainer';
 import Pagination, {PaginationTab} from '@/components/common/Pagination';
-import {trpc} from '@/util/trpc';
+import PublicTrainer from '@/components/trainer/public-custom-trainers/PublicTrainer';
 import PublicTrainerHeader from '@/components/trainer/public-custom-trainers/PublicTrainerHeader';
+import {trpc} from '@/util/trpc';
+import React, {useState} from 'react';
 
 const tabs: PaginationTab[] = [
 	{

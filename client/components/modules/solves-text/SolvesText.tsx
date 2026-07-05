@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {Download} from 'phosphor-react';
 import Button, {CommonType} from '@/components/common/Button';
-import CopyText from '@/components/common/CopyText';
-import dayjs from 'dayjs';
-import {getTimeString} from '@/util/time';
 import Checkbox from '@/components/common/Checkbox';
-import fileDownload from 'js-file-download';
-import {getCubeTypeName} from '@/util/cubes/util';
+import CopyText from '@/components/common/CopyText';
 import {Solve} from '@/types/solve';
+import {getCubeTypeName} from '@/util/cubes/util';
+import {getTimeString} from '@/util/time';
+import dayjs from 'dayjs';
+import fileDownload from 'js-file-download';
+import {Download} from 'phosphor-react';
+import React, {useState} from 'react';
 
 interface Props {
 	time?: number;

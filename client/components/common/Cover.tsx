@@ -1,6 +1,6 @@
-import React, {ReactNode} from 'react';
-import {Lock} from 'phosphor-react';
 import Tag from '@/components/common/Tag';
+import {Lock} from 'phosphor-react';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	tagText?: string;

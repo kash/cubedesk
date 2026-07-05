@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
-import {CaretDown} from 'phosphor-react';
-import {useDispatch} from 'react-redux';
-import ImportData, {ImportDataType} from '@/components/settings/data/import-data/ImportData';
-import fileDownload from 'js-file-download';
-import {removeTypename} from '@/util/object';
-import {trpc} from '@/util/trpc';
 import {openModal} from '@/actions/general';
+import Button, {CommonType} from '@/components/common/Button';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {clearOfflineData} from '@/components/layout/offline';
+import SettingRow from '@/components/settings/common/SettingRow';
+import ImportData, {ImportDataType} from '@/components/settings/data/import-data/ImportData';
 import {fetchSessions} from '@/db/sessions/query';
 import {fetchSolves} from '@/db/solves/query';
+import {removeTypename} from '@/util/object';
 import {toastError, toastSuccess} from '@/util/toast';
-import SettingRow from '@/components/settings/common/SettingRow';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import Button, {CommonType} from '@/components/common/Button';
-import {clearOfflineData} from '@/components/layout/offline';
+import {trpc} from '@/util/trpc';
+import fileDownload from 'js-file-download';
+import {CaretDown} from 'phosphor-react';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 export default function DataSettings() {
 	const dispatch = useDispatch();

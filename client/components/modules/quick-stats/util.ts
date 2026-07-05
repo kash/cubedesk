@@ -1,13 +1,13 @@
-import {FilterSolvesOptions} from '@/db/solves/query';
-import {StatsModuleBlock} from '@/types/stats-module';
 import {getStore} from '@/components/store';
-import {getWorstTime} from '@/db/solves/stats/solves/single/single-worst';
-import {SolveStat} from '@/db/solves/stats/solves/caching';
-import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
+import {FilterSolvesOptions} from '@/db/solves/query';
 import {getCurrentAverage} from '@/db/solves/stats/solves/average/average';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
-import {trpc} from '@/util/trpc';
+import {SolveStat} from '@/db/solves/stats/solves/caching';
+import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
+import {getWorstTime} from '@/db/solves/stats/solves/single/single-worst';
+import {StatsModuleBlock} from '@/types/stats-module';
 import {getCubeTypeInfo} from '@/util/cubes/util';
+import {trpc} from '@/util/trpc';
 
 export const STATS_GRID_SIZE = 4;
 

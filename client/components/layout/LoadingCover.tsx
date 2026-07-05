@@ -1,5 +1,5 @@
-import React from 'react';
 import LoadingIcon from '@/components/common/LoadingIcon';
+import React from 'react';
 
 interface Props {
 	fadeOut?: boolean;

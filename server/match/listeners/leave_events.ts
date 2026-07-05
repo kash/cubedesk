@@ -1,3 +1,12 @@
+import {Match} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
+import {MatchConst} from '../../../client/shared/match/consts';
+import {getMatchById, updateMatch} from '../../models/match';
+import {SocketClient} from '../init';
+import {getMatchIdFromPlayersRoom, getMatchPlayersRoomName} from '../match';
+import {abortMatch, resignMatch} from '../update/resign';
+import {emitMatchUpdate} from '../update/send';
+import {sendMatchUpdate} from '../update/standings';
 import {
 	getClientRooms,
 	getClientsInRoom,
@@ -6,15 +15,6 @@ import {
 	leaveAllRooms,
 	userExistsInRoom,
 } from '../util';
-import {getMatchIdFromPlayersRoom, getMatchPlayersRoomName} from '../match';
-import {getMatchById, updateMatch} from '../../models/match';
-import {sendMatchUpdate} from '../update/standings';
-import {Match} from '@/types/match';
-import {PublicUserAccount} from '@/types/user';
-import {emitMatchUpdate} from '../update/send';
-import {MatchConst} from '../../../client/shared/match/consts';
-import {SocketClient} from '../init';
-import {abortMatch, resignMatch} from '../update/resign';
 
 export function listenForLeaveEvents(client: SocketClient) {
 	// Player resigns match

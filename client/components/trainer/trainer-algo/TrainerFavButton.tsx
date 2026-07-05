@@ -1,9 +1,9 @@
-import React from 'react';
-import {Star} from 'phosphor-react';
 import Button from '@/components/common/Button';
-import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
+import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {toggleTrainerAlgoFavorite} from '@/db/trainer/operations';
+import {Star} from 'phosphor-react';
+import React from 'react';
 
 interface Props {
 	algoExt: TrainerAlgorithmExtended;

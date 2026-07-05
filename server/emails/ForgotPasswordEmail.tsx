@@ -1,7 +1,7 @@
-import React from 'react';
-import {Text} from '@react-email/components';
-import EmailLayout, {text} from './EmailLayout';
 import {EmailableUser} from '@/types/user';
+import {Text} from '@react-email/components';
+import React from 'react';
+import EmailLayout, {text} from './EmailLayout';
 
 export interface ForgotPasswordEmailProps {
 	user: EmailableUser;

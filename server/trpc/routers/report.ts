@@ -1,9 +1,9 @@
-import {z} from 'zod';
-import {TRPCError} from '@trpc/server';
-import {modProcedure, protectedProcedure, router} from '../trpc';
 import {reportInclude, ReportSummary} from '@/types/report';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 import {getPrisma} from '../../database';
 import {getUserById} from '../../models/user_account';
+import {modProcedure, protectedProcedure, router} from '../trpc';
 
 export function resolveReportsOfUserId(userId: string) {
 	return getPrisma().report.updateMany({

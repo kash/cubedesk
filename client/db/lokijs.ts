@@ -1,5 +1,5 @@
-import Loki from 'lokijs';
 import _ from 'lodash';
+import Loki from 'lokijs';
 import LokiIndexDbAdaptor from 'lokijs/src/loki-indexed-adapter.js';
 
 export interface LokiFetchOptions {

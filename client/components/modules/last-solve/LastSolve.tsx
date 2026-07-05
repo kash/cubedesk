@@ -1,16 +1,16 @@
+import {openModal} from '@/actions/general';
+import Button from '@/components/common/Button';
+import Scramble from '@/components/modules/scramble/ScrambleVisual';
+import SolveInfo from '@/components/solve-info/SolveInfo';
+import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
+import {fetchLastSolve, fetchSolve, FilterSolvesOptions} from '@/db/solves/query';
+import {deleteSolveDb} from '@/db/solves/update';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {getTimeString} from '@/util/time';
+import {Info} from 'phosphor-react';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {Info} from 'phosphor-react';
-import {openModal} from '@/actions/general';
-import SolveInfo from '@/components/solve-info/SolveInfo';
-import Scramble from '@/components/modules/scramble/ScrambleVisual';
-import {getTimeString} from '@/util/time';
-import {fetchLastSolve, fetchSolve, FilterSolvesOptions} from '@/db/solves/query';
-import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
-import {deleteSolveDb} from '@/db/solves/update';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
-import Button from '@/components/common/Button';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;

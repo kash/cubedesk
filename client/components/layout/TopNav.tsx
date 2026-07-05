@@ -1,7 +1,7 @@
-import React from 'react';
 import Button from '@/components/common/Button';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
+import React from 'react';
 
 interface Props {
 	white?: boolean;

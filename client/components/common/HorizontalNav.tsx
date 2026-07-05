@@ -1,7 +1,6 @@
-import React, {useEffect, useState, ReactNode} from 'react';
-import {Link} from 'react-router-dom';
-import InputLegend from '@/components/common/inputs/input/InputLegend';
 import Button from '@/components/common/Button';
+import InputLegend from '@/components/common/inputs/input/InputLegend';
+import React, {ReactNode, useEffect, useState} from 'react';
 
 export interface HorizontalNavTab {
 	id: string;

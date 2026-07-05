@@ -1,6 +1,6 @@
-import Notification from './notification';
-import {NotificationInput} from '../../@types/interfaces/server.interface';
 import {NotificationType} from '../../@types/enums';
+import {NotificationInput} from '../../@types/interfaces/server.interface';
+import Notification from './notification';
 
 interface EloRefundNotificationInputData {
 	eloRefunded: number;

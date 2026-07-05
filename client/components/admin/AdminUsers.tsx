@@ -1,12 +1,12 @@
-import React from 'react';
-import {trpc} from '@/util/trpc';
+import Input from '@/components/common/inputs/input/Input';
 import PaginatedList from '@/components/common/PaginatedList';
 import ProfileRow from '@/components/community/ProfileRow';
 import {PaginationArgsInput} from '@/types/pagination';
-import Input from '@/components/common/inputs/input/Input';
-import {useInput} from '@/util/hooks/useInput';
-import {PublicUser} from '@/types/user';
 import {Serialized} from '@/types/serialized';
+import {PublicUser} from '@/types/user';
+import {useInput} from '@/util/hooks/useInput';
+import {trpc} from '@/util/trpc';
+import React from 'react';
 
 export default function AdminUsers() {
 	const [query, setQuery] = useInput('');

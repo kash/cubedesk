@@ -1,7 +1,7 @@
-import React, {useRef, useState} from 'react';
-import {Copy, Check} from 'phosphor-react';
 import Button, {ButtonProps} from '@/components/common/Button';
 import {toastSuccess} from '@/util/toast';
+import {Check, Copy} from 'phosphor-react';
+import React, {useRef, useState} from 'react';
 
 export function copyText(source: string) {
 	const el = document.createElement('textarea');

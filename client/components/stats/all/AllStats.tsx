@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
-import StatSection from '@/components/stats/common/StatSection';
-import StatModule from '@/components/stats/common/StatModule';
-import SubStats from '@/components/stats/common/SubStats';
-import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
-import AllStatsFeatured from '@/components/stats/all/AllStatsFeatured';
-import AllStatsCommunity from '@/components/stats/all/AllStatsCommunity';
 import CubeDistro from '@/components/modules/cube-distro/CubeDistro';
+import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
+import AllStatsCommunity from '@/components/stats/all/AllStatsCommunity';
+import AllStatsFeatured from '@/components/stats/all/AllStatsFeatured';
+import StatModule from '@/components/stats/common/StatModule';
+import StatSection from '@/components/stats/common/StatSection';
+import SubStats from '@/components/stats/common/SubStats';
 import {StatsContext} from '@/components/stats/Stats';
+import React, {useContext} from 'react';
 
 export default function AllStats() {
 	const {filterOptions} = useContext(StatsContext);

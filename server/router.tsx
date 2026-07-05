@@ -1,22 +1,21 @@
+import type {Request} from 'express';
+import {minify} from 'html-minifier';
 import React, {ReactNode} from 'react';
-import {thunk} from 'redux-thunk';
 import ReactDOM from 'react-dom/server';
-import promise from 'redux-promise-middleware';
-import {applyMiddleware, createStore, Store} from 'redux';
+import {HelmetProvider} from 'react-helmet-async';
 import {Provider} from 'react-redux';
 import {StaticRouter, Switch} from 'react-router-dom';
-import {minify} from 'html-minifier';
+import {applyMiddleware, createStore, Store} from 'redux';
+import promise from 'redux-promise-middleware';
+import {thunk} from 'redux-thunk';
 import {PageContext, routes} from '../client/components/layout/Routes';
-import htmlTemplate, {HtmlPagePayload} from './html_template';
-import reducers from '../client/reducers/reducers';
-import {initUserAccount} from './models/store';
-
-import {HelmetProvider} from 'react-helmet-async';
 import {mapSingleRoute} from '../client/components/map-route';
+import reducers from '../client/reducers/reducers';
 import {TRPCProvider} from '../client/util/api';
-import {logger} from './services/logger';
 import {ErrorCode} from './constants/errors';
-import type {Request} from 'express';
+import htmlTemplate, {HtmlPagePayload} from './html_template';
+import {initUserAccount} from './models/store';
+import {logger} from './services/logger';
 
 const mappedRoutes: ReactNode[] = [];
 

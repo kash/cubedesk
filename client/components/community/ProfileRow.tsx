@@ -1,19 +1,19 @@
-import React, {ReactNode, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {Trash, Eye, User} from 'phosphor-react';
-import Avatar from '@/components/common/avatar/Avatar';
-import {trpc} from '@/util/trpc';
-import {getTimeString} from '@/util/time';
-import {useGeneral} from '@/util/hooks/useGeneral';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import {openModal} from '@/actions/general';
+import Avatar from '@/components/common/avatar/Avatar';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import ReportUser from '@/components/profile/ReportUser';
-import {useMe} from '@/util/hooks/useMe';
+import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
 import {PublicUser} from '@/types/user';
-import {Serialized} from '@/types/serialized';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useMe} from '@/util/hooks/useMe';
+import {getTimeString} from '@/util/time';
+import {trpc} from '@/util/trpc';
 import classNames from 'classnames';
+import {Eye, Trash, User} from 'phosphor-react';
+import React, {ReactNode, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 interface ProfileRowProps {
 	solve?: Solve;

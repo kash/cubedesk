@@ -1,8 +1,8 @@
-import MatchTypeLogic from './match_type_interface';
-import {getEliminationPlayerStatus} from '../../../client/shared/game-logic/elimination';
 import {MatchParticipant} from '@/types/match';
 import {Match} from '@/types/match';
+import {getEliminationPlayerStatus} from '../../../client/shared/game-logic/elimination';
 import {GameType} from '../../../shared/match/consts';
+import MatchTypeLogic from './match_type_interface';
 
 export default class Elimination implements MatchTypeLogic {
 	params() {

@@ -1,12 +1,12 @@
-import confetti from 'canvas-confetti';
-import {useEventListener} from '@/util/event_handler';
-import {ITimerContext} from '@/components/timer/Timer';
-import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
-import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
-import {FilterSolvesOptions} from '@/db/solves/query';
 import {displayTimerAlert} from '@/components/timer/helpers/notification';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {ITimerContext} from '@/components/timer/Timer';
 import {getSetting} from '@/db/settings/query';
+import {FilterSolvesOptions} from '@/db/solves/query';
+import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
+import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useEventListener} from '@/util/event_handler';
+import confetti from 'canvas-confetti';
 
 let lastConfetti: Date = null;
 

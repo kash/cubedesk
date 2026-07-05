@@ -1,5 +1,5 @@
-import React from 'react';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
+import React from 'react';
 
 export default function CsTimerInstructions() {
 	return (

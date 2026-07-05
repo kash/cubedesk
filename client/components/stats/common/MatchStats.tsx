@@ -1,7 +1,7 @@
+import StatModule from '@/components/stats/common/StatModule';
+import {StatsContext} from '@/components/stats/Stats';
 import React, {useContext} from 'react';
 import {PieChart} from 'react-minimal-pie-chart';
-import {StatsContext} from '@/components/stats/Stats';
-import StatModule from '@/components/stats/common/StatModule';
 
 export default function MatchStats() {
 	const context = useContext(StatsContext);

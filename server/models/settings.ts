@@ -1,7 +1,7 @@
-import {v4 as uuid} from 'uuid';
 import type {Prisma, Setting} from '@/generated/prisma/client';
-import {getPrisma} from '../database';
 import {UserAccount} from '@/types/user';
+import {v4 as uuid} from 'uuid';
+import {getPrisma} from '../database';
 
 export function getSettingsByUserId(userId: string) {
 	return getPrisma().setting.findUnique({

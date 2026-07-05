@@ -1,12 +1,12 @@
 import Modal from '@/components/common/modal/Modal';
-import Timer from '@/components/timer/Timer';
-import React, {ReactNode, useContext} from 'react';
-import onSolve from '@/components/play/helpers/on-solve';
 import {GameContext, getGameLink} from '@/components/play/game/Game';
+import onSolve from '@/components/play/helpers/on-solve';
 import Match, {MatchContext} from '@/components/play/match/Match';
 import {TimerProps} from '@/components/timer/@types/interfaces';
+import Timer from '@/components/timer/Timer';
 import {PlayerStatus} from '@/shared/match/types';
 import {useMe} from '@/util/hooks/useMe';
+import React, {ReactNode, useContext} from 'react';
 
 export default function GameTimer() {
 	const context = useContext(GameContext);

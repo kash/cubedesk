@@ -1,10 +1,10 @@
 import {snakeCase} from 'change-case';
-import {trpc} from '../../util/trpc';
-import {AllSettings, getSetting} from './query';
-import {getSettingsDb, SettingValue} from './init';
 import {updateOfflineHash} from '../../components/layout/offline';
 import {emitEvent} from '../../util/event_handler';
+import {trpc} from '../../util/trpc';
+import {getSettingsDb, SettingValue} from './init';
 import {setLocalSettingValue} from './local';
+import {AllSettings, getSetting} from './query';
 
 export const MOBILE_FONT_SIZE_MULTIPLIER = 0.75;
 

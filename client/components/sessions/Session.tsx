@@ -1,20 +1,20 @@
-import React, {CSSProperties, ReactNode} from 'react';
-import {useDispatch} from 'react-redux';
-import classNames from 'classnames';
-import {DotsThreeOutlineVertical} from 'phosphor-react';
-import {setCubeType, setCurrentSession} from '@/db/settings/update';
-import {v4 as uuid} from 'uuid';
-import {getDateFromNow} from '@/util/dates';
-import {fetchLastCubeTypeForSession} from '@/db/solves/query';
-import {Session as SessionSchema} from '@/types/session';
-import {createSessionDb, deleteSessionDb, mergeSessionsDb} from '@/db/sessions/update';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {reactState} from '@/@types/react';
 import {openModal} from '@/actions/general';
 import ConfirmModal from '@/components/common/ConfirmModal';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import {fetchSessionById} from '@/db/sessions/query';
+import {createSessionDb, deleteSessionDb, mergeSessionsDb} from '@/db/sessions/update';
+import {setCubeType, setCurrentSession} from '@/db/settings/update';
+import {fetchLastCubeTypeForSession} from '@/db/solves/query';
+import {Session as SessionSchema} from '@/types/session';
+import {getDateFromNow} from '@/util/dates';
 import {useSettings} from '@/util/hooks/useSettings';
 import {toastSuccess} from '@/util/toast';
-import {reactState} from '@/@types/react';
+import classNames from 'classnames';
+import {DotsThreeOutlineVertical} from 'phosphor-react';
+import React, {CSSProperties, ReactNode} from 'react';
+import {useDispatch} from 'react-redux';
+import {v4 as uuid} from 'uuid';
 
 interface Props {
 	setSelectedSessionId: reactState<string>;

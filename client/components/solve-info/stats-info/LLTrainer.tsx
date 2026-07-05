@@ -1,7 +1,7 @@
-import React from 'react';
-import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
+import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
 import {Solve} from '@/types/solve';
+import React from 'react';
 
 interface Props {
 	solve: Solve;

@@ -1,17 +1,17 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import classNames from 'classnames';
-import {Placeholder, WifiSlash, Check, Clock, X, Trophy} from 'phosphor-react';
-import {addEventListener} from '@/util/event_handler';
-import {getTimeString} from '@/util/time';
 import Avatar from '@/components/common/avatar/Avatar';
 import Emblem from '@/components/common/Emblem';
+import {MatchContext} from '@/components/play/match/Match';
 import {getMatchClientEvent} from '@/shared/match/client-events';
 import {MatchClientEvent} from '@/shared/match/events';
 import {MatchStanding, PlayerStatus} from '@/shared/match/types';
-import {MatchContext} from '@/components/play/match/Match';
 import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
+import {addEventListener} from '@/util/event_handler';
 import {useMe} from '@/util/hooks/useMe';
+import {getTimeString} from '@/util/time';
+import classNames from 'classnames';
+import {Check, Clock, Placeholder, Trophy, WifiSlash, X} from 'phosphor-react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 export interface ChallengerProps {
 	solves: Solve[];

@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
-import {layoutScramble} from '@/util/vendor/scramble_layout';
 import Face from '@/components/modules/scramble/Face';
 import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
+import {layoutScramble} from '@/util/vendor/scramble_layout';
+import React, {useMemo} from 'react';
 
 export const COLOR_MAP = {
 	O: '#FF9826',

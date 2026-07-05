@@ -1,14 +1,14 @@
-import React, {ReactNode, useEffect} from 'react';
 import Nav from '@/components/layout/nav/Nav';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
-import {ToastContainer} from 'react-toastify';
-import {useGeneral} from '@/util/hooks/useGeneral';
-import {useSettings} from '@/util/hooks/useSettings';
 import {updateThemeColors} from '@/components/layout/themes';
-import {useMe} from '@/util/hooks/useMe';
-import DemoWarning from '@/components/layout/wrapper/DemoWarning';
-import {useRouteMatch} from 'react-router-dom';
 import DemoRestricted from '@/components/layout/wrapper/DemoRestricted';
+import DemoWarning from '@/components/layout/wrapper/DemoWarning';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useMe} from '@/util/hooks/useMe';
+import {useSettings} from '@/util/hooks/useSettings';
+import React, {ReactNode, useEffect} from 'react';
+import {useRouteMatch} from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
 
 interface Props {
 	noPadding?: boolean;

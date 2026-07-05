@@ -1,5 +1,5 @@
-import {UserEloForCubeType} from '../../../models/elo_rating';
 import {generateId} from '../../../../shared/code';
+import {UserEloForCubeType} from '../../../models/elo_rating';
 import {calculateNewElo, EloConst} from './calc_elo';
 
 const DEFAULT_CUBE_TYPE = '333';

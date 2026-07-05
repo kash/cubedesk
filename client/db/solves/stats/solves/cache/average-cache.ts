@@ -1,8 +1,8 @@
 import {Solve} from '@/types/solve';
-import {clearSingleSolveStatCache, fetchAllSolveCaches} from '../caching';
-import {getAveragePB} from '../average/average-pb';
 import {getCurrentAverage} from '../average/average';
+import {getAveragePB} from '../average/average-pb';
 import {getAverageWorst} from '../average/average-worst';
+import {clearSingleSolveStatCache, fetchAllSolveCaches} from '../caching';
 
 export function checkForAveragePBUpdate(solve: Solve, isNew: boolean) {
 	const cached = fetchAllSolveCaches({

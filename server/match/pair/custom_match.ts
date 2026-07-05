@@ -1,11 +1,10 @@
 import {Match} from '@/types/match';
-import {getMatchPlayersRoomName, userExistsInMatch} from '../match';
-import {getClientsInRoom, getDetailedClientInfo, isClientInRoom, joinRoom} from '../util';
-import MatchTypeLogic from '../match_types/match_type_interface';
 import {Socket} from 'socket.io';
-import {sendMatchUpdate} from '../update/standings';
-import {pairPlayersInRoom} from './start_match';
 import {getMatchTypeByMatch} from '../init';
+import {getMatchPlayersRoomName, userExistsInMatch} from '../match';
+import {sendMatchUpdate} from '../update/standings';
+import {getClientsInRoom, getDetailedClientInfo, isClientInRoom, joinRoom} from '../util';
+import {pairPlayersInRoom} from './start_match';
 
 export async function matchPlayersInCustomMatch(client: Socket, match: Match) {
 	const matchRoomName = getMatchPlayersRoomName(match);

@@ -1,8 +1,15 @@
-import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
-import classNames from 'classnames';
-import {v4 as uuid} from 'uuid';
-import {Plus, ArrowRight, Star} from 'phosphor-react';
+import {openModal} from '@/actions/general';
+import Button, {CommonType} from '@/components/common/Button';
+import Empty from '@/components/common/Empty';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import LinkButton from '@/components/common/LinkButton';
 import PageTitle from '@/components/common/PageTitle';
+import AlgoModule from '@/components/modules/algo-module/AlgoModule';
+import {TimerModuleType} from '@/components/timer/@types/enums';
+import Timer from '@/components/timer/Timer';
+import AddCustom from '@/components/trainer/add-custom/AddCustom';
+import TrainerAlgo from '@/components/trainer/trainer-algo/TrainerAlgo';
+import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {
 	fetchTrainerAlgorithmCount,
 	fetchTrainerAlgorithmCubeTypes,
@@ -10,27 +17,20 @@ import {
 	fetchTrainerAlgorithmTypes,
 	FilterTrainerOptions,
 } from '@/db/trainer/query';
-import Chance from 'chance';
+import {Solve} from '@/types/solve';
 import {CubeType} from '@/util/cubes/cube_types';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import TrainerAlgo from '@/components/trainer/trainer-algo/TrainerAlgo';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import Empty from '@/components/common/Empty';
-import {useRouteMatch} from 'react-router-dom';
-import {useTrainerDb} from '@/util/hooks/useTrainerDb';
-import {openModal} from '@/actions/general';
-import memoize from 'memoizee';
-import Timer from '@/components/timer/Timer';
-import {useDispatch} from 'react-redux';
-import _ from 'lodash';
-import {TrainerAlgorithmExtended} from '@/db/trainer/init';
-import {TimerModuleType} from '@/components/timer/@types/enums';
-import AlgoModule from '@/components/modules/algo-module/AlgoModule';
-import LinkButton from '@/components/common/LinkButton';
-import Button, {CommonType} from '@/components/common/Button';
-import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import {useToggle} from '@/util/hooks/useToggle';
-import {Solve} from '@/types/solve';
+import {useTrainerDb} from '@/util/hooks/useTrainerDb';
+import Chance from 'chance';
+import classNames from 'classnames';
+import _ from 'lodash';
+import memoize from 'memoizee';
+import {ArrowRight, Plus, Star} from 'phosphor-react';
+import React, {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useRouteMatch} from 'react-router-dom';
+import {v4 as uuid} from 'uuid';
 
 export interface ITrainerContext {
 	cubeType: CubeType;

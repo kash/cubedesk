@@ -1,7 +1,6 @@
-import {getPrisma} from '../database';
-import Notification from '../resources/notification_types/notification';
-import {UserAccount, publicUserSelect} from '@/types/user';
 import {Notification as NotificationSchema} from '@/types/notification';
+import {publicUserSelect, UserAccount} from '@/types/user';
+import {getPrisma} from '../database';
 
 // triggering_user must stay a safe select — tRPC has no schema masking, and a
 // full include would send that user's password hash to the client

@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
 import {cn} from '@/util/cn';
+import React, {useRef} from 'react';
 
 interface Props {
 	text: string;

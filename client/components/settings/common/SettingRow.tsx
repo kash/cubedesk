@@ -1,13 +1,13 @@
-import React, {ReactNode} from 'react';
-import classNames from 'classnames';
-import Switch from '@/components/common/Switch';
-import {setSetting} from '@/db/settings/update';
-import {toastError} from '@/util/toast';
-import {useInput} from '@/util/hooks/useInput';
 import Input from '@/components/common/inputs/input/Input';
-import {useSettings} from '@/util/hooks/useSettings';
-import {AllSettings} from '@/db/settings/query';
 import LoggedInOnly from '@/components/common/LoggedInOnly';
+import Switch from '@/components/common/Switch';
+import {AllSettings} from '@/db/settings/query';
+import {setSetting} from '@/db/settings/update';
+import {useInput} from '@/util/hooks/useInput';
+import {useSettings} from '@/util/hooks/useSettings';
+import {toastError} from '@/util/toast';
+import classNames from 'classnames';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	title: string;

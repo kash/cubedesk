@@ -1,13 +1,13 @@
-import React, {useContext} from 'react';
-import classNames from 'classnames';
-import {getCurrentAverage} from '@/db/solves/stats/solves/average/average';
+import {openModal} from '@/actions/general';
+import HistoryModal from '@/components/modules/history/HistoryModal';
 import {StatsContext} from '@/components/stats/Stats';
+import {getCurrentAverage} from '@/db/solves/stats/solves/average/average';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {SolveStat} from '@/db/solves/stats/solves/caching';
 import {getTimeString} from '@/util/time';
+import classNames from 'classnames';
+import React, {useContext} from 'react';
 import {useDispatch} from 'react-redux';
-import HistoryModal from '@/components/modules/history/HistoryModal';
-import {openModal} from '@/actions/general';
 
 interface Props {
 	count: number;

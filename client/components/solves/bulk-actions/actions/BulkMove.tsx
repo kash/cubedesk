@@ -1,14 +1,14 @@
-import React, {useMemo} from 'react';
-import {openModal} from '../../../../actions/general';
 import ConfirmModal from '@/components/common/ConfirmModal';
-import {toastSuccess} from '../../../../util/toast';
-import {Solve} from '@/types/solve';
-import {useDispatch} from 'react-redux';
-import {trpc} from '@/util/trpc';
-import Button from '../../../common/Button';
-import SessionSelector from './SessionSelector';
 import {Session} from '@/types/session';
+import {Solve} from '@/types/solve';
+import {trpc} from '@/util/trpc';
+import React, {useMemo} from 'react';
+import {useDispatch} from 'react-redux';
+import {openModal} from '../../../../actions/general';
+import {toastSuccess} from '../../../../util/toast';
+import Button from '../../../common/Button';
 import {initAllSolves} from '../../../layout/init';
+import SessionSelector from './SessionSelector';
 
 interface Props {
 	disabled?: boolean;

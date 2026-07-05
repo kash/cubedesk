@@ -1,6 +1,6 @@
 import {CronJob} from 'cron';
-import {logger} from './logger';
 import {matchPlayersInLobby} from '../match/pair/pair_logic';
+import {logger} from './logger';
 import {initSiteMapGeneration} from './sitemap';
 
 export function initCronJobs() {

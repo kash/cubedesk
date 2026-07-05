@@ -1,7 +1,7 @@
-import React, {ReactNode, useContext} from 'react';
-import classNames from 'classnames';
-import {isTwo, processSmartTurns, rawTurnIsSame, reverseScramble} from '@/util/smart_scramble';
 import {TimerContext} from '@/components/timer/Timer';
+import {isTwo, processSmartTurns, rawTurnIsSame, reverseScramble} from '@/util/smart_scramble';
+import classNames from 'classnames';
+import React, {ReactNode, useContext} from 'react';
 
 function turnClassName({green, orange, red}: {green?: boolean; orange?: boolean; red?: boolean}) {
 	return classNames(

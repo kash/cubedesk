@@ -1,6 +1,4 @@
-import {S3Client} from '@aws-sdk/client-s3-node/S3Client';
-import {PutObjectCommand, PutObjectInput} from '@aws-sdk/client-s3-node/commands/PutObjectCommand';
-import {DeleteObjectCommand} from '@aws-sdk/client-s3-node/commands/DeleteObjectCommand';
+import {DeleteObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
 import {logger} from './logger';
 
 const BUCKET_NAME = 'cubedesk';
@@ -8,12 +6,12 @@ const BUCKET_NAME = 'cubedesk';
 const isDev = process.env.ENV === 'development';
 const s3 = isDev ? undefined : new S3Client({region: 'us-west-2'});
 
-export async function uploadObject(fileBuffer: Buffer, path: string, options: Partial<PutObjectInput> = {}) {
+export async function uploadObject(fileBuffer: Buffer, path: string, options: Partial<PutObjectCommandInput> = {}) {
 	if (isDev) {
 		logger.warn('S3 is not available in development environment - Upload Object command is ignored');
 		return Promise.resolve();
 	}
-	const params: PutObjectInput = {
+	const params: PutObjectCommandInput = {
 		Bucket: BUCKET_NAME,
 		Key: path,
 		Body: fileBuffer,

@@ -1,9 +1,9 @@
-import {v4 as uuid} from 'uuid';
-import {getPrisma} from '../database';
-import {Prisma} from '@/generated/prisma/client';
-import {getAverage} from '../../client/db/solves/stats/solves/average/average';
 import type {Solve} from '@/generated/prisma/client';
+import {Prisma} from '@/generated/prisma/client';
 import {publicUserSelect} from '@/types/user';
+import {v4 as uuid} from 'uuid';
+import {getAverage} from '../../client/db/solves/stats/solves/average/average';
+import {getPrisma} from '../database';
 
 export async function deleteAllPublishedSolves(user) {
 	return Promise.all([deleteAllTopSolves(user), deleteAllTopAverages(user)]);

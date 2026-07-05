@@ -1,8 +1,8 @@
+import {GameType} from '@/generated/prisma/client';
 import {Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
-import {MatchRoom} from '../../client/shared/match/events';
 import {MatchConst} from '../../client/shared/match/consts';
-import {GameType} from '@/generated/prisma/client';
+import {MatchRoom} from '../../client/shared/match/events';
 
 export function getRematchRoomName(match: Match): string {
 	return `${MatchConst.REMATCH_ROOM_PREFIX}${match.id}`;

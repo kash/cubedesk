@@ -1,9 +1,9 @@
-import React from 'react';
-import classNames from 'classnames';
-import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from '@/components/timer/helpers/timers';
-import {setTimerParam, setTimerParams} from '@/components/timer/helpers/params';
 import Tag, {TagProps} from '@/components/common/Tag';
+import {setTimerParam, setTimerParams} from '@/components/timer/helpers/params';
+import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from '@/components/timer/helpers/timers';
 import {getTimerStore} from '@/util/store/getTimer';
+import classNames from 'classnames';
+import React from 'react';
 
 const HIDE_NOTIF_TIMEOUT = 7000;
 

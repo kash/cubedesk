@@ -1,5 +1,5 @@
-import type {PublicUserAccount} from './user';
 import type {SmartDevice} from './smart-device';
+import type {PublicUserAccount} from './user';
 
 export interface SolveInput {
 	id?: string;

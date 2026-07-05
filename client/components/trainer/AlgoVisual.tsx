@@ -1,8 +1,8 @@
-import React, {useMemo, ReactNode} from 'react';
-import classNames from 'classnames';
-import {useSettings} from '@/util/hooks/useSettings';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useSettings} from '@/util/hooks/useSettings';
+import classNames from 'classnames';
 import CSS from 'csstype';
+import React, {ReactNode, useMemo} from 'react';
 
 interface Props {
 	threeD?: boolean;

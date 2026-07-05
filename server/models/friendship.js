@@ -1,5 +1,5 @@
-import {getPrisma} from '../database';
 import {v4 as uuid} from 'uuid';
+import {getPrisma} from '../database';
 
 export function getFriendships(user) {
 	return getPrisma().friendship.findMany({

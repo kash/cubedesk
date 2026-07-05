@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import TargetSession from '@/components/play/target/target-sessions/TargetSession';
 import Empty from '@/components/common/Empty';
-import {getGameMetaData} from '@/components/play/Play';
-import ModalHeader from '@/components/common/modal/ModalHeader';
-import {GameType} from '../../../../../shared/match/consts';
 import LoadingIcon from '@/components/common/LoadingIcon';
-import {trpc} from '@/util/trpc';
-import {Serialized} from '@/types/serialized';
+import ModalHeader from '@/components/common/modal/ModalHeader';
+import {getGameMetaData} from '@/components/play/Play';
+import TargetSession from '@/components/play/target/target-sessions/TargetSession';
 import {GameSessionWithRelations} from '@/types/game';
+import {Serialized} from '@/types/serialized';
+import {trpc} from '@/util/trpc';
+import React, {useEffect, useState} from 'react';
+import {GameType} from '../../../../../shared/match/consts';
 
 interface Props {
 	gameType: GameType;

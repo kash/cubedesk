@@ -1,8 +1,8 @@
-import {getPlayerPairsByGameType} from './elo_matching';
-import {testGenerateMatchLobbyRows} from '../../__test__/match_lobby';
-import * as SocketUtils from '../../util';
 import {MatchLobby} from '@/types/match';
+import {testGenerateMatchLobbyRows} from '../../__test__/match_lobby';
 import {GameType} from '../../../../shared/match/consts';
+import * as SocketUtils from '../../util';
+import {getPlayerPairsByGameType} from './elo_matching';
 
 describe('match players in lobby', () => {
 	test('leave one unmatched', async () => {

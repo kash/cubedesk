@@ -1,15 +1,15 @@
+import {openModal} from '@/actions/general';
+import Button from '@/components/common/Button';
+import Tag from '@/components/common/Tag';
+import AlgoVisual from '@/components/trainer/AlgoVisual';
+import EditAlgo from '@/components/trainer/EditAlgo';
+import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
+import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
+import {TrainerAlgorithmExtended} from '@/db/trainer/init';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useToggle} from '@/util/hooks/useToggle';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {openModal} from '@/actions/general';
-import EditAlgo from '@/components/trainer/EditAlgo';
-import Button from '@/components/common/Button';
-import AlgoVisual from '@/components/trainer/AlgoVisual';
-import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
-import {useToggle} from '@/util/hooks/useToggle';
-import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
-import Tag from '@/components/common/Tag';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 
 interface Props {
 	algoExt: TrainerAlgorithmExtended;

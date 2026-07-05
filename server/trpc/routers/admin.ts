@@ -1,9 +1,10 @@
-import {z} from 'zod';
+import {PublicUser, publicUserSelect} from '@/types/user';
 import {TRPCError} from '@trpc/server';
-import {adminProcedure, router} from '../trpc';
-import {publicUserSelect, PublicUser} from '@/types/user';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
+import {z} from 'zod';
 import {getUserAccountForAdmin} from '../../models/admin';
+import {createBanLog, deactivateAllBanLogs} from '../../models/ban_log';
+import {refundElo} from '../../models/elo_log';
+import {deleteAllPublishedSolves} from '../../models/top_solve';
 import {
 	banUserAccountForever,
 	banUserAccountUntil,
@@ -13,9 +14,8 @@ import {
 	unbanUserAccount,
 	updateUserAccountWithParams,
 } from '../../models/user_account';
-import {deleteAllPublishedSolves} from '../../models/top_solve';
-import {createBanLog, deactivateAllBanLogs} from '../../models/ban_log';
-import {refundElo} from '../../models/elo_log';
+import {getPaginatedResponse} from '../../util/pagination/paginated_response';
+import {adminProcedure, router} from '../trpc';
 import {resolveReportsOfUserId} from './report';
 
 const userIdInput = z.object({

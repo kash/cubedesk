@@ -1,5 +1,5 @@
-import React, {ReactElement} from 'react';
 import PageTitle from '@/components/common/PageTitle';
+import React, {ReactElement} from 'react';
 
 interface Props {
 	children: ReactElement;

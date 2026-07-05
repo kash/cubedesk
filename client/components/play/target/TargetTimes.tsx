@@ -1,17 +1,17 @@
-import React, {ReactNode, useContext} from 'react';
-import {useDispatch} from 'react-redux';
-import classNames from 'classnames';
-import {getTimeString} from '@/util/time';
 import {openModal} from '@/actions/general';
-import SolveInfo from '@/components/solve-info/SolveInfo';
+import Button from '@/components/common/Button';
 import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
-import {PlayerStatus} from '@/shared/match/types';
-import Button from '@/components/common/Button';
-import {socketClient} from '@/util/socket/socketio';
+import SolveInfo from '@/components/solve-info/SolveInfo';
 import {updateSolveDb} from '@/db/solves/update';
-import {useMe} from '@/util/hooks/useMe';
+import {PlayerStatus} from '@/shared/match/types';
 import {Solve} from '@/types/solve';
+import {useMe} from '@/util/hooks/useMe';
+import {socketClient} from '@/util/socket/socketio';
+import {getTimeString} from '@/util/time';
+import classNames from 'classnames';
+import React, {ReactNode, useContext} from 'react';
+import {useDispatch} from 'react-redux';
 
 const solveInfoClasses =
 	'flex flex-row items-center p-0 text-right text-base font-bold whitespace-pre';

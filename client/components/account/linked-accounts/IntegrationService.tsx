@@ -1,12 +1,12 @@
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 import Button from '@/components/common/Button';
-import {Check, ArrowRight} from 'phosphor-react';
 import Loading from '@/components/common/Loading';
-import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../../../shared/integration';
-import {toastError} from '@/util/toast';
-import {trpc} from '@/util/trpc';
 import {SafeIntegration} from '@/types/integration';
 import {Serialized} from '@/types/serialized';
+import {toastError} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import {ArrowRight, Check} from 'phosphor-react';
+import React, {ReactNode, useEffect, useMemo, useState} from 'react';
+import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../../../shared/integration';
 
 interface Props {
 	integrationType: IntegrationType;

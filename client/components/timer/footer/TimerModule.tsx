@@ -1,21 +1,21 @@
-import React, {ReactNode, useContext} from 'react';
-import classNames from 'classnames';
-import {CaretDown} from 'phosphor-react';
-import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
-import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import History from '@/components/modules/history/History';
 import LastSolve from '@/components/modules/last-solve/LastSolve';
+import QuickStats from '@/components/modules/quick-stats/QuickStats';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
+import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
 import TimeChart from '@/components/modules/time-chart/TimeChart';
 import TimeDistro from '@/components/modules/time-distro/TimeDistro';
-import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
-import {snakeCase} from 'change-case';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
+import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
 import {TimerContext} from '@/components/timer/Timer';
 import {setSetting} from '@/db/settings/update';
-import {useSettings} from '@/util/hooks/useSettings';
-import QuickStats from '@/components/modules/quick-stats/QuickStats';
 import {useGeneral} from '@/util/hooks/useGeneral';
+import {useSettings} from '@/util/hooks/useSettings';
+import {snakeCase} from 'change-case';
+import classNames from 'classnames';
+import {CaretDown} from 'phosphor-react';
+import React, {ReactNode, useContext} from 'react';
 
 interface Props {
 	index: number;

@@ -1,7 +1,7 @@
-import React from 'react';
-import {ArrowLeft} from 'phosphor-react';
-import LinkButton from '@/components/common/LinkButton';
 import {CommonType} from '@/components/common/Button';
+import LinkButton from '@/components/common/LinkButton';
+import {ArrowLeft} from 'phosphor-react';
+import React from 'react';
 
 export default function PublicTrainerHeader() {
 	return (

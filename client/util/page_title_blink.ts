@@ -2,7 +2,7 @@ let changeTitleInterval = null;
 let pageHasFocus = false;
 let isOldTitle = false;
 let init = false;
-let originalPageTitle = 'CubeDesk';
+const originalPageTitle = 'CubeDesk';
 
 export function initPageTitleBlink() {
 	if (init) {

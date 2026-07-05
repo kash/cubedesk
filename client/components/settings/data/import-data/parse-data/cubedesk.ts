@@ -1,9 +1,9 @@
-import {v4 as uuid} from 'uuid';
 import {IImportDataContext, ImportableData} from '@/components/settings/data/import-data/ImportData';
-import {SessionInput} from '@/types/session';
-import {fetchSessions} from '@/db/sessions/query';
 import {parseCubeDeskLegacyData} from '@/components/settings/data/import-data/parse-data/cubedesk-legacy';
+import {fetchSessions} from '@/db/sessions/query';
+import {SessionInput} from '@/types/session';
 import {Solve} from '@/types/solve';
+import {v4 as uuid} from 'uuid';
 
 interface CubeDeskExportSchema {
 	solves: Solve[];

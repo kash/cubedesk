@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
 import {logOut} from '@/util/auth/logout';
+import {useEffect} from 'react';
 
 export default function ForceSignOut() {
 	useEffect(() => {

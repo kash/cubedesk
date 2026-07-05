@@ -1,12 +1,12 @@
-import React, {useMemo, useState} from 'react';
-import {CaretDown} from 'phosphor-react';
-import {FilterSolvesOptions} from '@/db/solves/query';
-import jsonStr from 'json-stable-stringify';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
-import {getTimeDistro} from '@/db/solves/stats/time-distro';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import BarGraph from '@/components/modules/bar-graph/BarGraph';
 import dummyData from '@/components/modules/time-distro/dummy-data';
+import {FilterSolvesOptions} from '@/db/solves/query';
+import {getTimeDistro} from '@/db/solves/stats/time-distro';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import jsonStr from 'json-stable-stringify';
+import {CaretDown} from 'phosphor-react';
+import React, {useMemo, useState} from 'react';
 
 const DEFAULT_BUCKET_SIZE = 10;
 

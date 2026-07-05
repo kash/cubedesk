@@ -1,6 +1,6 @@
-import React from 'react';
-import {api} from '@/util/api';
 import Button from '@/components/common/Button';
+import {api} from '@/util/api';
+import React from 'react';
 
 export default function DangerZone() {
 	const deleteAccountMutation = api.user.deleteAccount.useMutation();

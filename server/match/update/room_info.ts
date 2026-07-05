@@ -1,8 +1,8 @@
-import {getAllRooms} from '../util';
 import {MatchConst} from '../../../client/shared/match/consts';
+import {UpdateRoomInfo} from '../../../client/shared/match/types';
 import {SocketConst} from '../../../client/shared/socket_costs';
 import {getSocketIO} from '../init';
-import {UpdateRoomInfo} from '../../../client/shared/match/types';
+import {getAllRooms} from '../util';
 
 export function sendRoomInfoUpdates() {
 	setInterval(() => {

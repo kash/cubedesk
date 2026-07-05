@@ -1,20 +1,20 @@
-import {initSessionCollection, initSessionDb} from '@/db/sessions/init';
-import {Dispatch} from 'redux';
 import {addFriendships} from '@/actions/account';
-import {clearOfflineData, initOfflineData, updateOfflineHash} from '@/components/layout/offline';
-import {initSettingsDb, SettingValue} from '@/db/settings/init';
-import {getDefaultSettings} from '@/db/settings/query';
-import {initLokiDb} from '@/db/lokijs';
-import {initSolveDb, initSolvesCollection} from '@/db/solves/init';
-import {initTrainerData} from '@/components/trainer/util/init';
-import {getNewScramble} from '@/components/timer/helpers/scramble';
-import {Solve} from '@/types/solve';
-import {initStatsModuleStore} from '@/actions/stats';
-import {trpc} from '@/util/trpc';
-import {UserAccount} from '@/types/user';
-import {getAllLocalSettings} from '@/db/settings/local';
-import {getStore} from '@/components/store';
 import {setGeneral} from '@/actions/general';
+import {initStatsModuleStore} from '@/actions/stats';
+import {clearOfflineData, initOfflineData, updateOfflineHash} from '@/components/layout/offline';
+import {getStore} from '@/components/store';
+import {getNewScramble} from '@/components/timer/helpers/scramble';
+import {initTrainerData} from '@/components/trainer/util/init';
+import {initLokiDb} from '@/db/lokijs';
+import {initSessionCollection, initSessionDb} from '@/db/sessions/init';
+import {initSettingsDb, SettingValue} from '@/db/settings/init';
+import {getAllLocalSettings} from '@/db/settings/local';
+import {getDefaultSettings} from '@/db/settings/query';
+import {initSolveDb, initSolvesCollection} from '@/db/solves/init';
+import {Solve} from '@/types/solve';
+import {UserAccount} from '@/types/user';
+import {trpc} from '@/util/trpc';
+import {Dispatch} from 'redux';
 import {generateId} from '../../../shared/code';
 
 export function initAnonymousAppData(callback) {

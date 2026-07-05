@@ -1,21 +1,21 @@
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import classNames from 'classnames';
-import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
-import HeaderControl from '@/components/timer/header-control/HeaderControl';
+import {TimerProps, TimerStore} from '@/components/timer/@types/interfaces';
 import TimerFooter from '@/components/timer/footer/TimerFooter';
+import HeaderControl from '@/components/timer/header-control/HeaderControl';
+import {initTimer} from '@/components/timer/helpers/init';
+import {listenForPbEvents} from '@/components/timer/helpers/pb';
+import {stopAllTimers} from '@/components/timer/helpers/timers';
+import KeyWatcher from '@/components/timer/key-watcher/KeyWatcher';
+import SmartCube from '@/components/timer/smart-cube/SmartCube';
 import TimeDisplay from '@/components/timer/time-display/TimeDisplay';
 import TimerScramble from '@/components/timer/time-display/timer-scramble/TimerScramble';
-import KeyWatcher from '@/components/timer/key-watcher/KeyWatcher';
-import {TimerProps, TimerStore} from '@/components/timer/@types/interfaces';
-import {getStorageURL} from '@/util/storage';
 import {useGeneral} from '@/util/hooks/useGeneral';
-import {useMe} from '@/util/hooks/useMe';
-import {initTimer} from '@/components/timer/helpers/init';
-import {stopAllTimers} from '@/components/timer/helpers/timers';
-import {useSettings} from '@/util/hooks/useSettings';
-import {listenForPbEvents} from '@/components/timer/helpers/pb';
 import {useWindowListener} from '@/util/hooks/useListener';
-import SmartCube from '@/components/timer/smart-cube/SmartCube';
+import {useMe} from '@/util/hooks/useMe';
+import {useSettings} from '@/util/hooks/useSettings';
+import {getStorageURL} from '@/util/storage';
+import classNames from 'classnames';
+import React, {createContext, ReactNode, useEffect, useState} from 'react';
+import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 
 export interface ITimerContext extends TimerProps, TimerStore {}
 

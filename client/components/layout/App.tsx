@@ -1,18 +1,18 @@
-import React, {ReactNode, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import Wrapper from '@/components/layout/wrapper/Wrapper';
-import LoadingCover from '@/components/layout/LoadingCover';
+import {setGeneral} from '@/actions/general';
 import Modal from '@/components/common/modal/Modal';
-import {initPageTitleBlink} from '@/util/page_title_blink';
 import Banned from '@/components/layout/Banned';
-import TopNav from '@/components/layout/TopNav';
 import Header from '@/components/layout/Header';
 import {initAnonymousAppData, initAppData, setBrowserSessionId} from '@/components/layout/init';
+import LoadingCover from '@/components/layout/LoadingCover';
+import {updateThemeColors} from '@/components/layout/themes';
+import TopNav from '@/components/layout/TopNav';
+import Wrapper from '@/components/layout/wrapper/Wrapper';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
-import {setGeneral} from '@/actions/general';
-import {updateThemeColors} from '@/components/layout/themes';
+import {initPageTitleBlink} from '@/util/page_title_blink';
 import {initSocketIO} from '@/util/socket/socketio';
+import React, {ReactNode, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 
 interface Props {
 	path?: string;

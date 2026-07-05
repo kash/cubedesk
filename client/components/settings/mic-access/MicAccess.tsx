@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
 import Button from '@/components/common/Button';
+import React, {useEffect, useState} from 'react';
 
 export default function MicAccess() {
 	const [status, setStatus] = useState<PermissionState | 'not-determined' | null>(null);

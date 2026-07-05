@@ -1,8 +1,8 @@
-import React, {useEffect, useState, ReactNode} from 'react';
 import Checkbox from '@/components/common/Checkbox';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
-import {trpc} from '@/util/trpc';
 import {NotificationPreferenceKey} from '@/types/notification-preference';
+import {trpc} from '@/util/trpc';
+import React, {ReactNode, useEffect, useState} from 'react';
 
 export default function NotificationPreferences() {
 	const [prefs, setPrefs] = useState({});

@@ -1,10 +1,10 @@
-import React, {ReactNode} from 'react';
-import classNames from 'classnames';
-import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
-import {getTimeString} from '@/util/time';
+import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {SolveMethodStep} from '@/types/solve';
 import {Solve} from '@/types/solve';
+import {getTimeString} from '@/util/time';
+import classNames from 'classnames';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	solve: Solve;

@@ -1,7 +1,7 @@
-import React, {createContext, ReactElement} from 'react';
-import {useInput} from '@/util/hooks/useInput';
 import CommunityNav from '@/components/community/CommunityNav';
 import UserSearch from '@/components/community/UserSearch';
+import {useInput} from '@/util/hooks/useInput';
+import React, {createContext, ReactElement} from 'react';
 
 interface Props {
 	children: ReactElement;

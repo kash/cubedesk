@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import classNames from 'classnames';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
 import CustomVisual from '@/components/trainer/CustomVisual';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import classNames from 'classnames';
+import React, {useEffect, useState} from 'react';
 
 const DEFAULT_COLOR = '#3F464F';
 const COLORS = ['#FF9826', '#43FF43', '#FF4343', '#246BFD', '#FFFF49', '#FFFFFF', '#3F464F'];

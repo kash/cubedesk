@@ -1,8 +1,8 @@
-import {IGameContext} from '@/components/play/game/Game';
 import {reactState} from '@/@types/react';
+import {IGameContext} from '@/components/play/game/Game';
 import {Match} from '@/types/match';
-import {Solve} from '@/types/solve';
 import {MatchSession} from '@/types/match';
+import {Solve} from '@/types/solve';
 
 interface ExistingMatch {
 	match: Match;

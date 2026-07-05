@@ -1,9 +1,9 @@
-import React from 'react';
-import {AlignRightSimple, AlignBottomSimple, AlignLeftSimple} from 'phosphor-react';
-import {setSetting} from '@/db/settings/update';
-import {useSettings} from '@/util/hooks/useSettings';
 import Button from '@/components/common/Button';
 import {TimerLayoutPosition} from '@/db/settings/query';
+import {setSetting} from '@/db/settings/update';
+import {useSettings} from '@/util/hooks/useSettings';
+import {AlignBottomSimple, AlignLeftSimple, AlignRightSimple} from 'phosphor-react';
+import React from 'react';
 
 export default function LayoutSelector() {
 	const timerLayout = useSettings('timer_layout');

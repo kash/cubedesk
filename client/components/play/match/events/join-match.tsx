@@ -1,7 +1,7 @@
 import {getGameLink} from '@/components/play/game/Game';
 import {useMatchContext} from '@/components/play/match/Match';
-import {useSocketListener} from '@/util/hooks/useSocketListener';
 import {MatchUpdate} from '@/shared/match/types';
+import {useSocketListener} from '@/util/hooks/useSocketListener';
 
 export function listenForJoinEvents() {
 	const matchContext = useMatchContext();

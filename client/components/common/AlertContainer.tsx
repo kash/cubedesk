@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import {CheckSquare, Warning, WarningOctagon, Info} from 'phosphor-react';
-import {cn} from '@/util/cn';
 import Loading from '@/components/common/Loading';
+import {cn} from '@/util/cn';
+import {CheckSquare, Info, Warning, WarningOctagon} from 'phosphor-react';
+import React, {ReactNode} from 'react';
 
 export type ElementGenericType = 'success' | 'error' | 'warning' | 'info';
 

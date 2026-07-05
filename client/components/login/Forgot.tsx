@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import Button from '@/components/common/Button';
 import Input from '@/components/common/inputs/input/Input';
-import {Link} from 'react-router-dom';
 import PasswordStrength from '@/components/common/PasswordStrength';
+import {api} from '@/util/api';
+import {getRedirectLink} from '@/util/auth/login';
 import {validateStrongPassword} from '@/util/auth/password';
 import {useInput} from '@/util/hooks/useInput';
-import {getRedirectLink} from '@/util/auth/login';
-import {api} from '@/util/api';
-import Button from '@/components/common/Button';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 
 enum ForgotStage {
 	EnterEmail,

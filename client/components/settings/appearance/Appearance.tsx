@@ -1,17 +1,17 @@
-import React from 'react';
-import {getTimeString} from '@/util/time';
+import Button from '@/components/common/Button';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import Slider from '@/components/common/Slider';
 import LayoutSelector from '@/components/settings/appearance/LayoutSelector';
+import ThemeOptions from '@/components/settings/appearance/theme-options/ThemeOptions';
 import TimerBackground from '@/components/settings/appearance/TimerBackground';
 import SettingRow from '@/components/settings/common/SettingRow';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import SettingSection from '@/components/settings/common/SettingSection';
+import {AllSettings, getDefaultSetting} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
-import Button from '@/components/common/Button';
-import ThemeOptions from '@/components/settings/appearance/theme-options/ThemeOptions';
-import {AllSettings, getDefaultSetting} from '@/db/settings/query';
+import {getTimeString} from '@/util/time';
 import {CaretDown} from 'phosphor-react';
+import React from 'react';
 
 const DEFAULT_FONT_FAMILY = 'Roboto Mono';
 

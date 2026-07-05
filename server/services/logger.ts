@@ -1,4 +1,4 @@
-import winston, {Logger, Format} from 'winston';
+import winston, {Format, Logger} from 'winston';
 
 let logger: Logger;
 

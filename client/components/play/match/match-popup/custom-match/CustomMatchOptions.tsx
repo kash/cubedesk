@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
-import {ArrowRight} from 'phosphor-react';
+import Button from '@/components/common/Button';
+import CubePicker from '@/components/common/CubePicker';
 import HorizontalNav from '@/components/common/HorizontalNav';
 import {MatchPopupContext, MatchPopupPage} from '@/components/play/match/match-popup/MatchPopup';
-import CubePicker from '@/components/common/CubePicker';
 import {CubeType} from '@/util/cubes/cube_types';
-import Button from '@/components/common/Button';
+import {ArrowRight} from 'phosphor-react';
+import React, {useContext} from 'react';
 
 export default function CustomMatchOptions() {
 	const context = useContext(MatchPopupContext);

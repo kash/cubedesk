@@ -1,8 +1,8 @@
-import {createIntegration, getIntegration, updateIntegration} from '../models/integration';
-import axios from 'axios';
-import {InternalUserAccount, UserAccount} from '@/types/user';
-import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../shared/integration';
 import {Integration} from '@/types/integration';
+import {InternalUserAccount, UserAccount} from '@/types/user';
+import axios from 'axios';
+import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../shared/integration';
+import {createIntegration, getIntegration, updateIntegration} from '../models/integration';
 import {updateUserProfile} from '../models/profile';
 import {getDiscordMe} from './discord';
 

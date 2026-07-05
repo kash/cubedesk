@@ -1,10 +1,10 @@
-import React from 'react';
+import PaginatedList from '@/components/common/PaginatedList';
 import ProfileRow from '@/components/community/ProfileRow';
 import FriendshipRequest from '@/components/profile/FriendshipRequest';
-import PaginatedList from '@/components/common/PaginatedList';
+import {PaginationArgs, PaginationOutput} from '@/types/pagination';
 import {PublicUserAccount} from '@/types/user';
 import {trpc} from '@/util/trpc';
-import {PaginationArgs, PaginationOutput} from '@/types/pagination';
+import React from 'react';
 
 interface Props {
 	query: string;

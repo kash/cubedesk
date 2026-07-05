@@ -1,7 +1,7 @@
-import {getPrisma} from '../database';
 import {Prisma} from '@/generated/prisma/client';
-import {PublicUserAccount} from '@/types/user';
 import {Match} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
+import {getPrisma} from '../database';
 
 export async function createMatchParticipant(user: PublicUserAccount, match: Match) {
 	const inMatch = await getPrisma().matchParticipant.findFirst({

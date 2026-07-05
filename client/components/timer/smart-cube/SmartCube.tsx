@@ -1,22 +1,22 @@
-import React, {useContext, useEffect, useRef, useState, ReactNode} from 'react';
+import {openModal} from '@/actions/general';
+import Button from '@/components/common/Button';
 import Emblem from '@/components/common/Emblem';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
+import {endTimer, startTimer} from '@/components/timer/helpers/events';
+import {setTimerParams} from '@/components/timer/helpers/params';
 import Battery from '@/components/timer/smart-cube/battery/Battery';
 import Connect from '@/components/timer/smart-cube/bluetooth/connect';
-import {setTimerParams} from '@/components/timer/helpers/params';
-import {Bluetooth, DotsThree} from 'phosphor-react';
-import {preflightChecks} from '@/components/timer/smart-cube/preflight';
-import {openModal} from '@/actions/general';
 import ManageSmartCubes from '@/components/timer/smart-cube/manage-smart-cubes/ManageSmartCubes';
-import Cube from 'cubejs';
+import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {TimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
-import {useDispatch} from 'react-redux';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import Button from '@/components/common/Button';
 import {toastError} from '@/util/toast';
-import {endTimer, startTimer} from '@/components/timer/helpers/events';
-import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
+import Cube from 'cubejs';
+import {Bluetooth, DotsThree} from 'phosphor-react';
+import React, {ReactNode, useContext, useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 export default function SmartCube() {
 	const dispatch = useDispatch();

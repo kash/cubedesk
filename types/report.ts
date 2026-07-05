@@ -1,5 +1,5 @@
 import type {Prisma} from '@/generated/prisma/client';
-import {publicUserSelect, PublicUser} from './user';
+import {PublicUser, publicUserSelect} from './user';
 
 export const reportInclude = {
 	created_by: {

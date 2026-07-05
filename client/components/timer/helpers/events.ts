@@ -1,20 +1,20 @@
 import {setTimerParams} from '@/components/timer/helpers/params';
-import {
-	setTimer,
-	stopTimer,
-	clearInspectionTimers,
-	START_TIMEOUT,
-	INSPECTION_TIMEOUT,
-	INSPECTION_INTERVAL
-} from '@/components/timer/helpers/timers';
-import {emitEvent} from '@/util/event_handler';
 import {saveSolve} from '@/components/timer/helpers/save';
 import {resetScramble} from '@/components/timer/helpers/scramble';
+import {
+	clearInspectionTimers,
+	INSPECTION_INTERVAL,
+	INSPECTION_TIMEOUT,
+	setTimer,
+	START_TIMEOUT,
+	stopTimer
+} from '@/components/timer/helpers/timers';
 import {ITimerContext} from '@/components/timer/Timer';
-import {SolveInput} from '@/types/solve';
 import {getSettings} from '@/db/settings/query';
-import {getTimerStore} from '@/util/store/getTimer';
+import {SolveInput} from '@/types/solve';
+import {emitEvent} from '@/util/event_handler';
 import {resourceUri} from '@/util/storage';
+import {getTimerStore} from '@/util/store/getTimer';
 
 let endLocked = false;
 

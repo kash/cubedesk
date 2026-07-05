@@ -1,7 +1,6 @@
-import React, {ReactNode} from 'react';
-
-import CSS from 'csstype';
 import {cn} from '@/util/cn';
+import CSS from 'csstype';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	children: ReactNode;

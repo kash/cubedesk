@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {CaretDown} from 'phosphor-react';
-import {setSetting} from '@/db/settings/update';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {useSettings} from '@/util/hooks/useSettings';
 import Button from '@/components/common/Button';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import {IModalProps} from '@/components/common/modal/Modal';
 import ModalHeader from '@/components/common/modal/ModalHeader';
+import {setSetting} from '@/db/settings/update';
+import {useSettings} from '@/util/hooks/useSettings';
+import {CaretDown} from 'phosphor-react';
+import React, {useEffect, useState} from 'react';
 
 export default function StackMatPicker(props: IModalProps) {
 	const {onComplete} = props;

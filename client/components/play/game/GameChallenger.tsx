@@ -1,12 +1,12 @@
-import ActivePlayers from '@/components/play/match/ActivePlayers';
-import React, {useContext} from 'react';
-import {GameContext} from '@/components/play/game/Game';
 import {openModal} from '@/actions/general';
-import MatchPopup from '@/components/play/match/match-popup/MatchPopup';
-import {useDispatch} from 'react-redux';
-import {getGameMetaData} from '@/components/play/Play';
 import Button from '@/components/common/Button';
+import {GameContext} from '@/components/play/game/Game';
+import ActivePlayers from '@/components/play/match/ActivePlayers';
+import MatchPopup from '@/components/play/match/match-popup/MatchPopup';
+import {getGameMetaData} from '@/components/play/Play';
 import {socketClient} from '@/util/socket/socketio';
+import React, {useContext} from 'react';
+import {useDispatch} from 'react-redux';
 
 export default function GameChallenger() {
 	const dispatch = useDispatch();

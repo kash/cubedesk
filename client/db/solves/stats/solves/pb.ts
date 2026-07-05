@@ -1,6 +1,6 @@
-import {emitEvent} from '../../../../util/event_handler';
-import jsonStr from 'json-stable-stringify';
 import {Solve} from '@/types/solve';
+import jsonStr from 'json-stable-stringify';
+import {emitEvent} from '../../../../util/event_handler';
 import {checkForAveragePBUpdate} from './cache/average-cache';
 import {checkForSinglePB} from './cache/single-cache';
 

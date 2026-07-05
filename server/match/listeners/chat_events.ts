@@ -1,12 +1,12 @@
-import {getDetailedClientInfo} from '../util';
-import {emitMatchUpdate} from '../update/send';
-import {MatchInputChatMessage} from '../../../client/shared/match/types';
 import {v4 as uuid} from 'uuid';
+import {MatchConst} from '../../../client/shared/match/consts';
+import {MatchInputChatMessage} from '../../../client/shared/match/types';
 import {createChatMessage} from '../../models/chat_message';
 import {getMatchById} from '../../models/match';
-import {userExistsInMatch} from '../match';
-import {MatchConst} from '../../../client/shared/match/consts';
 import {SocketClient} from '../init';
+import {userExistsInMatch} from '../match';
+import {emitMatchUpdate} from '../update/send';
+import {getDetailedClientInfo} from '../util';
 
 export function listenForChatEvents(client: SocketClient) {
 	client.on('playerSentChatMessage', async (data: MatchInputChatMessage) => {

@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import GenericInput, {GenericInputProps, InputProps, inputClassNames} from '@/components/common/inputs/generic_input/GenericInput';
-import TextareaAutosize from 'react-textarea-autosize';
+import GenericInput, {GenericInputProps, inputClassNames, InputProps} from '@/components/common/inputs/generic_input/GenericInput';
 import {cn} from '@/util/cn';
+import React, {ReactNode} from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 interface Props extends GenericInputProps<HTMLTextAreaElement> {
 	autoSize?: boolean;

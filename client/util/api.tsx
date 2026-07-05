@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {createTRPCReact} from '@trpc/react-query';
 import {httpBatchLink} from '@trpc/client';
+import {createTRPCReact} from '@trpc/react-query';
+import React, {useState} from 'react';
 import type {AppRouter} from '../../server/trpc/router';
 
 // React hooks client — use inside components: api.user.me.useQuery(),

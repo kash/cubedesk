@@ -1,20 +1,20 @@
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import {getGameMetaData} from '@/components/play/Play';
-import {useDispatch} from 'react-redux';
+import {reactState} from '@/@types/react';
 import {openModal} from '@/actions/general';
-import TargetSessions from '@/components/play/target/target-sessions/TargetSessions';
-import {getExistingMatch} from '@/components/play/helpers/match';
-import {useRouteMatch} from 'react-router-dom';
+import Button from '@/components/common/Button';
 import GameChallenger from '@/components/play/game/GameChallenger';
 import GameTimer from '@/components/play/game/GameTimer';
-import {reactState} from '@/@types/react';
-import {useMe} from '@/util/hooks/useMe';
-import {PlayerStatus} from '@/shared/match/types';
-import Button from '@/components/common/Button';
+import {getExistingMatch} from '@/components/play/helpers/match';
+import {getGameMetaData} from '@/components/play/Play';
+import TargetSessions from '@/components/play/target/target-sessions/TargetSessions';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {Solve} from '@/types/solve';
+import {PlayerStatus} from '@/shared/match/types';
 import {Match} from '@/types/match';
+import {Solve} from '@/types/solve';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useMe} from '@/util/hooks/useMe';
+import React, {createContext, ReactNode, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useRouteMatch} from 'react-router-dom';
 import {GameType} from '../../../../shared/match/consts';
 
 export interface GameSolveRow {

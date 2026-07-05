@@ -1,7 +1,7 @@
-import uniqid from 'uniqid';
 import type {Session} from '@/generated/prisma/client';
-import {getPrisma} from '../database';
 import type {SessionInput} from '@/types/session';
+import uniqid from 'uniqid';
+import {getPrisma} from '../database';
 
 export function getSessionById(id: string) {
 	return getPrisma().session.findUnique({

@@ -1,10 +1,10 @@
-import {getDetailedClientInfo} from '../util';
-import {getMatchById} from '../../models/match';
-import {sendMatchUpdate} from '../update/standings';
-import {emitMatchUpdate} from '../update/send';
 import {Solve} from '@/types/solve';
+import {getMatchById} from '../../models/match';
 import {SocketClient} from '../init';
 import {MatchCacher} from '../update/match_cacher';
+import {emitMatchUpdate} from '../update/send';
+import {sendMatchUpdate} from '../update/standings';
+import {getDetailedClientInfo} from '../util';
 
 export function listenForSolveEvents(client: SocketClient) {
 	// Player starts timer

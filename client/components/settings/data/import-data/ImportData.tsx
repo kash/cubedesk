@@ -1,14 +1,14 @@
-import React, {createContext, ReactNode, useState} from 'react';
 import {reactState} from '@/@types/react';
-import {SolveInput} from '@/types/solve';
-import {SessionInput} from '@/types/session';
-import ProcessData from '@/components/settings/data/import-data/ProcessData';
-import CsTimerInstructions from '@/components/settings/data/import-data/instructions/CsTimerInstructions';
-import {parseCubeDeskData} from '@/components/settings/data/import-data/parse-data/cubedesk';
-import CubeDeskInstructions from '@/components/settings/data/import-data/instructions/CubeDeskInstructions';
 import ModalHeader from '@/components/common/modal/ModalHeader';
-import ReviewImport from '@/components/settings/data/import-data/ReviewImport';
+import CsTimerInstructions from '@/components/settings/data/import-data/instructions/CsTimerInstructions';
+import CubeDeskInstructions from '@/components/settings/data/import-data/instructions/CubeDeskInstructions';
 import {parseCsTimerData} from '@/components/settings/data/import-data/parse-data/cstimer';
+import {parseCubeDeskData} from '@/components/settings/data/import-data/parse-data/cubedesk';
+import ProcessData from '@/components/settings/data/import-data/ProcessData';
+import ReviewImport from '@/components/settings/data/import-data/ReviewImport';
+import {SessionInput} from '@/types/session';
+import {SolveInput} from '@/types/solve';
+import React, {createContext, ReactNode, useState} from 'react';
 
 export enum ImportDataType {
 	CS_TIMER,

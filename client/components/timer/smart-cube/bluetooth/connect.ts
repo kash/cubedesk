@@ -1,8 +1,8 @@
+import GAN from '@/components/timer/smart-cube/bluetooth/gan';
+import Giiker from '@/components/timer/smart-cube/bluetooth/giiker';
 // @ts-nocheck
 import Particula from '@/components/timer/smart-cube/bluetooth/particula';
 import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
-import GAN from '@/components/timer/smart-cube/bluetooth/gan';
-import Giiker from '@/components/timer/smart-cube/bluetooth/giiker';
 
 export default class Connect extends SmartCube {
 	device = null;

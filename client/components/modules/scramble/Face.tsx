@@ -1,8 +1,8 @@
-import React, {ReactNode} from 'react';
-import {flatten} from 'lodash';
 import {COLOR_MAP} from '@/components/modules/scramble/ScrambleVisual';
-import CSS from 'csstype';
 import {ScrambleCubelet} from '@/util/vendor/scramble_layout';
+import CSS from 'csstype';
+import {flatten} from 'lodash';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	size?: number;

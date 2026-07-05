@@ -1,4 +1,3 @@
-import React, {ReactNode} from 'react';
 import {
 	ChartPie,
 	LadderSimple,
@@ -9,6 +8,7 @@ import {
 	Users,
 	Wrench,
 } from 'phosphor-react';
+import React, {ReactNode} from 'react';
 
 export interface NavLinkProps {
 	name: string;

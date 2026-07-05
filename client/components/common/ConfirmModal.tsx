@@ -1,9 +1,9 @@
-import React, {useState, ReactNode} from 'react';
-import Button, {ButtonProps, CommonType} from '@/components/common/Button';
+import Button, {ButtonProps} from '@/components/common/Button';
+import Input from '@/components/common/inputs/input/Input';
 import {IModalProps} from '@/components/common/modal/Modal';
 import ModalHeader from '@/components/common/modal/ModalHeader';
-import Input from '@/components/common/inputs/input/Input';
 import {useWindowListener} from '@/util/hooks/useListener';
+import React, {ReactNode, useState} from 'react';
 
 interface ConfirmModalInfoBox {
 	value: string | number;

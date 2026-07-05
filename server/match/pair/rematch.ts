@@ -1,9 +1,8 @@
 import {Match} from '@/types/match';
-import {getRematchRoomName} from '../match';
-import {pairPlayersInRoom} from './start_match';
-import MatchTypeLogic from '../match_types/match_type_interface';
-import {getClientsInRoom} from '../util';
 import {getMatchTypeByMatch} from '../init';
+import {getRematchRoomName} from '../match';
+import {getClientsInRoom} from '../util';
+import {pairPlayersInRoom} from './start_match';
 
 export async function rematchPlayers(match: Match) {
 	const rematchRoom = getRematchRoomName(match);

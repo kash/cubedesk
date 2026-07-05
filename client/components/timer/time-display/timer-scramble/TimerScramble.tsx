@@ -1,18 +1,18 @@
-import React, {ReactNode, useContext, useEffect, useRef} from 'react';
+import Button from '@/components/common/Button';
+import CopyText from '@/components/common/CopyText';
+import {setTimerParam} from '@/components/timer/helpers/params';
+import {resetScramble} from '@/components/timer/helpers/scramble';
+import {smartCubeSelected} from '@/components/timer/helpers/util';
+import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartScramble';
+import {TimerContext} from '@/components/timer/Timer';
+import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
+import {setSetting} from '@/db/settings/update';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useSettings} from '@/util/hooks/useSettings';
 import classNames from 'classnames';
 import {ArrowClockwise, Lock, PencilSimple} from 'phosphor-react';
+import React, {ReactNode, useContext, useEffect, useRef} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import CopyText from '@/components/common/CopyText';
-import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
-import {useGeneral} from '@/util/hooks/useGeneral';
-import Button from '@/components/common/Button';
-import {TimerContext} from '@/components/timer/Timer';
-import {resetScramble} from '@/components/timer/helpers/scramble';
-import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartScramble';
-import {setTimerParam} from '@/components/timer/helpers/params';
-import {smartCubeSelected} from '@/components/timer/helpers/util';
-import {useSettings} from '@/util/hooks/useSettings';
-import {setSetting} from '@/db/settings/update';
 
 export default function TimerScramble() {
 	const context = useContext(TimerContext);

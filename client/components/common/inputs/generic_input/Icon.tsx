@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
 import {cn} from '@/util/cn';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	icon: ReactNode;

@@ -1,6 +1,6 @@
-import React from 'react';
-import PageTitle from '@/components/common/PageTitle';
 import HorizontalNav from '@/components/common/HorizontalNav';
+import PageTitle from '@/components/common/PageTitle';
+import React from 'react';
 
 const TABS = [
 	{

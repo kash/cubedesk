@@ -1,11 +1,11 @@
-import React, {createContext, useEffect, useState, ReactNode} from 'react';
-import {socketClient} from '@/util/socket/socketio';
-import {getGameLink} from '@/components/play/game/Game';
 import {reactState} from '@/@types/react';
-import JoinOptions from '@/components/play/match/match-popup/JoinOptions';
-import Lobby from '@/components/play/match/match-popup/Lobby';
+import {getGameLink} from '@/components/play/game/Game';
 import CustomMatch from '@/components/play/match/match-popup/custom-match/CustomMatch';
 import CustomMatchOptions from '@/components/play/match/match-popup/custom-match/CustomMatchOptions';
+import JoinOptions from '@/components/play/match/match-popup/JoinOptions';
+import Lobby from '@/components/play/match/match-popup/Lobby';
+import {socketClient} from '@/util/socket/socketio';
+import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import {GameType} from '../../../../../shared/match/consts';
 
 export enum MatchPopupPage {

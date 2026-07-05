@@ -1,14 +1,14 @@
-import React, {useMemo} from 'react';
-import {openModal} from '../../../../actions/general';
-import ConfirmModal from '@/components/common/ConfirmModal';
-import {toastSuccess} from '../../../../util/toast';
-import {Solve} from '@/types/solve';
-import {useDispatch} from 'react-redux';
-import {trpc} from '@/util/trpc';
-import {CubeType} from '../../../../util/cubes/cube_types';
-import EventTypeSelector from './EventTypeSelector';
-import {initAllSolves} from '../../../layout/init';
 import Button from '@/components/common/Button';
+import ConfirmModal from '@/components/common/ConfirmModal';
+import {Solve} from '@/types/solve';
+import {trpc} from '@/util/trpc';
+import React, {useMemo} from 'react';
+import {useDispatch} from 'react-redux';
+import {openModal} from '../../../../actions/general';
+import {CubeType} from '../../../../util/cubes/cube_types';
+import {toastSuccess} from '../../../../util/toast';
+import {initAllSolves} from '../../../layout/init';
+import EventTypeSelector from './EventTypeSelector';
 
 interface Props {
 	disabled?: boolean;

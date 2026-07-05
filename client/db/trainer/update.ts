@@ -1,5 +1,5 @@
-import {getTrainerDb, TrainerAlgorithmExtended} from './init';
 import {emitEvent} from '../../util/event_handler';
+import {getTrainerDb, TrainerAlgorithmExtended} from './init';
 
 export function updateTrainerDb(algo: TrainerAlgorithmExtended, input: Partial<TrainerAlgorithmExtended>) {
 	const trainerDb = getTrainerDb();

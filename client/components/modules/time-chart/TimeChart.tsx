@@ -1,19 +1,19 @@
-import React, {useMemo} from 'react';
-import {max, min} from 'd3-array';
-import * as allCurves from '@visx/curve';
-import {Group} from '@visx/group';
-import hexToRgba from 'hex-to-rgba';
-import {ParentSize} from '@visx/responsive';
-import {AxisLeft} from '@visx/axis';
-import {Area} from '@visx/shape';
-import {scaleLinear, scaleTime} from '@visx/scale';
-import {getTimeString} from '@/util/time';
 import dummyData from '@/components/modules/time-chart/dummy-data';
-import {getChartData} from '@/db/solves/stats/chart';
 import {FilterSolvesOptions} from '@/db/solves/query';
-import jsonStr from 'json-stable-stringify';
+import {getChartData} from '@/db/solves/stats/chart';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {useTheme} from '@/util/hooks/useTheme';
+import {getTimeString} from '@/util/time';
+import {AxisLeft} from '@visx/axis';
+import * as allCurves from '@visx/curve';
+import {Group} from '@visx/group';
+import {ParentSize} from '@visx/responsive';
+import {scaleLinear, scaleTime} from '@visx/scale';
+import {Area} from '@visx/shape';
+import {max, min} from 'd3-array';
+import hexToRgba from 'hex-to-rgba';
+import jsonStr from 'json-stable-stringify';
+import React, {useMemo} from 'react';
 
 interface ChartDatum {
 	index: number;

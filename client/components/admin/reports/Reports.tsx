@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import Loading from '@/components/common/Loading';
-import Empty from '@/components/common/Empty';
 import ReportSummary from '@/components/admin/reports/ReportSummary';
-import {trpc} from '@/util/trpc';
+import Empty from '@/components/common/Empty';
+import Loading from '@/components/common/Loading';
 import {ReportSummary as ReportSummaryData} from '@/types/report';
 import {Serialized} from '@/types/serialized';
+import {trpc} from '@/util/trpc';
+import React, {useEffect, useState} from 'react';
 
 export default function Reports() {
 	const [reports, setReports] = useState<Serialized<ReportSummaryData>[] | null>(null);

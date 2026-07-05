@@ -1,21 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {ITimerContext, TimerContext} from '@/components/timer/Timer';
-import {Bluetooth} from 'phosphor-react';
+import {openModal} from '@/actions/general';
 import Emblem from '@/components/common/Emblem';
+import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
 import {
-	startTimer,
+	cancelInspection,
 	endTimer,
 	startInspection,
-	cancelInspection,
+	startTimer,
 } from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
+import {ITimerContext, TimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
+import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from 'gan-web-bluetooth';
+import {Bluetooth} from 'phosphor-react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {openModal} from '@/actions/general';
-import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
-
 import {SubscriptionLike} from 'rxjs';
-import {GanTimerConnection, GanTimerEvent, GanTimerState, connectGanTimer} from 'gan-web-bluetooth';
 
 // Since this component is singleton and should never have multiple instances,
 // also will never be used in different contexts, we won't pollute context

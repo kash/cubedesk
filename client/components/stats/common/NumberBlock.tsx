@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import CSS from 'csstype';
-import classNames from 'classnames';
 import StatModule from '@/components/stats/common/StatModule';
+import classNames from 'classnames';
+import CSS from 'csstype';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	icon: ReactNode;

@@ -1,10 +1,10 @@
-import {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
-import {Bell} from 'phosphor-react';
-import Loading from '@/components/common/Loading';
 import Empty from '@/components/common/Empty';
+import Loading from '@/components/common/Loading';
 import Notif from '@/components/layout/nav/notifications/Notif';
 import {api} from '@/util/api';
 import {cn} from '@/util/cn';
+import {Bell} from 'phosphor-react';
+import {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
 
 interface Props {
 	right?: boolean;

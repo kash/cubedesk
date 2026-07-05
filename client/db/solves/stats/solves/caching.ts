@@ -1,9 +1,9 @@
+import {Solve} from '@/types/solve';
 import flatten from 'flat';
-import {getSolveCacheDb} from '../../init';
-import {FilterSolvesOptions} from '../../query';
 import jsonStr from 'json-stable-stringify';
 import {getNumberToDecimalPoints} from '../../../../util/time';
-import {Solve} from '@/types/solve';
+import {getSolveCacheDb} from '../../init';
+import {FilterSolvesOptions} from '../../query';
 
 type CacheType = 'avg_current' | 'avg_pb' | 'avg_worst' | 'single_pb' | 'single_worst';
 

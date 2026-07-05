@@ -1,14 +1,14 @@
-import React, {useMemo, ReactNode} from 'react';
-import {AlignLeft} from 'phosphor-react';
+import Button, {CommonType} from '@/components/common/Button';
+import Checkbox from '@/components/common/Checkbox';
 import Emblem from '@/components/common/Emblem';
 import History from '@/components/modules/history/History';
-import {getTimeString} from '@/util/time';
 import SolvesText from '@/components/modules/solves-text/SolvesText';
-import Button, {CommonType} from '@/components/common/Button';
+import {Solve} from '@/types/solve';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
-import Checkbox from '@/components/common/Checkbox';
-import {Solve} from '@/types/solve';
+import {getTimeString} from '@/util/time';
+import {AlignLeft} from 'phosphor-react';
+import React, { useMemo} from 'react';
 
 interface Props {
 	solves: Solve[];

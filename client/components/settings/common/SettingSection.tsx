@@ -1,6 +1,6 @@
-import React, {ReactElement, ReactNode} from 'react';
-import classNames from 'classnames';
 import SettingRow from '@/components/settings/common/SettingRow';
+import classNames from 'classnames';
+import React, {ReactElement, ReactNode} from 'react';
 
 interface Props {
 	children: ReactNode;

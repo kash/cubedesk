@@ -1,12 +1,12 @@
-import React, {useContext, useRef, useState, ReactNode} from 'react';
-import classNames from 'classnames';
-import {convertTimeStringToSeconds} from '@/util/time';
-import {TimerContext} from '@/components/timer/Timer';
-import {resetScramble} from '@/components/timer/helpers/scramble';
 import {saveSolve} from '@/components/timer/helpers/save';
+import {resetScramble} from '@/components/timer/helpers/scramble';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
-import {useSettings} from '@/util/hooks/useSettings';
+import {TimerContext} from '@/components/timer/Timer';
 import {useElementListener} from '@/util/hooks/useListener';
+import {useSettings} from '@/util/hooks/useSettings';
+import {convertTimeStringToSeconds} from '@/util/time';
+import classNames from 'classnames';
+import React, {ReactNode, useContext, useRef, useState} from 'react';
 
 export default function Manual() {
 	const manualInput = useRef<HTMLInputElement>();

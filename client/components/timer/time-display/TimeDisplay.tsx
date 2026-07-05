@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useRef, useState, ReactNode} from 'react';
-import classNames from 'classnames';
-import {getTimeString} from '@/util/time';
-import Manual from '@/components/timer/time-display/Manual';
+import {smartCubeSelected} from '@/components/timer/helpers/util';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
+import GanTimer from '@/components/timer/time-display/GanTimer';
+import Manual from '@/components/timer/time-display/Manual';
+import StackMat from '@/components/timer/time-display/stackmat/StackMat';
+import StartInstructions from '@/components/timer/time-display/StartInstructions';
+import {TimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
-import {smartCubeSelected} from '@/components/timer/helpers/util';
-import {TimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
-import StartInstructions from '@/components/timer/time-display/StartInstructions';
-import StackMat from '@/components/timer/time-display/stackmat/StackMat';
-import GanTimer from '@/components/timer/time-display/GanTimer';
+import {getTimeString} from '@/util/time';
+import classNames from 'classnames';
+import React, {ReactNode, useContext, useEffect, useRef, useState} from 'react';
 
 export default function TimeDisplay() {
 	const context = useContext(TimerContext);

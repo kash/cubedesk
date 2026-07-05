@@ -1,7 +1,7 @@
-import React from 'react';
 import {UserAccountSolvesSummary, UserAccountSummary} from '@/types/admin';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {getTimeString} from '@/util/time';
+import React from 'react';
 
 interface Props {
 	summary: UserAccountSummary;

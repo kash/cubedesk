@@ -1,8 +1,7 @@
-import React, {ReactNode} from 'react';
 import {validateStrongPassword} from '@/util/auth/password';
-
-import {Check} from 'phosphor-react';
 import {cn} from '@/util/cn';
+import {Check} from 'phosphor-react';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	password: string;

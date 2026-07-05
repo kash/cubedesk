@@ -1,5 +1,5 @@
-import React from 'react';
 import GenericInput, {GenericInputProps, InputProps} from '@/components/common/inputs/generic_input/GenericInput';
+import React from 'react';
 
 export interface RadioOption {
 	label: string;

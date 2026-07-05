@@ -1,6 +1,5 @@
-import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
-import {adminProcedure, router} from '../trpc';
+import {z} from 'zod';
 import {
 	addBadgeToUser,
 	createBadgeType,
@@ -12,6 +11,7 @@ import {
 	userHasBadge,
 } from '../../models/badge';
 import {getUserById} from '../../models/user_account';
+import {adminProcedure, router} from '../trpc';
 
 const badgeTypeInput = z.object({
 	name: z.string().min(1).max(50),

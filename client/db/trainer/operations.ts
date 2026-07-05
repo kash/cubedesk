@@ -1,8 +1,8 @@
 import {AlgorithmOverrideInput} from '@/types/trainer';
-import {updateTrainerDb} from './update';
-import {TrainerAlgorithmExtended} from './init';
 import {trpc} from '../../util/trpc';
+import {TrainerAlgorithmExtended} from './init';
 import {fetchTrainerAlgorithmById} from './query';
+import {updateTrainerDb} from './update';
 
 export async function deleteTrainerAlgoOverrides(algo: TrainerAlgorithmExtended) {
 	if (!algo) {

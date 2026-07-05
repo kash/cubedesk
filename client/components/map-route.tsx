@@ -1,5 +1,5 @@
-import {Route} from 'react-router-dom';
 import React from 'react';
+import {Route} from 'react-router-dom';
 
 export function mapSingleRoute(route) {
 	route.exact = true;

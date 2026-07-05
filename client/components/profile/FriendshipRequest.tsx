@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {X, Plus, Timer, Check} from 'phosphor-react';
 import {addFriendship, removeFriendship} from '@/actions/account';
-import {toastSuccess} from '@/util/toast';
 import Button, {ButtonProps} from '@/components/common/Button';
 import {FriendshipRequest as FriendshipRequestSchema} from '@/types/friendship';
-import {trpc} from '@/util/trpc';
-import {useDispatch, useSelector} from 'react-redux';
-import {useMe} from '@/util/hooks/useMe';
 import {PublicUserAccount} from '@/types/user';
+import {useMe} from '@/util/hooks/useMe';
+import {toastSuccess} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import {Check, Plus, Timer, X} from 'phosphor-react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 interface Props {
 	user: PublicUserAccount;
