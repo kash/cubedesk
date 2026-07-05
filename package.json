@@ -76,7 +76,7 @@
 		"@visx/responsive": "^4.0.0",
 		"@visx/scale": "^4.0.0",
 		"@visx/shape": "^4.0.0",
-		"axios": "^0.21.1",
+		"axios": "^0.32.0",
 		"bad-words": "^3.0.4",
 		"bcryptjs": "^2.4.3",
 		"bem-cn": "^3.0.1",
