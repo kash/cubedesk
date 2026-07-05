@@ -1,9 +1,9 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
 import {ITimerContext, TimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
 import Stackmat from '@/util/vendor/stackmat';
-import {endTimer, startTimer} from '@/components/timer/helpers/events';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 export default function StackMat() {
 	const stackMatId = useSettings('stackmat_id');

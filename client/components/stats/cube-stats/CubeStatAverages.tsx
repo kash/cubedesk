@@ -1,6 +1,6 @@
-import React from 'react';
 import AvgRow from '@/components/stats/common/AvgRow';
 import StatModule from '@/components/stats/common/StatModule';
+import React from 'react';
 
 export default function CubeStatAverages() {
 	return (

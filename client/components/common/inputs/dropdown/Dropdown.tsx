@@ -1,13 +1,13 @@
-import React, {ReactNode, useState} from 'react';
-import CSS from 'csstype';
-import {CaretDown} from 'phosphor-react';
+import Button, {ButtonProps} from '@/components/common/Button';
 import DropdownOption, {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
 import GenericInput, {
 	GenericInputProps,
 	InputProps,
 } from '@/components/common/inputs/generic_input/GenericInput';
-import Button, {ButtonProps} from '@/components/common/Button';
 import {cn} from '@/util/cn';
+import CSS from 'csstype';
+import {CaretDown} from 'phosphor-react';
+import React, {ReactNode, useState} from 'react';
 
 // Marker class used by closeDropdown to detect clicks inside the dropdown.
 const DROPDOWN_CLASS = 'cd-common-dropdown';

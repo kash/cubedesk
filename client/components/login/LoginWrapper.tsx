@@ -1,9 +1,9 @@
+import {resourceUri} from '@/util/storage';
 import React from 'react';
+import {useRouteMatch} from 'react-router-dom';
+import Forgot from './Forgot';
 import Login from './Login';
 import SignUp from './SignUp';
-import Forgot from './Forgot';
-import {resourceUri} from '@/util/storage';
-import {useRouteMatch} from 'react-router-dom';
 
 export default function LoginWrapper() {
 	const match = useRouteMatch();

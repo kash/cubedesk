@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import Input from '@/components/common/inputs/input/Input';
-import {Link} from 'react-router-dom';
-import {validateStrongPassword} from '@/util/auth/password';
-import PasswordStrength from '@/components/common/PasswordStrength';
-import {getLoginLink, getRedirectLink} from '@/util/auth/login';
-import {useInput} from '@/util/hooks/useInput';
-import {api} from '@/util/api';
 import Button from '@/components/common/Button';
+import Input from '@/components/common/inputs/input/Input';
+import PasswordStrength from '@/components/common/PasswordStrength';
+import {api} from '@/util/api';
+import {getLoginLink, getRedirectLink} from '@/util/auth/login';
+import {validateStrongPassword} from '@/util/auth/password';
+import {useInput} from '@/util/hooks/useInput';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useInput('');

@@ -1,10 +1,10 @@
-import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
-import {protectedProcedure, router} from '../trpc';
-import {getSessionById} from '../../models/session';
-import {getCustomCubeTypesByUserId} from '../../models/custom_cube_type';
+import {z} from 'zod';
 import {getDefaultCubeTypes} from '../../../client/util/cubes/util';
+import {getCustomCubeTypesByUserId} from '../../models/custom_cube_type';
+import {getSessionById} from '../../models/session';
 import {bulkDeleteSolves, bulkDnfSolves, bulkOkSolves, bulkPlusTwoSolves, bulkUpdateSolves} from '../../models/solve';
+import {protectedProcedure, router} from '../trpc';
 
 const solveIdsInput = z.object({
 	solveIds: z.array(z.string()).min(1),

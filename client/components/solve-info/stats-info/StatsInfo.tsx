@@ -1,10 +1,10 @@
-import React, {ReactNode} from 'react';
-import {Timer, ArrowCounterClockwise, ArrowsClockwise} from 'phosphor-react';
-import StepPie from '@/components/solve-info/stats-info/StepPie';
-import RecognitionChart from '@/components/solve-info/stats-info/RecognitionChart';
 import ExecutionTime from '@/components/solve-info/stats-info/ExecutionTime';
 import LLTrainer, {getOllAndPllFromSolve} from '@/components/solve-info/stats-info/LLTrainer';
+import RecognitionChart from '@/components/solve-info/stats-info/RecognitionChart';
+import StepPie from '@/components/solve-info/stats-info/StepPie';
 import {Solve} from '@/types/solve';
+import {ArrowCounterClockwise, ArrowsClockwise, Timer} from 'phosphor-react';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	solve: Solve;

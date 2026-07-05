@@ -1,16 +1,16 @@
-import React, {ReactNode, useContext} from 'react';
-import {X} from 'phosphor-react';
-import {ImportDataContext} from '@/components/settings/data/import-data/ImportData';
 import Button from '@/components/common/Button';
-import {toastError} from '@/util/toast';
-import {SolveInput} from '@/types/solve';
-import {SessionInput} from '@/types/session';
-import {trpc} from '@/util/trpc';
-import ImportSection from '@/components/settings/data/import-data/ImportSection';
-import {clearOfflineData} from '@/components/layout/offline';
 import CubePicker from '@/components/common/CubePicker';
 import Input from '@/components/common/inputs/input/Input';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
+import {clearOfflineData} from '@/components/layout/offline';
+import {ImportDataContext} from '@/components/settings/data/import-data/ImportData';
+import ImportSection from '@/components/settings/data/import-data/ImportSection';
+import {SessionInput} from '@/types/session';
+import {SolveInput} from '@/types/solve';
+import {toastError} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import {X} from 'phosphor-react';
+import React, {ReactNode, useContext} from 'react';
 
 async function bulkImportSessions(sessions: SessionInput[]) {
 	await trpc.session.bulkCreate.mutate({

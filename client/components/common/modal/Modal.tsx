@@ -1,11 +1,10 @@
-import React, {ReactNode, useEffect, useRef, useState} from 'react';
-import CSS from 'csstype';
-import {useDispatch} from 'react-redux';
-
-import {X} from 'phosphor-react';
 import {closeModal} from '@/actions/general';
 import ModalHeader from '@/components/common/modal/ModalHeader';
 import {cn} from '@/util/cn';
+import CSS from 'csstype';
+import {X} from 'phosphor-react';
+import React, {ReactNode, useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 export interface IModalProps {
 	onComplete?: (data?: any) => void;

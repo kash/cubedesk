@@ -1,8 +1,8 @@
+import {NotificationType} from '../../@types/enums';
 import {NotificationData, NotificationInput} from '../../@types/interfaces/server.interface';
 import {getPrisma} from '../../database';
 import {getOrCreateNotificationPreferences} from '../../models/notification_preference';
 import {sendEmailWithTemplate} from '../../services/ses';
-import {NotificationType} from '../../@types/enums';
 
 export default abstract class Notification {
 	input: NotificationInput;

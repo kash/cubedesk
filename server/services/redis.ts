@@ -1,6 +1,6 @@
 import Redis from 'ioredis';
-import {logger} from './logger';
 import Redlock, {Lock} from 'redlock';
+import {logger} from './logger';
 
 let redlock: Redlock;
 let redisPubClient: Redis;

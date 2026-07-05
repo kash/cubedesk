@@ -1,9 +1,9 @@
-import React from 'react';
-import ProfileRow from '@/components/community/ProfileRow';
 import Pagination, {PaginationTab} from '@/components/common/Pagination';
+import ProfileRow from '@/components/community/ProfileRow';
 import FriendshipRequest from '@/components/profile/FriendshipRequest';
-import {trpc} from '@/util/trpc';
 import {PublicUserAccount} from '@/types/user';
+import {trpc} from '@/util/trpc';
+import React from 'react';
 
 const tabIdToOtherUserMap = {
 	friends: 'other_user',

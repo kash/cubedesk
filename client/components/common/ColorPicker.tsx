@@ -1,11 +1,11 @@
-import React, {useEffect, ReactNode} from 'react';
-import {ColorPicker as ColorPalette, toColor, useColor, type Color} from 'react-color-palette';
-import {useToggle} from '@/util/hooks/useToggle';
-import {useWindowClickAwayListener} from '@/util/hooks/useListener';
 import Button from '@/components/common/Button';
-import {useTheme} from '@/util/hooks/useTheme';
-import {getAnyColorStringAsRawRgbString, getAnyColorStringAsRgb} from '@/util/themes/theme_util';
 import {cn} from '@/util/cn';
+import {useWindowClickAwayListener} from '@/util/hooks/useListener';
+import {useTheme} from '@/util/hooks/useTheme';
+import {useToggle} from '@/util/hooks/useToggle';
+import {getAnyColorStringAsRawRgbString, getAnyColorStringAsRgb} from '@/util/themes/theme_util';
+import React, {ReactNode, useEffect} from 'react';
+import {type Color, ColorPicker as ColorPalette, toColor, useColor} from 'react-color-palette';
 
 // Used by the click-away listener to detect clicks inside the picker. Not a styling hook.
 const ROOT_CLASS = 'cd-common-color-picker';

@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {api} from '@/util/api';
+import Button from '@/components/common/Button';
 import Input from '@/components/common/inputs/input/Input';
 import TextArea from '@/components/common/TextArea';
-import Button from '@/components/common/Button';
 import {Profile} from '@/types/profile';
+import {api} from '@/util/api';
+import React, {useState} from 'react';
 
 interface Props {
 	profile: Profile;

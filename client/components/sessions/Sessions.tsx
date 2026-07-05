@@ -1,13 +1,22 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import classNames from 'classnames';
-import {Plus} from 'phosphor-react';
-import CubePicker from '@/components/common/CubePicker';
-import TimeChart from '@/components/modules/time-chart/TimeChart';
-import History from '@/components/modules/history/History';
-import Input from '@/components/common/inputs/input/Input';
 import {openModal} from '@/actions/general';
+import Button from '@/components/common/Button';
+import CubePicker from '@/components/common/CubePicker';
+import Input from '@/components/common/inputs/input/Input';
+import Module from '@/components/common/Module';
+import PageTitle from '@/components/common/PageTitle';
+import History from '@/components/modules/history/History';
+import TimeChart from '@/components/modules/time-chart/TimeChart';
+import TimeDistro from '@/components/modules/time-distro/TimeDistro';
 import CreateNewSession from '@/components/sessions/CreateNewSession';
+import Session from '@/components/sessions/Session';
+import {fetchSessionById, fetchSessions, getCubeTypesFromSession} from '@/db/sessions/query';
+import {reorderSessions, updateSessionDb} from '@/db/sessions/update';
+import {fetchLastCubeTypeForSession} from '@/db/solves/query';
+import block from '@/styles/bem';
+import {CubeType} from '@/util/cubes/cube_types';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useSessionDb} from '@/util/hooks/useSessionDb';
+import {useSettings} from '@/util/hooks/useSettings';
 import {
 	closestCenter,
 	DndContext,
@@ -25,19 +34,10 @@ import {
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import Session from '@/components/sessions/Session';
-import {fetchSessionById, fetchSessions, getCubeTypesFromSession} from '@/db/sessions/query';
-import {fetchLastCubeTypeForSession} from '@/db/solves/query';
-import {reorderSessions, updateSessionDb} from '@/db/sessions/update';
-import {useGeneral} from '@/util/hooks/useGeneral';
-import {useSessionDb} from '@/util/hooks/useSessionDb';
-import {CubeType} from '@/util/cubes/cube_types';
-import PageTitle from '@/components/common/PageTitle';
-import Button from '@/components/common/Button';
-import Module from '@/components/common/Module';
-import TimeDistro from '@/components/modules/time-distro/TimeDistro';
-import {useSettings} from '@/util/hooks/useSettings';
-import block from '@/styles/bem';
+import classNames from 'classnames';
+import {Plus} from 'phosphor-react';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 function SortableItem({
 	session,

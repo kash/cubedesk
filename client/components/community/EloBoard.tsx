@@ -1,11 +1,11 @@
-import React from 'react';
+import PaginatedList from '@/components/common/PaginatedList';
 import EloRow from '@/components/community/EloRow';
 import Header from '@/components/layout/Header';
-import PaginatedList from '@/components/common/PaginatedList';
-import {trpc} from '@/util/trpc';
-import {PaginationArgs} from '@/types/pagination';
 import {EloRatingWithUser} from '@/types/elo';
+import {PaginationArgs} from '@/types/pagination';
 import {Serialized} from '@/types/serialized';
+import {trpc} from '@/util/trpc';
+import React from 'react';
 
 export default function EloBoard() {
 	function fetchData(pageArgs: PaginationArgs) {

@@ -1,13 +1,13 @@
-import React, {useMemo, ReactNode} from 'react';
-import {FilterSolvesOptions} from '@/db/solves/query';
-import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {openModal} from '@/actions/general';
 import Button from '@/components/common/Button';
+import CustomizeStats from '@/components/modules/quick-stats/customize-stats/CustomizeStats';
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
 import {getQuickStatsGridSizes} from '@/components/modules/quick-stats/util';
-import {openModal} from '@/actions/general';
-import CustomizeStats from '@/components/modules/quick-stats/customize-stats/CustomizeStats';
+import {FilterSolvesOptions} from '@/db/solves/query';
 import {StatsModuleBlock} from '@/types/stats-module';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import React, {ReactNode, useMemo} from 'react';
+import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;

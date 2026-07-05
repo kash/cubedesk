@@ -1,9 +1,9 @@
-import {EventEmitter} from 'events';
-import {useEffect, useRef} from 'react';
-import {TrainerAlgorithmExtended} from '../db/trainer/init';
-import {SettingValue} from '../db/settings/init';
 import {Session} from '@/types/session';
 import {Solve} from '@/types/solve';
+import {EventEmitter} from 'events';
+import {useEffect, useRef} from 'react';
+import {SettingValue} from '../db/settings/init';
+import {TrainerAlgorithmExtended} from '../db/trainer/init';
 
 const ee = new EventEmitter();
 

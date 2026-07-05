@@ -1,9 +1,9 @@
-import React from 'react';
 import Dropdown, {DropdownProps} from '@/components/common/inputs/dropdown/Dropdown';
-import {getAllCubeTypeNames, getDefaultCubeTypeNames, getCubeTypeInfoById} from '@/util/cubes/util';
-import {Cube} from 'phosphor-react';
 import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
 import {CubeType} from '@/util/cubes/cube_types';
+import {getAllCubeTypeNames, getCubeTypeInfoById, getDefaultCubeTypeNames} from '@/util/cubes/util';
+import {Cube} from 'phosphor-react';
+import React from 'react';
 
 interface Props {
 	value: string;

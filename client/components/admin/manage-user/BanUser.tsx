@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
+import Button from '@/components/common/Button';
 import Checkbox from '@/components/common/Checkbox';
 import Input from '@/components/common/inputs/input/Input';
 import Select from '@/components/common/inputs/Select';
-import {toastSuccess} from '@/util/toast';
-import TextArea from '@/components/common/TextArea';
-import Button from '@/components/common/Button';
-import {useToggle} from '@/util/hooks/useToggle';
-import {useInput} from '@/util/hooks/useInput';
 import {IModalProps} from '@/components/common/modal/Modal';
 import ModalHeader from '@/components/common/modal/ModalHeader';
-import {trpc} from '@/util/trpc';
-import {UserAccount, UserAccountForAdmin} from '@/types/user';
+import TextArea from '@/components/common/TextArea';
 import {AdminUser} from '@/types/admin';
 import {Serialized} from '@/types/serialized';
+import {UserAccount, UserAccountForAdmin} from '@/types/user';
+import {useInput} from '@/util/hooks/useInput';
+import {useToggle} from '@/util/hooks/useToggle';
+import {toastSuccess} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import React, {useState} from 'react';
 
 interface Props extends IModalProps {
 	user: UserAccount | UserAccountForAdmin | Serialized<AdminUser>;

@@ -1,7 +1,7 @@
-import {ReactNode} from 'react';
-import WCA from '@/components/profile/WCA';
 import Emblem from '@/components/common/Emblem';
+import WCA from '@/components/profile/WCA';
 import {getDateFromNow} from '@/util/dates';
+import {ReactNode} from 'react';
 
 interface Props {
 	user: any;

@@ -1,7 +1,6 @@
-import React, {ReactNode} from 'react';
-
 import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {cn} from '@/util/cn';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	on: boolean;

@@ -1,12 +1,12 @@
-import React, {useContext, ReactNode} from 'react';
-import classNames from 'classnames';
-import {CaretUp, CaretDown} from 'phosphor-react';
-import {setSetting} from '@/db/settings/update';
-import {TimerContext} from '@/components/timer/Timer';
-import {useSettings} from '@/util/hooks/useSettings';
-import {useGeneral} from '@/util/hooks/useGeneral';
 import Button from '@/components/common/Button';
 import TimerModule from '@/components/timer/footer/TimerModule';
+import {TimerContext} from '@/components/timer/Timer';
+import {setSetting} from '@/db/settings/update';
+import {useGeneral} from '@/util/hooks/useGeneral';
+import {useSettings} from '@/util/hooks/useSettings';
+import classNames from 'classnames';
+import {CaretDown, CaretUp} from 'phosphor-react';
+import React, {ReactNode, useContext} from 'react';
 
 export default function TimerFooter() {
 	const context = useContext(TimerContext);

@@ -1,6 +1,6 @@
-import React, {ReactNode} from 'react';
-import CSS from 'csstype';
 import classNames from 'classnames';
+import CSS from 'csstype';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	style?: CSS.Properties;

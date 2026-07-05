@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
-import Dropzone from 'react-dropzone';
-
-import {CloudArrowUp} from 'phosphor-react';
-import {toastError} from '@/util/toast';
 import LoadingIcon from '@/components/common/LoadingIcon';
 import {cn} from '@/util/cn';
+import {toastError} from '@/util/toast';
+import {CloudArrowUp} from 'phosphor-react';
+import React, {useState} from 'react';
+import Dropzone from 'react-dropzone';
 
 interface Props {
 	allowGif?: boolean;

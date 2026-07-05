@@ -1,6 +1,6 @@
-import React, {ReactNode} from 'react';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	text?: string;

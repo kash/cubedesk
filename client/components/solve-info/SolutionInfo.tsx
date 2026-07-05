@@ -1,12 +1,12 @@
-import React, {ReactNode} from 'react';
-import classNames from 'classnames';
 import CopyText from '@/components/common/CopyText';
-import {getTimeString} from '@/util/time';
-import {getSolveStepsWithChildren} from '@/components/solve-info/util/solution';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
-import {processSmartTurns} from '@/util/smart_scramble';
+import {getSolveStepsWithChildren} from '@/components/solve-info/util/solution';
 import {SolveMethodStep} from '@/types/solve';
 import {Solve} from '@/types/solve';
+import {processSmartTurns} from '@/util/smart_scramble';
+import {getTimeString} from '@/util/time';
+import classNames from 'classnames';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	solve: Solve;

@@ -1,5 +1,5 @@
-import React from 'react';
 import AlertContainer from '@/components/common/AlertContainer';
+import React from 'react';
 
 export default function UnsubEmails() {
 	const body = (

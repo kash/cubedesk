@@ -1,5 +1,5 @@
-import {AllSettings, getSetting} from '../../db/settings/query';
 import {useState} from 'react';
+import {AllSettings, getSetting} from '../../db/settings/query';
 import {useEventListener} from '../event_handler';
 
 export function useSettings<T extends keyof AllSettings>(key: T): AllSettings[T] {

@@ -1,7 +1,7 @@
-import React from 'react';
 import Button from '@/components/common/Button';
 import {IModalProps} from '@/components/common/modal/Modal';
 import {resourceUri} from '@/util/storage';
+import React from 'react';
 
 export default function SolveCheck(props: IModalProps) {
 	return (

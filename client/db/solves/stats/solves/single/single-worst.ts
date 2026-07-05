@@ -1,5 +1,5 @@
-import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
 import {fetchSingleSolve, FilterSolvesOptions} from '../../../query';
+import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
 
 export function getWorstTime(filterOptions: FilterSolvesOptions) {
 	const cacheKey: SolveCacheKey = {

@@ -1,12 +1,12 @@
-import React, {ReactNode} from 'react';
-import {max} from 'd3-array';
+import {useTheme} from '@/util/hooks/useTheme';
+import {AxisBottom} from '@visx/axis';
 import {Group} from '@visx/group';
 import {ParentSize} from '@visx/responsive';
+import {scaleBand, scaleLinear} from '@visx/scale';
 import {Bar} from '@visx/shape';
-import {scaleLinear, scaleBand} from '@visx/scale';
+import {max} from 'd3-array';
 import hexToRgba from 'hex-to-rgba';
-import {AxisBottom} from '@visx/axis';
-import {useTheme} from '@/util/hooks/useTheme';
+import React, {ReactNode} from 'react';
 
 export interface BarGraphData {
 	x: string;

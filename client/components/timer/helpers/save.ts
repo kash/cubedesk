@@ -1,9 +1,9 @@
-import {v4 as uuid} from 'uuid';
-import {createSolveDb} from '@/db/solves/update';
-import {ITimerContext} from '@/components/timer/Timer';
-import {emitEvent} from '@/util/event_handler';
 import {setTimerParam} from '@/components/timer/helpers/params';
+import {ITimerContext} from '@/components/timer/Timer';
+import {createSolveDb} from '@/db/solves/update';
 import {Solve, SolveInput} from '@/types/solve';
+import {emitEvent} from '@/util/event_handler';
+import {v4 as uuid} from 'uuid';
 
 export function saveSolve(
 	context: ITimerContext,

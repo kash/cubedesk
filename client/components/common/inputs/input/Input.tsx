@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import GenericInput, {GenericInputProps, InputProps, inputClassNames} from '@/components/common/inputs/generic_input/GenericInput';
+import GenericInput, {GenericInputProps, inputClassNames, InputProps} from '@/components/common/inputs/generic_input/GenericInput';
 import Icon from '@/components/common/inputs/generic_input/Icon';
 import {cn} from '@/util/cn';
+import React, {ReactNode} from 'react';
 
 interface Props extends GenericInputProps<HTMLInputElement> {
 	icon?: ReactNode;

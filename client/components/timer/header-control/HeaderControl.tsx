@@ -1,34 +1,34 @@
-import React, {useContext, useEffect, useState} from 'react';
-import classNames from 'classnames';
-import {
-	MagnifyingGlassPlus,
-	FrameCorners,
-	CrosshairSimple,
-	Keyboard,
-	Plus,
-	X,
-	CaretDown,
-} from 'phosphor-react';
-import {GlobalHotKeys} from 'react-hotkeys';
-import {setCubeType, setSetting} from '@/db/settings/update';
-import CubePicker from '@/components/common/CubePicker';
-import SessionSwitcher from '@/components/sessions/SessionPicker';
-import {HOTKEY_MAP} from '@/util/timer/hotkeys';
-import CreateNewSession from '@/components/sessions/CreateNewSession';
 import {openModal} from '@/actions/general';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {TimerContext} from '@/components/timer/Timer';
-import {toggleSetting} from '@/db/settings/update';
-import {useDispatch} from 'react-redux';
-import {useGeneral} from '@/util/hooks/useGeneral';
-import {smartCubeSelected} from '@/components/timer/helpers/util';
 import Button from '@/components/common/Button';
+import CubePicker from '@/components/common/CubePicker';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import CreateNewSession from '@/components/sessions/CreateNewSession';
+import SessionSwitcher from '@/components/sessions/SessionPicker';
 import StackMatPicker from '@/components/settings/stackmat-picker/StackMatPicker';
 import {TIMER_INPUT_TYPE_NAMES} from '@/components/settings/timer/TimerSettings';
-import {useSettings} from '@/util/hooks/useSettings';
+import {smartCubeSelected} from '@/components/timer/helpers/util';
+import {TimerContext} from '@/components/timer/Timer';
 import {AllSettings} from '@/db/settings/query';
+import {setCubeType, setSetting} from '@/db/settings/update';
+import {toggleSetting} from '@/db/settings/update';
+import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
+import {useSettings} from '@/util/hooks/useSettings';
+import {HOTKEY_MAP} from '@/util/timer/hotkeys';
 import screenfull from '@/util/vendor/screenfull';
+import classNames from 'classnames';
+import {
+	CaretDown,
+	CrosshairSimple,
+	FrameCorners,
+	Keyboard,
+	MagnifyingGlassPlus,
+	Plus,
+	X,
+} from 'phosphor-react';
+import React, {useContext, useEffect, useState} from 'react';
+import {GlobalHotKeys} from 'react-hotkeys';
+import {useDispatch} from 'react-redux';
 
 export default function HeaderControl() {
 	const dispatch = useDispatch();

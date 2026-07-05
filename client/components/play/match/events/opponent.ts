@@ -1,5 +1,5 @@
-import {MatchClientEvent} from '@/shared/match/events';
 import {getMatchClientEvent} from '@/shared/match/client-events';
+import {MatchClientEvent} from '@/shared/match/events';
 import {emitEvent} from '@/util/event_handler';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
 

@@ -1,13 +1,13 @@
-import React, {useContext, useMemo} from 'react';
-import {ArrowFatLinesUp, Hash, Timer} from 'phosphor-react';
-import {StatsContext} from '@/components/stats/Stats';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
-import {fetchAllCubeTypesSolved} from '@/db/solves/query';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {getTotalSolveCount, getTotalSolveTime} from '@/db/solves/stats/count';
 import NumberBlock from '@/components/stats/common/NumberBlock';
-import {getTimeString} from '@/util/time';
 import StatsGrid from '@/components/stats/common/StatsGrid';
+import {StatsContext} from '@/components/stats/Stats';
+import {fetchAllCubeTypesSolved} from '@/db/solves/query';
+import {getTotalSolveCount, getTotalSolveTime} from '@/db/solves/stats/count';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {getTimeString} from '@/util/time';
+import {ArrowFatLinesUp, Hash, Timer} from 'phosphor-react';
+import React, {useContext, useMemo} from 'react';
 
 export default function AllStatsFeatured() {
 	const context = useContext(StatsContext);

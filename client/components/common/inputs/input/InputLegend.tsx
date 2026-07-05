@@ -1,7 +1,6 @@
-import React, {ReactNode} from 'react';
-
 import Tag from '@/components/common/Tag';
 import {cn} from '@/util/cn';
+import React, {ReactNode} from 'react';
 
 interface Props {
 	text?: string;

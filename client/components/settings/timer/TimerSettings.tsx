@@ -1,16 +1,16 @@
-import React, {ReactNode} from 'react';
+import {openModal} from '@/actions/general';
+import Button, {CommonType} from '@/components/common/Button';
+import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import SettingRow from '@/components/settings/common/SettingRow';
+import SettingSection from '@/components/settings/common/SettingSection';
+import CubeTypes from '@/components/settings/cube-types/CubeTypes';
 import MicAccess from '@/components/settings/mic-access/MicAccess';
 import StackMatPicker from '@/components/settings/stackmat-picker/StackMatPicker';
-import {openModal} from '@/actions/general';
-import CubeTypes from '@/components/settings/cube-types/CubeTypes';
-import SettingRow from '@/components/settings/common/SettingRow';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {useDispatch} from 'react-redux';
-import SettingSection from '@/components/settings/common/SettingSection';
-import Button, {CommonType} from '@/components/common/Button';
+import {AllSettings} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
-import {AllSettings} from '@/db/settings/query';
+import React, {ReactNode} from 'react';
+import {useDispatch} from 'react-redux';
 
 export const TIMER_INPUT_TYPE_NAMES = {
 	keyboard: 'Keyboard',

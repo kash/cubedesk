@@ -1,7 +1,7 @@
-import React from 'react';
 import TextArea from '@/components/common/TextArea';
-import {useInput} from '@/util/hooks/useInput';
 import {Solve} from '@/types/solve';
+import {useInput} from '@/util/hooks/useInput';
+import React from 'react';
 
 interface Props {
 	editMode?: boolean;

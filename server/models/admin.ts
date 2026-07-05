@@ -1,3 +1,4 @@
+import type {Prisma} from '@/generated/prisma/client';
 import {
 	AdminUser,
 	adminUserSelect,
@@ -5,7 +6,6 @@ import {
 	UserAccountSolvesSummary,
 	UserAccountSummary,
 } from '@/types/admin';
-import type {Prisma} from '@/generated/prisma/client';
 import {getPrisma} from '../database';
 import {trainerExceptions} from './solve';
 

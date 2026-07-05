@@ -1,10 +1,10 @@
-import {Readable} from 'stream';
 import type {ReadStream} from 'fs';
-import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
-import {protectedProcedure, router} from '../trpc';
+import {Readable} from 'stream';
+import {z} from 'zod';
 import {deleteTimerBackground, getTimerBackground, uploadTimerBackgroundWithFile} from '../../models/timer_background';
 import {logger} from '../../services/logger';
+import {protectedProcedure, router} from '../trpc';
 
 export const timerBackgroundRouter = router({
 	delete: protectedProcedure.mutation(async ({ctx}) => {

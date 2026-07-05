@@ -1,8 +1,8 @@
-import {useSelector} from 'react-redux';
-import {Warning} from 'phosphor-react';
-import {getDateFromNow} from '@/util/dates';
 import Button from '@/components/common/Button';
 import {logOut} from '@/util/auth/logout';
+import {getDateFromNow} from '@/util/dates';
+import {Warning} from 'phosphor-react';
+import {useSelector} from 'react-redux';
 
 export default function Banned() {
 	const me = useSelector((state: any) => state.account.me);

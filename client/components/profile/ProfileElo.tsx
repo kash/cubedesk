@@ -1,6 +1,6 @@
-import React from 'react';
 import {EloRating} from '@/types/elo';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
+import React from 'react';
 
 interface Props {
 	eloRating: EloRating;

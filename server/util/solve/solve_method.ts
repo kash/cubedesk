@@ -1,7 +1,7 @@
 import Cube from 'cubejs';
 import {processSmartTurns, SmartTurn} from '../../../client/util/smart_scramble';
-import {getLLState, reverseTurns} from './turns';
 import {getMatchingOLLState, getMatchingPLLState} from './ll_states';
+import {getLLState, reverseTurns} from './turns';
 
 export function getSolveSteps(turns) {
 	const SOLVED_STATE = 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB';

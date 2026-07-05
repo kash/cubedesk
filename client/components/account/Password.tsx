@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {validateStrongPassword} from '@/util/auth/password';
-import PasswordStrength from '@/components/common/PasswordStrength';
-import Input from '@/components/common/inputs/input/Input';
 import Button from '@/components/common/Button';
-import {useInput} from '@/util/hooks/useInput';
+import Input from '@/components/common/inputs/input/Input';
+import PasswordStrength from '@/components/common/PasswordStrength';
 import {api} from '@/util/api';
+import {validateStrongPassword} from '@/util/auth/password';
+import {useInput} from '@/util/hooks/useInput';
 import {toastSuccess} from '@/util/toast';
+import React, {useState} from 'react';
 
 export default function Password() {
 	const [oldPassword, setOldPassword] = useInput('');

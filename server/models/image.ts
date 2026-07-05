@@ -1,9 +1,8 @@
 import {generateRandomCode} from '../../shared/code';
-import {deleteObject, uploadObject} from '../services/storage';
 import {getPrisma} from '../database';
-import {v4 as uuid} from 'uuid';
-import {getImageBufferFromFileStream, ImageFileToBuffer} from '../util/image';
 import {logger} from '../services/logger';
+import {deleteObject, uploadObject} from '../services/storage';
+import {getImageBufferFromFileStream, ImageFileToBuffer} from '../util/image';
 
 export async function deleteImage(image) {
 	try {

@@ -1,5 +1,5 @@
-import React from 'react';
 import {useColor} from '@/util/hooks/useTheme';
+import React from 'react';
 import {ColorName} from '../../../../../shared/colors';
 
 interface Props {

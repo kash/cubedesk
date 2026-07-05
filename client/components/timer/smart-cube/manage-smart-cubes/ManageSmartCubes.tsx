@@ -1,8 +1,8 @@
-import React from 'react';
-import Loading from '@/components/common/Loading';
 import Empty from '@/components/common/Empty';
+import Loading from '@/components/common/Loading';
 import SmartManage from '@/components/timer/smart-cube/manage-smart-cubes/SmartManage';
 import {api} from '@/util/api';
+import React from 'react';
 
 export default function ManageSmartCubes() {
 	const smartDevicesQuery = api.smartDevice.list.useQuery();

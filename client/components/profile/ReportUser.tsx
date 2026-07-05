@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
-import {toastSuccess} from '@/util/toast';
 import Button from '@/components/common/Button';
+import {IModalProps} from '@/components/common/modal/Modal';
+import ModalHeader from '@/components/common/modal/ModalHeader';
+import TextArea from '@/components/common/TextArea';
+import {Serialized} from '@/types/serialized';
 import {
 	PublicUserAccount,
 	UserAccount,
 	UserAccountForAdmin,
 } from '@/types/user';
-import {useInput} from '@/util/hooks/useInput';
-import {IModalProps} from '@/components/common/modal/Modal';
-import TextArea from '@/components/common/TextArea';
-import ModalHeader from '@/components/common/modal/ModalHeader';
-import {trpc} from '@/util/trpc';
 import {PublicUser} from '@/types/user';
-import {Serialized} from '@/types/serialized';
+import {useInput} from '@/util/hooks/useInput';
+import {toastSuccess} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import React, {useState} from 'react';
 
 interface Props extends IModalProps {
 	user?: UserAccountForAdmin | PublicUserAccount | UserAccount | Serialized<PublicUser>;

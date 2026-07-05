@@ -1,8 +1,8 @@
-import {getLobbyRoomName} from '../../match';
-import {MatchRoom} from '../../../../client/shared/match/events';
-import {getClientIdsInRoom} from '../../util';
 import {MatchLobby} from '@/types/match';
+import {MatchRoom} from '../../../../client/shared/match/events';
 import {GameType} from '../../../../shared/match/consts';
+import {getLobbyRoomName} from '../../match';
+import {getClientIdsInRoom} from '../../util';
 
 const MIN_ELO_DIFF = 100;
 const MAX_TIME_IN_LOBBY_MS = 5 * 60 * 1000;

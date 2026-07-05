@@ -1,15 +1,15 @@
-import React, {ReactNode} from 'react';
-import {Link} from 'react-router-dom';
-import Error from '@/components/common/inputs/Error';
-import CSS from 'csstype';
-import InputInfo from '@/components/common/inputs/input/InputInfo';
 import {
-	CommonType,
-	getButtonClasses,
 	buttonTextClasses,
 	buttonWrapperClasses,
+	CommonType,
+	getButtonClasses,
 } from '@/components/common/Button';
+import Error from '@/components/common/inputs/Error';
+import InputInfo from '@/components/common/inputs/input/InputInfo';
 import {cn} from '@/util/cn';
+import CSS from 'csstype';
+import React, {ReactNode} from 'react';
+import {Link} from 'react-router-dom';
 
 interface Props {
 	to: string;

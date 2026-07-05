@@ -1,12 +1,12 @@
-import type {Prisma, Report, Setting, ChatMessage, NotificationPreference} from '@/generated/prisma/client';
+import type {ChatMessage, NotificationPreference, Prisma, Report, Setting} from '@/generated/prisma/client';
+import type {UserAccountSummary} from './admin';
 import type {Badge} from './badge';
 import type {BanLog} from './ban-log';
 import type {EloRating} from './elo';
 import type {Integration} from './integration';
 import type {Profile} from './profile';
 import type {TimerBackground} from './timer-background';
-import type {TopSolve, TopAverage} from './top-solve';
-import type {UserAccountSummary} from './admin';
+import type {TopAverage, TopSolve} from './top-solve';
 
 // Public-safe user shape. Unlike GraphQL, tRPC does not mask fields through a schema,
 // so anything selected here goes straight to the wire — never widen integrations

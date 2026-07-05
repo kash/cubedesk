@@ -1,5 +1,5 @@
-import {TrainerAlgorithmRecord} from '@/types/trainer';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
+import {TrainerAlgorithmRecord} from '@/types/trainer';
 
 // Overrides flattened back into the record; no `overrides` key
 export interface TrainerAlgorithmClean extends TrainerAlgorithmRecord {

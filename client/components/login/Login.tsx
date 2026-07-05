@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import {getRedirectLink, getSignUpLink} from '@/util/auth/login';
+import Button from '@/components/common/Button';
 import Input from '@/components/common/inputs/input/Input';
 import {api} from '@/util/api';
-import Button from '@/components/common/Button';
+import {getRedirectLink, getSignUpLink} from '@/util/auth/login';
 import {useInput} from '@/util/hooks/useInput';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 
 export default function Login() {
 	const [email, setEmail] = useInput('');

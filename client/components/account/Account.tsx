@@ -1,5 +1,5 @@
-import React from 'react';
 import AccountNav from '@/components/account/AccountNav';
+import React from 'react';
 
 interface Props {
 	children: React.ReactNode;

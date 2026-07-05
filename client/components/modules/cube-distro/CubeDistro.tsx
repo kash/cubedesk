@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
 import {fetchAllCubeTypesSolved} from '@/db/solves/query';
-import {PieChart} from 'react-minimal-pie-chart';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
+import React, {useMemo} from 'react';
+import {PieChart} from 'react-minimal-pie-chart';
 
 const colors = ['#abd1c6', '#f9bc60', '#e16162', '#ff8ba7', '#90b4ce', '#b8c1ec', '#8c7851'];
 

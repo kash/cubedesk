@@ -1,11 +1,11 @@
-import {z} from 'zod';
-import {TRPCError} from '@trpc/server';
-import {protectedProcedure, router} from '../trpc';
+import type {CustomTrainer, PrismaClient} from '@/generated/prisma/client';
 import {customTrainerInclude, CustomTrainerWithUser} from '@/types/trainer';
 import {publicUserSelect} from '@/types/user';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 import {generateUUID} from '../../../shared/code';
-import type {CustomTrainer, PrismaClient} from '@/generated/prisma/client';
+import {getPaginatedResponse} from '../../util/pagination/paginated_response';
+import {protectedProcedure, router} from '../trpc';
 
 const customTrainerInputSchema = z.object({
 	solution: z.string(),

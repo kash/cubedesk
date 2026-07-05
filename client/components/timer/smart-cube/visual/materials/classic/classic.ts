@@ -1,5 +1,5 @@
-import * as THREE from 'three';
 import {resourceUri} from '@/util/storage';
+import * as THREE from 'three';
 
 const textureLink = (color: string) => resourceUri(`/images/smart_cube/${color}.png`);
 

@@ -1,5 +1,5 @@
-import {v4 as uuid} from 'uuid';
 import {customAlphabet} from 'nanoid';
+import {v4 as uuid} from 'uuid';
 
 const LOWER_ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 const UPPER_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

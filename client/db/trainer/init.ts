@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import {getLokiDb} from '../lokijs';
+import {Serialized} from '@/types/serialized';
 import {
 	AlgorithmOverrideInput,
 	CustomTrainerWithUser,
@@ -7,7 +6,8 @@ import {
 	TrainerAlgorithmRecord,
 	TrainerFavorite,
 } from '@/types/trainer';
-import {Serialized} from '@/types/serialized';
+import _ from 'lodash';
+import {getLokiDb} from '../lokijs';
 
 export interface TrainerAlgorithmExtended extends TrainerAlgorithmRecord {
 	overrides?: AlgorithmOverrideInput | null;

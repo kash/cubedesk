@@ -1,5 +1,5 @@
-import {PublicUserAccount} from '@/types/user';
 import {Match} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
 
 export enum PlayerStatus {
 	None = 'NONE',

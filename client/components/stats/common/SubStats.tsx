@@ -1,19 +1,18 @@
-import React, {useContext, useMemo} from 'react';
-import {
-	WarningOctagon,
-	Warning,
-	NumberSquareOne,
-	Calculator,
-	Hash,
-	CaretDoubleRight,
-	CaretDoubleUp,
-} from 'phosphor-react';
-import {StatsContext} from '@/components/stats/Stats';
 import NumberBlock from '@/components/stats/common/NumberBlock';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {StatsContext} from '@/components/stats/Stats';
 import {getSolveStreak} from '@/db/solves/stats/streak';
 import {getSubStats} from '@/db/solves/stats/sub-stats';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
 import dayjs from 'dayjs';
+import {
+	Calculator,
+	CaretDoubleRight,
+	CaretDoubleUp,
+	NumberSquareOne,
+	Warning,
+	WarningOctagon,
+} from 'phosphor-react';
+import React, {useContext, useMemo} from 'react';
 
 const SUB_STATS_COLOR = '#6D7D90';
 

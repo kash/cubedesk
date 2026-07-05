@@ -1,15 +1,15 @@
-import React from 'react';
-import Dropdown, {DropdownProps} from '@/components/common/inputs/dropdown/Dropdown';
-import {copyText} from '@/components/common/CopyText';
-import {CaretDown, User, Copy, Flag, Pen, GearSix} from 'phosphor-react';
-import {toastSuccess} from '@/util/toast';
 import {openModal} from '@/actions/general';
 import UserView from '@/components/admin/manage-user/ManageUser';
-import {useDispatch} from 'react-redux';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
-import ReportUser from '@/components/profile/ReportUser';
+import {copyText} from '@/components/common/CopyText';
+import Dropdown, {DropdownProps} from '@/components/common/inputs/dropdown/Dropdown';
 import EditProfile from '@/components/profile/EditProfile';
+import ReportUser from '@/components/profile/ReportUser';
+import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
 import {useMe} from '@/util/hooks/useMe';
+import {toastSuccess} from '@/util/toast';
+import {CaretDown, Copy, Flag, GearSix, Pen, User} from 'phosphor-react';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 
 interface Props {
 	mini?: boolean;

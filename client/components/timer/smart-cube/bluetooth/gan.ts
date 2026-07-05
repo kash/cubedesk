@@ -1,9 +1,5 @@
 // @ts-nocheck
 import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
-import {isEqual} from 'lodash';
-import LZString from '@/components/timer/smart-cube/bluetooth/lz_string';
-import aes128 from '@/components/timer/smart-cube/bluetooth/ae128';
-
 import {	
   connectGanCube,
 } from 'gan-web-bluetooth';

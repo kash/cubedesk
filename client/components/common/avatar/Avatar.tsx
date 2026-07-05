@@ -1,14 +1,14 @@
-import React, {ReactNode} from 'react';
-import AvatarImage from '@/components/common/avatar/AvatarImage';
-import {CircleWavyCheck} from 'phosphor-react';
-import {Link} from 'react-router-dom';
-import Badges from '@/components/common/avatar/Badges';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
 import AvatarDropdown from '@/components/common/avatar/AvatarDropdown';
+import AvatarImage from '@/components/common/avatar/AvatarImage';
+import Badges from '@/components/common/avatar/Badges';
 import {Profile} from '@/types/profile';
-import {PublicUser} from '@/types/user';
 import {Serialized} from '@/types/serialized';
+import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
+import {PublicUser} from '@/types/user';
 import {cn} from '@/util/cn';
+import {CircleWavyCheck} from 'phosphor-react';
+import React, {ReactNode} from 'react';
+import {Link} from 'react-router-dom';
 
 interface Props {
 	user?: UserAccountForAdmin | PublicUserAccount | UserAccount | PublicUser | Serialized<PublicUser>;

@@ -1,9 +1,9 @@
-import {ReactNode, useState} from 'react';
-import dayjs from 'dayjs';
-import {Sword, User} from 'phosphor-react';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import {api} from '@/util/api';
 import AvatarImage from '@/components/common/avatar/AvatarImage';
+import {api} from '@/util/api';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import {Sword, User} from 'phosphor-react';
+import {ReactNode, useState} from 'react';
 
 dayjs.extend(relativeTime);
 

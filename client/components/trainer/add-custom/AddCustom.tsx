@@ -1,20 +1,20 @@
-import React, {useEffect, useState, ReactNode} from 'react';
-import Input from '@/components/common/inputs/input/Input';
-import Cube from 'cubejs';
-import HorizontalNav from '@/components/common/HorizontalNav';
-import CubeBuilder from '@/components/trainer/add-custom/CubeBuilder';
+import Button from '@/components/common/Button';
 import Checkbox from '@/components/common/Checkbox';
+import HorizontalLine from '@/components/common/HorizontalLine';
+import HorizontalNav from '@/components/common/HorizontalNav';
+import Input from '@/components/common/inputs/input/Input';
 import Loading from '@/components/common/Loading';
-import {CustomTrainerInput, CustomTrainerWithUser} from '@/types/trainer';
-import {trpc} from '@/util/trpc';
-import {useToggle} from '@/util/hooks/useToggle';
-import {useInput} from '@/util/hooks/useInput';
+import {IModalProps} from '@/components/common/modal/Modal';
 import ModalHeader from '@/components/common/modal/ModalHeader';
 import TextArea from '@/components/common/TextArea';
-import Button from '@/components/common/Button';
+import CubeBuilder from '@/components/trainer/add-custom/CubeBuilder';
 import {createCustomTrainerDb, updateCustomTrainerDb} from '@/db/trainer/custom';
-import {IModalProps} from '@/components/common/modal/Modal';
-import HorizontalLine from '@/components/common/HorizontalLine';
+import {CustomTrainerInput, CustomTrainerWithUser} from '@/types/trainer';
+import {useInput} from '@/util/hooks/useInput';
+import {useToggle} from '@/util/hooks/useToggle';
+import {trpc} from '@/util/trpc';
+import Cube from 'cubejs';
+import React, { useEffect, useState} from 'react';
 
 interface ColorMap {
 	[key: string]: string;

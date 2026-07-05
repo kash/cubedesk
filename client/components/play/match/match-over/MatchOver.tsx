@@ -1,16 +1,16 @@
-import React, {ReactNode, useMemo, useState} from 'react';
-import classNames from 'classnames';
-import {Sword} from 'phosphor-react';
-import Button from '@/components/common/Button';
 import Avatar from '@/components/common/avatar/Avatar';
-import {useMe} from '@/util/hooks/useMe';
-import {socketClient} from '@/util/socket/socketio';
-import {Match} from '@/types/match';
-import Lobby from '@/components/play/match/match-popup/Lobby';
+import Button from '@/components/common/Button';
 import {IModalProps} from '@/components/common/modal/Modal';
 import EloChange from '@/components/play/match/match-over/EloChange';
-import {GameType} from '../../../../../shared/match/consts';
+import Lobby from '@/components/play/match/match-popup/Lobby';
 import {MatchEndedBy} from '@/shared/match/types';
+import {Match} from '@/types/match';
+import {useMe} from '@/util/hooks/useMe';
+import {socketClient} from '@/util/socket/socketio';
+import classNames from 'classnames';
+import {Sword} from 'phosphor-react';
+import React, {ReactNode, useMemo, useState} from 'react';
+import {GameType} from '../../../../../shared/match/consts';
 
 interface Props extends IModalProps {
 	match: Match;

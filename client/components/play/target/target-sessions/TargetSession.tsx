@@ -1,16 +1,16 @@
-import React, {ReactNode} from 'react';
-import History from '@/components/modules/history/History';
+import {openModal} from '@/actions/general';
 import Avatar from '@/components/common/avatar/Avatar';
+import Button from '@/components/common/Button';
 import Emblem from '@/components/common/Emblem';
 import LinkButton from '@/components/common/LinkButton';
-import {useDispatch} from 'react-redux';
-import {openModal} from '@/actions/general';
+import History from '@/components/modules/history/History';
 import {getGameLink} from '@/components/play/game/Game';
-import Button from '@/components/common/Button';
-import {GameType} from '../../../../../shared/match/consts';
-import {Serialized} from '@/types/serialized';
 import {GameSessionWithRelations} from '@/types/game';
+import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
+import React, {ReactNode} from 'react';
+import {useDispatch} from 'react-redux';
+import {GameType} from '../../../../../shared/match/consts';
 
 interface Props {
 	gameType: GameType;

@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
-import Challenger from '@/components/play/target/challengers/Challenger';
 import {MatchContext} from '@/components/play/match/Match';
+import Challenger from '@/components/play/target/challengers/Challenger';
+import React, {useContext} from 'react';
 
 export default function Challengers() {
 	const context = useContext(MatchContext);

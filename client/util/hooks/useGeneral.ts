@@ -1,6 +1,6 @@
+import {ReactNode} from 'react';
 import {RootStateOrAny, useSelector} from 'react-redux';
 import {IModalProps} from '../../components/common/modal/Modal';
-import {ReactNode} from 'react';
 
 interface ModalListItem {
 	createdAt: number;

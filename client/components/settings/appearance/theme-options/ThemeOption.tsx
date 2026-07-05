@@ -1,9 +1,9 @@
-import React from 'react';
+import {getSetting} from '@/db/settings/query';
+import {setSetting} from '@/db/settings/update';
+import {APP_THEME_PRESETS, PresetThemeValues} from '@/util/themes/theme_consts';
 import classNames from 'classnames';
 import jsonStr from 'json-stable-stringify';
-import {setSetting} from '@/db/settings/update';
-import {getSetting} from '@/db/settings/query';
-import {APP_THEME_PRESETS, PresetThemeValues} from '@/util/themes/theme_consts';
+import React from 'react';
 
 interface Props {
 	theme: keyof PresetThemeValues;

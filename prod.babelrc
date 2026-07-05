@@ -19,8 +19,6 @@
 				"legacy": true
 			}
 		],
-		"@babel/plugin-proposal-class-properties",
-		"@babel/plugin-transform-object-rest-spread",
 		[
 			"babel-plugin-transform-remove-imports",
 			{

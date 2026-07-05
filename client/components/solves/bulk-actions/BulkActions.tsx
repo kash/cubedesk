@@ -1,14 +1,14 @@
+import jsonStr from 'json-stable-stringify';
 import React, {useMemo} from 'react';
+import {fetchSolves, FilterSolvesOptions} from '../../../db/solves/query';
+import {useSolveDb} from '../../../util/hooks/useSolveDb';
 import {getBasicPlural} from '../../../util/strings/plural';
+import BulkChangeEventSolvesButton from './actions/BulkChangeEvent';
 import BulkDeleteSolvesButton from './actions/BulkDelete';
+import BulkDnfSolvesButton from './actions/BulkDnf';
 import BulkMoveSolvesButton from './actions/BulkMove';
 import BulkOkSolvesButton from './actions/BulkOk';
-import BulkChangeEventSolvesButton from './actions/BulkChangeEvent';
 import BulkPlusTwoSolvesButton from './actions/BulkPlusTwo';
-import BulkDnfSolvesButton from './actions/BulkDnf';
-import {fetchSolves, FilterSolvesOptions} from '../../../db/solves/query';
-import jsonStr from 'json-stable-stringify';
-import {useSolveDb} from '../../../util/hooks/useSolveDb';
 
 interface Props {
 	filter: FilterSolvesOptions;

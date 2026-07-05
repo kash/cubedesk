@@ -1,9 +1,9 @@
+import Tag from '@/components/common/Tag';
+import {NavLinkProps} from '@/components/layout/nav/nav-links';
+import {useMe} from '@/util/hooks/useMe';
+import {Lock} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
-import Tag from '@/components/common/Tag';
-import {Lock} from 'phosphor-react';
-import {useMe} from '@/util/hooks/useMe';
-import {NavLinkProps} from '@/components/layout/nav/nav-links';
 
 interface Props extends NavLinkProps {
 	collapsed?: boolean;

@@ -1,6 +1,6 @@
-import {CSSProperties, ReactNode} from 'react';
-import Color from 'color';
 import {cn} from '@/util/cn';
+import Color from 'color';
+import {CSSProperties, ReactNode} from 'react';
 
 interface Props {
 	text?: ReactNode;

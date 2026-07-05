@@ -1,9 +1,8 @@
+import {getLokiDb, initLokiDb} from '@/db/lokijs';
+import {UserAccount} from '@/types/user';
 import {deleteLocalStorage, getLocalStorage, setLocalStorage} from '@/util/data/local_storage';
 import {trpc} from '@/util/trpc';
-import {UserAccount} from '@/types/user';
 import {v4 as uuid} from 'uuid';
-import {getLokiDb, initLokiDb} from '@/db/lokijs';
-import {initSolvesCollection} from '@/db/solves/init';
 
 export async function initOfflineData(me, callback) {
 	const offlineData = !(await shouldFetchDataFromDb(me));

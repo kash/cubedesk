@@ -1,22 +1,22 @@
-import React, {useEffect, useRef, useState, ReactNode} from 'react';
-import HorizontalNav from '@/components/common/HorizontalNav';
-import {useToggle} from '@/util/hooks/useToggle';
-import {Check} from 'phosphor-react';
-import Input from '@/components/common/inputs/input/Input';
+import {updateStatsModuleBlock} from '@/actions/stats';
+import Button from '@/components/common/Button';
 import Checkbox from '@/components/common/Checkbox';
+import FormSection from '@/components/common/FormSection';
+import HorizontalNav from '@/components/common/HorizontalNav';
+import Input from '@/components/common/inputs/input/Input';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
-import colorPalette, {ColorName} from '../../../../../shared/colors';
+import Tag from '@/components/common/Tag';
 import CustomizeStatsColor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsColor';
-import {StatsModuleBlock} from '@/types/stats-module';
 import {
 	getStatsBlockDescription,
 	saveStatsModuleBlocks,
 } from '@/components/modules/quick-stats/util';
+import {StatsModuleBlock} from '@/types/stats-module';
+import {useToggle} from '@/util/hooks/useToggle';
+import {Check} from 'phosphor-react';
+import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {updateStatsModuleBlock} from '@/actions/stats';
-import Tag from '@/components/common/Tag';
-import Button from '@/components/common/Button';
-import FormSection from '@/components/common/FormSection';
+import colorPalette, {ColorName} from '../../../../../shared/colors';
 
 interface Props {
 	hideRemoveButton?: boolean;

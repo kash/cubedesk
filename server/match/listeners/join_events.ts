@@ -1,12 +1,12 @@
-import {getLobbyRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '../match';
-import {getDetailedClientInfo, joinRoom, leaveRoom} from '../util';
-import {getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '../../models/match';
 import {MatchRoom} from '../../../client/shared/match/events';
+import {getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '../../models/match';
+import {SocketClient} from '../init';
+import {getLobbyRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '../match';
 import {matchPlayersInCustomMatch} from '../pair/custom_match';
+import {joinLobby, removeMatchLobbyRecordsByClientId} from '../pair/pair_logic';
 import {rematchPlayers} from '../pair/rematch';
 import {sendMatchUpdate, sendMatchUpdateById} from '../update/standings';
-import {joinLobby, removeMatchLobbyRecordsByClientId} from '../pair/pair_logic';
-import {SocketClient} from '../init';
+import {getDetailedClientInfo, joinRoom, leaveRoom} from '../util';
 
 export function listenForJoinEvents(client: SocketClient) {
 	client.on('playerJoinedMatchByLinkCode', async (linkCode) => {

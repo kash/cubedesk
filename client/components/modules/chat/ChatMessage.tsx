@@ -1,6 +1,6 @@
-import React from 'react';
 import AvatarImage from '@/components/common/avatar/AvatarImage';
 import {PublicUserAccount} from '@/types/user';
+import React from 'react';
 
 interface Props {
 	user: PublicUserAccount;

@@ -1,9 +1,6 @@
-import {z} from 'zod';
-import {TRPCError} from '@trpc/server';
-import {protectedProcedure, router} from '../trpc';
 import {publicUserSelect} from '@/types/user';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
-import {getUserById} from '../../models/user_account';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 import {
 	acceptFriendshipRequest,
 	createFriendshipRequest,
@@ -13,8 +10,11 @@ import {
 	getFriendshipRequestById,
 	getFriendships,
 } from '../../models/friendship';
+import {getUserById} from '../../models/user_account';
 import FriendRequestNotification from '../../resources/notification_types/friend_request';
 import FriendRequestAcceptNotification from '../../resources/notification_types/friend_request_accept';
+import {getPaginatedResponse} from '../../util/pagination/paginated_response';
+import {protectedProcedure, router} from '../trpc';
 
 const paginationInputSchema = z.object({
 	page: z.number().int().min(0).default(0),

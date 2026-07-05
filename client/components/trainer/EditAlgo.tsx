@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {TrainerAlgorithmExtended} from '@/db/trainer/init';
-import {IModalProps} from '@/components/common/modal/Modal';
-import {AlgorithmOverrideInput} from '@/types/trainer';
-import {useInput} from '@/util/hooks/useInput';
-import {deleteTrainerAlgoOverrides, updateTrainerAlgoOverrides} from '@/db/trainer/operations';
 import Button from '@/components/common/Button';
+import Input from '@/components/common/inputs/input/Input';
+import {IModalProps} from '@/components/common/modal/Modal';
+import ModalHeader from '@/components/common/modal/ModalHeader';
 import Radio from '@/components/common/Radio';
 import TextArea from '@/components/common/TextArea';
-import ModalHeader from '@/components/common/modal/ModalHeader';
-import Input from '@/components/common/inputs/input/Input';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
+import {TrainerAlgorithmExtended} from '@/db/trainer/init';
+import {deleteTrainerAlgoOverrides, updateTrainerAlgoOverrides} from '@/db/trainer/operations';
+import {AlgorithmOverrideInput} from '@/types/trainer';
+import {useInput} from '@/util/hooks/useInput';
 import {toastError, toastSuccess} from '@/util/toast';
+import React, {useState} from 'react';
 
 interface Props extends IModalProps {
 	algoExt: TrainerAlgorithmExtended;

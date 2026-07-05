@@ -1,8 +1,8 @@
-import React from 'react';
+import Avatar from '@/components/common/avatar/Avatar';
 import {EloRatingWithUser} from '@/types/elo';
 import {Serialized} from '@/types/serialized';
-import Avatar from '@/components/common/avatar/Avatar';
 import classNames from 'classnames';
+import React from 'react';
 
 interface Props {
 	rank: number;

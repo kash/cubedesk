@@ -1,9 +1,9 @@
-import React from 'react';
 import Dropdown, {DropdownProps} from '@/components/common/inputs/dropdown/Dropdown';
-import {CaretDown} from 'phosphor-react';
-import {getScrambleTypeById, getAllScrambleTypeNames} from '@/util/cubes/util';
 import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
 import {ScrambleType} from '@/util/cubes/cube_scrambles';
+import {getAllScrambleTypeNames, getScrambleTypeById} from '@/util/cubes/util';
+import {CaretDown} from 'phosphor-react';
+import React from 'react';
 
 interface Props {
 	value: string;

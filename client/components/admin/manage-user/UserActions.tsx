@@ -1,12 +1,12 @@
-import React from 'react';
 import {openModal} from '@/actions/general';
 import BanUser from '@/components/admin/manage-user/BanUser';
 import Button from '@/components/common/Button';
-import {toastSuccess} from '@/util/toast';
-import {useDispatch} from 'react-redux';
-import {trpc} from '@/util/trpc';
 import {AdminUser} from '@/types/admin';
 import {Serialized} from '@/types/serialized';
+import {toastSuccess} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 
 interface Props {
 	user: Serialized<AdminUser>;

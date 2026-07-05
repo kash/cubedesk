@@ -1,15 +1,15 @@
-import React, {createContext, useEffect, useMemo, useState} from 'react';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
-import PageTitle from '@/components/common/PageTitle';
 import HorizontalNav, {HorizontalNavTab} from '@/components/common/HorizontalNav';
+import PageTitle from '@/components/common/PageTitle';
+import AllStats from '@/components/stats/all/AllStats';
 import CubeStats from '@/components/stats/cube-stats/CubeStats';
 import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {CubeType} from '@/util/cubes/cube_types';
-import AllStats from '@/components/stats/all/AllStats';
 import {Stats as StatsSchema} from '@/types/stats';
-import {trpc} from '@/util/trpc';
+import {CubeType} from '@/util/cubes/cube_types';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {trpc} from '@/util/trpc';
+import React, {createContext, useEffect, useMemo, useState} from 'react';
 
 const CUBE_TYPE_QUERY_PARAM = 'cubeType';
 const ALL_TAB_ID = 'all';

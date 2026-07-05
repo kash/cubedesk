@@ -1,17 +1,17 @@
-import React, {useEffect, useMemo, useRef, useState, ReactNode} from 'react';
+import {openModal} from '@/actions/general';
+import HistoryModal from '@/components/modules/history/HistoryModal';
+import {getStatsBlockDescription, getStatsBlockValueFromFilter} from '@/components/modules/quick-stats/util';
+import SolveInfo from '@/components/solve-info/SolveInfo';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {StatsModuleBlock} from '@/types/stats-module';
-import {getStatsBlockDescription, getStatsBlockValueFromFilter} from '@/components/modules/quick-stats/util';
-import {useColor} from '@/util/hooks/useTheme';
-import jsonStr from 'json-stable-stringify';
 import {useSettings} from '@/util/hooks/useSettings';
-import {getTimeString} from '@/util/time';
-import {useDispatch} from 'react-redux';
-import {openModal} from '@/actions/general';
-import SolveInfo from '@/components/solve-info/SolveInfo';
-import HistoryModal from '@/components/modules/history/HistoryModal';
-import CSS from 'csstype';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {useColor} from '@/util/hooks/useTheme';
+import {getTimeString} from '@/util/time';
+import CSS from 'csstype';
+import jsonStr from 'json-stable-stringify';
+import React, {ReactNode, useEffect, useMemo, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 interface Props {
 	filterOptions?: FilterSolvesOptions;

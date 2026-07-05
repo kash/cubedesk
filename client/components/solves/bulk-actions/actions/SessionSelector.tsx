@@ -1,11 +1,11 @@
-import React, {useState, ReactNode} from 'react';
-import Button from '../../../common/Button';
-import SessionPicker from '../../../sessions/SessionPicker';
+import {Session} from '@/types/session';
 import {Solve} from '@/types/solve';
+import React, {ReactNode, useState} from 'react';
+import {getBasicPlural} from '../../../../util/strings/plural';
+import Button from '../../../common/Button';
 import {IModalProps} from '../../../common/modal/Modal';
 import ModalHeader from '../../../common/modal/ModalHeader';
-import {getBasicPlural} from '../../../../util/strings/plural';
-import {Session} from '@/types/session';
+import SessionPicker from '../../../sessions/SessionPicker';
 
 interface Props extends IModalProps {
 	solves: Solve[];

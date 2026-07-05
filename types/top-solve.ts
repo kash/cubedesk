@@ -1,5 +1,5 @@
-import type {PublicUserAccount} from './user';
 import type {Solve} from './solve';
+import type {PublicUserAccount} from './user';
 
 export interface TopSolve {
 	id: string;

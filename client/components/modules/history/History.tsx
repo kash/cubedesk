@@ -5,17 +5,17 @@ import ReactListImport from 'react-list';
 // (import_react_list.default ends up being the whole module-exports object,
 // not the class). Unwrap it here so JSX gets the class.
 const ReactList = ((ReactListImport as any).default ?? ReactListImport) as typeof ReactListImport;
-import {GlobalHotKeys} from 'react-hotkeys';
 import Empty from '@/components/common/Empty';
-import {HOTKEY_MAP} from '@/util/timer/hotkeys';
-import {FilterSolvesOptions, fetchSolves, fetchLastSolve} from '@/db/solves/query';
 import HistorySolveRow from '@/components/modules/history/HistorySolveRow';
-import {toggleDnfSolveDb, togglePlusTwoSolveDb, setOkSolveDb} from '@/db/solves/operations';
+import {setOkSolveDb, toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
+import {fetchLastSolve, fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 import {deleteSolveDb} from '@/db/solves/update';
-import {useSolveDb} from '@/util/hooks/useSolveDb';
-import {Solve} from '@/types/solve';
 import {Serialized} from '@/types/serialized';
+import {Solve} from '@/types/solve';
 import {useGeneral} from '@/util/hooks/useGeneral';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
+import {HOTKEY_MAP} from '@/util/timer/hotkeys';
+import {GlobalHotKeys} from 'react-hotkeys';
 
 interface Props {
 	// Serialized rows come from tRPC payloads (Dates arrive as ISO strings)

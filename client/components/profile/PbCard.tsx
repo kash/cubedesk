@@ -1,20 +1,20 @@
-import React, {useMemo, useState} from 'react';
-import {getTimeString} from '@/util/time';
+import {openModal} from '@/actions/general';
+import Button from '@/components/common/Button';
+import Tag from '@/components/common/Tag';
+import HistoryModal from '@/components/modules/history/HistoryModal';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import SolveInfo from '@/components/solve-info/SolveInfo';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {PublicUserAccount} from '@/types/user';
-import {TopAverage, TopSolve} from '@/types/top-solve';
-import {useDispatch} from 'react-redux';
-import {openModal} from '@/actions/general';
-import HistoryModal from '@/components/modules/history/HistoryModal';
-import Tag from '@/components/common/Tag';
 import {getAverage} from '@/db/solves/stats/solves/average/average';
-import Button from '@/components/common/Button';
+import {Solve} from '@/types/solve';
+import {TopAverage, TopSolve} from '@/types/top-solve';
+import {PublicUserAccount} from '@/types/user';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useMe} from '@/util/hooks/useMe';
+import {getTimeString} from '@/util/time';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
-import {useMe} from '@/util/hooks/useMe';
-import {Solve} from '@/types/solve';
+import React, {useMemo, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 interface Props {
 	solves: Solve[];

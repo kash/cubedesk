@@ -1,5 +1,5 @@
-import React from 'react';
 import {Body, Container, Head, Hr, Html, Img, Preview, Section, Text} from '@react-email/components';
+import React from 'react';
 
 const LOGO_SRC = 'https://cdn.cubedesk.io/storage/logo_text_black.png';
 

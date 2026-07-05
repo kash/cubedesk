@@ -1,17 +1,17 @@
-import React, {useContext, useMemo} from 'react';
-import {Timer, Hash, Trophy, CalendarBlank} from 'phosphor-react';
-import NumberBlock from '@/components/stats/common/NumberBlock';
+import {openModal} from '@/actions/general';
 import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
-import {getDateFromNow} from '@/util/dates';
+import SolveInfo from '@/components/solve-info/SolveInfo';
+import NumberBlock from '@/components/stats/common/NumberBlock';
 import {StatsContext} from '@/components/stats/Stats';
-import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
 import {getTotalSolveCount, getTotalSolveTime} from '@/db/solves/stats/count';
+import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
+import {Solve} from '@/types/solve';
+import {getDateFromNow} from '@/util/dates';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
+import {CalendarBlank, Hash, Timer, Trophy} from 'phosphor-react';
+import React, {useContext, useMemo} from 'react';
 import {useDispatch} from 'react-redux';
-import {openModal} from '@/actions/general';
-import SolveInfo from '@/components/solve-info/SolveInfo';
-import {Solve} from '@/types/solve';
 
 export default function CubeStatsFeatured() {
 	const dispatch = useDispatch();

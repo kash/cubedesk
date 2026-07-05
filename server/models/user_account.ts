@@ -1,19 +1,19 @@
-import {getLocationFromIp} from '../services/ipstack';
-import {v4 as uuid} from 'uuid';
-import {hashPassword} from '../util/password';
 import {Prisma} from '@/generated/prisma/client';
-import {getPrisma} from '../database';
-import dayjs from 'dayjs';
-import {createMetricLog} from './metric_log';
-import {MetricLogType} from '../@types/enums';
 import {
 	InternalUserAccount,
 	PublicUserAccount,
 	UserAccount,
 } from '@/types/user';
-import {logger} from '../services/logger';
-import {getActiveBanLogsByUserId} from './ban_log';
 import {publicUserSelect} from '@/types/user';
+import dayjs from 'dayjs';
+import {v4 as uuid} from 'uuid';
+import {MetricLogType} from '../@types/enums';
+import {getPrisma} from '../database';
+import {getLocationFromIp} from '../services/ipstack';
+import {logger} from '../services/logger';
+import {hashPassword} from '../util/password';
+import {getActiveBanLogsByUserId} from './ban_log';
+import {createMetricLog} from './metric_log';
 
 // Reuses publicUserSelect so integrations stay limited to id/service_name —
 // full rows carry OAuth tokens, and objects fetched with this include are sent

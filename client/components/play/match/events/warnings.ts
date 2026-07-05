@@ -1,6 +1,6 @@
-import {useSocketListener} from '@/util/hooks/useSocketListener';
 import {displayTimerAlert} from '@/components/timer/helpers/notification';
 import {useMe} from '@/util/hooks/useMe';
+import {useSocketListener} from '@/util/hooks/useSocketListener';
 
 export function listenForMatchWarnings() {
 	const me = useMe();

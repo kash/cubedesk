@@ -1,13 +1,13 @@
+import {getMe} from '@/actions/account';
+import AvatarImage from '@/components/common/avatar/AvatarImage';
+import UploadCover from '@/components/common/UploadCover';
+import {Profile} from '@/types/profile';
+import {api} from '@/util/api';
+import {useMe} from '@/util/hooks/useMe';
+import {getStorageURL} from '@/util/storage';
+import {fileToBase64} from '@/util/upload';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import UploadCover from '@/components/common/UploadCover';
-import AvatarImage from '@/components/common/avatar/AvatarImage';
-import {getStorageURL} from '@/util/storage';
-import {Profile} from '@/types/profile';
-import {useMe} from '@/util/hooks/useMe';
-import {api} from '@/util/api';
-import {fileToBase64} from '@/util/upload';
-import {getMe} from '@/actions/account';
 
 interface Props {
 	allowChange?: boolean;

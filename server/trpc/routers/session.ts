@@ -1,6 +1,5 @@
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {protectedProcedure, router} from '../trpc';
 import {
 	bulkCreateSessions,
 	createSession,
@@ -13,6 +12,7 @@ import {
 	updateOrderOfSessionsForUser,
 	updateSession,
 } from '../../models/session';
+import {protectedProcedure, router} from '../trpc';
 
 const sessionInputSchema = z.object({
 	id: z.string().optional(),

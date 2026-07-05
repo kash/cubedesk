@@ -1,9 +1,9 @@
-import {z} from 'zod';
+import {SafeIntegration, safeIntegrationSelect, WcaAccount} from '@/types/integration';
 import {TRPCError} from '@trpc/server';
-import {protectedProcedure, router} from '../trpc';
-import {safeIntegrationSelect, SafeIntegration, WcaAccount} from '@/types/integration';
-import {getIntegration} from '../../models/integration';
+import {z} from 'zod';
 import {getIntegrationGetMe, linkOAuthAccount, revokeIntegration} from '../../integrations/oauth';
+import {getIntegration} from '../../models/integration';
+import {protectedProcedure, router} from '../trpc';
 
 const integrationTypeInput = z.object({
 	integrationType: z.enum(['discord', 'wca']),

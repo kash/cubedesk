@@ -1,8 +1,8 @@
-import React from 'react';
-import {getStorageURL, resourceUri} from '@/util/storage';
-import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
 import {Profile} from '@/types/profile';
+import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
 import {cn} from '@/util/cn';
+import {getStorageURL, resourceUri} from '@/util/storage';
+import React from 'react';
 
 const COLORS = [
 	'#05445E',

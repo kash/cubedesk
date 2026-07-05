@@ -1,5 +1,4 @@
 import {EmailableUser} from '@/types/user';
-import {NotificationType} from '../enums';
 
 export interface NotificationData {
 	subject: string;

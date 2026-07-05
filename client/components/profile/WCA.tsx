@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import LinkButton from '@/components/common/LinkButton';
 import Emblem from '@/components/common/Emblem';
-import {Check} from 'phosphor-react';
-import {trpc} from '@/util/trpc';
+import LinkButton from '@/components/common/LinkButton';
 import {WcaAccount} from '@/types/integration';
+import {trpc} from '@/util/trpc';
+import {Check} from 'phosphor-react';
+import React, {useEffect, useState} from 'react';
 
 interface Props {
 	myProfile?: boolean;

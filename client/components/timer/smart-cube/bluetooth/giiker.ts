@@ -1,6 +1,6 @@
+import GiikerUtil from '@/components/timer/smart-cube/bluetooth/giiker_util';
 // @ts-nocheck
 import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
-import GiikerUtil from '@/components/timer/smart-cube/bluetooth/giiker_util';
 
 export default class Giiker extends SmartCube {
 	device;

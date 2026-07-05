@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
-import classNames from 'classnames';
-import {useDropzone} from 'react-dropzone';
 import {ImportDataContext} from '@/components/settings/data/import-data/ImportData';
-import {toastError} from '@/util/toast';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
+import {toastError} from '@/util/toast';
+import classNames from 'classnames';
+import React, {useContext} from 'react';
+import {useDropzone} from 'react-dropzone';
 
 export default function ProcessData() {
 	const context = useContext(ImportDataContext);

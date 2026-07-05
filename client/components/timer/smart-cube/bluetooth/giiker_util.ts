@@ -105,10 +105,10 @@ class EventEmitter {
 	}
 
 	off(label, callback) {
-		let listeners = this.listeners[label];
+		const listeners = this.listeners[label];
 
 		if (listeners && listeners.length > 0) {
-			let index = listeners.indexOf(callback);
+			const index = listeners.indexOf(callback);
 			if (index > -1) {
 				listeners.splice(index, 1);
 				this.listeners[label] = listeners;
@@ -119,7 +119,7 @@ class EventEmitter {
 	}
 
 	emit(label, ...args) {
-		let listeners = this.listeners[label];
+		const listeners = this.listeners[label];
 
 		if (listeners && listeners.length > 0) {
 			listeners.forEach((listener) => {
@@ -147,7 +147,7 @@ export default class GiikerUtil extends EventEmitter {
 		const service = await server.getPrimaryService(SERVICE_UUID);
 		const characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
 		await characteristic.startNotifications();
-		let value = await characteristic.readValue();
+		const value = await characteristic.readValue();
 
 		this._state = (await this._parseCubeValue(value)).state;
 

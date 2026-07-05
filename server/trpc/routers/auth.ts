@@ -1,5 +1,5 @@
-import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 import {getUserByEmail, sanitizeUser} from '../../models/user_account';
 import {getJwtString} from '../../util/auth';
 import {checkPassword} from '../../util/password';

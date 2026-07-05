@@ -1,14 +1,14 @@
+import {openModal} from '@/actions/general';
+import Button from '@/components/common/Button';
+import NewCubeType from '@/components/settings/cube-types/NewCubeType';
+import {refreshSettings, setCubeType} from '@/db/settings/update';
+import {CubeType} from '@/util/cubes/cube_types';
+import {getAllCubeTypes, getScrambleTypeById} from '@/util/cubes/util';
+import {useSettings} from '@/util/hooks/useSettings';
+import {trpc} from '@/util/trpc';
+import {Plus, Trash} from 'phosphor-react';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {Trash, Plus} from 'phosphor-react';
-import {refreshSettings, setCubeType} from '@/db/settings/update';
-import {getAllCubeTypes, getScrambleTypeById} from '@/util/cubes/util';
-import {openModal} from '@/actions/general';
-import NewCubeType from '@/components/settings/cube-types/NewCubeType';
-import {CubeType} from '@/util/cubes/cube_types';
-import Button from '@/components/common/Button';
-import {trpc} from '@/util/trpc';
-import {useSettings} from '@/util/hooks/useSettings';
 
 export default function CubeTypes() {
 	const dispatch = useDispatch();

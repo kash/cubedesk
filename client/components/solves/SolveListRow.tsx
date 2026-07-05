@@ -1,15 +1,15 @@
-import React from 'react';
-import classNames from 'classnames';
-import {useDispatch} from 'react-redux';
-import {getTimeString} from '@/util/time';
 import {openModal} from '@/actions/general';
-import SolveInfo from '@/components/solve-info/SolveInfo';
 import Emblem from '@/components/common/Emblem';
-import {getDateFromNow} from '@/util/dates';
-import Scramble from '@/components/modules/scramble/ScrambleVisual';
-import {getCubeTypeName} from '@/util/cubes/util';
 import Tag from '@/components/common/Tag';
+import Scramble from '@/components/modules/scramble/ScrambleVisual';
+import SolveInfo from '@/components/solve-info/SolveInfo';
 import {Solve} from '@/types/solve';
+import {getCubeTypeName} from '@/util/cubes/util';
+import {getDateFromNow} from '@/util/dates';
+import {getTimeString} from '@/util/time';
+import classNames from 'classnames';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 
 interface Props {
 	solve: Solve;

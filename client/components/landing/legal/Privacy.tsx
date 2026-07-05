@@ -1,5 +1,5 @@
-import React from 'react';
 import LegalContent from '@/components/landing/legal/LegalContent';
+import React from 'react';
 
 export default function Privacy() {
 	return (

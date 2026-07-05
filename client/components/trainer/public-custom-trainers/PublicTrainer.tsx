@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {ThumbsDown, ThumbsUp, Download} from 'phosphor-react';
-import AlgoVisual from '@/components/trainer/AlgoVisual';
-import {toastError, toastSuccess} from '@/util/toast';
-import {useSelector} from 'react-redux';
 import Avatar from '@/components/common/avatar/Avatar';
-import {CustomTrainerWithUser} from '@/types/trainer';
-import {Serialized} from '@/types/serialized';
-import {trpc} from '@/util/trpc';
 import Button from '@/components/common/Button';
+import AlgoVisual from '@/components/trainer/AlgoVisual';
+import {Serialized} from '@/types/serialized';
+import {CustomTrainerWithUser} from '@/types/trainer';
+import {toastError, toastSuccess} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import {Download, ThumbsDown, ThumbsUp} from 'phosphor-react';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
 
 interface Props {
 	downloadedByUser: boolean;

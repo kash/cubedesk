@@ -1,8 +1,8 @@
-import React from 'react';
 import Timer from '@/components/timer/Timer';
+import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
-import {useMe} from '@/util/hooks/useMe';
+import React from 'react';
 
 export default function DefaultTimer() {
 	const me = useMe();

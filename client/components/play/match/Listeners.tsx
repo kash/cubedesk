@@ -1,19 +1,19 @@
-import React, {ReactNode, useContext, useEffect} from 'react';
+import {GameContext} from '@/components/play/game/Game';
 import {setExistingMatchData} from '@/components/play/match/events/helpers';
-import {toastError} from '@/util/toast';
 import {listenForJoinEvents} from '@/components/play/match/events/join-match';
+import {handleOpenMatchLink} from '@/components/play/match/events/open-match';
+import {relayOpponentEvents} from '@/components/play/match/events/opponent';
 import {listenForConnectEvent} from '@/components/play/match/events/reconnect';
 import {listenForTimerEvents} from '@/components/play/match/events/timer';
-import {relayOpponentEvents} from '@/components/play/match/events/opponent';
-import {useMatchContext} from '@/components/play/match/Match';
-import {handleOpenMatchLink} from '@/components/play/match/events/open-match';
 import {listenForMatchUpdates} from '@/components/play/match/events/update';
-import {GameContext} from '@/components/play/game/Game';
+import {listenForMatchWarnings} from '@/components/play/match/events/warnings';
+import {useMatchContext} from '@/components/play/match/Match';
+import {getNewScramble} from '@/components/timer/helpers/scramble';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import {getHashCode} from '@/util/strings/util';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {getNewScramble} from '@/components/timer/helpers/scramble';
-import {listenForMatchWarnings} from '@/components/play/match/events/warnings';
+import {toastError} from '@/util/toast';
+import React, {ReactNode, useContext, useEffect} from 'react';
 
 interface Props {
 	children: ReactNode;

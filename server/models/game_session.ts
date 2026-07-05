@@ -1,6 +1,6 @@
 import type {GameType} from '@/generated/prisma/client';
-import {getPrisma} from '../database';
 import {gameSessionInclude} from '@/types/game';
+import {getPrisma} from '../database';
 
 export function getGameSessionById(id: string) {
 	return getPrisma().gameSession.findUnique({

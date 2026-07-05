@@ -1,6 +1,6 @@
-import * as THREE from 'three';
 import CubeMesh from '@/components/timer/smart-cube/visual/core/CubeMesh';
 import {Axis} from '@/components/timer/smart-cube/visual/core/types';
+import * as THREE from 'three';
 
 export class RubiksCube {
 	private camera: THREE.PerspectiveCamera;

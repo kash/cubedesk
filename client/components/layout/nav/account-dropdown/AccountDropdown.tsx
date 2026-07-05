@@ -1,9 +1,9 @@
-import React from 'react';
 import AvatarImage from '@/components/common/avatar/AvatarImage';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
 import {logOut} from '@/util/auth/logout';
 import {useMe} from '@/util/hooks/useMe';
+import React from 'react';
 
 export default function AccountDropdown() {
 	const me = useMe();

@@ -1,10 +1,10 @@
-import React, {ReactNode, useContext} from 'react';
-import {GameContext} from '@/components/play/game/Game';
-import {PlayerStatus} from '@/shared/match/types';
-import {MatchContext} from '@/components/play/match/Match';
-import {useMe} from '@/util/hooks/useMe';
 import Button from '@/components/common/Button';
+import {GameContext} from '@/components/play/game/Game';
+import {MatchContext} from '@/components/play/match/Match';
 import Challengers from '@/components/play/target/challengers/Challengers';
+import {PlayerStatus} from '@/shared/match/types';
+import {useMe} from '@/util/hooks/useMe';
+import React, {ReactNode, useContext} from 'react';
 
 // Center module that shows game/match status
 export default function MatchModule() {

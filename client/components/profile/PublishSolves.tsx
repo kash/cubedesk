@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import {trpc} from '@/util/trpc';
-import Emblem from '@/components/common/Emblem';
-import {useMe} from '@/util/hooks/useMe';
-import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
-import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
-import {IModalProps} from '@/components/common/modal/Modal';
-import {getTimeString} from '@/util/time';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
 import Button from '@/components/common/Button';
+import Emblem from '@/components/common/Emblem';
+import {IModalProps} from '@/components/common/modal/Modal';
 import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
+import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
+import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useMe} from '@/util/hooks/useMe';
+import {getTimeString} from '@/util/time';
 import {toastError, toastSuccess} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import React, {useState} from 'react';
 
 export default function PublishSolves(props: IModalProps) {
 	const {onComplete} = props;

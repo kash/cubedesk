@@ -1,7 +1,7 @@
 import type {
+	Prisma,
 	Friendship as PrismaFriendship,
 	FriendshipRequest as PrismaFriendshipRequest,
-	Prisma,
 } from '@/generated/prisma/client';
 import {publicUserSelect} from './user';
 

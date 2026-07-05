@@ -1,7 +1,7 @@
-import {getPrisma} from '../database';
+import {UserAccount} from '@/types/user';
 import {v4 as uuid} from 'uuid';
 import {MetricLogType} from '../@types/enums';
-import {UserAccount} from '@/types/user';
+import {getPrisma} from '../database';
 
 export function createMetricLog(user: UserAccount, actionType: MetricLogType, metricValue: number = null, actionsDetails: string = '') {
 	return getPrisma().metricLog.create({

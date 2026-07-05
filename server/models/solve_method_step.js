@@ -1,5 +1,5 @@
-import {getPrisma} from '../database';
 import {generateUUID} from '../../shared/code';
+import {getPrisma} from '../database';
 
 export function deleteSolveMethodSteps(solve) {
 	return getPrisma().solveMethodStep.deleteMany({

@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {ParentSize} from '@visx/responsive';
-import {Group} from '@visx/group';
-import {Pie} from '@visx/shape';
-import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
-import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
-import {scaleOrdinal} from '@visx/scale';
 import HorizontalNav from '@/components/common/HorizontalNav';
-import {getTimeString} from '@/util/time';
+import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
+import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {Solve} from '@/types/solve';
+import {getTimeString} from '@/util/time';
+import {Group} from '@visx/group';
+import {ParentSize} from '@visx/responsive';
+import {scaleOrdinal} from '@visx/scale';
+import {Pie} from '@visx/shape';
+import React, {useState} from 'react';
 
 const CHART_TYPES = [
 	{

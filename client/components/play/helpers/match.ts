@@ -1,6 +1,6 @@
 import {MatchConst} from '@/shared/match/consts';
-import {trpc} from '@/util/trpc';
 import {Match} from '@/types/match';
+import {trpc} from '@/util/trpc';
 
 const matchCache: Record<string, Match> = {};
 

@@ -1,20 +1,19 @@
-import React, {useContext} from 'react';
-import classNames from 'classnames';
-import {CaretRight, Pencil, Trash} from 'phosphor-react';
+import {openModal} from '@/actions/general';
 import Button from '@/components/common/Button';
 import Module from '@/components/common/Module';
+import AddCustom from '@/components/trainer/add-custom/AddCustom';
+import CustomVisual from '@/components/trainer/CustomVisual';
+import EditAlgo from '@/components/trainer/EditAlgo';
 import {CUSTOM_TRAINER_ALGO_TYPE, TrainerContext} from '@/components/trainer/Trainer';
-import {openModal} from '@/actions/general';
+import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
+import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
+import {deleteCustomTrainer} from '@/db/trainer/custom';
+import {TrainerAlgorithmExtended} from '@/db/trainer/init';
+import classNames from 'classnames';
+import {CaretRight, Pencil, Trash} from 'phosphor-react';
+import React, {useContext} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
-import EditAlgo from '@/components/trainer/EditAlgo';
-import {TrainerAlgorithmExtended} from '@/db/trainer/init';
-import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
-import AddCustom from '@/components/trainer/add-custom/AddCustom';
-import {deleteCustomTrainer} from '@/db/trainer/custom';
-
-import CustomVisual from '@/components/trainer/CustomVisual';
 
 interface Props {
 	algoExt: TrainerAlgorithmExtended;

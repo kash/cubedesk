@@ -10,15 +10,15 @@
 // LZ-based compression algorithm, version 1.4.4
 const LZString = (function () {
 	// private property
-	var f = String.fromCharCode;
-	var keyStrBase64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-	var keyStrUriSafe = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$';
-	var baseReverseDic = {};
+	const f = String.fromCharCode;
+	const keyStrBase64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+	const keyStrUriSafe = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$';
+	const baseReverseDic = {};
 
 	function getBaseValue(alphabet, character) {
 		if (!baseReverseDic[alphabet]) {
 			baseReverseDic[alphabet] = {};
-			for (var i = 0; i < alphabet.length; i++) {
+			for (let i = 0; i < alphabet.length; i++) {
 				baseReverseDic[alphabet][alphabet.charAt(i)] = i;
 			}
 		}
@@ -28,7 +28,7 @@ const LZString = (function () {
 	var LZString = {
 		compressToBase64: function (input) {
 			if (input == null) return '';
-			var res = LZString._compress(input, 6, function (a) {
+			const res = LZString._compress(input, 6, function (a) {
 				return keyStrBase64.charAt(a);
 			});
 			switch (
@@ -73,11 +73,11 @@ const LZString = (function () {
 
 		//compress into uint8array (UCS-2 big endian format)
 		compressToUint8Array: function (uncompressed) {
-			var compressed = LZString.compress(uncompressed);
-			var buf = new Uint8Array(compressed.length * 2); // 2 bytes per character
+			const compressed = LZString.compress(uncompressed);
+			const buf = new Uint8Array(compressed.length * 2); // 2 bytes per character
 
-			for (var i = 0, TotalLen = compressed.length; i < TotalLen; i++) {
-				var current_value = compressed.charCodeAt(i);
+			for (let i = 0, TotalLen = compressed.length; i < TotalLen; i++) {
+				const current_value = compressed.charCodeAt(i);
 				buf[i * 2] = current_value >>> 8;
 				buf[i * 2 + 1] = current_value % 256;
 			}
@@ -89,12 +89,12 @@ const LZString = (function () {
 			if (compressed === null || compressed === undefined) {
 				return LZString.decompress(compressed);
 			} else {
-				var buf = new Array(compressed.length / 2); // 2 bytes per character
-				for (var i = 0, TotalLen = buf.length; i < TotalLen; i++) {
+				const buf = new Array(compressed.length / 2); // 2 bytes per character
+				for (let i = 0, TotalLen = buf.length; i < TotalLen; i++) {
 					buf[i] = compressed[i * 2] * 256 + compressed[i * 2 + 1];
 				}
 
-				var result = [];
+				const result = [];
 				buf.forEach(function (c) {
 					result.push(f(c));
 				});
@@ -127,7 +127,7 @@ const LZString = (function () {
 		},
 		_compress: function (uncompressed, bitsPerChar, getCharFromInt) {
 			if (uncompressed == null) return '';
-			var i,
+			let i,
 				value,
 				context_dictionary = {},
 				context_dictionaryToCreate = {},
@@ -347,7 +347,7 @@ const LZString = (function () {
 		},
 
 		_decompress: function (length, resetValue, getNextValue) {
-			var dictionary = [],
+			let dictionary = [],
 				next,
 				enlargeIn = 4,
 				dictSize = 4,

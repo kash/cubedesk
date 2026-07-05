@@ -1,6 +1,6 @@
-import type {PublicUserAccount} from './user';
 import type {Image} from './image';
-import type {TopSolve, TopAverage} from './top-solve';
+import type {TopAverage, TopSolve} from './top-solve';
+import type {PublicUserAccount} from './user';
 
 export interface Profile {
 	id: string;

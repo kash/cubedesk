@@ -1,9 +1,9 @@
-import {getExistingMatch} from '@/components/play/helpers/match';
-import {IMatchContext} from '@/components/play/match/Match';
 import {IGameContext} from '@/components/play/game/Game';
+import {getExistingMatch} from '@/components/play/helpers/match';
+import {updateMatchState} from '@/components/play/match/helpers/state';
+import {IMatchContext} from '@/components/play/match/Match';
 import {UserAccount} from '@/types/user';
 import {socketClient} from '@/util/socket/socketio';
-import {updateMatchState} from '@/components/play/match/helpers/state';
 
 export async function setExistingMatchData(
 	me: UserAccount,

@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {api} from '@/util/api';
-import {fileToBase64} from '@/util/upload';
 import {getMe} from '@/actions/account';
+import Button from '@/components/common/Button';
 import UploadCover from '@/components/common/UploadCover';
+import {api} from '@/util/api';
 import {useMe} from '@/util/hooks/useMe';
 import {getStorageURL} from '@/util/storage';
-import Button from '@/components/common/Button';
+import {fileToBase64} from '@/util/upload';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 export default function TimerBackground() {
 	const dispatch = useDispatch();

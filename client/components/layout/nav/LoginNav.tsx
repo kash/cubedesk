@@ -1,7 +1,7 @@
-import React from 'react';
-import {SignIn} from 'phosphor-react';
 import Button from '@/components/common/Button';
 import {useMe} from '@/util/hooks/useMe';
+import {SignIn} from 'phosphor-react';
+import React from 'react';
 
 interface Props {
 	collapsed: boolean;

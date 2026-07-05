@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import {CaretDown} from 'phosphor-react';
-import GenericInput, {GenericInputProps, InputProps, inputClassNames} from '@/components/common/inputs/generic_input/GenericInput';
+import GenericInput, {GenericInputProps, inputClassNames, InputProps} from '@/components/common/inputs/generic_input/GenericInput';
 import {cn} from '@/util/cn';
+import {CaretDown} from 'phosphor-react';
+import React, {ReactNode} from 'react';
 
 interface Props extends GenericInputProps<HTMLSelectElement> {
 	defaultOption?: string;

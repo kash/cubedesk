@@ -1,5 +1,5 @@
-import {getPrisma} from '../database';
 import {Profile} from '@/types/profile';
+import {getPrisma} from '../database';
 import {publicUserInclude} from './user_account';
 
 export function getUserProfile(user): Promise<Profile> {

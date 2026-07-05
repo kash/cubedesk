@@ -1,8 +1,7 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-
 import Checkbox from '@/components/common/Checkbox';
 import {cn} from '@/util/cn';
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 export interface IDropdownOption {
 	text: string;

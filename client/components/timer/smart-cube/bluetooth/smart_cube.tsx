@@ -1,12 +1,12 @@
+import {openModal} from '@/actions/general';
+import {turnSmartCube} from '@/actions/timer';
+import {getStore} from '@/components/store';
 // @ts-nocheck
 import {setTimerParams} from '@/components/timer/helpers/params';
-import {getStore} from '@/components/store';
-import {turnSmartCube} from '@/actions/timer';
+import SolveCheck from '@/components/timer/smart-cube/solve-check/SolveCheck';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
-import {openModal} from '@/actions/general';
 import React from 'react';
-import SolveCheck from '@/components/timer/smart-cube/solve-check/SolveCheck';
 
 export default class SmartCube {
 	alertConnecting = () => {

@@ -1,7 +1,7 @@
-import React from 'react';
-import {YoutubeLogo, TwitterLogo, RedditLogo, TwitchLogo} from 'phosphor-react';
 import Emblem from '@/components/common/Emblem';
 import {Profile} from '@/types/profile';
+import {RedditLogo, TwitchLogo, TwitterLogo, YoutubeLogo} from 'phosphor-react';
+import React from 'react';
 
 interface Props {
 	profile: Profile;

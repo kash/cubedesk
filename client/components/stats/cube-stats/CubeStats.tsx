@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
-import CubeStatsFeatured from '@/components/stats/cube-stats/CubeStatsFeatured';
-import TimeChart from '@/components/modules/time-chart/TimeChart';
-import StatSection from '@/components/stats/common/StatSection';
-import StatModule from '@/components/stats/common/StatModule';
-import CubeStatAverages from '@/components/stats/cube-stats/CubeStatAverages';
-import {StatsContext} from '@/components/stats/Stats';
-import SubStats from '@/components/stats/common/SubStats';
 import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
+import TimeChart from '@/components/modules/time-chart/TimeChart';
+import StatModule from '@/components/stats/common/StatModule';
+import StatSection from '@/components/stats/common/StatSection';
+import SubStats from '@/components/stats/common/SubStats';
+import CubeStatAverages from '@/components/stats/cube-stats/CubeStatAverages';
+import CubeStatsFeatured from '@/components/stats/cube-stats/CubeStatsFeatured';
+import {StatsContext} from '@/components/stats/Stats';
+import React, {useContext} from 'react';
 
 export default function CubeStats() {
 	const context = useContext(StatsContext);

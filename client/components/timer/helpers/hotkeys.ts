@@ -1,5 +1,5 @@
-import {configure} from 'react-hotkeys';
 import {getTimerStore} from '@/util/store/getTimer';
+import {configure} from 'react-hotkeys';
 
 export function configureHotkeys() {
 	configure({

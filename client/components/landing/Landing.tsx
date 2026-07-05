@@ -1,5 +1,5 @@
-import React from 'react';
 import LandingNav from '@/components/landing/common/LandingNav';
+import React from 'react';
 
 export default function Landing(props: any) {
 	const {children} = props;

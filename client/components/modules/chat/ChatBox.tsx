@@ -1,16 +1,16 @@
-import React, {useEffect, useRef, useState, ReactNode} from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
-import {useDispatch} from 'react-redux';
-import ChatMessage from '@/components/modules/chat/ChatMessage';
 import {setTimerDisabled} from '@/actions/timer';
-import {socketClient} from '@/util/socket/socketio';
-import {cleanBadWords} from '@/util/strings/chat_filter';
+import ChatMessage from '@/components/modules/chat/ChatMessage';
 import {MatchConst} from '@/shared/match/consts';
 import {MatchUpdateChat} from '@/shared/match/types';
-import {useSocketListener} from '@/util/hooks/useSocketListener';
-import {GameType} from '../../../../shared/match/consts';
 import {Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
+import {useSocketListener} from '@/util/hooks/useSocketListener';
+import {socketClient} from '@/util/socket/socketio';
+import {cleanBadWords} from '@/util/strings/chat_filter';
+import React, {ReactNode, useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import TextareaAutosize from 'react-textarea-autosize';
+import {GameType} from '../../../../shared/match/consts';
 
 interface AggregatedChat {
 	user: PublicUserAccount;

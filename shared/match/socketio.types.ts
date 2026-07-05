@@ -1,6 +1,6 @@
 import {GameOptionsInput} from '@/types/match';
-import {PublicUserAccount} from '@/types/user';
 import {Solve} from '@/types/solve';
+import {PublicUserAccount} from '@/types/user';
 import {MatchInputChatMessage, MatchUpdate, MatchUpdateChat, UpdateRoomInfo} from '../../client/shared/match/types';
 
 export interface ServerToClientEvents {

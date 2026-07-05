@@ -1,11 +1,11 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {CaretDown} from 'phosphor-react';
-import {setCubeType, setCurrentSession} from '@/db/settings/update';
-import {fetchSessionById, fetchSessions} from '@/db/sessions/query';
-import {fetchLastCubeTypeForSession} from '@/db/solves/query';
-import {useSettings} from '@/util/hooks/useSettings';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {fetchSessionById, fetchSessions} from '@/db/sessions/query';
+import {setCubeType, setCurrentSession} from '@/db/settings/update';
+import {fetchLastCubeTypeForSession} from '@/db/solves/query';
 import {Session} from '@/types/session';
+import {useSettings} from '@/util/hooks/useSettings';
+import {CaretDown} from 'phosphor-react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 interface Props {
 	stateless?: boolean;

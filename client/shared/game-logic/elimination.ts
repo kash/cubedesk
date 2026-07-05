@@ -1,9 +1,9 @@
-import {MatchConst} from '../match/consts';
-import {GameSolveRow, PlayerStatusInfo} from '../../components/play/game/Game';
-import {PlayerStatus} from '../match/types';
-import {getTimeString} from '../../util/time';
-import {Solve} from '@/types/solve';
 import {Match} from '@/types/match';
+import {Solve} from '@/types/solve';
+import {GameSolveRow, PlayerStatusInfo} from '../../components/play/game/Game';
+import {getTimeString} from '../../util/time';
+import {MatchConst} from '../match/consts';
+import {PlayerStatus} from '../match/types';
 
 export function getEliminationPlayerStatus(
 	myId: string,

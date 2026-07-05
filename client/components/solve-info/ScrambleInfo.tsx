@@ -1,8 +1,8 @@
-import React from 'react';
-import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
 import CopyText from '@/components/common/CopyText';
 import TextArea from '@/components/common/TextArea';
+import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
 import {Solve} from '@/types/solve';
+import React from 'react';
 
 interface Props {
 	solve: Solve;

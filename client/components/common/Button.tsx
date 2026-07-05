@@ -1,13 +1,13 @@
-import React, {ReactNode} from 'react';
-import {Link} from 'react-router-dom';
-import {CircleNotch} from 'phosphor-react';
-import Error from '@/components/common/inputs/Error';
-import ConfirmModal, {ConfirmModalProps} from '@/components/common/ConfirmModal';
 import {openModal} from '@/actions/general';
-import CSS from 'csstype';
+import ConfirmModal, {ConfirmModalProps} from '@/components/common/ConfirmModal';
+import Error from '@/components/common/inputs/Error';
 import InputInfo from '@/components/common/inputs/input/InputInfo';
-import {useDispatch} from 'react-redux';
 import {cn} from '@/util/cn';
+import CSS from 'csstype';
+import {CircleNotch} from 'phosphor-react';
+import React, {ReactNode} from 'react';
+import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 export enum CommonType {
 	SUCCESS = 'success',

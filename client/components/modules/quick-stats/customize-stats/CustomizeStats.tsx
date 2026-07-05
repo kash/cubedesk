@@ -1,20 +1,20 @@
-import React, {useMemo, useState} from 'react';
+import {addStatsModuleBlock, removeStatsModuleBlock} from '@/actions/stats';
+import Button from '@/components/common/Button';
+import HorizontalLine from '@/components/common/HorizontalLine';
+import CustomizeStatsEditor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsEditor';
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
 import {
 	getQuickStatsGridSizes,
 	saveStatsModuleBlocks,
 	STATS_GRID_SIZE,
 } from '@/components/modules/quick-stats/util';
-import Button from '@/components/common/Button';
-import CustomizeStatsEditor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsEditor';
-import HorizontalLine from '@/components/common/HorizontalLine';
-import {StatsModuleBlock} from '@/types/stats-module';
-import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
-import {addStatsModuleBlock, removeStatsModuleBlock} from '@/actions/stats';
-import {defaultStatsModuleBlocks} from '@/reducers/stats';
-import {toastError} from '@/util/toast';
 import {FilterSolvesOptions} from '@/db/solves/query';
+import {defaultStatsModuleBlocks} from '@/reducers/stats';
+import {StatsModuleBlock} from '@/types/stats-module';
+import {toastError} from '@/util/toast';
 import jsonStr from 'json-stable-stringify';
+import React, {useMemo, useState} from 'react';
+import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;

@@ -1,7 +1,7 @@
+import {setTimerParam} from '@/components/timer/helpers/params';
+import {ITimerContext} from '@/components/timer/Timer';
 import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
 import {Scrambow} from 'scrambow';
-import {ITimerContext} from '@/components/timer/Timer';
-import {setTimerParam} from '@/components/timer/helpers/params';
 
 export function getNewScramble(scrambleTypeId: string, seed?: number) {
 	const scrambleType = getScrambleTypeById(scrambleTypeId);

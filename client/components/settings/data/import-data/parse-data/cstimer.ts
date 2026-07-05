@@ -1,7 +1,7 @@
 import {IImportDataContext, ImportableData} from '@/components/settings/data/import-data/ImportData';
-import {v4 as uuid} from 'uuid';
-import {SolveInput} from '@/types/solve';
 import {SessionInput} from '@/types/session';
+import {SolveInput} from '@/types/solve';
+import {v4 as uuid} from 'uuid';
 
 const CSTIMER_CUBEDESK_CUBETYPE_MAP = {
 	'333': '333',
