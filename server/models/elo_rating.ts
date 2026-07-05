@@ -11,7 +11,7 @@ export interface UserEloForCubeType {
 	games: number;
 }
 
-export async function createEloRating(userId: string) {
+async function createEloRating(userId: string) {
 	const user = await getUserByIdWithProfile(userId);
 	if (!user?.profile) {
 		throw new Error(`Cannot create ELO rating: user ${userId} or their profile not found`);
@@ -41,7 +41,7 @@ export async function getUserEloRatingByCubeType(userId: string, cubeType: strin
 	};
 }
 
-export async function getUserEloRating(userId: string) {
+async function getUserEloRating(userId: string) {
 	const rating = await getPrisma().eloRating.findUnique({
 		where: {
 			user_id: userId,
@@ -59,7 +59,7 @@ export function getEloRatingColumnNameFromCubeType(cubeType: string) {
 	return `${ELO_COLUMN_PREFIX}${cubeType}_rating`;
 }
 
-export function getGameCountColumnNameFromCubeType(cubeType: string) {
+function getGameCountColumnNameFromCubeType(cubeType: string) {
 	return `${GAMES_COLUMN_PREFIX}${cubeType}_count`;
 }
 

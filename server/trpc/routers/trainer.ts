@@ -1,8 +1,8 @@
 import type {PrismaClient} from '@/generated/prisma/client';
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
 import {fetchTrainerAlgorithms} from '@/server/models/trainer/fetch';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 const algorithmOverrideInputSchema = z.object({
 	rotate: z.number().int().nullish(),

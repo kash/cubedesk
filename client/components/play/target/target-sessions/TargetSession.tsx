@@ -5,12 +5,12 @@ import Emblem from '@/components/common/Emblem';
 import LinkButton from '@/components/common/LinkButton';
 import History from '@/components/modules/history/History';
 import {getGameLink} from '@/components/play/game/Game';
+import {GameType} from '@/shared/match/consts';
 import {GameSessionWithRelations} from '@/types/game';
 import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
 import React, {ReactNode} from 'react';
 import {useDispatch} from 'react-redux';
-import {GameType} from '@/shared/match/consts';
 
 interface Props {
 	gameType: GameType;

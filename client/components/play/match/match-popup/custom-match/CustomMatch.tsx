@@ -4,13 +4,13 @@ import Loading from '@/components/common/Loading';
 import Tag from '@/components/common/Tag';
 import {useMatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
 import {getGameMetaData} from '@/components/play/Play';
+import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import {ArrowRight, Eye} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
-import {GameType} from '@/shared/match/consts';
 
 export function getMatchLinkBase(gameType: GameType) {
 	const gameMetaData = getGameMetaData(gameType);

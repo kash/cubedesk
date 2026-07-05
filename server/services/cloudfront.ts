@@ -1,5 +1,5 @@
-import {CloudFrontClient, CreateInvalidationCommand} from '@aws-sdk/client-cloudfront';
 import {generateRandomCode} from '@/shared/code';
+import {CloudFrontClient, CreateInvalidationCommand} from '@aws-sdk/client-cloudfront';
 
 const CLOUDFRONT_DISTRIBUTION_ID = 'E1NXYT8MXGOG2X';
 const cloudfront = new CloudFrontClient({region: 'us-west-2'});

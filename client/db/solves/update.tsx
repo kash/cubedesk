@@ -1,19 +1,19 @@
-import ConfirmModal from '@/components/common/ConfirmModal';
-import {Solve} from '@/types/solve';
-import React from 'react';
-import {sanitizeSolve} from '@/shared/solve';
 import {openModal} from '@/actions/general';
+import ConfirmModal from '@/components/common/ConfirmModal';
 import {updateOfflineHash} from '@/components/layout/offline';
 import {getStore} from '@/components/store';
-import {emitEvent} from '@/util/event_handler';
-import {toastError} from '@/util/toast';
-import {trpc} from '@/util/trpc';
 import {getSetting} from '@/db/settings/query';
 import {getSolveDb} from '@/db/solves/init';
 import {checkForCurrentAverageUpdate} from '@/db/solves/stats/solves/cache/average-cache';
 import {clearSolveStatCache} from '@/db/solves/stats/solves/caching';
 import {checkForPB} from '@/db/solves/stats/solves/pb';
 import {checkForWorst} from '@/db/solves/stats/solves/worst';
+import {sanitizeSolve} from '@/shared/solve';
+import {Solve} from '@/types/solve';
+import {emitEvent} from '@/util/event_handler';
+import {toastError} from '@/util/toast';
+import {trpc} from '@/util/trpc';
+import React from 'react';
 
 export async function createSolveDb(solveInput: Solve) {
 	const solveDb = getSolveDb();
@@ -135,7 +135,7 @@ function postProcessDbUpdate(solve: Solve, isNew: boolean) {
 	emitEvent('solveDbUpdatedEvent', solve);
 }
 
-export function updateSolveTime(solve: Solve) {
+function updateSolveTime(solve: Solve) {
 	if (solve.dnf) {
 		solve.time = -1;
 	} else if (solve.plus_two) {

@@ -1,6 +1,3 @@
-import {TrainerAlgorithm} from '@/types/trainer';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import {getAllAirtableResults} from '@/server/services/airtable';
 import {
 	createRedisKey,
@@ -10,6 +7,9 @@ import {
 	RedisNamespace,
 	setKeyInRedis,
 } from '@/server/services/redis';
+import {TrainerAlgorithm} from '@/types/trainer';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 

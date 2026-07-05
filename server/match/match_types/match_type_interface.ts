@@ -1,6 +1,6 @@
-import {FullMatch, FullMatchParticipant} from '@/types/match';
 import {PlayerStatusInfo} from '@/components/play/game/Game';
 import {GameType} from '@/shared/match/consts';
+import {FullMatch, FullMatchParticipant} from '@/types/match';
 
 export interface MatchTypeParams {
 	eventName: GameType;

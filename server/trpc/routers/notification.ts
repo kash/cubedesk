@@ -1,5 +1,3 @@
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
 import {
 	deleteNotification,
 	getNotificationById,
@@ -8,6 +6,8 @@ import {
 	readNotification,
 } from '@/server/models/notification';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 const PAGE_SIZE = 10;
 

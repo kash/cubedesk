@@ -1,7 +1,7 @@
 import type {ForgotPassword, UserAccount} from '@/generated/prisma/client';
-import {v4 as uuid} from 'uuid';
-import {generateRandomCode} from '@/shared/code';
 import {getPrisma} from '@/server/database';
+import {generateRandomCode} from '@/shared/code';
+import {v4 as uuid} from 'uuid';
 
 export function getForgotPassword(user: UserAccount) {
 	return getPrisma().forgotPassword.findMany({

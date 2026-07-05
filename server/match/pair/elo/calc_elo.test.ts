@@ -1,6 +1,6 @@
-import {generateId} from '@/shared/code';
-import {UserEloForCubeType} from '@/server/models/elo_rating';
 import {calculateNewElo, EloConst} from '@/server/match/pair/elo/calc_elo';
+import {UserEloForCubeType} from '@/server/models/elo_rating';
+import {generateId} from '@/shared/code';
 
 const DEFAULT_CUBE_TYPE = '333';
 

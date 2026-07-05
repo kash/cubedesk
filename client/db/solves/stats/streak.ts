@@ -1,5 +1,5 @@
-import {mean} from 'lodash';
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
+import {mean} from 'lodash';
 
 interface SolveStreak {
 	currentStreak: number;

@@ -1,8 +1,8 @@
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
-import {CUBE_TYPES} from '@/util/cubes/cube_types';
 import {getCustomCubeTypesByUserId} from '@/server/models/custom_cube_type';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
+import {CUBE_TYPES} from '@/util/cubes/cube_types';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 const customCubeTypeInputSchema = z.object({
 	scramble: z.string(),

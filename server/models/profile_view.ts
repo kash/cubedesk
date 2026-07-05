@@ -1,6 +1,6 @@
 import type {Profile, UserAccount} from '@/generated/prisma/client';
-import {v4 as uuid} from 'uuid';
 import {getPrisma} from '@/server/database';
+import {v4 as uuid} from 'uuid';
 
 export function createProfileView(profile: Profile, profileUser: UserAccount, viewer: UserAccount | null | undefined) {
 	return getPrisma().profileView.create({

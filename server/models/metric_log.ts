@@ -1,7 +1,7 @@
-import {UserAccount} from '@/types/user';
-import {v4 as uuid} from 'uuid';
 import {MetricLogType} from '@/server/@types/enums';
 import {getPrisma} from '@/server/database';
+import {UserAccount} from '@/types/user';
+import {v4 as uuid} from 'uuid';
 
 export function createMetricLog(
 	user: UserAccount,

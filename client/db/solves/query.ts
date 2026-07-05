@@ -1,8 +1,8 @@
+import {LokiFetchOptions} from '@/db/lokijs';
+import {getSolveDb} from '@/db/solves/init';
+import {cleanFilterOptions} from '@/db/util';
 import {Solve} from '@/types/solve';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {LokiFetchOptions} from '@/db/lokijs';
-import {cleanFilterOptions} from '@/db/util';
-import {getSolveDb} from '@/db/solves/init';
 
 export type FilterSolvesOptions = LokiQuery<Solve>;
 

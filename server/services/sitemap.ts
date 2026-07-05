@@ -1,13 +1,13 @@
-import {Profile} from '@/types/profile';
-import {PublicUserAccount} from '@/types/user';
-import fs from 'fs';
-import process from 'process';
 import {PageContext, routes} from '@/components/layout/Routes';
 import {getPrisma} from '@/server/database';
 import {invalidateCloudFrontCache} from '@/server/services/cloudfront';
 import {logger} from '@/server/services/logger';
 import {acquireRedisLock, createRedisKey, RedisNamespace} from '@/server/services/redis';
 import {uploadObject} from '@/server/services/storage';
+import {Profile} from '@/types/profile';
+import {PublicUserAccount} from '@/types/user';
+import fs from 'fs';
+import process from 'process';
 
 const SITEMAP_REDIS_KEY = createRedisKey(RedisNamespace.SITEMAP);
 const SITEMAP_SCHEMAS_DIR = __dirname + '/sitemap_schemas';

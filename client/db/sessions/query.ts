@@ -1,6 +1,6 @@
-import {Session} from '@/types/session';
-import {fetchSolves} from '@/db/solves/query';
 import {getSessionDb} from '@/db/sessions/init';
+import {fetchSolves} from '@/db/solves/query';
+import {Session} from '@/types/session';
 
 interface FetchSessionOptions {
 	id?: string;

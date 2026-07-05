@@ -1,11 +1,11 @@
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import {ColorName} from '@/shared/colors';
 import {useWindowListener} from '@/util/hooks/useListener';
 import {resourceUri} from '@/util/storage';
 import {CaretDown} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {ColorName} from '@/shared/colors';
 
 const MAX_NAV_WIDTH = 1200;
 

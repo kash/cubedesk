@@ -1,8 +1,4 @@
 import type {Prisma} from '@/generated/prisma/client';
-import {EloRatingWithUser, eloRatingWithUserInclude} from '@/types/elo';
-import {publicUserSelect} from '@/types/user';
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
 import {getSolve} from '@/server/models/solve';
 import {
 	deleteTopAverage,
@@ -12,9 +8,13 @@ import {
 	submitTopAverage,
 	submitTopSolve,
 } from '@/server/models/top_solve';
+import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
 import {serializeSolveTimestamps} from '@/server/util/serialize';
-import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
+import {EloRatingWithUser, eloRatingWithUserInclude} from '@/types/elo';
+import {publicUserSelect} from '@/types/user';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 const PAGE_SIZE = 50;
 

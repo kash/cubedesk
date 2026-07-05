@@ -1,8 +1,8 @@
+import {getPrisma} from '@/server/database';
+import {IntegrationType} from '@/shared/integration';
 import {Integration} from '@/types/integration';
 import {UserAccount} from '@/types/user';
 import {v4 as uuid} from 'uuid';
-import {IntegrationType} from '@/shared/integration';
-import {getPrisma} from '@/server/database';
 
 export function createIntegration(user: UserAccount, serviceName, authToken, refreshToken, authExpiresAt) {
 	return getPrisma().integration.create({

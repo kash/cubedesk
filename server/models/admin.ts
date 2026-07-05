@@ -1,4 +1,6 @@
 import type {Prisma} from '@/generated/prisma/client';
+import {getPrisma} from '@/server/database';
+import {trainerExceptions} from '@/server/models/solve';
 import {
 	AdminUser,
 	adminUserSelect,
@@ -6,8 +8,6 @@ import {
 	UserAccountSolvesSummary,
 	UserAccountSummary,
 } from '@/types/admin';
-import {getPrisma} from '@/server/database';
-import {trainerExceptions} from '@/server/models/solve';
 
 export async function getUserAccountForAdmin(userId: string): Promise<AdminUser | null> {
 	const summary = await getUserForAdminSummary(userId);

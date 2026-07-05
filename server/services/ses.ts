@@ -1,10 +1,10 @@
+import ForgotPasswordEmail, {ForgotPasswordEmailProps} from '@/server/emails/ForgotPasswordEmail';
+import NotificationEmail, {NotificationEmailProps} from '@/server/emails/NotificationEmail';
+import {createEmailLog} from '@/server/models/email_log';
 import {EmailableUser} from '@/types/user';
 import {SendEmailResponse, SES} from '@aws-sdk/client-ses';
 import {render} from '@react-email/components';
 import React from 'react';
-import ForgotPasswordEmail, {ForgotPasswordEmailProps} from '@/server/emails/ForgotPasswordEmail';
-import NotificationEmail, {NotificationEmailProps} from '@/server/emails/NotificationEmail';
-import {createEmailLog} from '@/server/models/email_log';
 
 const ses = new SES({region: 'us-west-2'});
 

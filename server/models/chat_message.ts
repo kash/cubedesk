@@ -1,6 +1,6 @@
+import {getPrisma} from '@/server/database';
 import {Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
-import {getPrisma} from '@/server/database';
 
 interface CreateChatMessageInput {
 	id: string;

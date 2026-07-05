@@ -2,10 +2,10 @@ import type {PublicUserAccount} from '@/types/user';
 
 export interface TimerBackground {
 	id: string;
-	url: string;
-	storage_path: string;
+	url: string | null;
+	storage_path: string | null;
 	user_id: string;
-	hex: string;
+	hex: string | null;
 	created_at: Date;
 	user?: PublicUserAccount;
 }

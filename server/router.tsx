@@ -1,4 +1,12 @@
 import type {Request} from 'express';
+import {PageContext, routes} from '@/components/layout/Routes';
+import {mapSingleRoute} from '@/components/map-route';
+import reducers from '@/reducers/reducers';
+import {ErrorCode} from '@/server/constants/errors';
+import htmlTemplate, {HtmlPagePayload} from '@/server/html_template';
+import {initUserAccount} from '@/server/models/store';
+import {logger} from '@/server/services/logger';
+import {TRPCProvider} from '@/util/api';
 import {minify} from 'html-minifier';
 import React, {ReactNode} from 'react';
 import ReactDOM from 'react-dom/server';
@@ -8,14 +16,6 @@ import {StaticRouter, Switch} from 'react-router-dom';
 import {applyMiddleware, createStore, Store} from 'redux';
 import promise from 'redux-promise-middleware';
 import {thunk} from 'redux-thunk';
-import {PageContext, routes} from '@/components/layout/Routes';
-import {mapSingleRoute} from '@/components/map-route';
-import reducers from '@/reducers/reducers';
-import {TRPCProvider} from '@/util/api';
-import {ErrorCode} from '@/server/constants/errors';
-import htmlTemplate, {HtmlPagePayload} from '@/server/html_template';
-import {initUserAccount} from '@/server/models/store';
-import {logger} from '@/server/services/logger';
 
 const mappedRoutes: ReactNode[] = [];
 

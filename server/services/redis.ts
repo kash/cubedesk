@@ -1,6 +1,6 @@
+import {logger} from '@/server/services/logger';
 import Redis from 'ioredis';
 import Redlock, {Lock} from 'redlock';
-import {logger} from '@/server/services/logger';
 
 let redlock: Redlock;
 let redisPubClient: Redis;
@@ -25,34 +25,6 @@ export function createRedisKey(redisKey: RedisNamespace, hash: string = ''): gen
 	return {
 		key: `${redisKey}#${hash}`,
 	};
-}
-
-export async function fetchDataFromCache<T>(
-	redisKey: generatedRedisKey,
-	callback: () => Promise<T>,
-	expireSeconds: number
-): Promise<T> {
-	const processStart = Date.now();
-	const redisData = await getValueFromRedis(redisKey);
-
-	let output: T;
-	let cacheHit = false;
-
-	if (redisData) {
-		cacheHit = true;
-
-		output = JSON.parse(redisData);
-	} else {
-		output = await callback();
-		await setKeyInRedis(redisKey, JSON.stringify(output), expireSeconds);
-	}
-
-	logger.debug(`Redis cache ${cacheHit ? 'HIT' : 'MISS'}`, {
-		redisKey: redisKey.key,
-		processTime: Date.now() - processStart,
-	});
-
-	return output;
 }
 
 export async function initRedisClient() {

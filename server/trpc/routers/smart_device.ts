@@ -1,7 +1,12 @@
+import {
+	createSmartDevice,
+	deleteSmartDevice,
+	getSmartDeviceById,
+	updateSmartDevice,
+} from '@/server/models/smart_device';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {createSmartDevice, deleteSmartDevice, getSmartDeviceById, updateSmartDevice} from '@/server/models/smart_device';
-import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 export const smartDeviceRouter = router({
 	// Full solve rows carry BigInt timestamps that can't be JSON-serialized;
@@ -18,7 +23,7 @@ export const smartDeviceRouter = router({
 					},
 				},
 			},
-		})
+		}),
 	),
 
 	create: protectedProcedure
@@ -26,16 +31,18 @@ export const smartDeviceRouter = router({
 			z.object({
 				originalName: z.string().trim().min(1, 'Invalid device name'),
 				deviceId: z.string().trim().min(1, 'Invalid device ID'),
-			})
+			}),
 		)
-		.mutation(({ctx, input}) => createSmartDevice(ctx.user, input.originalName, input.originalName, input.deviceId)),
+		.mutation(({ctx, input}) =>
+			createSmartDevice(ctx.user, input.originalName, input.originalName, input.deviceId),
+		),
 
 	rename: protectedProcedure
 		.input(
 			z.object({
 				id: z.string(),
 				name: z.string().trim().min(1, 'Invalid new name for smart device'),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const sd = await getSmartDeviceById(input.id);
@@ -52,7 +59,7 @@ export const smartDeviceRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const sd = await getSmartDeviceById(input.id);

@@ -1,8 +1,8 @@
 import type {Stats} from '@/types/stats';
 import type {StatsModule, StatsModuleBlock} from '@/types/stats-module';
-import {z} from 'zod';
 import {getSettingsByUserId, setSettingByUserId} from '@/server/models/settings';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
+import {z} from 'zod';
 
 const statsModuleBlockSchema = z.object({
 	statType: z.enum(['average', 'single']),

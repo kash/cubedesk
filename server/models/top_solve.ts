@@ -1,9 +1,9 @@
 import type {Solve} from '@/generated/prisma/client';
+import {getAverage} from '@/db/solves/stats/solves/average/average';
 import {Prisma} from '@/generated/prisma/client';
+import {getPrisma} from '@/server/database';
 import {publicUserSelect} from '@/types/user';
 import {v4 as uuid} from 'uuid';
-import {getAverage} from '@/db/solves/stats/solves/average/average';
-import {getPrisma} from '@/server/database';
 
 export async function deleteAllPublishedSolves(user) {
 	return Promise.all([deleteAllTopSolves(user), deleteAllTopAverages(user)]);
@@ -18,7 +18,7 @@ export function deleteTopSolve(cubeType, user) {
 	});
 }
 
-export function deleteAllTopSolves(user) {
+function deleteAllTopSolves(user) {
 	return getPrisma().topSolve.deleteMany({
 		where: {
 			user_id: user.id,
@@ -26,7 +26,7 @@ export function deleteAllTopSolves(user) {
 	});
 }
 
-export function deleteAllTopAverages(user) {
+function deleteAllTopAverages(user) {
 	return getPrisma().topAverage.deleteMany({
 		where: {
 			user_id: user.id,

@@ -1,6 +1,6 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '@/reducers/reducers';
 import {setSsrValue} from '@/actions/ssr';
+import {RootState} from '@/reducers/reducers';
+import {useDispatch, useSelector} from 'react-redux';
 
 export function useSsr<T>(key: string): [T | null, (value: T) => void] {
 	const dispatch = useDispatch();

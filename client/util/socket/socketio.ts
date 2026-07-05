@@ -1,7 +1,7 @@
-import {io, Socket} from 'socket.io-client';
-import {ClientToServerEvents, ServerToClientEvents} from '@/shared/match/socketio.types';
 import {SocketConst} from '@/client/shared/socket_costs';
+import {ClientToServerEvents, ServerToClientEvents} from '@/shared/match/socketio.types';
 import {toastError} from '@/util/toast';
+import {io, Socket} from 'socket.io-client';
 
 let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 let initiated = false;

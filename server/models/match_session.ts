@@ -1,5 +1,5 @@
-import {MatchSession, MatchSessionInput} from '@/types/match';
 import {getPrisma} from '@/server/database';
+import {MatchSession, MatchSessionInput} from '@/types/match';
 
 export async function createMatchSession(
 	input: MatchSessionInput,

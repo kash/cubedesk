@@ -1,5 +1,5 @@
-import {Client, Guild, Intents, Role} from 'discord.js';
 import {logger} from '@/server/services/logger';
+import {Client, Guild, Intents, Role} from 'discord.js';
 
 // Create a new client instance
 

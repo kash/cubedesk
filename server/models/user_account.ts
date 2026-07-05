@@ -1,4 +1,11 @@
 import {Prisma} from '@/generated/prisma/client';
+import {MetricLogType} from '@/server/@types/enums';
+import {getPrisma} from '@/server/database';
+import {getActiveBanLogsByUserId} from '@/server/models/ban_log';
+import {createMetricLog} from '@/server/models/metric_log';
+import {getLocationFromIp} from '@/server/services/ipstack';
+import {logger} from '@/server/services/logger';
+import {hashPassword} from '@/server/util/password';
 import {
 	InternalUserAccount,
 	PublicUserAccount,
@@ -7,13 +14,6 @@ import {
 import {publicUserSelect} from '@/types/user';
 import dayjs from 'dayjs';
 import {v4 as uuid} from 'uuid';
-import {MetricLogType} from '@/server/@types/enums';
-import {getPrisma} from '@/server/database';
-import {getLocationFromIp} from '@/server/services/ipstack';
-import {logger} from '@/server/services/logger';
-import {hashPassword} from '@/server/util/password';
-import {getActiveBanLogsByUserId} from '@/server/models/ban_log';
-import {createMetricLog} from '@/server/models/metric_log';
 
 // Reuses publicUserSelect so integrations stay limited to id/service_name —
 // full rows carry OAuth tokens, and objects fetched with this include are sent
@@ -27,7 +27,7 @@ export function sanitizeUser(user: InternalUserAccount, forPublic = false): User
 }
 
 // Always call this method before returning any user to the frontend
-export function sanitizeUsers(users: InternalUserAccount[], forPublic = false): Array<UserAccount | PublicUserAccount> {
+function sanitizeUsers(users: InternalUserAccount[], forPublic = false): Array<UserAccount | PublicUserAccount> {
 	function sanitizeUser(user: InternalUserAccount): UserAccount | PublicUserAccount {
 		if (!user) {
 			return user;
@@ -58,60 +58,60 @@ export function sanitizeUsers(users: InternalUserAccount[], forPublic = false): 
 	return users.map((user) => sanitizeUser({...user}));
 }
 
-export function getUserById(id: string): Promise<InternalUserAccount | null> {
+export function getUserById(id: string) {
 	return getPrisma().userAccount.findUnique({
 		where: {
 			id,
 		},
-	}) as Promise<InternalUserAccount | null>;
+	});
 }
 
-export async function getUserByIdWithProfile(
-	id: string,
-	includeBans: boolean = false
-): Promise<InternalUserAccount | null> {
-	const include: any = {
-		timer_background: true,
-		integrations: true,
-		elo_rating: true,
-		profile: {
-			include: {
-				pfp_image: true,
-			},
+// Relations loaded alongside the full user row for internal use. bans is
+// filtered to active ones only.
+const internalUserInclude = {
+	timer_background: true,
+	integrations: true,
+	elo_rating: true,
+	profile: {
+		include: {
+			pfp_image: true,
 		},
-	};
+	},
+	bans: {
+		where: {
+			active: true,
+		},
+	},
+} satisfies Prisma.UserAccountInclude;
 
-	if (includeBans) {
-		include.bans = {
-			where: {
-				active: true,
-			},
-		};
-	}
+// Full user row (password hash + integration OAuth tokens) with internal
+// relations — server-side only, never send to a client without sanitizing
+export type InternalUser = Prisma.UserAccountGetPayload<{include: typeof internalUserInclude}>;
 
-	return (await getPrisma().userAccount.findUnique({
+export function getUserByIdWithProfile(id: string) {
+	return getPrisma().userAccount.findUnique({
 		where: {
 			id,
 		},
-		include,
-	})) as InternalUserAccount | null;
+		include: internalUserInclude,
+	});
 }
 
 // Returns the FULL row (password hash + integration OAuth tokens) — never
 // send this to a client without sanitizing/narrowing first
-export async function getUserByEmail(email: string): Promise<InternalUserAccount | null> {
-	return (await getPrisma().userAccount.findUnique({
+export function getUserByEmail(email: string) {
+	return getPrisma().userAccount.findUnique({
 		where: {
 			email: email.toLowerCase(),
 		},
 		include: {
 			integrations: true,
 		},
-	})) as InternalUserAccount | null;
+	});
 }
 
-export async function getUserByUsername(username: string): Promise<UserAccount[]> {
-	return (await getPrisma().userAccount.findMany({
+export function getUserByUsername(username: string) {
+	return getPrisma().userAccount.findMany({
 		where: {
 			username: {
 				equals: username,
@@ -121,23 +121,23 @@ export async function getUserByUsername(username: string): Promise<UserAccount[]
 		include: {
 			integrations: true,
 		},
-	})) as UserAccount[];
+	});
 }
 
-export async function updateUserAccountPassword(userId: string, password: string): Promise<UserAccount> {
+export async function updateUserAccountPassword(userId: string, password: string) {
 	const hashedPassword = await hashPassword(password);
 
-	return (await getPrisma().userAccount.update({
+	return getPrisma().userAccount.update({
 		where: {
 			id: userId,
 		},
 		data: {
 			password: hashedPassword,
 		},
-	})) as UserAccount;
+	});
 }
 
-export async function banUserAccountUntil(user: UserAccount, minutes: number): Promise<UserAccount> {
+export async function banUserAccountUntil(user: UserAccount, minutes: number) {
 	const until = dayjs().add(minutes, 'm').toDate();
 
 	return updateUserAccountWithParams(user.id, {
@@ -145,13 +145,13 @@ export async function banUserAccountUntil(user: UserAccount, minutes: number): P
 	});
 }
 
-export async function banUserAccountForever(user: UserAccount): Promise<UserAccount> {
+export async function banUserAccountForever(user: UserAccount) {
 	return updateUserAccountWithParams(user.id, {
 		banned_forever: true,
 	});
 }
 
-export async function unbanUserAccount(user: UserAccount): Promise<UserAccount> {
+export async function unbanUserAccount(user: UserAccount) {
 	return updateUserAccountWithParams(user.id, {
 		banned_forever: false,
 		banned_until: null,
@@ -173,7 +173,7 @@ export async function updateUserAccount(
 	lastName: string,
 	email: string,
 	username: string
-): Promise<UserAccount> {
+) {
 	return updateUserAccountWithParams(userId, {
 		id: userId,
 		first_name: firstName,
@@ -183,16 +183,13 @@ export async function updateUserAccount(
 	});
 }
 
-export async function updateUserAccountWithParams(
-	userId: string,
-	params: Prisma.UserAccountUncheckedUpdateInput
-): Promise<UserAccount> {
-	return (await getPrisma().userAccount.update({
+export function updateUserAccountWithParams(userId: string, params: Prisma.UserAccountUncheckedUpdateInput) {
+	return getPrisma().userAccount.update({
 		where: {
 			id: userId,
 		},
 		data: params,
-	})) as UserAccount;
+	});
 }
 
 export async function deleteUserAccount(user: UserAccount): Promise<UserAccount | null> {
@@ -244,7 +241,7 @@ export async function createUserAccount(
 
 	const hashedPassword = await hashPassword(password);
 
-	return (await getPrisma().userAccount.create({
+	return getPrisma().userAccount.create({
 		data: {
 			id: uuid(),
 			first_name: firstName,
@@ -255,5 +252,5 @@ export async function createUserAccount(
 			join_ip: ip || '',
 			join_country: country,
 		},
-	})) as InternalUserAccount;
+	});
 }

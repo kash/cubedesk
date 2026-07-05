@@ -79,7 +79,7 @@ export interface UserAccount extends PublicUserAccount {
 	last_name: string;
 	offline_hash: string | null;
 	join_country: string;
-	timer_background?: TimerBackground;
+	timer_background?: TimerBackground | null;
 	bans?: BanLog[];
 }
 

@@ -1,7 +1,7 @@
-import {Solve} from '@/types/solve';
-import {emitEvent} from '@/util/event_handler';
 import {getLokiDb, stripLokiJsMetadata} from '@/db/lokijs';
 import {SolveStat} from '@/db/solves/stats/solves/caching';
+import {Solve} from '@/types/solve';
+import {emitEvent} from '@/util/event_handler';
 
 export function getSolveDb(): Collection<Solve> {
 	const db = getLokiDb();

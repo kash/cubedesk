@@ -4,11 +4,11 @@ import CustomizeStats from '@/components/modules/quick-stats/customize-stats/Cus
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
 import {getQuickStatsGridSizes} from '@/components/modules/quick-stats/util';
 import {FilterSolvesOptions} from '@/db/solves/query';
+import {RootState} from '@/reducers/reducers';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import React, {ReactNode, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '@/reducers/reducers';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;

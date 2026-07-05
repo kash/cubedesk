@@ -1,6 +1,3 @@
-import {PublicUser, publicUserSelect} from '@/types/user';
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
 import {getUserAccountForAdmin} from '@/server/models/admin';
 import {createBanLog, deactivateAllBanLogs} from '@/server/models/ban_log';
 import {refundElo} from '@/server/models/elo_log';
@@ -14,9 +11,12 @@ import {
 	unbanUserAccount,
 	updateUserAccountWithParams,
 } from '@/server/models/user_account';
-import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
-import {adminProcedure, router} from '@/server/trpc/trpc';
 import {resolveReportsOfUserId} from '@/server/trpc/routers/report';
+import {adminProcedure, router} from '@/server/trpc/trpc';
+import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
+import {PublicUser, publicUserSelect} from '@/types/user';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 const userIdInput = z.object({
 	userId: z.string(),

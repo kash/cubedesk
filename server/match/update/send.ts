@@ -1,7 +1,7 @@
-import {Match} from '@/types/match';
-import {ServerToClientEvents} from '@/shared/match/socketio.types';
 import {getSocketIO} from '@/server/match/init';
 import {getMatchPlayersRoomName, getMatchSpectatorsRoomName} from '@/server/match/match';
+import {ServerToClientEvents} from '@/shared/match/socketio.types';
+import {Match} from '@/types/match';
 
 export function emitMatchUpdate<T extends keyof ServerToClientEvents>(
 	socketEvent: T,

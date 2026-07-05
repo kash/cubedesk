@@ -1,5 +1,3 @@
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
 import {
 	addBadgeToUser,
 	createBadgeType,
@@ -12,15 +10,14 @@ import {
 } from '@/server/models/badge';
 import {getUserById} from '@/server/models/user_account';
 import {adminProcedure, router} from '@/server/trpc/trpc';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 const badgeTypeInput = z.object({
 	name: z.string().min(1).max(50),
 	description: z.string().max(200),
 	priority: z.number().int().min(0).max(100),
-	color: z
-		.string()
-		.length(7)
-		.regex(/^#/, 'Color must be a valid hex'),
+	color: z.string().length(7).regex(/^#/, 'Color must be a valid hex'),
 });
 
 const userBadgeInput = z.object({
@@ -59,12 +56,15 @@ export const badgeRouter = router({
 			z.object({
 				id: z.string(),
 				input: badgeTypeInput,
-			})
+			}),
 		)
 		.mutation(async ({input}) => {
 			const badgeType = await getBadgeTypeById(input.id);
 			if (!badgeType) {
-				throw new TRPCError({code: 'NOT_FOUND', message: 'Could not find Badge Type with that id'});
+				throw new TRPCError({
+					code: 'NOT_FOUND',
+					message: 'Could not find Badge Type with that id',
+				});
 			}
 
 			return editBadgeType(badgeType, input.input);
@@ -74,12 +74,15 @@ export const badgeRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({input}) => {
 			const badgeType = await getBadgeTypeById(input.id);
 			if (!badgeType) {
-				throw new TRPCError({code: 'NOT_FOUND', message: 'Could not find Badge Type with that id'});
+				throw new TRPCError({
+					code: 'NOT_FOUND',
+					message: 'Could not find Badge Type with that id',
+				});
 			}
 
 			return deleteBadgeType(badgeType);
