@@ -8,7 +8,6 @@ import InputLegend from '@/components/common/inputs/input/InputLegend';
 import colorPalette, {ColorName} from '../../../../../shared/colors';
 import CustomizeStatsColor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsColor';
 import {StatsModuleBlock} from '@/types/stats-module';
-import ProOnly from '@/components/common/pro_only/ProOnly';
 import {
 	getStatsBlockDescription,
 	saveStatsModuleBlocks,
@@ -278,9 +277,7 @@ export default function CustomizeStatsEditor(props: Props) {
 				</FormSection>
 				<FormSection>
 					<InputLegend text="Stat color" />
-					<ProOnly>
-						<div className="flex flex-row flex-wrap gap-2">{colorOptions}</div>
-					</ProOnly>
+					<div className="flex flex-row flex-wrap gap-2">{colorOptions}</div>
 				</FormSection>
 				<div className="mt-3">
 					<Button

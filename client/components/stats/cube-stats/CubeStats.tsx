@@ -7,11 +7,8 @@ import CubeStatAverages from '@/components/stats/cube-stats/CubeStatAverages';
 import {StatsContext} from '@/components/stats/Stats';
 import SubStats from '@/components/stats/common/SubStats';
 import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
-import {useMe} from '@/util/hooks/useMe';
-import {isNotPro} from '@/util/pro';
 
 export default function CubeStats() {
-	const me = useMe();
 	const context = useContext(StatsContext);
 	const filter = context.filterOptions;
 
@@ -31,12 +28,12 @@ export default function CubeStats() {
 					<TimeChart filterOptions={filter} />
 				</StatModule>
 			</StatSection>
-			<StatSection proOnly title="More Stats">
-				<SubStats proOnly />
+			<StatSection title="More Stats">
+				<SubStats />
 			</StatSection>
-			<StatSection proOnly colSpan="all" title="Consistency">
+			<StatSection colSpan="all" title="Consistency">
 				<StatModule>
-					<SolvesPerDay proOnly filterOptions={filter} days={60} dummy={isNotPro(me)} />
+					<SolvesPerDay filterOptions={filter} days={60} />
 				</StatModule>
 			</StatSection>
 		</div>

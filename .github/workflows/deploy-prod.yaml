@@ -13,7 +13,6 @@ jobs:
             SUB_DOMAIN: www
             ECR_IMAGE_NAME: cubedesk
             ENV: production
-            STRIPE_PRO_PRODUCT_ID: prod_LUvHH6rN3QDliJ
             DISCORD_SERVER_ID: "799002715299643392"
             RESOURCES_BASE_URI: https://cdn.cubedesk.io/static
             DIST_BASE_URI: https://cdn.cubedesk.io/dist
@@ -29,5 +28,4 @@ jobs:
             WCA_SECRET: ${{ secrets.WCA_SECRET }}
             DISCORD_SECRET: ${{ secrets.DISCORD_SECRET }}
             DISCORD_BOT_SECRET: ${{ secrets.DISCORD_BOT_SECRET }}
-            STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
             SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

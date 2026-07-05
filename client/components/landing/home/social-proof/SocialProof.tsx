@@ -34,7 +34,6 @@ export default function SocialProof() {
 						username="patricKING210"
 						source="discord"
 					/>
-					<ProofCard quote="Cubedesk pro is great! Great work!" username="Blaze" source="discord" />
 				</div>
 			</div>
 			<div className="relative mx-auto mt-[25px] box-border h-[150px] w-full overflow-hidden max-[1000px]:mb-[15px] max-[1000px]:h-auto max-[1000px]:w-[95%] max-[1000px]:overflow-visible max-[1000px]:p-0 max-[800px]:hidden">

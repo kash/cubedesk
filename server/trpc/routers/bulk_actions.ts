@@ -1,6 +1,6 @@
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
-import {proProcedure, router} from '../trpc';
+import {protectedProcedure, router} from '../trpc';
 import {getSessionById} from '../../models/session';
 import {getCustomCubeTypesByUserId} from '../../models/custom_cube_type';
 import {getDefaultCubeTypes} from '../../../client/util/cubes/util';
@@ -12,12 +12,12 @@ const solveIdsInput = z.object({
 
 // All procedures return the number of records affected
 export const bulkActionsRouter = router({
-	deleteSolves: proProcedure.input(solveIdsInput).mutation(async ({ctx, input}) => {
+	deleteSolves: protectedProcedure.input(solveIdsInput).mutation(async ({ctx, input}) => {
 		const deleted = await bulkDeleteSolves(ctx.user.id, input.solveIds);
 		return deleted.count;
 	}),
 
-	moveSolvesToSession: proProcedure
+	moveSolvesToSession: protectedProcedure
 		.input(
 			solveIdsInput.extend({
 				sessionId: z.string(),
@@ -35,15 +35,15 @@ export const bulkActionsRouter = router({
 			return updated.count;
 		}),
 
-	dnfSolves: proProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkDnfSolves(ctx.user.id, input.solveIds)),
+	dnfSolves: protectedProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkDnfSolves(ctx.user.id, input.solveIds)),
 
-	plusTwoSolves: proProcedure
+	plusTwoSolves: protectedProcedure
 		.input(solveIdsInput)
 		.mutation(({ctx, input}) => bulkPlusTwoSolves(ctx.user.id, input.solveIds)),
 
-	okSolves: proProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkOkSolves(ctx.user.id, input.solveIds)),
+	okSolves: protectedProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkOkSolves(ctx.user.id, input.solveIds)),
 
-	updateCubeType: proProcedure
+	updateCubeType: protectedProcedure
 		.input(
 			solveIdsInput.extend({
 				cubeType: z.string(),

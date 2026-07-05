@@ -4,7 +4,6 @@ import {IModalProps} from '@/components/common/modal/Modal';
 import ModalHeader from '@/components/common/modal/ModalHeader';
 import Input from '@/components/common/inputs/input/Input';
 import {useWindowListener} from '@/util/hooks/useListener';
-import ProOnly from '@/components/common/pro_only/ProOnly';
 
 interface ConfirmModalInfoBox {
 	value: string | number;
@@ -17,7 +16,6 @@ export interface ConfirmModalProps extends IModalProps {
 	buttonProps?: ButtonProps;
 	buttonText: string;
 	hideInput?: boolean;
-	proOnly?: boolean;
 	triggerAction: () => Promise<any>;
 	infoBoxes?: ConfirmModalInfoBox[];
 }
@@ -26,7 +24,6 @@ export default function ConfirmModal(props: ConfirmModalProps) {
 	const {
 		buttonProps,
 		infoBoxes,
-		proOnly,
 		title,
 		description,
 		triggerAction,
@@ -115,23 +112,21 @@ export default function ConfirmModal(props: ConfirmModalProps) {
 		<form className="table" onSubmit={onClick}>
 			<ModalHeader title={title} description={description} />
 			{infoBoxContainer}
-			<ProOnly ignore={!proOnly}>
-				<div>
-					<div className="mb-2">{input}</div>
-					<Button
-						glow
-						large
-						type={hideInput ? 'submit' : 'button'}
-						text={buttonText}
-						danger
-						loading={loading}
-						onClick={onClick}
-						disabled={disabled}
-						error={error}
-						{...buttonProps}
-					/>
-				</div>
-			</ProOnly>
+			<div>
+				<div className="mb-2">{input}</div>
+				<Button
+					glow
+					large
+					type={hideInput ? 'submit' : 'button'}
+					text={buttonText}
+					danger
+					loading={loading}
+					onClick={onClick}
+					disabled={disabled}
+					error={error}
+					{...buttonProps}
+				/>
+			</div>
 		</form>
 	);
 }

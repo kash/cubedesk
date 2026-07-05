@@ -1,25 +1,15 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import jsonStr from 'json-stable-stringify';
-import {useDispatch} from 'react-redux';
 import {setSetting} from '@/db/settings/update';
-import {useMe} from '@/util/hooks/useMe';
-import Tag from '@/components/common/Tag';
-import {openModal} from '@/actions/general';
-import ProOnlyModal from '@/components/common/pro_only/ProOnlyModal';
-import {Lock} from 'phosphor-react';
 import {getSetting} from '@/db/settings/query';
 import {APP_THEME_PRESETS, PresetThemeValues} from '@/util/themes/theme_consts';
-import {isNotPro} from '@/util/pro';
 
 interface Props {
 	theme: keyof PresetThemeValues;
 }
 
 export default function ThemeOption(props: Props) {
-	const dispatch = useDispatch();
-	const me = useMe();
-
 	const theme = APP_THEME_PRESETS[props.theme];
 	const selected = jsonStr(theme.values) === getCurrentTheme();
 
@@ -33,29 +23,10 @@ export default function ThemeOption(props: Props) {
 	}
 
 	function selectTheme() {
-		if (theme.proOnly && isNotPro(me)) {
-			dispatch(openModal(<ProOnlyModal />));
-			return;
-		}
-
 		for (const key of Object.keys(theme.values)) {
 			const col = theme.values[key];
 			setSetting(key as any, col);
 		}
-	}
-
-	let proLock: ReactNode = null;
-	if (theme.proOnly && isNotPro(me)) {
-		proLock = (
-			<div className="absolute top-1/2 right-5 -translate-y-1/2">
-				<Tag
-					small
-					icon={<Lock weight="fill" />}
-					text="Pro Theme"
-					backgroundColor="primary"
-				/>
-			</div>
-		);
 	}
 
 	return (
@@ -86,7 +57,6 @@ export default function ThemeOption(props: Props) {
 			<p className="text-text m-0 text-[1.2rem] font-bold opacity-100 transition-all duration-100 ease-in-out">
 				{theme.name}
 			</p>
-			{proLock}
 		</button>
 	);
 }

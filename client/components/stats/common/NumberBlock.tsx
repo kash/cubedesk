@@ -2,8 +2,6 @@ import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import classNames from 'classnames';
 import StatModule from '@/components/stats/common/StatModule';
-import {useMe} from '@/util/hooks/useMe';
-import {isNotPro} from '@/util/pro';
 
 interface Props {
 	icon: ReactNode;
@@ -17,7 +15,6 @@ interface Props {
 	noPadding?: boolean;
 	small?: boolean;
 	style?: CSS.Properties;
-	proOnly?: boolean;
 	center?: boolean;
 	large?: boolean;
 	children?: ReactNode;
@@ -25,8 +22,6 @@ interface Props {
 }
 
 export default function NumberBlock(props: Props) {
-	const me = useMe();
-
 	const {
 		icon,
 		color,
@@ -37,7 +32,6 @@ export default function NumberBlock(props: Props) {
 		darkIcon,
 		vertical,
 		center,
-		proOnly,
 		children,
 		small,
 		rowSpan,
@@ -60,10 +54,6 @@ export default function NumberBlock(props: Props) {
 	}
 	if (colSpan) {
 		style.gridColumn = `span ${colSpan}`;
-	}
-
-	if (proOnly && isNotPro(me)) {
-		value = '-';
 	}
 
 	return (

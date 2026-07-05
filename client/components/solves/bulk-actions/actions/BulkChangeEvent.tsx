@@ -27,7 +27,6 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 		dispatch(
 			openModal(
 				<ConfirmModal
-					proOnly
 					buttonText={`Change event type`}
 					title="Bulk change event type"
 					description="You are about to set the event type of the selected solves. This is irreversible. Be careful."

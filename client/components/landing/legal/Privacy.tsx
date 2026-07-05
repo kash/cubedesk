@@ -504,31 +504,6 @@ export default function Privacy() {
 					</p>
 				</li>
 			</ul>
-			<h2>Payments</h2>
-			<p>
-				We may provide paid products and/or services within the Service. In that case, we may use third-party
-				services for payment processing (e.g. payment processors).
-			</p>
-			<p>
-				We will not store or collect Your payment card details. That information is provided directly to Our
-				third-party payment processors whose use of Your personal information is governed by their Privacy
-				Policy. These payment processors adhere to the standards set by PCI-DSS as managed by the PCI Security
-				Standards Council, which is a joint effort of brands like Visa, Mastercard, American Express and
-				Discover. PCI-DSS requirements help ensure the secure handling of payment information.
-			</p>
-			<ul>
-				<li>
-					<p>
-						<strong>Stripe</strong>
-					</p>
-					<p>
-						Their Privacy Policy can be viewed at{' '}
-						<a href="https://stripe.com/us/privacy" rel="external nofollow noopener" target="_blank">
-							https://stripe.com/us/privacy
-						</a>
-					</p>
-				</li>
-			</ul>
 			<h1>GDPR Privacy</h1>
 			<h2>Legal Basis for Processing Personal Data under GDPR</h2>
 			<p>We may process Personal Data under the following conditions:</p>

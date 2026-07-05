@@ -9,7 +9,7 @@ const discordSecret = process.env.DISCORD_BOT_SECRET;
 let client: Client;
 let guild: Guild;
 
-type DiscordRole = 'Pro' | 'Admin';
+type DiscordRole = 'Admin';
 
 export default class Discord {
 	static async init() {

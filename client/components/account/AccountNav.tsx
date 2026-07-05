@@ -10,11 +10,6 @@ const TABS = [
 		value: 'Personal Info',
 	},
 	{
-		id: 'pro',
-		link: '/account/pro',
-		value: 'Pro',
-	},
-	{
 		id: 'password',
 		link: '/account/password',
 		value: 'Password',

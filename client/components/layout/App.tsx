@@ -12,7 +12,6 @@ import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {setGeneral} from '@/actions/general';
 import {updateThemeColors} from '@/components/layout/themes';
-import {updateSettingsBasedOnProStatus} from '@/components/layout/pro-audit';
 import {initSocketIO} from '@/util/socket/socketio';
 
 interface Props {
@@ -36,7 +35,6 @@ export default function App(props: Props = {}) {
 		setBrowserSessionId(dispatch);
 		initPageTitleBlink();
 		updateThemeColors();
-		updateSettingsBasedOnProStatus(me);
 		dispatch(setGeneral('app_loaded', true));
 	}
 

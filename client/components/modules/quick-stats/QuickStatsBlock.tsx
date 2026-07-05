@@ -3,7 +3,6 @@ import {FilterSolvesOptions} from '@/db/solves/query';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {getStatsBlockDescription, getStatsBlockValueFromFilter} from '@/components/modules/quick-stats/util';
 import {useColor} from '@/util/hooks/useTheme';
-import {useMe} from '@/util/hooks/useMe';
 import jsonStr from 'json-stable-stringify';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getTimeString} from '@/util/time';
@@ -27,7 +26,6 @@ export default function QuickStatsBlock(props: Props) {
 	const dispatch = useDispatch();
 	const sessionId = useSettings('session_id');
 	const [fontSize, setFontSize] = useState(25);
-	const me = useMe();
 	const statsBlockDiv = useRef<HTMLDivElement>();
 	const solveDb = useSolveDb();
 
@@ -70,7 +68,7 @@ export default function QuickStatsBlock(props: Props) {
 		lineHeight: 0.9,
 	};
 	const colorHex = useColor(statOptions.colorName, 'button_color');
-	if (me?.is_pro && colorHex) {
+	if (colorHex) {
 		buttonStyle.color = colorHex.hex;
 	}
 

@@ -135,7 +135,7 @@ export default function LandingHome() {
 					primaryColor="#9899ed"
 					secondaryColor="#5779ad"
 					title="Themes"
-					description="Get full control over how CubeDesk looks. A Pro membership will give you even more options."
+					description="Get full control over how CubeDesk looks."
 				/>
 				<Settings />
 				<Feature

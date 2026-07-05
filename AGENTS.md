@@ -1,0 +1,2 @@
+- When using cn(), prefer using an object with the string as the key and a boolean value as the value to enable/disable a style rather than using a boolean && 'style' format.
+- Run the literal "pnpm prisma" when you need to migrate the local database schema. This alias exists in package.json and works.

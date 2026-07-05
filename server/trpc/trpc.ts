@@ -22,17 +22,6 @@ export const protectedProcedure = t.procedure.use(({ctx, next}) => {
 	});
 });
 
-export const proProcedure = protectedProcedure.use(({ctx, next}) => {
-	if (!ctx.user.is_pro) {
-		throw new TRPCError({
-			code: 'FORBIDDEN',
-			message: 'You must be a Pro member to perform this action',
-		});
-	}
-
-	return next();
-});
-
 export const modProcedure = protectedProcedure.use(({ctx, next}) => {
 	if (!ctx.user.mod && !ctx.user.admin) {
 		throw new TRPCError({code: 'FORBIDDEN'});

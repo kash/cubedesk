@@ -20,7 +20,7 @@ export const LINKED_SERVICES: Record<IntegrationType, LinkedServiceData> = {
 	discord: {
 		id: 'discord',
 		name: 'Discord',
-		description: 'Link your Discord account to allow messaging and gain access to more Pro features.',
+		description: 'Link your Discord account to allow messaging.',
 		logoSrc: resourceUri('/images/logos/discord_logo.svg'),
 		authEndpoint: 'https://discord.com/api/v8/oauth2/authorize',
 		tokenEndpoint: 'https://discord.com/api/v8/oauth2/token',

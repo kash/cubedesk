@@ -3756,8 +3756,6 @@ export const UserAccountScalarFieldEnum = {
   verified: 'verified',
   banned_forever: 'banned_forever',
   banned_until: 'banned_until',
-  stripe_customer_id: 'stripe_customer_id',
-  is_pro: 'is_pro',
   mod: 'mod',
   offline_hash: 'offline_hash',
   unsub_id: 'unsub_id',
@@ -4433,7 +4431,6 @@ export const UserAccountOrderByRelevanceFieldEnum = {
   join_country: 'join_country',
   last_name: 'last_name',
   username: 'username',
-  stripe_customer_id: 'stripe_customer_id',
   offline_hash: 'offline_hash',
   unsub_id: 'unsub_id'
 } as const

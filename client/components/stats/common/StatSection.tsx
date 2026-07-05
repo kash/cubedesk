@@ -1,21 +1,19 @@
 import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import classNames from 'classnames';
-import ProOnly from '@/components/common/pro_only/ProOnly';
 
 interface Props {
 	title: string;
 	className?: string;
 	minWidth?: string;
 	description?: string;
-	proOnly?: boolean;
 	children: ReactNode;
 	rowSpan?: number | string;
 	colSpan?: number | string;
 }
 
 export default function StatSection(props: Props) {
-	const {title, minWidth, proOnly, description, children, className, rowSpan, colSpan} = props;
+	const {title, minWidth, description, children, className, rowSpan, colSpan} = props;
 
 	let desc: ReactNode = null;
 	if (description) {
@@ -41,9 +39,7 @@ export default function StatSection(props: Props) {
 				</h2>
 				{desc}
 			</div>
-			<ProOnly ignore={!proOnly} noPadding>
-				{children}
-			</ProOnly>
+			{children}
 		</div>
 	);
 }

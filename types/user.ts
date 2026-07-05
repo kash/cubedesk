@@ -3,7 +3,6 @@ import type {Badge} from './badge';
 import type {BanLog} from './ban-log';
 import type {EloRating} from './elo';
 import type {Integration} from './integration';
-import type {MembershipStatus} from './membership';
 import type {Profile} from './profile';
 import type {TimerBackground} from './timer-background';
 import type {TopSolve, TopAverage} from './top-solve';
@@ -19,7 +18,6 @@ export const publicUserSelect = {
 	created_at: true,
 	username: true,
 	verified: true,
-	is_pro: true,
 	banned_forever: true,
 	banned_until: true,
 	integrations: {
@@ -39,7 +37,7 @@ export const publicUserSelect = {
 export type PublicUser = Prisma.UserAccountGetPayload<{select: typeof publicUserSelect}>;
 
 // Shape of user.me — the public-safe select plus the logged-in user's own
-// account fields. Still excludes secrets (password, tokens, stripe ids).
+// account fields. Still excludes secrets (password, tokens).
 export const meUserSelect = {
 	...publicUserSelect,
 	email: true,
@@ -64,7 +62,6 @@ export interface PublicUserAccount {
 	created_at: Date;
 	username: string;
 	verified: boolean;
-	is_pro: boolean;
 	// Not part of publicUserSelect, so most payloads omit it
 	last_solve_at?: Date;
 	banned_forever: boolean;
@@ -82,7 +79,6 @@ export interface UserAccount extends PublicUserAccount {
 	first_name: string;
 	last_name: string;
 	offline_hash: string;
-	pro_status?: MembershipStatus;
 	join_country: string;
 	timer_background?: TimerBackground;
 	bans?: BanLog[];
@@ -99,7 +95,6 @@ export interface UserAccountForAdmin extends UserAccount {
 
 export interface InternalUserAccount extends UserAccountForAdmin {
 	password: string;
-	stripe_customer_id: string;
 }
 
 // Minimal user shape needed to send emails/notifications. Satisfied by both the

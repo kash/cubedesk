@@ -29,8 +29,6 @@ model UserAccount {
   verified                      Boolean                 @default(false)
   banned_forever                Boolean                 @default(false)
   banned_until                  DateTime?
-  stripe_customer_id            String?                 @unique
-  is_pro                        Boolean                 @default(false)
   mod                           Boolean                 @default(false)
   offline_hash                  String?
   unsub_id                      String?                 @default(uuid())

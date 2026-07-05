@@ -2,7 +2,7 @@ import type {Prisma} from '@/generated/prisma/client';
 import {publicUserSelect} from './user';
 
 // Admin view of a user. Extends the public-safe shape with contact/moderation
-// data but still omits secrets (password hash, OAuth tokens, stripe ids).
+// data but still omits secrets (password hash, OAuth tokens).
 export const adminUserSelect = {
 	...publicUserSelect,
 	email: true,

@@ -1,6 +1,6 @@
 import React, {ReactNode, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import {Link, useRouteMatch} from 'react-router-dom';
+import {useRouteMatch} from 'react-router-dom';
 import {setSetting} from '@/db/settings/update';
 import {setGeneral} from '@/actions/general';
 import {ArrowLeft, ArrowRight} from 'phosphor-react';
@@ -86,21 +86,6 @@ export default function Nav() {
 		/>
 	));
 
-	let getPro: ReactNode = null;
-	if (!me?.is_pro && !navClosed) {
-		getPro = (
-			<Link
-				to="/account/pro"
-				className="bg-primary mt-0.5 mb-1 flex w-full flex-row items-center justify-center rounded px-3 py-2"
-			>
-				<div className="text-tmo-primary flex flex-row items-center gap-1 font-bold">
-					<span className="table">Get CubeDesk Pro</span>
-					<ArrowRight weight="bold" />
-				</div>
-			</Link>
-		);
-	}
-
 	const navClasses = [
 		'sticky',
 		'left-0',
@@ -168,7 +153,6 @@ export default function Nav() {
 								<AccountDropdown />
 							</div>
 						</div>
-						{getPro}
 						<div className="mt-4">{navLinks}</div>
 						<LoginNav collapsed={navClosed} />
 					</div>

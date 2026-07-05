@@ -54,7 +54,7 @@ export default function ThemeOptions() {
 					<ThemeOption theme="phd_student" />
 				</div>
 			</SettingRow>
-			<SettingRow proOnly vertical title="Advanced theme customization">
+			<SettingRow vertical title="Advanced theme customization">
 				<div className="box-border grid w-full grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2.5">
 					<ColorPicker
 						openUp

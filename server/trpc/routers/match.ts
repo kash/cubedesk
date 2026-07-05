@@ -45,34 +45,12 @@ export const matchRouter = router({
 		.mutation(async ({ctx, input}) => {
 			const {user} = ctx;
 
-			// Only Pro users can change the cube type
-			if (input.cube_type && input.cube_type !== '333' && !user.is_pro) {
-				throw new TRPCError({
-					code: 'FORBIDDEN',
-					message: 'Only Pro users can set the cube type for custom matches',
-				});
-			}
-
-			if ((input.min_players !== 2 || input.max_players !== 2) && !user.is_pro) {
-				throw new TRPCError({
-					code: 'FORBIDDEN',
-					message: 'Only Pro users can set the player count for custom matches',
-				});
-			}
-
 			const cubeType = getCubeTypeInfoById(input.cube_type);
 			if (!cubeType) {
 				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid cube type'});
 			}
 
 			const h2hTargetWin = input.head_to_head_target_win_count;
-			if (h2hTargetWin && !user.is_pro) {
-				throw new TRPCError({
-					code: 'FORBIDDEN',
-					message: 'Only Pro users can set the head to head target win count',
-				});
-			}
-
 			if (h2hTargetWin && (h2hTargetWin < 3 || h2hTargetWin > 100)) {
 				throw new TRPCError({
 					code: 'BAD_REQUEST',

@@ -190,7 +190,6 @@ export default function TimerSettings() {
 				</SettingRow>
 			</SettingSection>
 			<SettingRow
-				proOnly
 				title="Beta tester"
 				description="Unlock features that are still in beta. WARNING: This could mess with your data. Only turn this on if you're okay with some things breaking."
 				settingName="beta_tester"

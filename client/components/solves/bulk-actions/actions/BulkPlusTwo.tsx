@@ -27,7 +27,6 @@ export default function BulkPlusTwoSolvesButton(props: Props) {
 		dispatch(
 			openModal(
 				<ConfirmModal
-					proOnly
 					buttonText={`+2 ${solvesToActOn}`}
 					title="Bulk +2 solves"
 					description="You are about to +2 the selected solves. This is irreversible. Be careful."

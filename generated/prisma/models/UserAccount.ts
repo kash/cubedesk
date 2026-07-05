@@ -38,8 +38,6 @@ export type UserAccountMinAggregateOutputType = {
   verified: boolean | null
   banned_forever: boolean | null
   banned_until: Date | null
-  stripe_customer_id: string | null
-  is_pro: boolean | null
   mod: boolean | null
   offline_hash: string | null
   unsub_id: string | null
@@ -60,8 +58,6 @@ export type UserAccountMaxAggregateOutputType = {
   verified: boolean | null
   banned_forever: boolean | null
   banned_until: Date | null
-  stripe_customer_id: string | null
-  is_pro: boolean | null
   mod: boolean | null
   offline_hash: string | null
   unsub_id: string | null
@@ -82,8 +78,6 @@ export type UserAccountCountAggregateOutputType = {
   verified: number
   banned_forever: number
   banned_until: number
-  stripe_customer_id: number
-  is_pro: number
   mod: number
   offline_hash: number
   unsub_id: number
@@ -106,8 +100,6 @@ export type UserAccountMinAggregateInputType = {
   verified?: true
   banned_forever?: true
   banned_until?: true
-  stripe_customer_id?: true
-  is_pro?: true
   mod?: true
   offline_hash?: true
   unsub_id?: true
@@ -128,8 +120,6 @@ export type UserAccountMaxAggregateInputType = {
   verified?: true
   banned_forever?: true
   banned_until?: true
-  stripe_customer_id?: true
-  is_pro?: true
   mod?: true
   offline_hash?: true
   unsub_id?: true
@@ -150,8 +140,6 @@ export type UserAccountCountAggregateInputType = {
   verified?: true
   banned_forever?: true
   banned_until?: true
-  stripe_customer_id?: true
-  is_pro?: true
   mod?: true
   offline_hash?: true
   unsub_id?: true
@@ -245,8 +233,6 @@ export type UserAccountGroupByOutputType = {
   verified: boolean
   banned_forever: boolean
   banned_until: Date | null
-  stripe_customer_id: string | null
-  is_pro: boolean
   mod: boolean
   offline_hash: string | null
   unsub_id: string | null
@@ -288,8 +274,6 @@ export type UserAccountWhereInput = {
   verified?: Prisma.BoolFilter<"UserAccount"> | boolean
   banned_forever?: Prisma.BoolFilter<"UserAccount"> | boolean
   banned_until?: Prisma.DateTimeNullableFilter<"UserAccount"> | Date | string | null
-  stripe_customer_id?: Prisma.StringNullableFilter<"UserAccount"> | string | null
-  is_pro?: Prisma.BoolFilter<"UserAccount"> | boolean
   mod?: Prisma.BoolFilter<"UserAccount"> | boolean
   offline_hash?: Prisma.StringNullableFilter<"UserAccount"> | string | null
   unsub_id?: Prisma.StringNullableFilter<"UserAccount"> | string | null
@@ -359,8 +343,6 @@ export type UserAccountOrderByWithRelationInput = {
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
   banned_until?: Prisma.SortOrderInput | Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  is_pro?: Prisma.SortOrder
   mod?: Prisma.SortOrder
   offline_hash?: Prisma.SortOrderInput | Prisma.SortOrder
   unsub_id?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -421,7 +403,6 @@ export type UserAccountWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
   username?: string
-  stripe_customer_id?: string
   AND?: Prisma.UserAccountWhereInput | Prisma.UserAccountWhereInput[]
   OR?: Prisma.UserAccountWhereInput[]
   NOT?: Prisma.UserAccountWhereInput | Prisma.UserAccountWhereInput[]
@@ -435,7 +416,6 @@ export type UserAccountWhereUniqueInput = Prisma.AtLeast<{
   verified?: Prisma.BoolFilter<"UserAccount"> | boolean
   banned_forever?: Prisma.BoolFilter<"UserAccount"> | boolean
   banned_until?: Prisma.DateTimeNullableFilter<"UserAccount"> | Date | string | null
-  is_pro?: Prisma.BoolFilter<"UserAccount"> | boolean
   mod?: Prisma.BoolFilter<"UserAccount"> | boolean
   offline_hash?: Prisma.StringNullableFilter<"UserAccount"> | string | null
   unsub_id?: Prisma.StringNullableFilter<"UserAccount"> | string | null
@@ -489,7 +469,7 @@ export type UserAccountWhereUniqueInput = Prisma.AtLeast<{
   top_solves?: Prisma.TopSolveListRelationFilter
   trainer_favorite?: Prisma.TrainerFavoriteListRelationFilter
   user_feature_state?: Prisma.XOR<Prisma.UserFeatureStateNullableScalarRelationFilter, Prisma.UserFeatureStateWhereInput> | null
-}, "id" | "email" | "username" | "stripe_customer_id">
+}, "id" | "email" | "username">
 
 export type UserAccountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -505,8 +485,6 @@ export type UserAccountOrderByWithAggregationInput = {
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
   banned_until?: Prisma.SortOrderInput | Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  is_pro?: Prisma.SortOrder
   mod?: Prisma.SortOrder
   offline_hash?: Prisma.SortOrderInput | Prisma.SortOrder
   unsub_id?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -533,8 +511,6 @@ export type UserAccountScalarWhereWithAggregatesInput = {
   verified?: Prisma.BoolWithAggregatesFilter<"UserAccount"> | boolean
   banned_forever?: Prisma.BoolWithAggregatesFilter<"UserAccount"> | boolean
   banned_until?: Prisma.DateTimeNullableWithAggregatesFilter<"UserAccount"> | Date | string | null
-  stripe_customer_id?: Prisma.StringNullableWithAggregatesFilter<"UserAccount"> | string | null
-  is_pro?: Prisma.BoolWithAggregatesFilter<"UserAccount"> | boolean
   mod?: Prisma.BoolWithAggregatesFilter<"UserAccount"> | boolean
   offline_hash?: Prisma.StringNullableWithAggregatesFilter<"UserAccount"> | string | null
   unsub_id?: Prisma.StringNullableWithAggregatesFilter<"UserAccount"> | string | null
@@ -555,8 +531,6 @@ export type UserAccountCreateInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -626,8 +600,6 @@ export type UserAccountUncheckedCreateInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -697,8 +669,6 @@ export type UserAccountUpdateInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -768,8 +738,6 @@ export type UserAccountUncheckedUpdateInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -839,8 +807,6 @@ export type UserAccountCreateManyInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -861,8 +827,6 @@ export type UserAccountUpdateManyMutationInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -883,8 +847,6 @@ export type UserAccountUncheckedUpdateManyInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -911,8 +873,6 @@ export type UserAccountCountOrderByAggregateInput = {
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
   banned_until?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrder
-  is_pro?: Prisma.SortOrder
   mod?: Prisma.SortOrder
   offline_hash?: Prisma.SortOrder
   unsub_id?: Prisma.SortOrder
@@ -933,8 +893,6 @@ export type UserAccountMaxOrderByAggregateInput = {
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
   banned_until?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrder
-  is_pro?: Prisma.SortOrder
   mod?: Prisma.SortOrder
   offline_hash?: Prisma.SortOrder
   unsub_id?: Prisma.SortOrder
@@ -955,8 +913,6 @@ export type UserAccountMinOrderByAggregateInput = {
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
   banned_until?: Prisma.SortOrder
-  stripe_customer_id?: Prisma.SortOrder
-  is_pro?: Prisma.SortOrder
   mod?: Prisma.SortOrder
   offline_hash?: Prisma.SortOrder
   unsub_id?: Prisma.SortOrder
@@ -1715,8 +1671,6 @@ export type UserAccountCreateWithoutUser_feature_stateInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -1785,8 +1739,6 @@ export type UserAccountUncheckedCreateWithoutUser_feature_stateInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -1871,8 +1823,6 @@ export type UserAccountUpdateWithoutUser_feature_stateInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1941,8 +1891,6 @@ export type UserAccountUncheckedUpdateWithoutUser_feature_stateInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2011,8 +1959,6 @@ export type UserAccountCreateWithoutIntegrationsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -2081,8 +2027,6 @@ export type UserAccountUncheckedCreateWithoutIntegrationsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -2167,8 +2111,6 @@ export type UserAccountUpdateWithoutIntegrationsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2237,8 +2179,6 @@ export type UserAccountUncheckedUpdateWithoutIntegrationsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2307,8 +2247,6 @@ export type UserAccountCreateWithoutNotifications_triggeredInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -2377,8 +2315,6 @@ export type UserAccountUncheckedCreateWithoutNotifications_triggeredInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -2452,8 +2388,6 @@ export type UserAccountCreateWithoutNotificationsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -2522,8 +2456,6 @@ export type UserAccountUncheckedCreateWithoutNotificationsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -2608,8 +2540,6 @@ export type UserAccountUpdateWithoutNotifications_triggeredInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2678,8 +2608,6 @@ export type UserAccountUncheckedUpdateWithoutNotifications_triggeredInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2759,8 +2687,6 @@ export type UserAccountUpdateWithoutNotificationsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2829,8 +2755,6 @@ export type UserAccountUncheckedUpdateWithoutNotificationsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2899,8 +2823,6 @@ export type UserAccountCreateWithoutAction_logInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -2969,8 +2891,6 @@ export type UserAccountUncheckedCreateWithoutAction_logInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -3055,8 +2975,6 @@ export type UserAccountUpdateWithoutAction_logInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3125,8 +3043,6 @@ export type UserAccountUncheckedUpdateWithoutAction_logInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3195,8 +3111,6 @@ export type UserAccountCreateWithoutMetric_logsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -3265,8 +3179,6 @@ export type UserAccountUncheckedCreateWithoutMetric_logsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -3351,8 +3263,6 @@ export type UserAccountUpdateWithoutMetric_logsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3421,8 +3331,6 @@ export type UserAccountUncheckedUpdateWithoutMetric_logsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3491,8 +3399,6 @@ export type UserAccountCreateWithoutNotification_preferencesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -3561,8 +3467,6 @@ export type UserAccountUncheckedCreateWithoutNotification_preferencesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -3647,8 +3551,6 @@ export type UserAccountUpdateWithoutNotification_preferencesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3717,8 +3619,6 @@ export type UserAccountUncheckedUpdateWithoutNotification_preferencesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3787,8 +3687,6 @@ export type UserAccountCreateWithoutFriendship_requests_sentInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -3857,8 +3755,6 @@ export type UserAccountUncheckedCreateWithoutFriendship_requests_sentInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -3932,8 +3828,6 @@ export type UserAccountCreateWithoutFriendships_requests_receivedInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -4002,8 +3896,6 @@ export type UserAccountUncheckedCreateWithoutFriendships_requests_receivedInput 
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -4088,8 +3980,6 @@ export type UserAccountUpdateWithoutFriendship_requests_sentInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4158,8 +4048,6 @@ export type UserAccountUncheckedUpdateWithoutFriendship_requests_sentInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4239,8 +4127,6 @@ export type UserAccountUpdateWithoutFriendships_requests_receivedInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4309,8 +4195,6 @@ export type UserAccountUncheckedUpdateWithoutFriendships_requests_receivedInput 
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4379,8 +4263,6 @@ export type UserAccountCreateWithoutFriendships_otherInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -4449,8 +4331,6 @@ export type UserAccountUncheckedCreateWithoutFriendships_otherInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -4524,8 +4404,6 @@ export type UserAccountCreateWithoutFriendshipsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -4594,8 +4472,6 @@ export type UserAccountUncheckedCreateWithoutFriendshipsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -4680,8 +4556,6 @@ export type UserAccountUpdateWithoutFriendships_otherInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4750,8 +4624,6 @@ export type UserAccountUncheckedUpdateWithoutFriendships_otherInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4831,8 +4703,6 @@ export type UserAccountUpdateWithoutFriendshipsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4901,8 +4771,6 @@ export type UserAccountUncheckedUpdateWithoutFriendshipsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4971,8 +4839,6 @@ export type UserAccountCreateWithoutElo_ratingInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -5041,8 +4907,6 @@ export type UserAccountUncheckedCreateWithoutElo_ratingInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -5127,8 +4991,6 @@ export type UserAccountUpdateWithoutElo_ratingInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5197,8 +5059,6 @@ export type UserAccountUncheckedUpdateWithoutElo_ratingInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5267,8 +5127,6 @@ export type UserAccountCreateWithoutElo_log_opponentInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -5337,8 +5195,6 @@ export type UserAccountUncheckedCreateWithoutElo_log_opponentInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -5412,8 +5268,6 @@ export type UserAccountCreateWithoutElo_log_playerInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -5482,8 +5336,6 @@ export type UserAccountUncheckedCreateWithoutElo_log_playerInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -5568,8 +5420,6 @@ export type UserAccountUpdateWithoutElo_log_opponentInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5638,8 +5488,6 @@ export type UserAccountUncheckedUpdateWithoutElo_log_opponentInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5719,8 +5567,6 @@ export type UserAccountUpdateWithoutElo_log_playerInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5789,8 +5635,6 @@ export type UserAccountUncheckedUpdateWithoutElo_log_playerInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5859,8 +5703,6 @@ export type UserAccountCreateWithoutAd_viewsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -5929,8 +5771,6 @@ export type UserAccountUncheckedCreateWithoutAd_viewsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6015,8 +5855,6 @@ export type UserAccountUpdateWithoutAd_viewsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6085,8 +5923,6 @@ export type UserAccountUncheckedUpdateWithoutAd_viewsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6155,8 +5991,6 @@ export type UserAccountCreateWithoutProfileInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6225,8 +6059,6 @@ export type UserAccountUncheckedCreateWithoutProfileInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6311,8 +6143,6 @@ export type UserAccountUpdateWithoutProfileInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6381,8 +6211,6 @@ export type UserAccountUncheckedUpdateWithoutProfileInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6451,8 +6279,6 @@ export type UserAccountCreateWithoutImageInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6521,8 +6347,6 @@ export type UserAccountUncheckedCreateWithoutImageInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6607,8 +6431,6 @@ export type UserAccountUpdateWithoutImageInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6677,8 +6499,6 @@ export type UserAccountUncheckedUpdateWithoutImageInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6747,8 +6567,6 @@ export type UserAccountCreateWithoutProfile_viewsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6817,8 +6635,6 @@ export type UserAccountUncheckedCreateWithoutProfile_viewsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6892,8 +6708,6 @@ export type UserAccountCreateWithoutViewed_profilesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -6962,8 +6776,6 @@ export type UserAccountUncheckedCreateWithoutViewed_profilesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -7048,8 +6860,6 @@ export type UserAccountUpdateWithoutProfile_viewsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7118,8 +6928,6 @@ export type UserAccountUncheckedUpdateWithoutProfile_viewsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7199,8 +7007,6 @@ export type UserAccountUpdateWithoutViewed_profilesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7269,8 +7075,6 @@ export type UserAccountUncheckedUpdateWithoutViewed_profilesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7339,8 +7143,6 @@ export type UserAccountCreateWithoutForgot_passwordInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -7409,8 +7211,6 @@ export type UserAccountUncheckedCreateWithoutForgot_passwordInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -7495,8 +7295,6 @@ export type UserAccountUpdateWithoutForgot_passwordInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7565,8 +7363,6 @@ export type UserAccountUncheckedUpdateWithoutForgot_passwordInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7635,8 +7431,6 @@ export type UserAccountCreateWithoutSolvesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -7705,8 +7499,6 @@ export type UserAccountUncheckedCreateWithoutSolvesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -7791,8 +7583,6 @@ export type UserAccountUpdateWithoutSolvesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7861,8 +7651,6 @@ export type UserAccountUncheckedUpdateWithoutSolvesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7931,8 +7719,6 @@ export type UserAccountCreateWithoutEmail_logInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8001,8 +7787,6 @@ export type UserAccountUncheckedCreateWithoutEmail_logInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8087,8 +7871,6 @@ export type UserAccountUpdateWithoutEmail_logInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8157,8 +7939,6 @@ export type UserAccountUncheckedUpdateWithoutEmail_logInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8227,8 +8007,6 @@ export type UserAccountCreateWithoutMatch_sessions_createdInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8297,8 +8075,6 @@ export type UserAccountUncheckedCreateWithoutMatch_sessions_createdInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8383,8 +8159,6 @@ export type UserAccountUpdateWithoutMatch_sessions_createdInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8453,8 +8227,6 @@ export type UserAccountUncheckedUpdateWithoutMatch_sessions_createdInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8523,8 +8295,6 @@ export type UserAccountCreateWithoutMatches_wonInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8593,8 +8363,6 @@ export type UserAccountUncheckedCreateWithoutMatches_wonInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8679,8 +8447,6 @@ export type UserAccountUpdateWithoutMatches_wonInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8749,8 +8515,6 @@ export type UserAccountUncheckedUpdateWithoutMatches_wonInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8819,8 +8583,6 @@ export type UserAccountCreateWithoutMatch_lobbiesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8889,8 +8651,6 @@ export type UserAccountUncheckedCreateWithoutMatch_lobbiesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -8975,8 +8735,6 @@ export type UserAccountUpdateWithoutMatch_lobbiesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9045,8 +8803,6 @@ export type UserAccountUncheckedUpdateWithoutMatch_lobbiesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9115,8 +8871,6 @@ export type UserAccountCreateWithoutMatch_participationsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -9185,8 +8939,6 @@ export type UserAccountUncheckedCreateWithoutMatch_participationsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -9271,8 +9023,6 @@ export type UserAccountUpdateWithoutMatch_participationsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9341,8 +9091,6 @@ export type UserAccountUncheckedUpdateWithoutMatch_participationsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9411,8 +9159,6 @@ export type UserAccountCreateWithoutChat_messagesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -9481,8 +9227,6 @@ export type UserAccountUncheckedCreateWithoutChat_messagesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -9567,8 +9311,6 @@ export type UserAccountUpdateWithoutChat_messagesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9637,8 +9379,6 @@ export type UserAccountUncheckedUpdateWithoutChat_messagesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9707,8 +9447,6 @@ export type UserAccountCreateWithoutSmart_deviceInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -9777,8 +9515,6 @@ export type UserAccountUncheckedCreateWithoutSmart_deviceInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -9863,8 +9599,6 @@ export type UserAccountUpdateWithoutSmart_deviceInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9933,8 +9667,6 @@ export type UserAccountUncheckedUpdateWithoutSmart_deviceInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10003,8 +9735,6 @@ export type UserAccountCreateWithoutBadge_typeInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -10073,8 +9803,6 @@ export type UserAccountUncheckedCreateWithoutBadge_typeInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -10159,8 +9887,6 @@ export type UserAccountUpdateWithoutBadge_typeInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10229,8 +9955,6 @@ export type UserAccountUncheckedUpdateWithoutBadge_typeInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10299,8 +10023,6 @@ export type UserAccountCreateWithoutBadgesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -10369,8 +10091,6 @@ export type UserAccountUncheckedCreateWithoutBadgesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -10455,8 +10175,6 @@ export type UserAccountUpdateWithoutBadgesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10525,8 +10243,6 @@ export type UserAccountUncheckedUpdateWithoutBadgesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10595,8 +10311,6 @@ export type UserAccountCreateWithoutTimer_backgroundInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -10665,8 +10379,6 @@ export type UserAccountUncheckedCreateWithoutTimer_backgroundInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -10751,8 +10463,6 @@ export type UserAccountUpdateWithoutTimer_backgroundInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10821,8 +10531,6 @@ export type UserAccountUncheckedUpdateWithoutTimer_backgroundInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10891,8 +10599,6 @@ export type UserAccountCreateWithoutReports_createdInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -10961,8 +10667,6 @@ export type UserAccountUncheckedCreateWithoutReports_createdInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -11036,8 +10740,6 @@ export type UserAccountCreateWithoutReports_forInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -11106,8 +10808,6 @@ export type UserAccountUncheckedCreateWithoutReports_forInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -11192,8 +10892,6 @@ export type UserAccountUpdateWithoutReports_createdInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11262,8 +10960,6 @@ export type UserAccountUncheckedUpdateWithoutReports_createdInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11343,8 +11039,6 @@ export type UserAccountUpdateWithoutReports_forInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11413,8 +11107,6 @@ export type UserAccountUncheckedUpdateWithoutReports_forInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11483,8 +11175,6 @@ export type UserAccountCreateWithoutBansInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -11553,8 +11243,6 @@ export type UserAccountUncheckedCreateWithoutBansInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -11628,8 +11316,6 @@ export type UserAccountCreateWithoutCreated_bansInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -11698,8 +11384,6 @@ export type UserAccountUncheckedCreateWithoutCreated_bansInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -11784,8 +11468,6 @@ export type UserAccountUpdateWithoutBansInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11854,8 +11536,6 @@ export type UserAccountUncheckedUpdateWithoutBansInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11935,8 +11615,6 @@ export type UserAccountUpdateWithoutCreated_bansInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12005,8 +11683,6 @@ export type UserAccountUncheckedUpdateWithoutCreated_bansInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12075,8 +11751,6 @@ export type UserAccountCreateWithoutSolve_viewsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -12145,8 +11819,6 @@ export type UserAccountUncheckedCreateWithoutSolve_viewsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -12220,8 +11892,6 @@ export type UserAccountCreateWithoutViewed_solveInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -12290,8 +11960,6 @@ export type UserAccountUncheckedCreateWithoutViewed_solveInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -12376,8 +12044,6 @@ export type UserAccountUpdateWithoutSolve_viewsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12446,8 +12112,6 @@ export type UserAccountUncheckedUpdateWithoutSolve_viewsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12527,8 +12191,6 @@ export type UserAccountUpdateWithoutViewed_solveInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12597,8 +12259,6 @@ export type UserAccountUncheckedUpdateWithoutViewed_solveInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12667,8 +12327,6 @@ export type UserAccountCreateWithoutGame_sessionsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -12737,8 +12395,6 @@ export type UserAccountUncheckedCreateWithoutGame_sessionsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -12823,8 +12479,6 @@ export type UserAccountUpdateWithoutGame_sessionsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12893,8 +12547,6 @@ export type UserAccountUncheckedUpdateWithoutGame_sessionsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12963,8 +12615,6 @@ export type UserAccountCreateWithoutTop_solvesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -13033,8 +12683,6 @@ export type UserAccountUncheckedCreateWithoutTop_solvesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -13119,8 +12767,6 @@ export type UserAccountUpdateWithoutTop_solvesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13189,8 +12835,6 @@ export type UserAccountUncheckedUpdateWithoutTop_solvesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13259,8 +12903,6 @@ export type UserAccountCreateWithoutTop_averageInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -13329,8 +12971,6 @@ export type UserAccountUncheckedCreateWithoutTop_averageInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -13415,8 +13055,6 @@ export type UserAccountUpdateWithoutTop_averageInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13485,8 +13123,6 @@ export type UserAccountUncheckedUpdateWithoutTop_averageInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13555,8 +13191,6 @@ export type UserAccountCreateWithoutSessionsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -13625,8 +13259,6 @@ export type UserAccountUncheckedCreateWithoutSessionsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -13711,8 +13343,6 @@ export type UserAccountUpdateWithoutSessionsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13781,8 +13411,6 @@ export type UserAccountUncheckedUpdateWithoutSessionsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13851,8 +13479,6 @@ export type UserAccountCreateWithoutCustom_trainerInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -13921,8 +13547,6 @@ export type UserAccountUncheckedCreateWithoutCustom_trainerInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14007,8 +13631,6 @@ export type UserAccountUpdateWithoutCustom_trainerInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14077,8 +13699,6 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainerInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14147,8 +13767,6 @@ export type UserAccountCreateWithoutCustom_trainer_likesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14217,8 +13835,6 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_likesInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14292,8 +13908,6 @@ export type UserAccountCreateWithoutLiked_custom_trainersInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14362,8 +13976,6 @@ export type UserAccountUncheckedCreateWithoutLiked_custom_trainersInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14448,8 +14060,6 @@ export type UserAccountUpdateWithoutCustom_trainer_likesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14518,8 +14128,6 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_likesInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14599,8 +14207,6 @@ export type UserAccountUpdateWithoutLiked_custom_trainersInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14669,8 +14275,6 @@ export type UserAccountUncheckedUpdateWithoutLiked_custom_trainersInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14739,8 +14343,6 @@ export type UserAccountCreateWithoutCustom_trainer_downloadsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14809,8 +14411,6 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_downloadsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14884,8 +14484,6 @@ export type UserAccountCreateWithoutCustom_trainer_downloadedInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -14954,8 +14552,6 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_downloadedInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -15040,8 +14636,6 @@ export type UserAccountUpdateWithoutCustom_trainer_downloadsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15110,8 +14704,6 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_downloadsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15191,8 +14783,6 @@ export type UserAccountUpdateWithoutCustom_trainer_downloadedInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15261,8 +14851,6 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_downloadedInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15331,8 +14919,6 @@ export type UserAccountCreateWithoutTrainer_favoriteInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -15401,8 +14987,6 @@ export type UserAccountUncheckedCreateWithoutTrainer_favoriteInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -15487,8 +15071,6 @@ export type UserAccountUpdateWithoutTrainer_favoriteInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15557,8 +15139,6 @@ export type UserAccountUncheckedUpdateWithoutTrainer_favoriteInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15627,8 +15207,6 @@ export type UserAccountCreateWithoutAlgorithm_overrideInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -15697,8 +15275,6 @@ export type UserAccountUncheckedCreateWithoutAlgorithm_overrideInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -15783,8 +15359,6 @@ export type UserAccountUpdateWithoutAlgorithm_overrideInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15853,8 +15427,6 @@ export type UserAccountUncheckedUpdateWithoutAlgorithm_overrideInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15923,8 +15495,6 @@ export type UserAccountCreateWithoutSettingsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -15993,8 +15563,6 @@ export type UserAccountUncheckedCreateWithoutSettingsInput = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: Date | string | null
-  stripe_customer_id?: string | null
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: string | null
   unsub_id?: string | null
@@ -16079,8 +15647,6 @@ export type UserAccountUpdateWithoutSettingsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16149,8 +15715,6 @@ export type UserAccountUncheckedUpdateWithoutSettingsInput = {
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mod?: Prisma.BoolFieldUpdateOperationsInput | boolean
   offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16628,8 +16192,6 @@ export type UserAccountSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   verified?: boolean
   banned_forever?: boolean
   banned_until?: boolean
-  stripe_customer_id?: boolean
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: boolean
   unsub_id?: boolean
@@ -16700,8 +16262,6 @@ export type UserAccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   verified?: boolean
   banned_forever?: boolean
   banned_until?: boolean
-  stripe_customer_id?: boolean
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: boolean
   unsub_id?: boolean
@@ -16722,8 +16282,6 @@ export type UserAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   verified?: boolean
   banned_forever?: boolean
   banned_until?: boolean
-  stripe_customer_id?: boolean
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: boolean
   unsub_id?: boolean
@@ -16744,15 +16302,13 @@ export type UserAccountSelectScalar = {
   verified?: boolean
   banned_forever?: boolean
   banned_until?: boolean
-  stripe_customer_id?: boolean
-  is_pro?: boolean
   mod?: boolean
   offline_hash?: boolean
   unsub_id?: boolean
   last_solve_at?: boolean
 }
 
-export type UserAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "first_name" | "join_ip" | "join_country" | "admin" | "created_at" | "last_name" | "username" | "verified" | "banned_forever" | "banned_until" | "stripe_customer_id" | "is_pro" | "mod" | "offline_hash" | "unsub_id" | "last_solve_at", ExtArgs["result"]["userAccount"]>
+export type UserAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "first_name" | "join_ip" | "join_country" | "admin" | "created_at" | "last_name" | "username" | "verified" | "banned_forever" | "banned_until" | "mod" | "offline_hash" | "unsub_id" | "last_solve_at", ExtArgs["result"]["userAccount"]>
 export type UserAccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   action_log?: boolean | Prisma.UserAccount$action_logArgs<ExtArgs>
   ad_views?: boolean | Prisma.UserAccount$ad_viewsArgs<ExtArgs>
@@ -16875,8 +16431,6 @@ export type $UserAccountPayload<ExtArgs extends runtime.Types.Extensions.Interna
     verified: boolean
     banned_forever: boolean
     banned_until: Date | null
-    stripe_customer_id: string | null
-    is_pro: boolean
     mod: boolean
     offline_hash: string | null
     unsub_id: string | null
@@ -17366,8 +16920,6 @@ export interface UserAccountFieldRefs {
   readonly verified: Prisma.FieldRef<"UserAccount", 'Boolean'>
   readonly banned_forever: Prisma.FieldRef<"UserAccount", 'Boolean'>
   readonly banned_until: Prisma.FieldRef<"UserAccount", 'DateTime'>
-  readonly stripe_customer_id: Prisma.FieldRef<"UserAccount", 'String'>
-  readonly is_pro: Prisma.FieldRef<"UserAccount", 'Boolean'>
   readonly mod: Prisma.FieldRef<"UserAccount", 'Boolean'>
   readonly offline_hash: Prisma.FieldRef<"UserAccount", 'String'>
   readonly unsub_id: Prisma.FieldRef<"UserAccount", 'String'>
