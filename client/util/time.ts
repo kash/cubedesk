@@ -6,8 +6,12 @@ export function getNumberToDecimalPoints(number: number, decimalPoints: number):
 	return Math.floor(number * pow) / pow;
 }
 
-// source should be either time number or a Solve object
-export function getTimeString(source: number | Solve, decimalPoints?: number, ignoreMaxDepth?: boolean): string {
+// source should be either time number or a Solve object; nullish sources render as '-'
+export function getTimeString(
+	source: number | Solve | null | undefined,
+	decimalPoints?: number,
+	ignoreMaxDepth?: boolean
+): string {
 	if (source === null || source === undefined) {
 		return '-';
 	}

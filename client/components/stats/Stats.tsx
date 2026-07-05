@@ -9,19 +9,28 @@ import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {trpc} from '@/util/trpc';
-import React, {createContext, useEffect, useMemo, useState} from 'react';
+import React, {createContext, useContext, useEffect, useMemo, useState} from 'react';
 
 const CUBE_TYPE_QUERY_PARAM = 'cubeType';
 const ALL_TAB_ID = 'all';
 
 export interface IStatsContext {
 	all: boolean;
-	cubeType: CubeType;
+	// Undefined on the "all" tab, where no specific cube type is selected
+	cubeType?: CubeType;
 	stats: StatsSchema;
 	filterOptions: FilterSolvesOptions;
 }
 
-export const StatsContext = createContext<IStatsContext>(null);
+export const StatsContext = createContext<IStatsContext | null>(null);
+
+export function useStatsContext(): IStatsContext {
+	const ctx = useContext(StatsContext);
+	if (!ctx) {
+		throw new Error('useStatsContext must be used within StatsContext.Provider');
+	}
+	return ctx;
+}
 
 export default function Stats() {
 	const me = useMe();

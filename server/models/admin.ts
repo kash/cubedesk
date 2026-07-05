@@ -51,7 +51,7 @@ async function getUserForAdminSummary(userId: string): Promise<UserAccountSummar
 	});
 
 	const timerSolves = await getUserForAdminSolvesSummary(userId, {
-		AND: trainerExceptions,
+		OR: trainerExceptions,
 	});
 
 	const matchSolves = await getUserForAdminSolvesSummary(userId, {

@@ -11,7 +11,7 @@ import {
 } from '@/components/timer/helpers/timers';
 import {ITimerContext} from '@/components/timer/Timer';
 import {getSettings} from '@/db/settings/query';
-import {SolveInput} from '@/types/solve';
+import {Solve} from '@/types/solve';
 import {emitEvent} from '@/util/event_handler';
 import {resourceUri} from '@/util/storage';
 import {getTimerStore} from '@/util/store/getTimer';
@@ -37,7 +37,7 @@ export function startTimer() {
 	});
 }
 
-export function endTimer(context: ITimerContext, finalTimeMilli?: number, overrides?: Partial<SolveInput>) {
+export function endTimer(context: ITimerContext, finalTimeMilli?: number, overrides?: Partial<Solve>) {
 
 	const {scramble, timeStartedAt} = context;
 
@@ -46,13 +46,9 @@ export function endTimer(context: ITimerContext, finalTimeMilli?: number, overri
 	}
 
 	endLocked = true;
-	let finalTime = finalTimeMilli;
 
 	const now = new Date();
-
-	if (!finalTimeMilli) {
-		finalTime = now.getTime() - timeStartedAt.getTime();
-	}
+	const finalTime = finalTimeMilli || now.getTime() - timeStartedAt.getTime();
 
 	setTimerParams({
 		solving: false,
@@ -61,7 +57,7 @@ export function endTimer(context: ITimerContext, finalTimeMilli?: number, overri
 
 	resetTimerParams(context);
 	setTimeout(() => {
-		saveSolve(context, finalTime, scramble, timeStartedAt.getTime(), now.getTime(), false, false, overrides);
+		saveSolve(context, finalTime, scramble ?? '', timeStartedAt.getTime(), now.getTime(), false, false, overrides);
 		endLocked = false;
 	}, 10);
 }

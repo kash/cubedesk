@@ -1,7 +1,7 @@
 import type {CustomCubeType} from '@/generated/prisma/client';
 import {TimerModuleType} from '../../components/timer/@types/enums';
 import {APP_THEME_PRESETS} from '../../util/themes/theme_consts';
-import {getSettingsDb, SettingValue} from './init';
+import {getSettingsDb} from './init';
 
 export type TimerLayoutPosition = 'bottom' | 'left' | 'right';
 
@@ -27,7 +27,7 @@ export interface AllSettings {
 	cube_type: string;
 	session_id: string;
 	custom_cube_types: CustomCubeType[];
-	locked_scramble: string;
+	locked_scramble: string | null;
 
 	// Local
 	timer_type: 'keyboard' | 'smart' | 'stackmat' | 'gantimer';
@@ -75,7 +75,7 @@ const defaultSettings: AllSettings = {
 	require_period_in_manual_time_entry: false,
 	beta_tester: false,
 	cube_type: '333',
-	session_id: null,
+	session_id: '',
 	locked_scramble: null,
 	custom_cube_types: [],
 
@@ -138,16 +138,12 @@ export function getSettings(): AllSettings {
 export function getSetting<T extends keyof AllSettings>(key: T): AllSettings[T] {
 	const settingsDb = getSettingsDb();
 
-	if (!key) {
-		return null;
-	}
-
 	const defaultValue = defaultSettings[key];
 	if (!settingsDb) {
 		return defaultValue;
 	}
 
-	const result: SettingValue = settingsDb.findOne({
+	const result = settingsDb.findOne({
 		id: key,
 	});
 
@@ -155,5 +151,5 @@ export function getSetting<T extends keyof AllSettings>(key: T): AllSettings[T] 
 		return defaultValue;
 	}
 
-	return result?.value;
+	return result.value;
 }

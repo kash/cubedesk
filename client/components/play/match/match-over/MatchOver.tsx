@@ -30,7 +30,7 @@ export default function MatchOver(props: Props) {
 			return MatchEndedBy.ABORT;
 		}
 
-		for (const part of match.participants) {
+		for (const part of match.participants ?? []) {
 			if (!part.lost) {
 				continue;
 			}
@@ -46,7 +46,7 @@ export default function MatchOver(props: Props) {
 	}, []);
 
 	const winner = useMemo(() => {
-		for (const part of match.participants) {
+		for (const part of match.participants ?? []) {
 			if (part.won) {
 				return part.user;
 			}
@@ -153,7 +153,7 @@ export default function MatchOver(props: Props) {
 			<div className={swordClass}>
 				<Sword />
 			</div>
-			<EloChange userId={me.id} eloLogs={match.elo_log} />
+			<EloChange userId={me.id} eloLogs={match.elo_log ?? []} />
 			<div className="my-10 grid w-[90%] [grid-auto-rows:130px] grid-cols-2 gap-2.5">
 				{players}
 			</div>

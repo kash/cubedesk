@@ -1,6 +1,6 @@
 import {Consts} from '../shared/consts';
 
-export function getStorageURL(path: string) {
+export function getStorageURL(path: string | null | undefined): string | null {
 	if (!path) {
 		return null;
 	}

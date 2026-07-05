@@ -1,7 +1,7 @@
 import Cube from 'cubejs';
 import {SmartTurn} from '../../../client/util/smart_scramble';
 
-export function getReverseTurns(moves: SmartTurn[] | string) {
+export function getReverseTurns(moves: (SmartTurn | string)[] | string) {
 	let turns;
 	const output: string[] = [];
 
@@ -27,13 +27,13 @@ export function getReverseTurns(moves: SmartTurn[] | string) {
 	return output;
 }
 
-export function reverseTurns(cubejs: Cube, moves: SmartTurn[] | string) {
+export function reverseTurns(cubejs: Cube, moves: (SmartTurn | string)[] | string) {
 	for (const turn of getReverseTurns(moves)) {
 		cubejs.move(turn);
 	}
 }
 
-export function getLLState(moves: SmartTurn[] | string) {
+export function getLLState(moves: (SmartTurn | string)[] | string) {
 	const cubejs = new Cube();
 	reverseTurns(cubejs, moves);
 

@@ -1,15 +1,19 @@
 export function getLocalStorage(key: string) {
+	const raw = localStorage.getItem(key);
+	if (raw === null) {
+		return null;
+	}
+
 	try {
-		return JSON.parse(localStorage.getItem(key));
+		return JSON.parse(raw);
 	} catch (e) {
-		const val = localStorage.getItem(key);
-		if (val === 'true') {
+		if (raw === 'true') {
 			return true;
-		} else if (val === 'false') {
+		} else if (raw === 'false') {
 			return false;
 		}
 
-		return val;
+		return raw;
 	}
 }
 

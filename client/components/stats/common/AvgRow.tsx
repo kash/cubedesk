@@ -1,12 +1,12 @@
 import {openModal} from '@/actions/general';
 import HistoryModal from '@/components/modules/history/HistoryModal';
-import {StatsContext} from '@/components/stats/Stats';
+import {useStatsContext} from '@/components/stats/Stats';
 import {getCurrentAverage} from '@/db/solves/stats/solves/average/average';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {SolveStat} from '@/db/solves/stats/solves/caching';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import React from 'react';
 import {useDispatch} from 'react-redux';
 
 interface Props {
@@ -18,11 +18,11 @@ interface Props {
 export default function AvgRow(props: Props) {
 	const dispatch = useDispatch();
 
-	const context = useContext(StatsContext);
+	const context = useStatsContext();
 	const filter = context.filterOptions;
 	const {count, pb, className} = props;
 
-	let avg: SolveStat;
+	let avg: SolveStat | null;
 	if (pb) {
 		avg = getAveragePB(filter, count);
 	} else {
@@ -38,7 +38,7 @@ export default function AvgRow(props: Props) {
 
 		const descPrefix = pb ? 'Best ' : '';
 		const desc = descPrefix + `Average of ${localCount}`;
-		dispatch(openModal(<HistoryModal solves={avg.solves} description={desc} />));
+		dispatch(openModal(<HistoryModal solves={avg.solves ?? []} description={desc} />));
 	}
 
 	const highlightClass = 'inline-block font-bold text-info drop-shadow-[0_0_10px_rgba(var(--info-color),0.4)]';

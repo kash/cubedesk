@@ -2,7 +2,7 @@ import {getSettings} from '../../db/settings/query';
 import {CUBE_SCRAMBLES, ScrambleType} from './cube_scrambles';
 import {CUBE_TYPES, CubeType} from './cube_types';
 
-export function getScrambleTypeById(scrambleId: string): ScrambleType {
+export function getScrambleTypeById(scrambleId: string): ScrambleType | undefined {
 	return CUBE_SCRAMBLES[scrambleId];
 }
 
@@ -37,18 +37,18 @@ export function getAllScrambleTypeNames(): string[] {
 	return Object.keys(CUBE_SCRAMBLES);
 }
 
-export function getCubeTypeInfoById(id: string): CubeType {
+export function getCubeTypeInfoById(id: string): CubeType | undefined {
 	if (!id) {
-		return null;
+		return undefined;
 	}
 
 	const all = getAllCubeTypesAsMap();
 	return all[id];
 }
 
-export function getCubeTypeInfoByName(name: string): CubeType {
+export function getCubeTypeInfoByName(name: string): CubeType | undefined {
 	if (!name) {
-		return null;
+		return undefined;
 	}
 
 	for (const ct of getAllCubeTypes()) {
@@ -57,19 +57,15 @@ export function getCubeTypeInfoByName(name: string): CubeType {
 		}
 	}
 
-	return null;
+	return undefined;
 }
 
-export function getCubeTypeInfo(idOrName: string): CubeType {
+export function getCubeTypeInfo(idOrName: string): CubeType | undefined {
 	return getCubeTypeInfoById(idOrName) || getCubeTypeInfoByName(idOrName);
 }
 
-export function getCubeTypeName(id: string): string {
-	if (!id) {
-		return null;
-	}
-
-	return getCubeTypeInfoById(id).name;
+export function getCubeTypeName(id: string): string | undefined {
+	return getCubeTypeInfoById(id)?.name;
 }
 
 export function getCustomCubeTypes(): CubeType[] {

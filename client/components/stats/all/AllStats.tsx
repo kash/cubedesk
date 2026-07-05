@@ -5,11 +5,11 @@ import AllStatsFeatured from '@/components/stats/all/AllStatsFeatured';
 import StatModule from '@/components/stats/common/StatModule';
 import StatSection from '@/components/stats/common/StatSection';
 import SubStats from '@/components/stats/common/SubStats';
-import {StatsContext} from '@/components/stats/Stats';
-import React, {useContext} from 'react';
+import {useStatsContext} from '@/components/stats/Stats';
+import React from 'react';
 
 export default function AllStats() {
-	const {filterOptions} = useContext(StatsContext);
+	const {filterOptions} = useStatsContext();
 
 	return (
 		<div className="grid w-full auto-rows-[350px] grid-cols-[repeat(auto-fill,minmax(500px,1fr))] gap-[30px]">

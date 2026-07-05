@@ -30,7 +30,7 @@ export default function SolveListRow(props: Props) {
 	const scramble = solve.scramble;
 	const smart = solve.is_smart_cube;
 	const cubeType = getCubeTypeName(solve.cube_type) || 'None';
-	const createdAt = getDateFromNow(solve.started_at);
+	const createdAt = getDateFromNow(solve.started_at ?? 0);
 
 	let plusTwoEmblem: React.ReactNode = null;
 	let dnfEmblem: React.ReactNode = null;

@@ -52,6 +52,7 @@ export async function getPaginatedResponse<T>(input: PaginatedRequestInput): Pro
 			error: e,
 		});
 
-		return null;
+		// Callers return this straight to the client, so surface the failure instead of returning null
+		throw e;
 	}
 }

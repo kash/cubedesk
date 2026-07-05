@@ -1,13 +1,13 @@
 import {useLocation} from 'react-router-dom';
 
-export function useUrlParam(param: string): string {
+export function useUrlParam(param: string): string | null {
 	const location = useLocation();
 	const params = new URLSearchParams(location.search);
 
 	return params.get(param);
 }
 
-export function useUrlParamNumber(param: string): number {
+export function useUrlParamNumber(param: string): number | null {
 	const val = useUrlParam(param);
 
 	if (!val) {

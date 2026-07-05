@@ -11,7 +11,7 @@ export default function CubeDistro() {
 	}, []);
 
 	const data = cubeTypes.map((ct, i) => ({
-		title: getCubeTypeInfoById(ct.cube_type).name,
+		title: getCubeTypeInfoById(ct.cube_type)?.name ?? ct.cube_type,
 		value: ct.count,
 		color: colors[i],
 	}));

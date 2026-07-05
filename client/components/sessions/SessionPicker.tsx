@@ -25,7 +25,7 @@ export default function SessionPicker(props: Props) {
 		}
 
 		const currentSession = fetchSessionById(sessionId);
-		setSelectedSession(currentSession);
+		setSelectedSession(currentSession ?? undefined);
 	}, [sessionId]);
 
 	const options = useMemo(() => {

@@ -1,20 +1,20 @@
 import {saveSolve} from '@/components/timer/helpers/save';
 import {resetScramble} from '@/components/timer/helpers/scramble';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {useElementListener} from '@/util/hooks/useListener';
 import {useSettings} from '@/util/hooks/useSettings';
 import {convertTimeStringToSeconds} from '@/util/time';
 import classNames from 'classnames';
-import React, {ReactNode, useContext, useRef, useState} from 'react';
+import React, {ReactNode, useRef, useState} from 'react';
 
 export default function Manual() {
-	const manualInput = useRef<HTMLInputElement>();
+	const manualInput = useRef<HTMLInputElement>(null);
 
 	const [manualTime, setManualTime] = useState('');
 	const [error, setError] = useState(false);
 
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 	const {scramble, disabled, hideTime} = context;
 
 	const timerTimeSize = useSettings('timer_time_size');
@@ -35,7 +35,7 @@ export default function Manual() {
 			const endedAt = new Date().getTime();
 			const startedAt = endedAt - seconds.timeMilli;
 
-			saveSolve(context, seconds.timeMilli, scramble, startedAt, endedAt, seconds.dnf, seconds.plusTwo);
+			saveSolve(context, seconds.timeMilli, scramble ?? '', startedAt, endedAt, seconds.dnf, seconds.plusTwo);
 			resetScramble(context);
 
 			setManualTime('');

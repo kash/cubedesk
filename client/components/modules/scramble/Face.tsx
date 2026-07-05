@@ -13,11 +13,11 @@ interface Props {
 export default function Face(props: Props) {
 	const {size, data, width} = props;
 
-	if (!data || !Array.isArray(data) || size ** 2 !== data.length) {
+	if (!size || !data || !Array.isArray(data) || size ** 2 !== data.length) {
 		return <div className="grid h-full max-h-full w-full max-w-full gap-[3px]" />;
 	}
 
-	const content: ReactNode[] = [];
+	const content: ReactNode[][] = [];
 	for (let i = 0; i < size; i += 1) {
 		const body: ReactNode[] = [];
 		for (let k = 0; k < size; k += 1) {

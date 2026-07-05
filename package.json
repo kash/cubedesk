@@ -32,6 +32,7 @@
 		"testEnvironment": "node",
 		"moduleNameMapper": {
 			"^@/generated/(.*)$": "<rootDir>/generated/$1",
+			"^@/types/(.*)$": "<rootDir>/types/$1",
 			"^@/(.*)$": "<rootDir>/client/$1",
 			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
 			"\\.(css|less)$": "identity-obj-proxy"
@@ -66,7 +67,6 @@
 		"@trpc/client": "^11.18.0",
 		"@trpc/react-query": "^11.18.0",
 		"@trpc/server": "^11.18.0",
-		"@types/redlock": "^4.0.3",
 		"@visx/axis": "^4.0.0",
 		"@visx/curve": "^4.0.0",
 		"@visx/group": "^4.0.0",

@@ -64,6 +64,9 @@ function updateLocalDbOrderValuesForSessionIds(ids: string[]) {
 	for (let i = 0; i < ids.length; i += 1) {
 		const sessionId = ids[i];
 		const session = fetchSessionById(sessionId);
+		if (!session) {
+			continue;
+		}
 
 		const updated = sessionDb.update({
 			...session,
@@ -110,11 +113,16 @@ export async function mergeSessionsDb(oldSessionId: string, newSessionId: string
 	const oldSession = fetchSessionById(oldSessionId);
 	const newSession = fetchSessionById(newSessionId);
 
-	sessionsDb.remove(oldSession);
+	if (oldSession) {
+		sessionsDb.remove(oldSession);
 
-	// Finally, update the database
-	postProcessDbUpdate(oldSession, true);
-	postProcessDbUpdate(newSession, true);
+		// Finally, update the database
+		postProcessDbUpdate(oldSession, true);
+	}
+
+	if (newSession) {
+		postProcessDbUpdate(newSession, true);
+	}
 	updateLocalDbOrderValueForAllSessions();
 
 	await trpc.session.merge.mutate({

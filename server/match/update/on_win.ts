@@ -1,4 +1,4 @@
-import {Match} from '@/types/match';
+import {FullMatch, Match} from '@/types/match';
 import {getPrisma} from '../../database';
 import {createEloLog} from '../../models/elo_log';
 import {getUserEloRatingByCubeType, incrementGameCountForCubeType, updateEloRating} from '../../models/elo_rating';
@@ -6,7 +6,7 @@ import {updateMatch} from '../../models/match';
 import {calculateNewElo, EloUpdatePayload} from '../pair/elo/calc_elo';
 
 // Also sets the elo for the updated match
-export async function updateMatchWithWinner(match: Match, winnerId: string) {
+export async function updateMatchWithWinner(match: FullMatch, winnerId: string) {
 	const now = new Date();
 	await updateMatch(match, {
 		ended_at: now,

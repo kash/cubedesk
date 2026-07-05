@@ -44,7 +44,7 @@ export default function SolvesText(props: Props) {
 
 			const parts: string[] = [];
 			if (csv) {
-				parts.push(displayIndex);
+				parts.push(String(displayIndex));
 			} else {
 				parts.push(displayIndex + '.');
 			}
@@ -53,9 +53,9 @@ export default function SolvesText(props: Props) {
 
 			const add: string[] = [];
 			if (includeScramble) add.push(solve.scramble);
-			if (includeCubeType) add.push(cubeType);
-			if (includeDate) add.push(new Date(solve.ended_at).toLocaleString());
-			if (includeNotes) add.push(solve.notes);
+			if (includeCubeType) add.push(cubeType ?? solve.cube_type);
+			if (includeDate) add.push(new Date(solve.ended_at ?? 0).toLocaleString());
+			if (includeNotes) add.push(solve.notes ?? '');
 
 			for (const a of add) {
 				if (!csv) {

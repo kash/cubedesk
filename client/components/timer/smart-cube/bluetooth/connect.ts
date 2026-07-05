@@ -1,11 +1,10 @@
 import GAN from '@/components/timer/smart-cube/bluetooth/gan';
 import Giiker from '@/components/timer/smart-cube/bluetooth/giiker';
-// @ts-nocheck
 import Particula from '@/components/timer/smart-cube/bluetooth/particula';
 import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
 
 export default class Connect extends SmartCube {
-	device = null;
+	device: BluetoothDevice | null = null;
 
 	connect = () => {
 		if (!window.navigator || !window.navigator.bluetooth) {
@@ -66,13 +65,14 @@ export default class Connect extends SmartCube {
 
 				this.alertConnecting();
 
-				if (device.name.startsWith('Gi') || device.name.startsWith('Mi Smart Magic Cube')) {
+				const name = device.name ?? '';
+				if (name.startsWith('Gi') || name.startsWith('Mi Smart Magic Cube')) {
 					const cube = new Giiker(this.device);
 					cube.init();
-				} else if (device.name.toLowerCase().startsWith('gan')) {
+				} else if (name.toLowerCase().startsWith('gan')) {
 					const cube = new GAN(this.device);
 					cube.init();
-				} else if (device.name.startsWith('GoCube') || device.name.startsWith('Rubiks')) {
+				} else if (name.startsWith('GoCube') || name.startsWith('Rubiks')) {
 					const cube = new Particula(this.device);
 					cube.init();
 				} else {
@@ -86,7 +86,7 @@ export default class Connect extends SmartCube {
 		if (!this.device) {
 			return;
 		}
-		this.device.gatt.disconnect();
+		this.device.gatt?.disconnect();
 		this.device = null;
 	};
 }

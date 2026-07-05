@@ -11,6 +11,9 @@ export function listenForSolveEvents(client: SocketClient) {
 	client.on('playerStartedSolve', async (matchId, startedAt) => {
 		const {user} = await getDetailedClientInfo(client);
 		const match = await getMatchById(matchId);
+		if (!match) {
+			return;
+		}
 
 		const matchCacher = new MatchCacher(match.id);
 		await matchCacher.setPlayerSolving(user.id, true);
@@ -22,6 +25,9 @@ export function listenForSolveEvents(client: SocketClient) {
 	client.on('playerEndedSolve', async (matchId, endedAtUnix, finalTimeMillis) => {
 		const {user} = await getDetailedClientInfo(client);
 		const match = await getMatchById(matchId);
+		if (!match) {
+			return;
+		}
 
 		const matchCacher = new MatchCacher(match.id);
 		await matchCacher.setPlayerSolving(user.id, false);
@@ -37,12 +43,12 @@ export function listenForSolveEvents(client: SocketClient) {
 
 		const {user} = await getDetailedClientInfo(client);
 		const match = await getMatchById(matchId);
-		const matchCacher = new MatchCacher(match.id);
-		await matchCacher.updatePlayerLastSolveAt(user.id, new Date());
-
 		if (!match) {
 			return;
 		}
+
+		const matchCacher = new MatchCacher(match.id);
+		await matchCacher.updatePlayerLastSolveAt(user.id, new Date());
 
 		emitMatchUpdate('opponentSolveSaved', match, user, solve);
 

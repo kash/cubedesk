@@ -10,18 +10,18 @@ import Connect from '@/components/timer/smart-cube/bluetooth/connect';
 import ManageSmartCubes from '@/components/timer/smart-cube/manage-smart-cubes/ManageSmartCubes';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {Bluetooth, DotsThree} from 'phosphor-react';
-import React, {ReactNode, useContext, useEffect, useRef, useState} from 'react';
+import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 export default function SmartCube() {
 	const dispatch = useDispatch();
 
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const cube = useRef<RubiksCube | null>(null);

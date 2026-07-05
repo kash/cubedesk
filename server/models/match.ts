@@ -1,6 +1,5 @@
 import {Prisma} from '@/generated/prisma/client';
-import {Match} from '@/types/match';
-import {MatchSession} from '@/types/match';
+import {FullMatch, Match, MatchSession} from '@/types/match';
 import dayjs from 'dayjs';
 import uniqid from 'uniqid';
 import {v4 as uuid} from 'uuid';
@@ -9,7 +8,7 @@ import {getPrisma} from '../database';
 import {MatchCacher} from '../match/update/match_cacher';
 import {publicUserInclude} from './user_account';
 
-function matchInclude(includeChat: boolean): Prisma.MatchInclude {
+function matchInclude(includeChat?: boolean): Prisma.MatchInclude {
 	let matchSessionInclude = {};
 
 	if (includeChat) {
@@ -70,7 +69,7 @@ export async function getMatchBySpectateCode(code: string, includeChat?: boolean
 
 	// Spectators must not see the join code
 	if (match) {
-		delete match.link_code;
+		delete (match as {link_code?: string}).link_code;
 	}
 
 	return cleanMatch(match);
@@ -87,7 +86,7 @@ export async function getMatchByLinkCode(code: string, includeChat?: boolean) {
 	return cleanMatch(match);
 }
 
-export async function cleanMatch(match): Promise<Match> {
+export async function cleanMatch(match): Promise<FullMatch | null> {
 	if (!match) {
 		return match;
 	}

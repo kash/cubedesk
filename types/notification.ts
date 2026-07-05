@@ -5,9 +5,9 @@ export interface Notification {
 	user_id: string;
 	notification_type: string;
 	notification_category_name: string;
-	in_app_message: string;
-	triggering_user_id: string;
-	read_at: Date;
+	in_app_message: string | null;
+	triggering_user_id: string | null;
+	read_at: Date | null;
 	message: string;
 	icon: string;
 	link: string;

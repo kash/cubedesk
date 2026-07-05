@@ -13,7 +13,7 @@ type DiscordRole = 'Admin';
 
 export default class Discord {
 	static async init() {
-		if (!process.env.DISCORD_SERVER_ID) {
+		if (!discordServerId) {
 			logger.warn('Discord client is not initialized: DISCORD_SERVER_ID is not set');
 			return;
 		}
@@ -53,8 +53,16 @@ export default class Discord {
 		return null;
 	}
 
-	static getRoleByName(name: string): Role {
-		return guild.roles.cache.find((role) => role.name === name);
+	static getRoleByName(name: string): Role | null {
+		const role = guild.roles.cache.find((role) => role.name === name);
+		if (!role) {
+			logger.warn(`Could not find Discord role by name.`, {
+				name,
+			});
+			return null;
+		}
+
+		return role;
 	}
 
 	static async getUserRoles(discordUserId: string): Promise<Role[]> {
@@ -82,7 +90,11 @@ export default class Discord {
 			return;
 		}
 
-		const role = await Discord.getRoleByName(roleName);
+		const role = Discord.getRoleByName(roleName);
+		if (!role) {
+			return;
+		}
+
 		await member.roles.add(role);
 	}
 
@@ -97,7 +109,11 @@ export default class Discord {
 			return;
 		}
 
-		const role = await Discord.getRoleByName(roleName);
+		const role = Discord.getRoleByName(roleName);
+		if (!role) {
+			return;
+		}
+
 		await member.roles.remove(role);
 	}
 }

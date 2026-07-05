@@ -211,6 +211,10 @@ export default function Button(props: ButtonProps) {
 	}
 
 	function toggleConfirmModal() {
+		if (!confirmModalProps) {
+			return;
+		}
+
 		dispatch(openModal(<ConfirmModal {...confirmModalProps} />));
 	}
 

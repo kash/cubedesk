@@ -44,10 +44,14 @@ async function getOAuthPostRequest(
 ) {
 	const intType = service.id;
 	const secretEnvKey = `${intType.toUpperCase()}_SECRET`;
+	const clientSecret = process.env[secretEnvKey];
+	if (!clientSecret) {
+		throw new Error(`${secretEnvKey} is not set`);
+	}
 
 	const params = new URLSearchParams();
 	params.append('client_id', service.clientId);
-	params.append('client_secret', process.env[secretEnvKey]);
+	params.append('client_secret', clientSecret);
 	params.append('redirect_uri', `${process.env.BASE_URI}/oauth/${intType}`);
 
 	for (const [key, value] of Object.entries(additionalData)) {
@@ -68,10 +72,13 @@ async function getOAuthPostRequest(
 	};
 }
 
-export async function getAuthToken(intType: IntegrationType, user: UserAccount) {
+export async function getAuthToken(intType: IntegrationType, user: UserAccount): Promise<string | null> {
 	const integration = await getIntegration(user, intType);
+	if (!integration) {
+		return null;
+	}
 
-	let authToken: string = integration.auth_token;
+	let authToken: string | null = integration.auth_token;
 	const expiresAt = new Date(Number(integration.auth_expires_at) * 1000);
 	const now = new Date();
 
@@ -133,9 +140,11 @@ export async function revokeIntegration(intType: IntegrationType, user: UserAcco
 	const service = LINKED_SERVICES[intType];
 	const auth = await getAuthToken(intType, user);
 
-	await getOAuthPostRequest(service, service.revokeEndpoint, {
-		token: auth,
-	});
+	if (auth) {
+		await getOAuthPostRequest(service, service.revokeEndpoint, {
+			token: auth,
+		});
+	}
 
 	if (intType === 'discord') {
 		await updateUserProfile(user.profile, {

@@ -6,7 +6,7 @@ export type FilterTrainerOptions = LokiQuery<TrainerAlgorithmExtended>;
 
 export function fetchTrainerAlgorithmCubeTypes() {
 	const db = getTrainerDb();
-	return fetchUniqueValuesByField(db, null, 'cube_type');
+	return fetchUniqueValuesByField(db, {}, 'cube_type');
 }
 
 export function fetchTrainerAlgorithmTypes(options: FilterTrainerOptions = {}) {

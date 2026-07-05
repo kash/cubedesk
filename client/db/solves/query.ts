@@ -17,7 +17,7 @@ export function fetchLastSolve(options: FilterSolvesOptions = {}) {
 	return null;
 }
 
-export function fetchSolve(solve: string | Solve): Solve {
+export function fetchSolve(solve: string | Solve): Solve | null {
 	const solveDb = getSolveDb();
 
 	if (typeof solve === 'string') {
@@ -29,7 +29,7 @@ export function fetchSolve(solve: string | Solve): Solve {
 	return solveDb.findObject(solve);
 }
 
-export function fetchLastCubeTypeForSession(sessionId: string): string {
+export function fetchLastCubeTypeForSession(sessionId: string): string | null {
 	const solveDb = getSolveDb();
 
 	const last = solveDb

@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
 
 /**
- * @type {import('eslint').Linter.Config}
+ * @type {import('eslint').Linter.Config[]}
  */
 export default [
 	eslint.configs.recommended,

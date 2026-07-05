@@ -101,7 +101,7 @@ export default function Profile() {
 	const mobileMode = useGeneral('mobile_mode');
 	const [ssrProfile, setSsrProfile] = useSsr<IProfileData>(matchUsername);
 	const [loading, setLoading] = useState(!ssrProfile);
-	const [profileData, setProfileData] = useState<IProfileData>(ssrProfile);
+	const [profileData, setProfileData] = useState<IProfileData | null>(ssrProfile);
 
 	const uploadHeaderMutation = api.profile.uploadHeader.useMutation();
 
@@ -109,7 +109,7 @@ export default function Profile() {
 	const user = profileData?.user;
 	const profile = profileData?.profile;
 	const headerImage = profileData?.headerImage;
-	const pbs = profileData?.pbs;
+	const pbs = profileData?.pbs ?? {};
 
 	useEffect(() => {
 		if (profileData && profileData?.user?.username === matchUsername) {
@@ -128,6 +128,10 @@ export default function Profile() {
 	}, [matchUsername]);
 
 	async function uploadProfileHeader(variables: {file: File}) {
+		if (!profileData) {
+			return {storagePath: ''};
+		}
+
 		const image = await uploadHeaderMutation.mutateAsync({
 			fileName: variables.file.name,
 			data: await fileToBase64(variables.file),
@@ -167,6 +171,11 @@ export default function Profile() {
 		);
 	}
 
+	// Once loading is done, a fetched profile is required to render anything
+	if (!user || !profile) {
+		return null;
+	}
+
 	const topCubeTypes = Object.keys(pbs);
 
 	const pbCards: React.ReactNode[] = [];
@@ -178,7 +187,7 @@ export default function Profile() {
 		if (pb?.single) {
 			solves = [pb.single.solve];
 			topRecord = pb.single;
-		} else if (pb.average) {
+		} else if (pb?.average) {
 			const avg = pb.average;
 			solves = [avg.solve_1, avg.solve_2, avg.solve_3, avg.solve_4, avg.solve_5];
 			topRecord = pb.average;

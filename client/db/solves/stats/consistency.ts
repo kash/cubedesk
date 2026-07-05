@@ -35,7 +35,7 @@ export function getSolveCountByDateData(filter: FilterSolvesOptions): BarGraphDa
 		let solveCount = 0;
 		while (solveIndex < solves.length) {
 			const solve = solves[solveIndex];
-			if (solve.started_at > tempStart.getTime() && solve.ended_at < tempEnd.getTime()) {
+			if ((solve.started_at ?? 0) > tempStart.getTime() && (solve.ended_at ?? 0) < tempEnd.getTime()) {
 				solveCount++;
 				solveIndex++;
 			} else {

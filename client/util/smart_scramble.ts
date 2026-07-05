@@ -2,7 +2,7 @@ export interface SmartTurn {
 	turn: string
 }
 
-export function processSmartTurns(smartTurns: SmartTurn[], skipCompress: boolean = false) {
+export function processSmartTurns(smartTurns: (SmartTurn | string)[], skipCompress: boolean = false) {
 	let last = processSmartTurnsHelper(smartTurns, skipCompress);
 
 	while (true) {

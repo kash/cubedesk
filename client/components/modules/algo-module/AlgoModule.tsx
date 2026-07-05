@@ -34,7 +34,7 @@ export default function AlgoModule(props: Props) {
 				<div className="flex flex-row justify-between">
 					<div className="box-border pr-2.5">
 						<div className="mb-[15px] flex flex-row items-start gap-2.5 opacity-50">
-							<Tag text={cubeType.name} />
+							<Tag text={cubeType?.name ?? algoExt.cube_type} />
 							<Tag text={algoExt.algo_type} />
 						</div>
 						<h3>{algo.name}</h3>

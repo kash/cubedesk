@@ -4,18 +4,18 @@ import GanTimer from '@/components/timer/time-display/GanTimer';
 import Manual from '@/components/timer/time-display/Manual';
 import StackMat from '@/components/timer/time-display/stackmat/StackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
-import React, {ReactNode, useContext, useEffect, useRef, useState} from 'react';
+import React, {ReactNode, useEffect, useRef, useState} from 'react';
 
 export default function TimeDisplay() {
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 	const [time, setTime] = useState(0);
-	const timerCounter = useRef<NodeJS.Timeout>(null);
+	const timerCounter = useRef<NodeJS.Timeout | null>(null);
 	const timerLocked = useRef<boolean>(false);
 
 	const {
@@ -54,7 +54,7 @@ export default function TimeDisplay() {
 			stopInterval();
 		} else if (!timerCounter.current && timeStartedAt) {
 			startInterval();
-		} if (!solving && finalTime < 0) {
+		} if (!solving && finalTime !== undefined && finalTime < 0) {
 			setTime(0);
 		}
 	}, [solving, finalTime, timeStartedAt]);
@@ -62,13 +62,15 @@ export default function TimeDisplay() {
 	function stopInterval() {
 		timerLocked.current = true;
 
-		if (finalTime < 0) {
+		if (finalTime === undefined || finalTime < 0) {
 			setTime(0);
 		} else {
 			setTime(finalTime / 1000);
 		}
 
-		clearTimeout(timerCounter.current);
+		if (timerCounter.current) {
+			clearTimeout(timerCounter.current);
+		}
 		timerCounter.current = null;
 		timerLocked.current = false;
 
@@ -126,7 +128,7 @@ export default function TimeDisplay() {
 	} else if (ganTimerOn) {
 		bottomInfo = <GanTimer />;
 	} else if (smartCubeSelected(context)) {
-		if (preflightChecks(smartTurns, scramble)) {
+		if (preflightChecks(smartTurns, scramble ?? '')) {
 			bottomInfo = (
 				<StartInstructions>
 					Turn <span>smart cube</span> to start

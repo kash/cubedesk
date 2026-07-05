@@ -8,11 +8,11 @@ import {
 	Users,
 	Wrench,
 } from 'phosphor-react';
-import React, {ReactNode} from 'react';
+import React, {ReactElement} from 'react';
 
 export interface NavLinkProps {
 	name: string;
-	icon: ReactNode;
+	icon: ReactElement;
 	match: RegExp;
 	link: string;
 	newTag?: boolean;

@@ -68,7 +68,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
 		try {
 			res = await triggerAction();
 		} catch (e) {
-			setError(e.message);
+			setError(e instanceof Error ? e.message : 'Something went wrong');
 			setLoading(false);
 			return;
 		}

@@ -56,6 +56,10 @@ export async function fetchDataFromCache<T>(
 }
 
 export async function initRedisClient() {
+	if (!process.env.REDIS_URL) {
+		throw new Error('REDIS_URL is not set');
+	}
+
 	redisPubClient = new Redis(process.env.REDIS_URL);
 	redisSubClient = redisPubClient.duplicate();
 
@@ -77,7 +81,9 @@ export async function initRedisClient() {
 }
 
 function connectRedisLock() {
-	redlock = new Redlock([redisPubClient], {
+	// redlock v5 omits ioredis from its dependencies, so its Client type is a separate
+	// ioredis type identity from ours; the runtime object is a compatible ioredis v5 client
+	redlock = new Redlock([redisPubClient] as unknown as ConstructorParameters<typeof Redlock>[0], {
 		driftFactor: 0.01,
 		retryCount: 0,
 		retryJitter: 200,
@@ -85,7 +91,7 @@ function connectRedisLock() {
 	});
 }
 
-export async function acquireRedisLock(redisKey: generatedRedisKey, durationMs: number): Promise<Lock> {
+export async function acquireRedisLock(redisKey: generatedRedisKey, durationMs: number): Promise<Lock | null> {
 	try {
 		return await redlock.acquire([redisKey.key], durationMs);
 	} catch (e) {
@@ -106,7 +112,7 @@ export async function keyExistsInRedis({key}: generatedRedisKey): Promise<number
 	return client.exists(key);
 }
 
-export async function getValueFromRedis({key}: generatedRedisKey): Promise<string> {
+export async function getValueFromRedis({key}: generatedRedisKey): Promise<string | null> {
 	const client = getRedisPubClient();
 	return client.get(key);
 }

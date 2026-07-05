@@ -6,8 +6,8 @@ export interface BanLog {
 	banned_user_id: string;
 	reason: string;
 	active: boolean;
-	banned_until: Date;
-	minutes: number;
+	banned_until: Date | null;
+	minutes: number | null;
 	forever: boolean;
 	created_at: Date;
 	created_by?: UserAccountForAdmin;

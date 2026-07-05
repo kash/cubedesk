@@ -7,7 +7,7 @@ import ssr from './ssr';
 import stats from './stats';
 import timer from './timer';
 
-export default combineReducers({
+const rootReducer = combineReducers({
 	timer,
 	algorithms,
 	stats,
@@ -16,3 +16,7 @@ export default combineReducers({
 	general,
 	account,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export default rootReducer;

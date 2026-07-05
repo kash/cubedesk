@@ -9,9 +9,12 @@ export function listenForTimerEvents() {
 		'startTimerEvent',
 		(data) => {
 			const {match} = matchContext;
+			if (!match) {
+				return;
+			}
 
 			const startedAt = data.timeStartedAt.getTime();
-			socketClient().emit('playerStartedSolve', match?.id, startedAt);
+			socketClient().emit('playerStartedSolve', match.id, startedAt);
 		},
 		[matchContext.match]
 	);
@@ -22,7 +25,13 @@ export function listenForTimerEvents() {
 			const {match, setTimerDisabled} = matchContext;
 			setTimerDisabled(true);
 
-			socketClient().emit('playerEndedSolve', match?.id, data.ended_at, data.time);
+			// Solves saved by the timer always carry ended_at; without it (or a
+			// match) there is nothing meaningful to report to the opponent
+			if (!match || data.ended_at === null) {
+				return;
+			}
+
+			socketClient().emit('playerEndedSolve', match.id, data.ended_at, data.time);
 		},
 		[matchContext.match]
 	);

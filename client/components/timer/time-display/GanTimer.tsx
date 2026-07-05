@@ -8,11 +8,11 @@ import {
 	startTimer,
 } from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
-import {ITimerContext, TimerContext} from '@/components/timer/Timer';
+import {ITimerContext, useTimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
 import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from 'gan-web-bluetooth';
 import {Bluetooth} from 'phosphor-react';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {SubscriptionLike} from 'rxjs';
 
@@ -27,7 +27,7 @@ export default function GanTimer() {
 	const inspectionEnabled = useSettings('inspection');
 	const [connected, setConnected] = useState(false);
 
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 	const contextRef = useRef<ITimerContext>(context);
 	useEffect(() => {
 		contextRef.current = context;
@@ -35,7 +35,7 @@ export default function GanTimer() {
 
 	// Subscribe/unsubscribe to GAN Smart Timer events when component being mounted/unmounted
 	useEffect(() => {
-		subs = conn?.events$.subscribe(handleTimerEvent);
+		subs = conn?.events$.subscribe(handleTimerEvent) ?? null;
 		setConnected(!!conn);
 		return () => subs?.unsubscribe();
 	}, []);
@@ -56,13 +56,15 @@ export default function GanTimer() {
 				startTimer();
 				break;
 			case GanTimerState.STOPPED:
-				endTimer(contextRef.current, event.recordedTime.asTimestamp);
+				if (event.recordedTime) {
+					endTimer(contextRef.current, event.recordedTime.asTimestamp);
+				}
 				break;
 			case GanTimerState.IDLE:
 				if (
 					!inspectionEnabled ||
 					contextRef.current.inInspection ||
-					contextRef.current.finalTime > 0
+					(contextRef.current.finalTime ?? 0) > 0
 				) {
 					cancelInspection();
 					setTimerParams({spaceTimerStarted: 0, canStart: false, finalTime: -1});

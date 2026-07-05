@@ -7,7 +7,7 @@ const isDev = process.env.ENV === 'development';
 const s3 = isDev ? undefined : new S3Client({region: 'us-west-2'});
 
 export async function uploadObject(fileBuffer: Buffer, path: string, options: Partial<PutObjectCommandInput> = {}) {
-	if (isDev) {
+	if (!s3) {
 		logger.warn('S3 is not available in development environment - Upload Object command is ignored');
 		return Promise.resolve();
 	}
@@ -23,7 +23,7 @@ export async function uploadObject(fileBuffer: Buffer, path: string, options: Pa
 }
 
 export async function deleteObject(path: string) {
-	if (isDev) {
+	if (!s3) {
 		logger.warn('S3 is not available in development environment - Delete Object command is ignored');
 		return Promise.resolve();
 	}

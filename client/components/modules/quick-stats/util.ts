@@ -31,7 +31,7 @@ export function getStatsBlockDescription(statsOptions: StatsModuleBlock, filterO
 		const cubeType = solvesFilter.cube_type as string;
 
 		const ct = getCubeTypeInfo(cubeType);
-		description.push(ct.name);
+		description.push(ct?.name ?? cubeType);
 	}
 
 	if (statsOptions.statType === 'average') {
@@ -51,7 +51,7 @@ export function getStatsBlockValueFromFilter(
 	statsOptions: StatsModuleBlock,
 	filterOptions: FilterSolvesOptions = {},
 	currentSessionId?: string
-): SolveStat {
+): SolveStat | null {
 	const solvesFilter = {...filterOptions};
 	if (statsOptions.session) {
 		solvesFilter.session_id = currentSessionId;
@@ -59,7 +59,7 @@ export function getStatsBlockValueFromFilter(
 		delete solvesFilter.session_id;
 	}
 
-	let outputStat: SolveStat = null;
+	let outputStat: SolveStat | null = null;
 
 	if (statsOptions.statType === 'single') {
 		if (statsOptions.sortBy === 'worst') {

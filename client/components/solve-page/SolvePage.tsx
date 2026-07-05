@@ -29,21 +29,24 @@ export default function SolvePage() {
 	const match = useRouteMatch<{shareCode: string}>();
 	const shareCode = match.params.shareCode;
 	const [solve] = useSsr<Solve>(shareCode);
+	if (!solve) {
+		return null;
+	}
 
 	const ct = getCubeTypeInfoById(solve.cube_type);
 	const time = getTimeString(solve.time);
-	const cubeType = ct.name;
+	const cubeType = ct?.name ?? solve.cube_type;
 	const user = solve.user?.username;
 
 	return (
 		<div className="box-border flex min-h-screen w-full items-start justify-center bg-background py-[100px]">
 			<Header
 				path={`/solve/${shareCode}`}
-				title={`${getTimeString(solve.time)} Solve for ${ct.name} by ${user} | CubeDesk`}
+				title={`${getTimeString(solve.time)} Solve for ${cubeType} by ${user} | CubeDesk`}
 				description={`View the details of this ${time} ${cubeType} solve by ${user}. CubeDesk is the most advanced speedcubing timer, analytics, and trainer application.`}
 			/>
 			<div className="box-border w-full max-w-[600px] rounded-md bg-module px-5 py-[25px]">
-				<SolveInfo disabled solve={solve} solveId={solve?.id} />
+				<SolveInfo disabled solve={solve} solveId={solve.id} />
 			</div>
 		</div>
 	);

@@ -1,4 +1,5 @@
 import {Profile} from '@/types/profile';
+import {PublicUserAccount} from '@/types/user';
 import fs from 'fs';
 import process from 'process';
 import {PageContext, routes} from '../../client/components/layout/Routes';
@@ -17,6 +18,9 @@ interface SiteMapUrl {
 	changeFrequency?: 'hourly' | 'daily' | 'weekly' | 'monthly';
 	priority?: number;
 }
+
+// fetchUserProfiles always includes the user relation
+type ProfileWithUser = Profile & {user: PublicUserAccount};
 
 // TODO need some sort of worker pool cuz there are lots of sync calls
 
@@ -182,7 +186,7 @@ async function fetchAndGenerateSiteMapForAllProfiles() {
 	const limit = 500;
 	let offset = 0;
 	let batchIndex = 0;
-	let lastUserProfileBatch: Profile[] = [];
+	let lastUserProfileBatch: ProfileWithUser[] = [];
 	const processedUrls: string[] = [];
 
 	do {
@@ -200,7 +204,7 @@ async function fetchAndGenerateSiteMapForAllProfiles() {
 	return processedUrls;
 }
 
-async function processUserProfileBatch(batchIndex: number, profiles: Profile[]) {
+async function processUserProfileBatch(batchIndex: number, profiles: ProfileWithUser[]) {
 	const urlsToStore: SiteMapUrl[] = [];
 
 	for (const profile of profiles) {
@@ -215,7 +219,7 @@ async function processUserProfileBatch(batchIndex: number, profiles: Profile[]) 
 }
 
 // Range 0.7 - 0.8
-function getProfilePriority(profile: Profile) {
+function getProfilePriority(profile: ProfileWithUser) {
 	let isActive = false;
 	if (profile.user.last_solve_at) {
 		const sevenDaysInMs = 7 * 60 * 60 * 24 * 1000;
@@ -274,7 +278,7 @@ function convertSchemaUrlToXml(url: SiteMapUrl) {
 	`;
 }
 
-function getSchemaFromProfile(profile: Profile): SiteMapUrl {
+function getSchemaFromProfile(profile: ProfileWithUser): SiteMapUrl {
 	const baseUri = process.env.BASE_URI;
 	const url = `${baseUri}/user/${profile.user.username}`;
 

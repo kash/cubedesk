@@ -26,7 +26,7 @@ export default function QuickStatsBlock(props: Props) {
 	const dispatch = useDispatch();
 	const sessionId = useSettings('session_id');
 	const [fontSize, setFontSize] = useState(25);
-	const statsBlockDiv = useRef<HTMLDivElement>();
+	const statsBlockDiv = useRef<HTMLDivElement>(null);
 	const solveDb = useSolveDb();
 
 	const [statsBlockSolvesFilter, statsBlockDescription] = useMemo(() => {
@@ -76,9 +76,13 @@ export default function QuickStatsBlock(props: Props) {
 		buttonClasses.push('hover:border-current');
 	}
 
-	const statValue = getTimeString(statsBlockSolvesFilter?.time);
+	const statValue = getTimeString(statsBlockSolvesFilter?.time ?? 0);
 
 	useEffect(() => {
+		if (!statsBlockDiv.current) {
+			return;
+		}
+
 		const width = statsBlockDiv.current.clientWidth;
 		const height = statsBlockDiv.current.clientHeight;
 
@@ -93,18 +97,20 @@ export default function QuickStatsBlock(props: Props) {
 	}, [rowSpan, colSpan]);
 
 	function openSolve(e) {
-		if (solveCount > 1) {
+		const singleSolve = statsBlockSolvesFilter?.solve;
+
+		if (solveCount && solveCount > 1) {
 			dispatch(
 				openModal(
 					<HistoryModal
 						time={statsBlockSolvesFilter?.time}
-						solves={statsBlockSolvesFilter.solves}
+						solves={statsBlockSolvesFilter?.solves ?? []}
 						description={statsBlockDescription}
 					/>
 				)
 			);
-		} else if (solveCount) {
-			dispatch(openModal(<SolveInfo solveId={statsBlockSolvesFilter.solve.id} />));
+		} else if (solveCount && singleSolve) {
+			dispatch(openModal(<SolveInfo solveId={singleSolve.id} />));
 		} else {
 			e.preventDefault();
 		}

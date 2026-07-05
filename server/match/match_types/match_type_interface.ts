@@ -1,5 +1,4 @@
-import {MatchParticipant} from '@/types/match';
-import {Match} from '@/types/match';
+import {FullMatch, FullMatchParticipant} from '@/types/match';
 import {PlayerStatusInfo} from '../../../client/components/play/game/Game';
 import {GameType} from '../../../shared/match/consts';
 
@@ -13,5 +12,5 @@ export interface MatchTypeParams {
 export default interface MatchTypeLogic {
 	params(): MatchTypeParams;
 
-	playerStatus(player: MatchParticipant, match: Match): PlayerStatusInfo;
+	playerStatus(player: FullMatchParticipant, match: FullMatch): PlayerStatusInfo;
 }

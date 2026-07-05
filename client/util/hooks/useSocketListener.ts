@@ -7,7 +7,7 @@ export function useSocketListener<T extends keyof ServerToClientEvents>(
 	handler: ServerToClientEvents[T],
 	deps: any[] = []
 ) {
-	const savedHandler = useRef<ServerToClientEvents[T]>();
+	const savedHandler = useRef<ServerToClientEvents[T] | undefined>(undefined);
 
 	useEffect(() => {
 		savedHandler.current = handler;

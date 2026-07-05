@@ -8,6 +8,16 @@ import {sanitizeSolve} from '../../shared/solve';
 import {getPrisma} from '../database';
 import {publicUserInclude} from './user_account';
 
+// Conditions identifying non-trainer solves; combine with OR
+export const trainerExceptions: Prisma.SolveWhereInput[] = [
+	{
+		trainer_name: null,
+	},
+	{
+		trainer_name: '',
+	},
+];
+
 export function getSolveByShareCode(shareCode) {
 	return getPrisma().solve.findUnique({
 		where: {
@@ -65,23 +75,40 @@ export function updateSolveLiteral(id, data) {
 	});
 }
 
+// Solve inputs use null for "absent", but Prisma's non-nullable columns
+// (time, dnf, etc.) only accept undefined for "leave as is / use default"
+function toSolveWriteData(solve: Partial<SolveInput>) {
+	return {
+		...solve,
+		id: solve.id ?? undefined,
+		time: solve.time ?? undefined,
+		dnf: solve.dnf ?? undefined,
+		plus_two: solve.plus_two ?? undefined,
+		bulk: solve.bulk ?? undefined,
+		from_timer: solve.from_timer ?? undefined,
+		is_smart_cube: solve.is_smart_cube ?? undefined,
+	};
+}
+
+function requireSolveTime(solve: Partial<SolveInput>): number {
+	if (solve.time == null) {
+		throw new Error('Cannot save a solve without a time');
+	}
+
+	return solve.time;
+}
+
 export function updateSolve(id: string, solve: Partial<SolveInput>) {
 	solve = sanitizeSolve(solve);
-
-	if (!solve.plus_two) {
-		solve.plus_two = false;
-	}
-
-	if (!solve.dnf) {
-		solve.dnf = false;
-	}
 
 	return getPrisma().solve.update({
 		where: {
 			id,
 		},
 		data: {
-			...solve,
+			...toSolveWriteData(solve),
+			plus_two: solve.plus_two ?? false,
+			dnf: solve.dnf ?? false,
 			id,
 		},
 	});
@@ -96,7 +123,8 @@ export function bulkCreateSolves(user: UserAccount, solves: SolveInput[]) {
 		const shareCode = generateRandomCode(8);
 
 		data.push({
-			...solve,
+			...toSolveWriteData(solve),
+			time: requireSolveTime(solve),
 			bulk: true,
 			id,
 			user_id: user.id,
@@ -117,7 +145,8 @@ export function createSolve(user: UserAccount, input: SolveInput) {
 
 	return getPrisma().solve.create({
 		data: {
-			...solve,
+			...toSolveWriteData(solve),
+			time: requireSolveTime(solve),
 			id,
 			share_code: shareCode,
 			user_id: user.id,

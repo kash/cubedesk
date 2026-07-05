@@ -30,7 +30,7 @@ export function updateIntegration(integration: Integration, params) {
 	});
 }
 
-export async function getIntegration(user: UserAccount, intType: IntegrationType): Promise<Integration> {
+export async function getIntegration(user: UserAccount, intType: IntegrationType): Promise<Integration | null> {
 	return getPrisma().integration.findFirst({
 		where: {
 			user_id: user.id,

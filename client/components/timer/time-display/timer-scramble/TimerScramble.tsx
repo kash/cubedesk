@@ -4,20 +4,20 @@ import {setTimerParam} from '@/components/timer/helpers/params';
 import {resetScramble} from '@/components/timer/helpers/scramble';
 import {smartCubeSelected} from '@/components/timer/helpers/util';
 import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartScramble';
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
 import {setSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import classNames from 'classnames';
 import {ArrowClockwise, Lock, PencilSimple} from 'phosphor-react';
-import React, {ReactNode, useContext, useEffect, useRef} from 'react';
+import React, {ReactNode, useEffect, useRef} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 export default function TimerScramble() {
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 
-	const scrambleInput = useRef(null);
+	const scrambleInput = useRef<HTMLTextAreaElement | null>(null);
 	const mobileMode = useGeneral('mobile_mode');
 	const sessionId = useSettings('session_id');
 	const cubeType = context.cubeType;
@@ -47,7 +47,7 @@ export default function TimerScramble() {
 		}
 		setTimerParam('scrambleLocked', !scrambleLocked);
 
-		const lockedScramble = scrambleLocked ? null : scramble;
+		const lockedScramble = scrambleLocked ? null : scramble ?? null;
 
 		setSetting('locked_scramble', lockedScramble);
 	}
@@ -131,7 +131,7 @@ export default function TimerScramble() {
 					icon={<Lock weight="bold" />}
 				/>
 				<CopyText
-					text={scramble}
+					text={scramble ?? ''}
 					buttonProps={{
 						gray: false,
 						transparent: true,

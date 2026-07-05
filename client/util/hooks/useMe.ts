@@ -1,8 +1,9 @@
 import {UserAccount} from '@/types/user';
-import {RootStateOrAny, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../reducers/reducers';
 
 export function useMe(): UserAccount {
-	const {me} = useSelector((store: RootStateOrAny) => store.account);
+	const {me} = useSelector((store: RootState) => store.account);
 
 	return me;
 }

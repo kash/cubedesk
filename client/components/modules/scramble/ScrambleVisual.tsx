@@ -14,8 +14,8 @@ export const COLOR_MAP = {
 };
 
 interface Props {
-	cubeType: string;
-	scramble: string;
+	cubeType?: string;
+	scramble?: string;
 	width?: string;
 	frontFace?: boolean;
 }
@@ -29,11 +29,11 @@ export default function ScrambleVisual(props: Props) {
 		return ['222', '333', '333bl', '444', '555', '666', '777'].indexOf(scrambleType) > -1;
 	}
 
-	const ct = getCubeTypeInfoById(cubeType);
-	const cubeScramble = getScrambleTypeById(ct?.scramble);
+	const ct = getCubeTypeInfoById(cubeType ?? '');
+	const cubeScramble = getScrambleTypeById(ct?.scramble ?? '');
 
 	const visual = useMemo(() => {
-		if (!cubeType || !scramble) {
+		if (!cubeType || !scramble || !cubeScramble) {
 			return;
 		}
 
@@ -41,9 +41,7 @@ export default function ScrambleVisual(props: Props) {
 			return;
 		}
 
-		if (scramble) {
-			return layoutScramble(scramble, cubeScramble.size);
-		}
+		return layoutScramble(scramble, cubeScramble.size);
 	}, [cubeType, scramble]);
 
 	const cubeSize = cubeScramble?.size;

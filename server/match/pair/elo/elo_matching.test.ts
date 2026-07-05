@@ -56,7 +56,7 @@ describe('match players in lobby', () => {
 
 	test('big elo range', async () => {
 		const eloRange = [600, 800, 1000, 1350, 1500, 2000, 2500];
-		const matchLobby = eloRange.reduce((arr, elo) => {
+		const matchLobby = eloRange.reduce<MatchLobby[]>((arr, elo) => {
 			const recs = testGenerateMatchLobbyRows(5, {
 				elo: elo,
 			});

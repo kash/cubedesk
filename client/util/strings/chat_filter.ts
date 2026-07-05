@@ -1,17 +1,15 @@
 import Filter from 'bad-words';
 
-let filter = null;
+let filter: Filter | null = null;
 
-export function initFilter() {
-	if (filter) {
-		return;
+function getFilter(): Filter {
+	if (!filter) {
+		filter = new Filter();
 	}
 
-	filter = new Filter();
+	return filter;
 }
 
 export function cleanBadWords(msg: string) {
-	initFilter();
-
-	return filter.clean(msg);
+	return getFilter().clean(msg);
 }

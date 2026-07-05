@@ -88,6 +88,8 @@ export async function getMeWithCookieString(cookies: string | any): Promise<User
 	} catch (e) {
 		return null;
 	}
+
+	return null;
 }
 
 export function getJwtString(user: UserAccount) {

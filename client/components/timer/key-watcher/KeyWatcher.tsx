@@ -10,14 +10,14 @@ import {
 	stopTimer,
 } from '@/components/timer/helpers/timers';
 import {smartCubeSelected} from '@/components/timer/helpers/util';
-import {TimerContext} from '@/components/timer/Timer';
+import {useTimerContext} from '@/components/timer/Timer';
 import {getSettings} from '@/db/settings/query';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useDocumentListener, useWindowListener} from '@/util/hooks/useListener';
 import {useSettings} from '@/util/hooks/useSettings';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
-import React, {ReactNode, useContext, useEffect} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import {GlobalHotKeys} from 'react-hotkeys';
 
 interface Props {
@@ -25,7 +25,7 @@ interface Props {
 }
 
 export default function KeyWatcher(props: Props) {
-	const context = useContext(TimerContext);
+	const context = useTimerContext();
 	const {
 		cubeType,
 		disabled,
@@ -104,7 +104,7 @@ export default function KeyWatcher(props: Props) {
 			return;
 		}
 
-		const validCubeType = getCubeTypeInfoById(cubeType);
+		const validCubeType = getCubeTypeInfoById(cubeType ?? '');
 
 		if (!validCubeType) {
 			return;

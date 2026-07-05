@@ -1,5 +1,5 @@
 import NumberBlock from '@/components/stats/common/NumberBlock';
-import {StatsContext} from '@/components/stats/Stats';
+import {useStatsContext} from '@/components/stats/Stats';
 import {getSolveStreak} from '@/db/solves/stats/streak';
 import {getSubStats} from '@/db/solves/stats/sub-stats';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
@@ -12,12 +12,12 @@ import {
 	Warning,
 	WarningOctagon,
 } from 'phosphor-react';
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 
 const SUB_STATS_COLOR = '#6D7D90';
 
 export default function SubStats() {
-	const context = useContext(StatsContext);
+	const context = useStatsContext();
 	const {filterOptions} = context;
 
 	const solveUpdate = useSolveDb();

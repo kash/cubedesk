@@ -43,7 +43,7 @@ export function getEliminationSolveRowInfo(
 	solves: Solve[],
 	match?: Match
 ): GameSolveRow {
-	let lastSolve: Solve = null;
+	let lastSolve: Solve | null = null;
 	if (solves && solves.length) {
 		lastSolve = solves[timeIndex];
 	}
@@ -52,8 +52,8 @@ export function getEliminationSolveRowInfo(
 
 	const dnf = lastSolve?.dnf;
 	const solveTime = lastSolve?.time;
-	const solveFailed = lastSolve && (dnf || solveTime > targetTime);
-	const solvePassed = lastSolve && !dnf && solveTime <= targetTime;
+	const solveFailed = solveTime !== undefined && (dnf || solveTime > targetTime);
+	const solvePassed = solveTime !== undefined && !dnf && solveTime <= targetTime;
 
 	let solveStatus = PlayerStatus.Playing;
 	if (solveFailed) {
@@ -97,12 +97,12 @@ function getTargetTime(timeIndex: number) {
 function updateSolveInfoForMatch(info: GameSolveRow, solves: Solve[], match: Match) {
 	const myId = solves[0].user_id;
 	let minSolveCount = Infinity;
-	for (const part of match.participants) {
+	for (const part of match.participants ?? []) {
 		if (part.id === myId) {
 			continue;
 		}
 
-		minSolveCount = Math.min(info.index, Math.min(minSolveCount, part.solves.length));
+		minSolveCount = Math.min(info.index, Math.min(minSolveCount, part.solves?.length ?? 0));
 	}
 
 	if (solves.length <= minSolveCount) {

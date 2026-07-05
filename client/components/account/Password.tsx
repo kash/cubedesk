@@ -33,7 +33,7 @@ export default function Password() {
 
 			toastSuccess('Successfully updated password');
 		} catch (err) {
-			setError(err.message);
+			setError(err instanceof Error ? err.message : 'Could not update password');
 		}
 	}
 

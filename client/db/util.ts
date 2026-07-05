@@ -1,6 +1,6 @@
 import {LokiFetchOptions} from './lokijs';
 
-export function cleanFilterOptions<G extends object, T extends LokiQuery<G>>(options: T): T {
+export function cleanFilterOptions<T extends object>(options: T): T {
 	const keys = Object.keys(options || {});
 
 	const out: Partial<T> = {};
@@ -16,9 +16,9 @@ export function cleanFilterOptions<G extends object, T extends LokiQuery<G>>(opt
 /**
  * Takes in a query for (LokiJS) db and returns all the records that match the query
  */
-export function fetchRecords<G extends object, T extends LokiQuery<G>>(
+export function fetchRecords<G extends object>(
 	db: Collection<G>,
-	options: T,
+	options: LokiQuery<G & LokiObj>,
 	fetchOptions?: LokiFetchOptions
 ): G[] {
 	let out = db.chain().find(cleanFilterOptions(options));
@@ -48,9 +48,9 @@ type DistinctColumnCount = {
 /**
  * Takes in a query for (LokiJS) db and returns all the distinct values for a given column
  */
-export function fetchUniqueValuesByField<G extends object, T extends LokiQuery<G>>(
+export function fetchUniqueValuesByField<G extends object>(
 	db: Collection<G>,
-	options: T,
+	options: LokiQuery<G & LokiObj>,
 	column: keyof G
 ): DistinctColumnCount[] {
 	const typeListMap: Record<string, number> = {};

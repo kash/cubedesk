@@ -13,7 +13,7 @@ interface Props extends IModalProps {
 
 export default function EventTypeSelector(props: Props) {
 	const {solves, onComplete} = props;
-	const [cubeType, setCubeType] = useState<CubeType>(null);
+	const [cubeType, setCubeType] = useState<CubeType | null>(null);
 
 	let selectedCubeType: ReactNode = null;
 	if (cubeType) {
@@ -44,7 +44,7 @@ export default function EventTypeSelector(props: Props) {
 			{selectedCubeType}
 			<Button
 				large
-				onClick={() => onComplete(cubeType)}
+				onClick={() => onComplete?.(cubeType)}
 				disabled={!cubeType}
 				primary
 				text="Continue"

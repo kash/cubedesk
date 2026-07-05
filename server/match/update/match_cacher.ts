@@ -1,5 +1,4 @@
-import {MatchParticipant} from '@/types/match';
-import {Match} from '@/types/match';
+import {FullMatch, FullMatchParticipant, Match} from '@/types/match';
 import {MatchCache, MatchPlayerCache} from '../../../client/shared/match/types';
 import {getMatchById} from '../../models/match';
 import {logger} from '../../services/logger';
@@ -96,6 +95,9 @@ export class MatchCacher {
 
 	async constructMatchCacheFromScratch(): Promise<MatchCache> {
 		const match = await getMatchById(this.matchId);
+		if (!match) {
+			throw new Error(`Cannot build match cache: match ${this.matchId} not found`);
+		}
 
 		const playerCaches: MatchPlayerCache[] = [];
 		for (const player of match.participants) {
@@ -110,7 +112,7 @@ export class MatchCacher {
 		};
 	}
 
-	private getBasicMatchDetails(match: Match): Match {
+	private getBasicMatchDetails(match: FullMatch): Match {
 		const newMatch = {...match};
 
 		for (const key of Object.keys(newMatch)) {
@@ -128,7 +130,7 @@ export class MatchCacher {
 		return this.updateCache(cacheMap);
 	}
 
-	constructMatchPlayerCache(player: MatchParticipant): MatchPlayerCache {
+	constructMatchPlayerCache(player: FullMatchParticipant): MatchPlayerCache {
 		const solves = player.solves;
 
 		const playerCreatedAt = player.created_at;

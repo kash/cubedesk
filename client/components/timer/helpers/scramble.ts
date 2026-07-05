@@ -60,7 +60,7 @@ function getBlindWideMove() {
 
 export function resetScramble(context: ITimerContext) {
 	const {cubeType, scrambleLocked, customScrambleFunc} = context;
-	const ct = getCubeTypeInfoById(cubeType);
+	const ct = getCubeTypeInfoById(cubeType ?? '');
 
 	let newScramble;
 	if (customScrambleFunc) {
@@ -68,7 +68,7 @@ export function resetScramble(context: ITimerContext) {
 	} else if (scrambleLocked) {
 		return;
 	} else {
-		newScramble = getNewScramble(ct.scramble);
+		newScramble = getNewScramble(ct?.scramble ?? cubeType ?? '333');
 	}
 
 	setTimerParam('scramble', newScramble);

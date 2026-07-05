@@ -16,11 +16,21 @@ export default function SolutionInfo(props: Props) {
 	const {solve} = props;
 	const steps = getSolveStepsWithChildren(solve);
 
+	// Solution info only renders for smart-cube solves, which always carry these
+	const smartTurnCount = solve.smart_turn_count ?? 0;
+	const rawTime = solve.raw_time ?? solve.time;
+
 	function getTps() {
-		return Math.floor((solve.smart_turn_count / solve.raw_time) * 100) / 100;
+		return Math.floor((smartTurnCount / rawTime) * 100) / 100;
 	}
 
-	function getStep(step: SolveMethodStep, isChild: boolean, children?: ReactNode[]) {
+	// Accepts the narrow shape this helper reads so both real SolveMethodSteps
+	// and the synthetic "full solve" summary step can be rendered
+	function getStep(
+		step: Pick<SolveMethodStep, 'step_name' | 'tps' | 'turn_count' | 'total_time' | 'turns'>,
+		isChild: boolean,
+		children?: ReactNode[]
+	) {
 		return (
 			<div
 				key={step.step_name}
@@ -60,7 +70,7 @@ export default function SolutionInfo(props: Props) {
 		);
 	}
 
-	const turns = JSON.parse(solve.smart_turns);
+	const turns = JSON.parse(solve.smart_turns ?? '[]');
 	const solution = processSmartTurns(
 		turns.map((turn) => turn.turn),
 		true
@@ -68,7 +78,7 @@ export default function SolutionInfo(props: Props) {
 
 	const stepsBody: ReactNode[] = [];
 	for (const step of steps) {
-		let children: ReactNode = null;
+		let children: ReactNode[] | undefined;
 		if (step.children.length) {
 			children = step.children.map((child) => getStep(child, true));
 		}
@@ -84,7 +94,7 @@ export default function SolutionInfo(props: Props) {
 				{
 					step_name: 'full',
 					tps: getTps(),
-					turn_count: solve.smart_turn_count,
+					turn_count: smartTurnCount,
 					total_time: solve.time,
 					turns: solution,
 				},

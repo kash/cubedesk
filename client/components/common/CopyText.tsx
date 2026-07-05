@@ -25,7 +25,7 @@ interface Props {
 export default function CopyText(props: Props) {
 	const {text, buttonProps, onCopy, toastifyMessageOnCopy} = props;
 
-	const textCopiedTimeout = useRef<NodeJS.Timeout>();
+	const textCopiedTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 	const [textCopied, setTextCopied] = useState(false);
 
 	function onClick(e) {
@@ -65,7 +65,6 @@ export default function CopyText(props: Props) {
 		<Button
 			onClick={onClick}
 			title="Copy text"
-			gray
 			icon={textCopied ? <Check weight="bold" /> : <Copy weight="bold" />}
 			{...finalButtonProps}
 			white={textCopied}

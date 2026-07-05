@@ -2,7 +2,7 @@ import {openModal} from '@/actions/general';
 import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import NumberBlock from '@/components/stats/common/NumberBlock';
-import {StatsContext} from '@/components/stats/Stats';
+import {useStatsContext} from '@/components/stats/Stats';
 import {getTotalSolveCount, getTotalSolveTime} from '@/db/solves/stats/count';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
 import {Solve} from '@/types/solve';
@@ -10,12 +10,12 @@ import {getDateFromNow} from '@/util/dates';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
 import {CalendarBlank, Hash, Timer, Trophy} from 'phosphor-react';
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 
 export default function CubeStatsFeatured() {
 	const dispatch = useDispatch();
-	const context = useContext(StatsContext);
+	const context = useStatsContext();
 
 	const solveUpdate = useSolveDb();
 
@@ -35,16 +35,17 @@ export default function CubeStatsFeatured() {
 		dispatch(openModal(<SolveInfo solveId={solve.id} />));
 	}
 
-	const pbDate = new Date(singlePb?.solve.started_at);
+	const pbSolve = singlePb?.solve;
+	const pbDate = new Date(pbSolve?.started_at ?? NaN);
 
 	return (
 		<div className="grid grid-cols-[repeat(auto-fit,minmax(200px,auto))] gap-2.5">
 			<NumberBlock
 				large
-				onClick={() => openSolve(singlePb?.solve)}
+				onClick={() => pbSolve && openSolve(pbSolve)}
 				icon={<Trophy weight="bold" />}
 				title="Single PB"
-				value={getTimeString(singlePb?.time)}
+				value={getTimeString(singlePb?.time ?? 0)}
 				color="#23C586"
 			>
 				<div className="mt-[15px] flex w-full flex-row items-end justify-between">
@@ -63,8 +64,8 @@ export default function CubeStatsFeatured() {
 						<ScrambleVisual
 							width="60px"
 							frontFace
-							scramble={singlePb?.solve?.scramble}
-							cubeType={singlePb?.solve?.cube_type}
+							scramble={pbSolve?.scramble}
+							cubeType={pbSolve?.cube_type}
 						/>
 					</div>
 				</div>

@@ -70,7 +70,7 @@ export default function PublicTrainer(props: Props) {
 		} catch (e) {
 			console.error(e);
 
-			toastError(e.message);
+			toastError(e instanceof Error ? e.message : 'Could not download trainer');
 		}
 	}
 

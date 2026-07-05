@@ -1,14 +1,13 @@
 import GiikerUtil from '@/components/timer/smart-cube/bluetooth/giiker_util';
-// @ts-nocheck
 import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
 
 export default class Giiker extends SmartCube {
-	device;
+	device: BluetoothDevice;
 	connected = false;
-	batteryInterval = null;
-	giiker = null;
+	batteryInterval: NodeJS.Timeout | null = null;
+	giiker: GiikerUtil | null = null;
 
-	constructor(device) {
+	constructor(device: BluetoothDevice) {
 		super();
 
 		this.device = device;
@@ -51,6 +50,10 @@ export default class Giiker extends SmartCube {
 	};
 
 	updateBattery = async () => {
+		if (!this.giiker) {
+			return;
+		}
+
 		const level = await this.giiker.getBatteryLevel();
 		this.alertBatteryLevel(level);
 	};

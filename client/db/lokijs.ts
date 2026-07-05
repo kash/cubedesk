@@ -11,10 +11,10 @@ export interface LokiFetchOptions {
 
 let db: Loki;
 export function initLokiDb(op?: Partial<LokiConfigOptions>) {
-	let options = undefined;
+	let options: Partial<LokiConfigOptions> | undefined = undefined;
 	let autoSave = true;
 
-	let adapter = null;
+	let adapter: LokiPersistenceAdapter | null = null;
 	if (typeof indexedDB === 'undefined') {
 		autoSave = false;
 	} else {

@@ -5,15 +5,10 @@ import {getLobbyRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '
 import {matchPlayersInCustomMatch} from '../pair/custom_match';
 import {joinLobby, removeMatchLobbyRecordsByClientId} from '../pair/pair_logic';
 import {rematchPlayers} from '../pair/rematch';
-import {sendMatchUpdate, sendMatchUpdateById} from '../update/standings';
+import {sendMatchUpdateById} from '../update/standings';
 import {getDetailedClientInfo, joinRoom, leaveRoom} from '../util';
 
 export function listenForJoinEvents(client: SocketClient) {
-	client.on('playerJoinedMatchByLinkCode', async (linkCode) => {
-		const match = await getMatchByLinkCode(linkCode);
-		await sendMatchUpdate(match);
-	});
-
 	// Client joins [match type] lobby
 	client.on('playerJoinedLobby', async (gameOptions) => {
 		const gameType = gameOptions.game_type;

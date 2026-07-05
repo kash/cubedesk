@@ -5,7 +5,7 @@ import CustomMatchOptions from '@/components/play/match/match-popup/custom-match
 import JoinOptions from '@/components/play/match/match-popup/JoinOptions';
 import Lobby from '@/components/play/match/match-popup/Lobby';
 import {socketClient} from '@/util/socket/socketio';
-import React, {createContext, ReactNode, useEffect, useState} from 'react';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {GameType} from '../../../../../shared/match/consts';
 
 export enum MatchPopupPage {
@@ -32,7 +32,15 @@ export interface IMatchPopupContext extends Props {
 	setCubeType: reactState<string>;
 }
 
-export const MatchPopupContext = createContext<IMatchPopupContext>(null);
+export const MatchPopupContext = createContext<IMatchPopupContext | null>(null);
+
+export function useMatchPopupContext(): IMatchPopupContext {
+	const ctx = useContext(MatchPopupContext);
+	if (!ctx) {
+		throw new Error('useMatchPopupContext must be used within MatchPopupContext.Provider');
+	}
+	return ctx;
+}
 
 export default function MatchPopup(props: Props) {
 	const {matchType} = props;

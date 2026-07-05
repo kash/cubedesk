@@ -1,5 +1,6 @@
 import {ReactNode} from 'react';
-import {RootStateOrAny, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../reducers/reducers';
 import {IModalProps} from '../../components/common/modal/Modal';
 
 interface ModalListItem {
@@ -11,11 +12,11 @@ interface ModalListItem {
 export interface GeneralAllParams {
 	modals: ModalListItem[];
 	mobile_mode: boolean;
-	browser_session_id: string;
+	browser_session_id: string | null;
 	force_nav_collapsed: boolean;
 	app_loaded: boolean;
 }
 
 export function useGeneral<T extends keyof GeneralAllParams>(key: T): GeneralAllParams[T] {
-	return useSelector((state: RootStateOrAny) => (state.general as GeneralAllParams)[key]);
+	return useSelector((state: RootState) => (state.general as GeneralAllParams)[key]);
 }

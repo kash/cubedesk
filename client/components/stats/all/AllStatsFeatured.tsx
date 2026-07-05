@@ -1,16 +1,17 @@
 import NumberBlock from '@/components/stats/common/NumberBlock';
 import StatsGrid from '@/components/stats/common/StatsGrid';
-import {StatsContext} from '@/components/stats/Stats';
+import {useStatsContext} from '@/components/stats/Stats';
 import {fetchAllCubeTypesSolved} from '@/db/solves/query';
 import {getTotalSolveCount, getTotalSolveTime} from '@/db/solves/stats/count';
+import {CubeType} from '@/util/cubes/cube_types';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
 import {ArrowFatLinesUp, Hash, Timer} from 'phosphor-react';
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 
 export default function AllStatsFeatured() {
-	const context = useContext(StatsContext);
+	const context = useStatsContext();
 
 	const solveUpdate = useSolveDb();
 
@@ -18,7 +19,7 @@ export default function AllStatsFeatured() {
 		return fetchAllCubeTypesSolved();
 	}, [context.filterOptions, solveUpdate]);
 
-	let topCubeType = null;
+	let topCubeType: CubeType | undefined;
 	if (cubeTypes.length) {
 		topCubeType = getCubeTypeInfoById(cubeTypes[0].cube_type);
 	}

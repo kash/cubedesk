@@ -36,9 +36,9 @@ export default function SolveInfo(props: Props) {
 
 	const [page, setPage] = useState('scramble');
 	const [loading, setLoading] = useState(!demoSolve);
-	const [solve, setSolve] = useState<Solve>(props.solve);
+	const [solve, setSolve] = useState<Solve | undefined>(props.solve);
 	const [editMode, setEditMode] = useState(false);
-	const [dbSolve, setDbSolve] = useState<Solve>(null);
+	const [dbSolve, setDbSolve] = useState<Solve | null>(null);
 
 	const utils = api.useUtils();
 
@@ -65,19 +65,29 @@ export default function SolveInfo(props: Props) {
 	}
 
 	function togglePlusTwo() {
-		togglePlusTwoSolveDb(dbSolve);
+		if (dbSolve) {
+			togglePlusTwoSolveDb(dbSolve);
+		}
 	}
 
 	function toggleDnf() {
-		toggleDnfSolveDb(dbSolve);
+		if (dbSolve) {
+			toggleDnfSolveDb(dbSolve);
+		}
 	}
 
 	function deleteSolve() {
-		deleteSolveDb(dbSolve);
-		onComplete();
+		if (dbSolve) {
+			deleteSolveDb(dbSolve);
+		}
+		onComplete?.();
 	}
 
 	function handleChange(e) {
+		if (!dbSolve) {
+			return;
+		}
+
 		updateSolveDb(dbSolve, {
 			[e.target.name]: e.target.value,
 		});
@@ -104,6 +114,9 @@ export default function SolveInfo(props: Props) {
 	}
 
 	const effSolve = dbSolve || solve;
+	if (!effSolve || !solve) {
+		return null;
+	}
 
 	const plusTwo = effSolve.plus_two;
 	const dnf = effSolve.dnf;
@@ -228,7 +241,7 @@ export default function SolveInfo(props: Props) {
 						<Tag
 							icon={<Cube weight="bold" />}
 							backgroundColor="button"
-							text={cubeTypeInfo.name}
+							text={cubeTypeInfo?.name ?? cubeType}
 						/>
 						{plusTwoButton}
 						{dnfButton}
