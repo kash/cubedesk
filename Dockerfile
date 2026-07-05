@@ -56,7 +56,6 @@ RUN aws s3 sync dist s3://cubedesk/dist --delete --cache-control max-age=604800 
 
 RUN pnpm prune --prod
 
-RUN cp -r ./server/resources/mjml_templates ./build/server/resources/mjml_templates
 RUN cp ./server/resources/not_found.html ./build/server/resources/not_found.html
 
 RUN rm -rf ./client ./server ./shared ./test ./dist ./public ./generated ./types && \

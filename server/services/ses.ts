@@ -1,56 +1,45 @@
+import React from 'react';
 import {SendEmailResponse, SES} from '@aws-sdk/client-ses';
-import path from 'path'
-import fs from 'fs';
-import Handlebars from 'handlebars';
-import mjml2html from 'mjml';
+import {render} from '@react-email/components';
 import {createEmailLog} from '../models/email_log';
 import {EmailableUser} from '@/types/user';
+import NotificationEmail, {NotificationEmailProps} from '../emails/NotificationEmail';
+import ForgotPasswordEmail, {ForgotPasswordEmailProps} from '../emails/ForgotPasswordEmail';
 
 const ses = new SES({region: 'us-west-2'});
 
-type MjmlTemplate = {
-	[key: string]: string
-}
-const mjmlTemplates: MjmlTemplate = {};
+// Maps a template name to the vars its React component expects (minus `user`,
+// which is always injected from the recipient).
+type TemplateVars = {
+	notification: Omit<NotificationEmailProps, 'user'>;
+	forgot_password: Omit<ForgotPasswordEmailProps, 'user'>;
+};
 
-type EmailTemplateVars = {
-	[key: string]: any
-}
+type TemplateName = keyof TemplateVars;
 
-export function initMjmlTemplates(): void {
-	const directoryPath = path.join(__dirname, '/../resources/mjml_templates');
+const templates: {
+	[K in TemplateName]: React.ComponentType<TemplateVars[K] & {user: EmailableUser}>;
+} = {
+	notification: NotificationEmail,
+	forgot_password: ForgotPasswordEmail,
+};
 
-	fs.readdirSync(directoryPath).forEach((file: string) => {
-		const body = fs.readFileSync(directoryPath + '/' + file);
-		const fileName = file.replace('.mjml', '');
+export async function sendEmailWithTemplate<T extends TemplateName>(
+	user: EmailableUser,
+	subject: string,
+	template: T,
+	vars: TemplateVars[T]
+): Promise<SendEmailResponse> {
+	const Component = templates[template] as React.ComponentType<any>;
+	const element = React.createElement(Component, {user, ...vars});
+	const body = await render(element);
 
-		mjmlTemplates[fileName] = mjml2html(String(body)).html;
-	});
-}
-
-export async function sendEmailWithTemplate(user: EmailableUser, subject: string, template: string, vars: EmailTemplateVars): Promise<SendEmailResponse> {
-	let variables = vars || {};
-	const source = mjmlTemplates[template];
-
-	variables = {
-		user,
-		...variables
-	}
-
-	const templateBody = Handlebars.compile(source);
-	const body = templateBody(variables);
-
-	await createEmailLog(user, subject, template, vars);
+	await createEmailLog(user, subject, template, vars as {[key: string]: string});
 
 	return sendEmail(user.email, subject, body);
 }
 
 async function sendEmail(email: string, subject: string, body: string) {
-	let content = body;
-	if (Array.isArray(body)) {
-		content = body.join('<br/>');
-	}
-
 	const sesParams = {
 		Destination: {
 			ToAddresses: [email],
@@ -58,7 +47,7 @@ async function sendEmail(email: string, subject: string, body: string) {
 		Message: {
 			Body: {
 				Html: {
-					Data: content,
+					Data: body,
 				},
 			},
 

@@ -11,7 +11,6 @@ import '@sentry/tracing';
 import {initLLStates} from './util/solve/ll_states';
 import {initSocket} from './match/init';
 import 'seedrandom';
-import {initMjmlTemplates} from './services/ses';
 import colors from 'colors';
 import {mapPathToPage} from './router';
 import cookieParser from 'cookie-parser';
@@ -120,7 +119,6 @@ if (!isDev) {
 
 	// Setup code
 	initLLStates();
-	initMjmlTemplates();
 
 	await setupViteMiddleware();
 	mapPathToPage();

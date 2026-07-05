@@ -102,6 +102,7 @@ export interface InternalUserAccount extends UserAccountForAdmin {
 export type EmailableUser = {
 	id: string;
 	email: string;
+	first_name?: string | null;
 	username?: string | null;
 	join_country?: string | null;
 	unsub_id?: string | null;
