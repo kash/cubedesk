@@ -1,7 +1,7 @@
 import {setTimerDisabled} from '@/actions/timer';
 import ChatMessage from '@/components/modules/chat/ChatMessage';
-import {MatchConst} from '@/shared/match/consts';
-import {MatchUpdateChat} from '@/shared/match/types';
+import {MatchConst} from '@/client/shared/match/consts';
+import {MatchUpdateChat} from '@/client/shared/match/types';
 import {Match} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
@@ -10,7 +10,7 @@ import {cleanBadWords} from '@/util/strings/chat_filter';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
-import {GameType} from '../../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 interface AggregatedChat {
 	user: PublicUserAccount;

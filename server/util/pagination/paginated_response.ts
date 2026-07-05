@@ -1,6 +1,6 @@
 import {PaginationArgs, PaginationOutput} from '@/types/pagination';
-import {getPrisma} from '../../database';
-import {logger} from '../../services/logger';
+import {getPrisma} from '@/server/database';
+import {logger} from '@/server/services/logger';
 
 export interface PaginatedRequestInput {
 	paginationArgs: PaginationArgs;

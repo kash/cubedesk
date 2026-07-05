@@ -1,5 +1,5 @@
 import {Friendship} from '@/types/friendship';
-import {trpc} from '../util/trpc';
+import {trpc} from '@/util/trpc';
 
 export function getMe() {
 	return async (dispatch) => {

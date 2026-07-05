@@ -7,9 +7,9 @@ import {
 	deleteGameSession,
 	getGameSessionById,
 	getGameSessionsByUserId,
-} from '../../models/game_session';
-import {serializeSolveTimestamps} from '../../util/serialize';
-import {protectedProcedure, router} from '../trpc';
+} from '@/server/models/game_session';
+import {serializeSolveTimestamps} from '@/server/util/serialize';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 function serializeGameSession(session: GameSessionWithRelations) {
 	return {

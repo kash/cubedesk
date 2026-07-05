@@ -1,4 +1,4 @@
-import {GeneralAllParams} from '../util/hooks/useGeneral';
+import {GeneralAllParams} from '@/util/hooks/useGeneral';
 
 const initialState: GeneralAllParams = {
 	app_loaded: false,

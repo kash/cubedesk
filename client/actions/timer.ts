@@ -1,4 +1,4 @@
-import {TimerStore} from '../components/timer/@types/interfaces';
+import {TimerStore} from '@/components/timer/@types/interfaces';
 
 export function turnSmartCube(turn, completedAt) {
 	return {

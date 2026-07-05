@@ -4,7 +4,7 @@ import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import {updateSolveDb} from '@/db/solves/update';
-import {PlayerStatus} from '@/shared/match/types';
+import {PlayerStatus} from '@/client/shared/match/types';
 import {Solve} from '@/types/solve';
 import {useMe} from '@/util/hooks/useMe';
 import {socketClient} from '@/util/socket/socketio';

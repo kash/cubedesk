@@ -1,10 +1,10 @@
 import {Integration} from '@/types/integration';
 import {InternalUserAccount, UserAccount} from '@/types/user';
 import axios from 'axios';
-import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../shared/integration';
-import {createIntegration, getIntegration, updateIntegration} from '../models/integration';
-import {updateUserProfile} from '../models/profile';
-import {getDiscordMe} from './discord';
+import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '@/shared/integration';
+import {createIntegration, getIntegration, updateIntegration} from '@/server/models/integration';
+import {updateUserProfile} from '@/server/models/profile';
+import {getDiscordMe} from '@/server/integrations/discord';
 
 export async function linkOAuthAccount(intType: IntegrationType, user: InternalUserAccount, code: string) {
 	const int = await getIntegration(user, intType);

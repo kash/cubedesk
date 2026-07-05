@@ -8,14 +8,14 @@ import {StaticRouter, Switch} from 'react-router-dom';
 import {applyMiddleware, createStore, Store} from 'redux';
 import promise from 'redux-promise-middleware';
 import {thunk} from 'redux-thunk';
-import {PageContext, routes} from '../client/components/layout/Routes';
-import {mapSingleRoute} from '../client/components/map-route';
-import reducers from '../client/reducers/reducers';
-import {TRPCProvider} from '../client/util/api';
-import {ErrorCode} from './constants/errors';
-import htmlTemplate, {HtmlPagePayload} from './html_template';
-import {initUserAccount} from './models/store';
-import {logger} from './services/logger';
+import {PageContext, routes} from '@/components/layout/Routes';
+import {mapSingleRoute} from '@/components/map-route';
+import reducers from '@/reducers/reducers';
+import {TRPCProvider} from '@/util/api';
+import {ErrorCode} from '@/server/constants/errors';
+import htmlTemplate, {HtmlPagePayload} from '@/server/html_template';
+import {initUserAccount} from '@/server/models/store';
+import {logger} from '@/server/services/logger';
 
 const mappedRoutes: ReactNode[] = [];
 

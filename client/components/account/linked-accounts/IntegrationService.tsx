@@ -6,7 +6,7 @@ import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import {ArrowRight, Check} from 'phosphor-react';
 import React, {ReactNode, useEffect, useMemo, useState} from 'react';
-import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../../../shared/integration';
+import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '@/shared/integration';
 
 interface Props {
 	integrationType: IntegrationType;

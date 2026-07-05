@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import {AllSettings, getSetting} from '../../db/settings/query';
-import {useEventListener} from '../event_handler';
+import {AllSettings, getSetting} from '@/db/settings/query';
+import {useEventListener} from '@/util/event_handler';
 
 export function useSettings<T extends keyof AllSettings>(key: T): AllSettings[T] {
 	const [changeCounter, setChangeCounter] = useState(0);

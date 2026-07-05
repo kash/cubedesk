@@ -1,10 +1,10 @@
 import {MatchParticipant} from '@/types/match';
 import {Match} from '@/types/match';
 import {Solve} from '@/types/solve';
-import {GameSolveRow, PlayerStatusInfo} from '../../components/play/game/Game';
-import {getTimeString} from '../../util/time';
-import {MatchConst} from '../match/consts';
-import {PlayerStatus} from '../match/types';
+import {GameSolveRow, PlayerStatusInfo} from '@/components/play/game/Game';
+import {getTimeString} from '@/util/time';
+import {MatchConst} from '@/client/shared/match/consts';
+import {PlayerStatus} from '@/client/shared/match/types';
 
 interface RoundStatus {
 	playerStatus: PlayerStatus;

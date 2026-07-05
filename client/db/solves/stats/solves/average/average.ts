@@ -1,7 +1,7 @@
 import {Solve} from '@/types/solve';
-import {fetchSolves, FilterSolvesOptions} from '../../../query';
+import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 // Not providing a count will result in getting the average for all solves for this cube type
-import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '../caching';
+import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '@/db/solves/stats/solves/caching';
 
 export function getCurrentAverage(filterOptions: FilterSolvesOptions, count: number = -1) {
 	const cacheKey: SolveCacheKey = {

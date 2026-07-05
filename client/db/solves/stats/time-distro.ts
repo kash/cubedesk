@@ -1,5 +1,5 @@
-import {getTimeString} from '../../../util/time';
-import {fetchSolves, FilterSolvesOptions} from '../query';
+import {getTimeString} from '@/util/time';
+import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 
 export function getTimeDistro(filter: FilterSolvesOptions, buckets: number) {
 	const solves = fetchSolves(

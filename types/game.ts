@@ -1,5 +1,5 @@
 import type {Prisma} from '@/generated/prisma/client';
-import {publicUserSelect} from './user';
+import {publicUserSelect} from '@/types/user';
 
 export const gameSessionInclude = {
 	user: {

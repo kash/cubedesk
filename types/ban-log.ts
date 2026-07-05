@@ -1,4 +1,4 @@
-import type {UserAccountForAdmin} from './user';
+import type {UserAccountForAdmin} from '@/types/user';
 
 export interface BanLog {
 	id: string;

@@ -1,7 +1,7 @@
-import {ImageMock} from './image.mock';
-import {TopAverageMock} from './top_average.mock';
-import {TopSolveMock} from './top_solve.mock';
-import {UserMock} from './user.mock';
+import {ImageMock} from '@/server/__test__/mocks/image.mock';
+import {TopAverageMock} from '@/server/__test__/mocks/top_average.mock';
+import {TopSolveMock} from '@/server/__test__/mocks/top_solve.mock';
+import {UserMock} from '@/server/__test__/mocks/user.mock';
 
 export const ProfileMock = {
 	id: 'ffd1aa3d-1606-4b34-8fba-519fe99c2750',

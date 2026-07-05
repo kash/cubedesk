@@ -10,7 +10,7 @@ import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
 import React, {ReactNode} from 'react';
 import {useDispatch} from 'react-redux';
-import {GameType} from '../../../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 interface Props {
 	gameType: GameType;

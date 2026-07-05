@@ -1,8 +1,8 @@
 import type {Prisma} from '@/generated/prisma/client';
-import type {Match} from './match';
-import type {Profile} from './profile';
-import type {PublicUserAccount} from './user';
-import {publicUserSelect} from './user';
+import type {Match} from '@/types/match';
+import type {Profile} from '@/types/profile';
+import type {PublicUserAccount} from '@/types/user';
+import {publicUserSelect} from '@/types/user';
 
 export const eloRatingWithUserInclude = {
 	user: {

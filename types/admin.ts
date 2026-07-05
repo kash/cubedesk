@@ -1,5 +1,5 @@
 import type {Prisma} from '@/generated/prisma/client';
-import {publicUserSelect} from './user';
+import {publicUserSelect} from '@/types/user';
 
 // Admin view of a user. Extends the public-safe shape with contact/moderation
 // data but still omits secrets (password hash, OAuth tokens).

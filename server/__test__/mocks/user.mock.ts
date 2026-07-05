@@ -1,4 +1,4 @@
-import {EloRatingMock} from './elo_rating.mock';
+import {EloRatingMock} from '@/server/__test__/mocks/elo_rating.mock';
 
 export const UserMock = {
 	id: 'e4de5533-7c34-42c1-ae57-93ad0cb5b3d8',

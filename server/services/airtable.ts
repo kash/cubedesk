@@ -1,4 +1,4 @@
-import {logger} from './logger';
+import {logger} from '@/server/services/logger';
 
 const AIRTABLE_BASE_ID = 'app7tTyFM9gRZsI95';
 

@@ -1,9 +1,9 @@
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {getUserByEmail, sanitizeUser} from '../../models/user_account';
-import {getJwtString} from '../../util/auth';
-import {checkPassword} from '../../util/password';
-import {publicProcedure, router} from '../trpc';
+import {getUserByEmail, sanitizeUser} from '@/server/models/user_account';
+import {getJwtString} from '@/server/util/auth';
+import {checkPassword} from '@/server/util/password';
+import {publicProcedure, router} from '@/server/trpc/trpc';
 
 export const authRouter = router({
 	logIn: publicProcedure

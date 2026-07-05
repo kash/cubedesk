@@ -33,6 +33,9 @@
 		"moduleNameMapper": {
 			"^@/generated/(.*)$": "<rootDir>/generated/$1",
 			"^@/types/(.*)$": "<rootDir>/types/$1",
+			"^@/server/(.*)$": "<rootDir>/server/$1",
+			"^@/client/shared/(.*)$": "<rootDir>/client/shared/$1",
+			"^@/shared/(.*)$": "<rootDir>/shared/$1",
 			"^@/(.*)$": "<rootDir>/client/$1",
 			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
 			"\\.(css|less)$": "identity-obj-proxy"

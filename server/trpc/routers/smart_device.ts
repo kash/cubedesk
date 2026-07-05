@@ -1,7 +1,7 @@
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {createSmartDevice, deleteSmartDevice, getSmartDeviceById, updateSmartDevice} from '../../models/smart_device';
-import {protectedProcedure, router} from '../trpc';
+import {createSmartDevice, deleteSmartDevice, getSmartDeviceById, updateSmartDevice} from '@/server/models/smart_device';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 export const smartDeviceRouter = router({
 	// Full solve rows carry BigInt timestamps that can't be JSON-serialized;

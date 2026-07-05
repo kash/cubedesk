@@ -1,16 +1,16 @@
 import {Match} from '@/types/match';
 import {MatchSession} from '@/types/match';
 import {GameOptionsInput} from '@/types/match';
-import {GameType} from '../../../shared/match/consts';
-import {createGameOptions} from '../../models/game_options';
-import {createMatch, updateMatch} from '../../models/match';
-import {createMatchParticipant} from '../../models/match_participation';
-import {createMatchSession} from '../../models/match_session';
-import {logger} from '../../services/logger';
-import {getMatchPlayersRoomName} from '../match';
-import {emitMatchUpdate} from '../update/send';
-import {sendMatchUpdateById} from '../update/standings';
-import {DetailedClientInfo, getDetailedClientInfo, joinRoom, leaveAllMatchRooms, SocketType} from '../util';
+import {GameType} from '@/shared/match/consts';
+import {createGameOptions} from '@/server/models/game_options';
+import {createMatch, updateMatch} from '@/server/models/match';
+import {createMatchParticipant} from '@/server/models/match_participation';
+import {createMatchSession} from '@/server/models/match_session';
+import {logger} from '@/server/services/logger';
+import {getMatchPlayersRoomName} from '@/server/match/match';
+import {emitMatchUpdate} from '@/server/match/update/send';
+import {sendMatchUpdateById} from '@/server/match/update/standings';
+import {DetailedClientInfo, getDetailedClientInfo, joinRoom, leaveAllMatchRooms, SocketType} from '@/server/match/util';
 
 export async function pairPlayersInRoom(
 	gameType: GameType,

@@ -1,6 +1,6 @@
-import {getPrisma} from '../database';
-import {EloConst} from '../match/pair/elo/calc_elo';
-import {getUserByIdWithProfile} from './user_account';
+import {getPrisma} from '@/server/database';
+import {EloConst} from '@/server/match/pair/elo/calc_elo';
+import {getUserByIdWithProfile} from '@/server/models/user_account';
 
 const ELO_COLUMN_PREFIX = 'elo_';
 const GAMES_COLUMN_PREFIX = 'games_';

@@ -1,4 +1,4 @@
-import {MatchConst} from '@/shared/match/consts';
+import {MatchConst} from '@/client/shared/match/consts';
 import {Match} from '@/types/match';
 import {trpc} from '@/util/trpc';
 

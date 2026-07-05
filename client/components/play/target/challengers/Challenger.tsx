@@ -1,9 +1,9 @@
 import Avatar from '@/components/common/avatar/Avatar';
 import Emblem from '@/components/common/Emblem';
 import {MatchContext} from '@/components/play/match/Match';
-import {getMatchClientEvent} from '@/shared/match/client-events';
-import {MatchClientEvent} from '@/shared/match/events';
-import {MatchStanding, PlayerStatus} from '@/shared/match/types';
+import {getMatchClientEvent} from '@/client/shared/match/client-events';
+import {MatchClientEvent} from '@/client/shared/match/events';
+import {MatchStanding, PlayerStatus} from '@/client/shared/match/types';
 import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
 import {addEventListener} from '@/util/event_handler';

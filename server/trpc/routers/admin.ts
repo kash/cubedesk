@@ -1,10 +1,10 @@
 import {PublicUser, publicUserSelect} from '@/types/user';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {getUserAccountForAdmin} from '../../models/admin';
-import {createBanLog, deactivateAllBanLogs} from '../../models/ban_log';
-import {refundElo} from '../../models/elo_log';
-import {deleteAllPublishedSolves} from '../../models/top_solve';
+import {getUserAccountForAdmin} from '@/server/models/admin';
+import {createBanLog, deactivateAllBanLogs} from '@/server/models/ban_log';
+import {refundElo} from '@/server/models/elo_log';
+import {deleteAllPublishedSolves} from '@/server/models/top_solve';
 import {
 	banUserAccountForever,
 	banUserAccountUntil,
@@ -13,10 +13,10 @@ import {
 	isUserBanned,
 	unbanUserAccount,
 	updateUserAccountWithParams,
-} from '../../models/user_account';
-import {getPaginatedResponse} from '../../util/pagination/paginated_response';
-import {adminProcedure, router} from '../trpc';
-import {resolveReportsOfUserId} from './report';
+} from '@/server/models/user_account';
+import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
+import {adminProcedure, router} from '@/server/trpc/trpc';
+import {resolveReportsOfUserId} from '@/server/trpc/routers/report';
 
 const userIdInput = z.object({
 	userId: z.string(),

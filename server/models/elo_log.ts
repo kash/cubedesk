@@ -1,11 +1,11 @@
 import {Prisma} from '@/generated/prisma/client';
 import {EloLog} from '@/types/elo';
 import {UserAccount} from '@/types/user';
-import {getPrisma} from '../database';
-import EloRefundNotification from '../resources/notification_types/elo_refund';
-import {logger} from '../services/logger';
-import {getEloRatingColumnNameFromCubeType} from './elo_rating';
-import {getUserById} from './user_account';
+import {getPrisma} from '@/server/database';
+import EloRefundNotification from '@/server/resources/notification_types/elo_refund';
+import {logger} from '@/server/services/logger';
+import {getEloRatingColumnNameFromCubeType} from '@/server/models/elo_rating';
+import {getUserById} from '@/server/models/user_account';
 
 export function createEloLog(input: Prisma.EloLogUncheckedCreateInput) {
 	return getPrisma().eloLog.create({

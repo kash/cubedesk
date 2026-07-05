@@ -1,7 +1,7 @@
 import Cube from 'cubejs';
-import {processSmartTurns, SmartTurn} from '../../../client/util/smart_scramble';
-import {getMatchingOLLState, getMatchingPLLState} from './ll_states';
-import {getLLState, reverseTurns} from './turns';
+import {processSmartTurns, SmartTurn} from '@/util/smart_scramble';
+import {getMatchingOLLState, getMatchingPLLState} from '@/server/util/solve/ll_states';
+import {getLLState, reverseTurns} from '@/server/util/solve/turns';
 
 export interface SolveStepData {
 	index: number;

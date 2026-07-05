@@ -1,11 +1,11 @@
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
-import {getCubeTypeInfoById} from '../../../client/util/cubes/util';
-import {GameType} from '../../../shared/match/consts';
-import {createGameOptions} from '../../models/game_options';
-import {createMatch, getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '../../models/match';
-import {createMatchSession} from '../../models/match_session';
-import {protectedProcedure, router} from '../trpc';
+import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {GameType} from '@/shared/match/consts';
+import {createGameOptions} from '@/server/models/game_options';
+import {createMatch, getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '@/server/models/match';
+import {createMatchSession} from '@/server/models/match_session';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 export const matchRouter = router({
 	get: protectedProcedure

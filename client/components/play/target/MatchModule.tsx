@@ -2,7 +2,7 @@ import Button from '@/components/common/Button';
 import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
 import Challengers from '@/components/play/target/challengers/Challengers';
-import {PlayerStatus} from '@/shared/match/types';
+import {PlayerStatus} from '@/client/shared/match/types';
 import {useMe} from '@/util/hooks/useMe';
 import React, {ReactNode, useContext} from 'react';
 

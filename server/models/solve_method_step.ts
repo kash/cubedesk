@@ -1,7 +1,9 @@
-import {generateUUID} from '../../shared/code';
-import {getPrisma} from '../database';
+import type {Prisma, Solve} from '@/generated/prisma/client';
+import type {SolveStepData} from '@/server/util/solve/solve_method';
+import {generateUUID} from '@/shared/code';
+import {getPrisma} from '@/server/database';
 
-export function deleteSolveMethodSteps(solve) {
+export function deleteSolveMethodSteps(solve: Solve) {
 	return getPrisma().solveMethodStep.deleteMany({
 		where: {
 			solve_id: solve.id,
@@ -9,11 +11,15 @@ export function deleteSolveMethodSteps(solve) {
 	});
 }
 
-export function createSolveMethodSteps(solve, steps) {
-	const data = [];
+export function createSolveMethodSteps(solve: Solve, steps: Record<string, SolveStepData | null>) {
+	const data: Prisma.SolveMethodStepCreateManyInput[] = [];
 
 	for (const step of Object.keys(steps)) {
 		const method = steps[step];
+
+		if (!method) {
+			continue;
+		}
 
 		data.push({
 			id: generateUUID(),

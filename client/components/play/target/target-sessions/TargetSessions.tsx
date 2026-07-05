@@ -7,7 +7,7 @@ import {GameSessionWithRelations} from '@/types/game';
 import {Serialized} from '@/types/serialized';
 import {trpc} from '@/util/trpc';
 import React, {useEffect, useState} from 'react';
-import {GameType} from '../../../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 interface Props {
 	gameType: GameType;

@@ -6,7 +6,7 @@ import JoinOptions from '@/components/play/match/match-popup/JoinOptions';
 import Lobby from '@/components/play/match/match-popup/Lobby';
 import {socketClient} from '@/util/socket/socketio';
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import {GameType} from '../../../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 export enum MatchPopupPage {
 	HOME = 'home',

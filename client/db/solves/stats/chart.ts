@@ -1,4 +1,4 @@
-import {fetchSolves, FilterSolvesOptions} from '../query';
+import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 
 const CHART_BUCKET_SIZE = 50;
 

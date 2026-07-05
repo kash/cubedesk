@@ -2,7 +2,7 @@ import Elimination from '@/components/play/logic/Elimination';
 import HeadToHead from '@/components/play/logic/HeadToHead';
 import {Lightning, Sword} from 'phosphor-react';
 import React from 'react';
-import {GameType} from '../../../shared/match/consts';
+import {GameType} from '@/shared/match/consts';
 
 export interface GameMetaData {
 	id: string;

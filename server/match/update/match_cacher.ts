@@ -1,14 +1,14 @@
 import {FullMatch, FullMatchParticipant, Match} from '@/types/match';
-import {MatchCache, MatchPlayerCache} from '../../../client/shared/match/types';
-import {getMatchById} from '../../models/match';
-import {logger} from '../../services/logger';
+import {MatchCache, MatchPlayerCache} from '@/client/shared/match/types';
+import {getMatchById} from '@/server/models/match';
+import {logger} from '@/server/services/logger';
 import {
 	createRedisKey,
 	generatedRedisKey,
 	getValueFromRedis,
 	RedisNamespace,
 	setKeyInRedis,
-} from '../../services/redis';
+} from '@/server/services/redis';
 
 export class MatchCacher {
 	matchId: string;

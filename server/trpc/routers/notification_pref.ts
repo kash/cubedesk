@@ -1,6 +1,6 @@
 import {z} from 'zod';
-import {getOrCreateNotificationPreferences, setNotificationPreference} from '../../models/notification_preference';
-import {protectedProcedure, router} from '../trpc';
+import {getOrCreateNotificationPreferences, setNotificationPreference} from '@/server/models/notification_preference';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 export const notificationPrefRouter = router({
 	get: protectedProcedure.query(({ctx}) => getOrCreateNotificationPreferences(ctx.user)),

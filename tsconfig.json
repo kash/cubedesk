@@ -40,6 +40,15 @@
 			"@/types/*": [
 				"./types/*"
 			],
+			"@/server/*": [
+				"./server/*"
+			],
+			"@/client/shared/*": [
+				"./client/shared/*"
+			],
+			"@/shared/*": [
+				"./shared/*"
+			],
 			"@/*": [
 				"./client/*"
 			]

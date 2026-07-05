@@ -1,15 +1,15 @@
 import {Prisma} from '@/generated/prisma/client';
 import {FullMatch} from '@/types/match';
-import {MatchStanding, MatchUpdate, PlayerStatus} from '../../../client/shared/match/types';
-import {getPrisma} from '../../database';
-import {getMatchById} from '../../models/match';
-import {updateMatchParticipant} from '../../models/match_participation';
-import {getMatchTypeByMatch} from '../init';
-import {getMatchPlayersRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '../match';
-import MatchTypeLogic from '../match_types/match_type_interface';
-import {getRoomSize, getUsersInRoom, userExistsInRoom} from '../util';
-import {updateMatchWithWinner} from './on_win';
-import {emitMatchUpdate} from './send';
+import {MatchStanding, MatchUpdate, PlayerStatus} from '@/client/shared/match/types';
+import {getPrisma} from '@/server/database';
+import {getMatchById} from '@/server/models/match';
+import {updateMatchParticipant} from '@/server/models/match_participation';
+import {getMatchTypeByMatch} from '@/server/match/init';
+import {getMatchPlayersRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '@/server/match/match';
+import MatchTypeLogic from '@/server/match/match_types/match_type_interface';
+import {getRoomSize, getUsersInRoom, userExistsInRoom} from '@/server/match/util';
+import {updateMatchWithWinner} from '@/server/match/update/on_win';
+import {emitMatchUpdate} from '@/server/match/update/send';
 
 export async function sendMatchUpdateById(matchId: string) {
 	const match = await getMatchById(matchId);

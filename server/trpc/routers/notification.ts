@@ -6,8 +6,8 @@ import {
 	getNotifications,
 	getUnreadNotificationCount,
 	readNotification,
-} from '../../models/notification';
-import {protectedProcedure, router} from '../trpc';
+} from '@/server/models/notification';
+import {protectedProcedure, router} from '@/server/trpc/trpc';
 
 const PAGE_SIZE = 10;
 

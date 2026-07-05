@@ -1,7 +1,7 @@
 import tinycolor from 'tinycolor2';
-import colorPalette, {ColorName} from '../../../shared/colors';
-import {getAnyColorStringAsRgbString} from '../themes/theme_util';
-import {useSettings} from './useSettings';
+import colorPalette, {ColorName} from '@/shared/colors';
+import {getAnyColorStringAsRgbString} from '@/util/themes/theme_util';
+import {useSettings} from '@/util/hooks/useSettings';
 
 export interface AppTheme {
 	isDark: boolean;

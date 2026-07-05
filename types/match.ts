@@ -1,7 +1,7 @@
 import type {GameType} from '@/generated/prisma/client';
-import type {EloLog} from './elo';
-import type {Solve} from './solve';
-import type {PublicUserAccount} from './user';
+import type {EloLog} from '@/types/elo';
+import type {Solve} from '@/types/solve';
+import type {PublicUserAccount} from '@/types/user';
 
 export interface Match {
 	id: string;

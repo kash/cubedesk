@@ -1,7 +1,7 @@
 import {Server} from 'socket.io';
-import {SocketConst} from '../../../client/shared/socket_costs';
-import {sendRoomInfoUpdates} from '../update/room_info';
-import {joinRoom, leaveRoom} from '../util';
+import {SocketConst} from '@/client/shared/socket_costs';
+import {sendRoomInfoUpdates} from '@/server/match/update/room_info';
+import {joinRoom, leaveRoom} from '@/server/match/util';
 
 export function genericIoListen(io: Server) {
 	// Interval that notifies everyone what is happening

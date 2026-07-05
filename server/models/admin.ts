@@ -6,8 +6,8 @@ import {
 	UserAccountSolvesSummary,
 	UserAccountSummary,
 } from '@/types/admin';
-import {getPrisma} from '../database';
-import {trainerExceptions} from './solve';
+import {getPrisma} from '@/server/database';
+import {trainerExceptions} from '@/server/models/solve';
 
 export async function getUserAccountForAdmin(userId: string): Promise<AdminUser | null> {
 	const summary = await getUserForAdminSummary(userId);

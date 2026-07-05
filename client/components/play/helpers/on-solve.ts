@@ -1,5 +1,5 @@
 import {IGameContext} from '@/components/play/game/Game';
-import {PlayerStatus} from '@/shared/match/types';
+import {PlayerStatus} from '@/client/shared/match/types';
 import {Solve} from '@/types/solve';
 import {snakifyObject} from '@/util/strings/snakify';
 import {trpc} from '@/util/trpc';
