@@ -3756,7 +3756,6 @@ export const UserAccountScalarFieldEnum = {
   verified: 'verified',
   banned_forever: 'banned_forever',
   banned_until: 'banned_until',
-  mod: 'mod',
   offline_hash: 'offline_hash',
   unsub_id: 'unsub_id',
   last_solve_at: 'last_solve_at'

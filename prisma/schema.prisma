@@ -29,7 +29,6 @@ model UserAccount {
   verified                      Boolean                 @default(false)
   banned_forever                Boolean                 @default(false)
   banned_until                  DateTime?
-  mod                           Boolean                 @default(false)
   offline_hash                  String?
   unsub_id                      String?                 @default(uuid())
   last_solve_at                 DateTime?

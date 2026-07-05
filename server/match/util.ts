@@ -12,7 +12,6 @@ export function getBasicUser(user: PublicUserAccount): PublicUserAccount {
 	const {
 		id,
 		admin,
-		mod,
 		last_solve_at,
 		username,
 		banned_forever,
@@ -32,7 +31,6 @@ export function getBasicUser(user: PublicUserAccount): PublicUserAccount {
 		id,
 		username,
 		admin,
-		mod,
 		banned_forever,
 		last_solve_at,
 		banned_until,

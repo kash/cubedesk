@@ -14,7 +14,6 @@ export const UserAccountSchema = z.object({
   verified: z.boolean(),
   banned_forever: z.boolean(),
   banned_until: z.date().nullable(),
-  mod: z.boolean(),
   offline_hash: z.string().nullable(),
   unsub_id: z.string().nullable(),
   last_solve_at: z.date().nullable(),

@@ -8,7 +8,6 @@ export const UserMock = {
 	banned_forever: false,
 	banned_until: null,
 	admin: true,
-	mod: false,
 	integrations: [
 		{id: '4663e467-c4e0-4651-9aa7-d372b5e3eb6d', service_name: 'discord', __typename: 'Integration'},
 		{id: '2af51adc-5b9d-4ab9-89a6-1a6f4fab3b6a', service_name: 'wca', __typename: 'Integration'},
