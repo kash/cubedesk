@@ -32,12 +32,10 @@ import ForceSignOut from '@/components/login/ForceSignOut';
 import {Store} from 'redux';
 import type {Request} from 'express';
 import Reports from '@/components/admin/reports/Reports';
-import LandingHome from '@/components/landing/home/LandingHome';
 import DefaultTimer from '@/components/timer/DefaultTimer';
 import AdminUsers from '@/components/admin/AdminUsers';
 import UnsubEmails from '@/components/unsub/UnsubEmails';
 import EloBoard from '@/components/community/EloBoard';
-import DemoTimer from '@/components/timer/DemoTimer';
 import AboutCubeDesk from '@/components/landing/about/AboutCubeDesk';
 
 interface PageOptions {
@@ -112,11 +110,9 @@ export const routes: (PageContext | RedirectPath)[] = [
 	route('/settings/data', App, Settings, DataSettings, false),
 
 	// Landing Pages
-	route('/home', null, Landing, LandingHome, false, false, false, false, true),
 	// route('/how-to-solve', null, Landing, HTSLanding, false, false, false, false, true),
 	// route('/how-to-solve/:stepId', null, Landing, HTSLearn, false, false, false, false, true),
 	route('/about', null, Landing, AboutCubeDesk, false, false, false, false, true),
-	route('/demo', null, App, DemoTimer, false, false, false, false, true),
 	route('/terms', null, Landing, Terms, false, true),
 	route('/privacy', null, Landing, Privacy, false, true),
 
@@ -165,6 +161,8 @@ export const routes: (PageContext | RedirectPath)[] = [
 	routeRedirect('/settings', '/settings/timer'),
 	routeRedirect('/account', '/account/personal-info'),
 	routeRedirect('/timer', '/'),
+	routeRedirect('/home', '/'),
+	routeRedirect('/demo', '/'),
 	routeRedirect('/community/friends', '/community/friends/list'),
 	routeRedirect('/community', '/community/leaderboards'),
 	routeRedirect('/admin', '/admin/reports'),

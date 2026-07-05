@@ -105,7 +105,7 @@ export function leaveRoom(client: SocketType, room: string) {
 	updateMyRooms(client);
 }
 
-async function getUserFromClient(client: SocketType): Promise<PublicUserAccount | null> {
+export async function getUserFromClient(client: SocketType): Promise<PublicUserAccount | null> {
 	if (!client) {
 		return null;
 	}

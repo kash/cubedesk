@@ -99,7 +99,7 @@ export default function App(props: Props = {}) {
 
 	return (
 		<>
-			<Header path={path} />
+			<Header path={path} title={path === '/' && !me ? "CubeDesk - Rubik's Cube Timer | 1v1 | Trainer" : undefined} />
 			<LoadingCover fadeOut={appLoaded} />
 			{modalOutput}
 			{appLoaded ? <Wrapper {...wrapperProps}>{children}</Wrapper> : null}

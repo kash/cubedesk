@@ -23,7 +23,7 @@ export const NAV_LINKS: NavLinkProps[] = [
 	{
 		name: 'Timer',
 		icon: <Timer weight="bold" />,
-		match: /(^\/$|^$)|(^\/demo$|^$)/,
+		match: /^\/$|^$/,
 		link: '/',
 	},
 	{

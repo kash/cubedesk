@@ -120,7 +120,7 @@ export default function LandingNav(props: Props) {
 		>
 			<div className="mx-auto flex w-[calc(100%_-_30px)] max-w-[1600px] flex-row items-center justify-between text-inherit">
 				<div>
-					<Link to="/home" className="flex items-center justify-center">
+					<Link to="/" className="flex items-center justify-center">
 						<img
 							className="w-[120px]"
 							src={resourceUri(`/images/logos/cubedesk_logo_black.svg`)}

@@ -1,4 +1,11 @@
-import {getClientRooms, getClientsInRoom, getDetailedClientInfo, leaveAllRooms, userExistsInRoom} from '../util';
+import {
+	getClientRooms,
+	getClientsInRoom,
+	getDetailedClientInfo,
+	getUserFromClient,
+	leaveAllRooms,
+	userExistsInRoom,
+} from '../util';
 import {getMatchIdFromPlayersRoom, getMatchPlayersRoomName} from '../match';
 import {getMatchById, updateMatch} from '../../models/match';
 import {sendMatchUpdate} from '../update/standings';
@@ -34,7 +41,12 @@ export function listenForLeaveEvents(client: SocketClient) {
 
 	client.on('disconnecting', async () => {
 		const rooms = getClientRooms(client);
-		const {user} = await getDetailedClientInfo(client);
+
+		// Anonymous clients (e.g. demo mode) have no user to resolve
+		const user = await getUserFromClient(client);
+		if (!user) {
+			return;
+		}
 
 		await leaveMatch(user, rooms);
 	});
@@ -71,7 +83,7 @@ export function listenForLeaveEvents(client: SocketClient) {
 	function waitForUserToReturn(user: PublicUserAccount, match: Match) {
 		const matchRoom = getMatchPlayersRoomName(match);
 		let secondsWaited = 0;
-		let endMatchGracePeriodTimeout = null;
+		let endMatchGracePeriodTimeout: NodeJS.Timeout | null = null;
 
 		const int = setInterval(async () => {
 			const clientsInRoom = await getClientsInRoom(matchRoom);

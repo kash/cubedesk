@@ -11,7 +11,7 @@ import htmlTemplate, {HtmlPagePayload} from './html_template';
 import reducers from '../client/reducers/reducers';
 import {initUserAccount} from './models/store';
 
-import {HelmetProvider, HelmetServerState} from 'react-helmet-async';
+import {HelmetProvider} from 'react-helmet-async';
 import {mapSingleRoute} from '../client/components/map-route';
 import {TRPCProvider} from '../client/util/api';
 import {logger} from './services/logger';
@@ -20,27 +20,20 @@ import type {Request} from 'express';
 
 const mappedRoutes: ReactNode[] = [];
 
-function createEmptyHelmetState(): HelmetServerState {
-	const emptyDatum = {
-		toString: () => '',
-		toComponent: () => [],
-	};
-	const emptyAttributes = {
-		toString: () => '',
-		toComponent: () => ({}),
-	};
+// React 19 hoists <title>/<meta>/<link> tags to the start of the renderToString
+// output instead of populating the react-helmet-async context, so we lift that
+// leading block out of the body markup and inject it into the <head> ourselves.
+const HOISTED_HEAD_TAGS_PATTERN = /^(?:<title>.*?<\/title>|<(?:meta|link)\b[^>]*\/?>)+/;
+
+function extractHeadTags(markup: string): {headTags: string; bodyMarkup: string} {
+	const match = markup.match(HOISTED_HEAD_TAGS_PATTERN);
+	if (!match) {
+		return {headTags: '', bodyMarkup: markup};
+	}
 
 	return {
-		base: emptyDatum,
-		bodyAttributes: emptyAttributes,
-		htmlAttributes: emptyAttributes,
-		link: emptyDatum,
-		meta: emptyDatum,
-		noscript: emptyDatum,
-		script: emptyDatum,
-		style: emptyDatum,
-		title: emptyDatum,
-		priority: emptyDatum,
+		headTags: match[0],
+		bodyMarkup: markup.slice(match[0].length),
 	};
 }
 
@@ -52,7 +45,7 @@ function safeStringify(object) {
 		.replace(/\u2029/g, '\\u2029');
 }
 
-function renderFullPage(html, helmet, preloadedState) {
+function renderFullPage(html, headTags, preloadedState) {
 	let cleanState = JSON.stringify(preloadedState).replace(/</g, '\\u003c');
 	cleanState = safeStringify(cleanState);
 
@@ -60,7 +53,7 @@ function renderFullPage(html, helmet, preloadedState) {
 
 	const payload: HtmlPagePayload = {
 		html,
-		helmet,
+		headTags,
 		cleanState,
 		distBase: process.env.DIST_BASE_URI || '',
 		resourceBase: process.env.RESOURCES_BASE_URI || '',
@@ -80,15 +73,13 @@ function createComponents(req, store) {
 	// longer forces a full server restart — only Vite rebuilds + browser reloads.
 	if (isDev) {
 		const preloaded = store.getState();
-		const fullHtml = renderFullPage('', createEmptyHelmetState(), preloaded);
+		const fullHtml = renderFullPage('', '', preloaded);
 		return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
 	}
 
-	const helmetContext: {helmet?: HelmetServerState | null} = {};
-
 	const staticRouter = (
 		<StaticRouter location={req.url} context={{}}>
-			<HelmetProvider context={helmetContext}>
+			<HelmetProvider>
 				<TRPCProvider>
 					<Provider store={store}>
 						<Switch>
@@ -104,11 +95,11 @@ function createComponents(req, store) {
 	);
 
 	const markup = ReactDOM.renderToString(staticRouter);
-	const helmet = helmetContext.helmet || createEmptyHelmetState();
+	const {headTags, bodyMarkup} = extractHeadTags(markup);
 	const preloaded = store.getState();
 
 	// Get html and minify it
-	const fullHtml = renderFullPage(markup, helmet, preloaded);
+	const fullHtml = renderFullPage(bodyMarkup, headTags, preloaded);
 	return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
 }
 
@@ -117,18 +108,6 @@ function appUseRouteForPage(routePath, route: PageContext) {
 		const store = createStore(reducers, {}, applyMiddleware(promise, thunk));
 		const promises: ((store: Store<any>, req: Request) => Promise<any>)[] = route.prefetchData || [];
 		const me = await initUserAccount(store, req);
-
-		// Redirect to /home if user is not logged in and trying to access /
-		if (routePath === '/' && !me) {
-			res.status(401).redirect('/home');
-			return;
-		}
-
-		// Redirect from demo to timer if logged in
-		if (routePath === '/demo' && me) {
-			res.status(302).redirect('/');
-			return;
-		}
 
 		// Redirect to /login if page is restricted and user is not logged in
 		if (route.restricted && !me) {
