@@ -1,5 +1,5 @@
-import {MatchLobby} from '@/types/match';
 import {generateId} from '@/shared/code';
+import {MatchLobby} from '@/types/match';
 
 export function testGenerateMatchLobbyRows(count: number, options?: Partial<MatchLobby>) {
 	const objects: MatchLobby[] = [];
@@ -11,7 +11,7 @@ export function testGenerateMatchLobbyRows(count: number, options?: Partial<Matc
 	return objects;
 }
 
-export function testCreateMatchLobbyRow(options?: Partial<MatchLobby>) {
+function testCreateMatchLobbyRow(options?: Partial<MatchLobby>) {
 	const ml: MatchLobby = {
 		id: generateId(),
 		user_id: generateId(),

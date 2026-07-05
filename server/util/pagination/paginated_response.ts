@@ -1,6 +1,6 @@
-import {PaginationArgs, PaginationOutput} from '@/types/pagination';
 import {getPrisma} from '@/server/database';
 import {logger} from '@/server/services/logger';
+import {PaginationArgs, PaginationOutput} from '@/types/pagination';
 
 export interface PaginatedRequestInput {
 	paginationArgs: PaginationArgs;
@@ -10,7 +10,7 @@ export interface PaginatedRequestInput {
 	prismaPayload: {[key: string]: any};
 }
 
-export async function getPaginatedResponseTotalCount(input: PaginatedRequestInput): Promise<number> {
+async function getPaginatedResponseTotalCount(input: PaginatedRequestInput): Promise<number> {
 	const {prismaPayload, tableName} = input;
 
 	const countPayload: any = {};

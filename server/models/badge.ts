@@ -1,6 +1,6 @@
 import type {BadgeType, UserAccount} from '@/generated/prisma/client';
-import {v4 as uuid} from 'uuid';
 import {getPrisma} from '@/server/database';
+import {v4 as uuid} from 'uuid';
 
 interface BadgeTypeInput {
 	name: string;
@@ -21,7 +21,10 @@ export function getBadgeTypeById(id: string) {
 	});
 }
 
-export function createBadgeType(user: UserAccount, {name, priority, color, description}: BadgeTypeInput) {
+export function createBadgeType(
+	user: UserAccount,
+	{name, priority, color, description}: BadgeTypeInput,
+) {
 	return getPrisma().badgeType.create({
 		data: {
 			id: uuid(),
@@ -34,7 +37,10 @@ export function createBadgeType(user: UserAccount, {name, priority, color, descr
 	});
 }
 
-export function editBadgeType(badgeType: BadgeType, {name, priority, color, description}: BadgeTypeInput) {
+export function editBadgeType(
+	badgeType: BadgeType,
+	{name, priority, color, description}: BadgeTypeInput,
+) {
 	return getPrisma().badgeType.update({
 		where: {
 			id: badgeType.id,

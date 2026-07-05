@@ -1,7 +1,7 @@
+import {reverseTurns} from '@/server/util/solve/turns';
+import algorithms from '@/util/algorithms/algorithms';
 import Cube from 'cubejs';
 import {chunk} from 'lodash';
-import algorithms from '@/util/algorithms/algorithms';
-import {reverseTurns} from '@/server/util/solve/turns';
 
 const OLL_KEY = '3_oll';
 const PLL_KEY = '3_pll';

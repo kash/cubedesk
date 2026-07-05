@@ -12,7 +12,7 @@ export function getDefaultCubeTypes(): CubeType[] {
 }
 
 // Combines default cube types and customer cube types as a map
-export function getAllCubeTypesAsMap(): Record<string, CubeType> {
+function getAllCubeTypesAsMap(): Record<string, CubeType> {
 	return {
 		...getCustomCubeTypeAsMap(),
 		...CUBE_TYPES,
@@ -46,7 +46,7 @@ export function getCubeTypeInfoById(id: string): CubeType | undefined {
 	return all[id];
 }
 
-export function getCubeTypeInfoByName(name: string): CubeType | undefined {
+function getCubeTypeInfoByName(name: string): CubeType | undefined {
 	if (!name) {
 		return undefined;
 	}
@@ -68,7 +68,7 @@ export function getCubeTypeName(id: string): string | undefined {
 	return getCubeTypeInfoById(id)?.name;
 }
 
-export function getCustomCubeTypes(): CubeType[] {
+function getCustomCubeTypes(): CubeType[] {
 	const customCubeTypes = getSettings()?.custom_cube_types;
 
 	if (!customCubeTypes) {

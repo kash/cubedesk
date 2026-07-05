@@ -44,7 +44,7 @@ interface IProfileData {
 	};
 }
 
-export async function getProfileData(username: string): Promise<IProfileData> {
+async function getProfileData(username: string): Promise<IProfileData> {
 	// Raw client (not hooks): this also runs server-side for SSR prefetch
 	const profileData = (await trpc.profile.get.query({username})) as unknown as ProfileSchema;
 

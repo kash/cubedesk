@@ -11,7 +11,7 @@ export function getSettingsDb(): Collection<SettingValue> {
 	return db?.getCollection('settings');
 }
 
-export function initSettingsCollection() {
+function initSettingsCollection() {
 	const db = getLokiDb();
 
 	db.removeCollection('settings');

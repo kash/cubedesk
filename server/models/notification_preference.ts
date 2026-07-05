@@ -1,5 +1,5 @@
-import {v4 as uuid} from 'uuid';
 import {getPrisma} from '@/server/database';
+import {v4 as uuid} from 'uuid';
 
 // Minimal shape so both the schema classes and generated Prisma rows are accepted
 type UserAccount = {
@@ -51,7 +51,7 @@ export async function getOrCreateNotificationPreferences(user: UserAccount) {
 	return prefs;
 }
 
-export async function getNotificationPreferences(user: UserAccount) {
+async function getNotificationPreferences(user: UserAccount) {
 	return await getPrisma().notificationPreference.findUnique({
 		where: {
 			user_id: user.id,

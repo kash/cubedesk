@@ -1,5 +1,4 @@
 import {MatchRoom} from '@/client/shared/match/events';
-import {getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '@/server/models/match';
 import {SocketClient} from '@/server/match/init';
 import {getLobbyRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '@/server/match/match';
 import {matchPlayersInCustomMatch} from '@/server/match/pair/custom_match';
@@ -7,6 +6,7 @@ import {joinLobby, removeMatchLobbyRecordsByClientId} from '@/server/match/pair/
 import {rematchPlayers} from '@/server/match/pair/rematch';
 import {sendMatchUpdateById} from '@/server/match/update/standings';
 import {getDetailedClientInfo, joinRoom, leaveRoom} from '@/server/match/util';
+import {getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '@/server/models/match';
 
 export function listenForJoinEvents(client: SocketClient) {
 	// Client joins [match type] lobby

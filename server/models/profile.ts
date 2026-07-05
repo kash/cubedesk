@@ -1,8 +1,7 @@
-import {Profile} from '@/types/profile';
 import {getPrisma} from '@/server/database';
 import {publicUserInclude} from '@/server/models/user_account';
 
-export function getUserProfile(user): Promise<Profile | null> {
+function getUserProfile(user) {
 	return getPrisma().profile.findUnique({
 		where: {
 			user_id: user.id,
@@ -24,7 +23,7 @@ export function updateUserProfile(profile, data) {
 	});
 }
 
-export async function getOrCreateUserProfile(user): Promise<Profile> {
+export async function getOrCreateUserProfile(user) {
 	const profile = await getUserProfile(user);
 	if (profile) {
 		return profile;
@@ -39,7 +38,7 @@ export async function getOrCreateUserProfile(user): Promise<Profile> {
 	return created;
 }
 
-export function createUserProfile(user) {
+function createUserProfile(user) {
 	return getPrisma().profile.create({
 		data: {
 			user_id: user.id,

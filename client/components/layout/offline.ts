@@ -33,7 +33,7 @@ export async function initOfflineData(me, callback) {
 	});
 }
 
-export async function shouldFetchDataFromDb(me: UserAccount): Promise<boolean> {
+async function shouldFetchDataFromDb(me: UserAccount): Promise<boolean> {
 	if (typeof indexedDB === 'undefined' || typeof localStorage === 'undefined') {
 		return true;
 	}

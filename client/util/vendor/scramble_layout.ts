@@ -1,22 +1,11 @@
 /* eslint-disable */
 
-export const UP = 'U';
-export const RIGHT = 'R';
-export const DOWN = 'D';
-export const LEFT = 'L';
-export const FRONT = 'F';
-export const BACK = 'B';
-export const X = 'x';
-export const Y = 'y';
-export const Z = 'z';
-
-export const WHITE = 'W';
-export const BLUE = 'B';
-export const YELLOW = 'Y';
-export const ORANGE = 'O';
-export const RED = 'R';
-export const GREEN = 'G';
-export const NONE = 'X';
+const UP = 'U';
+const RIGHT = 'R';
+const DOWN = 'D';
+const LEFT = 'L';
+const FRONT = 'F';
+const BACK = 'B';
 
 const INITIAL_FACES = {
 	[UP]: 'W',
@@ -73,7 +62,7 @@ const FACE_EDGE_MAP = {
 	],
 };
 
-export function splitScramble(str) {
+function splitScramble(str) {
 	return str
 		.split(' ')
 		.map((str) => str.trim())
@@ -92,7 +81,7 @@ function parseMove(move) {
 	return {direction, reversed, depth, twice};
 }
 
-export function generateArr(n) {
+function generateArr(n) {
 	let arr = new Array(n);
 
 	for (let i = 0; i < n; i++) {
@@ -190,7 +179,7 @@ function getRowColors(row) {
 	return row.map(({color}) => color);
 }
 
-export function createAscSorter(property) {
+function createAscSorter(property) {
 	return (a, b) => {
 		if (a[property] < b[property]) {
 			return -1;

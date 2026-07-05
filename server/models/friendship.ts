@@ -1,6 +1,6 @@
 import type {Friendship, FriendshipRequest, UserAccount} from '@/generated/prisma/client';
-import {v4 as uuid} from 'uuid';
 import {getPrisma} from '@/server/database';
+import {v4 as uuid} from 'uuid';
 
 export function getFriendships(user: UserAccount) {
 	return getPrisma().friendship.findMany({

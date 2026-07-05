@@ -9,13 +9,13 @@ import {
 	STATS_GRID_SIZE,
 } from '@/components/modules/quick-stats/util';
 import {FilterSolvesOptions} from '@/db/solves/query';
+import {RootState} from '@/reducers/reducers';
 import {defaultStatsModuleBlocks} from '@/reducers/stats';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {toastError} from '@/util/toast';
 import jsonStr from 'json-stable-stringify';
 import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '@/reducers/reducers';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;

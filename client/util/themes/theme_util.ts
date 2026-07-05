@@ -1,6 +1,6 @@
 import {type Color} from 'react-color-palette';
 
-export function hexToRgb(hex: string) {
+function hexToRgb(hex: string) {
 	if (hex.includes(',')) {
 		return hex; // Already RGB
 	}

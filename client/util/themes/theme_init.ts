@@ -12,7 +12,7 @@ export const THEME_COLOR_KEYS = [
 
 export type ThemeColorKey = (typeof THEME_COLOR_KEYS)[number];
 
-export const THEME_CSS_VARS: Record<ThemeColorKey, string> = {
+const THEME_CSS_VARS: Record<ThemeColorKey, string> = {
 	primary_color: '--primary-color',
 	secondary_color: '--secondary-color',
 	background_color: '--background-color',
@@ -56,7 +56,7 @@ function getThemeBackgroundColor(rgb: string, opposite = false): string {
 	return '255, 255, 255';
 }
 
-export function getThemeSettingsFromLocalStorage(userId?: string | null): Record<ThemeColorKey, string> {
+function getThemeSettingsFromLocalStorage(userId?: string | null): Record<ThemeColorKey, string> {
 	const colors = {...DEFAULT_THEME_COLORS};
 
 	if (typeof localStorage === 'undefined') {

@@ -1,5 +1,5 @@
-import {getMe} from '@/server/util/auth';
 import {sanitizeUser} from '@/server/models/user_account';
+import {getMe} from '@/server/util/auth';
 
 async function setMe(store, req) {
 	const user = await getMe(req);

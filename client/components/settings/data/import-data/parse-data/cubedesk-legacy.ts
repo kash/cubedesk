@@ -99,7 +99,7 @@ const solveArrayIndexMapping: (keyof Solve)[] = [
 	'match_id',
 ];
 
-export function convertSolveArrayToObject(solveArr: any[]): Solve {
+function convertSolveArrayToObject(solveArr: any[]): Solve {
 	// Should be of type Solve but TypeScript is being difficult
 	const solve: any = {};
 

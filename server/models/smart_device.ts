@@ -1,6 +1,6 @@
 import type {Prisma, UserAccount} from '@/generated/prisma/client';
-import {v4 as uuid} from 'uuid';
 import {getPrisma} from '@/server/database';
+import {v4 as uuid} from 'uuid';
 
 export function getSmartDeviceById(id: string) {
 	return getPrisma().smartDevice.findUnique({
@@ -27,7 +27,12 @@ export function updateSmartDevice(id: string, params: Prisma.SmartDeviceUpdateIn
 	});
 }
 
-export function createSmartDevice(user: UserAccount, name: string, internalName: string, deviceId: string) {
+export function createSmartDevice(
+	user: UserAccount,
+	name: string,
+	internalName: string,
+	deviceId: string,
+) {
 	const id = uuid();
 
 	return getPrisma().smartDevice.create({

@@ -1,9 +1,9 @@
+import {SettingValue} from '@/db/settings/init';
+import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {Session} from '@/types/session';
 import {Solve} from '@/types/solve';
 import {EventEmitter} from 'events';
 import {useEffect, useRef} from 'react';
-import {SettingValue} from '@/db/settings/init';
-import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 
 const ee = new EventEmitter();
 
@@ -33,7 +33,7 @@ export function addEventListener<T extends keyof ClientEvent>(
 	ee.on(name, func);
 }
 
-export function removeEventListener(name: keyof ClientEvent, func: any) {
+function removeEventListener(name: keyof ClientEvent, func: any) {
 	ee.removeListener(name, func);
 }
 

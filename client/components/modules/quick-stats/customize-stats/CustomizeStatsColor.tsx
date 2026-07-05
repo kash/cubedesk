@@ -1,6 +1,6 @@
+import {ColorName} from '@/shared/colors';
 import {useColor} from '@/util/hooks/useTheme';
 import React from 'react';
-import {ColorName} from '@/shared/colors';
 
 interface Props {
 	selected?: boolean;

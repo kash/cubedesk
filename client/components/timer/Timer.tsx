@@ -8,6 +8,7 @@ import KeyWatcher from '@/components/timer/key-watcher/KeyWatcher';
 import SmartCube from '@/components/timer/smart-cube/SmartCube';
 import TimeDisplay from '@/components/timer/time-display/TimeDisplay';
 import TimerScramble from '@/components/timer/time-display/timer-scramble/TimerScramble';
+import {RootState} from '@/reducers/reducers';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useWindowListener} from '@/util/hooks/useListener';
 import {useMe} from '@/util/hooks/useMe';
@@ -16,11 +17,10 @@ import {getStorageURL} from '@/util/storage';
 import classNames from 'classnames';
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '@/reducers/reducers';
 
 export interface ITimerContext extends TimerProps, TimerStore {}
 
-export const TimerContext = createContext<ITimerContext | null>(null);
+const TimerContext = createContext<ITimerContext | null>(null);
 
 export function useTimerContext(): ITimerContext {
 	const ctx = useContext(TimerContext);

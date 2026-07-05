@@ -1,12 +1,12 @@
+import {MatchConst} from '@/client/shared/match/consts';
 import {Prisma} from '@/generated/prisma/client';
+import {getPrisma} from '@/server/database';
+import {MatchCacher} from '@/server/match/update/match_cacher';
+import {publicUserInclude} from '@/server/models/user_account';
 import {FullMatch, Match, MatchSession} from '@/types/match';
 import dayjs from 'dayjs';
 import uniqid from 'uniqid';
 import {v4 as uuid} from 'uuid';
-import {MatchConst} from '@/client/shared/match/consts';
-import {getPrisma} from '@/server/database';
-import {MatchCacher} from '@/server/match/update/match_cacher';
-import {publicUserInclude} from '@/server/models/user_account';
 
 function matchInclude(includeChat?: boolean): Prisma.MatchInclude {
 	let matchSessionInclude = {};
@@ -86,7 +86,7 @@ export async function getMatchByLinkCode(code: string, includeChat?: boolean) {
 	return cleanMatch(match);
 }
 
-export async function cleanMatch(match): Promise<FullMatch | null> {
+async function cleanMatch(match): Promise<FullMatch | null> {
 	if (!match) {
 		return match;
 	}

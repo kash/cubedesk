@@ -1,5 +1,5 @@
-import {UserAccount} from '@/types/user';
 import {getIntegrationGetMe} from '@/server/integrations/oauth';
+import {UserAccount} from '@/types/user';
 
 interface DiscordMe {
 	id: string;

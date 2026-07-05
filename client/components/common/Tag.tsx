@@ -1,8 +1,8 @@
+import {ColorName} from '@/shared/colors';
 import {useColor} from '@/util/hooks/useTheme';
 import CSS from 'csstype';
 import {CircleNotch} from 'phosphor-react';
 import React, {ReactNode} from 'react';
-import {ColorName} from '@/shared/colors';
 
 export interface TagProps {
 	text?: string;

@@ -1,9 +1,9 @@
-import {Solve} from '@/types/solve';
-import flatten from 'flat';
-import jsonStr from 'json-stable-stringify';
-import {getNumberToDecimalPoints} from '@/util/time';
 import {getSolveCacheDb} from '@/db/solves/init';
 import {FilterSolvesOptions} from '@/db/solves/query';
+import {Solve} from '@/types/solve';
+import {getNumberToDecimalPoints} from '@/util/time';
+import flatten from 'flat';
+import jsonStr from 'json-stable-stringify';
 
 type CacheType = 'avg_current' | 'avg_pb' | 'avg_worst' | 'single_pb' | 'single_worst';
 
@@ -51,7 +51,7 @@ export function fetchSolveCache(cacheKey: SolveCacheKey) {
 	return fetchSolveCacheByCacheStr(keyStr);
 }
 
-export function fetchSolveCacheByCacheStr(cacheKey: string) {
+function fetchSolveCacheByCacheStr(cacheKey: string) {
 	const out = fetchAllSolveCaches({
 		cacheKey: cacheKey,
 	});

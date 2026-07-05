@@ -1,11 +1,11 @@
-import {Session} from '@/types/session';
 import {updateOfflineHash} from '@/components/layout/offline';
-import {emitEvent} from '@/util/event_handler';
-import {trpc} from '@/util/trpc';
-import {getSolveDb} from '@/db/solves/init';
-import {clearSolveStatCache} from '@/db/solves/stats/solves/caching';
 import {getSessionDb} from '@/db/sessions/init';
 import {fetchSessionById, fetchSessions} from '@/db/sessions/query';
+import {getSolveDb} from '@/db/solves/init';
+import {clearSolveStatCache} from '@/db/solves/stats/solves/caching';
+import {Session} from '@/types/session';
+import {emitEvent} from '@/util/event_handler';
+import {trpc} from '@/util/trpc';
 
 export async function createSessionDb(sessionInput: Partial<Session>) {
 	const sessionDb = getSessionDb();

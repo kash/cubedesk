@@ -1,7 +1,7 @@
 import type {Prisma, Solve} from '@/generated/prisma/client';
 import type {SolveStepData} from '@/server/util/solve/solve_method';
-import {generateUUID} from '@/shared/code';
 import {getPrisma} from '@/server/database';
+import {generateUUID} from '@/shared/code';
 
 export function deleteSolveMethodSteps(solve: Solve) {
 	return getPrisma().solveMethodStep.deleteMany({

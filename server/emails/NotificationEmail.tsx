@@ -1,7 +1,7 @@
+import EmailLayout, {text} from '@/server/emails/EmailLayout';
 import {EmailableUser} from '@/types/user';
 import {Link, Text} from '@react-email/components';
 import React from 'react';
-import EmailLayout, {text} from '@/server/emails/EmailLayout';
 
 export interface NotificationEmailProps {
 	user: EmailableUser;

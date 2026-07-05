@@ -1,8 +1,8 @@
 import {MatchCache, MatchPlayerCache} from '@/client/shared/match/types';
-import {getMatchById} from '@/server/models/match';
 import {MatchCacher} from '@/server/match/update/match_cacher';
 import {resignMatch} from '@/server/match/update/resign';
 import {emitMatchUpdate} from '@/server/match/update/send';
+import {getMatchById} from '@/server/models/match';
 
 // If at 80% of the time, we send a warning. Round down to the nearest 5 seconds.
 const MAX_INACTIVITY_BEFORE_SOLVE_STARTS_MS = 90000;

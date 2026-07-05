@@ -43,7 +43,7 @@ export interface ITrainerContext {
 }
 
 export type TrainingSessionType = 'all' | 'single' | 'favorites';
-export const TrainerContext = createContext<ITrainerContext | null>(null);
+const TrainerContext = createContext<ITrainerContext | null>(null);
 
 export function useTrainerContext(): ITrainerContext {
 	const ctx = useContext(TrainerContext);

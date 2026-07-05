@@ -1,7 +1,7 @@
 import type {CustomCubeType} from '@/generated/prisma/client';
 import {TimerModuleType} from '@/components/timer/@types/enums';
-import {APP_THEME_PRESETS} from '@/util/themes/theme_consts';
 import {getSettingsDb} from '@/db/settings/init';
+import {APP_THEME_PRESETS} from '@/util/themes/theme_consts';
 
 export type TimerLayoutPosition = 'bottom' | 'left' | 'right';
 

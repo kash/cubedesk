@@ -22,7 +22,7 @@ export interface IStatsContext {
 	filterOptions: FilterSolvesOptions;
 }
 
-export const StatsContext = createContext<IStatsContext | null>(null);
+const StatsContext = createContext<IStatsContext | null>(null);
 
 export function useStatsContext(): IStatsContext {
 	const ctx = useContext(StatsContext);

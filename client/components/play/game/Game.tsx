@@ -1,5 +1,6 @@
 import {reactState} from '@/@types/react';
 import {openModal} from '@/actions/general';
+import {PlayerStatus} from '@/client/shared/match/types';
 import Button from '@/components/common/Button';
 import GameChallenger from '@/components/play/game/GameChallenger';
 import GameTimer from '@/components/play/game/GameTimer';
@@ -7,7 +8,7 @@ import {getExistingMatch} from '@/components/play/helpers/match';
 import {getGameMetaData} from '@/components/play/Play';
 import TargetSessions from '@/components/play/target/target-sessions/TargetSessions';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
-import {PlayerStatus} from '@/client/shared/match/types';
+import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {Solve} from '@/types/solve';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
@@ -15,7 +16,6 @@ import {useMe} from '@/util/hooks/useMe';
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
-import {GameType} from '@/shared/match/consts';
 
 export interface GameSolveRow {
 	id: string;

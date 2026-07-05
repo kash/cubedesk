@@ -1,7 +1,7 @@
+import {getTrainerDb, TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {CustomTrainerInput} from '@/types/trainer';
 import {emitEvent} from '@/util/event_handler';
 import {trpc} from '@/util/trpc';
-import {getTrainerDb, TrainerAlgorithmExtended} from '@/db/trainer/init';
 
 export async function updateCustomTrainerDb(id: string, input: CustomTrainerInput) {
 	const trainerDb = getTrainerDb();

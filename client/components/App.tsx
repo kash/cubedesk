@@ -1,5 +1,9 @@
-import {initThemeFromLocalStorage} from '@/util/themes/theme_init';
+import {routes} from '@/components/layout/Routes';
 import 'seedrandom';
+import {setStore} from '@/components/store';
+import reducers from '@/reducers/reducers';
+import {TRPCProvider} from '@/util/api';
+import {initThemeFromLocalStorage} from '@/util/themes/theme_init';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
 import React from 'react';
@@ -9,13 +13,9 @@ import {Provider} from 'react-redux';
 import {BrowserRouter, Switch} from 'react-router-dom';
 import {applyMiddleware, createStore} from 'redux';
 import promise from 'redux-promise-middleware';
-import {thunk} from 'redux-thunk';
-import reducers from '@/reducers/reducers';
-import {TRPCProvider} from '@/util/api';
-import {routes} from '@/components/layout/Routes';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/index.css';
-import {setStore} from '@/components/store';
+import {thunk} from 'redux-thunk';
 
 const preloadedState = JSON.parse(window.__STORE__);
 initThemeFromLocalStorage(preloadedState?.account?.me?.id);

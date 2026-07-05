@@ -1,6 +1,3 @@
-import {meUserSelect, PublicUser, publicUserSelect} from '@/types/user';
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
 import {createNotificationPreference} from '@/server/models/notification_preference';
 import {createSetting} from '@/server/models/settings';
 import {
@@ -11,10 +8,13 @@ import {
 	updateUserAccount,
 	updateUserAccountPassword,
 } from '@/server/models/user_account';
+import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 import {getJwtString} from '@/server/util/auth';
 import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
 import {checkPassword} from '@/server/util/password';
-import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
+import {meUserSelect, PublicUser, publicUserSelect} from '@/types/user';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 async function validateUsername(username: string, currentUsername?: string) {
 	if (username.length < 2) {

@@ -1,8 +1,5 @@
 import type {Prisma} from '@/generated/prisma/client';
 import type {SolveInput} from '@/types/solve';
-import {TRPCError} from '@trpc/server';
-import {z} from 'zod';
-import {generateRandomString} from '@/shared/code';
 import {getMatchById} from '@/server/models/match';
 import {
 	bulkCreateSolves,
@@ -19,9 +16,12 @@ import {createSolveView, deleteSolveViewsBySolveId} from '@/server/models/solve_
 import {deleteTopAverage, deleteTopSolveById} from '@/server/models/top_solve';
 import {updateUserAccountWithParams} from '@/server/models/user_account';
 import {logger} from '@/server/services/logger';
+import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 import {serializeSolveTimestamps} from '@/server/util/serialize';
 import {getSolveSteps} from '@/server/util/solve/solve_method';
-import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
+import {generateRandomString} from '@/shared/code';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
 
 // Mirrors the old MiniSolveFragment so the list payload stays lean
 const miniSolveSelect = {

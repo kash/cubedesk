@@ -1,5 +1,5 @@
-import {useMatchContext} from '@/components/play/match/Match';
 import {MatchConst} from '@/client/shared/match/consts';
+import {useMatchContext} from '@/components/play/match/Match';
 import {socketClient} from '@/util/socket/socketio';
 
 export function handleOpenMatchLink() {

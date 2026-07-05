@@ -1,14 +1,14 @@
-import {InternalUserAccount, UserAccount} from '@/types/user';
-import {Request} from 'express';
-import jwt from 'jsonwebtoken';
 import {deactivateAllBanLogs} from '@/server/models/ban_log';
 import {getOrCreateUserProfile} from '@/server/models/profile';
 import {getUserById, getUserByIdWithProfile, updateUserAccountWithParams} from '@/server/models/user_account';
+import {UserAccount} from '@/types/user';
+import {Request} from 'express';
+import jwt from 'jsonwebtoken';
 
 const jwtSecret = (process as any).env.JWT_SECRET as string;
 
 // Returns the FULL user row (password hash, tokens) for server-side use only
-export async function getMe(req: Request): Promise<InternalUserAccount | null> {
+export async function getMe(req: Request) {
 	const session = req.cookies.session;
 
 	if (!session) {
@@ -20,7 +20,7 @@ export async function getMe(req: Request): Promise<InternalUserAccount | null> {
 		const output: any = jwt.verify(session, jwtSecret);
 
 		if (output) {
-			const me = await getUserByIdWithProfile(output.user_id, true);
+			const me = await getUserByIdWithProfile(output.user_id);
 
 			if (!me) {
 				return null;

@@ -1,7 +1,7 @@
 import {SocketConst} from '@/client/shared/socket_costs';
+import {GameType} from '@/shared/match/consts';
 import {socketClient} from '@/util/socket/socketio';
 import React, {useEffect, useState} from 'react';
-import {GameType} from '@/shared/match/consts';
 
 interface Props {
 	matchType: GameType;

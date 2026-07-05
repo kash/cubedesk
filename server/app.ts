@@ -1,26 +1,26 @@
 import 'dotenv/config';
 import 'ignore-styles';
-import * as Sentry from '@sentry/node';
-import {createExpressMiddleware} from '@trpc/server/adapters/express';
-import bodyParser from 'body-parser';
-import colors from 'colors';
-import cookieParser from 'cookie-parser';
-import express from 'express';
-import '@sentry/tracing';
-import fs from 'fs';
-import http from 'http';
-import 'seedrandom';
-import https from 'https';
 import {initSocket} from '@/server/match/init';
 import {exposeResourcesForSearchEngines} from '@/server/middlewares/search_engines';
 import {mapPathToPage} from '@/server/router';
 import {initCronJobs} from '@/server/services/cron';
 import Discord from '@/server/services/discord';
 import {initLogger, logger} from '@/server/services/logger';
+import '@sentry/tracing';
 import {initRedisClient} from '@/server/services/redis';
 import {createTRPCContext} from '@/server/trpc/context';
+import 'seedrandom';
 import {appRouter} from '@/server/trpc/router';
 import {initLLStates} from '@/server/util/solve/ll_states';
+import * as Sentry from '@sentry/node';
+import {createExpressMiddleware} from '@trpc/server/adapters/express';
+import bodyParser from 'body-parser';
+import colors from 'colors';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
 
 // initPrisma();
 

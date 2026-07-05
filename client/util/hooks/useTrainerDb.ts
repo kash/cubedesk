@@ -1,5 +1,5 @@
-import {useState} from 'react';
 import {useEventListener} from '@/util/event_handler';
+import {useState} from 'react';
 
 export function useTrainerDb() {
 	const [changeCounter, setChangeCounter] = useState(0);

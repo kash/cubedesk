@@ -1,6 +1,6 @@
 import {setup} from 'bem-cn';
 
-export const blockNamespace = 'cd';
+const blockNamespace = 'cd';
 
 const block = setup({
 	ns: `${blockNamespace}-`,

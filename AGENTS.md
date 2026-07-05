@@ -1,2 +1,3 @@
 - When using cn(), prefer using an object with the string as the key and a boolean value as the value to enable/disable a style rather than using a boolean && 'style' format.
 - Run the literal "pnpm prisma" when you need to migrate the local database schema. This alias exists in package.json and works.
+- Once you're done with a task, make sure you didn't introduce any new TypeScript errors. Go back and fix them if you introduced any new TypeScript errors after making changes.

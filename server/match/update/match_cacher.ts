@@ -1,4 +1,3 @@
-import {FullMatch, FullMatchParticipant, Match} from '@/types/match';
 import {MatchCache, MatchPlayerCache} from '@/client/shared/match/types';
 import {getMatchById} from '@/server/models/match';
 import {logger} from '@/server/services/logger';
@@ -9,6 +8,7 @@ import {
 	RedisNamespace,
 	setKeyInRedis,
 } from '@/server/services/redis';
+import {FullMatch, FullMatchParticipant, Match} from '@/types/match';
 
 export class MatchCacher {
 	matchId: string;

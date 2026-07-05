@@ -1,5 +1,5 @@
-import {createTRPCClient, httpBatchLink} from '@trpc/client';
 import type {AppRouter} from '@/server/trpc/router';
+import {createTRPCClient, httpBatchLink} from '@trpc/client';
 
 type FetchType = (url: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 

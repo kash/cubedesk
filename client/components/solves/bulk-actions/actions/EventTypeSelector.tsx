@@ -1,11 +1,11 @@
-import CubePicker from '@/components/common/CubePicker';
-import {Solve} from '@/types/solve';
-import React, {ReactNode, useState} from 'react';
-import {CubeType} from '@/util/cubes/cube_types';
-import {getBasicPlural} from '@/util/strings/plural';
 import Button from '@/components/common/Button';
+import CubePicker from '@/components/common/CubePicker';
 import {IModalProps} from '@/components/common/modal/Modal';
 import ModalHeader from '@/components/common/modal/ModalHeader';
+import {Solve} from '@/types/solve';
+import {CubeType} from '@/util/cubes/cube_types';
+import {getBasicPlural} from '@/util/strings/plural';
+import React, {ReactNode, useState} from 'react';
 
 interface Props extends IModalProps {
 	solves: Solve[];

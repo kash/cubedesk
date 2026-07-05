@@ -1,10 +1,10 @@
+import {getHeadToHeadPlayerStatusInfo, getHeadToHeadSolveRowInfo} from '@/client/shared/game-logic/head-to-head';
 import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
 import Game from '@/components/play/game/Game';
 import MatchModule from '@/components/play/target/MatchModule';
 import TargetTimes from '@/components/play/target/TargetTimes';
-import {getHeadToHeadPlayerStatusInfo, getHeadToHeadSolveRowInfo} from '@/client/shared/game-logic/head-to-head';
-import React from 'react';
 import {GameType} from '@/shared/match/consts';
+import React from 'react';
 
 export default function HeadToHead() {
 	return (

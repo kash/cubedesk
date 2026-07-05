@@ -1,15 +1,15 @@
-import {Prisma} from '@/generated/prisma/client';
-import {FullMatch} from '@/types/match';
 import {MatchStanding, MatchUpdate, PlayerStatus} from '@/client/shared/match/types';
+import {Prisma} from '@/generated/prisma/client';
 import {getPrisma} from '@/server/database';
-import {getMatchById} from '@/server/models/match';
-import {updateMatchParticipant} from '@/server/models/match_participation';
 import {getMatchTypeByMatch} from '@/server/match/init';
 import {getMatchPlayersRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '@/server/match/match';
 import MatchTypeLogic from '@/server/match/match_types/match_type_interface';
-import {getRoomSize, getUsersInRoom, userExistsInRoom} from '@/server/match/util';
 import {updateMatchWithWinner} from '@/server/match/update/on_win';
 import {emitMatchUpdate} from '@/server/match/update/send';
+import {getRoomSize, getUsersInRoom, userExistsInRoom} from '@/server/match/util';
+import {getMatchById} from '@/server/models/match';
+import {updateMatchParticipant} from '@/server/models/match_participation';
+import {FullMatch} from '@/types/match';
 
 export async function sendMatchUpdateById(matchId: string) {
 	const match = await getMatchById(matchId);
@@ -76,7 +76,7 @@ export async function sendMatchUpdate(match: FullMatch) {
 	return payload;
 }
 
-export async function getMatchStandings(match: FullMatch, matchType: MatchTypeLogic): Promise<MatchStanding[]> {
+async function getMatchStandings(match: FullMatch, matchType: MatchTypeLogic): Promise<MatchStanding[]> {
 	const output: MatchStanding[] = [];
 
 	const allPlayers = match.participants;

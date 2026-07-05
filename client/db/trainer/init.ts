@@ -1,3 +1,4 @@
+import {getLokiDb} from '@/db/lokijs';
 import {Serialized} from '@/types/serialized';
 import {
 	AlgorithmOverrideInput,
@@ -7,7 +8,6 @@ import {
 	TrainerFavorite,
 } from '@/types/trainer';
 import _ from 'lodash';
-import {getLokiDb} from '@/db/lokijs';
 
 export interface TrainerAlgorithmExtended extends TrainerAlgorithmRecord {
 	overrides?: AlgorithmOverrideInput | null;

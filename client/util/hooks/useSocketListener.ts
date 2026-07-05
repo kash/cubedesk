@@ -1,6 +1,6 @@
-import {useEffect, useRef} from 'react';
 import {ServerToClientEvents} from '@/shared/match/socketio.types';
 import {socketClient} from '@/util/socket/socketio';
+import {useEffect, useRef} from 'react';
 
 export function useSocketListener<T extends keyof ServerToClientEvents>(
 	event: T,

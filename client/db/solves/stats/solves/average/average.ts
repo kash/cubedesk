@@ -1,5 +1,5 @@
-import {Solve} from '@/types/solve';
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
+import {Solve} from '@/types/solve';
 // Not providing a count will result in getting the average for all solves for this cube type
 import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '@/db/solves/stats/solves/caching';
 

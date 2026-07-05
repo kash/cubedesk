@@ -4,9 +4,9 @@ import CustomMatch from '@/components/play/match/match-popup/custom-match/Custom
 import CustomMatchOptions from '@/components/play/match/match-popup/custom-match/CustomMatchOptions';
 import JoinOptions from '@/components/play/match/match-popup/JoinOptions';
 import Lobby from '@/components/play/match/match-popup/Lobby';
+import {GameType} from '@/shared/match/consts';
 import {socketClient} from '@/util/socket/socketio';
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import {GameType} from '@/shared/match/consts';
 
 export enum MatchPopupPage {
 	HOME = 'home',
@@ -32,7 +32,7 @@ export interface IMatchPopupContext extends Props {
 	setCubeType: reactState<string>;
 }
 
-export const MatchPopupContext = createContext<IMatchPopupContext | null>(null);
+const MatchPopupContext = createContext<IMatchPopupContext | null>(null);
 
 export function useMatchPopupContext(): IMatchPopupContext {
 	const ctx = useContext(MatchPopupContext);

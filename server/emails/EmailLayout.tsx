@@ -60,4 +60,4 @@ export default function EmailLayout({previewText, firstName, children}: EmailLay
 	);
 }
 
-export {text, divider};
+export {text};

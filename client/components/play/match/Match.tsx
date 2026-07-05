@@ -1,5 +1,7 @@
 import {reactState} from '@/@types/react';
 import {openModal} from '@/actions/general';
+import {MatchConst} from '@/client/shared/match/consts';
+import {MatchUpdateChat} from '@/client/shared/match/types';
 import {copyText} from '@/components/common/CopyText';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import Modal from '@/components/common/modal/Modal';
@@ -13,8 +15,7 @@ import {getMatchLinkBase} from '@/components/play/match/match-popup/custom-match
 import {ChallengerProps} from '@/components/play/target/challengers/Challenger';
 import {TimerProps} from '@/components/timer/@types/interfaces';
 import Timer from '@/components/timer/Timer';
-import {MatchConst} from '@/client/shared/match/consts';
-import {MatchUpdateChat} from '@/client/shared/match/types';
+import {GameType} from '@/shared/match/consts';
 import {Match as MatchSchema} from '@/types/match';
 import {MatchSession} from '@/types/match';
 import {Solve} from '@/types/solve';
@@ -25,7 +26,6 @@ import {toastSuccess} from '@/util/toast';
 import {CaretDown, Copy, Flag, Prohibit} from 'phosphor-react';
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {GameType} from '@/shared/match/consts';
 
 interface MatchProps {
 	matchPath: string;
