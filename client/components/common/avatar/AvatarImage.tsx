@@ -1,9 +1,7 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {getStorageURL, resourceUri} from '@/util/storage';
 import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
-import ProBadge from '@/components/common/avatar/ProBadge';
 import {Profile} from '@/types/profile';
-import {isNotPro} from '@/util/pro';
 import {cn} from '@/util/cn';
 
 const COLORS = [
@@ -67,11 +65,6 @@ export default function AvatarImage(props: Props) {
 	const user = props.user || props.profile?.user;
 	const profile = props.profile || props.user?.profile;
 
-	let proBadge: ReactNode = <ProBadge small={small} tiny={tiny} large={large} />;
-	if (isNotPro(user)) {
-		proBadge = null;
-	}
-
 	const bodyClass = cn(
 		'relative h-[50px] w-[50px] overflow-hidden rounded-full bg-text/20',
 		tiny && 'h-6 w-6',
@@ -83,7 +76,6 @@ export default function AvatarImage(props: Props) {
 	if ((profile && profile.pfp_image) || image) {
 		avatar = (
 			<div className="relative">
-				{proBadge}
 				<div className={bodyClass}>
 					<img
 						className="h-full w-full object-cover"
@@ -100,7 +92,6 @@ export default function AvatarImage(props: Props) {
 
 		avatar = (
 			<div className="relative">
-				{proBadge}
 				<div className={bodyClass} style={{backgroundColor}}>
 					<img
 						className="h-full w-full object-cover"

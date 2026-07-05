@@ -95,10 +95,10 @@ export const statsRouter = router({
 			matches_played: matchesPlayed,
 			matches_won: matchesWon,
 			matches_lost: matchesLost,
-			profile_views: user.is_pro ? profileViews : 0,
-			match_solve_count: user.is_pro ? matchSolveCount : 0,
-			match_max_win_streak: user.is_pro ? maxWinStreak : 0,
-			solve_views: user.is_pro ? solveViews : 0,
+			profile_views: profileViews,
+			match_solve_count: matchSolveCount,
+			match_max_win_streak: maxWinStreak,
+			solve_views: solveViews,
 		};
 	}),
 

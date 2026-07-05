@@ -234,7 +234,6 @@ function getProfilePriority(profile: Profile) {
 		hasYouTube: !!profile.youtube_link,
 		hasHeaderImag: !!profile.header_image_id,
 		hasPfp: !!profile.pfp_image_id,
-		isPro: profile.user.is_pro,
 		isActive,
 	};
 

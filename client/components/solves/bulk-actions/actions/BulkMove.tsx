@@ -29,7 +29,6 @@ export default function BulkMoveSolvesButton(props: Props) {
 		dispatch(
 			openModal(
 				<ConfirmModal
-					proOnly
 					buttonText={`Move ${solvesToActOn}`}
 					title="Bulk move solves"
 					description="You are about to do a bulk move of solves. This is irreversible. Be careful."

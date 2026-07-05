@@ -64,7 +64,6 @@ export type TrainerAlgorithmRecord = {
 	rotate?: number | null;
 	// Airtable-only fields
 	active?: boolean;
-	pro_only?: boolean;
 	img_link?: string;
 	// Custom-trainer-only fields
 	key?: string;
@@ -88,7 +87,6 @@ export type TrainerAlgorithm = {
 	active: boolean;
 	scrambles: string;
 	solution: string;
-	pro_only: boolean;
 	img_link: string;
 	cube_type: string;
 	algo_type: string;

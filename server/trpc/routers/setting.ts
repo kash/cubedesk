@@ -37,18 +37,7 @@ export const settingRouter = router({
 			});
 		}
 
-		const data = {...input};
-
-		// beta_tester is a Pro-only setting
-		if (!ctx.user.is_pro) {
-			delete data.beta_tester;
-		}
-
-		if (!Object.keys(data).length) {
-			return getSettingsByUserId(ctx.user.id);
-		}
-
-		return updateSettings(ctx.user.id, data);
+		return updateSettings(ctx.user.id, input);
 	}),
 
 	reset: protectedProcedure.mutation(({ctx}) => resetSetting(ctx.user.id)),

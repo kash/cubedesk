@@ -1,7 +1,6 @@
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
-import {ArrowRight} from 'phosphor-react';
 import HeaderControl from '@/components/timer/header-control/HeaderControl';
 import TimerFooter from '@/components/timer/footer/TimerFooter';
 import TimeDisplay from '@/components/timer/time-display/TimeDisplay';
@@ -17,8 +16,6 @@ import {useSettings} from '@/util/hooks/useSettings';
 import {listenForPbEvents} from '@/components/timer/helpers/pb';
 import {useWindowListener} from '@/util/hooks/useListener';
 import SmartCube from '@/components/timer/smart-cube/SmartCube';
-import {Link} from 'react-router-dom';
-import {isNotPro} from '@/util/pro';
 
 export interface ITimerContext extends TimerProps, TimerStore {}
 
@@ -120,20 +117,6 @@ export default function Timer(props: TimerProps) {
 		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': timerType === 'smart' && cubeType === '333',
 	});
 
-	let timerFooterAd: ReactNode = null;
-	if (isNotPro(me)) {
-		timerFooterAd = (
-			<div className="absolute bottom-0 left-1/2 mx-auto mb-1.5 mt-[25px] table -translate-x-1/2">
-				<Link
-					to="/account/pro"
-					className="flex flex-row items-center gap-[5px] border-b-[3px] border-primary/60 pb-0.5 text-base text-tmo-module"
-				>
-					Support development and get Pro <ArrowRight weight="fill" />
-				</Link>
-			</div>
-		);
-	}
-
 	const timeBar = (
 		<div data-timer-main className={mainClass}>
 			<div className={mainCenterClass}>
@@ -143,7 +126,6 @@ export default function Timer(props: TimerProps) {
 					{smartCubeVisual}
 				</div>
 			</div>
-			{timerFooterAd}
 		</div>
 	);
 

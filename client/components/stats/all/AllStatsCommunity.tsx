@@ -17,21 +17,18 @@ export default function AllStatsCommunity() {
 			<MatchStats />
 			<StatsGrid rows={1} columns={2}>
 				<NumberBlock
-					proOnly
 					icon={<Hash weight="bold" />}
 					title="Solves"
 					color="#5A81B5"
 					value={solvesInMatches.toLocaleString()}
 				/>
 				<NumberBlock
-					proOnly
 					icon={<CaretDoubleUp weight="bold" />}
 					title="Best win streak"
 					color="#5A81B5"
 					value={maxWinStreak}
 				/>
 				<NumberBlock
-					proOnly
 					colSpan={1}
 					rowSpan={1}
 					icon={<Eye />}
@@ -40,7 +37,6 @@ export default function AllStatsCommunity() {
 					color="#667289"
 				/>
 				<NumberBlock
-					proOnly
 					colSpan={1}
 					rowSpan={1}
 					icon={<Eye />}

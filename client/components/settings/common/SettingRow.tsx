@@ -5,7 +5,6 @@ import {setSetting} from '@/db/settings/update';
 import {toastError} from '@/util/toast';
 import {useInput} from '@/util/hooks/useInput';
 import Input from '@/components/common/inputs/input/Input';
-import ProOnly from '@/components/common/pro_only/ProOnly';
 import {useSettings} from '@/util/hooks/useSettings';
 import {AllSettings} from '@/db/settings/query';
 import LoggedInOnly from '@/components/common/LoggedInOnly';
@@ -18,7 +17,6 @@ interface Props {
 	sub?: boolean;
 	loggedInOnly?: boolean;
 	vertical?: boolean;
-	proOnly?: boolean;
 	isNumberInput?: boolean;
 	parent?: boolean;
 	step?: number;
@@ -32,7 +30,6 @@ export default function SettingRow(props: Props) {
 		loggedInOnly,
 		isNumberInput,
 		parent,
-		proOnly,
 		sub,
 		vertical,
 		step,
@@ -118,8 +115,6 @@ export default function SettingRow(props: Props) {
 
 	if (loggedInOnly) {
 		content = <LoggedInOnly>{content}</LoggedInOnly>;
-	} else if (proOnly) {
-		content = <ProOnly>{content}</ProOnly>;
 	}
 
 	return (

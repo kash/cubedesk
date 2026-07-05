@@ -27,7 +27,6 @@ export default function BulkDnfSolvesButton(props: Props) {
 		dispatch(
 			openModal(
 				<ConfirmModal
-					proOnly
 					buttonText={`DNF ${solvesToActOn}`}
 					title="Bulk DNF solves"
 					description="You are about to DNF the selected solves. This is irreversible. Be careful."

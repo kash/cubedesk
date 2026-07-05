@@ -1,5 +1,4 @@
 import React, {useMemo} from 'react';
-import Tag from '../../common/Tag';
 import {getBasicPlural} from '../../../util/strings/plural';
 import BulkDeleteSolvesButton from './actions/BulkDelete';
 import BulkMoveSolvesButton from './actions/BulkMove';
@@ -26,9 +25,6 @@ export default function BulkActions(props: Props) {
 	return (
 		<div className="border-button/90 relative z-10 rounded border-4 border-solid p-4">
 			<div className="relative mb-2 flex flex-col items-start">
-				<div className="absolute top-0 right-0">
-					<Tag backgroundColor="primary" text="Pro Feature" />
-				</div>
 				<span className="text-text/70 table">
 					Bulk action on {getBasicPlural(solves.length, 'solve')}
 				</span>

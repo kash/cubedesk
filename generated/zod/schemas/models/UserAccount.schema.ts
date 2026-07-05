@@ -14,8 +14,6 @@ export const UserAccountSchema = z.object({
   verified: z.boolean(),
   banned_forever: z.boolean(),
   banned_until: z.date().nullable(),
-  stripe_customer_id: z.string().nullable(),
-  is_pro: z.boolean(),
   mod: z.boolean(),
   offline_hash: z.string().nullable(),
   unsub_id: z.string().nullable(),

@@ -19,7 +19,6 @@ import bodyParser from 'body-parser';
 import {initRedisClient} from './services/redis';
 import Discord from './services/discord';
 import {initCronJobs} from './services/cron';
-import {initWebhookListeners, initWebhookListenersRaw} from './webhooks';
 import {exposeResourcesForSearchEngines} from './middlewares/search_engines';
 import {createExpressMiddleware} from '@trpc/server/adapters/express';
 import {appRouter} from './trpc/router';
@@ -78,13 +77,9 @@ process.on('SIGINT', () => {
 // Initialize logging
 initLogger();
 
-// This must be before the bodyparser before RAW data needs to be passed to Stripe
-initWebhookListenersRaw();
-
 app.use(bodyParser.json({limit: '200mb'}));
 app.use(cookieParser());
 
-initWebhookListeners();
 exposeResourcesForSearchEngines();
 
 app.use((req, res, next) => {

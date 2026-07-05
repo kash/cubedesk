@@ -27,7 +27,6 @@ export default function BulkOkSolvesButton(props: Props) {
 		dispatch(
 			openModal(
 				<ConfirmModal
-					proOnly
 					buttonText={`OK ${solvesToActOn}`}
 					title="Bulk OK solves"
 					description="You are about to remove any +2 or DNF from the selected solves. This is irreversible. Be careful."

@@ -6,12 +6,9 @@ import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
 import AllStatsFeatured from '@/components/stats/all/AllStatsFeatured';
 import AllStatsCommunity from '@/components/stats/all/AllStatsCommunity';
 import CubeDistro from '@/components/modules/cube-distro/CubeDistro';
-import {useMe} from '@/util/hooks/useMe';
 import {StatsContext} from '@/components/stats/Stats';
-import {isNotPro} from '@/util/pro';
 
 export default function AllStats() {
-	const me = useMe();
 	const {filterOptions} = useContext(StatsContext);
 
 	return (
@@ -27,13 +24,13 @@ export default function AllStats() {
 					<CubeDistro />
 				</StatModule>
 			</StatSection>
-			<StatSection title="Consistency" proOnly>
+			<StatSection title="Consistency">
 				<StatModule>
-					<SolvesPerDay filterOptions={filterOptions} days={30} dummy={isNotPro(me)} />
+					<SolvesPerDay filterOptions={filterOptions} days={30} />
 				</StatModule>
 			</StatSection>
-			<StatSection proOnly title="More Stats">
-				<SubStats proOnly />
+			<StatSection title="More Stats">
+				<SubStats />
 			</StatSection>
 		</div>
 	);

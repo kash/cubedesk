@@ -17,13 +17,7 @@ import dayjs from 'dayjs';
 
 const SUB_STATS_COLOR = '#6D7D90';
 
-interface Props {
-	proOnly?: boolean;
-}
-
-export default function SubStats(props: Props) {
-	const {proOnly} = props;
-
+export default function SubStats() {
 	const context = useContext(StatsContext);
 	const {filterOptions} = context;
 
@@ -52,7 +46,6 @@ export default function SubStats(props: Props) {
 			<NumberBlock
 				small
 				center
-				proOnly={proOnly}
 				icon={<CaretDoubleRight weight="bold" />}
 				title="Solve Streak"
 				value={`${streak.currentStreak} day${streak.currentStreak === 1 ? '' : 's'}`}
@@ -61,7 +54,6 @@ export default function SubStats(props: Props) {
 			<NumberBlock
 				small
 				center
-				proOnly={proOnly}
 				icon={<CaretDoubleUp weight="bold" />}
 				title="Highest Streak"
 				value={`${streak.highestStreak} day${streak.highestStreak === 1 ? '' : 's'}`}
@@ -70,7 +62,6 @@ export default function SubStats(props: Props) {
 			<NumberBlock
 				small
 				center
-				proOnly={proOnly}
 				icon={<WarningOctagon weight="bold" />}
 				title="DNFs"
 				value={`${subStats.dnfCount} (${subStats.dnfPercent}%)`}
@@ -79,7 +70,6 @@ export default function SubStats(props: Props) {
 			<NumberBlock
 				small
 				center
-				proOnly={proOnly}
 				icon={<Warning weight="bold" />}
 				title="+2s"
 				value={`${subStats.plusTwoCount} (${subStats.plusTwoPercent}%)`}
@@ -88,7 +78,6 @@ export default function SubStats(props: Props) {
 			<NumberBlock
 				small
 				center
-				proOnly={proOnly}
 				icon={<Calculator weight="bold" />}
 				title="Avg # Solves / Session"
 				value={avgSolvesPerSession}
@@ -97,7 +86,6 @@ export default function SubStats(props: Props) {
 			<NumberBlock
 				small
 				center
-				proOnly={proOnly}
 				icon={<NumberSquareOne weight="bold" />}
 				title="First Solve"
 				value={firstSolveTime}

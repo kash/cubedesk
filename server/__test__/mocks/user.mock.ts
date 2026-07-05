@@ -6,7 +6,6 @@ export const UserMock = {
 	verified: false,
 	created_at: '2022-04-07T14:58:34.476Z',
 	banned_forever: false,
-	is_pro: true,
 	banned_until: null,
 	admin: true,
 	mod: false,

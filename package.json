@@ -149,7 +149,6 @@
 		"socket.io": "^4.2.0",
 		"socket.io-client": "^4.2.0",
 		"sorted-array": "^2.0.4",
-		"stripe": "^8.211.0",
 		"tailwind-merge": "^3.6.0",
 		"three": "0.125.0",
 		"tinycolor2": "^1.6.0",

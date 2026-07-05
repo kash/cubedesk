@@ -21,7 +21,6 @@ interface TimerHeaderOptions {
 
 export interface FooterModuleData {
 	module: ReactNode;
-	proOnly?: boolean;
 }
 
 export interface TimerCustomModuleOptions {

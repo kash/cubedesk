@@ -16,9 +16,6 @@ on:
             ENV:
                 required: true
                 type: string
-            STRIPE_PRO_PRODUCT_ID:
-                required: true
-                type: string
             DISCORD_SERVER_ID:
                 required: true
                 type: string
@@ -50,8 +47,6 @@ on:
             DISCORD_SECRET:
                 required: true
             DISCORD_BOT_SECRET:
-                required: true
-            STRIPE_SECRET_KEY:
                 required: true
             SENTRY_AUTH_TOKEN:
                 required: true
@@ -93,7 +88,6 @@ jobs:
                   echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_APP_ACCESS_KEY_ID }} >> .env
                   echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_APP_SECRET_ACCESS_KEY }} >> .env
                   echo AWS_DEFAULT_REGION=${{ env.AWS_DEFAULT_REGION }} >> .env
-                  echo STRIPE_PRO_PRODUCT_ID=${{ inputs.STRIPE_PRO_PRODUCT_ID }} >> .env
                   echo DISCORD_SERVER_ID=${{ inputs.DISCORD_SERVER_ID }} >> .env
                   echo DISCORD_BOT_SECRET=${{ secrets.DISCORD_BOT_SECRET }} >> .env
                   echo DISCORD_SECRET=${{ secrets.DISCORD_SECRET }} >> .env
@@ -107,7 +101,6 @@ jobs:
                   echo AIRTABLE_BEARER_TOKEN=${{ secrets.AIRTABLE_BEARER_TOKEN }} >> .env
                   echo ENV=${{ inputs.ENV }} >> .env
                   echo WCA_SECRET=${{ secrets.WCA_SECRET }} >> .env
-                  echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
                   echo ECR_IMAGE_NAME=${{ inputs.ECR_IMAGE_NAME }} >> .env
                   echo NODE_TLS_REJECT_UNAUTHORIZED=1 >> .env
                   echo REDIS_URL=${{ secrets.REDIS_URL }} >> .env

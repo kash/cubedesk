@@ -4,8 +4,7 @@ import {InternalUserAccount, UserAccount} from '@/types/user';
 import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '../../shared/integration';
 import {Integration} from '@/types/integration';
 import {updateUserProfile} from '../models/profile';
-import {getDiscordMe, updateStripeCustomerWithDiscordMetadata} from './discord';
-import Discord from '../services/discord';
+import {getDiscordMe} from './discord';
 
 export async function linkOAuthAccount(intType: IntegrationType, user: InternalUserAccount, code: string) {
 	const int = await getIntegration(user, intType);
@@ -33,12 +32,6 @@ export async function linkOAuthAccount(intType: IntegrationType, user: InternalU
 		await updateUserProfile(user.profile, {
 			discord_id: discordMe.id,
 		});
-
-		// Add discord ID to Stripe Customer metadata so that Pro can be deactivated if the user unlinks their account
-		await updateStripeCustomerWithDiscordMetadata(user, discordMe.id);
-		if (user.is_pro) {
-			await Discord.addRoleToUser(discordMe.id, 'Pro');
-		}
 	}
 
 	return integration;

@@ -15,7 +15,6 @@ import {customCubeTypeRouter} from './routers/custom_cube_type';
 import {bulkActionsRouter} from './routers/bulk_actions';
 import {gameRouter} from './routers/game';
 import {integrationRouter} from './routers/integration';
-import {membershipRouter} from './routers/membership';
 import {matchRouter} from './routers/match';
 import {adminRouter} from './routers/admin';
 import {reportRouter} from './routers/report';
@@ -43,7 +42,6 @@ export const appRouter = router({
 	bulkActions: bulkActionsRouter,
 	game: gameRouter,
 	integration: integrationRouter,
-	membership: membershipRouter,
 	match: matchRouter,
 	admin: adminRouter,
 	report: reportRouter,

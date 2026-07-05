@@ -27,7 +27,6 @@ export default function BulkDeleteSolvesButton(props: Props) {
 		dispatch(
 			openModal(
 				<ConfirmModal
-					proOnly
 					buttonText={`Delete ${solvesToDelete}`}
 					title="Bulk delete solves"
 					description="You are about to do a bulk deletion of solves. This is irreversible. Be careful."

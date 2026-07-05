@@ -36,7 +36,6 @@ export function sanitizeUsers(users: InternalUserAccount[], forPublic = false): 
 		// User's password should never go to the front-end
 		delete (user as Partial<InternalUserAccount>).password;
 		delete (user as Partial<InternalUserAccount>).join_ip;
-		delete (user as Partial<InternalUserAccount>).stripe_customer_id;
 
 		if (forPublic) {
 			return <PublicUserAccount>{
@@ -57,14 +56,6 @@ export function sanitizeUsers(users: InternalUserAccount[], forPublic = false): 
 	}
 
 	return users.map((user) => sanitizeUser({...user}));
-}
-
-export function getUserByStripeCustomerId(stripeCustomerId: string): Promise<InternalUserAccount | null> {
-	return getPrisma().userAccount.findUnique({
-		where: {
-			stripe_customer_id: stripeCustomerId,
-		},
-	}) as Promise<InternalUserAccount | null>;
 }
 
 export function getUserById(id: string): Promise<InternalUserAccount | null> {

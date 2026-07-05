@@ -11,11 +11,9 @@ import TimeDistro from '@/components/modules/time-distro/TimeDistro';
 import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
 import {snakeCase} from 'change-case';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import ProOnly from '@/components/common/pro_only/ProOnly';
 import {TimerContext} from '@/components/timer/Timer';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
-import {useMe} from '@/util/hooks/useMe';
 import QuickStats from '@/components/modules/quick-stats/QuickStats';
 import {useGeneral} from '@/util/hooks/useGeneral';
 
@@ -28,7 +26,6 @@ interface Props {
 export default function TimerModule(props: Props) {
 	const {index, moduleType, customOptions} = props;
 
-	const me = useMe();
 	const context = useContext(TimerContext);
 	const {scramble, cubeType, solvesFilter} = context;
 	const mobileMode = useGeneral('mobile_mode');
@@ -52,35 +49,27 @@ export default function TimerModule(props: Props) {
 	const moduleMap: Record<TimerModuleType, FooterModuleData> = {
 		[TimerModuleType.HISTORY]: {
 			module: <History filterOptions={solvesFilter} hotKeysEnabled />,
-			proOnly: false,
 		},
 		[TimerModuleType.LAST_SOLVE]: {
 			module: <LastSolve filterOptions={solvesFilter} />,
-			proOnly: false,
 		},
 		[TimerModuleType.STATS]: {
 			module: <QuickStats filterOptions={solvesFilter} />,
-			proOnly: false,
 		},
 		[TimerModuleType.SCRAMBLE]: {
 			module: <Scramble cubeType={cubeType} scramble={scramble} />,
-			proOnly: false,
 		},
 		[TimerModuleType.SOLVE_GRAPH]: {
 			module: <TimeChart filterOptions={solvesFilter} />,
-			proOnly: false,
 		},
 		[TimerModuleType.TIME_DISTRO]: {
 			module: <TimeDistro filterOptions={solvesFilter} />,
-			proOnly: false,
 		},
 		[TimerModuleType.CONSISTENCY]: {
-			module: <SolvesPerDay dummy={!me?.is_pro} filterOptions={solvesFilter} days={14} />,
-			proOnly: true,
+			module: <SolvesPerDay filterOptions={solvesFilter} days={14} />,
 		},
 		[TimerModuleType.NONE]: {
 			module: null,
-			proOnly: false,
 		},
 		...customOptions?.additionalDropdownTypes,
 	};
@@ -161,9 +150,7 @@ export default function TimerModule(props: Props) {
 	return (
 		<div className={wrapperClass.join(' ')}>
 			{dropdown}
-			<div className="h-full w-full">
-				<ProOnly ignore={!visual.proOnly}>{visual.module}</ProOnly>
-			</div>
+			<div className="h-full w-full">{visual.module}</div>
 		</div>
 	);
 }

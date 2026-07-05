@@ -26,7 +26,6 @@ import PlayWrapper from '@/components/play/PlayWrapper';
 import Appearance from '@/components/settings/appearance/Appearance';
 import TimerSettings from '@/components/settings/timer/TimerSettings';
 import DataSettings from '@/components/settings/data/import-data/DataSettings';
-import Membership from '@/components/account/membership/Membership';
 import LinkedAccounts from '@/components/account/linked-accounts/LinkedAccounts';
 import OAuthService from '@/components/oauth/OAuthService';
 import ForceSignOut from '@/components/login/ForceSignOut';
@@ -132,7 +131,6 @@ export const routes: (PageContext | RedirectPath)[] = [
 
 	// Account
 	route('/account/personal-info', App, Account, PersonalInfo),
-	route('/account/pro', App, Account, Membership),
 	route('/account/danger-zone', App, Account, DangerZone),
 	route('/account/password', App, Account, Password),
 	route('/account/linked-accounts', App, Account, LinkedAccounts),

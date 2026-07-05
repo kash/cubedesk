@@ -15,7 +15,6 @@ export default function AccountDropdown() {
 	const aviDropDownOptions: IDropdownOption[] = [];
 
 	aviDropDownOptions.push({link: '/account/personal-info', text: 'Account'});
-	aviDropDownOptions.push({link: `/account/pro`, text: 'Pro'});
 	aviDropDownOptions.push({link: `/user/${me.username}`, text: 'Profile'});
 	if (me.admin) {
 		aviDropDownOptions.push({link: '/admin/reports', text: 'Admin'});
