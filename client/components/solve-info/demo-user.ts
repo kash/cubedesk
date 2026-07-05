@@ -4,7 +4,6 @@ export const demoUser: PublicUserAccount = {
 	id: 'demo',
 	username: 'demo',
 	admin: false,
-	mod: false,
 	verified: false,
 	banned_forever: false,
 	created_at: new Date(0),

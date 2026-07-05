@@ -22,14 +22,6 @@ export const protectedProcedure = t.procedure.use(({ctx, next}) => {
 	});
 });
 
-export const modProcedure = protectedProcedure.use(({ctx, next}) => {
-	if (!ctx.user.mod && !ctx.user.admin) {
-		throw new TRPCError({code: 'FORBIDDEN'});
-	}
-
-	return next();
-});
-
 export const adminProcedure = protectedProcedure.use(({ctx, next}) => {
 	if (!ctx.user.admin) {
 		throw new TRPCError({code: 'FORBIDDEN'});

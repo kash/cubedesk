@@ -3,7 +3,7 @@ import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 import {getPrisma} from '../../database';
 import {getUserById} from '../../models/user_account';
-import {modProcedure, protectedProcedure, router} from '../trpc';
+import {adminProcedure, protectedProcedure, router} from '../trpc';
 
 export function resolveReportsOfUserId(userId: string) {
 	return getPrisma().report.updateMany({
@@ -18,7 +18,7 @@ export function resolveReportsOfUserId(userId: string) {
 
 export const reportRouter = router({
 	// Unresolved reports, grouped per reported user
-	list: modProcedure.query(async () => {
+	list: adminProcedure.query(async () => {
 		const reports = await getPrisma().report.findMany({
 			where: {
 				resolved_at: null,
@@ -86,7 +86,7 @@ export const reportRouter = router({
 			return {id: report.id};
 		}),
 
-	resolve: modProcedure
+	resolve: adminProcedure
 		.input(
 			z.object({
 				userId: z.string(),

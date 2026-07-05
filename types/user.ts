@@ -14,7 +14,6 @@ import type {TopAverage, TopSolve} from './top-solve';
 export const publicUserSelect = {
 	id: true,
 	admin: true,
-	mod: true,
 	created_at: true,
 	username: true,
 	verified: true,
@@ -58,7 +57,6 @@ export type MeUser = Prisma.UserAccountGetPayload<{select: typeof meUserSelect}>
 export interface PublicUserAccount {
 	id: string;
 	admin: boolean;
-	mod: boolean;
 	created_at: Date;
 	username: string | null;
 	verified: boolean;
