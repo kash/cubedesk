@@ -33,7 +33,7 @@ export default function TimeDistro(props: Props) {
 		data = dummyData;
 	}
 
-	const buckets = [4, 5, 6, 7, 8, 9, 10];
+	const buckets = [3, 5, 10, 20, 50];
 
 	return (
 		<div className="group relative box-border h-full w-full transition-all duration-100 ease-in-out">
