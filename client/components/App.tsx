@@ -1,3 +1,4 @@
+import ErrorBoundary from '@/components/common/ErrorBoundary';
 import {routes} from '@/components/layout/Routes';
 import 'seedrandom';
 import {setStore} from '@/components/store';
@@ -43,7 +44,9 @@ const tree = (
 		<HelmetProvider>
 			<Provider store={store as any}>
 				<BrowserRouter>
-					<Switch>{routes.map((route) => mapSingleRoute(route))}</Switch>
+					<ErrorBoundary>
+						<Switch>{routes.map((route) => mapSingleRoute(route))}</Switch>
+					</ErrorBoundary>
 				</BrowserRouter>
 			</Provider>
 		</HelmetProvider>
