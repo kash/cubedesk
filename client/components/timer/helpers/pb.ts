@@ -11,18 +11,18 @@ import confetti from 'canvas-confetti';
 let lastConfetti: Date | null = null;
 
 export function listenForPbEvents(context: ITimerContext) {
-	if (context.ignorePbEvents) {
-		return;
-	}
+	const ignorePbEvents = !!context.ignorePbEvents;
 
 	// In case the user doesn't have Quick Stats selected, we need to fetch the single and average PB so that it can be
 	// find in the cache
-	const pbFilter: FilterSolvesOptions = {
-		cube_type: context.cubeType,
-	};
+	if (!ignorePbEvents) {
+		const pbFilter: FilterSolvesOptions = {
+			cube_type: context.cubeType,
+		};
 
-	getSinglePB(pbFilter);
-	getAveragePB(pbFilter, 5);
+		getSinglePB(pbFilter);
+		getAveragePB(pbFilter, 5);
+	}
 
 	function pbEventCallback(msg: string) {
 		triggerConfetti();
@@ -32,31 +32,38 @@ export function listenForPbEvents(context: ITimerContext) {
 		});
 	}
 
+	// These hooks must always be called, in the same order, regardless of `ignorePbEvents` -
+	// conditionally calling hooks based on a prop that can change between renders of the same
+	// component violates the Rules of Hooks and throws "Rendered fewer/more hooks than during
+	// the previous render", crashing the whole app since there's no error boundary to catch it.
 	useEventListener(
 		'singlePbEvent',
 		(ct) => {
+			if (ignorePbEvents) return;
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType?.name ?? ct} Single PB!`);
 		},
-		[context.cubeType]
+		[context.cubeType, ignorePbEvents]
 	);
 
 	useEventListener(
 		'avgPbEvent',
 		(ct) => {
+			if (ignorePbEvents) return;
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType?.name ?? ct} Average of 5 PB!`);
 		},
-		[context.cubeType]
+		[context.cubeType, ignorePbEvents]
 	);
 
 	useEventListener(
 		'singleAndAvgPbEvent',
 		(ct) => {
+			if (ignorePbEvents) return;
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType?.name ?? ct} Single and Average of 5 PB!`);
 		},
-		[context.cubeType]
+		[context.cubeType, ignorePbEvents]
 	);
 }
 

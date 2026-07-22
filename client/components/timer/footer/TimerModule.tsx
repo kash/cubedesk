@@ -8,6 +8,7 @@ import TimeChart from '@/components/modules/time-chart/TimeChart';
 import TimeDistro from '@/components/modules/time-distro/TimeDistro';
 import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
 import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
+import {resolveModuleVisual} from '@/components/timer/footer/helpers/resolveModuleVisual';
 import {useTimerContext} from '@/components/timer/Timer';
 import {setSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
@@ -92,7 +93,7 @@ export default function TimerModule(props: Props) {
 		visual = customOptions.customBody(context);
 	} else {
 		const visualType = customOptions?.moduleType || snakeCase(moduleType ?? '');
-		visual = moduleMap[visualType];
+		visual = resolveModuleVisual(moduleMap, visualType, {module: null});
 	}
 
 	let dropdown: ReactNode = (
