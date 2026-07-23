@@ -3,16 +3,17 @@ import Button from '@/components/common/Button';
 import Emblem from '@/components/common/Emblem';
 import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
+import SmartCubeErrorMessage from '@/components/timer/common/SmartCubeErrorMessage';
 import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
 import Battery from '@/components/timer/smart-cube/battery/Battery';
 import Connect from '@/components/timer/smart-cube/bluetooth/connect';
+import {SmartCubeConnectionError} from '@/components/timer/smart-cube/bluetooth/errors';
 import ManageSmartCubes from '@/components/timer/smart-cube/manage-smart-cubes/ManageSmartCubes';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
-import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {Bluetooth, DotsThree} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
@@ -58,7 +59,7 @@ export default function SmartCube() {
 				turnInterval.current = null;
 			}
 
-			connect.current.disconnect();
+			void connect.current.disconnect();
 		};
 	}, []);
 
@@ -232,19 +233,36 @@ export default function SmartCube() {
 		try {
 			const bluetoothAvailable =
 				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
-			if (bluetoothAvailable) {
-				connect.current.connect();
-			} else {
+			if (!bluetoothAvailable) {
 				dispatch(openModal(<BluetoothErrorMessage />));
+				return;
 			}
-		} catch (e) {
-			toastError('Web Bluetooth API error' + (e ? `: ${e}` : ''));
-			// chrome://flags/#enable-experimental-web-platform-features
+
+			await connect.current.connect();
+		} catch (err) {
+			// Anything that goes wrong has to clear the connecting flag, otherwise
+			// the button sits on a disabled "Connecting..." until the page reloads.
+			await connect.current.disconnect();
+			setTimerParams({
+				smartCanStart: false,
+				smartCubeConnected: false,
+				smartCubeConnecting: false,
+			});
+
+			// The user just closed the device chooser; nothing to report.
+			if (err instanceof SmartCubeConnectionError && err.cancelled) {
+				return;
+			}
+
+			console.error('[SmartCube] connection failed', err);
+			const message =
+				err instanceof Error ? err.message : 'An unknown error occurred while connecting.';
+			dispatch(openModal(<SmartCubeErrorMessage message={message} />));
 		}
 	}
 
 	function disconnectBluetooth() {
-		connect.current.disconnect();
+		void connect.current.disconnect();
 		setTimerParams({
 			smartCanStart: false,
 			smartCubeConnected: false,

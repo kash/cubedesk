@@ -40,6 +40,11 @@ interface BluetoothDevice extends EventTarget {
 	id: string;
 	name?: string;
 	gatt?: BluetoothRemoteGATTServer;
+	/**
+	 * Behind chrome://flags/#enable-experimental-web-platform-features on most
+	 * installs, hence optional — GAN's automatic MAC address lookup needs it.
+	 */
+	watchAdvertisements?(options?: {signal?: AbortSignal}): Promise<void>;
 }
 
 interface Bluetooth {
@@ -47,6 +52,11 @@ interface Bluetooth {
 	requestDevice(options?: {
 		filters?: BluetoothRequestDeviceFilter[];
 		optionalServices?: string[];
+		/**
+		 * Company identifiers whose manufacturer-specific advertisement data
+		 * should be exposed. Chrome strips data for any identifier not listed.
+		 */
+		optionalManufacturerData?: number[];
 		acceptAllDevices?: boolean;
 	}): Promise<BluetoothDevice>;
 }
