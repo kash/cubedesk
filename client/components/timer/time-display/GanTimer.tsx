@@ -1,6 +1,7 @@
 import {openModal} from '@/actions/general';
 import Emblem from '@/components/common/Emblem';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
+import GanTimerErrorMessage from '@/components/timer/common/GanTimerErrorMessage';
 import {
 	cancelInspection,
 	endTimer,
@@ -8,11 +9,16 @@ import {
 	startTimer,
 } from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
+import {
+	connectGanTimer,
+	GanTimerConnection,
+	GanTimerConnectionError,
+} from '@/components/timer/time-display/gan-timer/connect';
+import {GanTimerEvent, GanTimerState} from '@/components/timer/time-display/gan-timer/protocol';
 import {ITimerContext, useTimerContext} from '@/components/timer/Timer';
 import {useSettings} from '@/util/hooks/useSettings';
-import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from 'gan-web-bluetooth';
 import {Bluetooth} from 'phosphor-react';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {SubscriptionLike} from 'rxjs';
 
@@ -25,20 +31,14 @@ let subs: SubscriptionLike | null = null;
 export default function GanTimer() {
 	const dispatch = useDispatch();
 	const inspectionEnabled = useSettings('inspection');
-	const [connected, setConnected] = useState(false);
+	const [connected, setConnected] = useState(!!conn);
+	const [connecting, setConnecting] = useState(false);
 
 	const context = useTimerContext();
 	const contextRef = useRef<ITimerContext>(context);
 	useEffect(() => {
 		contextRef.current = context;
 	}, [context]);
-
-	// Subscribe/unsubscribe to GAN Smart Timer events when component being mounted/unmounted
-	useEffect(() => {
-		subs = conn?.events$.subscribe(handleTimerEvent) ?? null;
-		setConnected(!!conn);
-		return () => subs?.unsubscribe();
-	}, []);
 
 	function handleTimerEvent(event: GanTimerEvent) {
 		switch (event.state) {
@@ -60,6 +60,9 @@ export default function GanTimer() {
 					endTimer(contextRef.current, event.recordedTime.asTimestamp);
 				}
 				break;
+			case GanTimerState.FINISHED:
+				// Emitted immediately after STOPPED, which already recorded the solve.
+				break;
 			case GanTimerState.IDLE:
 				if (
 					!inspectionEnabled ||
@@ -73,39 +76,100 @@ export default function GanTimer() {
 				}
 				break;
 			case GanTimerState.DISCONNECT:
+				conn = null;
 				setConnected(false);
 				break;
 		}
 	}
 
+	// The subscription outlives individual renders, so route events through a ref.
+	// Reading the handler off the ref keeps settings like inspection up to date
+	// instead of freezing whatever they were when the timer was connected.
+	const handlerRef = useRef(handleTimerEvent);
+	handlerRef.current = handleTimerEvent;
+
+	const subscribe = useCallback((connection: GanTimerConnection): SubscriptionLike => {
+		return connection.events$.subscribe({
+			next: (event: GanTimerEvent) => handlerRef.current(event),
+			// The driver drops bad packets rather than erroring, but never let an
+			// unexpected stream error escape as an unhandled rejection.
+			error: (err: unknown) => {
+				console.error('[GanTimer] event stream error', err);
+				conn = null;
+				setConnected(false);
+			},
+		});
+	}, []);
+
+	// Re-attach to an existing connection when this component is remounted
+	useEffect(() => {
+		subs?.unsubscribe();
+		subs = conn ? subscribe(conn) : null;
+		setConnected(!!conn);
+		return () => subs?.unsubscribe();
+	}, [subscribe]);
+
 	async function handleConnectButton() {
+		if (connecting) {
+			return;
+		}
+
 		if (conn) {
-			conn.disconnect();
+			const closing = conn;
 			conn = null;
+			subs?.unsubscribe();
+			subs = null;
 			setConnected(false);
-		} else {
+			await closing.disconnect().catch(() => undefined);
+			return;
+		}
+
+		setConnecting(true);
+		try {
 			const bluetoothAvailable =
 				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
-			if (bluetoothAvailable) {
-				conn = await connectGanTimer();
-				conn.events$.subscribe(
-					(evt) => evt.state == GanTimerState.DISCONNECT && (conn = null),
-				);
-				subs = conn.events$.subscribe(handleTimerEvent);
-				setConnected(true);
-			} else {
+			if (!bluetoothAvailable) {
 				dispatch(openModal(<BluetoothErrorMessage />));
+				return;
 			}
+
+			const connection = await connectGanTimer();
+			conn = connection;
+			subs?.unsubscribe();
+			subs = subscribe(connection);
+			setConnected(true);
+		} catch (err) {
+			conn = null;
+			setConnected(false);
+
+			// The user just closed the browser's device chooser; nothing to report.
+			if (err instanceof GanTimerConnectionError && err.cancelled) {
+				return;
+			}
+
+			console.error('[GanTimer] connection failed', err);
+			const message =
+				err instanceof Error ? err.message : 'An unknown error occurred while connecting.';
+			dispatch(openModal(<GanTimerErrorMessage message={message} />));
+		} finally {
+			setConnecting(false);
 		}
+	}
+
+	let text = 'Connect to Timer';
+	if (connecting) {
+		text = 'Connecting...';
+	} else if (connected) {
+		text = 'Connected';
 	}
 
 	return (
 		<div onClick={handleConnectButton} style={{userSelect: 'none', cursor: 'pointer'}}>
 			<Emblem
 				icon={<Bluetooth />}
-				text={connected ? 'Connected' : 'Connect to Timer'}
+				text={text}
 				small
-				red={!connected}
+				red={!connected && !connecting}
 				green={connected}
 			/>
 		</div>

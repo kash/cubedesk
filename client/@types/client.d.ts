@@ -13,10 +13,27 @@ interface BluetoothRequestDeviceFilter {
 	namePrefix?: string;
 }
 
+interface BluetoothRemoteGATTCharacteristic extends EventTarget {
+	uuid: string;
+	value?: DataView;
+	readValue(): Promise<DataView>;
+	writeValue(value: BufferSource): Promise<void>;
+	startNotifications(): Promise<BluetoothRemoteGATTCharacteristic>;
+	stopNotifications(): Promise<BluetoothRemoteGATTCharacteristic>;
+}
+
+interface BluetoothRemoteGATTService {
+	uuid: string;
+	getCharacteristic(characteristic: string): Promise<BluetoothRemoteGATTCharacteristic>;
+	getCharacteristics(characteristic?: string): Promise<BluetoothRemoteGATTCharacteristic[]>;
+}
+
 interface BluetoothRemoteGATTServer {
 	connected: boolean;
 	connect(): Promise<BluetoothRemoteGATTServer>;
 	disconnect(): void;
+	getPrimaryService(service: string): Promise<BluetoothRemoteGATTService>;
+	getPrimaryServices(service?: string): Promise<BluetoothRemoteGATTService[]>;
 }
 
 interface BluetoothDevice extends EventTarget {
