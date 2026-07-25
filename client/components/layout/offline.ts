@@ -48,7 +48,13 @@ export async function updateOfflineHash(nonInternal = false) {
 		if (nonInternal) {
 			getLokiDb().saveDatabase();
 		} else {
-			getLokiDb().saveDatabaseInternal();
+			// saveDatabaseInternal bypasses the safe default callback set up in
+			// initLokiDb, so it needs an explicit one to avoid an uncatchable throw.
+			getLokiDb().saveDatabaseInternal((err) => {
+				if (err) {
+					console.error('Failed to save local database', err);
+				}
+			});
 		}
 	});
 

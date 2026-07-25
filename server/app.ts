@@ -100,7 +100,7 @@ if (!isDev) {
 	Sentry.init({
 		dsn: 'https://2f30d529a6b242449dc1f86ec18c1ba3@o637154.ingest.sentry.io/5770453',
 		release: process.env.RELEASE_NAME,
-		tracesSampleRate: 1.0,
+		tracesSampleRate: 0.1,
 		environment: env
 	});
 }
