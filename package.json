@@ -113,7 +113,7 @@
 		"lodash": "^4.17.21",
 		"lokijs": "^1.5.12",
 		"memoizee": "^0.4.15",
-		"nanoid": "^3.3.4",
+		"nanoid": "^3.3.17",
 		"phosphor-react": "^1.4.1",
 		"react": "^19.2.6",
 		"react-color-palette": "^6.2.0",
