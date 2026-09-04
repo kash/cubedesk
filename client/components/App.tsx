@@ -36,22 +36,6 @@ if (process.env.ENV !== 'development') {
 		environment: process.env.ENV,
 		integrations: [new Integrations.BrowserTracing()],
 		tracesSampleRate: 0.1,
-		ignoreErrors: [
-			// Expired/missing sessions are an expected state, not an app bug. Old
-			// bundles still throw these as unhandled rejections (see FRONTEND-5CS).
-			'You must be logged in to perform this action',
-			'Request failed with status code 401',
-			// LokiJS local persistence failures (private browsing, storage quota).
-			// Handled at the source in db/lokijs.ts; this covers cached old bundles.
-			'Error saving database',
-			// Network flakiness on the user's end.
-			'Failed to fetch',
-			'NetworkError when attempting to fetch resource',
-			'Load failed',
-			// Benign browser noise.
-			'ResizeObserver loop',
-			'Non-Error promise rejection captured',
-		],
 		denyUrls: [/^chrome-extension:\/\//, /^moz-extension:\/\//, /^safari(-web)?-extension:\/\//],
 	});
 }
