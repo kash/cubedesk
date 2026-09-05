@@ -1,4 +1,5 @@
 import type {AppRouter} from '@/server/trpc/router';
+import {sessionExpiredLink} from '@/util/auth/session_expired';
 import {createTRPCClient, httpBatchLink} from '@trpc/client';
 
 type FetchType = (url: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -25,6 +26,7 @@ function getFetch(): FetchType {
 
 export const trpc = createTRPCClient<AppRouter>({
 	links: [
+		sessionExpiredLink,
 		httpBatchLink({
 			url: getTRPCUrl(),
 			fetch: getFetch(),

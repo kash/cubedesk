@@ -29,13 +29,16 @@ delete window.__STORE__;
 
 import {mapSingleRoute} from '@/components/map-route';
 
-Sentry.init({
-	dsn: 'https://feee16c821834f408ae2453577b10f9e@o637154.ingest.sentry.io/5756098',
-	release: process.env.RELEASE_NAME,
-	environment: process.env.ENV,
-	integrations: [new Integrations.BrowserTracing()],
-	tracesSampleRate: 1.0,
-});
+if (process.env.ENV !== 'development') {
+	Sentry.init({
+		dsn: 'https://feee16c821834f408ae2453577b10f9e@o637154.ingest.sentry.io/5756098',
+		release: process.env.RELEASE_NAME,
+		environment: process.env.ENV,
+		integrations: [new Integrations.BrowserTracing()],
+		tracesSampleRate: 0.1,
+		denyUrls: [/^chrome-extension:\/\//, /^moz-extension:\/\//, /^safari(-web)?-extension:\/\//],
+	});
+}
 
 const appNode = document.getElementById('app')!;
 

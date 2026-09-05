@@ -32,13 +32,24 @@ export default function FriendshipRequest(props: Props) {
 		useState<FriendshipRequestSchema | null>(props.friendRequestReceived ?? null);
 	const [overFriendButton, setOverFriendButton] = useState(false);
 
+	const myId = me?.id;
+
 	useEffect(() => {
-		getFriendshipRequests(user.id).then(({sentRequest, receivedRequest}) => {
+		// Anonymous visitors can't have friendship requests (and the button doesn't
+		// render for them), so don't hit protected endpoints.
+		if (!myId || user.id === myId) {
 			setLoading(false);
-			setFriendRequestSent(sentRequest);
-			setFriendRequestReceived(receivedRequest);
-		});
-	}, []);
+			return;
+		}
+
+		getFriendshipRequests(user.id)
+			.then(({sentRequest, receivedRequest}) => {
+				setFriendRequestSent(sentRequest);
+				setFriendRequestReceived(receivedRequest);
+			})
+			.catch((e) => console.error(e))
+			.finally(() => setLoading(false));
+	}, [myId, user.id]);
 
 	async function getFriendshipRequests(userId: string) {
 		const [sentReqs, receivedReqs] = await Promise.all([

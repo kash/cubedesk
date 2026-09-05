@@ -1,4 +1,5 @@
 import type {AppRouter} from '@/server/trpc/router';
+import {sessionExpiredLink} from '@/util/auth/session_expired';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {httpBatchLink} from '@trpc/client';
 import {createTRPCReact} from '@trpc/react-query';
@@ -36,6 +37,7 @@ export function TRPCProvider({children}: {children: React.ReactNode}) {
 	const [trpcClient] = useState(() =>
 		api.createClient({
 			links: [
+				sessionExpiredLink,
 				httpBatchLink({
 					url: getTRPCUrl(),
 					fetch: getFetch(),

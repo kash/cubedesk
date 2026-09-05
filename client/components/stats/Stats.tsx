@@ -34,16 +34,20 @@ export function useStatsContext(): IStatsContext {
 
 export default function Stats() {
 	const me = useMe();
+	const loggedIn = !!me;
 
 	const [stats, setStats] = useState<StatsSchema | null>(null);
 
 	useEffect(() => {
-		if (!me) {
+		if (!loggedIn) {
 			return;
 		}
 
-		trpc.stats.overview.query().then(setStats);
-	}, [!me]);
+		trpc.stats.overview
+			.query()
+			.then(setStats)
+			.catch((e) => console.error(e));
+	}, [loggedIn]);
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const tabId = urlParams.get(CUBE_TYPE_QUERY_PARAM) || ALL_TAB_ID;
