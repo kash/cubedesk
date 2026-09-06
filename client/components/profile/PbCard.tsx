@@ -1,7 +1,6 @@
 import HistoryDialog from '@/components/modules/history/HistoryDialog';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import SolveInfo from '@/components/solve-info/SolveInfo';
-import {Badge} from '@/components/ui/badge';
 import {Button} from '@/components/ui/button';
 import {Card} from '@/components/ui/card';
 import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
@@ -15,6 +14,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
+import {ArrowUpRight, Trash} from 'phosphor-react';
 import React, {useMemo, useState} from 'react';
 
 interface Props {
@@ -94,16 +94,17 @@ export default function PbCard(props: Props) {
 	let actions: React.ReactNode = null;
 	if (me?.id === user.id) {
 		actions = (
-			<div className="absolute top-0.5 left-2.5">
+			<div className="absolute top-3 right-3 z-10">
 				<Button
-					variant="destructive"
+					variant="ghost"
 					onClick={deletePb}
-					size="sm"
+					size="icon-sm"
+					className="text-text/35 hover:bg-error/10 hover:text-error"
+					aria-label={`Remove ${cubeType?.name} ${single ? 'single' : 'average'}`}
 					disabled={deleting}
 					aria-busy={deleting}
 				>
-					{'Remove'}
-					{deleting ? <Spinner aria-hidden="true" /> : null}
+					<>{deleting ? <Spinner aria-hidden="true" /> : <Trash size={15} />}</>
 				</Button>
 			</div>
 		);
@@ -115,30 +116,45 @@ export default function PbCard(props: Props) {
 
 	return (
 		<>
-			<Card className="relative p-0">
-				<Button
-					variant="ghost"
-					className="h-auto w-full justify-between p-5 text-left whitespace-normal"
+			<Card className="group border-tmo-module/10 hover:border-tmo-module/25 relative gap-0 overflow-hidden rounded-xl p-0 shadow-none transition-colors">
+				<button
+					type="button"
+					className="text-text focus-visible:ring-primary w-full p-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-inset"
 					onClick={openSolve}
 				>
-					<div>
-						<span className="text-text text-[3rem] font-bold">
+					<div className="mb-5 flex items-center gap-2 pr-7">
+						<span className="text-sm font-semibold">{cubeType.name}</span>
+						<span className="bg-tmo-module/5 text-text/50 rounded-md px-1.5 py-0.5 text-[10px] font-medium">
+							{single ? 'Single' : 'Average of 5'}
+						</span>
+					</div>
+					<div className="flex items-center justify-between gap-3">
+						<span className="text-4xl font-semibold tracking-tight tabular-nums">
 							{getTimeString(time, 2)}
 						</span>
-						<span className="text-text mt-[5px] table text-[0.85rem] opacity-70">
-							{new Date(createdAt).toDateString()}
-						</span>
-					</div>
-					<div className="flex flex-col items-end">
-						<div className="mb-[5px] h-[70px] w-[70px]">
-							<Scramble frontFace scramble={scramble} cubeType={cubeType.id} />
+						<div className="size-12 shrink-0 opacity-90">
+							<Scramble
+								frontFace
+								compact
+								scramble={scramble}
+								cubeType={cubeType.id}
+							/>
 						</div>
-						<Badge
-							size="sm"
-							variant="unfilled"
-						>{`${cubeType.name} ${single ? 'Single' : 'Average'}`}</Badge>
 					</div>
-				</Button>
+					<div className="border-tmo-module/10 text-text/40 mt-5 flex items-center justify-between border-t pt-3 text-xs">
+						<span>
+							{new Date(createdAt).toLocaleDateString(undefined, {
+								month: 'short',
+								day: 'numeric',
+								year: 'numeric',
+							})}
+						</span>
+						<ArrowUpRight
+							size={14}
+							className="group-hover:text-text transition-colors"
+						/>
+					</div>
+				</button>
 				{actions}
 			</Card>
 			<Dialog

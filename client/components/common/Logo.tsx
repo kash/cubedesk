@@ -6,7 +6,7 @@ interface LogoProps {
 
 export function LogoBrandmark(props: LogoProps) {
 	function getFileName(color: 'white' | 'black') {
-		return `logo_${color}.svg`;
+		return `cubedesk-logomark-${color}.svg`;
 	}
 
 	const fileName = getFileName(props.dark ? 'black' : 'white');
@@ -14,7 +14,7 @@ export function LogoBrandmark(props: LogoProps) {
 	return (
 		<img
 			className="h-auto w-full"
-			src={resourceUri(`/images/${fileName}`)}
+			src={resourceUri(`/images/branding/${fileName}`)}
 			alt="CubeDesk Logo"
 		/>
 	);
@@ -22,7 +22,7 @@ export function LogoBrandmark(props: LogoProps) {
 
 export function LogoLockup(props: LogoProps) {
 	function getFileName(color: 'white' | 'black') {
-		return `cube_desk_logo_${color}.svg`;
+		return `cubedesk-lockup-${color}.svg`;
 	}
 
 	const fileName = getFileName(props.dark ? 'black' : 'white');
@@ -30,7 +30,7 @@ export function LogoLockup(props: LogoProps) {
 	return (
 		<img
 			className="h-auto w-full"
-			src={resourceUri(`/images/${fileName}`)}
+			src={resourceUri(`/images/branding/${fileName}`)}
 			alt="CubeDesk Logo"
 		/>
 	);

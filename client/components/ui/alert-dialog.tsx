@@ -78,7 +78,7 @@ function OpenContent({
 	return (
 		<Primitive.Portal>
 			<Primitive.Overlay
-				className="fixed inset-0 overflow-y-auto bg-black/80"
+				className="fixed inset-0 overflow-y-auto bg-black/80 data-[state=open]:animate-in data-[state=open]:fade-in-0 duration-200 motion-reduce:animate-none"
 				style={{zIndex: 1000000 + order}}
 			>
 				<Primitive.Content
@@ -89,6 +89,7 @@ function OpenContent({
 					data-dialog-id={context.id}
 					className={cn(
 						'border-tmo-module/15 bg-background text-text relative mx-auto my-12 grid w-[95%] max-w-lg gap-4 rounded-lg border p-6 shadow-lg outline-none',
+						'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200 motion-reduce:animate-none',
 						className,
 					)}
 					onEscapeKeyDown={(event) => event.preventDefault()}

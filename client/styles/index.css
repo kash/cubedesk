@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 @import 'react-color-palette/lib/css/styles.css';
 @config "../../tailwind.config.js";
 @source "../../client";

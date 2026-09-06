@@ -1,18 +1,40 @@
 import {Button, type ButtonProps} from '@/components/ui/button';
-import {toastSuccess} from '@/util/toast';
+import {toastError, toastSuccess} from '@/util/toast';
 import {Check, Copy} from 'phosphor-react';
 import React, {useRef, useState} from 'react';
 
-export function copyText(source: string) {
+export async function copyText(source: string): Promise<boolean> {
+	try {
+		if (navigator.clipboard?.writeText) {
+			await navigator.clipboard.writeText(source);
+			return true;
+		}
+	} catch {
+		// Clipboard permissions can be denied; try copying within the active dialog.
+	}
+
+	const activeElement = document.activeElement as HTMLElement | null;
+	const container = activeElement?.closest('[role="dialog"], [role="alertdialog"]') || document.body;
 	const el = document.createElement('textarea');
 	el.value = source;
 	el.setAttribute('readonly', '');
 	el.style.position = 'absolute';
 	el.style.left = '-9999px';
-	document.body.appendChild(el);
-	el.select();
-	document.execCommand('copy');
-	document.body.removeChild(el);
+	try {
+		container.appendChild(el);
+		el.focus({preventScroll: true});
+		el.select();
+		if (!document.execCommand('copy')) {
+			throw new Error('Copy failed');
+		}
+		return true;
+	} catch {
+		toastError('Could not copy to the clipboard. Please try again.');
+		return false;
+	} finally {
+		el.remove();
+		activeElement?.focus({preventScroll: true});
+	}
 }
 
 interface Props {
@@ -28,7 +50,7 @@ export default function CopyText(props: Props) {
 	const textCopiedTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 	const [textCopied, setTextCopied] = useState(false);
 
-	function onClick(e) {
+	async function onClick(e) {
 		let source = text;
 
 		if (text === 'self') {
@@ -40,7 +62,10 @@ export default function CopyText(props: Props) {
 		}
 
 		// Copy the source
-		copyText(source);
+		if (!(await copyText(source))) {
+			setTextCopied(false);
+			return;
+		}
 		setTextCopied(() => true);
 
 		textCopiedTimeout.current = setTimeout(() => {

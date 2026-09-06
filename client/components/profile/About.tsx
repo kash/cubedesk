@@ -1,4 +1,3 @@
-import Emblem from '@/components/common/Emblem';
 import {Profile} from '@/types/profile';
 import {RedditLogo, TwitchLogo, TwitterLogo, YoutubeLogo} from 'phosphor-react';
 import React from 'react';
@@ -28,7 +27,7 @@ export default function About(props: Props) {
 			'items-center',
 			'px-3',
 			'py-1',
-			'font-bold',
+			'text-xs font-medium',
 			'mr-3 mb-3',
 		];
 
@@ -41,6 +40,7 @@ export default function About(props: Props) {
 				}}
 				key={key}
 				target="_blank"
+				rel="noopener noreferrer"
 				href={profile[key]}
 			>
 				{icon}
@@ -88,53 +88,37 @@ export default function About(props: Props) {
 	if (socialLinks.length) {
 		social = (
 			<div>
-				<Emblem text="Socials" />
 				<div className="flex flex-row flex-wrap">{socialLinks}</div>
 			</div>
 		);
 	}
 
-	return (
-		<div className="relative my-[35px]">
-			<h2>About me</h2>
-			<div className="mt-2.5 grid grid-cols-[repeat(auto-fit,minmax(400px,auto))] gap-[30px]">
-				<div className="space-y-2.5">
-					{social}
-					<div>
-						<Emblem text="Bio" />
-						<p className="text-text mt-2.5 text-[1.3rem] leading-[1.7rem] opacity-90">
-							{profile.bio || <i className="italic">No bio yet</i>}
-						</p>
-					</div>
-				</div>
+	const details = [
+		['3x3 method', profile.three_method],
+		['3x3 goal', profile.three_goal],
+		['Main 3x3 cube', profile.main_three_cube],
+		['Favorite event', profile.favorite_event],
+	];
 
-				<div className="grid grid-cols-2 gap-2.5">
-					<div className="bg-module box-border flex flex-col items-start rounded p-2.5">
-						<Emblem text="3x3 Method" />
-						<span className="text-text mt-[5px] table text-[1.3rem] font-semibold">
-							{profile.three_method || '-'}
-						</span>
+	return (
+		<aside className="border-tmo-module/10 bg-module rounded-xl border p-5">
+			<h2 className="mb-0 text-sm font-semibold">About</h2>
+			<p className="text-text/60 mt-3 mb-0 text-sm leading-relaxed break-words whitespace-pre-wrap">
+				{profile.bio || 'No bio yet.'}
+			</p>
+			<dl className="border-tmo-module/10 mt-5 grid grid-cols-2 gap-x-4 gap-y-5 border-t pt-5 lg:grid-cols-1">
+				{details.map(([label, value]) => (
+					<div key={label} className="min-w-0">
+						<dt className="text-text/45 text-xs">{label}</dt>
+						<dd className="text-text/80 mt-1 text-sm font-medium break-words">
+							{value || '—'}
+						</dd>
 					</div>
-					<div className="bg-module box-border flex flex-col items-start rounded p-2.5">
-						<Emblem text="3x3 Goal" />
-						<span className="text-text mt-[5px] table text-[1.3rem] font-semibold">
-							{profile.three_goal || '-'}
-						</span>
-					</div>
-					<div className="bg-module box-border flex flex-col items-start rounded p-2.5">
-						<Emblem text="Main 3x3 Cube" />
-						<span className="text-text mt-[5px] table text-[1.3rem] font-semibold">
-							{profile.main_three_cube || '-'}
-						</span>
-					</div>
-					<div className="bg-module box-border flex flex-col items-start rounded p-2.5">
-						<Emblem text="Favorite Event" />
-						<span className="text-text mt-[5px] table text-[1.3rem] font-semibold">
-							{profile.favorite_event || '-'}
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
+				))}
+			</dl>
+			{social ? (
+				<div className="border-tmo-module/10 mt-5 border-t pt-5">{social}</div>
+			) : null}
+		</aside>
 	);
 }

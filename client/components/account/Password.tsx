@@ -43,8 +43,8 @@ export default function Password() {
 	}
 
 	return (
-		<div>
-			<Field className="mb-2">
+		<div className="flex flex-col gap-5">
+			<Field>
 				<FieldLabel htmlFor={`${fieldId}-1`}>{'Current Password'}</FieldLabel>
 				<Input
 					type="password"
@@ -53,7 +53,7 @@ export default function Password() {
 					id={`${fieldId}-1`}
 				/>
 			</Field>
-			<Field className="mb-2">
+			<Field>
 				<FieldLabel htmlFor={`${fieldId}-2`}>{'New Password'}</FieldLabel>
 				<Input
 					type="password"
@@ -61,9 +61,9 @@ export default function Password() {
 					onChange={setPassword}
 					id={`${fieldId}-2`}
 				/>
+				<PasswordStrength password={password} />
 			</Field>
-			<PasswordStrength password={password} />
-			<div className="mt-5 flex flex-col items-start">
+			<div className="flex flex-col items-start">
 				<Button
 					variant="default"
 					onClick={changePassword}

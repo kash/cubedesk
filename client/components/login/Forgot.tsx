@@ -99,8 +99,8 @@ export default function Forgot() {
 	switch (stage) {
 		case 0: {
 			body = (
-				<div>
-					<Field className="mb-2">
+				<div className="flex flex-col gap-5">
+					<Field>
 						<FieldLabel htmlFor={`${fieldId}-1`}>{'Email'}</FieldLabel>
 						<Input onChange={setEmail} value={email} name="email" id={`${fieldId}-1`} />
 					</Field>
@@ -123,12 +123,12 @@ export default function Forgot() {
 		}
 		case 1: {
 			body = (
-				<div>
-					<p className="text-text mt-0 mb-[15px] text-center text-[0.9rem] leading-[1.4rem]">
+				<div className="flex flex-col gap-5">
+					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
 						Please check your email. You should have gotten a code to reset your
 						password.
 					</p>
-					<Field className="mb-2">
+					<Field>
 						<FieldLabel htmlFor={`${fieldId}-2`}>{'Code'}</FieldLabel>
 						<Input onChange={setCode} value={code} name="code" id={`${fieldId}-2`} />
 					</Field>
@@ -151,12 +151,12 @@ export default function Forgot() {
 		}
 		case 2: {
 			body = (
-				<div>
-					<p className="text-text mt-0 mb-[15px] text-center text-[0.9rem] leading-[1.4rem]">
+				<div className="flex flex-col gap-5">
+					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
 						Please check your email. You should have gotten a code to reset your
 						password.
 					</p>
-					<Field className="mb-2">
+					<Field>
 						<FieldLabel htmlFor={`${fieldId}-3`}>{'New Password'}</FieldLabel>
 						<Input
 							type="password"
@@ -166,7 +166,7 @@ export default function Forgot() {
 							id={`${fieldId}-3`}
 						/>
 					</Field>
-					<Field className="mb-2">
+					<Field>
 						<FieldLabel htmlFor={`${fieldId}-4`}>{'Confirm Password'}</FieldLabel>
 						<Input
 							type="password"
@@ -175,8 +175,11 @@ export default function Forgot() {
 							onChange={setConfirmPassword}
 							id={`${fieldId}-4`}
 						/>
+						<PasswordStrength
+							confirmPassword={confirmPassword}
+							password={newPassword}
+						/>
 					</Field>
-					<PasswordStrength confirmPassword={confirmPassword} password={newPassword} />
 					<div className="flex flex-col items-start">
 						<Button
 							variant="default"

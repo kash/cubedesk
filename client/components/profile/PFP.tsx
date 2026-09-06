@@ -51,7 +51,7 @@ export default function PFP(props: Props) {
 	}
 
 	return (
-		<div className="relative box-border flex h-[150px] w-[150px] items-center justify-center rounded-full bg-[#eee]/30 p-2.5">
+		<div className="border-module bg-module relative box-border flex size-24 shrink-0 items-center justify-center rounded-full border-4 shadow-sm [&>[data-slot=avatar]]:size-full">
 			{cover}
 			<AvatarImage
 				image={imgLink as any}

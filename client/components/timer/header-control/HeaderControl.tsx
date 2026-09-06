@@ -262,9 +262,9 @@ export default function HeaderControl() {
 					</div>
 					{me && <div className="flex flex-row items-start justify-center gap-2.5" />}
 					<div className="flex flex-row items-start justify-end gap-2.5">
-						{headerOptions?.customHeadersRight}
 						{timerTypeDropdown}
 						{topRightButton}
+						{headerOptions?.customHeadersRight}
 						{!me && (
 							<div className="flex shrink-0 items-center gap-2">
 								<AuthDialog view="login">

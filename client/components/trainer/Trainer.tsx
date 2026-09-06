@@ -7,15 +7,18 @@ import {TimerModuleType} from '@/components/timer/@types/enums';
 import Timer from '@/components/timer/Timer';
 import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import TrainerAlgo from '@/components/trainer/trainer-algo/TrainerAlgo';
+import TrainerSessionEdit from '@/components/trainer/TrainerSessionEdit';
 import {initTrainerData} from '@/components/trainer/util/init';
+import {compareTrainerAlgorithms} from '@/components/trainer/util/sort';
 import {Alert, AlertDescription} from '@/components/ui/alert';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent} from '@/components/ui/card';
-import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
+import {Dialog, DialogClose, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {Skeleton} from '@/components/ui/skeleton';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {
 	fetchTrainerAlgorithmCubeTypes,
+	fetchTrainerAlgorithmById,
 	fetchTrainerAlgorithms,
 	fetchTrainerAlgorithmTypes,
 	FilterTrainerOptions,
@@ -28,8 +31,7 @@ import {useTrainerDb} from '@/util/hooks/useTrainerDb';
 import Chance from 'chance';
 import classNames from 'classnames';
 import _ from 'lodash';
-import memoize from 'memoizee';
-import {ArrowRight, Plus, Star} from 'phosphor-react';
+import {ArrowRight, Plus, Star, X} from 'phosphor-react';
 import React, {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useRouteMatch} from 'react-router-dom';
@@ -109,39 +111,6 @@ export default function Trainer() {
 		filter.favorite = true;
 	}
 
-	const getRandomTrainerAlgo = (
-		filter: FilterTrainerOptions,
-		trainerSessionId: string,
-		index: number,
-	) => {
-		const seed = trainerSessionId + index;
-		const algs = fetchTrainerAlgorithms(filter);
-		const chance = new Chance(seed);
-		const randomIndex = chance.integer({min: 0, max: algs.length - 1});
-
-		return algs[randomIndex];
-	};
-
-	const randomAlgo = memoize(getRandomTrainerAlgo);
-
-	function getCurrentTrainerAlgo(
-		filter: FilterTrainerOptions,
-		trainerSessionId: string,
-		index: number,
-	) {
-		return randomAlgo(filter, trainerSessionId, index);
-	}
-
-	function getCustomScramble(
-		filter: FilterTrainerOptions,
-		trainerSessionId: string,
-		index: number,
-	) {
-		const algo = randomAlgo(filter, trainerSessionId, index);
-		const scrambles = (algo.scrambles ?? '').split('\n');
-		return _.sample(scrambles);
-	}
-
 	function openTrainer(
 		trainingSessionType: TrainingSessionType,
 		algo?: TrainerAlgorithmExtended,
@@ -169,6 +138,27 @@ export default function Trainer() {
 			sessionFilter.favorite = true;
 		}
 
+		// Keep this session's selection stable as favorites and names are edited.
+		// Resolve each ID again so the editor, module, and scrambles use fresh data.
+		const algorithmIds = fetchTrainerAlgorithms(sessionFilter).map((algorithm) => algorithm.id);
+		if (!algorithmIds.length) return;
+
+		function getCurrentTrainerAlgo(index: number) {
+			const chance = new Chance(sessionId + index);
+			const randomIndex = chance.integer({min: 0, max: algorithmIds.length - 1});
+			return fetchTrainerAlgorithmById(algorithmIds[randomIndex])!;
+		}
+
+		function getCustomScramble(index: number) {
+			const currentAlgo = getCurrentTrainerAlgo(index);
+			const scrambles = (
+				currentAlgo.overrides?.scrambles ??
+				currentAlgo.scrambles ??
+				''
+			).split('\n');
+			return _.sample(scrambles);
+		}
+
 		const solvesOverride: Partial<Solve> = {
 			training_session_id: sessionId,
 			trainer_name: algo?.id,
@@ -183,6 +173,16 @@ export default function Trainer() {
 					hideNewSession: true,
 					hideSessionSelector: true,
 					hideTimerType: true,
+					customHeadersRight: (
+						<>
+							<TrainerSessionEdit getAlgorithm={getCurrentTrainerAlgo} />
+							<DialogClose asChild>
+								<Button variant="ghost" size="icon" aria-label="Close trainer">
+									<X aria-hidden="true" />
+								</Button>
+							</DialogClose>
+						</>
+					),
 				},
 				timerCustomFooterModules: [
 					{
@@ -195,11 +195,7 @@ export default function Trainer() {
 					},
 					{
 						customBody: (context) => {
-							const ag = getCurrentTrainerAlgo(
-								sessionFilter,
-								sessionId,
-								context.sessionSolveCount,
-							);
+							const ag = getCurrentTrainerAlgo(context.sessionSolveCount);
 							return {
 								module: <AlgoModule algoExt={ag} />,
 							};
@@ -211,8 +207,7 @@ export default function Trainer() {
 				cubeType: cubeType,
 				solvesFilter: solvesFilter,
 				solvesSaveOverride: solvesOverride,
-				customScrambleFunc: (context) =>
-					getCustomScramble(sessionFilter, sessionId, context.sessionSolveCount),
+				customScrambleFunc: (context) => getCustomScramble(context.sessionSolveCount),
 			},
 			fullSize: true,
 		});
@@ -228,10 +223,7 @@ export default function Trainer() {
 	);
 
 	const algos = useMemo(
-		() =>
-			fetchTrainerAlgorithms(filter, {
-				sortBy: 'id',
-			}),
+		() => fetchTrainerAlgorithms(filter).sort(compareTrainerAlgorithms),
 		[cubeType, algoType, filter, loaded, updateCount],
 	);
 
@@ -313,21 +305,13 @@ export default function Trainer() {
 	if (algos && algos.length) {
 		body = algos.map((algo) => <TrainerAlgo key={algo.id} algoExt={algo} />);
 	} else {
-		body = (
-			<div>
-				<Empty text="No algorithms available in this set" />
-				<p className="text-text/60 text-center text-sm">
-					Try another set, create a custom trainer, or ask an administrator to import the
-					catalog.
-				</p>
-			</div>
-		);
+		body = <Empty text="No algorithms available in this set" />;
 	}
 
 	return (
 		<>
 			<TrainerContext.Provider value={context}>
-				<div>
+				<div className="flex h-full min-h-0 flex-col">
 					<PageTitle pageName="Trainer">
 						<div className="absolute top-0 right-0">
 							<Button variant="default" onClick={openCreateCustomTrainer} size="lg">
@@ -401,7 +385,7 @@ export default function Trainer() {
 					<div
 						className={classNames(
 							'grid [grid-template-columns:repeat(auto-fit,minmax(400px,1fr))] gap-5',
-							!algos?.length && '!grid-cols-1',
+							{'min-h-0 flex-1 !grid-cols-1 items-center': !algos?.length},
 						)}
 					>
 						{body}
@@ -417,7 +401,12 @@ export default function Trainer() {
 				}}
 			>
 				{timerDialog && (
-					<DialogContent fullSize={timerDialog.fullSize}>
+					<DialogContent
+						fullSize={timerDialog.fullSize}
+						noPadding={timerDialog.fullSize}
+						hideCloseButton
+						className={classNames({'border-0': timerDialog.fullSize})}
+					>
 						<DialogTitle className="sr-only">Timer</DialogTitle>
 						<Timer {...timerDialog.props} />
 					</DialogContent>

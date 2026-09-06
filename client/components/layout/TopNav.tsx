@@ -13,9 +13,9 @@ export default function TopNav(props: Props) {
 
 	const backgroundTheme = useTheme('background_color');
 
-	let logoFile = 'cube_desk_logo_white';
+	let logoFile = 'cubedesk-lockup-white';
 	if (!backgroundTheme.isDark || white) {
-		logoFile = 'cube_desk_logo_black';
+		logoFile = 'cubedesk-lockup-black';
 	}
 
 	const navClasses = [
@@ -33,17 +33,20 @@ export default function TopNav(props: Props) {
 	return (
 		<div className={navClasses.join(' ')}>
 			<div className="mx-auto flex w-[95%] max-w-[1600px] flex-row items-center justify-between text-inherit">
-				<div>
-					<a href="/">
+				<div className="shrink-0">
+					<a
+						className="flex min-h-10 items-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
+						href="/"
+					>
 						<img
-							className="w-[150px]"
-							src={resourceUri(`/images/${logoFile}.svg`)}
+							className="h-auto w-[120px] sm:w-[150px]"
+							src={resourceUri(`/images/branding/${logoFile}.svg`)}
 							alt="CubeDesk Logo"
 						/>
 					</a>
 				</div>
 
-				<div className="flex flex-row items-center gap-5 text-inherit">
+				<div className="flex shrink-0 flex-row items-center gap-2 text-inherit sm:gap-5">
 					<AuthDialog view="login">
 						<Button
 							variant="ghost"

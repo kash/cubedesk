@@ -112,14 +112,14 @@ export default function Nav() {
 					<div className="flex w-full flex-col justify-center">
 						<div className={headerClasses.join(' ')}>
 							<div
-								className={cn('flex w-[120px]', {
+								className={cn('flex w-[120px] shrink-0', {
 									hidden: navClosed,
 								})}
 							>
 								<LogoLockup dark={!moduleColor.isDark} />
 							</div>
 							<div
-								className={cn('mb-5 flex w-[23px]', {
+								className={cn('mb-5 flex w-6 shrink-0', {
 									hidden: !navClosed,
 								})}
 							>

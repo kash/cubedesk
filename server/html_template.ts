@@ -24,6 +24,7 @@ export default (payload: HtmlPagePayload) => {
 		url: `${baseUri}/`,
 	});
 	const assetBase = distBase.replace(/\/$/, '');
+	const brandingBase = `${resourceBase.replace(/\/$/, '')}/images/branding`;
 	const assetUri = (fileName: string) => `${assetBase}/${fileName}`;
 	const cssLink = isDev
 		? '<link rel="stylesheet" href="/client/styles/index.css?direct">'
@@ -65,9 +66,11 @@ export default (payload: HtmlPagePayload) => {
 				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans&family=JetBrains+Mono&family=Kiwi+Maru&family=Montserrat&family=Poppins&family=Roboto+Mono&family=Space+Mono&display=swap">
 				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,900&display=swap">
 				${cssLink}
-				<link rel="icon" href="${resourceBase}/favicon.ico" type="image/x-icon">
-				<link rel="icon" href="${resourceBase}/cubedesk_app_icon_192.png" type="image/png" sizes="192x192">
-				<link rel="apple-touch-icon" href="${resourceBase}/cubedesk_app_icon_192.png">
+				<link rel="icon" href="${brandingBase}/favicon.ico" type="image/x-icon">
+				<link rel="icon" href="${brandingBase}/favicon-32x32.png" type="image/png" sizes="32x32">
+				<link rel="icon" href="${brandingBase}/favicon-16x16.png" type="image/png" sizes="16x16">
+				<link rel="apple-touch-icon" href="${brandingBase}/apple-touch-icon.png" sizes="180x180">
+				<link rel="manifest" href="${brandingBase}/site.webmanifest">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 				<script async defer data-domain="cubedesk.io" src="https://plausible.io/js/plausible.js"></script>
 				<script async defer src="https://www.googletagmanager.com/gtag/js?id=AW-354788011"></script>

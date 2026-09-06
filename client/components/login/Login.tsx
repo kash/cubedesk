@@ -48,7 +48,7 @@ export default function Login() {
 			})}
 		>
 			<form onSubmit={login}>
-				<Field className="mb-2">
+				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-1`}>{'Email'}</FieldLabel>
 					<Input
 						type="email"

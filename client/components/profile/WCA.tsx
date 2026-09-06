@@ -63,13 +63,13 @@ const WCA = Object.assign(
 			const link = `https://www.worldcubeassociation.org/oauth/authorize?client_id=p_XZ2OvzijIXX-y8SZmQFa0w5m-B6u4U7PkrRWhojrs&redirect_uri=${url}&response_type=code&scope=public`;
 
 			body = (
-				<Button variant="default" asChild>
+				<Button variant="outline" size="sm" asChild>
 					<a href={link}>{'Link WCA Account'}</a>
 				</Button>
 			);
 		}
 
-		return <div className="absolute top-[15px] right-[15px] z-10">{body}</div>;
+		return <div className="relative">{body}</div>;
 	},
 	{getWcaIntegration},
 );

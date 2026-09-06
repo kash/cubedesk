@@ -124,16 +124,19 @@ export default function LandingNav(props: Props) {
 			].join(' ')}
 		>
 			<div className="mx-auto flex w-[calc(100%_-_30px)] max-w-[1600px] flex-row items-center justify-between text-inherit">
-				<div>
-					<Link to="/" className="flex items-center justify-center">
+				<div className="shrink-0">
+					<Link
+						to="/"
+						className="flex min-h-8 items-center justify-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
+					>
 						<img
-							className="w-[120px]"
-							src={resourceUri(`/images/logos/cubedesk_logo_black.svg`)}
+							className="h-auto w-[120px] sm:w-[144px]"
+							src={resourceUri('/images/branding/cubedesk-lockup-black.svg')}
 							alt="CubeDesk Logo"
 						/>
 					</Link>
 				</div>
-				<div className="flex flex-row items-center gap-[25px] text-inherit">
+				<div className="flex shrink-0 flex-row items-center gap-4 text-inherit sm:gap-[25px]">
 					<ActionMenu flat icon={<CaretDown weight="fill" />} options={dropDownOptions} />
 					{showNavLinks}
 				</div>

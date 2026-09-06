@@ -48,8 +48,13 @@ export default function MobileNav() {
 					/>
 				</div>
 				<div className="relative z-[100] flex w-[30%] flex-row justify-center">
-					<a className="w-[23px]" href="/">
-						<LogoBrandmark dark={!moduleColor.isDark} />
+					<a
+						className="flex size-11 shrink-0 items-center justify-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
+						href="/"
+					>
+						<span className="w-6">
+							<LogoBrandmark dark={!moduleColor.isDark} />
+						</span>
 					</a>
 				</div>
 				{navRight}

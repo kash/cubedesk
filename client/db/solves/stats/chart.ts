@@ -13,29 +13,30 @@ export function getChartData(filter: FilterSolvesOptions) {
 		},
 		{
 			sortBy: 'started_at',
-		}
+		},
 	);
 
-	const data: {index: number; value: number}[] = [];
+	const data: {index: number; value: number; timestamp: number | null}[] = [];
 	let index = 0;
 
 	const buckets = Math.floor(solves.length / CHART_BUCKET_SIZE);
 	let runningTotal = 0;
 	let bucketSize = 0;
 
-	for (const solve of solves) {
+	for (const [solveIndex, solve] of solves.entries()) {
 		const time = solve.time;
 
 		bucketSize += 1;
 		runningTotal += time;
 
-		if (bucketSize < buckets) {
+		if (bucketSize < buckets && solveIndex < solves.length - 1) {
 			continue;
 		}
 
 		data.push({
 			index,
 			value: runningTotal / bucketSize,
+			timestamp: solve.started_at,
 		});
 
 		runningTotal = 0;
