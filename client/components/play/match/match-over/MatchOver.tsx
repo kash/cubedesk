@@ -1,9 +1,8 @@
 import {MatchEndedBy} from '@/client/shared/match/types';
 import Avatar from '@/components/common/avatar/Avatar';
-import Button from '@/components/common/Button';
-import {IModalProps} from '@/components/common/modal/Modal';
 import EloChange from '@/components/play/match/match-over/EloChange';
 import Lobby from '@/components/play/match/match-popup/Lobby';
+import {Button} from '@/components/ui/button';
 import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {useMe} from '@/util/hooks/useMe';
@@ -12,7 +11,7 @@ import classNames from 'classnames';
 import {Sword} from 'phosphor-react';
 import React, {ReactNode, useMemo, useState} from 'react';
 
-interface Props extends IModalProps {
+interface Props {
 	match: Match;
 	matchType: GameType;
 	exitMatch: () => void;
@@ -67,7 +66,7 @@ export default function MatchOver(props: Props) {
 		setRematchRequested(true);
 	}
 
-	function exitModal() {
+	function exitDialog() {
 		exitMatch();
 	}
 
@@ -159,17 +158,21 @@ export default function MatchOver(props: Props) {
 			</div>
 			<div className="flex flex-col items-center pb-5">
 				<div className="mb-[15px] flex flex-row flex-wrap gap-[15px]">
-					<Button gray large text="Join Lobby" onClick={() => setNewMatch(true)} />
+					<Button variant="secondary" onClick={() => setNewMatch(true)} size="lg">
+						{'Join Lobby'}
+					</Button>
 					<Button
-						primary
-						glow
-						large
-						text={rematchText}
+						variant="default"
 						disabled={rematchDisabled}
 						onClick={requestRematch}
-					/>
+						size="lg"
+					>
+						{rematchText}
+					</Button>
 				</div>
-				<Button text="Exit" onClick={exitModal} flat white />
+				<Button variant="ghost" onClick={exitDialog} size="sm">
+					{'Exit'}
+				</Button>
 			</div>
 		</div>
 	);

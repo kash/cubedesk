@@ -17,6 +17,8 @@ export default function AllStatsFeatured() {
 
 	const cubeTypes = useMemo(() => {
 		return fetchAllCubeTypesSolved();
+		// The local solve database is mutable; its revision invalidates this query.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [context.filterOptions, solveUpdate]);
 
 	let topCubeType: CubeType | undefined;
@@ -26,27 +28,35 @@ export default function AllStatsFeatured() {
 
 	const totalSolves = useMemo(() => {
 		return getTotalSolveCount(context.filterOptions);
+		// The local solve database is mutable; its revision invalidates this query.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [context.filterOptions, solveUpdate]);
 
 	const timeSpentCubing = useMemo(() => {
 		return getTotalSolveTime(context.filterOptions);
+		// The local solve database is mutable; its revision invalidates this query.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [context.filterOptions, solveUpdate]);
 
 	return (
-		<StatsGrid rows={2} columns={2}>
+		<StatsGrid rows={1} columns={4} className="stats-featured">
 			<NumberBlock
 				center
 				colSpan={1}
 				icon={<Timer weight="bold" />}
-				title="Time Spent Cubing"
-				value={getTimeString(timeSpentCubing)}
+				title="Time spent cubing"
+				value={
+					timeSpentCubing < 60
+						? `${getTimeString(timeSpentCubing)}s`
+						: getTimeString(timeSpentCubing)
+				}
 				color="#23C586"
 			/>
 			<NumberBlock
 				center
 				colSpan={1}
 				icon={<Hash weight="bold" />}
-				title="Total Solves"
+				title="Total solves"
 				value={totalSolves}
 				color="#54ACE4"
 			/>
@@ -54,7 +64,7 @@ export default function AllStatsFeatured() {
 				center
 				colSpan={1}
 				icon={<Hash weight="bold" />}
-				title="Number of Events"
+				title="Events solved"
 				value={cubeTypes.length}
 				color="#6D7D90"
 			/>
@@ -62,7 +72,7 @@ export default function AllStatsFeatured() {
 				center
 				colSpan={1}
 				icon={<ArrowFatLinesUp weight="bold" />}
-				title="Top Event"
+				title="Most solved event"
 				value={topCubeType?.name || '-'}
 				color="#6D7D90"
 			/>

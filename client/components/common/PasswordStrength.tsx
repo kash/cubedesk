@@ -18,10 +18,10 @@ export default function PasswordStrength(props: Props) {
 	}
 
 	return (
-		<div className="my-1.25 flex flex-col items-start">
-			<PasswordCase name="Lowercase letter" checked={result.lower1Check} />
-			<PasswordCase name="Uppercase letter" checked={result.cap1Check} />
-			<PasswordCase name="1 number" checked={result.number1Check} />
+		<div className="my-1.25 flex flex-wrap items-center gap-x-3 gap-y-1">
+			<PasswordCase name="Lowercase" checked={result.lower1Check} />
+			<PasswordCase name="Uppercase" checked={result.cap1Check} />
+			<PasswordCase name="Number" checked={result.number1Check} />
 			<PasswordCase name="8 characters" checked={result.char8Check} />
 			{confirm}
 		</div>
@@ -39,11 +39,11 @@ function PasswordCase(props: SingleProps) {
 	return (
 		<span
 			className={cn(
-				'mb-1 flex flex-row items-center gap-1.25 text-sm text-text opacity-50',
-				checked && 'text-[#2dbd61] opacity-100'
+				'flex items-center gap-1 whitespace-nowrap text-xs text-text opacity-50',
+				{'text-[#2dbd61] opacity-100': checked}
 			)}
 		>
-			<Check weight="bold" />
+			<Check className="shrink-0" weight="bold" />
 			{name}
 		</span>
 	);

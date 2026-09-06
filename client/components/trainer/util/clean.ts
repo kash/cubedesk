@@ -11,7 +11,7 @@ export function cleanTrainerAlgorithm(algo: TrainerAlgorithmExtended): TrainerAl
 
 	const newAlgo: TrainerAlgorithmClean = {
 		...algo,
-		rotate: 0,
+		rotate: algo.rotate ?? 0,
 		favorite: algo.favorite,
 	};
 

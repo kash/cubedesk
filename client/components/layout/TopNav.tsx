@@ -1,4 +1,5 @@
-import Button from '@/components/common/Button';
+import AuthDialog from '@/components/login/AuthDialog';
+import {Button} from '@/components/ui/button';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
 import React from 'react';
@@ -43,14 +44,20 @@ export default function TopNav(props: Props) {
 				</div>
 
 				<div className="flex flex-row items-center gap-5 text-inherit">
-					<Button
-						large
-						textColor={white ? '#444444' : undefined}
-						to="/login"
-						text="Log In"
-						transparent
-					/>
-					<Button large primary to="/signup" text="Sign uo" />
+					<AuthDialog view="login">
+						<Button
+							variant="ghost"
+							size="lg"
+							style={{color: white ? '#444444' : undefined}}
+						>
+							{'Log In'}
+						</Button>
+					</AuthDialog>
+					<AuthDialog view="signup">
+						<Button variant="default" size="lg">
+							{'Sign up'}
+						</Button>
+					</AuthDialog>
 				</div>
 			</div>
 		</div>

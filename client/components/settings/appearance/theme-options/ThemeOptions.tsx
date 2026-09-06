@@ -20,9 +20,10 @@ export default function ThemeOptions() {
 
 	return (
 		<>
-			<SettingRow vertical title="Basic theme customization theme">
-				<div className="box-border grid w-full grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2.5">
+			<SettingRow vertical title="Basic theme customization">
+				<div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
 					<ColorPicker
+						fullWidth
 						hideReset
 						name="Primary color"
 						selectedColorHex={primaryColor}
@@ -30,6 +31,7 @@ export default function ThemeOptions() {
 						onChange={(color) => updateSetting('primary_color', color)}
 					/>
 					<ColorPicker
+						fullWidth
 						hideReset
 						name="Secondary color"
 						selectedColorHex={secondaryColor}
@@ -41,9 +43,9 @@ export default function ThemeOptions() {
 			<SettingRow
 				vertical
 				title="Themes"
-				description="Choose from a pre-defined list of themes or customize your own in the section below. *Warning*: Selecting one of these themes will reset any custom theme settings you may have set."
+				description="Choose a preset or customize your colors below. Selecting a preset replaces your custom theme colors."
 			>
-				<div className="box-border grid w-full grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-2.5">
+				<div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
 					<ThemeOption theme="dark" />
 					<ThemeOption theme="light" />
 					<ThemeOption theme="cyberpunk" />
@@ -55,8 +57,9 @@ export default function ThemeOptions() {
 				</div>
 			</SettingRow>
 			<SettingRow vertical title="Advanced theme customization">
-				<div className="box-border grid w-full grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2.5">
+				<div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
 					<ColorPicker
+						fullWidth
 						openUp
 						hideReset
 						name="Background color"
@@ -65,6 +68,7 @@ export default function ThemeOptions() {
 						onChange={(color) => updateSetting('background_color', color)}
 					/>
 					<ColorPicker
+						fullWidth
 						openUp
 						hideReset
 						name="Module color"
@@ -73,6 +77,7 @@ export default function ThemeOptions() {
 						onChange={(color) => updateSetting('module_color', color)}
 					/>
 					<ColorPicker
+						fullWidth
 						openUp
 						hideReset
 						name="Text color"
@@ -81,6 +86,7 @@ export default function ThemeOptions() {
 						onChange={(color) => updateSetting('text_color', color)}
 					/>
 					<ColorPicker
+						fullWidth
 						openUp
 						hideReset
 						name="Button color"

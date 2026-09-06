@@ -1,4 +1,5 @@
 import {TimerProps, TimerStore} from '@/components/timer/@types/interfaces';
+import DemoWarning from '@/components/layout/wrapper/DemoWarning';
 import TimerFooter from '@/components/timer/footer/TimerFooter';
 import HeaderControl from '@/components/timer/header-control/HeaderControl';
 import {initTimer} from '@/components/timer/helpers/init';
@@ -33,7 +34,7 @@ export function useTimerContext(): ITimerContext {
 export default function Timer(props: TimerProps) {
 	const dispatch = useDispatch();
 
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(!props.demoMode);
 	const timerStore = useSelector((state: RootState) => state.timer) as TimerStore;
 	const mobileMode = useGeneral('mobile_mode');
 	const cubeType = useSettings('cube_type');
@@ -167,7 +168,7 @@ export default function Timer(props: TimerProps) {
 		<div
 			className={classNames(
 				'relative mx-auto box-border flex flex-col justify-end pb-[calc(10px_+_env(safe-area-inset-bottom))] text-text',
-				mobileMode
+				mobileMode && me
 					? 'h-[calc(100vh_-_55px)] supports-[height:100dvh]:h-[calc(100dvh_-_55px)]'
 					: 'h-screen supports-[height:100dvh]:h-dvh'
 			)}
@@ -195,6 +196,11 @@ export default function Timer(props: TimerProps) {
 				</KeyWatcher>
 			</TimerContext.Provider>
 			{background}
+			{(sideLayout || context.focusMode) && (
+				<div className="absolute bottom-[calc(4px_+_env(safe-area-inset-bottom))] left-0 z-20 w-full">
+					<DemoWarning />
+				</div>
+			)}
 		</div>
 	);
 }

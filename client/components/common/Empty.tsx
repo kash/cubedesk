@@ -1,31 +1,25 @@
+import {
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	Empty as EmptyState,
+} from '@/components/ui/empty';
+import {cn} from '@/util/cn';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
-import React, {ReactNode} from 'react';
-
-interface Props {
-	text?: string;
-}
-
-export default function Empty(props: Props) {
-	const {text} = props;
+import React from 'react';
+export default function Empty({text, centered}: {text?: string; centered?: boolean}) {
 	const moduleColor = useTheme('module_color');
-
-	let body: ReactNode = null;
-	if (text) {
-		body = <p className="mt-3.75 text-sm text-text opacity-60">{text}</p>;
-	}
-
-	const imgClass = 'mt-7.5 h-auto w-22.5 opacity-40';
-
-	let img = <img className={imgClass} src={resourceUri('/images/empty_cube_white.svg')} alt="Empty result" />;
-	if (!moduleColor.isDark) {
-		img = <img className={imgClass} src={resourceUri('/images/empty_cube_black.svg')} alt="Empty result" />;
-	}
+	const icon = moduleColor.isDark ? 'empty_cube_white.svg' : 'empty_cube_black.svg';
 
 	return (
-		<div className="flex w-full flex-col items-center">
-			{img}
-			{body}
-		</div>
+		<EmptyState className={cn('w-full', {'h-full': centered})}>
+			<EmptyHeader>
+				<EmptyMedia>
+					<img src={resourceUri(`/images/${icon}`)} alt="Empty result" className="size-10 opacity-30" />
+				</EmptyMedia>
+				<EmptyDescription>{text || 'No results yet'}</EmptyDescription>
+			</EmptyHeader>
+		</EmptyState>
 	);
 }

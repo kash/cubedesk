@@ -1,16 +1,15 @@
-import Button from '@/components/common/Button';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import SelectField from '@/components/common/inputs/SelectField';
 import Slider from '@/components/common/Slider';
 import LayoutSelector from '@/components/settings/appearance/LayoutSelector';
 import ThemeOptions from '@/components/settings/appearance/theme-options/ThemeOptions';
 import TimerBackground from '@/components/settings/appearance/TimerBackground';
 import SettingRow from '@/components/settings/common/SettingRow';
 import SettingSection from '@/components/settings/common/SettingSection';
+import {Button} from '@/components/ui/button';
 import {AllSettings, getDefaultSetting} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getTimeString} from '@/util/time';
-import {CaretDown} from 'phosphor-react';
 import React from 'react';
 
 const DEFAULT_FONT_FAMILY = 'Roboto Mono';
@@ -46,13 +45,13 @@ export default function Appearance() {
 				title="Timer modules"
 				description="Change the number of modules shown on the timer page. Note that this is the *maximum* number of modules shown (based on your window size)."
 			>
-				<Dropdown
-					text={String(timerModuleCount)}
-					noMargin
-					icon={<CaretDown />}
+				<SelectField
+					label="Timer modules"
+					value={String(timerModuleCount)}
+					onValueChange={(value) => updateSetting('timer_module_count', Number(value))}
 					options={[1, 2, 3, 4, 5, 6].map((count) => ({
+						value: String(count),
 						text: String(count) + (count === 3 ? ' (Default)' : ''),
-						onClick: () => updateSetting('timer_module_count', count),
 					}))}
 				/>
 			</SettingRow>
@@ -72,22 +71,33 @@ export default function Appearance() {
 				title="Timer font"
 				description="Font of the big timer you see on the timer page"
 			>
-				<Dropdown
-					text={timerFontFamily}
-					noMargin
-					icon={<CaretDown />}
-					options={FONT_FAMILIES.map((ff) => ({
-						text: ff,
-						onClick: () => updateSetting('timer_font_family', ff),
+				<SelectField
+					label="Timer font"
+					value={timerFontFamily}
+					onValueChange={(value) => updateSetting('timer_font_family', value)}
+					contentClassName="min-w-72"
+					options={FONT_FAMILIES.map((font) => ({
+						value: font,
+						text: font,
+						endContent: (
+							<span
+								className="inline-block w-16 text-right"
+								style={{fontFamily: font, fontWeight: 400}}
+							>
+								12.34
+							</span>
+						),
 					}))}
 				/>
-				<Button
-					hidden={timerFontFamily === DEFAULT_FONT_FAMILY}
-					text="Reset"
-					warning
-					flat
-					onClick={() => updateSetting('timer_font_family', DEFAULT_FONT_FAMILY)}
-				/>
+				{timerFontFamily === DEFAULT_FONT_FAMILY ? null : (
+					<Button
+						variant="ghost"
+						onClick={() => updateSetting('timer_font_family', DEFAULT_FONT_FAMILY)}
+						size="sm"
+					>
+						{'Reset'}
+					</Button>
+				)}
 			</SettingRow>
 			<SettingSection>
 				<SettingRow
@@ -96,19 +106,25 @@ export default function Appearance() {
 				>
 					<Slider
 						min={35}
-						value={String(timerTimeSize)}
+						label="Timer font size"
+						value={Number(timerTimeSize)}
 						max={150}
-						onChange={(e) => updateSetting('timer_time_size', e.target.value)}
+						onValueChange={(value) => updateSetting('timer_time_size', value)}
 					/>
-					<Button
-						hidden={timerTimeSize === getDefaultSetting('timer_time_size')}
-						text="Reset"
-						warning
-						flat
-						onClick={() =>
-							updateSetting('timer_time_size', getDefaultSetting('timer_time_size'))
-						}
-					/>
+					{timerTimeSize === getDefaultSetting('timer_time_size') ? null : (
+						<Button
+							variant="ghost"
+							onClick={() =>
+								updateSetting(
+									'timer_time_size',
+									getDefaultSetting('timer_time_size'),
+								)
+							}
+							size="sm"
+						>
+							{'Reset'}
+						</Button>
+					)}
 				</SettingRow>
 				<div className="w-full py-[30px] pb-[50px] text-center">
 					<h1
@@ -129,22 +145,25 @@ export default function Appearance() {
 				>
 					<Slider
 						min={10}
-						value={String(timerScrambleSize)}
+						label="Scramble font size"
+						value={Number(timerScrambleSize)}
 						max={40}
-						onChange={(e) => updateSetting('timer_scramble_size', e.target.value)}
+						onValueChange={(value) => updateSetting('timer_scramble_size', value)}
 					/>
-					<Button
-						hidden={timerScrambleSize === getDefaultSetting('timer_scramble_size')}
-						text="Reset"
-						warning
-						flat
-						onClick={() =>
-							updateSetting(
-								'timer_scramble_size',
-								getDefaultSetting('timer_scramble_size'),
-							)
-						}
-					/>
+					{timerScrambleSize === getDefaultSetting('timer_scramble_size') ? null : (
+						<Button
+							variant="ghost"
+							onClick={() =>
+								updateSetting(
+									'timer_scramble_size',
+									getDefaultSetting('timer_scramble_size'),
+								)
+							}
+							size="sm"
+						>
+							{'Reset'}
+						</Button>
+					)}
 				</SettingRow>
 				<div className="w-full py-[30px] pb-[50px] text-center">
 					<h3

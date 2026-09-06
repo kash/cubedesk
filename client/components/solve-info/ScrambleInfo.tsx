@@ -1,6 +1,6 @@
 import CopyText from '@/components/common/CopyText';
-import TextArea from '@/components/common/TextArea';
 import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
+import {AutosizeTextarea} from '@/components/ui/textarea';
 import {Solve} from '@/types/solve';
 import React from 'react';
 
@@ -25,12 +25,11 @@ export default function ScrambleInfo(props: Props) {
 		<div className="flex w-full flex-col items-center">
 			{scrambleBody}
 			{editMode ? (
-				<TextArea
-					fullWidth
-					autoSize
+				<AutosizeTextarea
 					value={scramble}
 					name="scramble"
 					onChange={handleChange}
+					aria-label={'Scramble'}
 				/>
 			) : (
 				<p className="text-text mt-0 mb-[15px] text-center font-mono leading-6 opacity-100">
@@ -39,7 +38,7 @@ export default function ScrambleInfo(props: Props) {
 			)}
 			<CopyText
 				buttonProps={{
-					text: 'Copy Scramble',
+					children: 'Copy Scramble',
 				}}
 				text={scramble}
 			/>

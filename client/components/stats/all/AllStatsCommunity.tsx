@@ -13,12 +13,12 @@ export default function AllStatsCommunity() {
 	const maxWinStreak = stats.match_max_win_streak || 0;
 
 	return (
-		<StatsGrid rows={2} columns={1}>
+		<div className="stats-community">
 			<MatchStats />
-			<StatsGrid rows={1} columns={2}>
+			<StatsGrid rows={2} columns={2}>
 				<NumberBlock
 					icon={<Hash weight="bold" />}
-					title="Solves"
+					title="Match solves"
 					color="#5A81B5"
 					value={solvesInMatches.toLocaleString()}
 				/>
@@ -33,7 +33,7 @@ export default function AllStatsCommunity() {
 					rowSpan={1}
 					icon={<Eye />}
 					title="Solve Views"
-					value={stats.solve_views}
+					value={stats.solve_views ?? 0}
 					color="#667289"
 				/>
 				<NumberBlock
@@ -41,10 +41,10 @@ export default function AllStatsCommunity() {
 					rowSpan={1}
 					icon={<Eye />}
 					title="Profile Views"
-					value={stats.profile_views}
+					value={stats.profile_views ?? 0}
 					color="#667289"
 				/>
 			</StatsGrid>
-		</StatsGrid>
+		</div>
 	);
 }

@@ -1,6 +1,6 @@
 import Avatar from '@/components/common/avatar/Avatar';
-import Button from '@/components/common/Button';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
+import {Button} from '@/components/ui/button';
 import {Serialized} from '@/types/serialized';
 import {CustomTrainerWithUser} from '@/types/trainer';
 import {toastError, toastSuccess} from '@/util/toast';
@@ -94,20 +94,20 @@ export default function PublicTrainer(props: Props) {
 				</div>
 			</div>
 			<div className="mt-5 flex flex-row flex-wrap gap-2.5">
-				<Button
-					icon={liked ? <ThumbsUp /> : <ThumbsDown />}
-					onClick={likeTrainer}
-					text={`${likes} Like${likes === 1 ? '' : 's'}`}
-					gray
-					primary={liked}
-				/>
-				<Button
-					icon={<Download weight="bold" />}
-					text={downloadedFinal ? 'Downloaded' : 'Download'}
-					disabled={downloadedFinal}
-					hidden={trainerOwnedByUser}
-					onClick={downloadTrainer}
-				/>
+				<Button variant={liked ? 'default' : 'secondary'} onClick={likeTrainer}>
+					{`${likes} Like${likes === 1 ? '' : 's'}`}
+					{liked ? <ThumbsUp /> : <ThumbsDown />}
+				</Button>
+				{trainerOwnedByUser ? null : (
+					<Button
+						variant="secondary"
+						disabled={downloadedFinal}
+						onClick={downloadTrainer}
+					>
+						{downloadedFinal ? 'Downloaded' : 'Download'}
+						<Download weight="bold" />
+					</Button>
+				)}
 			</div>
 		</div>
 	);

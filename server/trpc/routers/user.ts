@@ -50,8 +50,6 @@ async function validateEmail(email: string, currentEmail?: string) {
 }
 
 const accountInput = z.object({
-	first_name: z.string().min(1, 'Please fill out all of the required fields'),
-	last_name: z.string().min(1, 'Please fill out all of the required fields'),
 	email: z.string().min(1, 'Please fill out all of the required fields'),
 	username: z.string().min(1, 'Please fill out all of the required fields'),
 });
@@ -81,8 +79,6 @@ export const userRouter = router({
 			await validateUsername(input.username);
 
 			const user = await createUserAccount(
-				input.first_name,
-				input.last_name,
 				input.email,
 				input.username,
 				input.password,
@@ -102,7 +98,7 @@ export const userRouter = router({
 		await validateEmail(input.email, ctx.user.email);
 		await validateUsername(input.username, ctx.user.username ?? undefined);
 
-		const updated = await updateUserAccount(ctx.user.id, input.first_name, input.last_name, input.email, input.username);
+		const updated = await updateUserAccount(ctx.user.id, input.email, input.username);
 
 		return {id: updated.id};
 	}),

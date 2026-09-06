@@ -1,8 +1,6 @@
-import Dropdown, {DropdownProps} from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import ComboboxField, {ComboboxFieldOptions} from '@/components/common/inputs/ComboboxField';
 import {CubeType} from '@/util/cubes/cube_types';
 import {getAllCubeTypeNames, getCubeTypeInfoById, getDefaultCubeTypeNames} from '@/util/cubes/util';
-import {Cube} from 'phosphor-react';
 import React from 'react';
 
 interface Props {
@@ -13,7 +11,7 @@ interface Props {
 	excludeCustomCubeTypes?: boolean;
 	onChange?: (cubeType: CubeType) => void;
 	excludeOtherCubeType?: boolean;
-	dropdownProps?: Partial<DropdownProps>;
+	pickerProps?: ComboboxFieldOptions;
 }
 
 export default function CubePicker(props: Props) {
@@ -24,7 +22,7 @@ export default function CubePicker(props: Props) {
 		excludeCustomCubeTypes,
 		excludeSelected,
 		onChange,
-		dropdownProps,
+		pickerProps,
 		excludeOtherCubeType,
 	} = props;
 
@@ -37,19 +35,23 @@ export default function CubePicker(props: Props) {
 		cubeTypeNames = getAllCubeTypeNames();
 	}
 
-	const options: IDropdownOption[] = [];
+	const options: {value: string; text: string}[] = [];
 	for (const name of cubeTypeNames) {
 		const ct = getCubeTypeInfoById(name);
 		const disabled = ct?.id === value;
 
-		if (!name || !ct || (excludeOtherCubeType && name === 'other') || (excludeSelected && disabled)) {
+		if (
+			!name ||
+			!ct ||
+			(excludeOtherCubeType && name === 'other') ||
+			(excludeSelected && disabled)
+		) {
 			continue;
 		}
 
 		options.push({
+			value: ct.id,
 			text: ct.name,
-			disabled,
-			onClick: () => onChange && onChange(ct),
 		});
 	}
 
@@ -59,12 +61,16 @@ export default function CubePicker(props: Props) {
 	text += cubeType?.name || '';
 
 	return (
-		<Dropdown
+		<ComboboxField
+			{...pickerProps}
+			label="Cube type"
+			value={value}
 			text={text}
-			icon={<Cube weight="bold" />}
 			options={options}
-			dropdownMaxHeight={300}
-			{...(dropdownProps || {})}
+			onValueChange={(id) => {
+				const cube = getCubeTypeInfoById(id);
+				if (cube) onChange?.(cube);
+			}}
 		/>
 	);
 }

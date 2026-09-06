@@ -218,6 +218,16 @@ export type CustomTrainerLike = Prisma.CustomTrainerLikeModel
  */
 export type CustomTrainerDownload = Prisma.CustomTrainerDownloadModel
 /**
+ * Model TrainerAlgorithm
+ *
+ */
+export type TrainerAlgorithm = Prisma.TrainerAlgorithmModel
+/**
+ * Model TrainerCatalogState
+ *
+ */
+export type TrainerCatalogState = Prisma.TrainerCatalogStateModel
+/**
  * Model TrainerFavorite
  * 
  */

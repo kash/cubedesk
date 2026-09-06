@@ -1,6 +1,6 @@
 import AvatarImage from '@/components/common/avatar/AvatarImage';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
+import {ActionMenuOption} from '@/components/common/inputs/ActionMenu';
 import {logOut} from '@/util/auth/logout';
 import {useMe} from '@/util/hooks/useMe';
 import React from 'react';
@@ -12,7 +12,7 @@ export default function AccountDropdown() {
 		return null;
 	}
 
-	const aviDropDownOptions: IDropdownOption[] = [];
+	const aviDropDownOptions: ActionMenuOption[] = [];
 
 	aviDropDownOptions.push({link: '/account/personal-info', text: 'Account'});
 	aviDropDownOptions.push({link: `/user/${me.username}`, text: 'Profile'});
@@ -24,10 +24,15 @@ export default function AccountDropdown() {
 
 	return (
 		<div>
-			<Dropdown
+			<ActionMenu
 				openLeft
 				noMargin
 				options={aviDropDownOptions}
+				triggerProps={{
+					variant: 'ghost',
+					size: 'icon-sm',
+					className: 'rounded-full p-0 hover:bg-transparent',
+				}}
 				handle={
 					<div>
 						<AvatarImage small user={me} profile={me.profile} />

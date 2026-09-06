@@ -43,6 +43,8 @@ export { SessionSchema } from './Session.schema';
 export { CustomTrainerSchema } from './CustomTrainer.schema';
 export { CustomTrainerLikeSchema } from './CustomTrainerLike.schema';
 export { CustomTrainerDownloadSchema } from './CustomTrainerDownload.schema';
+export { TrainerAlgorithmSchema } from './TrainerAlgorithm.schema';
+export { TrainerCatalogStateSchema } from './TrainerCatalogState.schema';
 export { TrainerFavoriteSchema } from './TrainerFavorite.schema';
 export { AlgorithmOverrideSchema } from './AlgorithmOverride.schema';
 export { SettingSchema } from './Setting.schema';

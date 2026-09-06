@@ -1,11 +1,11 @@
-import Button from '@/components/common/Button';
 import Empty from '@/components/common/Empty';
 import HorizontalNav from '@/components/common/HorizontalNav';
-import Input from '@/components/common/inputs/input/Input';
 import Loading from '@/components/common/Loading';
+import PageControls from '@/components/common/PageControls';
+import {InputGroup, InputGroupAddon, InputGroupInput} from '@/components/ui/input-group';
 import {numberWithCommas} from '@/util/strings/util';
 import {MagnifyingGlass} from 'phosphor-react';
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {useRouteMatch} from 'react-router-dom';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -39,51 +39,44 @@ interface Props {
 }
 
 export default function Pagination<T>(props: Props) {
+	const routeMatch = useRouteMatch();
+	const currentTab = props.tabs.find((tab) => tab.link === routeMatch.path) ?? props.tabs[0];
+
+	return <PaginationContent<T> key={currentTab.id} {...props} currentTab={currentTab} />;
+}
+
+function PaginationContent<T>(props: Props & {currentTab: PaginationTab}) {
 	const {tabs, itemRow, searchable, prefetchData, searchQuery: parentSearchQuery} = props;
+	const {currentTab} = props;
 
 	const [hasMore, setHasMore] = useState(false);
 	const [totalResults, setTotalResults] = useState(0);
 	const [tabTotals, setTabTotals] = useState<Record<string, number> | null>(null);
 	const [page, setPage] = useState(0);
-	const [tabId, setTabId] = useState(tabs[0].id);
 	const [items, setItems] = useState<T[] | null>(null);
 	const [searchQuery, setSearchQuery] = useState('');
 
 	const finalSearchQuery = parentSearchQuery ? parentSearchQuery : searchQuery;
 
-	const routeMatch = useRouteMatch();
-
 	// Sets page count and updates current page data when tab or page changes
 	useEffect(() => {
-		setPageCounts();
-
-		for (const tab of tabs) {
-			if (tabs.length === 1 || tab.link === routeMatch.path) {
-				setTabId(tab.id);
-				updatePage(tab);
-				break;
+		let active = true;
+		setItems(null);
+		const requests = tabs.map((tab) => {
+			const request = fetchData(tab);
+			if (tab.id === currentTab.id) {
+				request.then((output) => {
+					if (!active) return;
+					setTotalResults(output.total);
+					setHasMore(output.hasMore);
+					setItems(output.items);
+				});
 			}
-		}
-	}, [routeMatch.path, page, searchQuery, parentSearchQuery]);
+			return request;
+		});
 
-	// Current tab that the user is on
-	const currentTab = useMemo(() => {
-		for (const tab of tabs) {
-			if (tab.id === tabId) {
-				return tab;
-			}
-		}
-		return null;
-	}, [tabId]);
-
-	function setPageCounts() {
-		const promises: Promise<any>[] = [];
-
-		for (const tab of tabs) {
-			promises.push(fetchData(tab));
-		}
-
-		Promise.all(promises).then((data) => {
+		Promise.all(requests).then((data) => {
+			if (!active) return;
 			const counts: Record<string, number> = {};
 
 			for (let i = 0; i < tabs.length; i += 1) {
@@ -93,7 +86,10 @@ export default function Pagination<T>(props: Props) {
 
 			setTabTotals(counts);
 		});
-	}
+		return () => {
+			active = false;
+		};
+	}, [currentTab.id, page, searchQuery, parentSearchQuery]);
 
 	function fetchData(tab?: PaginationTab): Promise<PaginationOutput<T>> {
 		const resolvedTab = tab ?? currentTab;
@@ -112,22 +108,12 @@ export default function Pagination<T>(props: Props) {
 		});
 	}
 
-	function updatePage(tab?: PaginationTab) {
-		setItems(null);
-		fetchData(tab).then((output) => {
-			setTotalResults(output.total);
-			setHasMore(output.hasMore);
-			setItems(output.items);
-		});
-	}
-
 	function prevPage() {
 		if (!page) {
 			return;
 		}
 
 		setPage(page - 1);
-		updatePage();
 	}
 
 	function nextPage() {
@@ -136,7 +122,6 @@ export default function Pagination<T>(props: Props) {
 		}
 
 		setPage(page + 1);
-		updatePage();
 	}
 
 	let resultCount: ReactNode = (
@@ -161,7 +146,7 @@ export default function Pagination<T>(props: Props) {
 	if (tabs.length > 1) {
 		nav = (
 			<HorizontalNav
-				tabId={tabId}
+				tabId={currentTab.id}
 				tabs={tabs.map((tab) => {
 					if (!tabTotals) {
 						return tab;
@@ -173,7 +158,6 @@ export default function Pagination<T>(props: Props) {
 						value: `${tab.value} (${tabTotals[tab.id]})`,
 					};
 				})}
-				onChange={(t) => setTabId(t)}
 			/>
 		);
 	}
@@ -182,12 +166,17 @@ export default function Pagination<T>(props: Props) {
 	if (searchable && currentTab) {
 		inputQuery = (
 			<div className="mt-10 mb-2.5 w-full">
-				<Input
-					placeholder={`Search for ${currentTab.plural}`}
-					icon={<MagnifyingGlass weight="bold" />}
-					value={searchQuery}
-					onChange={(e) => setSearchQuery(e.target.value)}
-				/>
+				<InputGroup className="mb-2">
+					<InputGroupAddon>
+						<MagnifyingGlass weight="bold" />
+					</InputGroupAddon>
+					<InputGroupInput
+						placeholder={`Search for ${currentTab.plural}`}
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						aria-label={`Search for ${currentTab.plural}`}
+					/>
+				</InputGroup>
 			</div>
 		);
 	}
@@ -200,18 +189,14 @@ export default function Pagination<T>(props: Props) {
 				{nav}
 				{resultCount}
 				<div className="flex w-full flex-col">{body}</div>
-				<div className="mx-auto mt-5 flex flex-row items-center">
-					<Button
-						onClick={prevPage}
-						text="Prev"
-						disabled={page === 0}
-						primary={page > 0}
-					/>
-					<p className="mx-5 my-0">
-						Page {page + 1} of {Math.ceil(totalResults / 25) || 1}
-					</p>
-					<Button onClick={nextPage} text="Next" disabled={!hasMore} primary={hasMore} />
-				</div>
+				<PageControls
+					className="mt-6"
+					page={page}
+					totalPages={Math.ceil(totalResults / DEFAULT_PAGE_SIZE)}
+					hasMore={hasMore}
+					onPrevious={prevPage}
+					onNext={nextPage}
+				/>
 			</div>
 		</div>
 	);

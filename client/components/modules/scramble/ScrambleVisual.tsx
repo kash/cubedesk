@@ -1,3 +1,4 @@
+import Empty from '@/components/common/Empty';
 import Face from '@/components/modules/scramble/Face';
 import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
 import {layoutScramble} from '@/util/vendor/scramble_layout';
@@ -48,11 +49,11 @@ export default function ScrambleVisual(props: Props) {
 
 	const supported = scrambleIsSupported(cubeScramble?.id);
 	if (!supported) {
-		return <div className="flex h-full w-full items-center justify-center text-text opacity-50">No visual</div>;
+		return <Empty text="No scramble visual available" centered />;
 	}
 
 	if (!visual) {
-		return null;
+		return <Empty text="No scramble yet" centered />;
 	}
 
 	if (frontFace) {

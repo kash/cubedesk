@@ -4,7 +4,7 @@ import React from 'react';
 export default function Terms() {
 	return (
 		<LegalContent>
-			<h1>Terms and Conditions</h1>
+			<h1 className="font-sans text-3xl font-medium tracking-tight">Terms and Conditions</h1>
 			<p>Last updated: May 25, 2021</p>
 			<p>Please read these terms and conditions carefully before using Our Service.</p>
 			<h1>Interpretation and Definitions</h1>

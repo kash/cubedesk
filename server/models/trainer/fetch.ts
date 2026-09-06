@@ -1,68 +1,28 @@
-import {getAllAirtableResults} from '@/server/services/airtable';
-import {
-	createRedisKey,
-	deleteKeyInRedis,
-	getValueFromRedis,
-	keyExistsInRedis,
-	RedisNamespace,
-	setKeyInRedis,
-} from '@/server/services/redis';
+import {getPrisma} from '@/server/database';
+import {CATALOG_ID} from '@/server/models/trainer/catalog';
+import {createRedisKey, getValueFromRedis, RedisNamespace} from '@/server/services/redis';
+import {trainerAlgorithmSchema} from '@/shared/trainer/catalog';
 import {TrainerAlgorithm} from '@/types/trainer';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 
-dayjs.extend(utc);
-
-const redisKey = createRedisKey(RedisNamespace.TRAINER_DATA);
-const redisKeyDate = createRedisKey(RedisNamespace.TRAINER_DATA_DATE);
-
-const AIRTABLE_TRAINER_TABLE = 'Trainer';
-
-export async function fetchTrainerAlgorithms() {
-	const exists = await keyExistsInRedis(redisKey);
-	const cachedResult = exists ? await getValueFromRedis(redisKey) : null;
-
-	let trainerVal: TrainerAlgorithm[];
-	if (cachedResult) {
-		trainerVal = JSON.parse(cachedResult);
-
-		const shouldUpdate = await shouldUpdateCache();
-		if (shouldUpdate) {
-			await deleteKeyInRedis(redisKeyDate);
-			// Leave async and then return
-			fetchAndCacheAirtableResults();
-		}
-	} else {
-		trainerVal = await fetchAndCacheAirtableResults();
+// Transitional read-only bridge. Never refresh or write the legacy Redis catalog.
+export async function fetchTrainerAlgorithms(): Promise<TrainerAlgorithm[]> {
+	const db = getPrisma();
+	const state = await db.trainerCatalogState.findUnique({where: {id: CATALOG_ID}});
+	if (state?.initialized_at) {
+		const algorithms = await db.trainerAlgorithm.findMany({
+			where: {active: true},
+			orderBy: {id: 'asc'},
+		});
+		return algorithms.map((algorithm) => trainerAlgorithmSchema.parse(algorithm));
 	}
-
-	return trainerVal;
-}
-
-async function fetchAndCacheAirtableResults() {
-	const trainerVal = await getAllAirtableResults<TrainerAlgorithm>(AIRTABLE_TRAINER_TABLE);
-	await cacheTrainerData(JSON.stringify(trainerVal));
-
-	return trainerVal;
-}
-
-async function cacheTrainerData(data: string) {
-	const date = dayjs().utc().unix();
-	await setKeyInRedis(redisKeyDate, String(date));
-	return setKeyInRedis(redisKey, data);
-}
-
-async function shouldUpdateCache() {
-	const redisVal = await getValueFromRedis(redisKeyDate);
-	if (!redisVal) {
-		return false;
-	}
-	const createUnix = parseInt(redisVal);
-
-	const nowDate = dayjs().utc().toDate();
-
-	// Trainer data should only be updated once a day
-	const targetDate = dayjs.unix(createUnix).add(1, 'day').toDate();
-
-	return targetDate < nowDate;
+	const cached = await getValueFromRedis(createRedisKey(RedisNamespace.TRAINER_DATA));
+	if (!cached) return [];
+	const parsed: unknown = JSON.parse(cached);
+	if (!Array.isArray(parsed))
+		throw new Error(
+			'The legacy trainer catalog is invalid. An administrator needs to import the CSV.',
+		);
+	return parsed
+		.map((record) => trainerAlgorithmSchema.parse(record))
+		.filter((record) => record.active);
 }

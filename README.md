@@ -16,6 +16,31 @@ If you'd like to request a new feature or make suggestions, please use the [Disc
 
 If you'd like to contribute to CubeDesk, firstly, _thank you_; secondly, please follow the [Development Onboarding instructions on the Wiki](https://github.com/kash/cubedesk/wiki/Development-Onboarding). Getting set up should only take less than 10 minutes!
 
+### Local sample data
+
+After signing up in your local app, run:
+
+```sh
+pnpm seed:dev --username YOUR_LOCAL_USERNAME
+```
+
+The command reads `.env` and requires `NODE_ENV=development`. It adds roughly 4,000
+solves over 90 days across 3x3, 2x2, 4x4, and Pyraminx, with improving times, rest
+days, DNFs, and +2 penalties. Reload the app to populate Stats, Solves, and the four
+`[Dev seed]` sessions. Select a seeded session in the timer to see its history.
+Community and match records are not seeded.
+
+Existing data is preserved. Stable IDs make reruns skip records already inserted;
+they do not refresh their dates. To regenerate a fresh history, delete the four
+`[Dev seed]` sessions and their solves through the local app, then rerun.
+
+The script is manual and is not wired into app startup, builds, or migrations.
+It refuses remote hosts, production/unset environments, alternate database secret
+settings, and URL query parameters. Only `localhost`, `127.0.0.1`, or `::1` with a
+database named `cubedesk`, `cubedesk_dev`, or `cubedesk_test` are accepted. Use an
+actual local PostgreSQL instance; a localhost tunnel to a remote database cannot
+be distinguished from a local database by its URL.
+
 ## Infrastructure
 
 The visual below should give you a decent understanding of the infrastructure behind CubeDesk. For a full breakdown, checkout the [Infrasture page on the Wiki](https://github.com/kash/cubedesk/wiki/Infrastructure).

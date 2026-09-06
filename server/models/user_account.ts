@@ -167,17 +167,9 @@ export async function isUserBanned(user: UserAccount, checkLogs = false): Promis
 	return user.banned_forever || !!user.banned_until || bannedInLogs;
 }
 
-export async function updateUserAccount(
-	userId: string,
-	firstName: string,
-	lastName: string,
-	email: string,
-	username: string
-) {
+export async function updateUserAccount(userId: string, email: string, username: string) {
 	return updateUserAccountWithParams(userId, {
 		id: userId,
-		first_name: firstName,
-		last_name: lastName,
 		email: email.toLowerCase(),
 		username,
 	});
@@ -216,8 +208,6 @@ export async function deleteUserAccount(user: UserAccount): Promise<UserAccount 
 }
 
 export async function createUserAccount(
-	firstName: string,
-	lastName: string,
 	email: string,
 	username: string,
 	password: string,
@@ -244,9 +234,7 @@ export async function createUserAccount(
 	return getPrisma().userAccount.create({
 		data: {
 			id: uuid(),
-			first_name: firstName,
 			username,
-			last_name: lastName,
 			email: email.toLowerCase(),
 			password: hashedPassword,
 			join_ip: ip || '',

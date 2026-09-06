@@ -1,7 +1,7 @@
 import StatModule from '@/components/stats/common/StatModule';
-import classNames from 'classnames';
-import CSS from 'csstype';
-import React, {ReactNode} from 'react';
+import {Button} from '@/components/ui/button';
+import {cn} from '@/util/cn';
+import React, {CSSProperties, ReactNode} from 'react';
 
 interface Props {
 	icon: ReactNode;
@@ -14,7 +14,7 @@ interface Props {
 	colSpan?: number;
 	noPadding?: boolean;
 	small?: boolean;
-	style?: CSS.Properties;
+	style?: CSSProperties;
 	center?: boolean;
 	large?: boolean;
 	children?: ReactNode;
@@ -22,87 +22,49 @@ interface Props {
 }
 
 export default function NumberBlock(props: Props) {
-	const {
-		icon,
-		color,
-		title,
-		onClick,
-		large,
-		noPadding,
-		darkIcon,
-		vertical,
-		center,
-		children,
-		small,
-		rowSpan,
-		colSpan,
-	} = props;
-
-	let value;
-	if (typeof props.value === 'number') {
-		value = props.value.toLocaleString();
-	} else {
-		value = props.value;
-	}
-
-	const style: CSS.Properties = {
-		color,
-		...props.style,
-	};
-	if (rowSpan) {
-		style.gridRow = `span ${rowSpan}`;
-	}
-	if (colSpan) {
-		style.gridColumn = `span ${colSpan}`;
-	}
+	const {icon, color, title, onClick, large, noPadding, children, small, rowSpan, colSpan} =
+		props;
+	const value = typeof props.value === 'number' ? props.value.toLocaleString() : props.value;
+	const content = (
+		<>
+			<span className="stats-number-label">
+				<span className="stats-number-icon" aria-hidden="true">
+					{icon}
+				</span>
+				<span>{title}</span>
+			</span>
+			<span className="stats-number-value">{value ?? '—'}</span>
+		</>
+	);
 
 	return (
 		<StatModule
-			className={classNames(
-				'flex h-full w-full flex-col justify-between text-inherit transition-all duration-100 ease-in-out',
+			className={cn('stats-number', {
+				'stats-number-small': small,
+				'stats-number-large': large,
+				'stats-number-unpadded': noPadding,
+			})}
+			style={
 				{
-					'justify-center': center,
-					'!p-0': noPadding,
-					'!px-[15px] !py-2.5': small,
-				}
-			)}
-			style={style}
+					'--stat-accent': color,
+					gridRow: rowSpan ? `span ${rowSpan}` : undefined,
+					gridColumn: colSpan ? `span ${colSpan}` : undefined,
+					...props.style,
+				} as CSSProperties
+			}
 		>
-			<div className={classNames('flex w-full items-center text-inherit', vertical ? 'flex-col' : 'flex-row')}>
-				<button
-					className={classNames('ml-2.5 flex cursor-default flex-col items-start text-inherit', {
-						'cursor-pointer': !!onClick,
-					})}
+			{onClick ? (
+				<Button
+					variant="ghost"
+					type="button"
+					className="stats-number-content stats-number-button h-auto flex-col items-stretch justify-start gap-5 p-0 font-normal whitespace-normal hover:bg-transparent"
 					onClick={onClick}
 				>
-					<div className="mb-2.5 flex flex-row items-center">
-						<div
-							className={classNames(
-								'flex h-7 w-7 items-center justify-center rounded-[5px] text-[1.2rem] text-tmo-background',
-								{
-									'!text-tm-background': darkIcon,
-								}
-							)}
-							style={{backgroundColor: color}}
-						>
-							{icon}
-						</div>
-						<p className="m-0 ml-2.5 text-left text-base font-medium text-text opacity-90">{title}</p>
-					</div>
-					<span
-						className={classNames(
-							'table border-b-[3px] border-transparent font-["Kontora",Poppins,Arial,"Helvetica_Neue",Helvetica,sans-serif] text-[2.3rem] font-bold leading-[2.2rem] text-inherit',
-							{
-								'text-[1.4rem] leading-[0.9rem]': small,
-								'text-[3.7rem] leading-[4rem]': large,
-								'hover:border-current': !!onClick,
-							}
-						)}
-					>
-						{value}
-					</span>
-				</button>
-			</div>
+					{content}
+				</Button>
+			) : (
+				<div className="stats-number-content">{content}</div>
+			)}
 			{children}
 		</StatModule>
 	);

@@ -17,7 +17,7 @@ const codeStyle: React.CSSProperties = {
 
 export default function ForgotPasswordEmail({user, message, code}: ForgotPasswordEmailProps) {
 	return (
-		<EmailLayout previewText={message} firstName={user.first_name}>
+		<EmailLayout previewText={message} username={user.username}>
 			<Text style={text}>{message}</Text>
 			<Text style={codeStyle}>{code}</Text>
 		</EmailLayout>

@@ -21,7 +21,9 @@ export default function SettingSection(props: Props) {
 			return React.cloneElement(
 				child,
 				{},
-				React.Children.map(element.props.children, (fragmentChild) => renderChild(fragmentChild))
+				React.Children.map(element.props.children, (fragmentChild) =>
+					renderChild(fragmentChild),
+				),
 			);
 		}
 
@@ -38,7 +40,7 @@ export default function SettingSection(props: Props) {
 	}
 
 	return (
-		<div className="mb-5 border-b-[3px] border-tmo-background/10 last:border-b-0">
+		<div className="border-tmo-background/10 mb-5 border-b last:border-b-0">
 			{React.Children.map(children, (child) => renderChild(child))}
 		</div>
 	);

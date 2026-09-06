@@ -1,5 +1,6 @@
 import {ImportDataContext} from '@/components/settings/data/import-data/ImportData';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
+import {Separator} from '@/components/ui/separator';
 import {toastError} from '@/util/toast';
 import classNames from 'classnames';
 import React, {useContext} from 'react';
@@ -48,18 +49,18 @@ export default function ProcessData() {
 
 	return (
 		<div>
-			<hr className="my-[30px] h-[3px] w-full border-0 bg-button p-0" />
+			<Separator className="my-6" />
 			<ImportSection title="Select file to import" />
 
 			<div
 				className={classNames(
-					'my-5 mb-2.5 box-border flex cursor-pointer items-center justify-center rounded-[7px] border-[3px] border-dashed bg-module py-[30px]',
-					isDragActive ? 'border-primary' : 'border-button'
+					'bg-module my-5 mb-2.5 box-border flex cursor-pointer items-center justify-center rounded-[7px] border-[3px] border-dashed py-[30px]',
+					isDragActive ? 'border-primary' : 'border-button',
 				)}
 				{...getRootProps()}
 			>
 				<input {...getInputProps()} />
-				<p className="m-0 text-text">Drag and drop your file here, or click to select</p>
+				<p className="text-text m-0">Drag and drop your file here, or click to select</p>
 			</div>
 		</div>
 	);

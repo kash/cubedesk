@@ -91,6 +91,8 @@ export const ModelName = {
   CustomTrainer: 'CustomTrainer',
   CustomTrainerLike: 'CustomTrainerLike',
   CustomTrainerDownload: 'CustomTrainerDownload',
+  TrainerAlgorithm: 'TrainerAlgorithm',
+  TrainerCatalogState: 'TrainerCatalogState',
   TrainerFavorite: 'TrainerFavorite',
   AlgorithmOverride: 'AlgorithmOverride',
   Setting: 'Setting',
@@ -117,12 +119,10 @@ export const UserAccountScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  first_name: 'first_name',
   join_ip: 'join_ip',
   join_country: 'join_country',
   admin: 'admin',
   created_at: 'created_at',
-  last_name: 'last_name',
   username: 'username',
   verified: 'verified',
   banned_forever: 'banned_forever',
@@ -703,6 +703,34 @@ export const CustomTrainerDownloadScalarFieldEnum = {
 export type CustomTrainerDownloadScalarFieldEnum = (typeof CustomTrainerDownloadScalarFieldEnum)[keyof typeof CustomTrainerDownloadScalarFieldEnum]
 
 
+export const TrainerAlgorithmScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  active: 'active',
+  solution: 'solution',
+  scrambles: 'scrambles',
+  cube_type: 'cube_type',
+  algo_type: 'algo_type',
+  group_name: 'group_name',
+  img_link: 'img_link',
+  colors: 'colors',
+  rotate: 'rotate',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type TrainerAlgorithmScalarFieldEnum = (typeof TrainerAlgorithmScalarFieldEnum)[keyof typeof TrainerAlgorithmScalarFieldEnum]
+
+
+export const TrainerCatalogStateScalarFieldEnum = {
+  id: 'id',
+  initialized_at: 'initialized_at',
+  revision: 'revision'
+} as const
+
+export type TrainerCatalogStateScalarFieldEnum = (typeof TrainerCatalogStateScalarFieldEnum)[keyof typeof TrainerCatalogStateScalarFieldEnum]
+
+
 export const TrainerFavoriteScalarFieldEnum = {
   id: 'id',
   cube_key: 'cube_key',
@@ -796,10 +824,8 @@ export const UserAccountOrderByRelevanceFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  first_name: 'first_name',
   join_ip: 'join_ip',
   join_country: 'join_country',
-  last_name: 'last_name',
   username: 'username',
   offline_hash: 'offline_hash',
   unsub_id: 'unsub_id'
@@ -1240,6 +1266,28 @@ export const CustomTrainerDownloadOrderByRelevanceFieldEnum = {
 } as const
 
 export type CustomTrainerDownloadOrderByRelevanceFieldEnum = (typeof CustomTrainerDownloadOrderByRelevanceFieldEnum)[keyof typeof CustomTrainerDownloadOrderByRelevanceFieldEnum]
+
+
+export const TrainerAlgorithmOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  solution: 'solution',
+  scrambles: 'scrambles',
+  cube_type: 'cube_type',
+  algo_type: 'algo_type',
+  group_name: 'group_name',
+  img_link: 'img_link',
+  colors: 'colors'
+} as const
+
+export type TrainerAlgorithmOrderByRelevanceFieldEnum = (typeof TrainerAlgorithmOrderByRelevanceFieldEnum)[keyof typeof TrainerAlgorithmOrderByRelevanceFieldEnum]
+
+
+export const TrainerCatalogStateOrderByRelevanceFieldEnum = {
+  id: 'id'
+} as const
+
+export type TrainerCatalogStateOrderByRelevanceFieldEnum = (typeof TrainerCatalogStateOrderByRelevanceFieldEnum)[keyof typeof TrainerCatalogStateOrderByRelevanceFieldEnum]
 
 
 export const TrainerFavoriteOrderByRelevanceFieldEnum = {

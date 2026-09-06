@@ -1,48 +1,56 @@
 import Avatar from '@/components/common/avatar/Avatar';
-import Button from '@/components/common/Button';
 import CopyText from '@/components/common/CopyText';
 import HorizontalNav from '@/components/common/HorizontalNav';
 import Loading from '@/components/common/Loading';
-import {IModalProps} from '@/components/common/modal/Modal';
-import Tag from '@/components/common/Tag';
-import {demoUser} from '@/components/solve-info/demo-user';
+import DeleteSolveDialog, {useSolveDeletion} from '@/components/solve-info/DeleteSolveDialog';
 import NotesInfo from '@/components/solve-info/NotesInfo';
 import ScrambleInfo from '@/components/solve-info/ScrambleInfo';
 import SolutionInfo from '@/components/solve-info/SolutionInfo';
 import StatsInfo from '@/components/solve-info/stats-info/StatsInfo';
+import {Badge} from '@/components/ui/badge';
+import {Button} from '@/components/ui/button';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {fetchSolve} from '@/db/solves/query';
-import {deleteSolveDb, updateSolveDb} from '@/db/solves/update';
+import {updateSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
 import {api} from '@/util/api';
+import {cn} from '@/util/cn';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {getFullFormattedDate} from '@/util/dates';
+import {useSettings} from '@/util/hooks/useSettings';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
 import {Bluetooth, Cube} from 'phosphor-react';
 import React, {ReactNode, useEffect, useState} from 'react';
 
-interface Props extends IModalProps {
+interface Props {
+	onComplete?: () => void;
 	solveId: string;
 	solve?: Solve;
 	disabled?: boolean;
-	closeModal?: () => void;
 }
 
 export default function SolveInfo(props: Props) {
 	const {solveId, disabled, onComplete} = props;
+	const deletion = useSolveDeletion(onComplete);
+	const timerFontFamily = useSettings('timer_font_family');
 
-	const demoSolve = props.solve?.demo_mode;
+	const initialSolve = props.solve ?? fetchSolve(solveId) ?? undefined;
+	const demoSolve = initialSolve?.demo_mode;
 
 	const [page, setPage] = useState('scramble');
 	const [loading, setLoading] = useState(!demoSolve);
-	const [solve, setSolve] = useState<Solve | undefined>(props.solve);
+	const [solve, setSolve] = useState<Solve | undefined>(initialSolve);
+	const [loadError, setLoadError] = useState(false);
 	const [editMode, setEditMode] = useState(false);
-	const [dbSolve, setDbSolve] = useState<Solve | null>(null);
+	const [dbSolve, setDbSolve] = useState<Solve | null>(() => fetchSolve(solveId));
 
 	const utils = api.useUtils();
 
-	useSolveDb();
+	const solveDbVersion = useSolveDb();
+	useEffect(() => {
+		setDbSolve(fetchSolve(solveId));
+	}, [solveId, solveDbVersion]);
 	useEffect(() => {
 		if (demoSolve) {
 			return;
@@ -51,17 +59,27 @@ export default function SolveInfo(props: Props) {
 		updateSolve();
 	}, []);
 
-	let user = solve?.user;
-	if (solve?.demo_mode) {
-		user = demoUser;
-	}
+	const user = solve?.user;
 
 	function updateSolve() {
-		utils.solve.get.fetch({id: solveId}).then((res) => {
-			setDbSolve(fetchSolve(solveId));
-			setSolve(res as unknown as Solve);
+		const localSolve = fetchSolve(solveId);
+		if (localSolve?.demo_mode || demoSolve) {
+			setDbSolve(localSolve);
+			setSolve(localSolve ?? initialSolve);
 			setLoading(false);
-		});
+			return;
+		}
+
+		setLoadError(false);
+		setLoading(true);
+		utils.solve.get
+			.fetch({id: solveId})
+			.then((res) => {
+				setDbSolve(fetchSolve(solveId));
+				setSolve(res as unknown as Solve);
+			})
+			.catch(() => setLoadError(true))
+			.finally(() => setLoading(false));
 	}
 
 	function togglePlusTwo() {
@@ -78,9 +96,8 @@ export default function SolveInfo(props: Props) {
 
 	function deleteSolve() {
 		if (dbSolve) {
-			deleteSolveDb(dbSolve);
+			deletion.requestDelete(dbSolve);
 		}
-		onComplete?.();
 	}
 
 	function handleChange(e) {
@@ -109,6 +126,17 @@ export default function SolveInfo(props: Props) {
 		return (
 			<div className="relative pt-5">
 				<Loading />
+			</div>
+		);
+	}
+
+	if (loadError) {
+		return (
+			<div className="text-text flex flex-col items-center gap-4 py-8">
+				<p>Could not load this solve. Please try again.</p>
+				<Button variant="secondary" onClick={updateSolve}>
+					{'Try again'}
+				</Button>
 			</div>
 		);
 	}
@@ -143,19 +171,38 @@ export default function SolveInfo(props: Props) {
 	const infoBody = pageMap[page];
 
 	let editButton: ReactNode = (
-		<Button
-			text={editMode ? 'Save' : 'Edit'}
-			gray
-			primary={editMode}
-			onClick={toggleEditMode}
-		/>
+		<Button variant={editMode ? 'default' : 'secondary'} onClick={toggleEditMode}>
+			{editMode ? 'Save' : 'Edit'}
+		</Button>
 	);
 
 	let plusTwoButton: ReactNode = (
-		<Button gray text="+2" disabled={disabled} onClick={togglePlusTwo} warning={plusTwo} />
+		<Button
+			variant="secondary"
+			aria-pressed={plusTwo}
+			className={cn({'text-warning': plusTwo})}
+			disabled={disabled}
+			onClick={togglePlusTwo}
+		>
+			{'+2'}
+		</Button>
 	);
-	let dnfButton: ReactNode = <Button gray text="DNF" disabled={disabled} onClick={toggleDnf} danger={dnf} />;
-	let deleteButton: ReactNode = <Button gray title="Delete solve" text="Delete" onClick={deleteSolve} />;
+	let dnfButton: ReactNode = (
+		<Button
+			variant="secondary"
+			aria-pressed={dnf}
+			className={cn({'text-error': dnf})}
+			disabled={disabled}
+			onClick={toggleDnf}
+		>
+			{'DNF'}
+		</Button>
+	);
+	let deleteButton: ReactNode = (
+		<Button variant="secondary" title="Delete solve" onClick={deleteSolve}>
+			{'Delete'}
+		</Button>
+	);
 
 	if (disabled) {
 		deleteButton = null;
@@ -164,10 +211,18 @@ export default function SolveInfo(props: Props) {
 		dnfButton = null;
 
 		if (plusTwo) {
-			plusTwoButton = <Tag text="+2" backgroundColor="orange" />;
+			plusTwoButton = (
+				<Badge size="button" variant="warning">
+					+2
+				</Badge>
+			);
 		}
 		if (dnf) {
-			dnfButton = <Tag text="DNF" backgroundColor="red" />;
+			dnfButton = (
+				<Badge size="button" variant="destructive">
+					DNF
+				</Badge>
+			);
 		}
 	}
 
@@ -199,11 +254,11 @@ export default function SolveInfo(props: Props) {
 	];
 
 	let shareLink: ReactNode = null;
-	if (typeof window !== 'undefined') {
+	if (typeof window !== 'undefined' && !demoSolve && solve.share_code) {
 		shareLink = (
 			<CopyText
 				buttonProps={{
-					text: 'Share Link',
+					children: 'Share Link',
 				}}
 				text={window.location.origin + '/solve/' + solve.share_code}
 			/>
@@ -213,52 +268,56 @@ export default function SolveInfo(props: Props) {
 	const cubeTypeInfo = getCubeTypeInfoById(cubeType);
 
 	return (
-		<div className="relative pt-5">
-			<div className="absolute top-0 right-[45px] flex w-[calc(100%_-_45px)] flex-row items-center justify-between">
-				<div className="flex flex-row gap-2.5">{shareLink}</div>
-				<div className="flex flex-row gap-2.5">
-					{deleteButton}
-					{editButton}
+		<>
+			<div className="relative pt-5">
+				<div className="absolute top-0 right-[45px] flex w-[calc(100%_-_45px)] flex-row items-center justify-between">
+					<div className="flex flex-row gap-2.5">{shareLink}</div>
+					<div className="flex flex-row gap-2.5">
+						{deleteButton}
+						{editButton}
+					</div>
 				</div>
-			</div>
-			<div>
-				<h2 className="text-text mt-5 mb-0 w-full text-center font-mono text-[4.3rem] font-bold">
-					{time}
-				</h2>
-				<div className="border-button mx-auto mt-5 mb-[25px] flex w-full flex-col items-center border-b-2 pb-[25px]">
-					<Avatar small user={user} hideBadges profile={user?.profile} />
-					<div className="mt-[15px] flex flex-row items-center gap-2.5">
-						{isSmartCube ? (
-							<Tag
-								icon={<Bluetooth />}
-								text={smartDevice?.name}
-								title="Smart cube"
-								large
-								backgroundColor="blue"
-							/>
-						) : null}
+				<div>
+					<h2
+						className="text-text mt-5 mb-0 w-full text-center text-[4.3rem] font-medium"
+						style={{fontFamily: timerFontFamily + ', monospace'}}
+					>
+						{time}
+					</h2>
+					<div className="border-button mx-auto mt-5 mb-[25px] flex w-full flex-col items-center border-b-2 pb-[25px]">
+						{!demoSolve && user && (
+							<Avatar small user={user} hideBadges profile={user.profile} />
+						)}
+						<div className="mt-[15px] flex flex-row items-center gap-2.5">
+							{isSmartCube ? (
+								<Badge size="button" variant="info" title="Smart cube">
+									{smartDevice?.name}
+									<Bluetooth />
+								</Badge>
+							) : null}
 
-						<Tag
-							icon={<Cube weight="bold" />}
-							backgroundColor="button"
-							text={cubeTypeInfo?.name ?? cubeType}
-						/>
-						{plusTwoButton}
-						{dnfButton}
+							<Badge variant="secondary" size="button">
+								{cubeTypeInfo?.name ?? cubeType}
+								<Cube weight="bold" />
+							</Badge>
+							{plusTwoButton}
+							{dnfButton}
+						</div>
+						<div className="w-full pt-5">
+							<span className="text-text/60 m-auto table text-sm">
+								{getFullFormattedDate(endedAt)}
+							</span>
+						</div>
 					</div>
-					<div className="w-full pt-5">
-						<span className="text-text/60 m-auto table text-sm">
-							{getFullFormattedDate(endedAt)}
-						</span>
+					<div className="flex flex-col items-center">
+						<div className="mb-5 flex w-full items-start">
+							<HorizontalNav tabId={page} onChange={onPageChange} tabs={pages} />
+						</div>
+						{infoBody}
 					</div>
-				</div>
-				<div className="flex flex-col items-center">
-					<div className="mb-5 flex w-full items-start">
-						<HorizontalNav tabId={page} onChange={onPageChange} tabs={pages} />
-					</div>
-					{infoBody}
 				</div>
 			</div>
-		</div>
+			<DeleteSolveDialog {...deletion.dialogProps} />
+		</>
 	);
 }

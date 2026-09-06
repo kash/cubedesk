@@ -1,32 +1,21 @@
-import {useGeneral} from '@/util/hooks/useGeneral';
+import AuthDialog from '@/components/login/AuthDialog';
 import {useMe} from '@/util/hooks/useMe';
 import React from 'react';
 
 export default function DemoWarning() {
 	const me = useMe();
-	const mobileMode = useGeneral('mobile_mode');
 
 	if (me) {
 		return null;
 	}
 
-	const classNames = [
-		'absolute text-sm min-w-fit font-label text-white left-1/2 z-50 -translate-x-1/2 bg-orange-600 rounded py-1 px-2',
-	];
-	if (mobileMode) {
-		classNames.push('top-16');
-	} else {
-		classNames.push('top-5');
-	}
-
 	return (
-		<div className={classNames.join(' ')}>
-			<span>
-				Demo Mode. No data being saved.
-				<a className="ml-1 underline hover:opacity-100 opacity-75" href="/signup">
-					Sign up
-				</a>
-			</span>
+		<div className="text-center text-base font-normal text-orange-400">
+			<AuthDialog view="signup">
+				<button type="button" className="p-0 text-base text-orange-400 hover:text-orange-300">
+					Demo mode. Sign up to save solves
+				</button>
+			</AuthDialog>
 		</div>
 	);
 }

@@ -28,12 +28,10 @@ export type UserAccountMinAggregateOutputType = {
   id: string | null
   email: string | null
   password: string | null
-  first_name: string | null
   join_ip: string | null
   join_country: string | null
   admin: boolean | null
   created_at: Date | null
-  last_name: string | null
   username: string | null
   verified: boolean | null
   banned_forever: boolean | null
@@ -47,12 +45,10 @@ export type UserAccountMaxAggregateOutputType = {
   id: string | null
   email: string | null
   password: string | null
-  first_name: string | null
   join_ip: string | null
   join_country: string | null
   admin: boolean | null
   created_at: Date | null
-  last_name: string | null
   username: string | null
   verified: boolean | null
   banned_forever: boolean | null
@@ -66,12 +62,10 @@ export type UserAccountCountAggregateOutputType = {
   id: number
   email: number
   password: number
-  first_name: number
   join_ip: number
   join_country: number
   admin: number
   created_at: number
-  last_name: number
   username: number
   verified: number
   banned_forever: number
@@ -87,12 +81,10 @@ export type UserAccountMinAggregateInputType = {
   id?: true
   email?: true
   password?: true
-  first_name?: true
   join_ip?: true
   join_country?: true
   admin?: true
   created_at?: true
-  last_name?: true
   username?: true
   verified?: true
   banned_forever?: true
@@ -106,12 +98,10 @@ export type UserAccountMaxAggregateInputType = {
   id?: true
   email?: true
   password?: true
-  first_name?: true
   join_ip?: true
   join_country?: true
   admin?: true
   created_at?: true
-  last_name?: true
   username?: true
   verified?: true
   banned_forever?: true
@@ -125,12 +115,10 @@ export type UserAccountCountAggregateInputType = {
   id?: true
   email?: true
   password?: true
-  first_name?: true
   join_ip?: true
   join_country?: true
   admin?: true
   created_at?: true
-  last_name?: true
   username?: true
   verified?: true
   banned_forever?: true
@@ -217,12 +205,10 @@ export type UserAccountGroupByOutputType = {
   id: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin: boolean
   created_at: Date
-  last_name: string
   username: string | null
   verified: boolean
   banned_forever: boolean
@@ -257,12 +243,10 @@ export type UserAccountWhereInput = {
   id?: Prisma.StringFilter<"UserAccount"> | string
   email?: Prisma.StringFilter<"UserAccount"> | string
   password?: Prisma.StringFilter<"UserAccount"> | string
-  first_name?: Prisma.StringFilter<"UserAccount"> | string
   join_ip?: Prisma.StringFilter<"UserAccount"> | string
   join_country?: Prisma.StringFilter<"UserAccount"> | string
   admin?: Prisma.BoolFilter<"UserAccount"> | boolean
   created_at?: Prisma.DateTimeFilter<"UserAccount"> | Date | string
-  last_name?: Prisma.StringFilter<"UserAccount"> | string
   username?: Prisma.StringNullableFilter<"UserAccount"> | string | null
   verified?: Prisma.BoolFilter<"UserAccount"> | boolean
   banned_forever?: Prisma.BoolFilter<"UserAccount"> | boolean
@@ -325,12 +309,10 @@ export type UserAccountOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  first_name?: Prisma.SortOrder
   join_ip?: Prisma.SortOrder
   join_country?: Prisma.SortOrder
   admin?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  last_name?: Prisma.SortOrder
   username?: Prisma.SortOrderInput | Prisma.SortOrder
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
@@ -398,12 +380,10 @@ export type UserAccountWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserAccountWhereInput[]
   NOT?: Prisma.UserAccountWhereInput | Prisma.UserAccountWhereInput[]
   password?: Prisma.StringFilter<"UserAccount"> | string
-  first_name?: Prisma.StringFilter<"UserAccount"> | string
   join_ip?: Prisma.StringFilter<"UserAccount"> | string
   join_country?: Prisma.StringFilter<"UserAccount"> | string
   admin?: Prisma.BoolFilter<"UserAccount"> | boolean
   created_at?: Prisma.DateTimeFilter<"UserAccount"> | Date | string
-  last_name?: Prisma.StringFilter<"UserAccount"> | string
   verified?: Prisma.BoolFilter<"UserAccount"> | boolean
   banned_forever?: Prisma.BoolFilter<"UserAccount"> | boolean
   banned_until?: Prisma.DateTimeNullableFilter<"UserAccount"> | Date | string | null
@@ -465,12 +445,10 @@ export type UserAccountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  first_name?: Prisma.SortOrder
   join_ip?: Prisma.SortOrder
   join_country?: Prisma.SortOrder
   admin?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  last_name?: Prisma.SortOrder
   username?: Prisma.SortOrderInput | Prisma.SortOrder
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
@@ -490,12 +468,10 @@ export type UserAccountScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"UserAccount"> | string
   email?: Prisma.StringWithAggregatesFilter<"UserAccount"> | string
   password?: Prisma.StringWithAggregatesFilter<"UserAccount"> | string
-  first_name?: Prisma.StringWithAggregatesFilter<"UserAccount"> | string
   join_ip?: Prisma.StringWithAggregatesFilter<"UserAccount"> | string
   join_country?: Prisma.StringWithAggregatesFilter<"UserAccount"> | string
   admin?: Prisma.BoolWithAggregatesFilter<"UserAccount"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"UserAccount"> | Date | string
-  last_name?: Prisma.StringWithAggregatesFilter<"UserAccount"> | string
   username?: Prisma.StringNullableWithAggregatesFilter<"UserAccount"> | string | null
   verified?: Prisma.BoolWithAggregatesFilter<"UserAccount"> | boolean
   banned_forever?: Prisma.BoolWithAggregatesFilter<"UserAccount"> | boolean
@@ -509,12 +485,10 @@ export type UserAccountCreateInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -577,12 +551,10 @@ export type UserAccountUncheckedCreateInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -645,12 +617,10 @@ export type UserAccountUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -713,12 +683,10 @@ export type UserAccountUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -781,12 +749,10 @@ export type UserAccountCreateManyInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -800,12 +766,10 @@ export type UserAccountUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -819,12 +783,10 @@ export type UserAccountUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -844,12 +806,10 @@ export type UserAccountCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  first_name?: Prisma.SortOrder
   join_ip?: Prisma.SortOrder
   join_country?: Prisma.SortOrder
   admin?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  last_name?: Prisma.SortOrder
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
@@ -863,12 +823,10 @@ export type UserAccountMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  first_name?: Prisma.SortOrder
   join_ip?: Prisma.SortOrder
   join_country?: Prisma.SortOrder
   admin?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  last_name?: Prisma.SortOrder
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
@@ -882,12 +840,10 @@ export type UserAccountMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  first_name?: Prisma.SortOrder
   join_ip?: Prisma.SortOrder
   join_country?: Prisma.SortOrder
   admin?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  last_name?: Prisma.SortOrder
   username?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   banned_forever?: Prisma.SortOrder
@@ -1639,12 +1595,10 @@ export type UserAccountCreateWithoutUser_feature_stateInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -1706,12 +1660,10 @@ export type UserAccountUncheckedCreateWithoutUser_feature_stateInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -1789,12 +1741,10 @@ export type UserAccountUpdateWithoutUser_feature_stateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1856,12 +1806,10 @@ export type UserAccountUncheckedUpdateWithoutUser_feature_stateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1923,12 +1871,10 @@ export type UserAccountCreateWithoutIntegrationsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -1990,12 +1936,10 @@ export type UserAccountUncheckedCreateWithoutIntegrationsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -2073,12 +2017,10 @@ export type UserAccountUpdateWithoutIntegrationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2140,12 +2082,10 @@ export type UserAccountUncheckedUpdateWithoutIntegrationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2207,12 +2147,10 @@ export type UserAccountCreateWithoutNotifications_triggeredInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -2274,12 +2212,10 @@ export type UserAccountUncheckedCreateWithoutNotifications_triggeredInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -2346,12 +2282,10 @@ export type UserAccountCreateWithoutNotificationsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -2413,12 +2347,10 @@ export type UserAccountUncheckedCreateWithoutNotificationsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -2496,12 +2428,10 @@ export type UserAccountUpdateWithoutNotifications_triggeredInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2563,12 +2493,10 @@ export type UserAccountUncheckedUpdateWithoutNotifications_triggeredInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2641,12 +2569,10 @@ export type UserAccountUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2708,12 +2634,10 @@ export type UserAccountUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2775,12 +2699,10 @@ export type UserAccountCreateWithoutAction_logInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -2842,12 +2764,10 @@ export type UserAccountUncheckedCreateWithoutAction_logInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -2925,12 +2845,10 @@ export type UserAccountUpdateWithoutAction_logInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2992,12 +2910,10 @@ export type UserAccountUncheckedUpdateWithoutAction_logInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3059,12 +2975,10 @@ export type UserAccountCreateWithoutMetric_logsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3126,12 +3040,10 @@ export type UserAccountUncheckedCreateWithoutMetric_logsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3209,12 +3121,10 @@ export type UserAccountUpdateWithoutMetric_logsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3276,12 +3186,10 @@ export type UserAccountUncheckedUpdateWithoutMetric_logsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3343,12 +3251,10 @@ export type UserAccountCreateWithoutNotification_preferencesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3410,12 +3316,10 @@ export type UserAccountUncheckedCreateWithoutNotification_preferencesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3493,12 +3397,10 @@ export type UserAccountUpdateWithoutNotification_preferencesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3560,12 +3462,10 @@ export type UserAccountUncheckedUpdateWithoutNotification_preferencesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3627,12 +3527,10 @@ export type UserAccountCreateWithoutFriendship_requests_sentInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3694,12 +3592,10 @@ export type UserAccountUncheckedCreateWithoutFriendship_requests_sentInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3766,12 +3662,10 @@ export type UserAccountCreateWithoutFriendships_requests_receivedInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3833,12 +3727,10 @@ export type UserAccountUncheckedCreateWithoutFriendships_requests_receivedInput 
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -3916,12 +3808,10 @@ export type UserAccountUpdateWithoutFriendship_requests_sentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3983,12 +3873,10 @@ export type UserAccountUncheckedUpdateWithoutFriendship_requests_sentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4061,12 +3949,10 @@ export type UserAccountUpdateWithoutFriendships_requests_receivedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4128,12 +4014,10 @@ export type UserAccountUncheckedUpdateWithoutFriendships_requests_receivedInput 
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4195,12 +4079,10 @@ export type UserAccountCreateWithoutFriendships_otherInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -4262,12 +4144,10 @@ export type UserAccountUncheckedCreateWithoutFriendships_otherInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -4334,12 +4214,10 @@ export type UserAccountCreateWithoutFriendshipsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -4401,12 +4279,10 @@ export type UserAccountUncheckedCreateWithoutFriendshipsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -4484,12 +4360,10 @@ export type UserAccountUpdateWithoutFriendships_otherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4551,12 +4425,10 @@ export type UserAccountUncheckedUpdateWithoutFriendships_otherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4629,12 +4501,10 @@ export type UserAccountUpdateWithoutFriendshipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4696,12 +4566,10 @@ export type UserAccountUncheckedUpdateWithoutFriendshipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4763,12 +4631,10 @@ export type UserAccountCreateWithoutElo_ratingInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -4830,12 +4696,10 @@ export type UserAccountUncheckedCreateWithoutElo_ratingInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -4913,12 +4777,10 @@ export type UserAccountUpdateWithoutElo_ratingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4980,12 +4842,10 @@ export type UserAccountUncheckedUpdateWithoutElo_ratingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5047,12 +4907,10 @@ export type UserAccountCreateWithoutElo_log_opponentInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -5114,12 +4972,10 @@ export type UserAccountUncheckedCreateWithoutElo_log_opponentInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -5186,12 +5042,10 @@ export type UserAccountCreateWithoutElo_log_playerInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -5253,12 +5107,10 @@ export type UserAccountUncheckedCreateWithoutElo_log_playerInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -5336,12 +5188,10 @@ export type UserAccountUpdateWithoutElo_log_opponentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5403,12 +5253,10 @@ export type UserAccountUncheckedUpdateWithoutElo_log_opponentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5481,12 +5329,10 @@ export type UserAccountUpdateWithoutElo_log_playerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5548,12 +5394,10 @@ export type UserAccountUncheckedUpdateWithoutElo_log_playerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5615,12 +5459,10 @@ export type UserAccountCreateWithoutAd_viewsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -5682,12 +5524,10 @@ export type UserAccountUncheckedCreateWithoutAd_viewsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -5765,12 +5605,10 @@ export type UserAccountUpdateWithoutAd_viewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5832,12 +5670,10 @@ export type UserAccountUncheckedUpdateWithoutAd_viewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5899,12 +5735,10 @@ export type UserAccountCreateWithoutProfileInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -5966,12 +5800,10 @@ export type UserAccountUncheckedCreateWithoutProfileInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -6049,12 +5881,10 @@ export type UserAccountUpdateWithoutProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6116,12 +5946,10 @@ export type UserAccountUncheckedUpdateWithoutProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6183,12 +6011,10 @@ export type UserAccountCreateWithoutImageInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -6250,12 +6076,10 @@ export type UserAccountUncheckedCreateWithoutImageInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -6333,12 +6157,10 @@ export type UserAccountUpdateWithoutImageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6400,12 +6222,10 @@ export type UserAccountUncheckedUpdateWithoutImageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6467,12 +6287,10 @@ export type UserAccountCreateWithoutProfile_viewsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -6534,12 +6352,10 @@ export type UserAccountUncheckedCreateWithoutProfile_viewsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -6606,12 +6422,10 @@ export type UserAccountCreateWithoutViewed_profilesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -6673,12 +6487,10 @@ export type UserAccountUncheckedCreateWithoutViewed_profilesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -6756,12 +6568,10 @@ export type UserAccountUpdateWithoutProfile_viewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6823,12 +6633,10 @@ export type UserAccountUncheckedUpdateWithoutProfile_viewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6901,12 +6709,10 @@ export type UserAccountUpdateWithoutViewed_profilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6968,12 +6774,10 @@ export type UserAccountUncheckedUpdateWithoutViewed_profilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7035,12 +6839,10 @@ export type UserAccountCreateWithoutForgot_passwordInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -7102,12 +6904,10 @@ export type UserAccountUncheckedCreateWithoutForgot_passwordInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -7185,12 +6985,10 @@ export type UserAccountUpdateWithoutForgot_passwordInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7252,12 +7050,10 @@ export type UserAccountUncheckedUpdateWithoutForgot_passwordInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7319,12 +7115,10 @@ export type UserAccountCreateWithoutSolvesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -7386,12 +7180,10 @@ export type UserAccountUncheckedCreateWithoutSolvesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -7469,12 +7261,10 @@ export type UserAccountUpdateWithoutSolvesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7536,12 +7326,10 @@ export type UserAccountUncheckedUpdateWithoutSolvesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7603,12 +7391,10 @@ export type UserAccountCreateWithoutEmail_logInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -7670,12 +7456,10 @@ export type UserAccountUncheckedCreateWithoutEmail_logInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -7753,12 +7537,10 @@ export type UserAccountUpdateWithoutEmail_logInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7820,12 +7602,10 @@ export type UserAccountUncheckedUpdateWithoutEmail_logInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7887,12 +7667,10 @@ export type UserAccountCreateWithoutMatch_sessions_createdInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -7954,12 +7732,10 @@ export type UserAccountUncheckedCreateWithoutMatch_sessions_createdInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -8037,12 +7813,10 @@ export type UserAccountUpdateWithoutMatch_sessions_createdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8104,12 +7878,10 @@ export type UserAccountUncheckedUpdateWithoutMatch_sessions_createdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8171,12 +7943,10 @@ export type UserAccountCreateWithoutMatches_wonInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -8238,12 +8008,10 @@ export type UserAccountUncheckedCreateWithoutMatches_wonInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -8321,12 +8089,10 @@ export type UserAccountUpdateWithoutMatches_wonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8388,12 +8154,10 @@ export type UserAccountUncheckedUpdateWithoutMatches_wonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8455,12 +8219,10 @@ export type UserAccountCreateWithoutMatch_lobbiesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -8522,12 +8284,10 @@ export type UserAccountUncheckedCreateWithoutMatch_lobbiesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -8605,12 +8365,10 @@ export type UserAccountUpdateWithoutMatch_lobbiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8672,12 +8430,10 @@ export type UserAccountUncheckedUpdateWithoutMatch_lobbiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8739,12 +8495,10 @@ export type UserAccountCreateWithoutMatch_participationsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -8806,12 +8560,10 @@ export type UserAccountUncheckedCreateWithoutMatch_participationsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -8889,12 +8641,10 @@ export type UserAccountUpdateWithoutMatch_participationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8956,12 +8706,10 @@ export type UserAccountUncheckedUpdateWithoutMatch_participationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9023,12 +8771,10 @@ export type UserAccountCreateWithoutChat_messagesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -9090,12 +8836,10 @@ export type UserAccountUncheckedCreateWithoutChat_messagesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -9173,12 +8917,10 @@ export type UserAccountUpdateWithoutChat_messagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9240,12 +8982,10 @@ export type UserAccountUncheckedUpdateWithoutChat_messagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9307,12 +9047,10 @@ export type UserAccountCreateWithoutSmart_deviceInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -9374,12 +9112,10 @@ export type UserAccountUncheckedCreateWithoutSmart_deviceInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -9457,12 +9193,10 @@ export type UserAccountUpdateWithoutSmart_deviceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9524,12 +9258,10 @@ export type UserAccountUncheckedUpdateWithoutSmart_deviceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9591,12 +9323,10 @@ export type UserAccountCreateWithoutBadge_typeInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -9658,12 +9388,10 @@ export type UserAccountUncheckedCreateWithoutBadge_typeInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -9741,12 +9469,10 @@ export type UserAccountUpdateWithoutBadge_typeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9808,12 +9534,10 @@ export type UserAccountUncheckedUpdateWithoutBadge_typeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9875,12 +9599,10 @@ export type UserAccountCreateWithoutBadgesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -9942,12 +9664,10 @@ export type UserAccountUncheckedCreateWithoutBadgesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -10025,12 +9745,10 @@ export type UserAccountUpdateWithoutBadgesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10092,12 +9810,10 @@ export type UserAccountUncheckedUpdateWithoutBadgesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10159,12 +9875,10 @@ export type UserAccountCreateWithoutTimer_backgroundInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -10226,12 +9940,10 @@ export type UserAccountUncheckedCreateWithoutTimer_backgroundInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -10309,12 +10021,10 @@ export type UserAccountUpdateWithoutTimer_backgroundInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10376,12 +10086,10 @@ export type UserAccountUncheckedUpdateWithoutTimer_backgroundInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10443,12 +10151,10 @@ export type UserAccountCreateWithoutReports_createdInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -10510,12 +10216,10 @@ export type UserAccountUncheckedCreateWithoutReports_createdInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -10582,12 +10286,10 @@ export type UserAccountCreateWithoutReports_forInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -10649,12 +10351,10 @@ export type UserAccountUncheckedCreateWithoutReports_forInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -10732,12 +10432,10 @@ export type UserAccountUpdateWithoutReports_createdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10799,12 +10497,10 @@ export type UserAccountUncheckedUpdateWithoutReports_createdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10877,12 +10573,10 @@ export type UserAccountUpdateWithoutReports_forInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10944,12 +10638,10 @@ export type UserAccountUncheckedUpdateWithoutReports_forInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11011,12 +10703,10 @@ export type UserAccountCreateWithoutBansInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11078,12 +10768,10 @@ export type UserAccountUncheckedCreateWithoutBansInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11150,12 +10838,10 @@ export type UserAccountCreateWithoutCreated_bansInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11217,12 +10903,10 @@ export type UserAccountUncheckedCreateWithoutCreated_bansInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11300,12 +10984,10 @@ export type UserAccountUpdateWithoutBansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11367,12 +11049,10 @@ export type UserAccountUncheckedUpdateWithoutBansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11445,12 +11125,10 @@ export type UserAccountUpdateWithoutCreated_bansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11512,12 +11190,10 @@ export type UserAccountUncheckedUpdateWithoutCreated_bansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11579,12 +11255,10 @@ export type UserAccountCreateWithoutSolve_viewsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11646,12 +11320,10 @@ export type UserAccountUncheckedCreateWithoutSolve_viewsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11718,12 +11390,10 @@ export type UserAccountCreateWithoutViewed_solveInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11785,12 +11455,10 @@ export type UserAccountUncheckedCreateWithoutViewed_solveInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -11868,12 +11536,10 @@ export type UserAccountUpdateWithoutSolve_viewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11935,12 +11601,10 @@ export type UserAccountUncheckedUpdateWithoutSolve_viewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12013,12 +11677,10 @@ export type UserAccountUpdateWithoutViewed_solveInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12080,12 +11742,10 @@ export type UserAccountUncheckedUpdateWithoutViewed_solveInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12147,12 +11807,10 @@ export type UserAccountCreateWithoutGame_sessionsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -12214,12 +11872,10 @@ export type UserAccountUncheckedCreateWithoutGame_sessionsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -12297,12 +11953,10 @@ export type UserAccountUpdateWithoutGame_sessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12364,12 +12018,10 @@ export type UserAccountUncheckedUpdateWithoutGame_sessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12431,12 +12083,10 @@ export type UserAccountCreateWithoutTop_solvesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -12498,12 +12148,10 @@ export type UserAccountUncheckedCreateWithoutTop_solvesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -12581,12 +12229,10 @@ export type UserAccountUpdateWithoutTop_solvesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12648,12 +12294,10 @@ export type UserAccountUncheckedUpdateWithoutTop_solvesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12715,12 +12359,10 @@ export type UserAccountCreateWithoutTop_averageInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -12782,12 +12424,10 @@ export type UserAccountUncheckedCreateWithoutTop_averageInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -12865,12 +12505,10 @@ export type UserAccountUpdateWithoutTop_averageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12932,12 +12570,10 @@ export type UserAccountUncheckedUpdateWithoutTop_averageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12999,12 +12635,10 @@ export type UserAccountCreateWithoutSessionsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13066,12 +12700,10 @@ export type UserAccountUncheckedCreateWithoutSessionsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13149,12 +12781,10 @@ export type UserAccountUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13216,12 +12846,10 @@ export type UserAccountUncheckedUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13283,12 +12911,10 @@ export type UserAccountCreateWithoutCustom_trainerInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13350,12 +12976,10 @@ export type UserAccountUncheckedCreateWithoutCustom_trainerInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13433,12 +13057,10 @@ export type UserAccountUpdateWithoutCustom_trainerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13500,12 +13122,10 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13567,12 +13187,10 @@ export type UserAccountCreateWithoutCustom_trainer_likesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13634,12 +13252,10 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_likesInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13706,12 +13322,10 @@ export type UserAccountCreateWithoutLiked_custom_trainersInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13773,12 +13387,10 @@ export type UserAccountUncheckedCreateWithoutLiked_custom_trainersInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -13856,12 +13468,10 @@ export type UserAccountUpdateWithoutCustom_trainer_likesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13923,12 +13533,10 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_likesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14001,12 +13609,10 @@ export type UserAccountUpdateWithoutLiked_custom_trainersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14068,12 +13674,10 @@ export type UserAccountUncheckedUpdateWithoutLiked_custom_trainersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14135,12 +13739,10 @@ export type UserAccountCreateWithoutCustom_trainer_downloadsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -14202,12 +13804,10 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_downloadsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -14274,12 +13874,10 @@ export type UserAccountCreateWithoutCustom_trainer_downloadedInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -14341,12 +13939,10 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_downloadedInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -14424,12 +14020,10 @@ export type UserAccountUpdateWithoutCustom_trainer_downloadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14491,12 +14085,10 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_downloadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14569,12 +14161,10 @@ export type UserAccountUpdateWithoutCustom_trainer_downloadedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14636,12 +14226,10 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_downloadedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14703,12 +14291,10 @@ export type UserAccountCreateWithoutTrainer_favoriteInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -14770,12 +14356,10 @@ export type UserAccountUncheckedCreateWithoutTrainer_favoriteInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -14853,12 +14437,10 @@ export type UserAccountUpdateWithoutTrainer_favoriteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14920,12 +14502,10 @@ export type UserAccountUncheckedUpdateWithoutTrainer_favoriteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14987,12 +14567,10 @@ export type UserAccountCreateWithoutAlgorithm_overrideInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -15054,12 +14632,10 @@ export type UserAccountUncheckedCreateWithoutAlgorithm_overrideInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -15137,12 +14713,10 @@ export type UserAccountUpdateWithoutAlgorithm_overrideInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15204,12 +14778,10 @@ export type UserAccountUncheckedUpdateWithoutAlgorithm_overrideInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15271,12 +14843,10 @@ export type UserAccountCreateWithoutSettingsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -15338,12 +14908,10 @@ export type UserAccountUncheckedCreateWithoutSettingsInput = {
   id?: string
   email: string
   password: string
-  first_name: string
   join_ip: string
   join_country: string
   admin?: boolean
   created_at?: Date | string
-  last_name: string
   username?: string | null
   verified?: boolean
   banned_forever?: boolean
@@ -15421,12 +14989,10 @@ export type UserAccountUpdateWithoutSettingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15488,12 +15054,10 @@ export type UserAccountUncheckedUpdateWithoutSettingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
   join_ip?: Prisma.StringFieldUpdateOperationsInput | string
   join_country?: Prisma.StringFieldUpdateOperationsInput | string
   admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15964,12 +15528,10 @@ export type UserAccountSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   email?: boolean
   password?: boolean
-  first_name?: boolean
   join_ip?: boolean
   join_country?: boolean
   admin?: boolean
   created_at?: boolean
-  last_name?: boolean
   username?: boolean
   verified?: boolean
   banned_forever?: boolean
@@ -16033,12 +15595,10 @@ export type UserAccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   email?: boolean
   password?: boolean
-  first_name?: boolean
   join_ip?: boolean
   join_country?: boolean
   admin?: boolean
   created_at?: boolean
-  last_name?: boolean
   username?: boolean
   verified?: boolean
   banned_forever?: boolean
@@ -16052,12 +15612,10 @@ export type UserAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   email?: boolean
   password?: boolean
-  first_name?: boolean
   join_ip?: boolean
   join_country?: boolean
   admin?: boolean
   created_at?: boolean
-  last_name?: boolean
   username?: boolean
   verified?: boolean
   banned_forever?: boolean
@@ -16071,12 +15629,10 @@ export type UserAccountSelectScalar = {
   id?: boolean
   email?: boolean
   password?: boolean
-  first_name?: boolean
   join_ip?: boolean
   join_country?: boolean
   admin?: boolean
   created_at?: boolean
-  last_name?: boolean
   username?: boolean
   verified?: boolean
   banned_forever?: boolean
@@ -16086,7 +15642,7 @@ export type UserAccountSelectScalar = {
   last_solve_at?: boolean
 }
 
-export type UserAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "first_name" | "join_ip" | "join_country" | "admin" | "created_at" | "last_name" | "username" | "verified" | "banned_forever" | "banned_until" | "offline_hash" | "unsub_id" | "last_solve_at", ExtArgs["result"]["userAccount"]>
+export type UserAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "join_ip" | "join_country" | "admin" | "created_at" | "username" | "verified" | "banned_forever" | "banned_until" | "offline_hash" | "unsub_id" | "last_solve_at", ExtArgs["result"]["userAccount"]>
 export type UserAccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   action_log?: boolean | Prisma.UserAccount$action_logArgs<ExtArgs>
   ad_views?: boolean | Prisma.UserAccount$ad_viewsArgs<ExtArgs>
@@ -16199,12 +15755,10 @@ export type $UserAccountPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     email: string
     password: string
-    first_name: string
     join_ip: string
     join_country: string
     admin: boolean
     created_at: Date
-    last_name: string
     username: string | null
     verified: boolean
     banned_forever: boolean
@@ -16687,12 +16241,10 @@ export interface UserAccountFieldRefs {
   readonly id: Prisma.FieldRef<"UserAccount", 'String'>
   readonly email: Prisma.FieldRef<"UserAccount", 'String'>
   readonly password: Prisma.FieldRef<"UserAccount", 'String'>
-  readonly first_name: Prisma.FieldRef<"UserAccount", 'String'>
   readonly join_ip: Prisma.FieldRef<"UserAccount", 'String'>
   readonly join_country: Prisma.FieldRef<"UserAccount", 'String'>
   readonly admin: Prisma.FieldRef<"UserAccount", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"UserAccount", 'DateTime'>
-  readonly last_name: Prisma.FieldRef<"UserAccount", 'String'>
   readonly username: Prisma.FieldRef<"UserAccount", 'String'>
   readonly verified: Prisma.FieldRef<"UserAccount", 'Boolean'>
   readonly banned_forever: Prisma.FieldRef<"UserAccount", 'Boolean'>

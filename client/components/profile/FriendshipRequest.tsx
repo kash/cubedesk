@@ -1,5 +1,5 @@
 import {addFriendship, removeFriendship} from '@/actions/account';
-import Button, {ButtonProps} from '@/components/common/Button';
+import {Button, type ButtonProps} from '@/components/ui/button';
 import {FriendshipRequest as FriendshipRequestSchema} from '@/types/friendship';
 import {PublicUserAccount} from '@/types/user';
 import {useMe} from '@/util/hooks/useMe';
@@ -107,43 +107,61 @@ export default function FriendshipRequest(props: Props) {
 
 	function getFriendButtonParams(): ButtonProps {
 		let friendButtonParams: ButtonProps = {
-			text: 'Add Friend',
-			icon: <Plus weight="bold" />,
-			gray: true,
+			children: (
+				<>
+					{'Add Friend'} <Plus weight="bold" />{' '}
+				</>
+			),
+			variant: 'secondary',
 		};
 
 		if (friends[user.id]) {
 			friendButtonParams = {
-				text: 'Friends',
-				icon: <Check weight="bold" />,
-				gray: true,
+				children: (
+					<>
+						{'Friends'} <Check weight="bold" />{' '}
+					</>
+				),
+				variant: 'secondary',
 			};
 
 			if (overFriendButton) {
 				friendButtonParams = {
-					text: 'Remove Friend',
-					icon: <X weight="bold" />,
-					danger: true,
+					children: (
+						<>
+							{'Remove Friend'} <X weight="bold" />{' '}
+						</>
+					),
+					variant: 'destructive',
 				};
 			}
 		} else if (friendRequestReceived) {
 			friendButtonParams = {
-				text: 'Accept Friend Request',
-				icon: <Plus weight="bold" />,
-				primary: true,
+				children: (
+					<>
+						{'Accept Friend Request'} <Plus weight="bold" />{' '}
+					</>
+				),
+				variant: 'default',
 			};
 		} else if (friendRequestSent) {
 			friendButtonParams = {
-				text: 'Friend Request Sent',
-				icon: <Timer weight="bold" />,
-				warning: true,
+				children: (
+					<>
+						{'Friend Request Sent'} <Timer weight="bold" />{' '}
+					</>
+				),
+				variant: 'secondary',
 			};
 
 			if (overFriendButton) {
 				friendButtonParams = {
-					text: 'Cancel Friend Request',
-					icon: <X weight="bold" />,
-					danger: true,
+					children: (
+						<>
+							{'Cancel Friend Request'} <X weight="bold" />{' '}
+						</>
+					),
+					variant: 'destructive',
 				};
 			}
 		}
@@ -155,10 +173,11 @@ export default function FriendshipRequest(props: Props) {
 
 	let friendButton: React.ReactNode = (
 		<Button
+			variant="secondary"
+			{...friendButtonParams}
 			onClick={friendshipButton}
 			onMouseOver={() => setOverFriendButton(true)}
 			onMouseOut={() => setOverFriendButton(false)}
-			{...friendButtonParams}
 		/>
 	);
 

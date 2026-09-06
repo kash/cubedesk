@@ -1,9 +1,9 @@
-import Button from '@/components/common/Button';
 import CopyText from '@/components/common/CopyText';
 import Loading from '@/components/common/Loading';
-import Tag from '@/components/common/Tag';
+import {Badge} from '@/components/ui/badge';
 import {useMatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
 import {getGameMetaData} from '@/components/play/Play';
+import {Button} from '@/components/ui/button';
 import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
@@ -92,23 +92,25 @@ export default function CustomMatch() {
 			<div className="flex w-full flex-col items-start">
 				<div className="mx-auto mt-10 mb-[60px] flex flex-col items-center">
 					<div className="mb-[5px] flex w-full flex-row flex-wrap gap-1">
-						<Tag backgroundColor="secondary" text={ct?.name ?? cubeType} />
-						<Tag backgroundColor="secondary" text={`${minPlayers} Players`} />
+						<Badge>{ct?.name ?? cubeType}</Badge>
+						<Badge>{`${minPlayers} Players`}</Badge>
 					</div>
 					<div className="bg-button mb-[5px] box-border rounded-[5px] px-[13px] py-[9px]">
 						{getMatchLinkBody(match)}
 					</div>
 					<div className="flex w-full items-start justify-between">
 						<Button
-							text="Show Link"
+							variant={showChallengeLink ? 'default' : 'secondary'}
 							onClick={toggleShowChallengeLink}
-							icon={<Eye weight="bold" />}
-							white={showChallengeLink}
-						/>
+							aria-pressed={showChallengeLink}
+						>
+							{'Show Link'}
+							<Eye weight="bold" />
+						</Button>
 						<CopyText
 							buttonProps={{
-								text: 'Copy Link',
-								primary: true,
+								children: 'Copy Link',
+								variant: 'default',
 							}}
 							text={matchLink}
 						/>
@@ -117,20 +119,18 @@ export default function CustomMatch() {
 				<div className="flex w-full flex-row items-end justify-between">
 					<CopyText
 						buttonProps={{
-							text: 'Copy Spectate Link',
-							large: true,
-							gray: true,
+							children: 'Copy Spectate Link',
+							size: 'lg',
+							variant: 'secondary',
 						}}
 						text={spectateLink}
 					/>
-					<Button
-						icon={<ArrowRight />}
-						primary
-						glow
-						large
-						text="Join Match"
-						to={matchLink}
-					/>
+					<Button variant="default" size="lg" asChild>
+						<a href={matchLink}>
+							{'Join Match'}
+							<ArrowRight />
+						</a>
+					</Button>
 				</div>
 			</div>
 		);

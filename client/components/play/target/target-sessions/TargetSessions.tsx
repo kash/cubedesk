@@ -1,8 +1,8 @@
 import Empty from '@/components/common/Empty';
 import LoadingIcon from '@/components/common/LoadingIcon';
-import ModalHeader from '@/components/common/modal/ModalHeader';
 import {getGameMetaData} from '@/components/play/Play';
 import TargetSession from '@/components/play/target/target-sessions/TargetSession';
+import {DialogHeader} from '@/components/ui/dialog';
 import {GameType} from '@/shared/match/consts';
 import {GameSessionWithRelations} from '@/types/game';
 import {Serialized} from '@/types/serialized';
@@ -38,7 +38,7 @@ export default function TargetSessions(props: Props) {
 		body = <Empty text="You don't have any sessions at the moment" />;
 	} else {
 		body = (
-			<div className="text-text mx-auto mt-[70px] mb-[100px] text-2xl">
+			<div className="mx-auto mb-[100px] mt-[70px] text-2xl text-text">
 				<LoadingIcon />
 			</div>
 		);
@@ -46,7 +46,7 @@ export default function TargetSessions(props: Props) {
 
 	return (
 		<div>
-			<ModalHeader title={`${name} Sessions`} />
+			<DialogHeader title={`${name} Sessions`} />
 			<div className="flex flex-col">{body}</div>
 		</div>
 	);

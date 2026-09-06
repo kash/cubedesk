@@ -1,7 +1,7 @@
 import {PlayerStatus} from '@/client/shared/match/types';
-import Button from '@/components/common/Button';
 import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
+import {Button} from '@/components/ui/button';
 import {useMe} from '@/util/hooks/useMe';
 import classNames from 'classnames';
 import React, {ReactNode, useContext} from 'react';
@@ -13,7 +13,12 @@ export default function TargetStatus() {
 	const me = useMe();
 
 	const {matchOpen, retrySolve, solves, getPlayerStatusInfo, timeIndex} = gameContext;
-	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match ?? undefined);
+	const playerStatus = getPlayerStatusInfo(
+		me.id,
+		timeIndex,
+		solves,
+		matchContext?.match ?? undefined,
+	);
 	const status = playerStatus.status;
 
 	let timeAlert: ReactNode;
@@ -29,7 +34,11 @@ export default function TargetStatus() {
 
 			// Can't retry solves in multiplayer
 			if (!matchOpen) {
-				retryAlert = <Button text="Retry failed solve" onClick={retrySolve} />;
+				retryAlert = (
+					<Button variant="secondary" onClick={retrySolve}>
+						{'Retry failed solve'}
+					</Button>
+				);
 			}
 			break;
 		}

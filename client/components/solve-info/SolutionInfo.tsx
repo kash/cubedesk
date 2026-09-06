@@ -1,6 +1,7 @@
 import CopyText from '@/components/common/CopyText';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {getSolveStepsWithChildren} from '@/components/solve-info/util/solution';
+import {Separator} from '@/components/ui/separator';
 import {SolveMethodStep} from '@/types/solve';
 import {Solve} from '@/types/solve';
 import {processSmartTurns} from '@/util/smart_scramble';
@@ -29,26 +30,28 @@ export default function SolutionInfo(props: Props) {
 	function getStep(
 		step: Pick<SolveMethodStep, 'step_name' | 'tps' | 'turn_count' | 'total_time' | 'turns'>,
 		isChild: boolean,
-		children?: ReactNode[]
+		children?: ReactNode[],
 	) {
 		return (
 			<div
 				key={step.step_name}
-				className={classNames('box-border w-full rounded border-2 border-button p-2.5', {
-					'mb-2.5 ml-2.5 mt-[5px]': isChild,
+				className={classNames('border-button box-border w-full rounded border-2 p-2.5', {
+					'mt-[5px] mb-2.5 ml-2.5': isChild,
 				})}
 			>
 				<div className="flex w-full flex-row items-start justify-between">
 					<div className="flex flex-col items-start">
-						<legend className="mb-0 w-auto font-bold text-text">{STEP_NAME_MAP[step.step_name] ?? step.step_name}</legend>
+						<span className="text-text mb-0 w-auto font-bold">
+							{STEP_NAME_MAP[step.step_name] ?? step.step_name}
+						</span>
 						<div className="mt-1.5 flex flex-row flex-wrap">
-							<span className="mr-3 table border-t-[3px] border-info pt-0.5 text-[0.9rem] font-medium text-text opacity-70">
+							<span className="border-info text-text mr-3 table border-t-[3px] pt-0.5 text-[0.9rem] font-medium opacity-70">
 								{getTimeString(step.total_time ?? 0)}s
 							</span>
-							<span className="mr-3 table border-t-[3px] border-success pt-0.5 text-[0.9rem] font-medium text-text opacity-70">
+							<span className="border-success text-text mr-3 table border-t-[3px] pt-0.5 text-[0.9rem] font-medium opacity-70">
 								{step.turn_count} Turns
 							</span>
-							<span className="mr-3 table border-t-[3px] border-warning pt-0.5 text-[0.9rem] font-medium text-text opacity-70">
+							<span className="border-warning text-text mr-3 table border-t-[3px] pt-0.5 text-[0.9rem] font-medium opacity-70">
 								{step.tps} TPS
 							</span>
 						</div>
@@ -57,14 +60,14 @@ export default function SolutionInfo(props: Props) {
 					<CopyText
 						text={step.turns ?? ''}
 						buttonProps={{
-							text: 'Copy moves',
+							children: 'Copy moves',
 						}}
 					/>
 				</div>
 				{children ? (
-					<div className="mb-2.5 mr-5 mt-[15px]">{children}</div>
+					<div className="mt-[15px] mr-5 mb-2.5">{children}</div>
 				) : (
-					<p className="mb-[7px] mt-1.5 font-mono text-text">{step.turns}</p>
+					<p className="text-text mt-1.5 mb-[7px] font-mono">{step.turns}</p>
 				)}
 			</div>
 		);
@@ -73,7 +76,7 @@ export default function SolutionInfo(props: Props) {
 	const turns = JSON.parse(solve.smart_turns ?? '[]');
 	const solution = processSmartTurns(
 		turns.map((turn) => turn.turn),
-		true
+		true,
 	).join(' ');
 
 	const stepsBody: ReactNode[] = [];
@@ -89,7 +92,7 @@ export default function SolutionInfo(props: Props) {
 	return (
 		<div className="relative flex min-h-[150px] w-full flex-col items-start pb-[45px]">
 			<div className="flex w-full flex-col gap-[15px]">{stepsBody}</div>
-			<hr className="my-5 h-0.5 w-full border-none bg-button" />
+			<Separator className="my-6" />
 			{getStep(
 				{
 					step_name: 'full',
@@ -98,7 +101,7 @@ export default function SolutionInfo(props: Props) {
 					total_time: solve.time,
 					turns: solution,
 				},
-				false
+				false,
 			)}
 		</div>
 	);

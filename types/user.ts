@@ -40,8 +40,6 @@ export type PublicUser = Prisma.UserAccountGetPayload<{select: typeof publicUser
 export const meUserSelect = {
 	...publicUserSelect,
 	email: true,
-	first_name: true,
-	last_name: true,
 	join_country: true,
 	offline_hash: true,
 	last_solve_at: true,
@@ -75,8 +73,6 @@ export interface PublicUserAccount {
 
 export interface UserAccount extends PublicUserAccount {
 	email: string;
-	first_name: string;
-	last_name: string;
 	offline_hash: string | null;
 	join_country: string;
 	timer_background?: TimerBackground | null;
@@ -101,7 +97,6 @@ export interface InternalUserAccount extends UserAccountForAdmin {
 export type EmailableUser = {
 	id: string;
 	email: string;
-	first_name?: string | null;
 	username?: string | null;
 	join_country?: string | null;
 	unsub_id?: string | null;

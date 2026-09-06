@@ -1,19 +1,18 @@
 import {reactState} from '@/@types/react';
-import {openModal} from '@/actions/general';
-import ConfirmModal from '@/components/common/ConfirmModal';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
+import {Button} from '@/components/ui/button';
 import {fetchSessionById} from '@/db/sessions/query';
 import {createSessionDb, deleteSessionDb, mergeSessionsDb} from '@/db/sessions/update';
 import {setCubeType, setCurrentSession} from '@/db/settings/update';
 import {fetchLastCubeTypeForSession} from '@/db/solves/query';
 import {Session as SessionSchema} from '@/types/session';
+import {cn} from '@/util/cn';
 import {getDateFromNow} from '@/util/dates';
 import {useSettings} from '@/util/hooks/useSettings';
 import {toastSuccess} from '@/util/toast';
-import classNames from 'classnames';
-import {DotsThreeOutlineVertical} from 'phosphor-react';
+import {DotsSixVertical, DotsThree} from 'phosphor-react';
 import React, {CSSProperties, ReactNode} from 'react';
-import {useDispatch} from 'react-redux';
 import {v4 as uuid} from 'uuid';
 
 interface Props {
@@ -33,10 +32,25 @@ interface Props {
 }
 
 export default function Session(props: Props) {
-	const currentSessionId = useSettings('session_id');
-	const dispatch = useDispatch();
+	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
+		typeof ConfirmDialog
+	> | null>(null);
+	const [confirmDialog2, setConfirmDialog2] = React.useState<React.ComponentProps<
+		typeof ConfirmDialog
+	> | null>(null);
 
-	const {session, selectedSessionId, selectSession, dragHandleProps, refCallback, style, className, isDragging} = props;
+	const currentSessionId = useSettings('session_id');
+
+	const {
+		session,
+		selectedSessionId,
+		selectSession,
+		dragHandleProps,
+		refCallback,
+		style,
+		className,
+		isDragging,
+	} = props;
 
 	const currentSession = fetchSessionById(currentSessionId);
 	const sessionIsSelected = selectedSessionId === session.id;
@@ -54,22 +68,18 @@ export default function Session(props: Props) {
 			return;
 		}
 
-		dispatch(
-			openModal(
-				<ConfirmModal
-					title="Merge sessions"
-					description={`Be careful here. You are about to merge "${session.name}" into "${currentSession.name}". "${session.name}" will be deleted after the merge.`}
-					triggerAction={async () => {
-						await mergeSessionsDb(session.id, currentSessionId);
-						props.setSelectedSessionId(currentSessionId);
-					}}
-					buttonText="Merge sessions"
-					buttonProps={{
-						danger: true,
-					}}
-				/>
-			)
-		);
+		setConfirmDialog({
+			title: 'Merge sessions',
+			description: `Be careful here. You are about to merge "${session.name}" into "${currentSession.name}". "${session.name}" will be deleted after the merge.`,
+			triggerAction: async () => {
+				await mergeSessionsDb(session.id, currentSessionId);
+				props.setSelectedSessionId(currentSessionId);
+			},
+			buttonText: 'Merge sessions',
+			buttonProps: {
+				variant: 'destructive',
+			},
+		});
 	}
 
 	async function deleteSession() {
@@ -96,25 +106,24 @@ export default function Session(props: Props) {
 			toastSuccess(`Successfully deleted session "${name}"`);
 		}
 
-		dispatch(
-			openModal(
-				<ConfirmModal
-					title="Delete session"
-					description={`Be careful here. You are about to delete "${session.name}." This action is irreversible.`}
-					triggerAction={triggerAction}
-					buttonText="Delete session"
-				/>
-			)
-		);
+		setConfirmDialog2({
+			title: 'Delete session',
+			description: `Be careful here. You are about to delete "${session.name}." This action is irreversible.`,
+			triggerAction: triggerAction,
+			buttonText: 'Delete session',
+		});
 	}
 
 	let dropdown: ReactNode = null;
 
 	if (!isCurrentSession) {
 		dropdown = (
-			<Dropdown
-				dropdownButtonProps={{
-					transparent: true,
+			<ActionMenu
+				icon={<DotsThree size={18} />}
+				triggerProps={{
+					variant: 'ghost',
+					size: 'icon-sm',
+					'aria-label': `Actions for ${session.name}`,
 				}}
 				options={[
 					{
@@ -135,44 +144,76 @@ export default function Session(props: Props) {
 	}
 
 	return (
-		<div
-			ref={refCallback}
-			key={session.id}
-			style={style}
-			className={classNames(
-				'mb-2.5 box-border flex w-full cursor-pointer flex-row items-center justify-between rounded-[10px] border-4 border-transparent bg-module p-[13px]',
-				{
-					'border-primary': sessionIsSelected,
-				},
-				className
-			)}
-			onClick={(e) => selectSession(e, session.id)}
-		>
-			<div className="flex flex-row">
-				<button
+		<>
+			<div
+				ref={refCallback}
+				key={session.id}
+				style={style}
+				className={cn(
+					'sessions-item',
+					{
+						'sessions-item-selected': sessionIsSelected,
+						'sessions-item-dragging': isDragging,
+					},
+					className,
+				)}
+			>
+				<Button
+					variant="ghost"
 					ref={dragHandleProps?.setActivatorNodeRef}
 					type="button"
-					className="mr-[13px] cursor-pointer text-base text-text opacity-50"
-					onClick={(e) => e.stopPropagation()}
+					className="sessions-drag-handle h-auto p-0 font-normal whitespace-normal hover:bg-transparent"
 					{...dragHandleProps?.attributes}
 					{...dragHandleProps?.listeners}
+					aria-label={`Reorder ${session.name}`}
 				>
-					<DotsThreeOutlineVertical weight="fill" />
-				</button>
-				<div className="flex flex-col items-start justify-start">
-					<h4 className="text-left text-base font-medium text-text">{session.name}</h4>
-					<span className="mt-[3px] table text-[0.85rem] text-text opacity-70">
+					<DotsSixVertical size={18} />
+				</Button>
+				<Button
+					variant="ghost"
+					type="button"
+					className="sessions-select h-auto flex-col items-start justify-start gap-1 p-0 font-normal whitespace-normal hover:bg-transparent"
+					onClick={(e) => selectSession(e, session.id)}
+					aria-pressed={sessionIsSelected}
+				>
+					<span className="sessions-item-name">{session.name || 'Untitled session'}</span>
+					<span className="sessions-item-date">
 						Created {getDateFromNow(session.created_at)}
 					</span>
-				</div>
+					{isCurrentSession && <span className="sessions-current">Current</span>}
+				</Button>
+				{dropdown}
 			</div>
-
-			{isCurrentSession ? (
-				<span className="absolute right-[5px] top-[5px] rounded bg-primary px-1.5 py-[3px] text-[0.8rem] font-bold text-white/80">
-					Current
-				</span>
-			) : null}
-			{dropdown}
-		</div>
+			{confirmDialog && (
+				<ConfirmDialog
+					open={confirmDialog !== null}
+					onOpenChange={(open) => {
+						if (!open) {
+							setConfirmDialog(null);
+						}
+					}}
+					{...confirmDialog}
+					onComplete={() => {
+						setConfirmDialog((current) => (current === confirmDialog ? null : current));
+					}}
+				/>
+			)}
+			{confirmDialog2 && (
+				<ConfirmDialog
+					open={confirmDialog2 !== null}
+					onOpenChange={(open) => {
+						if (!open) {
+							setConfirmDialog2(null);
+						}
+					}}
+					{...confirmDialog2}
+					onComplete={() => {
+						setConfirmDialog2((current) =>
+							current === confirmDialog2 ? null : current,
+						);
+					}}
+				/>
+			)}
+		</>
 	);
 }

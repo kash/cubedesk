@@ -1,16 +1,13 @@
-import Button from '@/components/common/Button';
+import {Button} from '@/components/ui/button';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {cn} from '@/util/cn';
-import {useWindowClickAwayListener} from '@/util/hooks/useListener';
 import {useTheme} from '@/util/hooks/useTheme';
-import {useToggle} from '@/util/hooks/useToggle';
 import {getAnyColorStringAsRawRgbString, getAnyColorStringAsRgb} from '@/util/themes/theme_util';
-import React, {ReactNode, useEffect} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {type Color, ColorPicker as ColorPalette, toColor, useColor} from 'react-color-palette';
 
-// Used by the click-away listener to detect clicks inside the picker. Not a styling hook.
-const ROOT_CLASS = 'cd-common-color-picker';
-
 interface Props {
+	fullWidth?: boolean;
 	openUp?: boolean;
 	resetToRgb?: string;
 	openLeft?: boolean;
@@ -24,22 +21,19 @@ export default function ColorPicker(props: Props) {
 	const {name, hideReset, onChange, openUp, openLeft, resetToRgb} = props;
 	const selectedColorHex = props.selectedColorHex || '#000000';
 
-	const backgroundTheme = useTheme('background_color');
-	const [showPicker, toggleShowPicker] = useToggle(false);
+	const moduleTheme = useTheme('module_color');
+	const [showPicker, setShowPicker] = useState(false);
 	const [color, setColor] = useColor('rgb', getAnyColorStringAsRgb(selectedColorHex));
 
 	useEffect(() => {
 		const newColor = toColor('rgb', getAnyColorStringAsRgb(selectedColorHex));
 		setColor(newColor);
-	}, [selectedColorHex]);
+	}, [selectedColorHex, setColor]);
 
-	useWindowClickAwayListener(ROOT_CLASS, () => {
-		if (showPicker) {
-			// Close picker and update parent
-			onChange(getAnyColorStringAsRawRgbString(color));
-			toggleShowPicker();
-		}
-	});
+	function changeOpen(open: boolean) {
+		setShowPicker(open);
+		if (!open) onChange(getAnyColorStringAsRawRgbString(color));
+	}
 
 	function colorChange(c: Color) {
 		setColor(c);
@@ -47,56 +41,58 @@ export default function ColorPicker(props: Props) {
 
 	let resetButton: ReactNode = null;
 	if (resetToRgb && !hideReset) {
-		resetButton = (
-			<Button
-				hidden={resetToRgb.replace(/\s/g, '') === getAnyColorStringAsRawRgbString(color)}
-				text="Reset"
-				warning
-				flat
-				onClick={() => {
-					const newColor = toColor('rgb', getAnyColorStringAsRgb(resetToRgb));
-					setColor(newColor);
-					onChange(getAnyColorStringAsRawRgbString(newColor));
-				}}
-			/>
-		);
+		resetButton =
+			resetToRgb.replace(/\s/g, '') === getAnyColorStringAsRawRgbString(color) ? null : (
+				<Button
+					variant="ghost"
+					onClick={() => {
+						const newColor = toColor('rgb', getAnyColorStringAsRgb(resetToRgb));
+						setColor(newColor);
+						onChange(getAnyColorStringAsRawRgbString(newColor));
+					}}
+					size="sm"
+				>
+					{'Reset'}
+				</Button>
+			);
 	}
 
 	return (
-		<div className={cn(ROOT_CLASS, 'relative flex flex-col items-end')}>
-			<button
-				className="border-button/90 bg-button/40 hover:bg-tmo-background/[0.07] flex w-full flex-row items-center rounded border-4 px-4 py-2.5"
-				onClick={() => toggleShowPicker()}
-			>
-				<span
-					className="border-tmo-background/30 mr-2.5 inline-block h-6 w-6 rounded-full border-2"
-					style={{
-						backgroundColor: color.hex,
-					}}
-				/>
-				<p className="text-text m-0 text-lg font-bold transition-all duration-100 ease-in-out">
-					{name || 'Select color'}
-				</p>
-			</button>
+		<div className={cn('flex flex-col items-end', {'w-full min-w-0': props.fullWidth})}>
+			<Popover open={showPicker} onOpenChange={changeOpen}>
+				<PopoverTrigger asChild>
+					<Button
+						type="button"
+						variant="outline"
+						className={cn({'h-11 w-full justify-start': props.fullWidth})}
+					>
+						<span
+							className="border-tmo-background/30 inline-block size-5 shrink-0 rounded-full border"
+							style={{
+								backgroundColor: color.hex,
+							}}
+						/>
+						<p className="m-0 text-sm font-medium">{name || 'Select color'}</p>
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent
+					aria-label={name || 'Select color'}
+					align={openLeft ? 'start' : 'end'}
+					side={openUp ? 'top' : 'bottom'}
+					className="[&_.rcp]:bg-module [&_.rcp]:text-text w-auto overflow-hidden p-0 [&_.rcp]:max-w-full [&_input]:max-w-none"
+				>
+					<ColorPalette
+						width={350}
+						height={150}
+						color={color}
+						onChange={colorChange}
+						hideRGB
+						dark={moduleTheme.isDark}
+						hideHSV
+					/>
+				</PopoverContent>
+			</Popover>
 			{resetButton}
-			<div
-				className={cn(
-					'absolute top-[calc(100%+5px)] right-0 z-1000 block transition-all duration-100 ease-in-out [&_input]:max-w-none',
-					openUp && 'top-auto bottom-[calc(100%+5px)]',
-					openLeft && 'right-auto left-0',
-					!showPicker && 'hidden',
-				)}
-			>
-				<ColorPalette
-					width={350}
-					height={150}
-					color={color}
-					onChange={colorChange}
-					hideRGB
-					dark={backgroundTheme.isDark}
-					hideHSV
-				/>
-			</div>
 		</div>
 	);
 }

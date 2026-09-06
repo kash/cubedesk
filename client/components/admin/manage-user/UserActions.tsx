@@ -1,12 +1,11 @@
-import {openModal} from '@/actions/general';
 import BanUser from '@/components/admin/manage-user/BanUser';
-import Button from '@/components/common/Button';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {AdminUser} from '@/types/admin';
 import {Serialized} from '@/types/serialized';
 import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React from 'react';
-import {useDispatch} from 'react-redux';
 
 interface Props {
 	user: Serialized<AdminUser>;
@@ -14,7 +13,10 @@ interface Props {
 }
 
 export default function UserActions(props: Props) {
-	const dispatch = useDispatch();
+	const [banUserDialog, setBanUserDialog] = React.useState<{
+		props: React.ComponentProps<typeof BanUser>;
+		onComplete: React.ComponentProps<typeof BanUser>['onComplete'];
+	} | null>(null);
 
 	const {user, updateUser} = props;
 	const banned = user.banned_forever || user.banned_until;
@@ -46,23 +48,45 @@ export default function UserActions(props: Props) {
 		if (banned) {
 			unbanUser();
 		} else {
-			dispatch(
-				openModal(<BanUser user={user} />, {
-					onComplete: updateUser,
-				}),
-			);
+			setBanUserDialog({props: {user: user}, onComplete: updateUser});
 		}
 	}
 
 	return (
-		<div className="my-[15px] flex w-full flex-row flex-wrap items-start gap-[7px]">
-			<Button text={banned ? 'Unban user' : 'Ban user'} onClick={toggleBan} danger />
-			<Button
-				text={user.verified ? 'Unverify user' : 'Verify user'}
-				primary={!user.verified}
-				warning={user.verified}
-				onClick={toggleVerifyUser}
-			/>
-		</div>
+		<>
+			<div className="my-[15px] flex w-full flex-row flex-wrap items-start gap-[7px]">
+				<Button variant="destructive" onClick={toggleBan}>
+					{banned ? 'Unban user' : 'Ban user'}
+				</Button>
+				<Button
+					variant={user.verified ? 'secondary' : !user.verified ? 'default' : 'secondary'}
+					onClick={toggleVerifyUser}
+				>
+					{user.verified ? 'Unverify user' : 'Verify user'}
+				</Button>
+			</div>
+			<Dialog
+				open={banUserDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setBanUserDialog(null);
+					}
+				}}
+			>
+				{banUserDialog && (
+					<DialogContent>
+						<BanUser
+							{...banUserDialog.props}
+							onComplete={(...args) => {
+								setBanUserDialog((current) =>
+									current === banUserDialog ? null : current,
+								);
+								banUserDialog.onComplete?.(...args);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

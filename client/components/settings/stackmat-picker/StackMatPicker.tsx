@@ -1,13 +1,16 @@
-import Button from '@/components/common/Button';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/ModalHeader';
+import ButtonError from '@/components/common/inputs/Error';
+import SelectField from '@/components/common/inputs/SelectField';
+import {Button} from '@/components/ui/button';
+import {DialogHeader} from '@/components/ui/dialog';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
-import {CaretDown} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 
-export default function StackMatPicker(props: IModalProps) {
+interface Props {
+	onComplete?: () => void;
+}
+
+export default function StackMatPicker(props: Props) {
 	const {onComplete} = props;
 
 	const stackMatId = useSettings('stackmat_id');
@@ -32,12 +35,12 @@ export default function StackMatPicker(props: IModalProps) {
 				const storedIds = new Set();
 
 				for (const device of devices) {
-					if (device.kind !== 'audioinput') {
+					if (device.kind !== 'audioinput' || !device.deviceId) {
 						continue;
 					}
 
 					if (storedIds.has(device.deviceId)) {
-						// continue;
+						continue;
 					}
 					storedIds.add(device.deviceId);
 					options.push(device);
@@ -73,51 +76,41 @@ export default function StackMatPicker(props: IModalProps) {
 		setSelectedStackMatId(selectedId);
 	}
 
-	let name = 'Select Stackmat';
 	let disabled = !selectedStackMatId;
 
 	if (selectedStackMatId) {
 		const stackMat = getStackMatFromId(selectedStackMatId);
 
-		if (stackMat) {
-			name = stackMat.label;
-		} else {
-			name = 'None';
+		if (!stackMat) {
 			disabled = true;
 		}
 	}
 
 	return (
 		<div>
-			<ModalHeader
+			<DialogHeader
 				title="Select StackMat Input"
 				description={`StackMat connects to your computer via an audio jack. Click the dropdown below, select your StackMat, and select it. Please note that the input name may not be "StackMat" but rather something like "USB Audio Device."`}
 			/>
 			<div className="mb-2">
-				<Dropdown
-					dropdownButtonProps={{
-						large: true,
-					}}
-					openLeft
-					text={name}
-					icon={<CaretDown />}
+				<SelectField
+					label="StackMat input"
+					value={selectedStackMatId || ''}
+					placeholder="Select StackMat"
+					onValueChange={selectAudio}
 					error={error || undefined}
-					options={options.map((op) => ({
-						onClick: () => selectAudio(op.deviceId),
-						text: op.label.replace(/\(.+\)/g, '').trim(),
-						on: op.deviceId === selectedStackMatId,
+					options={options.map((device) => ({
+						value: device.deviceId,
+						text: device.label.replace(/\(.+\)/g, '').trim() || 'Unnamed audio input',
 					}))}
 				/>
 			</div>
-			<Button
-				large
-				glow
-				text="Save"
-				primary
-				disabled={disabled}
-				onClick={saveSelectedAudio}
-				error={error || undefined}
-			/>
+			<div className="flex flex-col items-start">
+				<Button variant="default" disabled={disabled} onClick={saveSelectedAudio} size="lg">
+					{'Save'}
+				</Button>
+				<ButtonError text={error || undefined} />
+			</div>
 		</div>
 	);
 }

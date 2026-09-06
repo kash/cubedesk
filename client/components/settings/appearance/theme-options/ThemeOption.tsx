@@ -1,7 +1,8 @@
+import {Button} from '@/components/ui/button';
 import {getSetting} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
+import {cn} from '@/util/cn';
 import {APP_THEME_PRESETS, PresetThemeValues} from '@/util/themes/theme_consts';
-import classNames from 'classnames';
 import jsonStr from 'json-stable-stringify';
 import React from 'react';
 
@@ -30,15 +31,19 @@ export default function ThemeOption(props: Props) {
 	}
 
 	return (
-		<button
-			className={classNames(
-				'border-button/90 bg-button/40 relative mr-3 mb-3 flex w-full flex-row items-center rounded-[30px] border-4 px-[30px] py-3 hover:opacity-80',
-				selected && 'border-primary',
-			)}
+		<Button
+			variant="outline"
+			aria-pressed={selected}
+			className={cn('h-14 w-full min-w-0 justify-start gap-3 rounded-lg px-4', {
+				'border-primary bg-primary/5': selected,
+			})}
 			onClick={selectTheme}
 		>
-			<div className="border-tmo-background/30 relative mr-2.5 table h-[30px] w-10 overflow-hidden rounded-[5px] border-2">
-				<div className="absolute top-1/2 left-[57%] flex -translate-x-1/2 -translate-y-1/2 rotate-[25deg] flex-row items-center">
+			<span
+				aria-hidden="true"
+				className="border-tmo-background/20 relative h-6 w-8 shrink-0 overflow-hidden rounded border"
+			>
+				<span className="absolute top-1/2 left-[57%] flex -translate-x-1/2 -translate-y-1/2 rotate-[25deg] flex-row items-center">
 					<span
 						className="box-border table h-[60px] w-[60px]"
 						style={{
@@ -52,11 +57,9 @@ export default function ThemeOption(props: Props) {
 							backgroundColor: 'rgb(' + theme.values.module_color + ')',
 						}}
 					/>
-				</div>
-			</div>
-			<p className="text-text m-0 text-[1.2rem] font-bold opacity-100 transition-all duration-100 ease-in-out">
-				{theme.name}
-			</p>
-		</button>
+				</span>
+			</span>
+			<span className="truncate text-sm font-medium">{theme.name}</span>
+		</Button>
 	);
 }

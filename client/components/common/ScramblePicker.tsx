@@ -1,8 +1,6 @@
-import Dropdown, {DropdownProps} from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import ComboboxField, {ComboboxFieldOptions} from '@/components/common/inputs/ComboboxField';
 import {ScrambleType} from '@/util/cubes/cube_scrambles';
 import {getAllScrambleTypeNames, getScrambleTypeById} from '@/util/cubes/util';
-import {CaretDown} from 'phosphor-react';
 import React from 'react';
 
 interface Props {
@@ -12,7 +10,7 @@ interface Props {
 	scrambleTypes?: string[];
 	onChange?: (scrambleType: ScrambleType) => void;
 	excludeOtherScrambleType?: boolean;
-	dropdownProps?: DropdownProps;
+	pickerProps?: ComboboxFieldOptions;
 }
 
 export default function ScramblePicker(props: Props) {
@@ -22,7 +20,7 @@ export default function ScramblePicker(props: Props) {
 		handlePrefix,
 		excludeSelected,
 		onChange,
-		dropdownProps,
+		pickerProps,
 		excludeOtherScrambleType,
 	} = props;
 
@@ -33,7 +31,7 @@ export default function ScramblePicker(props: Props) {
 		scrambleTypeNames = getAllScrambleTypeNames();
 	}
 
-	const options: IDropdownOption[] = [];
+	const options: {value: string; text: string}[] = [];
 	for (const name of scrambleTypeNames) {
 		const st = getScrambleTypeById(name);
 		const selected = st?.id === value;
@@ -48,9 +46,8 @@ export default function ScramblePicker(props: Props) {
 		}
 
 		options.push({
+			value: st.id,
 			text: st.name,
-			on: selected,
-			onClick: () => onChange && onChange(st),
 		});
 	}
 
@@ -62,14 +59,16 @@ export default function ScramblePicker(props: Props) {
 	}
 
 	return (
-		<Dropdown
+		<ComboboxField
+			{...pickerProps}
+			label="Scramble type"
+			value={value}
 			text={text}
-			legend="Scramble type"
-			icon={<CaretDown />}
-			openLeft
-			dropdownMaxHeight={300}
-			{...(dropdownProps || {})}
 			options={options}
+			onValueChange={(id) => {
+				const scramble = getScrambleTypeById(id);
+				if (scramble) onChange?.(scramble);
+			}}
 		/>
 	);
 }

@@ -1,13 +1,17 @@
+import {cn} from '@/util/cn';
 import React, {ReactNode} from 'react';
 
 interface Props {
 	pageName: string;
 	children?: ReactNode;
+	actions?: ReactNode;
 	icon?: string;
+	titleClassName?: string;
+	description?: string;
 }
 
 export default function PageTitle(props: Props) {
-	const {pageName, children, icon} = props;
+	const {pageName, children, actions, icon, titleClassName, description} = props;
 
 	let iconBody: ReactNode = null;
 	if (icon) {
@@ -15,17 +19,23 @@ export default function PageTitle(props: Props) {
 	}
 
 	return (
-		<div className="relative mb-5 w-full pb-5">
-			<h1 className="flex flex-row items-center font-['Kontora',Poppins,Arial,'Helvetica_Neue',Helvetica,sans-serif] text-[2.7rem] font-medium">
-				{iconBody}
-				{pageName}
-			</h1>
-			<div className="mb-7.5 flex flex-row">
-				<div className="mr-1.25 h-1 w-12.5 rounded bg-primary" />
-				<div className="mr-1.25 h-1 w-8.75 rounded bg-secondary" />
+		<header className="relative mb-8 w-full">
+			<div className="flex flex-wrap items-center justify-between gap-4">
+				<h1
+					className={cn(
+						'flex items-center font-sans text-3xl font-medium tracking-tight',
+						titleClassName,
+					)}
+				>
+					{iconBody}
+					{pageName}
+				</h1>
+				{actions && <div className="ml-auto">{actions}</div>}
 			</div>
-
-			{children}
-		</div>
+			{description && (
+				<p className="text-text/60 mt-2 text-base font-normal">{description}</p>
+			)}
+			{children && <div className="mt-6">{children}</div>}
+		</header>
 	);
 }

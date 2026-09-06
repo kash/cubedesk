@@ -1,4 +1,6 @@
+import {Button} from '@/components/ui/button';
 import {ColorName} from '@/shared/colors';
+import {cn} from '@/util/cn';
 import {useColor} from '@/util/hooks/useTheme';
 import React from 'react';
 
@@ -16,12 +18,24 @@ export default function CustomizeStatsColor(props: Props) {
 		backgroundColor: colorHex.hex,
 	};
 
-	const classNames = ['table', 'w-8', 'h-8', 'rounded-full', 'border-solid', 'border-2'];
-	if (selected) {
-		classNames.push('border-primary/80');
-	} else {
-		classNames.push('border-tmo-background/40');
-	}
-
-	return <button style={style} onClick={() => onSelectColor(colorName)} className={classNames.join(' ')} />;
+	return (
+		<Button
+			variant="ghost"
+			type="button"
+			aria-label={`${colorName.replaceAll('_', ' ')} color`}
+			aria-pressed={Boolean(selected)}
+			title={colorName.replaceAll('_', ' ')}
+			style={style}
+			onClick={() => onSelectColor(colorName)}
+			className={cn(
+				'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
+				cn(
+					'border-tmo-module/20 ring-offset-module focus-visible:ring-text h-6 w-6 rounded-full border ring-offset-2 transition-transform hover:scale-110 focus-visible:ring-2',
+					{
+						'ring-text/80 ring-2': selected,
+					},
+				),
+			)}
+		/>
+	);
 }

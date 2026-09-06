@@ -424,6 +424,8 @@ export const ModelName = {
   CustomTrainer: 'CustomTrainer',
   CustomTrainerLike: 'CustomTrainerLike',
   CustomTrainerDownload: 'CustomTrainerDownload',
+  TrainerAlgorithm: 'TrainerAlgorithm',
+  TrainerCatalogState: 'TrainerCatalogState',
   TrainerFavorite: 'TrainerFavorite',
   AlgorithmOverride: 'AlgorithmOverride',
   Setting: 'Setting',
@@ -443,7 +445,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "solveMethodStep" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerFavorite" | "algorithmOverride" | "setting" | "customCubeType"
+    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "solveMethodStep" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerAlgorithm" | "trainerCatalogState" | "trainerFavorite" | "algorithmOverride" | "setting" | "customCubeType"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3407,6 +3409,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TrainerAlgorithm: {
+      payload: Prisma.$TrainerAlgorithmPayload<ExtArgs>
+      fields: Prisma.TrainerAlgorithmFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TrainerAlgorithmFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TrainerAlgorithmFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>
+        }
+        findFirst: {
+          args: Prisma.TrainerAlgorithmFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TrainerAlgorithmFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>
+        }
+        findMany: {
+          args: Prisma.TrainerAlgorithmFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>[]
+        }
+        create: {
+          args: Prisma.TrainerAlgorithmCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>
+        }
+        createMany: {
+          args: Prisma.TrainerAlgorithmCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TrainerAlgorithmCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>[]
+        }
+        delete: {
+          args: Prisma.TrainerAlgorithmDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>
+        }
+        update: {
+          args: Prisma.TrainerAlgorithmUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>
+        }
+        deleteMany: {
+          args: Prisma.TrainerAlgorithmDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TrainerAlgorithmUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TrainerAlgorithmUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>[]
+        }
+        upsert: {
+          args: Prisma.TrainerAlgorithmUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerAlgorithmPayload>
+        }
+        aggregate: {
+          args: Prisma.TrainerAlgorithmAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTrainerAlgorithm>
+        }
+        groupBy: {
+          args: Prisma.TrainerAlgorithmGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrainerAlgorithmGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TrainerAlgorithmCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrainerAlgorithmCountAggregateOutputType> | number
+        }
+      }
+    }
+    TrainerCatalogState: {
+      payload: Prisma.$TrainerCatalogStatePayload<ExtArgs>
+      fields: Prisma.TrainerCatalogStateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TrainerCatalogStateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TrainerCatalogStateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>
+        }
+        findFirst: {
+          args: Prisma.TrainerCatalogStateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TrainerCatalogStateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>
+        }
+        findMany: {
+          args: Prisma.TrainerCatalogStateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>[]
+        }
+        create: {
+          args: Prisma.TrainerCatalogStateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>
+        }
+        createMany: {
+          args: Prisma.TrainerCatalogStateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TrainerCatalogStateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>[]
+        }
+        delete: {
+          args: Prisma.TrainerCatalogStateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>
+        }
+        update: {
+          args: Prisma.TrainerCatalogStateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>
+        }
+        deleteMany: {
+          args: Prisma.TrainerCatalogStateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TrainerCatalogStateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TrainerCatalogStateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>[]
+        }
+        upsert: {
+          args: Prisma.TrainerCatalogStateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainerCatalogStatePayload>
+        }
+        aggregate: {
+          args: Prisma.TrainerCatalogStateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTrainerCatalogState>
+        }
+        groupBy: {
+          args: Prisma.TrainerCatalogStateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrainerCatalogStateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TrainerCatalogStateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrainerCatalogStateCountAggregateOutputType> | number
+        }
+      }
+    }
     TrainerFavorite: {
       payload: Prisma.$TrainerFavoritePayload<ExtArgs>
       fields: Prisma.TrainerFavoriteFieldRefs
@@ -3746,12 +3896,10 @@ export const UserAccountScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  first_name: 'first_name',
   join_ip: 'join_ip',
   join_country: 'join_country',
   admin: 'admin',
   created_at: 'created_at',
-  last_name: 'last_name',
   username: 'username',
   verified: 'verified',
   banned_forever: 'banned_forever',
@@ -4332,6 +4480,34 @@ export const CustomTrainerDownloadScalarFieldEnum = {
 export type CustomTrainerDownloadScalarFieldEnum = (typeof CustomTrainerDownloadScalarFieldEnum)[keyof typeof CustomTrainerDownloadScalarFieldEnum]
 
 
+export const TrainerAlgorithmScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  active: 'active',
+  solution: 'solution',
+  scrambles: 'scrambles',
+  cube_type: 'cube_type',
+  algo_type: 'algo_type',
+  group_name: 'group_name',
+  img_link: 'img_link',
+  colors: 'colors',
+  rotate: 'rotate',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type TrainerAlgorithmScalarFieldEnum = (typeof TrainerAlgorithmScalarFieldEnum)[keyof typeof TrainerAlgorithmScalarFieldEnum]
+
+
+export const TrainerCatalogStateScalarFieldEnum = {
+  id: 'id',
+  initialized_at: 'initialized_at',
+  revision: 'revision'
+} as const
+
+export type TrainerCatalogStateScalarFieldEnum = (typeof TrainerCatalogStateScalarFieldEnum)[keyof typeof TrainerCatalogStateScalarFieldEnum]
+
+
 export const TrainerFavoriteScalarFieldEnum = {
   id: 'id',
   cube_key: 'cube_key',
@@ -4425,10 +4601,8 @@ export const UserAccountOrderByRelevanceFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  first_name: 'first_name',
   join_ip: 'join_ip',
   join_country: 'join_country',
-  last_name: 'last_name',
   username: 'username',
   offline_hash: 'offline_hash',
   unsub_id: 'unsub_id'
@@ -4871,6 +5045,28 @@ export const CustomTrainerDownloadOrderByRelevanceFieldEnum = {
 export type CustomTrainerDownloadOrderByRelevanceFieldEnum = (typeof CustomTrainerDownloadOrderByRelevanceFieldEnum)[keyof typeof CustomTrainerDownloadOrderByRelevanceFieldEnum]
 
 
+export const TrainerAlgorithmOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  solution: 'solution',
+  scrambles: 'scrambles',
+  cube_type: 'cube_type',
+  algo_type: 'algo_type',
+  group_name: 'group_name',
+  img_link: 'img_link',
+  colors: 'colors'
+} as const
+
+export type TrainerAlgorithmOrderByRelevanceFieldEnum = (typeof TrainerAlgorithmOrderByRelevanceFieldEnum)[keyof typeof TrainerAlgorithmOrderByRelevanceFieldEnum]
+
+
+export const TrainerCatalogStateOrderByRelevanceFieldEnum = {
+  id: 'id'
+} as const
+
+export type TrainerCatalogStateOrderByRelevanceFieldEnum = (typeof TrainerCatalogStateOrderByRelevanceFieldEnum)[keyof typeof TrainerCatalogStateOrderByRelevanceFieldEnum]
+
+
 export const TrainerFavoriteOrderByRelevanceFieldEnum = {
   id: 'id',
   cube_key: 'cube_key',
@@ -5173,6 +5369,8 @@ export type GlobalOmitConfig = {
   customTrainer?: Prisma.CustomTrainerOmit
   customTrainerLike?: Prisma.CustomTrainerLikeOmit
   customTrainerDownload?: Prisma.CustomTrainerDownloadOmit
+  trainerAlgorithm?: Prisma.TrainerAlgorithmOmit
+  trainerCatalogState?: Prisma.TrainerCatalogStateOmit
   trainerFavorite?: Prisma.TrainerFavoriteOmit
   algorithmOverride?: Prisma.AlgorithmOverrideOmit
   setting?: Prisma.SettingOmit

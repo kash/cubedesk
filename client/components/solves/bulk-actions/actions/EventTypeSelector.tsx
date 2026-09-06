@@ -1,13 +1,13 @@
-import Button from '@/components/common/Button';
 import CubePicker from '@/components/common/CubePicker';
-import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/ModalHeader';
+import {Button} from '@/components/ui/button';
+import {DialogHeader} from '@/components/ui/dialog';
 import {Solve} from '@/types/solve';
 import {CubeType} from '@/util/cubes/cube_types';
 import {getBasicPlural} from '@/util/strings/plural';
 import React, {ReactNode, useState} from 'react';
 
-interface Props extends IModalProps {
+interface Props {
+	onComplete?: (cubeType: CubeType) => void;
 	solves: Solve[];
 }
 
@@ -18,7 +18,7 @@ export default function EventTypeSelector(props: Props) {
 	let selectedCubeType: ReactNode = null;
 	if (cubeType) {
 		selectedCubeType = (
-			<p className="text-text border-text/20 mt-4 mb-5 table border-b-4 border-solid text-2xl">
+			<p className="border-text/20 text-text mt-4 mb-5 table border-b-4 border-solid text-2xl">
 				Set event type of{' '}
 				<span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
 				<span className="text-warning">{cubeType.name}</span>
@@ -28,13 +28,13 @@ export default function EventTypeSelector(props: Props) {
 
 	return (
 		<div>
-			<ModalHeader
+			<DialogHeader
 				title="Change event type"
 				description="Select which event type to associate the selected solves with"
 			/>
 			<div className="mb-6">
 				<CubePicker
-					dropdownProps={{
+					pickerProps={{
 						openLeft: true,
 					}}
 					value="333"
@@ -43,12 +43,15 @@ export default function EventTypeSelector(props: Props) {
 			</div>
 			{selectedCubeType}
 			<Button
-				large
-				onClick={() => onComplete?.(cubeType)}
+				variant="default"
+				onClick={() => {
+					if (cubeType) onComplete?.(cubeType);
+				}}
 				disabled={!cubeType}
-				primary
-				text="Continue"
-			/>
+				size="lg"
+			>
+				{'Continue'}
+			</Button>
 		</div>
 	);
 }

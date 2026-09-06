@@ -1,5 +1,10 @@
 import {APP_THEME_PRESETS} from '@/util/themes/theme_consts';
 import {getAnyColorStringAsRawRgbString} from '@/util/themes/theme_util';
+import {
+	LEGACY_DARK_THEME_COLORS,
+	matchesLegacyDarkTheme,
+	migrateDefaultDarkTheme,
+} from '@/util/themes/theme_migration';
 
 export const THEME_COLOR_KEYS = [
 	'primary_color',
@@ -103,7 +108,7 @@ function getThemeSettingsFromLocalStorage(userId?: string | null): Record<ThemeC
 		}
 	}
 
-	return colors;
+	return migrateDefaultDarkTheme(colors);
 }
 
 export function applyThemeColorsToDocument(colors: Record<ThemeColorKey, string>) {
@@ -123,10 +128,13 @@ export function applyThemeColorsToDocument(colors: Record<ThemeColorKey, string>
 		const cssVar = THEME_CSS_VARS[key];
 		const rgb = getAnyColorStringAsRawRgbString(color);
 		html.style.setProperty(cssVar, rgb);
-		html.style.setProperty(`--theme-${key.replace('_color', '')}`, getThemeBackgroundColor(rgb));
+		html.style.setProperty(
+			`--theme-${key.replace('_color', '')}`,
+			getThemeBackgroundColor(rgb),
+		);
 		html.style.setProperty(
 			`--theme-${key.replace('_color', '')}-opposite`,
-			getThemeBackgroundColor(rgb, true)
+			getThemeBackgroundColor(rgb, true),
 		);
 	}
 
@@ -233,6 +241,9 @@ export function getBlockingThemeInitScript(): string {
 		}
 
 		var colors = getThemeSettings();
+		if ((${matchesLegacyDarkTheme.toString()})(colors, ${JSON.stringify(LEGACY_DARK_THEME_COLORS)})) {
+			colors = Object.assign({}, defaults);
+		}
 		var html = document.documentElement;
 		html.classList.add('app-html');
 

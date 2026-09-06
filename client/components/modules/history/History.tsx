@@ -1,3 +1,5 @@
+import DeleteSolveDialog, {useSolveDeletion} from '@/components/solve-info/DeleteSolveDialog';
+import SolveInfoDialog from '@/components/solve-info/SolveInfoDialog';
 import React from 'react';
 import ReactListImport from 'react-list';
 
@@ -7,12 +9,12 @@ import ReactListImport from 'react-list';
 const ReactList = ((ReactListImport as any).default ?? ReactListImport) as typeof ReactListImport;
 import Empty from '@/components/common/Empty';
 import HistorySolveRow from '@/components/modules/history/HistorySolveRow';
+import {useAnyDialogOpen} from '@/components/ui/dialog';
+import {isPopupOpen} from '@/components/ui/popup';
 import {setOkSolveDb, toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {fetchLastSolve, fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
-import {deleteSolveDb} from '@/db/solves/update';
 import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
-import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
 import {GlobalHotKeys} from 'react-hotkeys';
@@ -29,6 +31,11 @@ interface Props {
 
 // TODO NOW hotkeys for History
 export default function History(props: Props) {
+	const [selectedSolve, setSelectedSolve] =
+		React.useState<React.ComponentProps<typeof SolveInfoDialog>['solve']>(null);
+	const dialogFallbackRef = React.useRef<HTMLDivElement>(null);
+
+	const deletion = useSolveDeletion();
 	const {
 		solves: parentSolves,
 		reverseOrder,
@@ -39,7 +46,7 @@ export default function History(props: Props) {
 	} = props;
 
 	useSolveDb();
-	const modals = useGeneral('modals');
+	const dialogOpen = useAnyDialogOpen();
 
 	let solves;
 	if (parentSolves) {
@@ -62,6 +69,8 @@ export default function History(props: Props) {
 		const solve = solves[solveIndex];
 		return (
 			<HistorySolveRow
+				onOpenSolve={setSelectedSolve}
+				onDeleteSolve={deletion.requestDelete}
 				disabled={disabled}
 				key={solve.id}
 				index={displayIndex}
@@ -74,9 +83,9 @@ export default function History(props: Props) {
 		return fetchLastSolve(filterOptions);
 	}
 
-	// allow hotkey actions only when explicitly enabled and no any modal windows active
+	// allow hotkey actions only when explicitly enabled and no any dialogs active
 	function isHotKeysEnabled() {
-		return hotKeysEnabled && (!modals || modals.length == 0);
+		return hotKeysEnabled && !dialogOpen && !isPopupOpen();
 	}
 
 	function okLastSolve() {
@@ -96,15 +105,7 @@ export default function History(props: Props) {
 
 	function deleteLastSolve() {
 		const lastSolve = getLastSolve();
-		if (isHotKeysEnabled() && lastSolve) deleteSolveDb(lastSolve);
-	}
-
-	if (!solves.length) {
-		return (
-			<div className="box-border h-full w-full overflow-visible px-[5px]">
-				<Empty text="No solves yet" />
-			</div>
-		);
+		if (isHotKeysEnabled() && lastSolve) deletion.requestDelete(lastSolve);
 	}
 
 	const HOTKEY_HANDLERS = {
@@ -115,22 +116,45 @@ export default function History(props: Props) {
 	};
 
 	return (
-		<GlobalHotKeys handlers={HOTKEY_HANDLERS} keyMap={HOTKEY_MAP}>
-			<div className="box-border h-full w-full overflow-visible px-[5px]">
-				<div className="h-full w-full">
-					<div
-						className={['max-h-full overflow-auto', listClassName]
-							.filter(Boolean)
-							.join(' ')}
-					>
-						<ReactList
-							itemRenderer={renderSolveRow}
-							length={solves.length}
-							type="uniform"
-						/>
+		<>
+			<GlobalHotKeys handlers={HOTKEY_HANDLERS} keyMap={HOTKEY_MAP}>
+				<div
+					ref={dialogFallbackRef}
+					tabIndex={-1}
+					className="box-border h-full w-full overflow-visible px-[5px]"
+				>
+					<div className="h-full w-full">
+						<div
+							className={[
+								'max-h-full overflow-auto',
+								listClassName,
+								!solves.length ? 'h-full' : '',
+							]
+								.filter(Boolean)
+								.join(' ')}
+						>
+							{!solves.length ? (
+								<Empty text="No solves yet" centered />
+							) : (
+								<ReactList
+									itemRenderer={renderSolveRow}
+									length={solves.length}
+									type="uniform"
+								/>
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
-		</GlobalHotKeys>
+			</GlobalHotKeys>
+			<DeleteSolveDialog {...deletion.dialogProps} />
+			<SolveInfoDialog
+				solve={selectedSolve}
+				onOpenChange={(open) => {
+					if (!open) setSelectedSolve(null);
+				}}
+				disabled={disabled}
+				focusFallbackRef={dialogFallbackRef}
+			/>
+		</>
 	);
 }

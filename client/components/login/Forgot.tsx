@@ -1,12 +1,16 @@
-import Button from '@/components/common/Button';
-import Input from '@/components/common/inputs/input/Input';
+import ButtonError from '@/components/common/inputs/Error';
 import PasswordStrength from '@/components/common/PasswordStrength';
+import {AuthFormLink, useAuthForm} from '@/components/login/AuthFormContext';
+import {Button} from '@/components/ui/button';
+import {Field, FieldLabel} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
+import {Spinner} from '@/components/ui/spinner';
 import {api} from '@/util/api';
 import {getRedirectLink} from '@/util/auth/login';
 import {validateStrongPassword} from '@/util/auth/password';
+import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 
 enum ForgotStage {
 	EnterEmail,
@@ -15,6 +19,9 @@ enum ForgotStage {
 }
 
 export default function Forgot() {
+	const fieldId = React.useId();
+	const auth = useAuthForm();
+
 	const [stage, setStage] = useState<ForgotStage>(ForgotStage.EnterEmail);
 	const [code, setCode] = useInput('');
 	const [email, setEmail] = useInput('');
@@ -27,7 +34,9 @@ export default function Forgot() {
 	const updatePassMutation = api.forgotPassword.updatePassword.useMutation();
 
 	const loading =
-		forgotCodeMutation.isPending || checkForgotMutation.isPending || updatePassMutation.isPending;
+		forgotCodeMutation.isPending ||
+		checkForgotMutation.isPending ||
+		updatePassMutation.isPending;
 	const err =
 		forgotCodeMutation.error?.message ||
 		checkForgotMutation.error?.message ||
@@ -75,8 +84,12 @@ export default function Forgot() {
 					return;
 				}
 
-				await updatePassMutation.mutateAsync({email: email.trim(), code, password: newPassword});
-				window.location.href = getRedirectLink();
+				await updatePassMutation.mutateAsync({
+					email: email.trim(),
+					code,
+					password: newPassword,
+				});
+				window.location.href = auth?.redirectTo ?? getRedirectLink();
 				return;
 			}
 		}
@@ -87,15 +100,23 @@ export default function Forgot() {
 		case 0: {
 			body = (
 				<div>
-					<Input onChange={setEmail} value={email} name="email" legend="Email" />
-					<Button
-						loading={loading}
-						type="submit"
-						error={error}
-						large
-						primary
-						text="Get Code"
-					/>
+					<Field className="mb-2">
+						<FieldLabel htmlFor={`${fieldId}-1`}>{'Email'}</FieldLabel>
+						<Input onChange={setEmail} value={email} name="email" id={`${fieldId}-1`} />
+					</Field>
+					<div className="flex flex-col items-start">
+						<Button
+							variant="default"
+							type="submit"
+							size="lg"
+							disabled={loading}
+							aria-busy={loading}
+						>
+							{'Get Code'}
+							{loading ? <Spinner aria-hidden="true" /> : null}
+						</Button>
+						<ButtonError text={error} />
+					</div>
 				</div>
 			);
 			break;
@@ -107,15 +128,23 @@ export default function Forgot() {
 						Please check your email. You should have gotten a code to reset your
 						password.
 					</p>
-					<Input onChange={setCode} value={code} name="code" legend="Code" />
-					<Button
-						loading={loading}
-						type="submit"
-						error={error}
-						large
-						primary
-						text="Check Code"
-					/>
+					<Field className="mb-2">
+						<FieldLabel htmlFor={`${fieldId}-2`}>{'Code'}</FieldLabel>
+						<Input onChange={setCode} value={code} name="code" id={`${fieldId}-2`} />
+					</Field>
+					<div className="flex flex-col items-start">
+						<Button
+							variant="default"
+							type="submit"
+							size="lg"
+							disabled={loading}
+							aria-busy={loading}
+						>
+							{'Check Code'}
+							{loading ? <Spinner aria-hidden="true" /> : null}
+						</Button>
+						<ButtonError text={error} />
+					</div>
 				</div>
 			);
 			break;
@@ -127,29 +156,40 @@ export default function Forgot() {
 						Please check your email. You should have gotten a code to reset your
 						password.
 					</p>
-					<Input
-						type="password"
-						value={newPassword}
-						legend="New Password"
-						name="newPassword"
-						onChange={setNewPassword}
-					/>
-					<Input
-						type="password"
-						value={confirmPassword}
-						legend="Confirm Password"
-						name="confirmPassword"
-						onChange={setConfirmPassword}
-					/>
+					<Field className="mb-2">
+						<FieldLabel htmlFor={`${fieldId}-3`}>{'New Password'}</FieldLabel>
+						<Input
+							type="password"
+							value={newPassword}
+							name="newPassword"
+							onChange={setNewPassword}
+							id={`${fieldId}-3`}
+						/>
+					</Field>
+					<Field className="mb-2">
+						<FieldLabel htmlFor={`${fieldId}-4`}>{'Confirm Password'}</FieldLabel>
+						<Input
+							type="password"
+							value={confirmPassword}
+							name="confirmPassword"
+							onChange={setConfirmPassword}
+							id={`${fieldId}-4`}
+						/>
+					</Field>
 					<PasswordStrength confirmPassword={confirmPassword} password={newPassword} />
-					<Button
-						loading={loading}
-						type="submit"
-						error={err}
-						large
-						primary
-						text="Change Password & Log in"
-					/>
+					<div className="flex flex-col items-start">
+						<Button
+							variant="default"
+							type="submit"
+							size="lg"
+							disabled={loading}
+							aria-busy={loading}
+						>
+							{'Change Password & Log in'}
+							{loading ? <Spinner aria-hidden="true" /> : null}
+						</Button>
+						<ButtonError text={err} />
+					</div>
 				</div>
 			);
 			break;
@@ -157,23 +197,30 @@ export default function Forgot() {
 	}
 
 	return (
-		<div className="bg-module box-border w-[95%] max-w-[400px] rounded-[5px] p-[25px]">
+		<div
+			className={cn('box-border', {
+				'w-full': !!auth,
+				'bg-module w-[95%] max-w-[400px] rounded-[5px] p-[25px]': !auth,
+			})}
+		>
 			<form onSubmit={nextStage}>{body}</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
 				You can also{' '}
-				<Link
+				<AuthFormLink
 					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
+					view="signup"
 					to="/signup"
 				>
 					sign up
-				</Link>{' '}
+				</AuthFormLink>{' '}
 				or{' '}
-				<Link
+				<AuthFormLink
 					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
+					view="login"
 					to="/login"
 				>
 					login
-				</Link>
+				</AuthFormLink>
 				.
 			</p>
 		</div>

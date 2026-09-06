@@ -1,3 +1,4 @@
+import './stats.css';
 import HorizontalNav, {HorizontalNavTab} from '@/components/common/HorizontalNav';
 import PageTitle from '@/components/common/PageTitle';
 import AllStats from '@/components/stats/all/AllStats';
@@ -52,11 +53,13 @@ export default function Stats() {
 	const urlParams = new URLSearchParams(window.location.search);
 	const tabId = urlParams.get(CUBE_TYPE_QUERY_PARAM) || ALL_TAB_ID;
 
-	useSolveDb();
+	const solveUpdate = useSolveDb();
 
 	const cubeTypes = useMemo(() => {
 		return fetchAllCubeTypesSolved();
-	}, []);
+		// The local solve database is mutable; its revision invalidates this query.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [solveUpdate]);
 
 	const all = tabId === ALL_TAB_ID;
 	const filterOptions: FilterSolvesOptions = {
@@ -84,7 +87,7 @@ export default function Stats() {
 	const tabs = [
 		{
 			id: ALL_TAB_ID,
-			value: 'All',
+			value: 'All events',
 			link: '/stats',
 		},
 		...cubeTypeTabs,
@@ -104,9 +107,11 @@ export default function Stats() {
 
 	return (
 		<StatsContext.Provider value={context}>
-			<div>
+			<div className="stats-page">
 				<PageTitle pageName="Stats">
-					<HorizontalNav tabs={tabs} tabId={tabId} />
+					<div className="stats-toolbar">
+						<HorizontalNav tabs={tabs} tabId={tabId} />
+					</div>
 				</PageTitle>
 				{body}
 			</div>

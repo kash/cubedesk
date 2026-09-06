@@ -1,10 +1,12 @@
-import Button from '@/components/common/Button';
 import CubePicker from '@/components/common/CubePicker';
-import Input from '@/components/common/inputs/input/Input';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {clearOfflineData} from '@/components/layout/offline';
 import {ImportDataContext} from '@/components/settings/data/import-data/ImportData';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
+import {Separator} from '@/components/ui/separator';
+import {Spinner} from '@/components/ui/spinner';
 import {SessionInput} from '@/types/session';
 import {SolveInput} from '@/types/solve';
 import {toastError} from '@/util/toast';
@@ -116,6 +118,8 @@ export default function ReviewImport() {
 						<Input
 							value={session.name || ''}
 							onChange={(e) => updateSessionName(sessionId, e.target.value)}
+							aria-label={'Session name'}
+							className="mb-2"
 						/>
 					</div>
 					<div className="flex w-1/3 flex-row justify-end">
@@ -125,7 +129,14 @@ export default function ReviewImport() {
 						/>
 					</div>
 					<div className="flex w-1/3 flex-row justify-end">
-						<Button icon={<X />} onClick={() => removeSession(sessionId)} transparent />
+						<Button
+							variant="ghost"
+							onClick={() => removeSession(sessionId)}
+							size="icon"
+							aria-label="Review Import"
+						>
+							<X />
+						</Button>
 					</div>
 				</div>
 			);
@@ -139,13 +150,13 @@ export default function ReviewImport() {
 				key="session-header-row"
 			>
 				<div className="flex w-1/3 flex-row">
-					<InputLegend large text="Session Name" />
+					<InputLegend text="Session Name" />
 				</div>
 				<div className="flex w-1/3 flex-row justify-end">
-					<InputLegend large text="Cube Type" />
+					<InputLegend text="Cube Type" />
 				</div>
 				<div className="flex w-1/3 flex-row justify-end">
-					<InputLegend large text="Remove" />
+					<InputLegend text="Remove" />
 				</div>
 			</div>,
 		);
@@ -153,7 +164,7 @@ export default function ReviewImport() {
 
 	return (
 		<div>
-			<hr className="bg-button my-[30px] h-[3px] w-full border-0 p-0" />
+			<Separator className="my-6" />
 			<ImportSection
 				title="Review & import"
 				description="Please make sure that the number below look correct. Then click Import data!"
@@ -174,14 +185,15 @@ export default function ReviewImport() {
 					{sessionMapper}
 				</div>
 				<Button
-					loading={context.importing}
-					text="Import data"
-					primary
-					large
-					glow
-					disabled={context.importing}
+					variant="default"
 					onClick={importData}
-				/>
+					size="lg"
+					disabled={context.importing || context.importing}
+					aria-busy={context.importing}
+				>
+					{'Import data'}
+					{context.importing ? <Spinner aria-hidden="true" /> : null}
+				</Button>
 			</ImportSection>
 		</div>
 	);

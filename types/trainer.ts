@@ -9,7 +9,13 @@ import type {
 import {Serialized} from '@/types/serialized';
 import {publicUserSelect} from '@/types/user';
 
-export type {AlgorithmOverride, CustomTrainer, CustomTrainerDownload, CustomTrainerLike, TrainerFavorite};
+export type {
+	AlgorithmOverride,
+	CustomTrainer,
+	CustomTrainerDownload,
+	CustomTrainerLike,
+	TrainerFavorite,
+};
 
 export const customTrainerInclude = {
 	user: {
@@ -24,7 +30,9 @@ export const customTrainerInclude = {
 	},
 } satisfies Prisma.CustomTrainerInclude;
 
-export type CustomTrainerWithUser = Prisma.CustomTrainerGetPayload<{include: typeof customTrainerInclude}>;
+export type CustomTrainerWithUser = Prisma.CustomTrainerGetPayload<{
+	include: typeof customTrainerInclude;
+}>;
 
 export type CustomTrainerInput = {
 	solution: string;
@@ -49,7 +57,7 @@ export type AlgorithmOverrideInput = {
 };
 
 // Shape of records in the client's loki "trainer" collection, which mixes
-// Airtable algorithms (TrainerAlgorithm) with the user's custom trainers
+// Built-in algorithms (TrainerAlgorithm) with the user's custom trainers
 // (serialized CustomTrainerWithUser rows over tRPC) — fields that only one
 // source provides are optional.
 export type TrainerAlgorithmRecord = {
@@ -62,7 +70,7 @@ export type TrainerAlgorithmRecord = {
 	solution?: string | null;
 	scrambles?: string | null;
 	rotate?: number | null;
-	// Airtable-only fields
+	// Built-in catalog fields
 	active?: boolean;
 	img_link?: string;
 	// Custom-trainer-only fields
@@ -80,17 +88,5 @@ export type TrainerAlgorithmRecord = {
 	created_at?: string;
 };
 
-// Trainer algorithms come from Airtable (cached in Redis), not Prisma
-export type TrainerAlgorithm = {
-	id: string;
-	name: string;
-	active: boolean;
-	scrambles: string;
-	solution: string;
-	img_link: string;
-	cube_type: string;
-	algo_type: string;
-	colors: string;
-	rotate: number;
-	group_name: string;
-};
+// The public trainer payload omits database timestamps.
+export type TrainerAlgorithm = import('@/shared/trainer/catalog').CatalogAlgorithm;

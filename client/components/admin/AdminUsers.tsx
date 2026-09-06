@@ -1,6 +1,6 @@
-import Input from '@/components/common/inputs/input/Input';
 import PaginatedList from '@/components/common/PaginatedList';
 import ProfileRow from '@/components/community/ProfileRow';
+import {Input} from '@/components/ui/input';
 import {PaginationArgsInput} from '@/types/pagination';
 import {Serialized} from '@/types/serialized';
 import {PublicUser} from '@/types/user';
@@ -17,9 +17,14 @@ export default function AdminUsers() {
 
 	return (
 		<div className="w-full p-2">
-			<div className="w-full max-w-4xl mx-auto">
+			<div className="mx-auto w-full max-w-4xl">
 				<div>
-					<Input value={query} onChange={setQuery} />
+					<Input
+						value={query}
+						onChange={setQuery}
+						aria-label={'Search users'}
+						className="mb-2"
+					/>
 				</div>
 				<PaginatedList<Serialized<PublicUser>>
 					searchQuery={query}

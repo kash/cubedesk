@@ -1,10 +1,10 @@
 import {PlayerStatus} from '@/client/shared/match/types';
-import Modal from '@/components/common/modal/Modal';
 import {GameContext, getGameLink} from '@/components/play/game/Game';
 import onSolve from '@/components/play/helpers/on-solve';
 import Match, {MatchContext} from '@/components/play/match/Match';
 import {TimerProps} from '@/components/timer/@types/interfaces';
 import Timer from '@/components/timer/Timer';
+import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {useMe} from '@/util/hooks/useMe';
 import React, {ReactNode, useContext} from 'react';
 
@@ -43,7 +43,12 @@ export default function GameTimer() {
 	const visual2Param = visual2;
 	const visual3Param = visual3?.(context);
 
-	const playerStatus = getPlayerStatusInfo(me.id, timeIndex, solves, matchContext?.match ?? undefined);
+	const playerStatus = getPlayerStatusInfo(
+		me.id,
+		timeIndex,
+		solves,
+		matchContext?.match ?? undefined,
+	);
 
 	async function timerOnSolve(solve, match?: any) {
 		return onSolve(solve, context, match);
@@ -54,7 +59,7 @@ export default function GameTimer() {
 	const timerParams: TimerProps = {
 		scramble: disabled ? ' ' : scramble,
 		scrambleLocked: true,
-		inModal: true,
+		inDialog: true,
 		disabled,
 		ignorePbEvents: true,
 		solvesFilter: {
@@ -109,9 +114,17 @@ export default function GameTimer() {
 		const timer: ReactNode = <Timer {...timerParams} />;
 
 		return (
-			<Modal onClose={closeTimer} fullSize overFlowHidden>
-				{timer}
-			</Modal>
+			<Dialog
+				open={showTimer}
+				onOpenChange={(open) => {
+					if (!open) closeTimer();
+				}}
+			>
+				<DialogContent fullSize overflowHidden>
+					<DialogTitle className="sr-only">Timer</DialogTitle>
+					{timer}
+				</DialogContent>
+			</Dialog>
 		);
 	} else {
 		return null;

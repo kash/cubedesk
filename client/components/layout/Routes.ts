@@ -7,11 +7,11 @@ import Password from '@/components/account/Password';
 import PersonalInfo from '@/components/account/PersonalInfo';
 import Admin from '@/components/admin/Admin';
 import AdminUsers from '@/components/admin/AdminUsers';
+import AdminTrainer from '@/components/admin/AdminTrainer';
 import Reports from '@/components/admin/reports/Reports';
 import Community from '@/components/community/Community';
 import EloBoard from '@/components/community/EloBoard';
 import Friends from '@/components/community/Friends';
-import AboutCubeDesk from '@/components/landing/about/AboutCubeDesk';
 import Landing from '@/components/landing/Landing';
 import Privacy from '@/components/landing/legal/Privacy';
 import Terms from '@/components/landing/legal/Terms';
@@ -112,7 +112,6 @@ export const routes: (PageContext | RedirectPath)[] = [
 	// Landing Pages
 	// route('/how-to-solve', null, Landing, HTSLanding, false, false, false, false, true),
 	// route('/how-to-solve/:stepId', null, Landing, HTSLearn, false, false, false, false, true),
-	route('/about', null, Landing, AboutCubeDesk, false, false, false, false, true),
 	route('/terms', null, Landing, Terms, false, true),
 	route('/privacy', null, Landing, Privacy, false, true),
 
@@ -148,6 +147,7 @@ export const routes: (PageContext | RedirectPath)[] = [
 	// Admin
 	route('/admin/reports', App, Admin, Reports, true, false, true),
 	route('/admin/users', App, Admin, AdminUsers, true, false, true),
+	route('/admin/trainer', App, Admin, AdminTrainer, true, false, true),
 
 	// OAuth
 	route('/oauth/:integrationType', null, App, OAuthService, true, true, false, true),

@@ -1,4 +1,4 @@
-import Button from '@/components/common/Button';
+import {Button} from '@/components/ui/button';
 import {GameType} from '@/shared/match/consts';
 import {socketClient} from '@/util/socket/socketio';
 import {UsersThree} from 'phosphor-react';
@@ -44,7 +44,9 @@ export default function Lobby(props: Props) {
 			<div className="text-text box-border flex flex-col items-center px-0 pt-[30px] pb-2.5">
 				<UsersThree className="mb-[5px] text-[1.2rem]" weight="fill" />
 				<p className="mb-5">Looking for players{dots}</p>
-				<Button text="Cancel" onClick={cancelSearch} />
+				<Button variant="secondary" onClick={cancelSearch}>
+					{'Cancel'}
+				</Button>
 			</div>
 		</div>
 	);

@@ -1,3 +1,4 @@
+import Empty from '@/components/common/Empty';
 import dummyData from '@/components/modules/time-chart/dummy-data';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {getChartData} from '@/db/solves/stats/chart';
@@ -34,14 +35,18 @@ export default function TimeChart(props: Props) {
 	let chartColor = primaryColor.hex;
 	let chartColorOpacity = 1;
 
-	useSolveDb();
+	const solveUpdate = useSolveDb();
 
 	const memoData = useMemo(() => {
 		return getChartData(filterOptions);
-	}, [filterStr, filterOptions]);
+	}, [filterStr, filterOptions, solveUpdate]);
+
+	if (!dummy && !memoData.length) {
+		return <Empty text="No completed solves yet" centered />;
+	}
 
 	let data: ChartDatum[] = [...memoData];
-	if (dummy || !data || !data.length) {
+	if (dummy) {
 		data = dummyData;
 		chartColor = moduleColor.themeHexOpposite;
 		chartColorOpacity = 0.1;

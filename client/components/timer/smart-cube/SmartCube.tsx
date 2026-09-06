@@ -1,25 +1,32 @@
-import {openModal} from '@/actions/general';
-import Button from '@/components/common/Button';
 import Emblem from '@/components/common/Emblem';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
 import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
 import Battery from '@/components/timer/smart-cube/battery/Battery';
 import Connect from '@/components/timer/smart-cube/bluetooth/connect';
+import {PendingSmartDevice} from '@/components/timer/smart-cube/bluetooth/smart_cube';
 import ManageSmartCubes from '@/components/timer/smart-cube/manage-smart-cubes/ManageSmartCubes';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
+import SolveCheck from '@/components/timer/smart-cube/solve-check/SolveCheck';
 import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {useSettings} from '@/util/hooks/useSettings';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {Bluetooth, DotsThree} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
 
 export default function SmartCube() {
-	const dispatch = useDispatch();
+	const [bluetoothErrorMessageDialog, setBluetoothErrorMessageDialog] = React.useState<{
+		props: Record<string, never>;
+	} | null>(null);
+	const [manageSmartCubesDialog, setManageSmartCubesDialog] = React.useState<{
+		props: Record<string, never>;
+		title: React.ReactNode;
+	} | null>(null);
 
 	const context = useTimerContext();
 
@@ -28,7 +35,27 @@ export default function SmartCube() {
 	const turnIndex = useRef(0);
 	const turnInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 	const cubejs = useRef(new Cube());
-	const connect = useRef(new Connect());
+	const [pendingDevice, setPendingDevice] = useState<PendingSmartDevice | null>(null);
+	const confirmationRef = useRef<((confirmed: boolean) => void) | null>(null);
+	const mountedRef = useRef(true);
+	const [connection] = useState(
+		() =>
+			new Connect({
+				isActive: () => mountedRef.current,
+				confirmSolved: (device) =>
+					new Promise<boolean>((resolve) => {
+						confirmationRef.current?.(false);
+						confirmationRef.current = resolve;
+						setPendingDevice(device);
+					}),
+				onDisconnected: () => {
+					confirmationRef.current?.(false);
+					confirmationRef.current = null;
+					if (mountedRef.current) setPendingDevice(null);
+					setTimerParams({smartCubeConnecting: false, smartCubeConnected: false});
+				},
+			}),
+	);
 
 	// Turn queue that an interval picks up every 50ms or so
 	const turns = useRef<string[]>([]);
@@ -50,15 +77,19 @@ export default function SmartCube() {
 	} = context;
 
 	useEffect(() => {
+		mountedRef.current = true;
 		initVisualCube();
 
 		return () => {
+			mountedRef.current = false;
+			confirmationRef.current?.(false);
+			confirmationRef.current = null;
 			if (turnInterval.current) {
 				clearInterval(turnInterval.current);
 				turnInterval.current = null;
 			}
 
-			connect.current.disconnect();
+			connection.disconnect();
 		};
 	}, []);
 
@@ -233,9 +264,9 @@ export default function SmartCube() {
 			const bluetoothAvailable =
 				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
-				connect.current.connect();
+				connection.connect();
 			} else {
-				dispatch(openModal(<BluetoothErrorMessage />));
+				setBluetoothErrorMessageDialog({props: {}});
 			}
 		} catch (e) {
 			toastError('Web Bluetooth API error' + (e ? `: ${e}` : ''));
@@ -244,7 +275,7 @@ export default function SmartCube() {
 	}
 
 	function disconnectBluetooth() {
-		connect.current.disconnect();
+		connection.disconnect();
 		setTimerParams({
 			smartCanStart: false,
 			smartCubeConnected: false,
@@ -255,18 +286,14 @@ export default function SmartCube() {
 	}
 
 	function toggleManageSmartCubes() {
-		dispatch(
-			openModal(<ManageSmartCubes />, {
-				title: 'Manage smart cubes',
-			}),
-		);
+		setManageSmartCubesDialog({props: {}, title: 'Manage smart cubes'});
 	}
 
 	let actionButton: ReactNode = null;
 	const dropdown = (
-		<Dropdown
-			dropdownButtonProps={{
-				transparent: true,
+		<ActionMenu
+			triggerProps={{
+				variant: 'ghost',
 			}}
 			icon={<DotsThree />}
 			options={[
@@ -295,29 +322,84 @@ export default function SmartCube() {
 	let emblem: ReactNode;
 	if (smartCubeConnecting) {
 		emblem = <Emblem small orange icon={<Bluetooth />} />;
-		actionButton = <Button text="Connecting..." disabled />;
+		actionButton = (
+			<Button variant="secondary" disabled>
+				{'Connecting...'}
+			</Button>
+		);
 		battery = null;
 	} else if (smartCubeConnected) {
 		emblem = <Emblem small green icon={<Bluetooth />} />;
 	} else {
 		emblem = <Emblem small red icon={<Bluetooth />} />;
-		actionButton = <Button text="Connect" onClick={connectBluetooth} />;
+		actionButton = (
+			<Button variant="secondary" onClick={connectBluetooth}>
+				{'Connect'}
+			</Button>
+		);
 		battery = null;
 	}
 
 	return (
-		<div className="relative flex w-1/2 flex-col items-center">
-			<div className="mb-[5px]">
-				<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
-					<canvas width="200px" height="200px" ref={canvasRef} />
+		<>
+			<div className="relative flex w-1/2 flex-col items-center">
+				<div className="mb-[5px]">
+					<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
+						<canvas width="200px" height="200px" ref={canvasRef} />
+					</div>
+					<div className="absolute top-[7px] right-[25px] z-[100] flex flex-col items-center gap-2.5">
+						{battery}
+						{emblem}
+						{dropdown}
+					</div>
 				</div>
-				<div className="absolute top-[7px] right-[25px] z-[100] flex flex-col items-center gap-2.5">
-					{battery}
-					{emblem}
-					{dropdown}
-				</div>
+				{actionButton}
 			</div>
-			{actionButton}
-		</div>
+			<Dialog
+				open={bluetoothErrorMessageDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setBluetoothErrorMessageDialog(null);
+					}
+				}}
+			>
+				{bluetoothErrorMessageDialog && (
+					<DialogContent>
+						<BluetoothErrorMessage {...bluetoothErrorMessageDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+			<Dialog
+				open={manageSmartCubesDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setManageSmartCubesDialog(null);
+					}
+				}}
+			>
+				{manageSmartCubesDialog && (
+					<DialogContent>
+						<DialogHeader title={manageSmartCubesDialog.title} />
+						<ManageSmartCubes {...manageSmartCubesDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+			<Dialog open={pendingDevice !== null} onOpenChange={() => {}}>
+				<DialogContent hideCloseButton closeOnEscape={false}>
+					<DialogHeader
+						title="Confirm that cube is solved"
+						description="Please confirm that your smart cube is solved before proceeding."
+					/>
+					<SolveCheck
+						onComplete={() => {
+							setPendingDevice(null);
+							const resolve = confirmationRef.current;
+							confirmationRef.current = null;
+							resolve?.(true);
+						}}
+					/>
+				</DialogContent>
+			</Dialog>
+		</>
 	);
 }

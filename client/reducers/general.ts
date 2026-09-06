@@ -5,7 +5,6 @@ const initialState: GeneralAllParams = {
 	browser_session_id: null,
 	mobile_mode: false,
 	force_nav_collapsed: false,
-	modals: [],
 };
 
 export default (state = initialState, action) => {
@@ -16,24 +15,6 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				[key]: value,
-			};
-		}
-		case 'OPEN_MODAL': {
-			const modals = state.modals;
-			modals.push(action.payload);
-
-			return {
-				...state,
-				modals,
-			};
-		}
-		case 'CLOSE_MODAL': {
-			const modals = state.modals;
-			modals.pop();
-
-			return {
-				...state,
-				modals,
 			};
 		}
 

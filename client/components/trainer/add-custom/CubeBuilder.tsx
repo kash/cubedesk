@@ -1,4 +1,6 @@
 import CustomVisual from '@/components/trainer/CustomVisual';
+import {Button} from '@/components/ui/button';
+import {cn} from '@/util/cn';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
@@ -68,22 +70,28 @@ export default function CubeBuilder(props: Props) {
 	}
 
 	const colorPicker = COLORS.map((color) => (
-		<button
+		<Button
+			variant="ghost"
+			aria-label={`Paint color ${color}`}
+			aria-pressed={color === selectedColor}
 			type="button"
 			onClick={() => setSelectedColor(color)}
 			key={color}
-			className={classNames(
-				'mb-[5px] h-[35px] w-[35px] rounded opacity-40 transition-all duration-100 ease-in-out',
-				color === selectedColor && 'rounded-full opacity-100 shadow-[0_0_20px]'
+			className={cn(
+				'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
+				classNames(
+					'mb-[5px] h-[35px] w-[35px] rounded opacity-40 transition-all duration-100 ease-in-out',
+					color === selectedColor && 'rounded-full opacity-100 shadow-[0_0_20px]',
+				),
 			)}
 			style={{backgroundColor: color, color}}
 		/>
 	));
 
 	return (
-		<div className="mb-[30px] mt-10 flex flex-col items-center">
+		<div className="mt-10 mb-[30px] flex flex-col items-center">
 			<div className="mb-[30px] flex flex-row flex-wrap gap-x-2.5">{colorPicker}</div>
-			<div className="relative flex h-[300px] w-full flex-col items-center justify-center overflow-hidden rounded-[10px] bg-module">
+			<div className="bg-module relative flex h-[300px] w-full flex-col items-center justify-center overflow-hidden rounded-[10px]">
 				<CustomVisual
 					cubeletSize={40}
 					colors={colors}
@@ -91,7 +99,7 @@ export default function CubeBuilder(props: Props) {
 					onSelect={clickCubelet}
 					threeD={threeD}
 				/>
-				<span className="pattern-grid-md absolute left-1/2 top-1/2 z-0 h-[200%] w-[200%] -translate-x-1/2 -translate-y-1/2 rotate-45 text-primary/10" />
+				<span className="pattern-grid-md text-primary/10 absolute top-1/2 left-1/2 z-0 h-[200%] w-[200%] -translate-x-1/2 -translate-y-1/2 rotate-45" />
 			</div>
 		</div>
 	);

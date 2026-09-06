@@ -1,15 +1,16 @@
-import {openModal} from '@/actions/general';
-import Button, {CommonType} from '@/components/common/Button';
 import CubePicker from '@/components/common/CubePicker';
 import Empty from '@/components/common/Empty';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
+import {ActionMenuOption} from '@/components/common/inputs/ActionMenu';
 import Loading from '@/components/common/Loading';
 import PageTitle from '@/components/common/PageTitle';
 import ResultCount from '@/components/common/ResultCount';
-import HistoryModal from '@/components/modules/history/HistoryModal';
+import HistoryDialog from '@/components/modules/history/HistoryDialog';
+import SolveInfoDialog from '@/components/solve-info/SolveInfoDialog';
 import BulkActions from '@/components/solves/bulk-actions/BulkActions';
 import SolveListRow from '@/components/solves/SolveListRow';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {LokiFetchOptions} from '@/db/lokijs';
 import {fetchSolveCount, fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 import {Solve} from '@/types/solve';
@@ -20,12 +21,18 @@ import {numberWithCommas} from '@/util/strings/util';
 import jsonStr from 'json-stable-stringify';
 import {Funnel, Share, SortAscending, SortDescending} from 'phosphor-react';
 import React, {ReactNode, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 
 const PAGE_SIZE = 25;
 
 export default function SolvesList() {
-	const dispatch = useDispatch();
+	const [selectedSolve, setSelectedSolve] =
+		React.useState<React.ComponentProps<typeof SolveInfoDialog>['solve']>(null);
+	const dialogFallbackRef = React.useRef<HTMLDivElement>(null);
+
+	const [historyDialog, setHistoryDialog] = React.useState<React.ComponentProps<
+		typeof HistoryDialog
+	> | null>(null);
+
 	const me = useMe();
 
 	const [cubeType, setCubeType] = useState('333');
@@ -120,18 +127,14 @@ export default function SolvesList() {
 
 		const byUser = me ? ` by ${me?.username}` : '';
 
-		dispatch(
-			openModal(
-				<HistoryModal
-					showAsText
-					description={`${solveCountText}${byUser}`}
-					solves={list}
-				/>,
-			),
-		);
+		setHistoryDialog({
+			showAsText: true,
+			description: `${solveCountText}${byUser}`,
+			solves: list,
+		});
 	}
 
-	function getFilterOptionValue(name: string, key: keyof Solve, not?: boolean): IDropdownOption {
+	function getFilterOptionValue(name: string, key: keyof Solve, not?: boolean): ActionMenuOption {
 		const filterVal = filters[key];
 		let currentValue;
 
@@ -151,7 +154,13 @@ export default function SolvesList() {
 
 	let body: ReactNode;
 	if (solves && solves.length) {
-		body = solves.map((solve) => <SolveListRow key={solve.id} solve={solve} />);
+		body = (
+			<div className="border-tmo-module/15 divide-tmo-module/15 divide-y overflow-hidden rounded-[5px] border">
+				{solves.map((solve) => (
+					<SolveListRow onOpenSolve={setSelectedSolve} key={solve.id} solve={solve} />
+				))}
+			</div>
+		);
 	} else if (solves && !solves.length) {
 		body = <Empty text="Could not find any solves" />;
 	} else {
@@ -166,102 +175,136 @@ export default function SolvesList() {
 	}
 
 	return (
-		<div>
-			<PageTitle pageName="Solves" />
+		<>
+			<>
+				<div ref={dialogFallbackRef} tabIndex={-1}>
+					<PageTitle pageName="Solves" />
 
-			<div className="container mx-auto flex max-w-2xl flex-col gap-2">
-				<div className="container mb-2 flex flex-row items-center gap-2">
-					<CubePicker
-						dropdownProps={{
-							openLeft: true,
-						}}
-						value={cubeType}
-						onChange={changeCubeType}
-					/>
-					<Dropdown
-						openLeft
-						preventCloseOnInnerClick
-						text={filterText}
-						icon={<Funnel weight="bold" />}
-						options={[
-							getFilterOptionValue('+2 Only', 'plus_two'),
-							getFilterOptionValue('No +2s', 'plus_two', true),
-							getFilterOptionValue('DNF Only', 'dnf'),
-							getFilterOptionValue('No DNFs', 'dnf', true),
-							getFilterOptionValue('Imported', 'bulk'),
-							getFilterOptionValue('Not Imported', 'bulk', true),
-							getFilterOptionValue('Smart Cube', 'is_smart_cube'),
-							getFilterOptionValue('Not Smart Cube', 'is_smart_cube', true),
-						]}
-					/>
-					<Dropdown
-						text="Sort"
-						openLeft
-						preventCloseOnInnerClick
-						icon={
-							sortInverse ? (
-								<SortAscending weight="bold" />
-							) : (
-								<SortDescending weight="bold" />
-							)
+					<div className="container mx-auto flex max-w-2xl flex-col gap-2">
+						<div className="container mb-2 flex flex-row flex-wrap items-center gap-2">
+							<CubePicker
+								pickerProps={{
+									openLeft: true,
+								}}
+								value={cubeType}
+								onChange={changeCubeType}
+							/>
+							<ActionMenu
+								openLeft
+								preventCloseOnInnerClick
+								triggerProps={{
+									'aria-label': filterText,
+									title: filterText,
+									variant: filterCount ? 'default' : 'outline',
+								}}
+								icon={<Funnel weight="bold" />}
+								options={[
+									getFilterOptionValue('+2 Only', 'plus_two'),
+									getFilterOptionValue('No +2s', 'plus_two', true),
+									getFilterOptionValue('DNF Only', 'dnf'),
+									getFilterOptionValue('No DNFs', 'dnf', true),
+									getFilterOptionValue('Imported', 'bulk'),
+									getFilterOptionValue('Not Imported', 'bulk', true),
+									getFilterOptionValue('Smart Cube', 'is_smart_cube'),
+									getFilterOptionValue('Not Smart Cube', 'is_smart_cube', true),
+								]}
+							/>
+							<ActionMenu
+								triggerProps={{'aria-label': 'Sort', title: 'Sort'}}
+								openLeft
+								preventCloseOnInnerClick
+								icon={
+									sortInverse ? (
+										<SortAscending weight="bold" />
+									) : (
+										<SortDescending weight="bold" />
+									)
+								}
+								options={[
+									{
+										text: 'Date',
+										radio: true,
+										on: sortBy === 'started_at',
+										onChange: () => changeSortBy('started_at'),
+									},
+									{
+										text: 'Time',
+										radio: true,
+										on: sortBy === 'time',
+										onChange: () => changeSortBy('time'),
+									},
+									{
+										text: 'Reverse Order',
+										icon: sortInverse ? (
+											<SortDescending weight="bold" />
+										) : (
+											<SortAscending weight="bold" />
+										),
+										// checkbox: true,
+										// on: sortInverse,
+										onClick: toggleSortByOrder,
+									},
+								]}
+							/>
+							<Button
+								variant="secondary"
+								disabled={!solves?.length}
+								onClick={viewAsText}
+								size="icon"
+								aria-label="Solves List"
+							>
+								<Share weight="bold" />
+							</Button>
+							<div className="ml-auto flex items-center gap-3">
+								<ResultCount value={solveCountText} />
+								<BulkActions filter={getFinalFilter()} />
+							</div>
+						</div>
+						<div className="flex w-full flex-col">{body}</div>
+						<div className="mx-auto mt-5 flex flex-row items-center gap-5">
+							<Button
+								variant={page > 0 ? 'default' : 'secondary'}
+								onClick={prevPage}
+								disabled={page === 0}
+							>
+								{'Prev'}
+							</Button>
+							<span className="text-text text-center">
+								Page {page + 1} of {Math.ceil(totalResults / 25) || 1}
+							</span>
+							<Button
+								variant={page > 0 ? 'default' : 'secondary'}
+								onClick={nextPage}
+								disabled={!moreResults}
+							>
+								{'Next'}
+							</Button>
+						</div>
+					</div>
+				</div>
+				<Dialog
+					open={historyDialog !== null}
+					onOpenChange={(open) => {
+						if (!open) {
+							setHistoryDialog(null);
 						}
-						options={[
-							{
-								text: 'Date',
-								checkbox: true,
-								on: sortBy === 'started_at',
-								onChange: () => changeSortBy('started_at'),
-							},
-							{
-								text: 'Time',
-								checkbox: true,
-								on: sortBy === 'time',
-								onChange: () => changeSortBy('time'),
-							},
-							{
-								text: 'Reverse Order',
-								icon: sortInverse ? (
-									<SortDescending weight="bold" />
-								) : (
-									<SortAscending weight="bold" />
-								),
-								// checkbox: true,
-								// on: sortInverse,
-								onClick: toggleSortByOrder,
-							},
-						]}
-					/>
-					<Button
-						disabled={!solves?.length}
-						gray
-						icon={<Share weight="bold" />}
-						onClick={viewAsText}
-					/>
-					<div className="grow" />
-					<ResultCount value={solveCountText} />
-				</div>
-				<div className="mb-4">
-					<BulkActions filter={getFinalFilter()} />
-				</div>
-				<div className="flex w-full flex-col">{body}</div>
-				<div className="mx-auto mt-5 flex flex-row items-center">
-					<Button
-						onClick={prevPage}
-						text="Prev"
-						disabled={page === 0}
-						theme={page > 0 ? CommonType.PRIMARY : undefined}
-					/>
-					<p className="mx-5">
-						Page {page + 1} of {Math.ceil(totalResults / 25) || 1}
-					</p>
-					<Button
-						onClick={nextPage}
-						text="Next"
-						disabled={!moreResults}
-						theme={page > 0 ? CommonType.PRIMARY : undefined}
-					/>
-				</div>
-			</div>
-		</div>
+					}}
+				>
+					{historyDialog && (
+						<DialogContent>
+							<DialogTitle className="sr-only">Solve history</DialogTitle>
+							<HistoryDialog {...historyDialog} />
+						</DialogContent>
+					)}
+				</Dialog>
+			</>
+			<SolveInfoDialog
+				solve={selectedSolve}
+				onOpenChange={(open) => {
+					if (!open) setSelectedSolve(null);
+				}}
+				focusFallbackRef={dialogFallbackRef}
+			/>
+		</>
 	);
 }

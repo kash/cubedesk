@@ -1,5 +1,6 @@
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import {IDropdownOption} from '@/components/common/inputs/dropdown/DropdownOption';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
+import {ActionMenuOption} from '@/components/common/inputs/ActionMenu';
+import AuthDialog from '@/components/login/AuthDialog';
 import {ColorName} from '@/shared/colors';
 import {useWindowListener} from '@/util/hooks/useListener';
 import {resourceUri} from '@/util/storage';
@@ -27,10 +28,6 @@ const NAV_REST_LINKS: NavLinkProps[] = [
 		link: '/play/head-to-head',
 		color: 'green',
 		dropDownOnly: true,
-	},
-	{
-		label: 'About',
-		link: '/about',
 	},
 	{
 		label: 'Log in',
@@ -79,7 +76,7 @@ export default function LandingNav(props: Props) {
 		}
 	}
 
-	const dropDownOptions: IDropdownOption[] = [];
+	const dropDownOptions: ActionMenuOption[] = [];
 	const showNavLinks: React.ReactNode[] = [];
 
 	for (const nav of NAV_REST_LINKS) {
@@ -99,9 +96,17 @@ export default function LandingNav(props: Props) {
 			}
 
 			showNavLinks.push(
-				<a key={link} href={link} className={linkClasses.join(' ')}>
-					{label}
-				</a>,
+				link === '/login' || link === '/signup' ? (
+					<AuthDialog key={link} view={link === '/login' ? 'login' : 'signup'}>
+						<button type="button" className={linkClasses.join(' ')}>
+							{label}
+						</button>
+					</AuthDialog>
+				) : (
+					<a key={link} href={link} className={linkClasses.join(' ')}>
+						{label}
+					</a>
+				),
 			);
 		} else {
 			dropDownOptions.push({
@@ -129,7 +134,7 @@ export default function LandingNav(props: Props) {
 					</Link>
 				</div>
 				<div className="flex flex-row items-center gap-[25px] text-inherit">
-					<Dropdown flat icon={<CaretDown weight="fill" />} options={dropDownOptions} />
+					<ActionMenu flat icon={<CaretDown weight="fill" />} options={dropDownOptions} />
 					{showNavLinks}
 				</div>
 			</div>

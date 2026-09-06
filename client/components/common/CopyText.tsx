@@ -1,4 +1,4 @@
-import Button, {ButtonProps} from '@/components/common/Button';
+import {Button, type ButtonProps} from '@/components/ui/button';
 import {toastSuccess} from '@/util/toast';
 import {Check, Copy} from 'phosphor-react';
 import React, {useRef, useState} from 'react';
@@ -56,18 +56,27 @@ export default function CopyText(props: Props) {
 		}
 	}
 
-	const finalButtonProps = {
-		gray: true,
-		...buttonProps,
-	};
-
 	return (
 		<Button
-			onClick={onClick}
+			variant="secondary"
+			size={buttonProps?.children ? 'default' : 'icon'}
 			title="Copy text"
-			icon={textCopied ? <Check weight="bold" /> : <Copy weight="bold" />}
-			{...finalButtonProps}
-			white={textCopied}
-		/>
+			aria-label={buttonProps?.children ? undefined : 'Copy text'}
+			{...buttonProps}
+			onClick={(event) => {
+				onClick(event);
+				buttonProps?.onClick?.(event);
+			}}
+		>
+			{buttonProps?.children}
+			{textCopied ? (
+				<Check weight="bold" aria-hidden="true" />
+			) : (
+				<Copy weight="bold" aria-hidden="true" />
+			)}
+			<span className="sr-only" role="status">
+				{textCopied ? 'Copied' : ''}
+			</span>
+		</Button>
 	);
 }

@@ -1,4 +1,9 @@
-import {endTimer, resetTimerParams, startInspection, startTimer} from '@/components/timer/helpers/events';
+import {
+	endTimer,
+	resetTimerParams,
+	startInspection,
+	startTimer,
+} from '@/components/timer/helpers/events';
 import {configureHotkeys} from '@/components/timer/helpers/hotkeys';
 import {setTimerParam, setTimerParams} from '@/components/timer/helpers/params';
 import {
@@ -11,13 +16,14 @@ import {
 } from '@/components/timer/helpers/timers';
 import {smartCubeSelected} from '@/components/timer/helpers/util';
 import {useTimerContext} from '@/components/timer/Timer';
+import {useDialogBlocked} from '@/components/ui/dialog';
+import {isPopupOpen} from '@/components/ui/popup';
 import {getSettings} from '@/db/settings/query';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {useGeneral} from '@/util/hooks/useGeneral';
 import {useDocumentListener, useWindowListener} from '@/util/hooks/useListener';
 import {useSettings} from '@/util/hooks/useSettings';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
-import React, {ReactNode, useEffect} from 'react';
+import React, {ReactNode, useEffect, useRef} from 'react';
 import {GlobalHotKeys} from 'react-hotkeys';
 
 interface Props {
@@ -25,6 +31,8 @@ interface Props {
 }
 
 export default function KeyWatcher(props: Props) {
+	const pointerInteraction = useRef(false);
+	const capturedSpace = useRef(false);
 	const context = useTimerContext();
 	const {
 		cubeType,
@@ -32,7 +40,6 @@ export default function KeyWatcher(props: Props) {
 		timerDisabled,
 		editScramble,
 		timeStartedAt,
-		inModal,
 		inInspection,
 		spaceTimerStarted,
 		startEnabled,
@@ -40,11 +47,12 @@ export default function KeyWatcher(props: Props) {
 
 	const HOTKEY_HANDLERS = {
 		RESET_INSPECTION: () => {
+			if (dialogBlocked || isPopupOpen()) return;
 			clearInspectionTimers(true, true);
 		},
 	};
 
-	const modals = useGeneral('modals');
+	const dialogBlocked = useDialogBlocked();
 	const timerType = useSettings('timer_type');
 	const stackMatOn = timerType === 'stackmat';
 	const ganTimerOn = timerType === 'gantimer';
@@ -66,7 +74,11 @@ export default function KeyWatcher(props: Props) {
 		let target = e.target;
 
 		while (target.parentNode) {
-			if (target.nodeName === 'BUTTON' || target.nodeName === 'TEXTAREA' || target.nodeName === 'INPUT') {
+			if (
+				target.nodeName === 'BUTTON' ||
+				target.nodeName === 'TEXTAREA' ||
+				target.nodeName === 'INPUT'
+			) {
 				return;
 			}
 
@@ -92,15 +104,33 @@ export default function KeyWatcher(props: Props) {
 		}
 	}
 
-	function keydownSpace(e, touch = false) {
+	function keydownSpace(e, touch = false, allowButton = false) {
 		const freezeTime = getSettings().freeze_time;
 
-		if (e.key === 'Escape') return;
+		if (e.key === 'Escape' || isPopupOpen()) return;
+		if (
+			!touch &&
+			e.target instanceof Element &&
+			e.target.closest(
+				allowButton
+					? 'input, select, textarea, [contenteditable], [data-popup-content]'
+					: 'button, input, select, textarea, [contenteditable], [data-popup-content]',
+			)
+		)
+			return;
 
-		const solveOpen = modals.length > 1 || (!inModal && modals.length);
+		const solveOpen = dialogBlocked;
 
 		// Checking for various conditions where we don't want to start the timer
-		if (ganTimerOn || solveOpen || !startEnabled || timerDisabled || disabled || editScramble || smartCubeSelected(context)) {
+		if (
+			ganTimerOn ||
+			solveOpen ||
+			!startEnabled ||
+			timerDisabled ||
+			disabled ||
+			editScramble ||
+			smartCubeSelected(context)
+		) {
 			return;
 		}
 
@@ -119,7 +149,7 @@ export default function KeyWatcher(props: Props) {
 					INSPECTION_GRACE_PERIOD_TIMEOUT,
 					setTimeout(() => {
 						stopTimer(INSPECTION_GRACE_PERIOD_TIMEOUT);
-					}, 250)
+					}, 250),
 				);
 			}
 
@@ -158,7 +188,7 @@ export default function KeyWatcher(props: Props) {
 					setTimerParams({
 						canStart: true,
 					});
-				}, freezeTime * 1000)
+				}, freezeTime * 1000),
 			);
 		}
 	}
@@ -166,7 +196,15 @@ export default function KeyWatcher(props: Props) {
 	function keyupSpace(e, touch = false) {
 		const freezeTime = getSettings().freeze_time;
 
-		if (ganTimerOn || (e.keyCode !== 32 && !touch) || !spaceTimerStarted || manualEntry) return;
+		if (
+			dialogBlocked ||
+			isPopupOpen() ||
+			ganTimerOn ||
+			(e.keyCode !== 32 && !touch) ||
+			!spaceTimerStarted ||
+			manualEntry
+		)
+			return;
 
 		if (getTimer(START_TIMEOUT)) {
 			stopTimer(START_TIMEOUT);
@@ -205,7 +243,7 @@ export default function KeyWatcher(props: Props) {
 	 * @param e
 	 */
 	function escapePressed(e) {
-		if (ganTimerOn || e.code !== 'Escape') {
+		if (dialogBlocked || isPopupOpen() || ganTimerOn || e.code !== 'Escape') {
 			return;
 		}
 
@@ -227,7 +265,40 @@ export default function KeyWatcher(props: Props) {
 
 	return (
 		<GlobalHotKeys handlers={HOTKEY_HANDLERS} keyMap={HOTKEY_MAP}>
-			{props.children}
+			<div
+				className="contents"
+				onPointerDownCapture={() => {
+					pointerInteraction.current = true;
+				}}
+				onKeyDownCapture={(event) => {
+					if (event.key === 'Tab') pointerInteraction.current = false;
+					if (
+						event.key !== ' ' ||
+						!pointerInteraction.current ||
+						!(event.target instanceof Element) ||
+						!event.target.closest('button')
+					)
+						return;
+
+					// Reclaim space from clicked buttons before picker triggers handle it.
+					// Tabbing to a button still allows normal keyboard activation.
+					keydownSpace(event, false, true);
+					if (event.defaultPrevented) {
+						capturedSpace.current = true;
+						event.stopPropagation();
+					}
+				}}
+				onKeyUpCapture={(event) => {
+					if (event.key !== ' ' || !capturedSpace.current) return;
+					capturedSpace.current = false;
+					// Buttons activate on keyup; only the timer should consume this press.
+					event.preventDefault();
+					event.stopPropagation();
+					keyupSpace(event);
+				}}
+			>
+				{props.children}
+			</div>
 		</GlobalHotKeys>
 	);
 }

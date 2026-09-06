@@ -1,13 +1,13 @@
-import {openModal} from '@/actions/general';
-import HistoryModal from '@/components/modules/history/HistoryModal';
+import HistoryDialog from '@/components/modules/history/HistoryDialog';
 import {useStatsContext} from '@/components/stats/Stats';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {getCurrentAverage} from '@/db/solves/stats/solves/average/average';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {SolveStat} from '@/db/solves/stats/solves/caching';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
 import React from 'react';
-import {useDispatch} from 'react-redux';
 
 interface Props {
 	count: number;
@@ -16,7 +16,9 @@ interface Props {
 }
 
 export default function AvgRow(props: Props) {
-	const dispatch = useDispatch();
+	const [historyDialog, setHistoryDialog] = React.useState<React.ComponentProps<
+		typeof HistoryDialog
+	> | null>(null);
 
 	const context = useStatsContext();
 	const filter = context.filterOptions;
@@ -31,27 +33,51 @@ export default function AvgRow(props: Props) {
 
 	const localCount = count.toLocaleString();
 
-	function openSolveModal() {
+	function openSolveDialog() {
 		if (!avg) {
 			return;
 		}
 
 		const descPrefix = pb ? 'Best ' : '';
 		const desc = descPrefix + `Average of ${localCount}`;
-		dispatch(openModal(<HistoryModal solves={avg.solves ?? []} description={desc} />));
+		setHistoryDialog({solves: avg.solves ?? [], description: desc});
 	}
 
-	const highlightClass = 'inline-block font-bold text-info drop-shadow-[0_0_10px_rgba(var(--info-color),0.4)]';
+	const highlightClass = 'font-medium text-text';
 	const bestSpan = pb ? <span className={highlightClass}>Best</span> : null;
 
 	return (
-		<div className={classNames('box-border flex flex-row items-center justify-between rounded-[5px] px-2.5 py-1.5', className)}>
-			<p className="m-0 p-0 text-[1.2rem] opacity-100">
-				{bestSpan} {pb ? 'a' : 'A'}verage of <span className={highlightClass}>{count.toLocaleString()}</span>
-			</p>
-			<button onClick={openSolveModal} className="text-[1.3rem] font-bold text-secondary">
-				{getTimeString(avg?.time)}
-			</button>
-		</div>
+		<>
+			<div className={classNames('stats-average-row', className)}>
+				<p>
+					{bestSpan} {pb ? 'a' : 'A'}verage of{' '}
+					<span className={highlightClass}>{count.toLocaleString()}</span>
+				</p>
+				<Button
+					variant="ghost"
+					className="h-auto p-0 font-normal whitespace-normal hover:bg-transparent"
+					onClick={openSolveDialog}
+					type="button"
+					disabled={!avg}
+				>
+					{getTimeString(avg?.time)}
+				</Button>
+			</div>
+			<Dialog
+				open={historyDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setHistoryDialog(null);
+					}
+				}}
+			>
+				{historyDialog && (
+					<DialogContent>
+						<DialogTitle className="sr-only">Solve history</DialogTitle>
+						<HistoryDialog {...historyDialog} />
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

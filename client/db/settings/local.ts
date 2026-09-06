@@ -1,6 +1,7 @@
 import { getMe } from "@/components/store";
 import {AllSettings, getDefaultSettings} from '@/db/settings/query';
 import {getLocalStorage, setLocalStorageObject} from '@/util/data/local_storage';
+import {migrateDefaultDarkTheme} from '@/util/themes/theme_migration';
 
 export function getAllLocalSettings(userId: string): AllSettings {
 	clearDemoUserSettings();
@@ -11,13 +12,17 @@ export function getAllLocalSettings(userId: string): AllSettings {
 	if (settingsVal && typeof settingsVal === 'object') {
 		const userSettings = settingsVal[userId];
 		if (userSettings && Object.keys(userSettings).length) {
-			output = userSettings;
+			output = migrateDefaultDarkTheme(userSettings);
+			if (output !== userSettings) {
+				settingsVal[userId] = output;
+				setLocalStorageObject('settings', settingsVal);
+			}
 		} else {
 			settingsVal[userId] = getDefaultSettings();
 			setLocalStorageObject('settings', settingsVal);
 		}
 	} else {
-		output = findLegacyLocalSettings();
+		output = migrateDefaultDarkTheme(findLegacyLocalSettings());
 
 		setLocalStorageObject('settings', {
 			[userId]: output,

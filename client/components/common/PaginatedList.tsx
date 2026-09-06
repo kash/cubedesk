@@ -1,6 +1,6 @@
-import Button from '@/components/common/Button';
 import Empty from '@/components/common/Empty';
 import Loading from '@/components/common/Loading';
+import PageControls from '@/components/common/PageControls';
 import {PaginationArgs, PaginationOutput} from '@/types/pagination';
 import {useUrlParamNumber} from '@/util/hooks/useUrlParam';
 import {numberWithCommas} from '@/util/strings/util';
@@ -99,25 +99,21 @@ export default function PaginatedList<T>(props: Props<T>) {
 		resultCount = null;
 	}
 
-	const totalPages = Math.ceil(totalResults / DEFAULT_PAGE_SIZE);
+	const totalPages = Math.max(1, Math.ceil(totalResults / DEFAULT_PAGE_SIZE));
 
 	return (
 		<div className="w-full">
 			<div className="w-full">
 				{resultCount}
 				<div className="">{body}</div>
-				<div className="mx-auto mt-8 flex w-full max-w-36 flex-row items-center justify-center">
-					<Button
-						onClick={prevPage}
-						text="Prev"
-						disabled={page === 0}
-						primary={page > 0}
-					/>
-					<p className="m-0 mx-3">
-						Page {page + 1} of {totalPages}
-					</p>
-					<Button onClick={nextPage} text="Next" disabled={!hasMore} primary={hasMore} />
-				</div>
+				<PageControls
+					className="mt-6"
+					page={page}
+					totalPages={totalPages}
+					hasMore={hasMore}
+					onPrevious={prevPage}
+					onNext={nextPage}
+				/>
 			</div>
 		</div>
 	);

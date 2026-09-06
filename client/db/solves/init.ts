@@ -1,16 +1,19 @@
 import {getLokiDb, stripLokiJsMetadata} from '@/db/lokijs';
 import {SolveStat} from '@/db/solves/stats/solves/caching';
 import {Solve} from '@/types/solve';
+import Loki from 'lokijs';
 import {emitEvent} from '@/util/event_handler';
 
 export function getSolveDb(): Collection<Solve> {
 	const db = getLokiDb();
-	return db.getCollection('solves');
+	// Before browser initialization (including SSR), demo solves are empty.
+	// Use a fresh collection so server requests never share mutable solve data.
+	return db?.getCollection('solves') ?? new Loki.Collection<Solve>('solves');
 }
 
 export function getSolveCacheDb(): Collection<SolveStat> {
 	const db = getLokiDb();
-	return db.getCollection('solve_cache');
+	return db?.getCollection('solve_cache') ?? new Loki.Collection<SolveStat>('solve_cache');
 }
 
 export function initSolvesCollection(forceRefresh = false) {
@@ -20,7 +23,7 @@ export function initSolvesCollection(forceRefresh = false) {
 		db.removeCollection('solves');
 	}
 
-	if (!getSolveDb()) {
+	if (!db.getCollection('solves')) {
 		db.addCollection<Solve>('solves', {
 			unique: ['id'],
 			indices: ['session_id', 'started_at', 'is_smart_cube', 'time', 'cube_type', 'trainer_name', 'from_timer'],

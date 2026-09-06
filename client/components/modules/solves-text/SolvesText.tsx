@@ -1,6 +1,6 @@
-import Button, {CommonType} from '@/components/common/Button';
 import Checkbox from '@/components/common/Checkbox';
 import CopyText from '@/components/common/CopyText';
+import {Button} from '@/components/ui/button';
 import {Solve} from '@/types/solve';
 import {getCubeTypeName} from '@/util/cubes/util';
 import {getTimeString} from '@/util/time';
@@ -131,35 +131,35 @@ export default function SolvesText(props: Props) {
 					<div className="w-1/2">
 						<Checkbox
 							text="Include scramble"
-							onChange={() => setIncludeScramble(!includeScramble)}
+							onCheckedChange={() => setIncludeScramble(!includeScramble)}
 							checked={includeScramble}
 						/>
 					</div>
 					<div className="w-1/2">
 						<Checkbox
 							text="Include cube type"
-							onChange={() => setIncludeCubeType(!includeCubeType)}
+							onCheckedChange={() => setIncludeCubeType(!includeCubeType)}
 							checked={includeCubeType}
 						/>
 					</div>
 					<div className="w-1/2">
 						<Checkbox
 							text="Include date"
-							onChange={() => setIncludeDate(!includeDate)}
+							onCheckedChange={() => setIncludeDate(!includeDate)}
 							checked={includeDate}
 						/>
 					</div>
 					<div className="w-1/2">
 						<Checkbox
 							text="Include notes"
-							onChange={() => setIncludeNotes(!includeNotes)}
+							onCheckedChange={() => setIncludeNotes(!includeNotes)}
 							checked={includeNotes}
 						/>
 					</div>
 					<div className="w-1/2">
 						<Checkbox
 							text="Wrap text"
-							onChange={() => setWrapText(!wrapText)}
+							onCheckedChange={() => setWrapText(!wrapText)}
 							checked={wrapText}
 						/>
 					</div>
@@ -170,16 +170,14 @@ export default function SolvesText(props: Props) {
 				<CopyText
 					text={solvesText}
 					buttonProps={{
-						primary: true,
-						text: 'Copy text',
+						variant: 'default',
+						children: 'Copy text',
 					}}
 				/>
-				<Button
-					icon={<Download weight="bold" />}
-					theme={CommonType.GRAY}
-					onClick={downloadCsv}
-					text="Download as CSV"
-				/>
+				<Button variant="secondary" onClick={downloadCsv}>
+					{'Download as CSV'}
+					<Download weight="bold" />
+				</Button>
 			</div>
 		</div>
 	);

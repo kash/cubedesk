@@ -1,19 +1,20 @@
 import {addStatsModuleBlock, removeStatsModuleBlock} from '@/actions/stats';
-import Button from '@/components/common/Button';
-import HorizontalLine from '@/components/common/HorizontalLine';
 import CustomizeStatsEditor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsEditor';
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
 import {
 	getQuickStatsGridSizes,
+	getStatsBlockDescription,
 	saveStatsModuleBlocks,
 	STATS_GRID_SIZE,
 } from '@/components/modules/quick-stats/util';
+import {Button} from '@/components/ui/button';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {RootState} from '@/reducers/reducers';
 import {defaultStatsModuleBlocks} from '@/reducers/stats';
 import {StatsModuleBlock} from '@/types/stats-module';
+import {cn} from '@/util/cn';
 import {toastError} from '@/util/toast';
-import jsonStr from 'json-stable-stringify';
+import {Plus} from 'phosphor-react';
 import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -32,16 +33,7 @@ export default function CustomizeStats(props: Props) {
 	const blockCount = statsModuleBlocks.length;
 	const blockSizes = useMemo(() => getQuickStatsGridSizes(blockCount), [blockCount]);
 
-	const classes = [
-		'grid',
-		`grid-rows-4`,
-		'w-full',
-		'h-80',
-		`grid-cols-4`,
-		'gap-1',
-		'w-full',
-		'h-full',
-	];
+	const classes = ['grid', `grid-rows-4`, 'w-full', 'h-72', `grid-cols-4`, 'gap-2'];
 	const className = classes.join(' ');
 
 	const canAddBlocks = blockCount < STATS_GRID_SIZE ** 2;
@@ -93,60 +85,72 @@ export default function CustomizeStats(props: Props) {
 			continue;
 		}
 
-		const buttonClasses = ['group', 'relative', 'p-0', 'rounded'];
-		if (selected) {
-			buttonClasses.push(
-				'border-solid',
-				'relative',
-				'rounded-md',
-				'border-4',
-				'border-primary/80',
-			);
-		}
-
 		blocks.push(
-			<button
+			<Button
+				variant="ghost"
+				type="button"
+				aria-pressed={selected}
+				aria-label={`Block ${i + 1}: ${getStatsBlockDescription(statOptions)}`}
 				key={`stats-block-${i}`}
-				className={buttonClasses.join(' ')}
+				className={cn(
+					'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
+					cn(
+						'focus-visible:ring-text relative min-h-0 rounded-md p-0 ring-1 transition-shadow focus-visible:ring-2',
+						{
+							'ring-text/70': selected,
+							'ring-tmo-module/10 hover:ring-tmo-module/30': !selected,
+						},
+					),
+				)}
 				onClick={(e) => selectStatsBlock(e, i)}
 				style={{
 					gridColumn: `span ${colSpan}`,
 					gridRow: `span ${rowSpan}`,
 				}}
 			>
-				<div className="pointer-events-none h-full w-full">
+				<div className="pointer-events-none h-full w-full" inert>
 					<QuickStatsBlock
+						interactive={false}
 						statOptions={statOptions}
 						filterOptions={filterOptions}
 						rowSpan={rowSpan}
 						colSpan={colSpan}
 					/>
 				</div>
-			</button>,
+			</Button>,
 		);
 	}
 
 	const selectedStatOptions = statsModuleBlocks[selectedIndex];
 
 	return (
-		<div>
-			<div className="mb-4 table w-full">
-				<div className={className}>{blocks}</div>
-				<div className="mx-auto mt-4 table">
+		<div className="text-text grid items-start gap-5 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+			<section className="border-tmo-module/10 bg-tmo-module/[0.025] rounded-xl border p-4 md:sticky md:top-0">
+				<div className="mb-4 flex items-center justify-between gap-3">
+					<div>
+						<h3 className="m-0 text-sm font-semibold">Your stats layout</h3>
+						<span className="text-text/45 text-xs">
+							{blockCount} of {STATS_GRID_SIZE ** 2} blocks
+						</span>
+					</div>
 					<Button
+						variant="secondary"
 						disabled={!canAddBlocks}
-						glow
-						small
-						primary
 						onClick={addBlockToGrid}
-						text="Add block"
-					/>
+						size="sm"
+					>
+						{<Plus size={14} />}
+						{'Add block'}
+					</Button>
 				</div>
-			</div>
-			<HorizontalLine />
-			<div>
+				<div className={className}>{blocks}</div>
+				<p className="text-text/45 mt-4 mb-0 text-xs leading-relaxed">
+					Select any block to edit its value and color. Your changes apply automatically.
+				</p>
+			</section>
+			<div className="border-tmo-module/10 min-w-0 rounded-xl border p-4">
 				<CustomizeStatsEditor
-					key={`${jsonStr(selectedStatOptions)}-${selectedIndex}`}
+					key={`${blockCount}-${selectedIndex}`}
 					hideRemoveButton={blockCount <= 1}
 					removeStatsBlock={removeStatsBlock}
 					stat={selectedStatOptions}

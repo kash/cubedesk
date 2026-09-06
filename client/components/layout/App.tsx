@@ -1,5 +1,4 @@
 import {setGeneral} from '@/actions/general';
-import Modal from '@/components/common/modal/Modal';
 import Banned from '@/components/layout/Banned';
 import Header from '@/components/layout/Header';
 import {initAnonymousAppData, initAppData, setBrowserSessionId} from '@/components/layout/init';
@@ -7,11 +6,12 @@ import LoadingCover from '@/components/layout/LoadingCover';
 import {updateThemeColors} from '@/components/layout/themes';
 import TopNav from '@/components/layout/TopNav';
 import Wrapper from '@/components/layout/wrapper/Wrapper';
+import {useDemoSolveWarning} from '@/util/hooks/useDemoSolveWarning';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {initPageTitleBlink} from '@/util/page_title_blink';
 import {initSocketIO} from '@/util/socket/socketio';
-import React, {ReactNode, useEffect} from 'react';
+import React, {ReactNode, useEffect, useLayoutEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
 interface Props {
@@ -27,9 +27,9 @@ export default function App(props: Props = {}) {
 	const {path, standalone, children, hideTopNav, restricted} = props;
 
 	const dispatch = useDispatch();
-	const modals = useGeneral('modals');
 	const appLoaded = useGeneral('app_loaded');
 	const me = useMe();
+	useDemoSolveWarning(!me && appLoaded);
 
 	function appInitiated() {
 		setBrowserSessionId(dispatch);
@@ -38,13 +38,15 @@ export default function App(props: Props = {}) {
 		dispatch(setGeneral('app_loaded', true));
 	}
 
-	useEffect(() => {
-		if (appLoaded) {
-			return;
-		}
-
-		if (!me) {
+	useLayoutEffect(() => {
+		// Demo data is local and synchronous, so initialize it before the first paint.
+		if (!me && !appLoaded) {
 			initAnonymousAppData(appInitiated);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (!me || appLoaded) {
 			return;
 		}
 
@@ -76,22 +78,6 @@ export default function App(props: Props = {}) {
 		);
 	}
 
-	let modalOutput: ReactNode = null;
-	if (modals && modals.length) {
-		const modalList: ReactNode[] = [];
-		for (let i = 0; i < modals.length; i += 1) {
-			const modal = modals[i];
-
-			modalList.push(
-				<Modal key={modal.createdAt} zIndex={1000000 + i} {...modal.options}>
-					{modal.body}
-				</Modal>
-			);
-		}
-
-		modalOutput = <div className="cd-modal--list">{modalList}</div>;
-	}
-
 	const wrapperProps = {
 		...props,
 		children: null,
@@ -100,9 +86,8 @@ export default function App(props: Props = {}) {
 	return (
 		<>
 			<Header path={path ?? ''} title={path === '/' && !me ? "CubeDesk - Rubik's Cube Timer | 1v1 | Trainer" : undefined} />
-			<LoadingCover fadeOut={appLoaded} />
-			{modalOutput}
-			{appLoaded ? <Wrapper {...wrapperProps}>{children}</Wrapper> : null}
+			{me ? <LoadingCover fadeOut={appLoaded} /> : null}
+			{appLoaded || (!me && path === '/') ? <Wrapper {...wrapperProps}>{children}</Wrapper> : null}
 		</>
 	);
 }

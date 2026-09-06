@@ -1,60 +1,89 @@
 import StatModule from '@/components/stats/common/StatModule';
 import {useStatsContext} from '@/components/stats/Stats';
+import {Sword} from 'phosphor-react';
 import React from 'react';
 import {PieChart} from 'react-minimal-pie-chart';
+import {Link} from 'react-router-dom';
 
 export default function MatchStats() {
-	const context = useStatsContext();
-	const {stats} = context;
-
-	let ties = 0;
+	const {stats} = useStatsContext();
 	const played = stats.matches_played || 0;
 	const wins = stats.matches_won || 0;
 	const losses = stats.matches_lost || 0;
-
-	if (!played) {
-		ties = 1;
-	}
-
-	const winPercent = Math.floor((wins / played) * 100);
-	const lostPercent = Math.floor((losses / played) * 100);
+	const ties = Math.max(0, played - wins - losses);
 
 	return (
-		<StatModule rowSpan={1} colSpan={2} className="flex flex-col justify-between">
-			<div>
-				<div className="mx-auto mt-2.5 mb-5 w-full max-w-[150px]">
-					<PieChart
-						rounded
-						lineWidth={18}
-						data={[
-							{title: 'Wins', value: wins, color: '#23C586'},
-							{title: 'Ties', value: ties, color: '#FFFFFF'},
-							{title: 'Losses', value: losses, color: '#CC4C4C'},
-						]}
-						labelPosition={100}
-						labelStyle={{
-							color: 'white',
-						}}
-					/>
-				</div>
-				<h3 className="m-0 w-full text-center text-[2rem]">
-					{played} Match{played === 1 ? '' : 'es'}
-				</h3>
-				<div className="relative mx-auto mt-[30px] flex w-full max-w-[350px] flex-row items-center justify-between">
-					<div className="flex flex-col items-center">
-						<h4 className="text-[1.4rem]">
-							{wins.toLocaleString()} win{wins === 1 ? '' : 's'}
-						</h4>
-						<p>({played ? winPercent : 0}%)</p>
+		<StatModule className="stats-matches">
+			{played ? (
+				<>
+					<div
+						className="stats-ring"
+						role="img"
+						aria-label={`${played} matches: ${wins} wins, ${losses} losses, ${ties} ties`}
+					>
+						<PieChart
+							lineWidth={12}
+							startAngle={-90}
+							data={[
+								{title: 'Wins', value: wins, color: '#23C586'},
+								{title: 'Ties', value: ties, color: '#8b95a5'},
+								{title: 'Losses', value: losses, color: '#e47878'},
+							]}
+						/>
+						<div className="stats-ring-label">
+							<strong>{played.toLocaleString()}</strong>
+							<span>matches</span>
+						</div>
 					</div>
-					<div className="flex flex-col items-center">
-						<h4 className="text-[1.4rem]">
-							{losses.toLocaleString()} {losses === 1 ? 'loss' : 'losses'}
-						</h4>
-						<p>({played ? lostPercent : 0}%)</p>
+					<div className="stats-match-results">
+						<h3>Match record</h3>
+						<p>
+							<span>
+								<i style={{background: '#23C586'}} />
+								Wins
+							</span>
+							<strong>
+								{wins.toLocaleString()}{' '}
+								<small>{Math.round((wins / played) * 100)}%</small>
+							</strong>
+						</p>
+						<p>
+							<span>
+								<i style={{background: '#e47878'}} />
+								Losses
+							</span>
+							<strong>
+								{losses.toLocaleString()}{' '}
+								<small>{Math.round((losses / played) * 100)}%</small>
+							</strong>
+						</p>
+						{ties > 0 && (
+							<p>
+								<span>
+									<i style={{background: '#8b95a5'}} />
+									Ties
+								</span>
+								<strong>{ties.toLocaleString()}</strong>
+							</p>
+						)}
 					</div>
+				</>
+			) : (
+				<div className="stats-match-empty">
+					<span className="stats-empty-icon">
+						<Sword size={24} />
+					</span>
+					<h3>Your next challenge awaits</h3>
+					<p>
+						Go head-to-head with another cuber.
+						<br />
+						Your match record starts here.
+					</p>
+					<Link to="/play" className="stats-text-link">
+						Play your first match <span aria-hidden="true">↗</span>
+					</Link>
 				</div>
-			</div>
+			)}
 		</StatModule>
 	);
 }

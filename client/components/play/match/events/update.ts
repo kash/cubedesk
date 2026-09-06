@@ -71,7 +71,10 @@ export function listenForMatchUpdates() {
 				onWin(stand);
 			}
 
-			emitEvent<any>(getMatchClientEvent(MatchClientEvent.UPDATE_OPPONENT_STATUS, stand.userId), stand);
+			emitEvent<any>(
+				getMatchClientEvent(MatchClientEvent.UPDATE_OPPONENT_STATUS, stand.userId),
+				stand,
+			);
 		}
 
 		/*
@@ -85,7 +88,16 @@ export function listenForMatchUpdates() {
 		}
 
 		setTimerDisabled(timerDisabled);
-		updateMatchState(match, matchOver, myId, gameContext, setMatch, setMatchSession, setMatchOver, true);
+		updateMatchState(
+			match,
+			matchOver,
+			myId,
+			gameContext,
+			setMatch,
+			setMatchSession,
+			setMatchOver,
+			true,
+		);
 	}
 
 	function onWin(stand: MatchStanding) {
@@ -98,12 +110,12 @@ export function listenForMatchUpdates() {
 		if (winnerId.current === me.id) {
 			triggerConfetti();
 			displayTimerAlert({
-				backgroundColor: 'green',
+				variant: 'success',
 				text: 'You won!',
 			});
 		} else {
 			displayTimerAlert({
-				backgroundColor: 'orange',
+				variant: 'warning',
 				text: `${stand.username} won`,
 			});
 		}
@@ -143,11 +155,10 @@ export function listenForMatchUpdates() {
 		if (message) {
 			displayTimerAlert(
 				{
-					backgroundColor: 'button',
-					textColor: 'text',
+					variant: 'secondary',
 					text: message,
 				},
-				true
+				true,
 			);
 		} else {
 			removeTimerNotifications();

@@ -1,4 +1,5 @@
 import {adminRouter} from '@/server/trpc/routers/admin';
+import {adminTrainerRouter} from '@/server/trpc/routers/admin_trainer';
 import {authRouter} from '@/server/trpc/routers/auth';
 import {badgeRouter} from '@/server/trpc/routers/badge';
 import {bulkActionsRouter} from '@/server/trpc/routers/bulk_actions';
@@ -26,6 +27,7 @@ import {userRouter} from '@/server/trpc/routers/user';
 import {router} from '@/server/trpc/trpc';
 
 export const appRouter = router({
+	adminTrainer: adminTrainerRouter,
 	auth: authRouter,
 	session: sessionRouter,
 	setting: settingRouter,

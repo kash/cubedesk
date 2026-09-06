@@ -1,9 +1,7 @@
 import {getMe} from '@/actions/account';
-import {openModal} from '@/actions/general';
 import {setSsrValue} from '@/actions/ssr';
 import Avatar from '@/components/common/avatar/Avatar';
 import AvatarDropdown from '@/components/common/avatar/AvatarDropdown';
-import Button from '@/components/common/Button';
 import LoadingIcon from '@/components/common/LoadingIcon';
 import UploadCover from '@/components/common/UploadCover';
 import Header from '@/components/layout/Header';
@@ -14,6 +12,9 @@ import PFP from '@/components/profile/PFP';
 import ProfileElo from '@/components/profile/ProfileElo';
 import PublishSolves from '@/components/profile/PublishSolves';
 import WCA from '@/components/profile/WCA';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
+import {Separator} from '@/components/ui/separator';
 import {Image} from '@/types/image';
 import {Profile as ProfileSchema} from '@/types/profile';
 import {TopAverage, TopSolve} from '@/types/top-solve';
@@ -92,6 +93,13 @@ export async function prefetchProfileData(store, req) {
 }
 
 export default function Profile() {
+	const [publishSolvesDialog, setPublishSolvesDialog] = React.useState<{
+		props: React.ComponentProps<typeof PublishSolves>;
+		title: React.ReactNode;
+		description: React.ReactNode;
+		onComplete: React.ComponentProps<typeof PublishSolves>['onComplete'];
+	} | null>(null);
+
 	const dispatch = useDispatch();
 	const match = useRouteMatch() as any;
 
@@ -149,13 +157,12 @@ export default function Profile() {
 	}
 
 	function openPublishSolves() {
-		dispatch(
-			openModal(<PublishSolves />, {
-				title: 'Publish your PBs',
-				description: 'Please make sure that the solves below are legitimate and yours.',
-				onComplete: () => window.location.reload(),
-			}),
-		);
+		setPublishSolvesDialog({
+			props: {},
+			title: 'Publish your PBs',
+			description: 'Please make sure that the solves below are legitimate and yours.',
+			onComplete: () => window.location.reload(),
+		});
 	}
 
 	let headerUrl = getStorageURL('storage/default_profile_background.jpeg') || '';
@@ -237,7 +244,7 @@ export default function Profile() {
 	if (user?.elo_rating) {
 		eloBody = (
 			<>
-				<hr className="bg-tmo-background/[0.08] mx-auto my-[30px] h-1 w-full border-0" />
+				<Separator className="my-6" />
 				<ProfileElo eloRating={user.elo_rating} />
 			</>
 		);
@@ -247,7 +254,7 @@ export default function Profile() {
 	if (pbCards.length) {
 		pbsDiv = (
 			<>
-				<hr className="bg-tmo-background/[0.08] mx-auto my-[30px] h-1 w-full border-0" />
+				<Separator className="my-6" />
 				<div className="my-[35px]">
 					<h2>Personal Bests</h2>
 					<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">
@@ -261,55 +268,81 @@ export default function Profile() {
 	let publishSolves: React.ReactNode = null;
 	if (myProfile) {
 		publishSolves = (
-			<Button
-				primary
-				icon={<Plus weight="bold" />}
-				text="Publish Your PBs"
-				onClick={openPublishSolves}
-			/>
+			<Button variant="default" onClick={openPublishSolves}>
+				{'Publish Your PBs'}
+				<Plus weight="bold" />
+			</Button>
 		);
 	}
 
 	return (
-		<div
-			className={classNames({
-				'bg-background box-border min-h-screen pt-[100px] pb-[150px]': !me,
-			})}
-		>
-			<Header
-				path={`/profile/${username}`}
-				title={user.username + ' Profile | CubeDesk'}
-				description={`Check out ${user.username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more`}
-			/>
+		<>
 			<div
-				className={classNames('flex flex-col items-center pb-[100px]', {
-					'mx-auto w-[95%] max-w-[1000px]': !me,
+				className={classNames({
+					'bg-background box-border min-h-screen pt-[100px] pb-[150px]': !me,
 				})}
 			>
-				<div className="group/profile-header relative mb-[7px] box-border flex h-[300px] w-full max-w-[1500px] flex-row items-center p-[25px]">
-					<WCA myProfile={myProfile} user={user} />
-					{pfp}
-					<div className="absolute top-0 left-0 z-0 h-full w-full overflow-hidden rounded-[15px] bg-black">
-						{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
+				<Header
+					path={`/profile/${username}`}
+					title={user.username + ' Profile | CubeDesk'}
+					description={`Check out ${user.username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more`}
+				/>
+				<div
+					className={classNames('flex flex-col items-center pb-[100px]', {
+						'mx-auto w-[95%] max-w-[1000px]': !me,
+					})}
+				>
+					<div className="group/profile-header relative mb-[7px] box-border flex h-[300px] w-full max-w-[1500px] flex-row items-center p-[25px]">
+						<WCA myProfile={myProfile} user={user} />
+						{pfp}
+						<div className="absolute top-0 left-0 z-0 h-full w-full overflow-hidden rounded-[15px] bg-black">
+							{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
 
-						<img
-							className="h-full w-full object-cover opacity-50"
-							src={headerUrl}
-							alt="Header photo"
-						/>
+							<img
+								className="h-full w-full object-cover opacity-50"
+								src={headerUrl}
+								alt="Header photo"
+							/>
+						</div>
 					</div>
-				</div>
-				<div className="relative mx-auto w-full max-w-[1200px]">
-					<div className="absolute top-0 right-0 z-[1000] flex flex-row justify-end gap-2.5">
-						<FriendshipRequest user={user as any} fetchData />
-						{publishSolves}
-						<AvatarDropdown user={user as any} />
+					<div className="relative mx-auto w-full max-w-[1200px]">
+						<div className="absolute top-0 right-0 z-[1000] flex flex-row justify-end gap-2.5">
+							<FriendshipRequest user={user as any} fetchData />
+							{publishSolves}
+							<AvatarDropdown user={user as any} />
+						</div>
+						<About profile={profile} />
+						{eloBody}
+						{pbsDiv}
 					</div>
-					<About profile={profile} />
-					{eloBody}
-					{pbsDiv}
 				</div>
 			</div>
-		</div>
+			<Dialog
+				open={publishSolvesDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setPublishSolvesDialog(null);
+					}
+				}}
+			>
+				{publishSolvesDialog && (
+					<DialogContent>
+						<DialogHeader
+							title={publishSolvesDialog.title}
+							description={publishSolvesDialog.description}
+						/>
+						<PublishSolves
+							{...publishSolvesDialog.props}
+							onComplete={(...args) => {
+								setPublishSolvesDialog((current) =>
+									current === publishSolvesDialog ? null : current,
+								);
+								publishSolvesDialog.onComplete?.(...args);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

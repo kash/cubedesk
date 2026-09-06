@@ -1,4 +1,4 @@
-import Button from '@/components/common/Button';
+import {Button} from '@/components/ui/button';
 import {logOut} from '@/util/auth/logout';
 import {getDateFromNow} from '@/util/dates';
 import {Warning} from 'phosphor-react';
@@ -54,7 +54,9 @@ export default function Banned() {
 						kash@cubedesk.io
 					</a>
 				</p>
-				<Button text="Log out" onClick={logOut} />
+				<Button variant="secondary" onClick={logOut}>
+					{'Log out'}
+				</Button>
 			</div>
 		</div>
 	);

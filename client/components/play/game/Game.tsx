@@ -1,20 +1,19 @@
 import {reactState} from '@/@types/react';
-import {openModal} from '@/actions/general';
 import {PlayerStatus} from '@/client/shared/match/types';
-import Button from '@/components/common/Button';
 import GameChallenger from '@/components/play/game/GameChallenger';
 import GameTimer from '@/components/play/game/GameTimer';
 import {getExistingMatch} from '@/components/play/helpers/match';
 import {getGameMetaData} from '@/components/play/Play';
 import TargetSessions from '@/components/play/target/target-sessions/TargetSessions';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {Solve} from '@/types/solve';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
 
 export interface GameSolveRow {
@@ -101,6 +100,10 @@ export function getGameLink(gameType: GameType, linkCode?: string) {
 }
 
 export default function Game(props: GameProps) {
+	const [targetSessionsDialog, setTargetSessionsDialog] = React.useState<React.ComponentProps<
+		typeof TargetSessions
+	> | null>(null);
+
 	interface MatchParams {
 		linkCode?: string;
 	}
@@ -122,7 +125,6 @@ export default function Game(props: GameProps) {
 	const [sessionId, setSessionId] = useState<string | null>(null);
 	const [matchOpen, setMatchOpen] = useState(false);
 
-	const dispatch = useDispatch();
 	const routeMatch = useRouteMatch<MatchParams>();
 	const linkCode = routeMatch.params.linkCode;
 
@@ -140,7 +142,7 @@ export default function Game(props: GameProps) {
 	}, []);
 
 	function openSessions() {
-		dispatch(openModal(<TargetSessions gameType={gameType} />));
+		setTargetSessionsDialog({gameType: gameType});
 	}
 
 	function updateScramble() {
@@ -206,7 +208,7 @@ export default function Game(props: GameProps) {
 	};
 
 	let playButton: ReactNode = (
-		<Button fullWidth large primary onClick={toggleTimer}>
+		<Button variant="default" onClick={toggleTimer} size="lg" className="w-full">
 			Play {name}
 		</Button>
 	);
@@ -215,25 +217,41 @@ export default function Game(props: GameProps) {
 	}
 
 	return (
-		<GameContext.Provider value={contextValue}>
-			<div className="h-full">
-				<GameTimer />
+		<>
+			<GameContext.Provider value={contextValue}>
+				<div className="h-full">
+					<GameTimer />
 
-				<div className="flex h-full flex-col justify-between">
-					<div className="flex flex-col items-start gap-3" style={{color}}>
-						<div className="flex flex-row items-center gap-2">
-							<span className="text-4xl leading-none">{icon}</span>
-							<h2 className="text-4xl">{name}</h2>
+					<div className="flex h-full flex-col gap-5">
+						<div className="flex flex-col items-start gap-3">
+							<div className="flex flex-row items-center gap-3">
+								<span className="flex size-10 items-center justify-center rounded-xl bg-tmo-module/5 text-xl leading-none" style={{color}}>{icon}</span>
+								<h2 className="m-0 font-sans text-xl font-medium tracking-tight">{name}</h2>
+							</div>
+							<p className="m-0 text-base leading-relaxed font-normal text-text/60">{description}</p>
 						</div>
-						<p className="text-xl">{description}</p>
-					</div>
 
-					<div className="flex flex-col gap-3">
-						{playButton}
-						<GameChallenger />
+						<div className="mt-auto flex flex-col gap-2">
+							{playButton}
+							<GameChallenger />
+						</div>
 					</div>
 				</div>
-			</div>
-		</GameContext.Provider>
+			</GameContext.Provider>
+			<Dialog
+				open={targetSessionsDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setTargetSessionsDialog(null);
+					}
+				}}
+			>
+				{targetSessionsDialog && (
+					<DialogContent>
+						<TargetSessions {...targetSessionsDialog} />
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

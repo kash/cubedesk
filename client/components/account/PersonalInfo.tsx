@@ -1,5 +1,7 @@
-import Button from '@/components/common/Button';
-import Input from '@/components/common/inputs/input/Input';
+import {Button} from '@/components/ui/button';
+import {Field} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
 import {api} from '@/util/api';
 import {useInput} from '@/util/hooks/useInput';
 import {useMe} from '@/util/hooks/useMe';
@@ -7,10 +9,10 @@ import {toastError} from '@/util/toast';
 import React from 'react';
 
 export default function PersonalInfo() {
+	const fieldId = React.useId();
+
 	const me = useMe();
 
-	const [firstName, setFirstName] = useInput(me.first_name);
-	const [lastName, setLastName] = useInput(me.last_name);
 	const [email, setEmail] = useInput(me.email);
 	const [username, setUsername] = useInput(me.username);
 
@@ -19,8 +21,6 @@ export default function PersonalInfo() {
 	async function clickUpdate() {
 		try {
 			await updateAccountMutation.mutateAsync({
-				first_name: firstName,
-				last_name: lastName,
 				username,
 				email,
 			});
@@ -32,12 +32,23 @@ export default function PersonalInfo() {
 	}
 
 	return (
-		<div>
-			<Input value={firstName} legend="First Name" onChange={setFirstName} name="firstName" />
-			<Input value={lastName} legend="Last Name" onChange={setLastName} name="lastName" />
-			<Input value={username} legend="Username" onChange={setUsername} name="username" />
-			<Input value={email} legend="Email" onChange={setEmail} name="email" />
-			<Button primary large glow text="Update Info" onClick={clickUpdate} />
+		<div className="flex flex-col gap-5">
+			<Field className="gap-2">
+				<Label htmlFor={`${fieldId}-1`}>Username</Label>
+				<Input
+					value={username}
+					onChange={setUsername}
+					name="username"
+					id={`${fieldId}-1`}
+				/>
+			</Field>
+			<Field className="gap-2">
+				<Label htmlFor={`${fieldId}-2`}>Email</Label>
+				<Input value={email} onChange={setEmail} name="email" id={`${fieldId}-2`} />
+			</Field>
+			<Button className="self-start" onClick={clickUpdate}>
+				{'Update Info'}
+			</Button>
 		</div>
 	);
 }

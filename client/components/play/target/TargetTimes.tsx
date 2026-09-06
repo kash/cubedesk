@@ -1,17 +1,17 @@
-import {openModal} from '@/actions/general';
 import {PlayerStatus} from '@/client/shared/match/types';
-import Button from '@/components/common/Button';
 import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
 import SolveInfo from '@/components/solve-info/SolveInfo';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {updateSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
+import {cn} from '@/util/cn';
 import {useMe} from '@/util/hooks/useMe';
 import {socketClient} from '@/util/socket/socketio';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
 import React, {ReactNode, useContext} from 'react';
-import {useDispatch} from 'react-redux';
 
 const solveInfoClasses =
 	'flex flex-row items-center p-0 text-right text-base font-bold whitespace-pre';
@@ -22,7 +22,10 @@ interface Props {
 
 // Left-most module that shows list of times
 export default function TargetTimes(props: Props) {
-	const dispatch = useDispatch();
+	const [solveInfoDialog, setSolveInfoDialog] = React.useState<React.ComponentProps<
+		typeof SolveInfo
+	> | null>(null);
+
 	const gameContext = useContext(GameContext);
 	const matchContext = useContext(MatchContext);
 	const me = useMe();
@@ -32,7 +35,7 @@ export default function TargetTimes(props: Props) {
 	const {timeIndex, getSolveRowInfo, solves} = gameContext;
 
 	function openSolve(solve) {
-		dispatch(openModal(<SolveInfo disabled solveId={solve.id} />));
+		setSolveInfoDialog({disabled: true, solveId: solve.id});
 	}
 
 	async function dnfSolve(solve: Solve) {
@@ -99,43 +102,51 @@ export default function TargetTimes(props: Props) {
 			const tie = solveStatus === PlayerStatus.Tie;
 
 			solveInfo = (
-				<button
+				<Button
+					variant="ghost"
 					onClick={() => openSolve(solve)}
-					className={classNames(solveInfoClasses, 'text-secondary', {
-						'text-warning': plusTwo,
-						'text-error': failed || dnf,
-						'text-secondary': tie,
-					})}
+					className={cn(
+						'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
+						classNames(solveInfoClasses, 'text-secondary', {
+							'text-warning': plusTwo,
+							'text-error': failed || dnf,
+							'text-secondary': tie,
+						}),
+					)}
 				>
 					{time}
 					{targetSuffix}
-				</button>
+				</Button>
 			);
 
 			if (i === timeIndex - 1) {
 				const actionsDisabled = solve.plus_two || solve.dnf;
 				actions = (
 					<div className="flex flex-row items-center">
-						<Button
-							title="Plus two solve"
-							hidden={actionsDisabled}
-							text="+2"
-							flat
-							white
-							warning={solve.plus_two}
-							className="mr-[5px] !text-base opacity-30 transition-opacity duration-100 ease-in-out hover:opacity-70"
-							onClick={() => plusTwoSolve(solve)}
-						/>
-						<Button
-							title="DNF solve"
-							flat
-							white
-							text="DNF"
-							hidden={actionsDisabled}
-							danger={solve.dnf}
-							className="mr-[5px] !text-base opacity-30 transition-opacity duration-100 ease-in-out hover:opacity-70"
-							onClick={() => dnfSolve(solve)}
-						/>
+						{actionsDisabled ? null : (
+							<Button
+								variant="ghost"
+								title="Plus two solve"
+								onClick={() => plusTwoSolve(solve)}
+								size="sm"
+								aria-pressed={plusTwo}
+								className={cn({'text-warning': plusTwo})}
+							>
+								{'+2'}
+							</Button>
+						)}
+						{actionsDisabled ? null : (
+							<Button
+								variant="ghost"
+								title="DNF solve"
+								onClick={() => dnfSolve(solve)}
+								size="sm"
+								aria-pressed={dnf}
+								className={cn({'text-error': dnf})}
+							>
+								{'DNF'}
+							</Button>
+						)}
 					</div>
 				);
 			}
@@ -180,8 +191,32 @@ export default function TargetTimes(props: Props) {
 	}
 
 	return (
-		<div className="flex h-full w-full flex-col justify-start">
-			<div className="overflow-y-auto">{body}</div>
-		</div>
+		<>
+			<div className="flex h-full w-full flex-col justify-start">
+				<div className="overflow-y-auto">{body}</div>
+			</div>
+			<Dialog
+				open={solveInfoDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setSolveInfoDialog(null);
+					}
+				}}
+			>
+				{solveInfoDialog && (
+					<DialogContent>
+						<DialogTitle className="sr-only">Solve details</DialogTitle>
+						<SolveInfo
+							{...solveInfoDialog}
+							onComplete={() => {
+								setSolveInfoDialog((current) =>
+									current === solveInfoDialog ? null : current,
+								);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

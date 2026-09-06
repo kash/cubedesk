@@ -1,4 +1,3 @@
-import {openModal} from '@/actions/general';
 import Emblem from '@/components/common/Emblem';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
 import {
@@ -9,11 +8,11 @@ import {
 } from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
 import {ITimerContext, useTimerContext} from '@/components/timer/Timer';
+import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {useSettings} from '@/util/hooks/useSettings';
 import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from 'gan-web-bluetooth';
 import {Bluetooth} from 'phosphor-react';
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {SubscriptionLike} from 'rxjs';
 
 // Since this component is singleton and should never have multiple instances,
@@ -23,7 +22,10 @@ let conn: GanTimerConnection | null = null;
 let subs: SubscriptionLike | null = null;
 
 export default function GanTimer() {
-	const dispatch = useDispatch();
+	const [bluetoothErrorMessageDialog, setBluetoothErrorMessageDialog] = React.useState<{
+		props: Record<string, never>;
+	} | null>(null);
+
 	const inspectionEnabled = useSettings('inspection');
 	const [connected, setConnected] = useState(false);
 
@@ -94,20 +96,36 @@ export default function GanTimer() {
 				subs = conn.events$.subscribe(handleTimerEvent);
 				setConnected(true);
 			} else {
-				dispatch(openModal(<BluetoothErrorMessage />));
+				setBluetoothErrorMessageDialog({props: {}});
 			}
 		}
 	}
 
 	return (
-		<div onClick={handleConnectButton} style={{userSelect: 'none', cursor: 'pointer'}}>
-			<Emblem
-				icon={<Bluetooth />}
-				text={connected ? 'Connected' : 'Connect to Timer'}
-				small
-				red={!connected}
-				green={connected}
-			/>
-		</div>
+		<>
+			<div onClick={handleConnectButton} style={{userSelect: 'none', cursor: 'pointer'}}>
+				<Emblem
+					icon={<Bluetooth />}
+					text={connected ? 'Connected' : 'Connect to Timer'}
+					small
+					red={!connected}
+					green={connected}
+				/>
+			</div>
+			<Dialog
+				open={bluetoothErrorMessageDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setBluetoothErrorMessageDialog(null);
+					}
+				}}
+			>
+				{bluetoothErrorMessageDialog && (
+					<DialogContent>
+						<BluetoothErrorMessage {...bluetoothErrorMessageDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

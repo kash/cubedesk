@@ -1,4 +1,5 @@
-import Button from '@/components/common/Button';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
+import {Button} from '@/components/ui/button';
 import {api} from '@/util/api';
 import React from 'react';
 
@@ -17,19 +18,19 @@ export default function DangerZone() {
 				All of your solves, sessions, stats, etc. will get deleted forever. Proceed with
 				caution.
 			</p>
-			<Button
-				danger
-				large
-				glow
-				text="Delete Account"
-				confirmModalProps={{
+			<ConfirmDialog
+				{...{
 					title: 'Delete account',
 					description:
 						"Be careful here. You're about to delete your entire account. All of your CubeDesk will be deleted and will not be recoverable.",
 					triggerAction: deleteAccount,
 					buttonText: 'Delete account and all data',
 				}}
-			/>
+			>
+				<Button variant="destructive" size="lg">
+					{'Delete Account'}
+				</Button>
+			</ConfirmDialog>
 		</div>
 	);
 }

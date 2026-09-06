@@ -1,5 +1,3 @@
-import {setGeneral} from '@/actions/general';
-import Button from '@/components/common/Button';
 import {LogoBrandmark, LogoLockup} from '@/components/common/Logo';
 import AccountDropdown from '@/components/layout/nav/account-dropdown/AccountDropdown';
 import LoginNav from '@/components/layout/nav/LoginNav';
@@ -7,22 +5,19 @@ import MobileNav from '@/components/layout/nav/MobileNav';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import NavLink from '@/components/layout/nav/NavLink';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
+import {Button} from '@/components/ui/button';
 import {setSetting} from '@/db/settings/update';
 import {cn} from '@/util/cn';
 import {useGeneral} from '@/util/hooks/useGeneral';
-import {useWindowListener} from '@/util/hooks/useListener';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
 import {ArrowLeft, ArrowRight} from 'phosphor-react';
-import React, {ReactNode, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {ReactNode} from 'react';
 import {useRouteMatch} from 'react-router-dom';
 
 export default function Nav() {
-	const dispatch = useDispatch();
-
 	const match = useRouteMatch();
 	const me = useMe();
 
@@ -32,26 +27,6 @@ export default function Nav() {
 	const navCollapsed = useSettings('nav_collapsed');
 	const mobileMode = useGeneral('mobile_mode');
 	const forceNavCollapsed = useGeneral('force_nav_collapsed');
-
-	useWindowListener('resize', windowResize, [navCollapsed, mobileMode, forceNavCollapsed]);
-
-	useEffect(() => {
-		windowResize();
-	}, []);
-
-	function windowResize() {
-		if (window.innerWidth <= 1080 && !forceNavCollapsed) {
-			dispatch(setGeneral('force_nav_collapsed', true));
-		} else if (window.innerWidth > 1080 && forceNavCollapsed) {
-			dispatch(setGeneral('force_nav_collapsed', false));
-		}
-
-		if (window.innerWidth <= 750 && !mobileMode) {
-			dispatch(setGeneral('mobile_mode', true));
-		} else if (window.innerWidth > 750 && mobileMode) {
-			dispatch(setGeneral('mobile_mode', false));
-		}
-	}
 
 	function toggleCollapse() {
 		setSetting('nav_collapsed', !navCollapsed);
@@ -99,6 +74,8 @@ export default function Nav() {
 		'flex-col',
 		'items-center',
 		'bg-module',
+		'border-r',
+		'border-tmo-module/10',
 		'pt-5',
 	];
 
@@ -123,7 +100,7 @@ export default function Nav() {
 		'grid',
 		'w-[95%]',
 		'max-w-[200px]',
-		navClosed ? 'grid-cols-1' : 'grid-cols-5',
+		'grid-cols-4',
 		'gap-[5px]',
 		'box-border',
 	];
@@ -157,7 +134,7 @@ export default function Nav() {
 						<LoginNav collapsed={navClosed} />
 					</div>
 					<div className="flex flex-col items-center pb-[30px] opacity-70">
-						<div className={socialClasses.join(' ')}>
+						<div className={cn(socialClasses, {hidden: navClosed})}>
 							<SocialIcon
 								href="https://discord.gg/wdVbhDnsQV"
 								darkPath={resourceUri('/images/logos/discord_logo_white.svg')}
@@ -182,29 +159,22 @@ export default function Nav() {
 								lightPath={resourceUri('/images/logos/github_logo_black.svg')}
 								name="GitHub"
 							/>
-							<SocialIcon
-								href="/about"
-								darkPath={resourceUri('/images/logos/globe_logo_white.svg')}
-								lightPath={resourceUri('/images/logos/globe_logo_black.svg')}
-								name="Globe"
-							/>
 						</div>
-						<Button
-							large
-							iconFirst
-							hidden={forceNavCollapsed}
-							text={navCollapsed ? '' : 'Collapse'}
-							icon={
-								navCollapsed ? (
+						{forceNavCollapsed ? null : (
+							<Button
+								variant="ghost"
+								type="button"
+								onClick={toggleCollapse}
+								size="lg"
+							>
+								{navCollapsed ? (
 									<ArrowRight weight="fill" />
 								) : (
 									<ArrowLeft weight="fill" />
-								)
-							}
-							transparent
-							type="button"
-							onClick={toggleCollapse}
-						/>
+								)}
+								{navCollapsed ? '' : 'Collapse'}
+							</Button>
+						)}
 					</div>
 				</div>
 			</div>
@@ -234,7 +204,7 @@ function SocialIcon(props: SocialIconInterface) {
 			href={href}
 			target="_blank"
 		>
-			<img className="w-full" src={path} alt={`${name} logo`} />
+			<img className="size-5 shrink-0 object-contain" src={path} alt={`${name} logo`} />
 		</a>
 	);
 }

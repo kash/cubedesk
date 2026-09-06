@@ -1,4 +1,6 @@
-import Button from '@/components/common/Button';
+import ButtonError from '@/components/common/inputs/Error';
+import InputInfo from '@/components/common/inputs/input/InputInfo';
+import {Button} from '@/components/ui/button';
 import React, {useEffect, useState} from 'react';
 
 export default function MicAccess() {
@@ -49,13 +51,12 @@ export default function MicAccess() {
 	}
 
 	return (
-		<Button
-			onClick={clickAllow}
-			primary
-			text="Give Mic Access"
-			disabled={disabled}
-			info={info}
-			error={error}
-		/>
+		<div className="flex flex-col items-start">
+			<Button variant="default" onClick={clickAllow} disabled={disabled}>
+				{'Give Mic Access'}
+			</Button>
+			<ButtonError text={error} />
+			<InputInfo text={info} />
+		</div>
 	);
 }
