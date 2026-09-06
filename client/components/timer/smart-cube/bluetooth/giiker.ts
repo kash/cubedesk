@@ -1,5 +1,5 @@
 import GiikerUtil from '@/components/timer/smart-cube/bluetooth/giiker_util';
-import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
+import SmartCube, {SmartCubeCallbacks} from '@/components/timer/smart-cube/bluetooth/smart_cube';
 
 export default class Giiker extends SmartCube {
 	device: BluetoothDevice;
@@ -7,8 +7,8 @@ export default class Giiker extends SmartCube {
 	batteryInterval: NodeJS.Timeout | null = null;
 	giiker: GiikerUtil | null = null;
 
-	constructor(device: BluetoothDevice) {
-		super();
+	constructor(device: BluetoothDevice, callbacks: SmartCubeCallbacks) {
+		super(callbacks);
 
 		this.device = device;
 	}

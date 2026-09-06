@@ -28,7 +28,7 @@ export function listenForPbEvents(context: ITimerContext) {
 		triggerConfetti();
 		displayTimerAlert({
 			text: msg,
-			backgroundColor: 'green',
+			variant: 'success',
 		});
 	}
 
@@ -43,7 +43,7 @@ export function listenForPbEvents(context: ITimerContext) {
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType?.name ?? ct} Single PB!`);
 		},
-		[context.cubeType, ignorePbEvents]
+		[context.cubeType, ignorePbEvents],
 	);
 
 	useEventListener(
@@ -53,7 +53,7 @@ export function listenForPbEvents(context: ITimerContext) {
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType?.name ?? ct} Average of 5 PB!`);
 		},
-		[context.cubeType, ignorePbEvents]
+		[context.cubeType, ignorePbEvents],
 	);
 
 	useEventListener(
@@ -63,7 +63,7 @@ export function listenForPbEvents(context: ITimerContext) {
 			const cubeType = getCubeTypeInfoById(ct);
 			pbEventCallback(`New ${cubeType?.name ?? ct} Single and Average of 5 PB!`);
 		},
-		[context.cubeType, ignorePbEvents]
+		[context.cubeType, ignorePbEvents],
 	);
 }
 

@@ -1,27 +1,23 @@
-import {openModal} from '@/actions/general';
 import Emblem from '@/components/common/Emblem';
-import Tag from '@/components/common/Tag';
+import {Badge} from '@/components/ui/badge';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
-import SolveInfo from '@/components/solve-info/SolveInfo';
 import {Solve} from '@/types/solve';
 import {getCubeTypeName} from '@/util/cubes/util';
 import {getDateFromNow} from '@/util/dates';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
 import React from 'react';
-import {useDispatch} from 'react-redux';
 
 interface Props {
+	onOpenSolve: (solve: Solve) => void;
 	solve: Solve;
 }
 
 export default function SolveListRow(props: Props) {
 	const {solve} = props;
 
-	const dispatch = useDispatch();
-
 	function openSolve() {
-		dispatch(openModal(<SolveInfo solveId={solve.id} />));
+		props.onOpenSolve(solve);
 	}
 
 	const time = getTimeString(solve);
@@ -37,51 +33,65 @@ export default function SolveListRow(props: Props) {
 	let smartEmblem: React.ReactNode = null;
 
 	if (plusTwo) {
-		plusTwoEmblem = <Tag small text="+2" backgroundColor="orange" />;
+		plusTwoEmblem = (
+			<Badge size="sm" variant="warning">
+				+2
+			</Badge>
+		);
 	}
 
 	if (dnf) {
-		dnfEmblem = <Tag small text="DNF" backgroundColor="red" />;
+		dnfEmblem = (
+			<Badge size="sm" variant="destructive">
+				DNF
+			</Badge>
+		);
 	}
 
 	if (smart) {
-		smartEmblem = <Tag small text="Smart Cube" />;
+		smartEmblem = (
+			<Badge size="sm" variant="unfilled">
+				Smart Cube
+			</Badge>
+		);
 	}
 
 	return (
 		<div
-			className="bg-module relative mb-[15px] grid cursor-pointer grid-cols-3 rounded-[5px] p-5"
+			className="bg-module grid cursor-pointer grid-cols-3 items-center px-4 py-2.5"
 			onClick={openSolve}
 		>
 			<div>
 				<h4
 					className={classNames(
-						'text-text text-[1.6rem] font-bold',
+						'text-text mb-0 text-xl leading-tight font-bold',
 						dnf && '!text-error',
 						plusTwo && '!text-warning',
 					)}
 				>
 					{time}
 				</h4>
-				<span className="text-text table text-[0.9rem] opacity-80">{createdAt}</span>
+				<span className="text-text table text-xs opacity-80">{createdAt}</span>
 			</div>
-			<div className="-mt-2.5 flex w-full items-center justify-center">
-				<Emblem text={cubeType} />
+			<div className="flex w-full flex-col items-center justify-center gap-1">
+				<Emblem small className="mb-0" text={cubeType} />
+				{(dnf || plusTwo || smart) && (
+					<div className="flex flex-wrap justify-center gap-1">
+						{dnfEmblem}
+						{plusTwoEmblem}
+						{smartEmblem}
+					</div>
+				)}
 			</div>
 			<div className="flex w-full justify-end">
 				<div>
 					<Scramble
 						frontFace
-						width="60px"
+						width="44px"
 						scramble={scramble}
 						cubeType={solve.cube_type}
 					/>
 				</div>
-			</div>
-			<div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 flex-row gap-[5px]">
-				{dnfEmblem}
-				{plusTwoEmblem}
-				{smartEmblem}
 			</div>
 		</div>
 	);

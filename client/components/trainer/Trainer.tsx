@@ -1,17 +1,20 @@
-import {openModal} from '@/actions/general';
-import Button, {CommonType} from '@/components/common/Button';
 import Empty from '@/components/common/Empty';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import LinkButton from '@/components/common/LinkButton';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
+import SelectField from '@/components/common/inputs/SelectField';
 import PageTitle from '@/components/common/PageTitle';
 import AlgoModule from '@/components/modules/algo-module/AlgoModule';
 import {TimerModuleType} from '@/components/timer/@types/enums';
 import Timer from '@/components/timer/Timer';
 import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import TrainerAlgo from '@/components/trainer/trainer-algo/TrainerAlgo';
+import {initTrainerData} from '@/components/trainer/util/init';
+import {Alert, AlertDescription} from '@/components/ui/alert';
+import {Button} from '@/components/ui/button';
+import {Card, CardContent} from '@/components/ui/card';
+import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
+import {Skeleton} from '@/components/ui/skeleton';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {
-	fetchTrainerAlgorithmCount,
 	fetchTrainerAlgorithmCubeTypes,
 	fetchTrainerAlgorithms,
 	fetchTrainerAlgorithmTypes,
@@ -28,7 +31,7 @@ import _ from 'lodash';
 import memoize from 'memoizee';
 import {ArrowRight, Plus, Star} from 'phosphor-react';
 import React, {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {useRouteMatch} from 'react-router-dom';
 import {v4 as uuid} from 'uuid';
 
@@ -58,7 +61,14 @@ const DEFAULT_ALGO_CUBE_TYPE = '333';
 const DEFAULT_ALGO_TYPE = 'OLL';
 
 export default function Trainer() {
-	const dispatch = useDispatch();
+	const [timerDialog, setTimerDialog] = React.useState<{
+		props: React.ComponentProps<typeof Timer>;
+		fullSize: boolean;
+	} | null>(null);
+	const [addCustomDialog, setAddCustomDialog] = React.useState<React.ComponentProps<
+		typeof AddCustom
+	> | null>(null);
+
 	const match = useRouteMatch();
 	const matchParams: any = match.params;
 
@@ -66,19 +76,29 @@ export default function Trainer() {
 	const urlAlgoType = matchParams.algoType || DEFAULT_ALGO_TYPE;
 
 	const [loaded, setLoaded] = useState(false);
+	const [loadError, setLoadError] = useState('');
+	const [loadAttempt, setLoadAttempt] = useState(0);
 	const [cubeType, setCubeType] = useState(urlCubeType);
 	const [algoType, setAlgoType] = useState(urlAlgoType);
 	const [favsOnly, toggleFavsOnly] = useToggle(false);
 
-	const trainerAlgTypeCount = fetchTrainerAlgorithmCount();
 	const updateCount = useTrainerDb();
 
 	useEffect(() => {
-		if (trainerAlgTypeCount) {
-			setLoaded(() => true);
-			return;
-		}
-	}, []);
+		let cancelled = false;
+		setLoadError('');
+		setLoaded(false);
+		initTrainerData()
+			.then(() => {
+				if (!cancelled) setLoaded(true);
+			})
+			.catch((error) => {
+				if (!cancelled) setLoadError(error.message || 'Could not load trainer algorithms.');
+			});
+		return () => {
+			cancelled = true;
+		};
+	}, [loadAttempt]);
 
 	const filter: FilterTrainerOptions = {
 		cube_type: cubeType,
@@ -154,62 +174,57 @@ export default function Trainer() {
 			trainer_name: algo?.id,
 		};
 
-		dispatch(
-			openModal(
-				<Timer
-					ignorePbEvents
-					inModal
-					headerOptions={{
-						hideCubeType: true,
-						hideNewSession: true,
-						hideSessionSelector: true,
-						hideTimerType: true,
-					}}
-					timerCustomFooterModules={[
-						{
-							moduleType: TimerModuleType.HISTORY,
-							hideAllOptions: true,
-						},
-						{
-							moduleType: TimerModuleType.STATS,
-							hideAllOptions: true,
-						},
-						{
-							customBody: (context) => {
-								const ag = getCurrentTrainerAlgo(
-									sessionFilter,
-									sessionId,
-									context.sessionSolveCount,
-								);
-								return {
-									module: <AlgoModule algoExt={ag} />,
-								};
-							},
-							hideAllOptions: true,
-						},
-					]}
-					scrambleLocked
-					cubeType={cubeType}
-					solvesFilter={solvesFilter}
-					solvesSaveOverride={solvesOverride}
-					customScrambleFunc={(context) =>
-						getCustomScramble(sessionFilter, sessionId, context.sessionSolveCount)
-					}
-				/>,
-				{
-					fullSize: true,
+		setTimerDialog({
+			props: {
+				ignorePbEvents: true,
+				inDialog: true,
+				headerOptions: {
+					hideCubeType: true,
+					hideNewSession: true,
+					hideSessionSelector: true,
+					hideTimerType: true,
 				},
-			),
-		);
+				timerCustomFooterModules: [
+					{
+						moduleType: TimerModuleType.HISTORY,
+						hideAllOptions: true,
+					},
+					{
+						moduleType: TimerModuleType.STATS,
+						hideAllOptions: true,
+					},
+					{
+						customBody: (context) => {
+							const ag = getCurrentTrainerAlgo(
+								sessionFilter,
+								sessionId,
+								context.sessionSolveCount,
+							);
+							return {
+								module: <AlgoModule algoExt={ag} />,
+							};
+						},
+						hideAllOptions: true,
+					},
+				],
+				scrambleLocked: true,
+				cubeType: cubeType,
+				solvesFilter: solvesFilter,
+				solvesSaveOverride: solvesOverride,
+				customScrambleFunc: (context) =>
+					getCustomScramble(sessionFilter, sessionId, context.sessionSolveCount),
+			},
+			fullSize: true,
+		});
 	}
 
-	const cubeTypes = useMemo(fetchTrainerAlgorithmCubeTypes, [loaded]);
+	const cubeTypes = useMemo(fetchTrainerAlgorithmCubeTypes, [loaded, updateCount]);
 	const algoTypes = useMemo(
 		() =>
 			fetchTrainerAlgorithmTypes({
 				cube_type: cubeType,
 			}),
-		[loaded, cubeType],
+		[loaded, cubeType, updateCount],
 	);
 
 	const algos = useMemo(
@@ -228,7 +243,31 @@ export default function Trainer() {
 	}, 0);
 
 	if (!loaded) {
-		return <div />;
+		return (
+			<div>
+				<PageTitle pageName="Trainer" />
+				{loadError ? (
+					<Alert variant="destructive">
+						<AlertDescription>{loadError}</AlertDescription>
+						<Button onClick={() => setLoadAttempt((attempt) => attempt + 1)}>
+							Retry
+						</Button>
+					</Alert>
+				) : (
+					<div role="status" aria-label="Loading trainers" className="grid gap-4">
+						{[0, 1, 2].map((key) => (
+							<Card key={key} aria-hidden>
+								<CardContent className="space-y-4">
+									<Skeleton className="h-5 w-40" />
+									<Skeleton className="h-4 w-2/3" />
+									<Skeleton className="h-9 w-32" />
+								</CardContent>
+							</Card>
+						))}
+					</div>
+				)}
+			</div>
+		);
 	}
 
 	const context: ITrainerContext = {
@@ -239,7 +278,7 @@ export default function Trainer() {
 	};
 
 	function openCreateCustomTrainer() {
-		dispatch(openModal(<AddCustom />));
+		setAddCustomDialog({});
 	}
 
 	function selectCubeType(ct: string) {
@@ -274,101 +313,137 @@ export default function Trainer() {
 	if (algos && algos.length) {
 		body = algos.map((algo) => <TrainerAlgo key={algo.id} algoExt={algo} />);
 	} else {
-		body = <Empty text="No algorithms here" />;
-	}
-
-	const cubeTypeDropdownOptions = cubeTypes.map((ct) => ({
-		text: getCubeTypeInfoById(ct.value)?.name ?? ct.value,
-		disabled: cubeType === ct.value,
-		onClick: () => selectCubeType(ct.value),
-	}));
-
-	const algoTypeDropdownOptions = [
-		{
-			text: 'Custom',
-			onClick: () => selectAlgoType(CUSTOM_TRAINER_ALGO_TYPE),
-			disabled: algoType === CUSTOM_TRAINER_ALGO_TYPE,
-		},
-	];
-	for (const at of algoTypes) {
-		if (at.value === CUSTOM_TRAINER_ALGO_TYPE) {
-			continue;
-		}
-		algoTypeDropdownOptions.push({
-			text: at.value,
-			disabled: algoType === at.value,
-			onClick: () => selectAlgoType(at.value),
-		});
+		body = (
+			<div>
+				<Empty text="No algorithms available in this set" />
+				<p className="text-text/60 text-center text-sm">
+					Try another set, create a custom trainer, or ask an administrator to import the
+					catalog.
+				</p>
+			</div>
+		);
 	}
 
 	return (
-		<TrainerContext.Provider value={context}>
-			<div>
-				<PageTitle pageName="Trainer">
-					<div className="absolute top-0 right-0">
-						<Button
-							primary
-							text="Create New"
-							icon={<Plus />}
-							glow
-							large
-							onClick={openCreateCustomTrainer}
-						/>
-					</div>
-					<div className="flex flex-row items-start justify-between">
-						<div className="flex flex-row gap-2.5">
-							<Dropdown
-								openLeft
-								text={context.cubeType?.name ?? cubeType}
-								options={[...cubeTypeDropdownOptions]}
-							/>
-							<Dropdown
-								openLeft
-								text={algoType}
-								options={[...algoTypeDropdownOptions]}
-							/>
-							<Button
-								icon={<Star />}
-								white={favsOnly}
-								gray
-								onClick={() => toggleFavsOnly()}
-							/>
-							<Dropdown
-								text="Train"
-								openLeft
-								dropdownButtonProps={{
-									primary: true,
-								}}
-								options={[
-									{text: 'Train All', onClick: () => openTrainer('all')},
-									{
-										text: 'Train Favorites',
-										disabled: !favCount,
-										onClick: () => openTrainer('favorites'),
-									},
-								]}
-							/>
+		<>
+			<TrainerContext.Provider value={context}>
+				<div>
+					<PageTitle pageName="Trainer">
+						<div className="absolute top-0 right-0">
+							<Button variant="default" onClick={openCreateCustomTrainer} size="lg">
+								{'Create New'}
+								<Plus />
+							</Button>
 						</div>
-						<div>
-							<LinkButton
-								noMargin
-								theme={CommonType.WARNING}
-								to="/trainer/public-trainers"
-								text="Marketplace"
-								icon={<ArrowRight />}
-							/>
+						<div className="flex flex-row items-start justify-between">
+							<div className="flex flex-row gap-2.5">
+								<SelectField
+									label="Trainer cube type"
+									value={cubeType}
+									onValueChange={selectCubeType}
+									options={cubeTypes.map((cube) => ({
+										value: cube.value,
+										text: getCubeTypeInfoById(cube.value)?.name || cube.value,
+									}))}
+								/>
+								<SelectField
+									label="Algorithm set"
+									value={algoType}
+									onValueChange={selectAlgoType}
+									options={[
+										{value: CUSTOM_TRAINER_ALGO_TYPE, text: 'Custom'},
+										...algoTypes
+											.filter(
+												(algo) => algo.value !== CUSTOM_TRAINER_ALGO_TYPE,
+											)
+											.map((algo) => ({value: algo.value, text: algo.value})),
+									]}
+								/>
+								<Button
+									variant={favsOnly ? 'default' : 'secondary'}
+									onClick={() => toggleFavsOnly()}
+									size="icon"
+									aria-label="Show favorites only"
+									aria-pressed={favsOnly}
+								>
+									<Star />
+								</Button>
+								<ActionMenu
+									text="Train"
+									openLeft
+									triggerProps={{
+										variant: 'default',
+									}}
+									options={[
+										{
+											text: 'Train All',
+											disabled: !algos.length,
+											onClick: () => openTrainer('all'),
+										},
+										{
+											text: 'Train Favorites',
+											disabled: !favCount,
+											onClick: () => openTrainer('favorites'),
+										},
+									]}
+								/>
+							</div>
+							<div>
+								<Button variant="secondary" asChild>
+									<Link to={'/trainer/public-trainers'}>
+										{'Marketplace'}
+										<ArrowRight />
+									</Link>
+								</Button>
+							</div>
 						</div>
+					</PageTitle>
+					<div
+						className={classNames(
+							'grid [grid-template-columns:repeat(auto-fit,minmax(400px,1fr))] gap-5',
+							!algos?.length && '!grid-cols-1',
+						)}
+					>
+						{body}
 					</div>
-				</PageTitle>
-				<div
-					className={classNames(
-						'grid [grid-template-columns:repeat(auto-fit,minmax(400px,1fr))] gap-5',
-						!algos?.length && '!grid-cols-1',
-					)}
-				>
-					{body}
 				</div>
-			</div>
-		</TrainerContext.Provider>
+			</TrainerContext.Provider>
+			<Dialog
+				open={timerDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setTimerDialog(null);
+					}
+				}}
+			>
+				{timerDialog && (
+					<DialogContent fullSize={timerDialog.fullSize}>
+						<DialogTitle className="sr-only">Timer</DialogTitle>
+						<Timer {...timerDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+			<Dialog
+				open={addCustomDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setAddCustomDialog(null);
+					}
+				}}
+			>
+				{addCustomDialog && (
+					<DialogContent>
+						<AddCustom
+							{...addCustomDialog}
+							onComplete={() => {
+								setAddCustomDialog((current) =>
+									current === addCustomDialog ? null : current,
+								);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

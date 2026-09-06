@@ -3,6 +3,7 @@ import UserSummary from '@/components/admin/manage-user/UserSummary';
 import Avatar from '@/components/common/avatar/Avatar';
 import Empty from '@/components/common/Empty';
 import Loading from '@/components/common/Loading';
+import {Table, TableBody, TableCell, TableRow} from '@/components/ui/table';
 import {AdminUser} from '@/types/admin';
 import {Serialized} from '@/types/serialized';
 import {getDateFromNow} from '@/util/dates';
@@ -50,17 +51,17 @@ export default function ManageUser(props: Props) {
 			}
 
 			return (
-				<tr key={key}>
-					<td className="font-bold capitalize">{name}</td>
-					<td>{obj[key]}</td>
-				</tr>
+				<TableRow key={key}>
+					<TableCell className="font-bold capitalize">{name}</TableCell>
+					<TableCell>{obj[key]}</TableCell>
+				</TableRow>
 			);
 		});
 
 		let body = (
-			<table className="cd-table">
-				<tbody>{rows}</tbody>
-			</table>
+			<Table>
+				<TableBody>{rows}</TableBody>
+			</Table>
 		);
 
 		if (!rows.length) {

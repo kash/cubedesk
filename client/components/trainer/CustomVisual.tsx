@@ -1,3 +1,5 @@
+import {Button} from '@/components/ui/button';
+import {cn} from '@/util/cn';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import classNames from 'classnames';
 import CSS from 'csstype';
@@ -54,14 +56,19 @@ export default function CustomVisual(props: Props) {
 
 				if (onSelect) {
 					tag = (
-						<button
+						<Button
+							variant="ghost"
+							aria-label={`Paint cube sticker ${off + 1}`}
 							type="button"
 							disabled={empty}
 							onClick={() => onSelect(off)}
 							key={`cubeNumber-${index}`}
-							className={classNames(
-								'table h-full w-full rounded hover:opacity-80 disabled:!opacity-0',
-								empty && '!opacity-0'
+							className={cn(
+								'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
+								classNames(
+									'table h-full w-full rounded hover:opacity-80 disabled:!opacity-0',
+									empty && '!opacity-0',
+								),
 							)}
 							style={{backgroundColor: color || DEFAULT_COLOR}}
 						/>
@@ -104,11 +111,13 @@ export default function CustomVisual(props: Props) {
 
 					if (onSelect) {
 						tag = (
-							<button
+							<Button
+								variant="ghost"
+								aria-label={`Paint cube sticker ${off + 1}`}
 								type="button"
 								onClick={() => onSelect(off)}
 								key={`cubeNumber-${off}`}
-								className="table h-full w-full rounded hover:opacity-80 disabled:!opacity-0"
+								className="table h-auto h-full w-full rounded p-0 font-normal whitespace-normal hover:bg-transparent hover:opacity-80 disabled:!opacity-0"
 								style={{backgroundColor: color || DEFAULT_COLOR}}
 							/>
 						);
@@ -125,9 +134,9 @@ export default function CustomVisual(props: Props) {
 				<div
 					className={classNames(
 						'!m-0 grid',
-						j === 0 && 'absolute right-0 top-0',
-						j === 1 && 'absolute left-0 top-0',
-						j === 2 && 'absolute left-0 top-0'
+						j === 0 && 'absolute top-0 right-0',
+						j === 1 && 'absolute top-0 left-0',
+						j === 2 && 'absolute top-0 left-0',
 					)}
 					key={`cube-side-${j}`}
 					style={{
@@ -138,7 +147,7 @@ export default function CustomVisual(props: Props) {
 					}}
 				>
 					{cubelets}
-				</div>
+				</div>,
 			);
 		}
 

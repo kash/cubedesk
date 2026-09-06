@@ -1,17 +1,17 @@
-import Tag from '@/components/common/Tag';
+import {Badge} from '@/components/ui/badge';
+import {Label} from '@/components/ui/label';
 import {cn} from '@/util/cn';
 import React, {ReactNode} from 'react';
 
 interface Props {
 	text?: string;
 	tag?: boolean;
-	large?: boolean;
 	icon?: string;
 	optional?: boolean;
 }
 
 export default function InputLegend(props: Props) {
-	const {text, large, icon, tag, optional} = props;
+	const {text, icon, tag, optional} = props;
 
 	if (!text) {
 		return null;
@@ -21,7 +21,12 @@ export default function InputLegend(props: Props) {
 	let optionalSpan: ReactNode = null;
 
 	if (tag) {
-		body = <Tag icon={icon} text={text} small />;
+		body = (
+			<Badge size="sm" variant="unfilled">
+				{text}
+				{icon}
+			</Badge>
+		);
 	} else {
 		let iconBody: ReactNode = null;
 		if (icon) {
@@ -29,12 +34,12 @@ export default function InputLegend(props: Props) {
 		}
 
 		body = (
-			<legend
-				className={cn('text-text text-base font-semibold', {'text-lg font-bold': large})}
-			>
-				{text}
-				{iconBody}
-			</legend>
+			<Label asChild>
+				<span>
+					{text}
+					{iconBody}
+				</span>
+			</Label>
 		);
 	}
 

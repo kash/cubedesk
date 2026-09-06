@@ -14,20 +14,26 @@ export default function EloRow(props: Props) {
 	const {user, elo_333_rating, games_333_count} = eloRating;
 
 	return (
-		<div className="mb-2 flex w-full flex-row items-center justify-between rounded bg-module p-4">
+		<div className="mb-2 flex w-full flex-row items-center justify-between rounded border border-text/15 bg-module p-4">
 			<div className="flex flex-row items-center">
 				<div
-					className={classNames('flex h-10 w-10 items-center justify-center rounded text-text', {
+					className={classNames('flex h-10 w-10 shrink-0 items-center justify-center rounded', {
 						'bg-button': rank > 3,
 						'bg-amber-300': rank === 1,
-						'text-amber-800': rank === 1,
 						'bg-stone-400': rank === 2,
-						'text-stone-800': rank === 2,
 						'bg-amber-700': rank === 3,
-						'text-amber-200': rank === 3,
 					})}
 				>
-					<span className="table text-xl">#{rank}</span>
+					<span
+						className={classNames('text-xl font-semibold', {
+							'text-text': rank > 3,
+							'text-amber-800': rank === 1,
+							'text-stone-800': rank === 2,
+							'text-amber-100': rank === 3,
+						})}
+					>
+						#{rank}
+					</span>
 				</div>
 				<div className="ml-3">
 					<Avatar hideBadges user={user} />

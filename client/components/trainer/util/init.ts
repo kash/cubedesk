@@ -2,8 +2,19 @@ import {initTrainerDb} from '@/db/trainer/init';
 import {Serialized} from '@/types/serialized';
 import {AlgorithmOverrideInput, CustomTrainerWithUser, TrainerFavorite} from '@/types/trainer';
 import {trpc} from '@/util/trpc';
+import {emitEvent} from '@/util/event_handler';
 
-export async function initTrainerData() {
+let pending: Promise<void> | null = null;
+
+export function initTrainerData(): Promise<void> {
+	if (!pending)
+		pending = loadTrainerData().finally(() => {
+			pending = null;
+		});
+	return pending;
+}
+
+async function loadTrainerData() {
 	const [customAlgos, algos, overrides, favorites] = await Promise.all([
 		trpc.customTrainer.list.query(),
 		trpc.trainer.algorithms.query(),
@@ -15,6 +26,7 @@ export async function initTrainerData() {
 		customAlgos as Array<Serialized<CustomTrainerWithUser>>,
 		algos,
 		overrides as AlgorithmOverrideInput[],
-		favorites as Array<Serialized<TrainerFavorite>>
+		favorites as Array<Serialized<TrainerFavorite>>,
 	);
+	emitEvent('trainerDbUpdatedEvent');
 }

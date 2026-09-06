@@ -4,22 +4,22 @@
 @source "../../client";
 @layer base {
   :root {
-    --primary-color: 36, 107, 253;
-    --secondary-color: 65, 176, 88;
-    --text-color: 255, 255, 255;
-    --background-color: 18, 20, 28;
-    --button-color: 30, 36, 44;
-    --module-color: 12, 13, 23;
+    --primary-color: 235, 235, 235;
+    --secondary-color: 170, 170, 170;
+    --text-color: 235, 235, 235;
+    --background-color: 0, 0, 0;
+    --button-color: 33, 33, 33;
+    --module-color: 0, 0, 0;
     --theme-background: 0, 0, 0;
     --theme-background-opposite: 255, 255, 255;
     --theme-module: 0, 0, 0;
     --theme-module-opposite: 255, 255, 255;
-    --theme-primary: 0, 0, 0;
-    --theme-primary-opposite: 255, 255, 255;
-    --theme-secondary: 0, 0, 0;
+    --theme-primary: 255, 255, 255;
+    --theme-primary-opposite: 0, 0, 0;
+    --theme-secondary: 255, 255, 255;
     --theme-secondary-opposite: 0, 0, 0;
-    --theme-text: 0, 0, 0;
-    --theme-text-opposite: 255, 255, 255;
+    --theme-text: 255, 255, 255;
+    --theme-text-opposite: 0, 0, 0;
     --theme-button: 0, 0, 0;
     --theme-button-opposite: 255, 255, 255;
     --success-color: 45, 189, 97;
@@ -928,37 +928,6 @@ html {
   -webkit-app-region: no-drag;
 }
 
-.Toastify {
-  z-index: 10000000;
-}
-
-.Toastify__toast {
-  background-color: rgb(var(--module-color));
-  z-index: 1000000000;
-  border-radius: 8px;
-  box-shadow: 0 3px 25px rgba(0, 0, 0, 0.1);
-}
-.Toastify__toast div {
-  font-weight: 600 !important;
-  color: white !important;
-  font-size: 1rem;
-}
-.Toastify__toast-body {
-  z-index: 99999999999;
-  font-size: 0.9rem;
-  position: relative;
-  top: -2px;
-}
-.Toastify__toast--success {
-  background-color: rgb(var(--success-color)) !important;
-}
-.Toastify__toast--error {
-  background-color: rgb(var(--error-color)) !important;
-}
-.Toastify__toast--warning {
-  background-color: rgb(var(--warning-color)) !important;
-}
-
 .app-html ::-webkit-scrollbar {
   width: 10px;
   background-color: transparent !important;
@@ -1013,4 +982,16 @@ html {
 .cd-table__actions > * {
   margin-left: 7px;
 }
+}
+
+/* Keep browser autofill in the same theme as the migrated text controls. */
+@layer components {
+  input[data-slot="input"]:-webkit-autofill {
+    -webkit-text-fill-color: rgb(var(--theme-text));
+    -webkit-box-shadow: 0 0 0 1000px rgb(var(--theme-module)) inset;
+    caret-color: rgb(var(--theme-text));
+  }
+  input[data-slot="input"]:-webkit-autofill:focus-visible {
+    -webkit-box-shadow: 0 0 0 1000px rgb(var(--theme-module)) inset, 0 0 0 3px rgba(var(--theme-primary), 0.5);
+  }
 }

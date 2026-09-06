@@ -1,6 +1,7 @@
 import Avatar from '@/components/common/avatar/Avatar';
-import Button from '@/components/common/Button';
-import Tag from '@/components/common/Tag';
+import {Badge} from '@/components/ui/badge';
+import {Button} from '@/components/ui/button';
+import {Spinner} from '@/components/ui/spinner';
 import {ReportSummary as ReportSummaryData, ReportWithUsers} from '@/types/report';
 import {Serialized} from '@/types/serialized';
 import {getDateFromNow} from '@/util/dates';
@@ -27,9 +28,15 @@ export default function ReportSummary(props: Props) {
 	const count = reportSummary.count;
 	const topInfo = (
 		<div className="absolute top-0 right-0 flex flex-col items-end gap-1.5">
-			<Tag backgroundColor="orange" text={`${count} report${count === 1 ? '' : 's'}`} />
-			<Tag small text={`Last reported ${getDateFromNow(reportSummary.last_report)}`} />
-			<Tag small text={`First reported ${getDateFromNow(reportSummary.first_report)}`} />
+			<Badge variant="warning">{`${count} report${count === 1 ? '' : 's'}`}</Badge>
+			<Badge
+				size="sm"
+				variant="unfilled"
+			>{`Last reported ${getDateFromNow(reportSummary.last_report)}`}</Badge>
+			<Badge
+				size="sm"
+				variant="unfilled"
+			>{`First reported ${getDateFromNow(reportSummary.first_report)}`}</Badge>
 		</div>
 	);
 
@@ -59,12 +66,14 @@ export default function ReportSummary(props: Props) {
 				<div className="mt-2.5">{rows}</div>
 				<div className="absolute right-0 bottom-0">
 					<Button
-						text="Mark as Resolve"
-						loading={resolving}
+						variant="default"
 						onClick={markAsResolved}
-						primary
-						glow
-					/>
+						disabled={resolving}
+						aria-busy={resolving}
+					>
+						{'Mark as Resolve'}
+						{resolving ? <Spinner aria-hidden="true" /> : null}
+					</Button>
 				</div>
 			</div>
 		</div>

@@ -1,10 +1,8 @@
 import {reactState} from '@/@types/react';
-import {openModal} from '@/actions/general';
 import {MatchConst} from '@/client/shared/match/consts';
 import {MatchUpdateChat} from '@/client/shared/match/types';
 import {copyText} from '@/components/common/CopyText';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
-import Modal from '@/components/common/modal/Modal';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
 import ChatBox from '@/components/modules/chat/ChatBox';
 import History from '@/components/modules/history/History';
 import {GameContext} from '@/components/play/game/Game';
@@ -15,6 +13,7 @@ import {getMatchLinkBase} from '@/components/play/match/match-popup/custom-match
 import {ChallengerProps} from '@/components/play/target/challengers/Challenger';
 import {TimerProps} from '@/components/timer/@types/interfaces';
 import Timer from '@/components/timer/Timer';
+import {Dialog, DialogContent, DialogHeader, DialogTitle} from '@/components/ui/dialog';
 import {GameType} from '@/shared/match/consts';
 import {Match as MatchSchema} from '@/types/match';
 import {MatchSession} from '@/types/match';
@@ -25,7 +24,6 @@ import {isSocketConnected, socketClient} from '@/util/socket/socketio';
 import {toastSuccess} from '@/util/toast';
 import {CaretDown, Copy, Flag, Prohibit} from 'phosphor-react';
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
 
 interface MatchProps {
 	matchPath: string;
@@ -83,10 +81,19 @@ export function useMatchContext(): IMatchContext {
 }
 
 export default function Match(props: MatchProps) {
+	const [matchOverDialog, setMatchOverDialog] = React.useState<{
+		props: React.ComponentProps<typeof MatchOver>;
+		noPadding: boolean;
+	} | null>(null);
+	const [historyDialog, setHistoryDialog] = React.useState<{
+		props: React.ComponentProps<typeof History>;
+		width: number;
+		title: React.ReactNode;
+	} | null>(null);
+
 	const {linkCode, matchType, matchPath, onSolve, timerParams} = props;
 
 	const gameContext = useContext(GameContext);
-	const dispatch = useDispatch();
 	const matchLoaded = useRef(false);
 
 	const [scramble, setScramble] = useState<string | null>(null);
@@ -97,7 +104,7 @@ export default function Match(props: MatchProps) {
 	const [spectateQueueSize, setSpectateQueueSize] = useState(0);
 	const [rematchRoomSize, setRematchRoomSize] = useState(0);
 	const [spectating, setSpectating] = useState(
-		!!(linkCode && linkCode.startsWith(MatchConst.SPECTATE_LINK_CODE_PREFIX))
+		!!(linkCode && linkCode.startsWith(MatchConst.SPECTATE_LINK_CODE_PREFIX)),
 	);
 	const [hideTimer, setHideTimer] = useState(false);
 	const [match, setMatch] = useState<MatchSchema | null>(null);
@@ -115,11 +122,10 @@ export default function Match(props: MatchProps) {
 
 	useEffect(() => {
 		if (matchOver && match) {
-			dispatch(
-				openModal(<MatchOver exitMatch={exitMatch} match={match} matchType={matchType} />, {
-					noPadding: true,
-				})
-			);
+			setMatchOverDialog({
+				props: {exitMatch: exitMatch, match: match, matchType: matchType},
+				noPadding: true,
+			});
 		}
 	}, [matchOver, match]);
 
@@ -138,12 +144,11 @@ export default function Match(props: MatchProps) {
 	}, [match]);
 
 	function clickChallengerActionButton(challenger: PublicUserAccount, solves: Solve[]) {
-		dispatch(
-			openModal(<History disabled solves={solves as any} />, {
-				width: 600,
-				title: `${challenger.username}'s Times`,
-			})
-		);
+		setHistoryDialog({
+			props: {disabled: true, solves: solves as any},
+			width: 600,
+			title: `${challenger.username}'s Times`,
+		});
 	}
 
 	function getChallengers() {
@@ -171,7 +176,7 @@ export default function Match(props: MatchProps) {
 						setMatch,
 						setMatchSession,
 						setMatchOver,
-						true
+						true,
 					);
 				},
 				selectedChallengerId: watchingPlayerId.current,
@@ -246,13 +251,21 @@ export default function Match(props: MatchProps) {
 		headerOptions: {
 			...timerParams.headerOptions,
 			customHeadersLeft: (
-				<Dropdown
+				<ActionMenu
 					openLeft
 					text="Match Options"
 					icon={<CaretDown weight="bold" />}
 					options={[
-						{text: 'Copy Spectate Link', icon: <Copy weight="bold" />, onClick: copySpectateLink},
-						{text: 'Copy Play Link', icon: <Copy weight="bold" />, onClick: copyPlayLink},
+						{
+							text: 'Copy Spectate Link',
+							icon: <Copy weight="bold" />,
+							onClick: copySpectateLink,
+						},
+						{
+							text: 'Copy Play Link',
+							icon: <Copy weight="bold" />,
+							onClick: copyPlayLink,
+						},
 						{
 							text: 'Resign',
 							disabled: !!match?.ended_at,
@@ -322,9 +335,17 @@ export default function Match(props: MatchProps) {
 		}
 
 		timer = (
-			<Modal onClose={exitMatch} width={1500} zIndex={2000} overFlowHidden fullSize>
-				{timerBody}
-			</Modal>
+			<Dialog
+				open
+				onOpenChange={(open) => {
+					if (!open) exitMatch();
+				}}
+			>
+				<DialogContent width={1500} overflowHidden fullSize>
+					<DialogTitle className="sr-only">Match timer</DialogTitle>
+					{timerBody}
+				</DialogContent>
+			</Dialog>
 		);
 	}
 
@@ -358,10 +379,42 @@ export default function Match(props: MatchProps) {
 	};
 
 	return (
-		<MatchContext.Provider value={context}>
-			<Listeners>
-				<div>{timer}</div>;
-			</Listeners>
-		</MatchContext.Provider>
+		<>
+			<MatchContext.Provider value={context}>
+				<Listeners>
+					<div>{timer}</div>;
+				</Listeners>
+			</MatchContext.Provider>
+			<Dialog
+				open={matchOverDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setMatchOverDialog(null);
+					}
+				}}
+			>
+				{matchOverDialog && (
+					<DialogContent noPadding={matchOverDialog.noPadding}>
+						<DialogTitle className="sr-only">Match results</DialogTitle>
+						<MatchOver {...matchOverDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+			<Dialog
+				open={historyDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setHistoryDialog(null);
+					}
+				}}
+			>
+				{historyDialog && (
+					<DialogContent width={historyDialog.width}>
+						<DialogHeader title={historyDialog.title} />
+						<History {...historyDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

@@ -1,6 +1,9 @@
-import Button from '@/components/common/Button';
-import Input from '@/components/common/inputs/input/Input';
-import TextArea from '@/components/common/TextArea';
+import ButtonError from '@/components/common/inputs/Error';
+import {Button} from '@/components/ui/button';
+import {Field, FieldDescription, FieldLabel} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
+import {Spinner} from '@/components/ui/spinner';
+import {Textarea} from '@/components/ui/textarea';
 import {Profile} from '@/types/profile';
 import {api} from '@/util/api';
 import React, {useState} from 'react';
@@ -36,6 +39,8 @@ function getInitialForm(profile: Profile): ProfileForm {
 }
 
 export default function EditProfile(props: Props) {
+	const fieldId = React.useId();
+
 	const {profile} = props;
 	const [form, setForm] = useState<ProfileForm>(() => getInitialForm(profile));
 	const [error, setError] = useState('');
@@ -123,81 +128,141 @@ export default function EditProfile(props: Props) {
 		<div>
 			<div className="mb-5 grid grid-cols-2 gap-5">
 				<div className="col-span-2">
-					<TextArea
-						maxLength={250}
-						fullWidth
-						legend="Bio"
-						value={form.bio}
-						onChange={handleChange}
-						name="bio"
-					/>
+					<Field>
+						<FieldLabel htmlFor={`${fieldId}-1`}>{'Bio'}</FieldLabel>
+						<Textarea
+							maxLength={250}
+							value={form.bio}
+							onChange={handleChange}
+							name="bio"
+							id={`${fieldId}-1`}
+							aria-describedby={`${fieldId}-1-description`}
+						/>
+						<FieldDescription id={`${fieldId}-1-description`}>
+							<span className={form.bio?.length >= 250 ? 'text-error' : undefined}>
+								{(250 - (form.bio?.length ?? 0)).toLocaleString()}
+							</span>
+						</FieldDescription>
+					</Field>
 				</div>
-				<Input
-					legend="YouTube Channel"
-					info="Ex: https://youtube.com/user/PewDiePie"
-					name="youtubeLink"
-					value={form.youtubeLink}
-					onChange={handleChange}
-				/>
-				<Input
-					legend="Twitch Channel"
-					info="Ex: https://www.twitch.tv/xqcow"
-					name="twitchLink"
-					value={form.twitchLink}
-					onChange={handleChange}
-				/>
-				<Input
-					legend="Twitter Profile"
-					info="Ex: https://www.twitter.com/nasa"
-					name="twitterLink"
-					value={form.twitterLink}
-					onChange={handleChange}
-				/>
-				<Input
-					legend="Reddit Profile"
-					info="Ex: https://www.reddit.com/user/nasa"
-					name="redditLink"
-					value={form.redditLink}
-					onChange={handleChange}
-				/>
-				<Input
-					legend="3x3 Method"
-					info="Ex: CFOP, ROUX"
-					name="threeMethod"
-					value={form.threeMethod}
-					onChange={handleChange}
-				/>
-				<Input
-					legend="3x3 Goal"
-					info="Ex: Sub 10"
-					name="threeGoal"
-					value={form.threeGoal}
-					onChange={handleChange}
-				/>
-				<Input
-					legend="Main 3x3 Cube"
-					info="Ex: GAN 11 M Pro 3x3"
-					name="mainThreeCube"
-					value={form.mainThreeCube}
-					onChange={handleChange}
-				/>
-				<Input
-					legend="Favorite Event"
-					info="Ex: Pyraminx"
-					name="favoriteEvent"
-					value={form.favoriteEvent}
-					onChange={handleChange}
-				/>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-2`}>{'YouTube Channel'}</FieldLabel>
+					<Input
+						name="youtubeLink"
+						value={form.youtubeLink}
+						onChange={handleChange}
+						id={`${fieldId}-2`}
+						aria-describedby={`${fieldId}-2-description`}
+					/>
+					<FieldDescription id={`${fieldId}-2-description`}>
+						{'Ex: https://youtube.com/user/PewDiePie'}
+					</FieldDescription>
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-3`}>{'Twitch Channel'}</FieldLabel>
+					<Input
+						name="twitchLink"
+						value={form.twitchLink}
+						onChange={handleChange}
+						id={`${fieldId}-3`}
+						aria-describedby={`${fieldId}-3-description`}
+					/>
+					<FieldDescription id={`${fieldId}-3-description`}>
+						{'Ex: https://www.twitch.tv/xqcow'}
+					</FieldDescription>
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-4`}>{'Twitter Profile'}</FieldLabel>
+					<Input
+						name="twitterLink"
+						value={form.twitterLink}
+						onChange={handleChange}
+						id={`${fieldId}-4`}
+						aria-describedby={`${fieldId}-4-description`}
+					/>
+					<FieldDescription id={`${fieldId}-4-description`}>
+						{'Ex: https://www.twitter.com/nasa'}
+					</FieldDescription>
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-5`}>{'Reddit Profile'}</FieldLabel>
+					<Input
+						name="redditLink"
+						value={form.redditLink}
+						onChange={handleChange}
+						id={`${fieldId}-5`}
+						aria-describedby={`${fieldId}-5-description`}
+					/>
+					<FieldDescription id={`${fieldId}-5-description`}>
+						{'Ex: https://www.reddit.com/user/nasa'}
+					</FieldDescription>
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-6`}>{'3x3 Method'}</FieldLabel>
+					<Input
+						name="threeMethod"
+						value={form.threeMethod}
+						onChange={handleChange}
+						id={`${fieldId}-6`}
+						aria-describedby={`${fieldId}-6-description`}
+					/>
+					<FieldDescription id={`${fieldId}-6-description`}>
+						{'Ex: CFOP, ROUX'}
+					</FieldDescription>
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-7`}>{'3x3 Goal'}</FieldLabel>
+					<Input
+						name="threeGoal"
+						value={form.threeGoal}
+						onChange={handleChange}
+						id={`${fieldId}-7`}
+						aria-describedby={`${fieldId}-7-description`}
+					/>
+					<FieldDescription id={`${fieldId}-7-description`}>
+						{'Ex: Sub 10'}
+					</FieldDescription>
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-8`}>{'Main 3x3 Cube'}</FieldLabel>
+					<Input
+						name="mainThreeCube"
+						value={form.mainThreeCube}
+						onChange={handleChange}
+						id={`${fieldId}-8`}
+						aria-describedby={`${fieldId}-8-description`}
+					/>
+					<FieldDescription id={`${fieldId}-8-description`}>
+						{'Ex: GAN 11 M Pro 3x3'}
+					</FieldDescription>
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-9`}>{'Favorite Event'}</FieldLabel>
+					<Input
+						name="favoriteEvent"
+						value={form.favoriteEvent}
+						onChange={handleChange}
+						id={`${fieldId}-9`}
+						aria-describedby={`${fieldId}-9-description`}
+					/>
+					<FieldDescription id={`${fieldId}-9-description`}>
+						{'Ex: Pyraminx'}
+					</FieldDescription>
+				</Field>
 			</div>
-			<Button
-				text="Update Profile"
-				primary
-				glow
-				large
-				loading={loading}
-				error={error}
-				onClick={updateProfile}
-			/>
+			<div className="flex flex-col items-start">
+				<Button
+					variant="default"
+					onClick={updateProfile}
+					size="lg"
+					disabled={loading}
+					aria-busy={loading}
+				>
+					{'Update Profile'}
+					{loading ? <Spinner aria-hidden="true" /> : null}
+				</Button>
+				<ButtonError text={error} />
+			</div>
 		</div>
 	);
 }

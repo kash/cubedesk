@@ -2,19 +2,15 @@ import {useEffect, useRef} from 'react';
 type EventHandler = (data: any) => void;
 
 export function useDocumentListener(eventName, handler: EventHandler, deps: any[] = []) {
-	useElementListener(document, eventName, handler, deps);
+	useElementListener(typeof document === 'undefined' ? null : document, eventName, handler, deps);
 }
 
 export function useWindowListener(eventName, handler: EventHandler, deps: any[] = []) {
-	if (typeof window === 'undefined') {
-		return;
-	}
-
-	useElementListener(window, eventName, handler, deps);
+	useElementListener(typeof window === 'undefined' ? null : window, eventName, handler, deps);
 }
 
 /**
- * Used for when user clicks on the screen and we we want to get rid of a popup or modal.
+ * Used for when user clicks on the screen and we we want to get rid of a popup or dialog.
  */
 export function useWindowClickAwayListener(ignoreClassName: string, handler: EventHandler) {
 	function clickChecker(e) {

@@ -17,12 +17,12 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 	dark: {
 		name: 'Dark',
 			values: {
-			background_color: '18, 20, 28',
-			button_color: '30, 36, 44',
-			module_color: '12, 13, 23',
-			primary_color: '36, 107, 253',
-			secondary_color: '65, 176, 88',
-			text_color: '255, 255, 255',
+			background_color: '0, 0, 0',
+			button_color: '33, 33, 33',
+			module_color: '0, 0, 0',
+			primary_color: '235, 235, 235',
+			secondary_color: '170, 170, 170',
+			text_color: '235, 235, 235',
 		},
 	},
 	light: {

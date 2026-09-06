@@ -1,5 +1,5 @@
 // @ts-nocheck
-import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
+import SmartCube, {SmartCubeCallbacks} from '@/components/timer/smart-cube/bluetooth/smart_cube';
 
 export default class Particula extends SmartCube {
 	device;
@@ -30,8 +30,8 @@ export default class Particula extends SmartCube {
 	curBatteryLevel = -1;
 	batteryResolveList = [];
 
-	constructor(device) {
-		super();
+	constructor(device, callbacks: SmartCubeCallbacks) {
+		super(callbacks);
 
 		this.device = device;
 	}
@@ -123,7 +123,9 @@ export default class Particula extends SmartCube {
 			const aoff = this.faceOffset[a];
 			facelet[axis + 4] = 'BFUDRL'.charAt(value.getUint8(3 + a * 9));
 			for (let i = 0; i < 8; i++) {
-				facelet[axis + this.facePerm[(i + aoff) % 8]] = 'BFUDRL'.charAt(value.getUint8(3 + a * 9 + i + 1));
+				facelet[axis + this.facePerm[(i + aoff) % 8]] = 'BFUDRL'.charAt(
+					value.getUint8(3 + a * 9 + i + 1),
+				);
 			}
 		}
 

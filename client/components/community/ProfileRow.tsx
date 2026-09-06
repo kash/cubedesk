@@ -1,7 +1,8 @@
-import {openModal} from '@/actions/general';
 import Avatar from '@/components/common/avatar/Avatar';
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
 import ReportUser from '@/components/profile/ReportUser';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
@@ -13,7 +14,6 @@ import {trpc} from '@/util/trpc';
 import classNames from 'classnames';
 import {Eye, Trash, User} from 'phosphor-react';
 import React, {ReactNode, useState} from 'react';
-import {useDispatch} from 'react-redux';
 
 interface ProfileRowProps {
 	solve?: Solve;
@@ -26,7 +26,10 @@ interface ProfileRowProps {
 }
 
 export default function ProfileRow(props: ProfileRowProps) {
-	const dispatch = useDispatch();
+	const [reportUserDialog, setReportUserDialog] = React.useState<React.ComponentProps<
+		typeof ReportUser
+	> | null>(null);
+
 	const [deleted, setDeleted] = useState(false);
 
 	const {solve, index, user, openSolve, hideDropdown, recordType} = props;
@@ -39,7 +42,7 @@ export default function ProfileRow(props: ProfileRowProps) {
 	const isMe = solve?.user?.id === me?.id;
 
 	async function reportProfile() {
-		dispatch(openModal(<ReportUser user={user} />));
+		setReportUserDialog({user: user});
 	}
 
 	async function deleteSolve() {
@@ -64,9 +67,15 @@ export default function ProfileRow(props: ProfileRowProps) {
 	let amSolver = false;
 	if (solve) {
 		solveRow = (
-			<button className="w-1/5 text-center" onClick={() => openSolve(solve)}>
-				<span className="table text-base font-bold text-text">{getTimeString(solve.time)}</span>
-			</button>
+			<Button
+				variant="ghost"
+				className="h-auto w-1/5 p-0 text-center font-normal whitespace-normal hover:bg-transparent"
+				onClick={() => openSolve(solve)}
+			>
+				<span className="text-text table text-base font-bold">
+					{getTimeString(solve.time)}
+				</span>
+			</Button>
 		);
 
 		const solveUser = (solve as any).user;
@@ -75,12 +84,12 @@ export default function ProfileRow(props: ProfileRowProps) {
 
 	let indexSpan: ReactNode = null;
 	if (index !== undefined) {
-		indexSpan = <span className="mr-2 table text-secondary">{index + 1}.</span>;
+		indexSpan = <span className="text-secondary mr-2 table">{index + 1}.</span>;
 	}
 
 	let dropdown: ReactNode = (
 		<div className="ml-2">
-			<Dropdown
+			<ActionMenu
 				noMargin
 				options={[
 					{text: 'View details', icon: <Eye />, onClick: () => openSolve(solve)},
@@ -106,23 +115,47 @@ export default function ProfileRow(props: ProfileRowProps) {
 	}
 
 	return (
-		<div
-			className={classNames(
-				'mb-2 flex w-full flex-row items-center justify-between rounded bg-module p-4 text-left text-[1.1rem] font-semibold text-text',
-				{
-					'sticky bottom-2.5 top-2.5 z-[100] border-[3px] border-primary': amSolver,
-				}
-			)}
-		>
-			<div className="flex w-2/5 flex-row items-center">
-				{indexSpan}
-				<Avatar showOptions small={mobileMode} user={user} />
+		<>
+			<div
+				className={classNames(
+					'bg-module text-text mb-2 flex w-full flex-row items-center justify-between rounded p-4 text-left text-[1.1rem] font-semibold',
+					{
+						'border-text/15 border': !amSolver,
+						'border-primary sticky top-2.5 bottom-2.5 z-[100] border-[3px]': amSolver,
+					},
+				)}
+			>
+				<div className="flex w-2/5 flex-row items-center">
+					{indexSpan}
+					<Avatar showOptions small={mobileMode} user={user} />
+				</div>
+				{solveRow}
+				<div className="flex w-2/5 flex-row items-center justify-end text-right">
+					{getRightMessage}
+					{dropdown}
+				</div>
 			</div>
-			{solveRow}
-			<div className="flex w-2/5 flex-row items-center justify-end text-right">
-				{getRightMessage}
-				{dropdown}
-			</div>
-		</div>
+			<Dialog
+				open={reportUserDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setReportUserDialog(null);
+					}
+				}}
+			>
+				{reportUserDialog && (
+					<DialogContent>
+						<ReportUser
+							{...reportUserDialog}
+							onComplete={() => {
+								setReportUserDialog((current) =>
+									current === reportUserDialog ? null : current,
+								);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

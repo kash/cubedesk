@@ -1,5 +1,5 @@
 import Emblem from '@/components/common/Emblem';
-import LinkButton from '@/components/common/LinkButton';
+import {Button} from '@/components/ui/button';
 import {WcaAccount} from '@/types/integration';
 import {trpc} from '@/util/trpc';
 import {Check} from 'phosphor-react';
@@ -62,7 +62,11 @@ const WCA = Object.assign(
 
 			const link = `https://www.worldcubeassociation.org/oauth/authorize?client_id=p_XZ2OvzijIXX-y8SZmQFa0w5m-B6u4U7PkrRWhojrs&redirect_uri=${url}&response_type=code&scope=public`;
 
-			body = <LinkButton text="Link WCA Account" to={link} />;
+			body = (
+				<Button variant="default" asChild>
+					<a href={link}>{'Link WCA Account'}</a>
+				</Button>
+			);
 		}
 
 		return <div className="absolute top-[15px] right-[15px] z-10">{body}</div>;

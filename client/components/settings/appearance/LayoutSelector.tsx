@@ -1,4 +1,4 @@
-import Button from '@/components/common/Button';
+import {Button} from '@/components/ui/button';
 import {TimerLayoutPosition} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
@@ -15,38 +15,35 @@ export default function LayoutSelector() {
 	return (
 		<div className="flex flex-col items-end gap-[15px]">
 			<Button
+				variant={timerLayout === 'left' ? 'default' : 'secondary'}
 				onClick={() => {
 					selectLayout('left');
 				}}
-				large
-				glow={timerLayout === 'left'}
-				primary={timerLayout === 'left'}
-				gray
-				text="Align Left"
-				icon={<AlignLeftSimple weight="bold" />}
-			/>
+				size="lg"
+			>
+				{'Align Left'}
+				<AlignLeftSimple weight="bold" />
+			</Button>
 			<Button
+				variant={timerLayout === 'bottom' ? 'default' : 'secondary'}
 				onClick={() => {
 					selectLayout('bottom');
 				}}
-				large
-				glow={timerLayout === 'bottom'}
-				primary={timerLayout === 'bottom'}
-				gray
-				text="Align Bottom"
-				icon={<AlignBottomSimple weight="bold" />}
-			/>
+				size="lg"
+			>
+				{'Align Bottom'}
+				<AlignBottomSimple weight="bold" />
+			</Button>
 			<Button
+				variant={timerLayout === 'right' ? 'default' : 'secondary'}
 				onClick={() => {
 					selectLayout('right');
 				}}
-				large
-				primary={timerLayout === 'right'}
-				glow={timerLayout === 'right'}
-				gray
-				text="Align Right"
-				icon={<AlignRightSimple weight="bold" />}
-			/>
+				size="lg"
+			>
+				{'Align Right'}
+				<AlignRightSimple weight="bold" />
+			</Button>
 		</div>
 	);
 }

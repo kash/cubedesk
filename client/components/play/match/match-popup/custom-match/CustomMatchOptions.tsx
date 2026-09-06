@@ -1,7 +1,7 @@
-import Button from '@/components/common/Button';
 import CubePicker from '@/components/common/CubePicker';
 import HorizontalNav from '@/components/common/HorizontalNav';
 import {MatchPopupPage, useMatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
+import {Button} from '@/components/ui/button';
 import {CubeType} from '@/util/cubes/cube_types';
 import {ArrowRight} from 'phosphor-react';
 import React from 'react';
@@ -34,12 +34,10 @@ export default function CustomMatchOptions() {
 					excludeOtherCubeType
 					value={context.cubeType}
 					onChange={selectCubeType}
-					dropdownProps={{
+					pickerProps={{
 						openLeft: true,
-						dropdownButtonProps: {
-							primary: true,
-							large: true,
-							glow: true,
+						triggerProps: {
+							className: 'h-10',
 						},
 					}}
 				/>
@@ -62,14 +60,10 @@ export default function CustomMatchOptions() {
 				/>
 			</div>
 			<div className="mt-5 w-full justify-end">
-				<Button
-					onClick={createMatch}
-					text="Create custom match"
-					icon={<ArrowRight />}
-					primary
-					glow
-					large
-				/>
+				<Button variant="default" onClick={createMatch} size="lg">
+					{'Create custom match'}
+					<ArrowRight />
+				</Button>
 			</div>
 		</div>
 	);

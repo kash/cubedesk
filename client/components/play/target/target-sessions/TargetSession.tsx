@@ -1,16 +1,15 @@
-import {openModal} from '@/actions/general';
 import Avatar from '@/components/common/avatar/Avatar';
-import Button from '@/components/common/Button';
 import Emblem from '@/components/common/Emblem';
-import LinkButton from '@/components/common/LinkButton';
 import History from '@/components/modules/history/History';
 import {getGameLink} from '@/components/play/game/Game';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {GameType} from '@/shared/match/consts';
 import {GameSessionWithRelations} from '@/types/game';
 import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
 import React, {ReactNode} from 'react';
-import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 interface Props {
 	gameType: GameType;
@@ -18,26 +17,24 @@ interface Props {
 }
 
 export default function TargetSession(props: Props) {
-	const {session, gameType} = props;
+	const [historyDialog, setHistoryDialog] = React.useState<{
+		props: React.ComponentProps<typeof History>;
+		width: number;
+		title: React.ReactNode;
+	} | null>(null);
 
-	const dispatch = useDispatch();
+	const {session, gameType} = props;
 
 	// Game-session rows have Prisma nullability (raw_time etc. nullable) that the
 	// shared Solve shape doesn't model; History only reads display fields
 	const gameSolves = (session.solves || []) as unknown as Serialized<Solve>[];
 
 	function openSolves() {
-		dispatch(
-			openModal(
-				<>
-					<h1 className="gameSolves">Solves</h1>
-					<History disabled solves={gameSolves} />
-				</>,
-				{
-					width: 500,
-				},
-			),
-		);
+		setHistoryDialog({
+			props: {disabled: true, solves: gameSolves},
+			width: 500,
+			title: 'Solves',
+		});
 	}
 
 	let players: ReactNode = [];
@@ -46,10 +43,11 @@ export default function TargetSession(props: Props) {
 		let rejoin: ReactNode = null;
 		if (!session.match.ended_at) {
 			rejoin = (
-				<LinkButton
-					to={`${getGameLink(gameType)}/${session.match.link_code}`}
-					text="Rejoin Match"
-				/>
+				<Button variant="default" asChild>
+					<Link to={`${getGameLink(gameType)}/${session.match.link_code}`}>
+						{'Rejoin Match'}
+					</Link>
+				</Button>
 			);
 		}
 
@@ -80,22 +78,41 @@ export default function TargetSession(props: Props) {
 	}
 
 	return (
-		<div className="border-button relative mb-5 box-border rounded border-2 p-2.5">
-			<div className="flex flex-col">
-				<h4 className="text-text text-[1.4rem]">
-					<span className="text-primary mr-[5px] inline-block font-bold">
-						{gameSolves.length}
+		<>
+			<div className="border-button relative mb-5 box-border rounded border-2 p-2.5">
+				<div className="flex flex-col">
+					<h4 className="text-text text-[1.4rem]">
+						<span className="text-primary mr-[5px] inline-block font-bold">
+							{gameSolves.length}
+						</span>
+						solve{gameSolves.length === 1 ? '' : 's'} completed
+					</h4>
+					<span className="text-text mt-[5px] text-[0.9rem] opacity-70">
+						{new Date(session.created_at).toLocaleString()}
 					</span>
-					solve{gameSolves.length === 1 ? '' : 's'} completed
-				</h4>
-				<span className="text-text mt-[5px] text-[0.9rem] opacity-70">
-					{new Date(session.created_at).toLocaleString()}
-				</span>
+				</div>
+				<div className="absolute top-2.5 right-2.5">
+					<Button variant="secondary" onClick={openSolves}>
+						{'View Solves'}
+					</Button>
+				</div>
+				{players}
 			</div>
-			<div className="absolute top-2.5 right-2.5">
-				<Button onClick={openSolves} text="View Solves" />
-			</div>
-			{players}
-		</div>
+			<Dialog
+				open={historyDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setHistoryDialog(null);
+					}
+				}}
+			>
+				{historyDialog && (
+					<DialogContent width={historyDialog.width}>
+						<DialogHeader title={historyDialog.title} />
+						<History {...historyDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

@@ -21,7 +21,6 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_APP_ACCESS_KEY_ID: ${{ secrets.AWS_APP_ACCESS_KEY_ID }}
             AWS_APP_SECRET_ACCESS_KEY: ${{ secrets.AWS_APP_SECRET_ACCESS_KEY }}
-            AIRTABLE_BEARER_TOKEN: ${{ secrets.AIRTABLE_BEARER_TOKEN }}
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
             JWT_SECRET: ${{ secrets.JWT_SECRET }}
             REDIS_URL: ${{ secrets.REDIS_URL }}

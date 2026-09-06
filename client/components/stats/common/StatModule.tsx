@@ -1,9 +1,8 @@
 import classNames from 'classnames';
-import CSS from 'csstype';
-import React, {ReactNode} from 'react';
+import React, {CSSProperties, ReactNode} from 'react';
 
 interface Props {
-	style?: CSS.Properties;
+	style?: CSSProperties;
 	className?: string;
 	children: ReactNode;
 	rowSpan?: number;
@@ -13,7 +12,7 @@ interface Props {
 export default function StatModule(props: Props) {
 	const {children, className, rowSpan, colSpan} = props;
 
-	const style: CSS.Properties = props.style || {};
+	const style: CSSProperties = props.style || {};
 	if (rowSpan) {
 		style.gridRow = `span ${rowSpan}`;
 	}
@@ -22,7 +21,7 @@ export default function StatModule(props: Props) {
 	}
 
 	return (
-		<div style={style} className={classNames('box-border w-full rounded-[20px] bg-module p-[25px]', className)}>
+		<div style={style} className={classNames('stats-card', className)}>
 			{children}
 		</div>
 	);

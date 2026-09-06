@@ -1,10 +1,11 @@
-import Button from '@/components/common/Button';
-import Input from '@/components/common/inputs/input/Input';
-import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/ModalHeader';
 import Radio from '@/components/common/Radio';
-import TextArea from '@/components/common/TextArea';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
+import {Button} from '@/components/ui/button';
+import {DialogHeader} from '@/components/ui/dialog';
+import {Field, FieldLabel} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
+import {Spinner} from '@/components/ui/spinner';
+import {AutosizeTextarea} from '@/components/ui/textarea';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {deleteTrainerAlgoOverrides, updateTrainerAlgoOverrides} from '@/db/trainer/operations';
 import {AlgorithmOverrideInput} from '@/types/trainer';
@@ -12,11 +13,14 @@ import {useInput} from '@/util/hooks/useInput';
 import {toastError, toastSuccess} from '@/util/toast';
 import React, {useState} from 'react';
 
-interface Props extends IModalProps {
+interface Props {
+	onComplete?: () => void;
 	algoExt: TrainerAlgorithmExtended;
 }
 
 export default function EditAlgo(props: Props) {
+	const fieldId = React.useId();
+
 	const {onComplete, algoExt} = props;
 
 	const [overrides, setOverrides] = useState(algoExt?.overrides || null);
@@ -68,7 +72,7 @@ export default function EditAlgo(props: Props) {
 
 	return (
 		<div>
-			<ModalHeader
+			<DialogHeader
 				title="Edit Trainer Algorithm"
 				description="Below, you can override any of the default values for this trainer algorithm. Removing the value will reset it to its default value."
 			/>
@@ -79,24 +83,38 @@ export default function EditAlgo(props: Props) {
 					cubeType={algoExt.cube_type}
 				/>
 			</div>
-			<Input legend="Name" value={name} placeholder={algoExt.name ?? undefined} onChange={setName} />
-			<Input
-				legend="Solution"
-				value={solution}
-				placeholder={algoExt.solution ?? undefined}
-				onChange={setSolution}
-			/>
-			<TextArea
-				optional
-				autoSize
-				legend="Scrambles"
-				value={scrambles}
-				placeholder={algoExt.scrambles ?? undefined}
-				onChange={setScrambles}
-			/>
+			<Field className="mb-2">
+				<FieldLabel htmlFor={`${fieldId}-1`}>{'Name'}</FieldLabel>
+				<Input
+					value={name}
+					placeholder={algoExt.name ?? undefined}
+					onChange={setName}
+					id={`${fieldId}-1`}
+				/>
+			</Field>
+			<Field className="mb-2">
+				<FieldLabel htmlFor={`${fieldId}-2`}>{'Solution'}</FieldLabel>
+				<Input
+					value={solution}
+					placeholder={algoExt.solution ?? undefined}
+					onChange={setSolution}
+					id={`${fieldId}-2`}
+				/>
+			</Field>
+			<Field>
+				<FieldLabel htmlFor={`${fieldId}-3`}>
+					{'Scrambles'} <span className="text-text/60 font-normal italic">Optional</span>
+				</FieldLabel>
+				<AutosizeTextarea
+					value={scrambles}
+					placeholder={algoExt.scrambles ?? undefined}
+					onChange={setScrambles}
+					id={`${fieldId}-3`}
+				/>
+			</Field>
 			<Radio
 				legend="Rotation"
-				onChange={setRotate}
+				onValueChange={setRotate}
 				value={rotate}
 				name="rotate"
 				options={[
@@ -107,15 +125,22 @@ export default function EditAlgo(props: Props) {
 				]}
 			/>
 			<div className="mt-[30px] flex flex-row items-center justify-between gap-[7px]">
-				<Button text="Save" loading={saving} onClick={saveAlgo} />
-				<Button
-					hidden={!overrides}
-					text="Reset to Defaults"
-					flat
-					danger
-					loading={resetting}
-					onClick={resetToDefaults}
-				/>
+				<Button variant="secondary" onClick={saveAlgo} disabled={saving} aria-busy={saving}>
+					{'Save'}
+					{saving ? <Spinner aria-hidden="true" /> : null}
+				</Button>
+				{!overrides ? null : (
+					<Button
+						variant="destructive"
+						onClick={resetToDefaults}
+						size="sm"
+						disabled={resetting}
+						aria-busy={resetting}
+					>
+						{'Reset to Defaults'}
+						{resetting ? <Spinner aria-hidden="true" /> : null}
+					</Button>
+				)}
 			</div>
 		</div>
 	);

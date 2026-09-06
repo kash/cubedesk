@@ -1,4 +1,5 @@
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import {Combobox} from '@/components/ui/combobox';
+import {useSessionDb} from '@/util/hooks/useSessionDb';
 import {fetchSessionById, fetchSessions} from '@/db/sessions/query';
 import {setCubeType, setCurrentSession} from '@/db/settings/update';
 import {fetchLastCubeTypeForSession} from '@/db/solves/query';
@@ -14,30 +15,17 @@ interface Props {
 }
 
 export default function SessionPicker(props: Props) {
+	useSessionDb();
 	const sessionId = useSettings('session_id');
 
-	const [selectedSession, setSelectedSession] = useState<Session>();
-	const {onChange, hideSessionName, stateless} = props;
+	const [localSessionId, setLocalSessionId] = useState<string>();
+    const {onChange, hideSessionName, stateless} = props;
+    const selectedSession = fetchSessionById((stateless ? localSessionId : sessionId) || '');
 
-	useEffect(() => {
-		if (stateless) {
-			return;
-		}
-
-		const currentSession = fetchSessionById(sessionId);
-		setSelectedSession(currentSession ?? undefined);
-	}, [sessionId]);
-
-	const options = useMemo(() => {
-		return fetchSessions().map((ses) => ({
-			text: ses.name,
-			disabled: selectedSession?.id === ses.id,
-			onClick: () => switchSession(ses),
-		}));
-	}, [selectedSession]);
+	const options = fetchSessions().map((session) => ({value:session.id, text:session.name}));
 
 	function switchSession(session: Session) {
-		setSelectedSession(session);
+		setLocalSessionId(session.id);
 		if (onChange) {
 			onChange(session);
 		}
@@ -59,7 +47,7 @@ export default function SessionPicker(props: Props) {
 
 	return (
 		<div>
-			<Dropdown noMargin openLeft text={sessionName} icon={<CaretDown />} options={options} />
+			<Combobox label="Session" value={selectedSession?.id || ''} text={sessionName} options={options} onValueChange={(id) => {const session = fetchSessionById(id); if (session) switchSession(session);}} />
 		</div>
 	);
 }

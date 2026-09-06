@@ -1,4 +1,4 @@
-import TextArea from '@/components/common/TextArea';
+import {AutosizeTextarea} from '@/components/ui/textarea';
 import {Solve} from '@/types/solve';
 import {useInput} from '@/util/hooks/useInput';
 import React from 'react';
@@ -24,15 +24,14 @@ export default function NotesInfo(props: Props) {
 	return (
 		<div className="flex w-full justify-center">
 			{editMode ? (
-				<TextArea
-					fullWidth
+				<AutosizeTextarea
 					value={notes || ''}
-					autoSize
 					name="notes"
 					onChange={(e) => {
 						setNotes(e);
 						handleChange(e);
 					}}
+					aria-label={'Notes'}
 				/>
 			) : (
 				notesBody

@@ -1,4 +1,4 @@
-import {getBlockingThemeInitScript} from '@/util/themes/theme_init';
+import {DEFAULT_THEME_COLORS, getBlockingThemeInitScript} from '@/util/themes/theme_init';
 
 export interface HtmlPagePayload {
 	html: string;
@@ -25,7 +25,9 @@ export default (payload: HtmlPagePayload) => {
 	});
 	const assetBase = distBase.replace(/\/$/, '');
 	const assetUri = (fileName: string) => `${assetBase}/${fileName}`;
-	const cssLink = isDev ? '' : `<link rel="stylesheet" href="${assetUri(cssFileName)}">`;
+	const cssLink = isDev
+		? '<link rel="stylesheet" href="/client/styles/index.css?direct">'
+		: `<link rel="stylesheet" href="${assetUri(cssFileName)}">`;
 	const clientScripts = isDev
 		? `<script type="module">
 				import RefreshRuntime from '/@react-refresh';
@@ -49,8 +51,8 @@ export default (payload: HtmlPagePayload) => {
 				<style>
 					html,
 					body {
-						background-color: rgb(18, 20, 28);
-						color: rgb(255, 255, 255);
+						background-color: rgb(${DEFAULT_THEME_COLORS.background_color});
+						color: rgb(${DEFAULT_THEME_COLORS.text_color});
 					}
 				</style>
 				<script type="text/javascript">

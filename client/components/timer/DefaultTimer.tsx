@@ -12,7 +12,7 @@ export default function DefaultTimer() {
 	useSolveDb();
 
 	const timerSolveData = {
-		session_id: sessionId,
+		session_id: me ? sessionId : 'demo',
 		from_timer: true,
 		cube_type: cubeType,
 	};

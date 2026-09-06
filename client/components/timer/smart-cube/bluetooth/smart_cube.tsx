@@ -1,14 +1,20 @@
-import {openModal} from '@/actions/general';
 import {turnSmartCube} from '@/actions/timer';
 import {getStore} from '@/components/store';
 // @ts-nocheck
 import {setTimerParams} from '@/components/timer/helpers/params';
-import SolveCheck from '@/components/timer/smart-cube/solve-check/SolveCheck';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
-import React from 'react';
+
+export type PendingSmartDevice = Awaited<ReturnType<typeof trpc.smartDevice.create.mutate>>;
+export interface SmartCubeCallbacks {
+	confirmSolved: (device: PendingSmartDevice) => Promise<boolean>;
+	onDisconnected: () => void;
+	isActive: () => boolean;
+}
 
 export default class SmartCube {
+	constructor(protected callbacks: SmartCubeCallbacks) {}
+
 	alertConnecting = () => {
 		setTimerParams({
 			smartCubeConnecting: true,
@@ -16,6 +22,8 @@ export default class SmartCube {
 	};
 
 	alertDisconnected = () => {
+		if (!this.callbacks.isActive()) return;
+		this.callbacks.onDisconnected();
 		toastError('Smart cube disconnected');
 
 		setTimerParams({
@@ -44,6 +52,7 @@ export default class SmartCube {
 	};
 
 	alertConnected = async (server) => {
+		if (!this.callbacks.isActive()) return;
 		let dev;
 		const exists = await this.smartCubeInDb(server);
 		if (!exists) {
@@ -52,14 +61,9 @@ export default class SmartCube {
 			dev = exists;
 		}
 
-		getStore().dispatch(
-			openModal(<SolveCheck />, {
-				title: 'Confirm that cube is solved',
-				description: 'Please confirm that your smart cube is solved before proceeding.',
-				hideCloseButton: true,
-				onComplete: () => this.confirmConnected(dev),
-			})
-		);
+		if (!this.callbacks.isActive()) return;
+		const confirmed = await this.callbacks.confirmSolved(dev);
+		if (confirmed && this.callbacks.isActive()) this.confirmConnected(dev);
 	};
 
 	confirmConnected = (dev) => {

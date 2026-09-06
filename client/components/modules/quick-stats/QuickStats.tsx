@@ -1,6 +1,3 @@
-import {openModal} from '@/actions/general';
-import Button from '@/components/common/Button';
-import CustomizeStats from '@/components/modules/quick-stats/customize-stats/CustomizeStats';
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
 import {getQuickStatsGridSizes} from '@/components/modules/quick-stats/util';
 import {FilterSolvesOptions} from '@/db/solves/query';
@@ -8,7 +5,7 @@ import {RootState} from '@/reducers/reducers';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import React, {ReactNode, useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 interface Props {
 	filterOptions: FilterSolvesOptions;
@@ -16,7 +13,6 @@ interface Props {
 
 export default function QuickStats(props: Props) {
 	const {filterOptions} = props;
-	const dispatch = useDispatch();
 
 	const stats = useSelector((state: RootState) => state?.stats);
 	const statsModuleBlocks = stats.blocks as StatsModuleBlock[];
@@ -53,21 +49,9 @@ export default function QuickStats(props: Props) {
 		);
 	}
 
-	function openCustomizer() {
-		dispatch(
-			openModal(<CustomizeStats filterOptions={filterOptions} />, {
-				title: 'Customize Stats',
-				description: 'Customize this here and now',
-			}),
-		);
-	}
-
 	return (
 		<div className="group relative h-full w-full">
 			<div className={className}>{blocks}</div>
-			<div className="absolute top-0 right-0 opacity-0 group-hover:opacity-100">
-				<Button onClick={openCustomizer} text="Customize Stats" secondary glow />
-			</div>
 		</div>
 	);
 }

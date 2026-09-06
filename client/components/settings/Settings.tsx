@@ -18,11 +18,11 @@ export default function Settings(props: Props) {
 	const page = useRouteMatch().path.split('/').pop();
 
 	return (
-		<div>
+		<div className="mx-auto w-full max-w-4xl py-4 sm:py-8">
 			<PageTitle pageName="Settings">
 				<HorizontalNav tabId={page} tabs={TABS} />
 			</PageTitle>
-			<div className="mt-5 w-full max-w-[650px] pb-[300px]">{children}</div>
+			<div className="mt-5 w-full pb-24">{children}</div>
 		</div>
 	);
 }

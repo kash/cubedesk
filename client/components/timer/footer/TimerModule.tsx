@@ -1,6 +1,7 @@
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import SelectField from '@/components/common/inputs/SelectField';
 import History from '@/components/modules/history/History';
 import LastSolve from '@/components/modules/last-solve/LastSolve';
+import CustomizeStats from '@/components/modules/quick-stats/customize-stats/CustomizeStats';
 import QuickStats from '@/components/modules/quick-stats/QuickStats';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
@@ -10,12 +11,14 @@ import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@t
 import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
 import {resolveModuleVisual} from '@/components/timer/footer/helpers/resolveModuleVisual';
 import {useTimerContext} from '@/components/timer/Timer';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {setSetting} from '@/db/settings/update';
+import {cn} from '@/util/cn';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {snakeCase} from 'change-case';
-import classNames from 'classnames';
-import {CaretDown} from 'phosphor-react';
+import {Gear} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 
 interface Props {
@@ -25,6 +28,13 @@ interface Props {
 }
 
 export default function TimerModule(props: Props) {
+	const [customizeStatsDialog, setCustomizeStatsDialog] = React.useState<{
+		props: React.ComponentProps<typeof CustomizeStats>;
+		title: React.ReactNode;
+		description: React.ReactNode;
+		width: number;
+	} | null>(null);
+
 	const {index, moduleType, customOptions} = props;
 
 	const context = useTimerContext();
@@ -56,6 +66,26 @@ export default function TimerModule(props: Props) {
 		},
 		[TimerModuleType.STATS]: {
 			module: <QuickStats filterOptions={solvesFilter} />,
+			actions: (
+				<Button
+					type="button"
+					aria-label="Customize Stats"
+					title="Customize Stats"
+					variant="ghost"
+					size="icon-lg"
+					className="border-tmo-module/10 rounded-l-none border-l"
+					onClick={() =>
+						setCustomizeStatsDialog({
+							props: {filterOptions: solvesFilter},
+							title: 'Customize Stats',
+							description: 'Choose a block in the preview, then make it yours.',
+							width: 960,
+						})
+					}
+				>
+					<Gear size={18} />
+				</Button>
+			),
 		},
 		[TimerModuleType.SCRAMBLE]: {
 			module: <Scramble cubeType={cubeType} scramble={scramble} />,
@@ -86,7 +116,9 @@ export default function TimerModule(props: Props) {
 		{label: 'None', value: TimerModuleType.NONE},
 	];
 
-	const currentModuleName = moduleDropdownOptions.find((option) => option.value === moduleType)?.label;
+	const currentModuleName = moduleDropdownOptions.find(
+		(option) => option.value === moduleType,
+	)?.label;
 
 	let visual: FooterModuleData;
 	if (customOptions?.customBody) {
@@ -97,22 +129,26 @@ export default function TimerModule(props: Props) {
 	}
 
 	let dropdown: ReactNode = (
-		<div className={classNames('absolute z-40 opacity-0 group-hover:opacity-100', mobileMode && 'left-0 top-[-40px] !opacity-100')}>
-			<Dropdown
-				openLeft
-				noMargin
-				dropdownButtonProps={{
-					primary: true,
-					glow: true,
-				}}
-				dropdownMaxHeight={200}
-				icon={<CaretDown />}
+		<div
+			className={cn(
+				'border-tmo-module/10 bg-module absolute top-0 left-1/2 z-40 flex -translate-x-1/2 items-center rounded-b-md border border-t-0 opacity-0 shadow-lg transition-opacity duration-150 ease-in-out group-hover:opacity-100 focus-within:opacity-100',
+				{'opacity-100': mobileMode},
+			)}
+		>
+			<SelectField
+				label="Timer module"
+				value={moduleType || ''}
 				text={currentModuleName}
+				onValueChange={(value) => selectVisual(value as TimerModuleType)}
+				align="center"
+				triggerProps={{className: 'h-10 rounded-none border-0 px-4 shadow-none'}}
+				maxHeight={240}
 				options={moduleDropdownOptions.map((option) => ({
+					value: option.value,
 					text: option.label,
-					onClick: () => selectVisual(option.value),
 				}))}
 			/>
+			{visual.actions}
 		</div>
 	);
 
@@ -127,13 +163,8 @@ export default function TimerModule(props: Props) {
 		'h-full',
 		'w-full',
 		'overflow-hidden',
-		'border-[5px]',
-		'border-transparent',
 		'p-2.5',
 	];
-	if (index % 2 !== 0) {
-		wrapperClass.push('rounded-lg', 'border-4', 'border-tmo-background/10', 'bg-tm-module/10');
-	}
 	if (mobileMode) {
 		wrapperClass.push('!h-[270px]', '!overflow-visible');
 		if (index > 0) {
@@ -149,9 +180,29 @@ export default function TimerModule(props: Props) {
 	}
 
 	return (
-		<div className={wrapperClass.join(' ')}>
-			{dropdown}
-			<div className="h-full w-full">{visual.module}</div>
-		</div>
+		<>
+			<div className={wrapperClass.join(' ')}>
+				{dropdown}
+				<div className="h-full w-full">{visual.module}</div>
+			</div>
+			<Dialog
+				open={customizeStatsDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setCustomizeStatsDialog(null);
+					}
+				}}
+			>
+				{customizeStatsDialog && (
+					<DialogContent width={customizeStatsDialog.width}>
+						<DialogHeader
+							title={customizeStatsDialog.title}
+							description={customizeStatsDialog.description}
+						/>
+						<CustomizeStats {...customizeStatsDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

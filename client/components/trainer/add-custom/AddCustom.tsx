@@ -1,31 +1,36 @@
-import Button from '@/components/common/Button';
 import Checkbox from '@/components/common/Checkbox';
 import HorizontalLine from '@/components/common/HorizontalLine';
 import HorizontalNav from '@/components/common/HorizontalNav';
-import Input from '@/components/common/inputs/input/Input';
+import ButtonError from '@/components/common/inputs/Error';
 import Loading from '@/components/common/Loading';
-import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/ModalHeader';
-import TextArea from '@/components/common/TextArea';
 import CubeBuilder from '@/components/trainer/add-custom/CubeBuilder';
+import {Button} from '@/components/ui/button';
+import {DialogHeader} from '@/components/ui/dialog';
+import {Field, FieldDescription, FieldLabel} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
+import {Spinner} from '@/components/ui/spinner';
+import {AutosizeTextarea, Textarea} from '@/components/ui/textarea';
 import {createCustomTrainerDb, updateCustomTrainerDb} from '@/db/trainer/custom';
 import {CustomTrainerInput, CustomTrainerWithUser} from '@/types/trainer';
 import {useInput} from '@/util/hooks/useInput';
 import {useToggle} from '@/util/hooks/useToggle';
 import {trpc} from '@/util/trpc';
 import Cube from 'cubejs';
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 // Values can be null because a stored trainer's colors column is nullable
 interface ColorMap {
 	[key: string]: string | null;
 }
 
-interface Props extends IModalProps {
+interface Props {
+	onComplete?: () => void;
 	editingId?: string;
 }
 
 export default function AddCustom(props: Props) {
+	const fieldId = React.useId();
+
 	const {editingId, onComplete} = props;
 
 	const editing = !!editingId;
@@ -151,12 +156,12 @@ export default function AddCustom(props: Props) {
 		setCubeType(ct);
 	}
 
-	function onPrivateChange(e) {
-		togglePrivateChecked(e.checked);
+	function onPrivateChange(checked: boolean) {
+		togglePrivateChecked(checked);
 	}
 
-	function onThreeDChange(e) {
-		toggleThreeD(e.checked);
+	function onThreeDChange(checked: boolean) {
+		toggleThreeD(checked);
 	}
 
 	if (loading) {
@@ -169,30 +174,54 @@ export default function AddCustom(props: Props) {
 
 	return (
 		<div>
-			<ModalHeader title="Add custom trainer" />
+			<DialogHeader title="Add custom trainer" />
 			<div>
-				<Input legend="Name" onChange={setName} value={name} />
-				<Input legend="Solution" onChange={setSolution} value={solution} />
-				<TextArea
-					legend="Description"
-					onChange={setDescription}
-					value={description}
-					maxLength={300}
-					autoSize
-					optional
-				/>
-				<TextArea
-					legend="Alternate solutions"
-					onChange={setAltSolutions}
-					value={altSolutions}
-					optional
-					info="These solutions will be reversed and used for scrambles. One per line"
-				/>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-1`}>{'Name'}</FieldLabel>
+					<Input onChange={setName} value={name} id={`${fieldId}-1`} />
+				</Field>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-2`}>{'Solution'}</FieldLabel>
+					<Input onChange={setSolution} value={solution} id={`${fieldId}-2`} />
+				</Field>
+				<Field>
+					<FieldLabel htmlFor={`${fieldId}-3`}>
+						{'Description'}{' '}
+						<span className="text-text/60 font-normal italic">Optional</span>
+					</FieldLabel>
+					<AutosizeTextarea
+						onChange={setDescription}
+						value={description}
+						maxLength={300}
+						id={`${fieldId}-3`}
+						aria-describedby={`${fieldId}-3-description`}
+					/>
+					<FieldDescription id={`${fieldId}-3-description`}>
+						<span className={description?.length >= 300 ? 'text-error' : undefined}>
+							{(300 - (description?.length ?? 0)).toLocaleString()}
+						</span>
+					</FieldDescription>
+				</Field>
+				<Field>
+					<FieldLabel htmlFor={`${fieldId}-4`}>
+						{'Alternate solutions'}{' '}
+						<span className="text-text/60 font-normal italic">Optional</span>
+					</FieldLabel>
+					<Textarea
+						onChange={setAltSolutions}
+						value={altSolutions}
+						id={`${fieldId}-4`}
+						aria-describedby={`${fieldId}-4-description`}
+					/>
+					<FieldDescription id={`${fieldId}-4-description`}>
+						{'These solutions will be reversed and used for scrambles. One per line'}
+					</FieldDescription>
+				</Field>
 				{data?.copy_of_id ? null : (
 					<Checkbox
 						checked={privateChecked}
 						text="Make trainer private"
-						onChange={onPrivateChange}
+						onCheckedChange={onPrivateChange}
 					/>
 				)}
 				<HorizontalLine />
@@ -205,7 +234,7 @@ export default function AddCustom(props: Props) {
 							{id: '222', value: '2x2'},
 						]}
 					/>
-					<Checkbox checked={threeD} text="3D" onChange={onThreeDChange} />
+					<Checkbox checked={threeD} text="3D" onCheckedChange={onThreeDChange} />
 				</div>
 				<CubeBuilder
 					cubeType={cubeType}
@@ -213,14 +242,19 @@ export default function AddCustom(props: Props) {
 					threeD={threeD}
 					onUpdate={updateColors}
 				/>
-				<Button
-					loading={saving}
-					large
-					error={error}
-					text={`${editing ? 'Edit' : 'Create'} custom trainer`}
-					primary
-					onClick={createCustomTrainer}
-				/>
+				<div className="flex flex-col items-start">
+					<Button
+						variant="default"
+						onClick={createCustomTrainer}
+						size="lg"
+						disabled={saving}
+						aria-busy={saving}
+					>
+						{`${editing ? 'Edit' : 'Create'} custom trainer`}
+						{saving ? <Spinner aria-hidden="true" /> : null}
+					</Button>
+					<ButtonError text={error} />
+				</div>
 			</div>
 		</div>
 	);

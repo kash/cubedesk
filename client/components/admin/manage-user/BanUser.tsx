@@ -1,10 +1,12 @@
-import Button from '@/components/common/Button';
 import Checkbox from '@/components/common/Checkbox';
-import Input from '@/components/common/inputs/input/Input';
-import Select from '@/components/common/inputs/Select';
-import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/ModalHeader';
-import TextArea from '@/components/common/TextArea';
+import ButtonError from '@/components/common/inputs/Error';
+import NativeSelectField from '@/components/common/inputs/NativeSelectField';
+import {Button} from '@/components/ui/button';
+import {DialogHeader} from '@/components/ui/dialog';
+import {Field, FieldLabel} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
+import {Spinner} from '@/components/ui/spinner';
+import {AutosizeTextarea} from '@/components/ui/textarea';
 import {AdminUser} from '@/types/admin';
 import {Serialized} from '@/types/serialized';
 import {UserAccount, UserAccountForAdmin} from '@/types/user';
@@ -14,11 +16,14 @@ import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React, {useState} from 'react';
 
-interface Props extends IModalProps {
+interface Props {
+	onComplete?: () => void;
 	user: UserAccount | UserAccountForAdmin | Serialized<AdminUser>;
 }
 
 export default function BanUser(props: Props) {
+	const fieldId = React.useId();
+
 	const {user} = props;
 
 	const [cheatingIn1v1, toggleCheatingIn1v1] = useToggle(false);
@@ -103,30 +108,34 @@ export default function BanUser(props: Props) {
 
 	return (
 		<div>
-			<ModalHeader
+			<DialogHeader
 				title={`Ban ${user.username}`}
 				description="If this user has broken a rule, you can ban them here. You can either ban them for a set amount of time or forever"
 			/>
-			<TextArea
-				autoSize
-				fullWidth
-				onChange={setReason}
-				name="reason"
-				legend="Reason (user-facing)"
-				value={reason}
-			/>
+			<Field>
+				<FieldLabel htmlFor={`${fieldId}-1`}>{'Reason (user-facing)'}</FieldLabel>
+				<AutosizeTextarea
+					onChange={setReason}
+					name="reason"
+					value={reason}
+					id={`${fieldId}-1`}
+				/>
+			</Field>
 			<div
 				className={`mt-5 grid grid-cols-2 gap-5 ${forever ? 'pointer-events-none opacity-60' : ''}`}
 			>
-				<Input
-					disabled={forever}
-					legend="Count"
-					type="number"
-					name="durationCount"
-					value={durationCount}
-					onChange={setDurationCount}
-				/>
-				<Select
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-2`}>{'Count'}</FieldLabel>
+					<Input
+						disabled={forever}
+						type="number"
+						name="durationCount"
+						value={durationCount}
+						onChange={setDurationCount}
+						id={`${fieldId}-2`}
+					/>
+				</Field>
+				<NativeSelectField
 					disabled={forever}
 					legend="Duration type"
 					name="durationType"
@@ -139,35 +148,38 @@ export default function BanUser(props: Props) {
 					<option value="week">Week</option>
 					<option value="month">Month</option>
 					<option value="year">Year</option>
-				</Select>
+				</NativeSelectField>
 			</div>
 			<div className="my-5 w-full">
 				<Checkbox
 					text="Delete all published solves"
-					onChange={() => toggleDeletePublishedSolves()}
+					onCheckedChange={() => toggleDeletePublishedSolves()}
 					checked={deletePublishedSolves}
 				/>
 				<Checkbox
 					text="Ban user forever"
-					onChange={() => toggleForever()}
+					onCheckedChange={() => toggleForever()}
 					checked={forever}
 				/>
 				<Checkbox
 					text="User was cheating in 1v1 (refunds ELO)"
-					onChange={() => toggleCheatingIn1v1()}
+					onCheckedChange={() => toggleCheatingIn1v1()}
 					checked={cheatingIn1v1}
 				/>
 			</div>
-			<Button
-				text="Ban user"
-				disabled={disabled}
-				danger
-				large
-				glow
-				onClick={submitBan}
-				loading={loading}
-				error={error}
-			/>
+			<div className="flex flex-col items-start">
+				<Button
+					variant="destructive"
+					onClick={submitBan}
+					size="lg"
+					disabled={disabled || loading}
+					aria-busy={loading}
+				>
+					{'Ban user'}
+					{loading ? <Spinner aria-hidden="true" /> : null}
+				</Button>
+				<ButtonError text={error} />
+			</div>
 		</div>
 	);
 }

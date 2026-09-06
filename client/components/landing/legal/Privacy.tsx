@@ -4,7 +4,7 @@ import React from 'react';
 export default function Privacy() {
 	return (
 		<LegalContent>
-			<h1>Privacy Policy</h1>
+			<h1 className="font-sans text-3xl font-medium tracking-tight">Privacy Policy</h1>
 			<p>Last updated: May 25, 2021</p>
 			<p>
 				This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your
@@ -169,7 +169,7 @@ export default function Privacy() {
 					<p>Email address</p>
 				</li>
 				<li>
-					<p>First name and last name</p>
+					<p>Username</p>
 				</li>
 				<li>
 					<p>Usage Data</p>

@@ -24,10 +24,14 @@ export default function SubStats() {
 
 	const streak = useMemo(() => {
 		return getSolveStreak(filterOptions);
+		// The local solve database is mutable; its revision invalidates this query.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filterOptions, solveUpdate]);
 
 	const subStats = useMemo(() => {
 		return getSubStats(filterOptions);
+		// The local solve database is mutable; its revision invalidates this query.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filterOptions, solveUpdate]);
 
 	let firstSolveTime = '-';
@@ -41,7 +45,7 @@ export default function SubStats() {
 	}
 
 	return (
-		<div className="grid h-full grid-cols-2 grid-rows-3 gap-2.5">
+		<div className="stats-details">
 			<NumberBlock
 				small
 				center
@@ -78,7 +82,7 @@ export default function SubStats() {
 				small
 				center
 				icon={<Calculator weight="bold" />}
-				title="Avg # Solves / Session"
+				title="Solves per session"
 				value={avgSolvesPerSession}
 				color={SUB_STATS_COLOR}
 			/>

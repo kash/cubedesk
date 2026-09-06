@@ -1,3 +1,4 @@
+import {Avatar, AvatarFallback, AvatarImage as AvatarPhoto} from '@/components/ui/avatar';
 import {Profile} from '@/types/profile';
 import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
 import {cn} from '@/util/cn';
@@ -65,44 +66,30 @@ export default function AvatarImage(props: Props) {
 	const user = props.user || props.profile?.user;
 	const profile = props.profile || props.user?.profile;
 
-	const bodyClass = cn(
-		'relative h-[50px] w-[50px] overflow-hidden rounded-full bg-text/20',
-		tiny && 'h-6 w-6',
-		small && 'h-[30px] w-[30px]',
-		large && 'h-[150px] w-[150px]'
+	const userId = user?.id ?? '0';
+	const lastIndex = 'abcdefghijklmnopqrstuvwxyz0123456789'.indexOf(userId[userId.length - 1]);
+	const backgroundColor = COLORS[lastIndex] ?? COLORS[0];
+	const src =
+		image || (profile?.pfp_image ? getStorageURL(profile.pfp_image.storage_path) : undefined);
+	return (
+		<Avatar
+			className={cn('size-[50px]', {
+				'size-6': tiny,
+				'size-[30px]': small,
+				'size-[150px]': large,
+			})}
+		>
+			<AvatarPhoto
+				src={src || undefined}
+				alt={`Profile picture of ${user?.username || 'user'}`}
+			/>
+			<AvatarFallback style={{backgroundColor}}>
+				<img
+					className="size-full object-cover"
+					alt={`Default avatar for ${user?.username || 'user'}`}
+					src={resourceUri('/images/community/default_avatar.png')}
+				/>
+			</AvatarFallback>
+		</Avatar>
 	);
-
-	let avatar;
-	if ((profile && profile.pfp_image) || image) {
-		avatar = (
-			<div className="relative">
-				<div className={bodyClass}>
-					<img
-						className="h-full w-full object-cover"
-						src={image || getStorageURL(profile?.pfp_image?.storage_path) || undefined}
-						alt={`Profile picture of ${user?.username || 'user'}`}
-					/>
-				</div>
-			</div>
-		);
-	} else {
-		const userId = user?.id ?? '0';
-		const lastLetter = userId[userId.length - 1];
-		const lastIndex = 'abcdefghijklmnopqrstuvwxyz0123456789'.indexOf(lastLetter);
-		const backgroundColor = COLORS[lastIndex];
-
-		avatar = (
-			<div className="relative">
-				<div className={bodyClass} style={{backgroundColor}}>
-					<img
-						className="h-full w-full object-cover"
-						alt="Default avatar"
-						src={resourceUri('/images/community/default_avatar.png')}
-					/>
-				</div>
-			</div>
-		);
-	}
-
-	return avatar;
 }

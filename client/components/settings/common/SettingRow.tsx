@@ -1,6 +1,7 @@
-import Input from '@/components/common/inputs/input/Input';
 import LoggedInOnly from '@/components/common/LoggedInOnly';
-import Switch from '@/components/common/Switch';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {Switch} from '@/components/ui/switch';
 import {AllSettings} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
 import {useInput} from '@/util/hooks/useInput';
@@ -40,6 +41,7 @@ export default function SettingRow(props: Props) {
 		isSwitch,
 	} = props;
 	const settingKey = settingName as keyof AllSettings;
+	const controlId = React.useId();
 	const settingValue = useSettings(settingKey);
 	const [inputValue, setInputValue] = useInput(settingValue);
 
@@ -58,19 +60,29 @@ export default function SettingRow(props: Props) {
 
 	let body: ReactNode = null;
 	if (isSwitch) {
-		body = <Switch onChange={(on) => updateSetting(on)} on={settingValue as boolean} />;
+		body = (
+			<Switch
+				id={controlId}
+				checked={Boolean(settingValue)}
+				onCheckedChange={updateSetting}
+				aria-label={title}
+			/>
+		);
 	}
 
 	if (isNumberInput) {
 		body = (
 			<div className="max-w-[100px]">
 				<Input
+					id={controlId}
 					type="number"
 					value={inputValue}
 					name={settingName}
 					step={step}
 					onChange={setInputValue}
 					onBlur={inputBlur}
+					aria-label={title}
+					className="mb-2"
 				/>
 			</div>
 		);
@@ -83,24 +95,28 @@ export default function SettingRow(props: Props) {
 	let content: ReactNode = (
 		<div
 			className={classNames(
-				'flex w-full justify-between',
+				'flex w-full justify-between gap-4',
 				vertical ? 'flex-col justify-start' : 'flex-row',
 			)}
 		>
 			<div
 				className={classNames(
-					'box-border table text-left',
-					vertical ? 'mb-2.5 w-full' : 'w-[300px]',
+					'box-border min-w-0 text-left',
+					vertical ? 'w-full' : 'w-[300px] max-w-[60%]',
 				)}
 			>
-				<legend
-					className={classNames(
-						'text-text',
-						sub ? 'text-[1.1rem] leading-6 font-normal opacity-90' : 'text-[1.2rem]',
-					)}
-				>
-					{title}
-				</legend>
+				{!children && (isSwitch || isNumberInput) ? (
+					<Label
+						htmlFor={controlId}
+						className={classNames('text-base leading-snug', {'opacity-90': sub})}
+					>
+						{title}
+					</Label>
+				) : (
+					<Label asChild className={classNames('text-base leading-snug', {'opacity-90': sub})}>
+						<span>{title}</span>
+					</Label>
+				)}
 				{description && (
 					<p className="text-text mt-[5px] text-[0.9rem] leading-[1.3rem] opacity-70">
 						{description}
@@ -121,7 +137,7 @@ export default function SettingRow(props: Props) {
 		<div
 			className={classNames(
 				'mt-[30px] box-border min-h-10 w-full items-start pb-[30px]',
-				!nested && 'border-tmo-background/10 mb-5 border-b-[3px] last:border-b-0',
+				!nested && 'border-tmo-background/10 mb-5 border-b last:border-b-0',
 				parent && 'pb-0',
 				nested && 'pl-5',
 			)}

@@ -20,6 +20,7 @@ interface TimerHeaderOptions {
 
 export interface FooterModuleData {
 	module: ReactNode;
+	actions?: ReactNode;
 }
 
 export interface TimerCustomModuleOptions {
@@ -39,7 +40,7 @@ export interface TimerProps {
 	subTimerActions?: ReactComponentElement<any> | null;
 	hideScramble?: boolean;
 	hideTime?: boolean;
-	inModal?: boolean;
+	inDialog?: boolean;
 	cubeType?: string;
 	timerLayout?: TimerLayoutPosition;
 

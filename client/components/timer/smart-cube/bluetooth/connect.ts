@@ -1,12 +1,25 @@
 import GAN from '@/components/timer/smart-cube/bluetooth/gan';
 import Giiker from '@/components/timer/smart-cube/bluetooth/giiker';
 import Particula from '@/components/timer/smart-cube/bluetooth/particula';
-import SmartCube from '@/components/timer/smart-cube/bluetooth/smart_cube';
+import SmartCube, {SmartCubeCallbacks} from '@/components/timer/smart-cube/bluetooth/smart_cube';
 
 export default class Connect extends SmartCube {
 	device: BluetoothDevice | null = null;
+	private generation = 0;
 
 	connect = () => {
+		const generation = ++this.generation;
+		const isActive = () => generation === this.generation && this.callbacks.isActive();
+		const callbacks: SmartCubeCallbacks = {
+			...this.callbacks,
+			isActive,
+			onDisconnected: () => {
+				if (isActive()) {
+					++this.generation;
+					this.callbacks.onDisconnected();
+				}
+			},
+		};
 		if (!window.navigator || !window.navigator.bluetooth) {
 			throw new Error();
 		}
@@ -57,32 +70,41 @@ export default class Connect extends SmartCube {
 					'8653000a-43e6-47b7-9cb0-5fc21d4ae340',
 					'00000010-0000-fff7-fff6-fff5fff4fff0',
 
-					'00001805-0000-1000-8000-00805f9b34fb'
+					'00001805-0000-1000-8000-00805f9b34fb',
 				],
 			})
 			.then((device) => {
+				if (!isActive()) return;
 				this.device = device;
 
 				this.alertConnecting();
 
 				const name = device.name ?? '';
 				if (name.startsWith('Gi') || name.startsWith('Mi Smart Magic Cube')) {
-					const cube = new Giiker(this.device);
+					const cube = new Giiker(this.device, callbacks);
 					cube.init();
 				} else if (name.toLowerCase().startsWith('gan')) {
-					const cube = new GAN(this.device);
+					const cube = new GAN(this.device, callbacks);
 					cube.init();
 				} else if (name.startsWith('GoCube') || name.startsWith('Rubiks')) {
-					const cube = new Particula(this.device);
+					const cube = new Particula(this.device, callbacks);
 					cube.init();
 				} else {
 					// HANDLE unsupported cube
 					return Promise.resolve();
 				}
+			})
+			.catch(() => {
+				if (isActive()) {
+					++this.generation;
+					this.callbacks.onDisconnected();
+				}
 			});
 	};
 
 	disconnect = () => {
+		++this.generation;
+		if (this.callbacks.isActive()) this.callbacks.onDisconnected();
 		if (!this.device) {
 			return;
 		}

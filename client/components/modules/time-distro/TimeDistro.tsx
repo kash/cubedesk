@@ -1,11 +1,11 @@
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import Empty from '@/components/common/Empty';
+import SelectField from '@/components/common/inputs/SelectField';
 import BarGraph from '@/components/modules/bar-graph/BarGraph';
 import dummyData from '@/components/modules/time-distro/dummy-data';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {getTimeDistro} from '@/db/solves/stats/time-distro';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import jsonStr from 'json-stable-stringify';
-import {CaretDown} from 'phosphor-react';
 import React, {useMemo, useState} from 'react';
 
 const DEFAULT_BUCKET_SIZE = 10;
@@ -26,9 +26,13 @@ export default function TimeDistro(props: Props) {
 		return getTimeDistro(filterOptions, bucketCount);
 	}, [filterStr, bucketCount, solveUpdate]);
 
+	if (!dummy && !memoData.length) {
+		return <Empty text="No completed solves yet" centered />;
+	}
+
 	let data = [...memoData];
 
-	const isDummy = dummy || !data || !data.length;
+	const isDummy = Boolean(dummy);
 	if (isDummy) {
 		data = dummyData;
 	}
@@ -38,17 +42,16 @@ export default function TimeDistro(props: Props) {
 	return (
 		<div className="group relative box-border h-full w-full transition-all duration-100 ease-in-out">
 			<BarGraph className="flex" data={data} dummy={isDummy}>
-				<div className="absolute top-[5px] right-[5px] z-[1000] opacity-0 transition-all duration-100 ease-in-out group-hover:opacity-100">
-					<Dropdown
-						text={`${bucketCount} Columns`}
-						icon={<CaretDown />}
-						dropdownMaxHeight={150}
+				<div className="absolute right-[5px] top-[5px] z-[1000] opacity-0 transition-all duration-100 ease-in-out focus-within:opacity-100 group-hover:opacity-100">
+					<SelectField
+						label="Distribution columns"
+						value={String(bucketCount)}
+						onValueChange={(value) => setBucketCount(Number(value))}
 						options={buckets.map((bucket) => ({
-							value: bucket,
-							text: `${bucket} columns`,
-							disabled: bucket === bucketCount,
-							onClick: () => setBucketCount(bucket),
+							value: String(bucket),
+							text: bucket + ' columns',
 						}))}
+						maxHeight={200}
 					/>
 				</div>
 			</BarGraph>

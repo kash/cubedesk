@@ -1,4 +1,5 @@
 import AvatarImage from '@/components/common/avatar/AvatarImage';
+import {Button} from '@/components/ui/button';
 import {api} from '@/util/api';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -62,7 +63,7 @@ export default function Notif({notif, index, onRead, deleteNotification}: Props)
 	}
 
 	let icon: ReactNode = (
-		<div className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-module text-[0.9rem] text-text">
+		<div className="bg-module text-text flex h-[30px] w-[30px] items-center justify-center rounded-full text-[0.9rem]">
 			<i className={notif.icon} />
 		</div>
 	);
@@ -73,12 +74,9 @@ export default function Notif({notif, index, onRead, deleteNotification}: Props)
 	}
 
 	let markAsReadBtn: ReactNode = (
-		<button
-			className="ml-[7px] rounded-none border-b border-white px-0 pb-px pt-0 text-[0.8rem] text-text opacity-80 hover:bg-transparent hover:opacity-60"
-			onClick={markAsRead}
-		>
+		<Button variant="ghost" size="sm" onClick={markAsRead}>
 			Mark as Read
-		</button>
+		</Button>
 	);
 	if (notif.read_at) {
 		markAsReadBtn = null;
@@ -88,24 +86,21 @@ export default function Notif({notif, index, onRead, deleteNotification}: Props)
 		<div className={className}>
 			<div className="flex h-full w-[50px] items-center justify-center">{icon}</div>
 			<div className="w-[calc(100%_-_50px)]">
-				<h5 className="mb-1.5 text-xs font-medium uppercase tracking-[0.1rem] text-text opacity-50">
+				<h5 className="text-text mb-1.5 text-xs font-medium tracking-[0.1rem] uppercase opacity-50">
 					{notif.notification_category_name}
 				</h5>
 				<p className="mb-[5px]">{notif.in_app_message}</p>
-				<button className="mt-[5px] table border-b border-text text-[0.9rem] text-text" onClick={openLink}>
+				<Button variant="link" size="sm" className="mt-1 px-0" onClick={openLink}>
 					{notif.link_text}
-				</button>
+				</Button>
 			</div>
-			<div className="absolute right-2 top-2 flex flex-row opacity-0 transition-opacity duration-100 ease-in-out group-hover:opacity-100">
-				<button
-					className="ml-[7px] rounded-none border-b border-white px-0 pb-px pt-0 text-[0.8rem] text-text opacity-80 hover:bg-transparent hover:opacity-60"
-					onClick={handleDelete}
-				>
+			<div className="absolute top-2 right-2 flex flex-row opacity-0 transition-opacity duration-100 ease-in-out group-hover:opacity-100 focus-within:opacity-100">
+				<Button variant="ghost" size="sm" onClick={handleDelete}>
 					Delete
-				</button>
+				</Button>
 				{markAsReadBtn}
 			</div>
-			<span className="absolute bottom-2.5 right-2.5 flex text-[0.9rem] text-text opacity-50">
+			<span className="text-text absolute right-2.5 bottom-2.5 flex text-[0.9rem] opacity-50">
 				{dayjs(notif.created_at).fromNow()}
 			</span>
 		</div>

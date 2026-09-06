@@ -42,8 +42,6 @@ on:
                 required: true
             REDIS_URL:
                 required: true
-            AIRTABLE_BEARER_TOKEN:
-                required: true
             DISCORD_SECRET:
                 required: true
             DISCORD_BOT_SECRET:
@@ -98,7 +96,6 @@ jobs:
                   echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
                   echo RESOURCES_BASE_URI=${{ inputs.RESOURCES_BASE_URI }} >> .env
                   echo DIST_BASE_URI=${{ inputs.DIST_BASE_URI }} >> .env
-                  echo AIRTABLE_BEARER_TOKEN=${{ secrets.AIRTABLE_BEARER_TOKEN }} >> .env
                   echo ENV=${{ inputs.ENV }} >> .env
                   echo WCA_SECRET=${{ secrets.WCA_SECRET }} >> .env
                   echo ECR_IMAGE_NAME=${{ inputs.ECR_IMAGE_NAME }} >> .env

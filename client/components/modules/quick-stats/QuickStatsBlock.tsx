@@ -1,7 +1,10 @@
-import {openModal} from '@/actions/general';
-import HistoryModal from '@/components/modules/history/HistoryModal';
-import {getStatsBlockDescription, getStatsBlockValueFromFilter} from '@/components/modules/quick-stats/util';
+import HistoryDialog from '@/components/modules/history/HistoryDialog';
+import {
+	getStatsBlockDescription,
+	getStatsBlockValueFromFilter,
+} from '@/components/modules/quick-stats/util';
 import SolveInfo from '@/components/solve-info/SolveInfo';
+import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {useSettings} from '@/util/hooks/useSettings';
@@ -10,23 +13,28 @@ import {useColor} from '@/util/hooks/useTheme';
 import {getTimeString} from '@/util/time';
 import CSS from 'csstype';
 import jsonStr from 'json-stable-stringify';
-import React, {ReactNode, useEffect, useMemo, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {ReactNode, useMemo} from 'react';
 
 interface Props {
 	filterOptions?: FilterSolvesOptions;
 	statOptions: StatsModuleBlock;
 	rowSpan: number;
 	colSpan: number;
+	interactive?: boolean;
 }
 
 export default function QuickStatsBlock(props: Props) {
-	const {rowSpan, filterOptions, colSpan, statOptions} = props;
+	const [historyDialog, setHistoryDialog] = React.useState<React.ComponentProps<
+		typeof HistoryDialog
+	> | null>(null);
+	const [solveInfoDialog, setSolveInfoDialog] = React.useState<React.ComponentProps<
+		typeof SolveInfo
+	> | null>(null);
 
-	const dispatch = useDispatch();
+	const {filterOptions, statOptions, interactive = true} = props;
+	const ValueElement = interactive ? 'button' : 'span';
+
 	const sessionId = useSettings('session_id');
-	const [fontSize, setFontSize] = useState(25);
-	const statsBlockDiv = useRef<HTMLDivElement>(null);
 	const solveDb = useSolveDb();
 
 	const [statsBlockSolvesFilter, statsBlockDescription] = useMemo(() => {
@@ -64,7 +72,7 @@ export default function QuickStatsBlock(props: Props) {
 	];
 
 	const buttonStyle: CSS.Properties = {
-		fontSize: `${fontSize}px`,
+		fontSize: 'clamp(12px, min(33.333333cqh, 22.222222cqw), 70px)',
 		lineHeight: 0.9,
 	};
 	const colorHex = useColor(statOptions.colorName, 'button_color');
@@ -78,55 +86,81 @@ export default function QuickStatsBlock(props: Props) {
 
 	const statValue = getTimeString(statsBlockSolvesFilter?.time ?? 0);
 
-	useEffect(() => {
-		if (!statsBlockDiv.current) {
-			return;
-		}
-
-		const width = statsBlockDiv.current.clientWidth;
-		const height = statsBlockDiv.current.clientHeight;
-
-		const newFontSizeBasedOnHeight = height / 3;
-		const newFontSizeBasedOnWidth = width / 4.5;
-		const newFontSize = Math.min(newFontSizeBasedOnHeight, newFontSizeBasedOnWidth);
-
-		const absoluteMaxFontSize = 70;
-		const absoluteMinFontSize = 12;
-
-		setFontSize(Math.min(absoluteMaxFontSize, Math.max(newFontSize, absoluteMinFontSize)));
-	}, [rowSpan, colSpan]);
-
 	function openSolve(e) {
 		const singleSolve = statsBlockSolvesFilter?.solve;
 
 		if (solveCount && solveCount > 1) {
-			dispatch(
-				openModal(
-					<HistoryModal
-						time={statsBlockSolvesFilter?.time}
-						solves={statsBlockSolvesFilter?.solves ?? []}
-						description={statsBlockDescription}
-					/>
-				)
-			);
+			setHistoryDialog({
+				time: statsBlockSolvesFilter?.time,
+				solves: statsBlockSolvesFilter?.solves ?? [],
+				description: statsBlockDescription,
+			});
 		} else if (solveCount && singleSolve) {
-			dispatch(openModal(<SolveInfo solveId={singleSolve.id} />));
+			setSolveInfoDialog({solveId: singleSolve.id});
 		} else {
 			e.preventDefault();
 		}
 	}
 
 	return (
-		<div className={blockClasses.join(' ')} ref={statsBlockDiv}>
-			<div className="flex flex-row">
-				<StatDescription statOptions={statOptions} />
+		<>
+			<div className="relative h-full w-full">
+				{/* The grid sizes the outer block; containment only applies to its contents. */}
+				<div className="absolute inset-0 [container-type:size]">
+					<div className={blockClasses.join(' ')}>
+						<div className="flex flex-row">
+							<StatDescription statOptions={statOptions} />
+						</div>
+						<div className="relative flex h-full w-full items-start justify-center">
+							<ValueElement
+								onClick={interactive ? openSolve : undefined}
+								className={buttonClasses.join(' ')}
+								style={buttonStyle}
+							>
+								{statValue}
+							</ValueElement>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div className="relative w-full h-full flex items-start justify-center">
-				<button onClick={openSolve} className={buttonClasses.join(' ')} style={buttonStyle}>
-					{statValue}
-				</button>
-			</div>
-		</div>
+			<Dialog
+				open={historyDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setHistoryDialog(null);
+					}
+				}}
+			>
+				{historyDialog && (
+					<DialogContent>
+						<DialogTitle className="sr-only">Solve history</DialogTitle>
+						<HistoryDialog {...historyDialog} />
+					</DialogContent>
+				)}
+			</Dialog>
+			<Dialog
+				open={solveInfoDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setSolveInfoDialog(null);
+					}
+				}}
+			>
+				{solveInfoDialog && (
+					<DialogContent>
+						<DialogTitle className="sr-only">Solve details</DialogTitle>
+						<SolveInfo
+							{...solveInfoDialog}
+							onComplete={() => {
+								setSolveInfoDialog((current) =>
+									current === solveInfoDialog ? null : current,
+								);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }
 
@@ -162,5 +196,5 @@ function StatDescription(props: DescProps) {
 		text.push('worst');
 	}
 
-	return <span className="text-[0.8rem] px-0.5 text-text/70">{text.join(' ')}</span>;
+	return <span className="px-0.5 text-[0.8rem] text-text/70">{text.join(' ')}</span>;
 }

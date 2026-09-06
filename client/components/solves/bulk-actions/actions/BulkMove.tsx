@@ -1,14 +1,13 @@
-import {openModal} from '@/actions/general';
-import Button from '@/components/common/Button';
-import ConfirmModal from '@/components/common/ConfirmModal';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {initAllSolves} from '@/components/layout/init';
 import SessionSelector from '@/components/solves/bulk-actions/actions/SessionSelector';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {Session} from '@/types/session';
 import {Solve} from '@/types/solve';
 import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React, {useMemo} from 'react';
-import {useDispatch} from 'react-redux';
 
 interface Props {
 	disabled?: boolean;
@@ -16,8 +15,15 @@ interface Props {
 }
 
 export default function BulkMoveSolvesButton(props: Props) {
+	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
+		typeof ConfirmDialog
+	> | null>(null);
+	const [sessionSelectorDialog, setSessionSelectorDialog] = React.useState<{
+		props: React.ComponentProps<typeof SessionSelector>;
+		onComplete: React.ComponentProps<typeof SessionSelector>['onComplete'];
+	} | null>(null);
+
 	const {solves, disabled} = props;
-	const dispatch = useDispatch();
 
 	const solveIds = useMemo(() => {
 		return solves.map((solve) => solve.id);
@@ -26,20 +32,17 @@ export default function BulkMoveSolvesButton(props: Props) {
 	function onSelectSession(session: Session) {
 		const solvesToActOn = `${solves.length.toLocaleString()} solve${solves.length === 1 ? '' : 's'}`;
 
-		dispatch(
-			openModal(
-				<ConfirmModal
-					buttonText={`Move ${solvesToActOn}`}
-					title="Bulk move solves"
-					description="You are about to do a bulk move of solves. This is irreversible. Be careful."
-					infoBoxes={[
-						{label: 'Solves', value: solves.length.toLocaleString()},
-						{label: 'New Session', value: session.name},
-					]}
-					triggerAction={run}
-				/>,
-			),
-		);
+		setConfirmDialog({
+			buttonText: `Move ${solvesToActOn}`,
+			title: 'Bulk move solves',
+			description:
+				'You are about to do a bulk move of solves. This is irreversible. Be careful.',
+			infoBoxes: [
+				{label: 'Solves', value: solves.length.toLocaleString()},
+				{label: 'New Session', value: session.name},
+			],
+			triggerAction: run,
+		});
 
 		async function run() {
 			const updateCount = await trpc.bulkActions.moveSolvesToSession.mutate({
@@ -55,12 +58,50 @@ export default function BulkMoveSolvesButton(props: Props) {
 	}
 
 	function onClick() {
-		dispatch(
-			openModal(<SessionSelector solves={solves} />, {
-				onComplete: onSelectSession,
-			}),
-		);
+		setSessionSelectorDialog({props: {solves: solves}, onComplete: onSelectSession});
 	}
 
-	return <Button disabled={disabled} text="Change Session" gray onClick={onClick} />;
+	return (
+		<>
+			<Button variant="secondary" disabled={disabled} onClick={onClick}>
+				{'Change Session'}
+			</Button>
+			{confirmDialog && (
+				<ConfirmDialog
+					open={confirmDialog !== null}
+					onOpenChange={(open) => {
+						if (!open) {
+							setConfirmDialog(null);
+						}
+					}}
+					{...confirmDialog}
+					onComplete={() => {
+						setConfirmDialog((current) => (current === confirmDialog ? null : current));
+					}}
+				/>
+			)}
+			<Dialog
+				open={sessionSelectorDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setSessionSelectorDialog(null);
+					}
+				}}
+			>
+				{sessionSelectorDialog && (
+					<DialogContent>
+						<SessionSelector
+							{...sessionSelectorDialog.props}
+							onComplete={(...args) => {
+								setSessionSelectorDialog((current) =>
+									current === sessionSelectorDialog ? null : current,
+								);
+								sessionSelectorDialog.onComplete?.(...args);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
+	);
 }

@@ -1,4 +1,4 @@
-import Dropdown from '@/components/common/inputs/dropdown/Dropdown';
+import ActionMenu from '@/components/common/inputs/ActionMenu';
 import {LogoBrandmark} from '@/components/common/Logo';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
@@ -20,7 +20,7 @@ export default function MobileNav() {
 		navRight = (
 			<div className="relative z-[100] flex w-[30%] flex-row justify-end gap-2.5">
 				<Notifications right />
-				<Dropdown
+				<ActionMenu
 					options={[
 						{text: 'Account', link: '/account/personal-info'},
 						{text: 'Admin', link: '/admin/reports', hidden: !me.admin},
@@ -33,10 +33,10 @@ export default function MobileNav() {
 	}
 
 	return (
-		<div className="fixed top-0 left-0 z-[100000] flex h-[55px] w-full justify-center">
+		<div className="fixed left-0 top-0 z-[100000] flex h-[55px] w-full justify-center">
 			<div className="box-border flex w-full items-center justify-between px-[13px]">
 				<div className="relative z-[100] w-[30%]">
-					<Dropdown
+					<ActionMenu
 						icon={<List />}
 						openLeft
 						options={NAV_LINKS.map((link) => ({
@@ -54,7 +54,7 @@ export default function MobileNav() {
 				</div>
 				{navRight}
 			</div>
-			<span className="bg-module absolute top-0 left-0 z-0 h-full w-full" />
+			<span className="absolute left-0 top-0 z-0 h-full w-full bg-module" />
 		</div>
 	);
 }

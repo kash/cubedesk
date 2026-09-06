@@ -1,6 +1,8 @@
-import Button from '@/components/common/Button';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
-import React, {ReactNode, useEffect, useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group';
+import React, {ReactNode, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 export interface HorizontalNavTab {
 	id: string;
@@ -21,38 +23,50 @@ interface Props {
 export default function HorizontalNav(props: Props) {
 	const {onChange, legend, showBackgroundForUnselectedTabs} = props;
 
-	const [tabs, setTabs] = useState<HorizontalNavTab[]>([]);
-	const [selectedTab, setSelectedTab] = useState<HorizontalNavTab | null>(null);
+	const {tabs} = props;
+	const [localTabId, setLocalTabId] = useState<string | undefined>(undefined);
+	const selectedId =
+		props.tabId ?? props.tab?.id ?? localTabId ?? tabs.find((tab) => !tab.skip)?.id;
 
-	useEffect(() => {
-		setTabs(props.tabs);
-
-		if (props.tabId) {
-			for (const tab of props.tabs) {
-				if (tab.id === props.tabId) {
-					setSelectedTab(tab);
-					break;
-				}
-			}
-		} else if (props.tab) {
-			setSelectedTab(props.tab);
-		} else {
-			setSelectedTab(props.tabs[0]);
-		}
-	}, [props.tabs, props.tab, props.tabId]);
-
-	function clickTab(tab) {
-		setSelectedTab(tab);
+	function clickTab(tab: HorizontalNavTab) {
+		setLocalTabId(tab.id);
 
 		if (onChange) {
 			onChange(tab.id, tab);
 		}
 	}
 
+	if (!tabs.some((tab) => tab.link)) {
+		return (
+			<div className="space-y-2">
+				{legend && <InputLegend text={legend} />}
+				<ToggleGroup
+					type="single"
+					value={selectedId}
+					aria-label={legend || 'Options'}
+					variant={showBackgroundForUnselectedTabs ? 'outline' : 'default'}
+					className="flex-wrap"
+					onValueChange={(id) => {
+						const next = tabs.find((tab) => tab.id === id && !tab.skip);
+						if (next) clickTab(next);
+					}}
+				>
+					{tabs
+						.filter((tab) => !tab.skip)
+						.map((tab) => (
+							<ToggleGroupItem key={tab.id} value={tab.id}>
+								{tab.value}
+							</ToggleGroupItem>
+						))}
+				</ToggleGroup>
+			</div>
+		);
+	}
+
 	const output: ReactNode[] = [];
 
 	for (const tab of tabs) {
-		const selected = selectedTab?.id === tab.id;
+		const selected = selectedId === tab.id;
 		const unselected = !selected && showBackgroundForUnselectedTabs;
 
 		if (tab.skip) {
@@ -61,16 +75,21 @@ export default function HorizontalNav(props: Props) {
 
 		output.push(
 			<Button
-				to={tab.link}
+				variant={selected ? 'default' : unselected ? 'secondary' : 'ghost'}
 				key={tab.id}
 				type="button"
-				gray={unselected}
-				large
-				primary={selected}
-				glow={selected}
-				text={tab.value}
 				onClick={() => clickTab(tab)}
-			/>,
+				aria-pressed={!tab.link ? selected : undefined}
+				asChild={!!tab.link}
+			>
+				{tab.link ? (
+					<Link to={tab.link} aria-current={selected ? 'page' : undefined}>
+						{tab.value}
+					</Link>
+				) : (
+					tab.value
+				)}
+			</Button>,
 		);
 	}
 

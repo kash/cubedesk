@@ -8,7 +8,7 @@ import {Dispatch} from 'redux';
 
 // Creates session if none exist already
 export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext) {
-	const {inModal, demoMode} = context;
+	const {inDialog, demoMode} = context;
 	const sessionId = getSetting('session_id');
 	const cubeType = getSetting('cube_type');
 	const ct = getCubeTypeInfoById(cubeType);
@@ -22,7 +22,7 @@ export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext)
 			});
 		}
 		setSetting('session_id', 'demo');
-	} else if (!inModal) {
+	} else if (!inDialog) {
 		if (!sessionId || (sessionId && !fetchSessionById(sessionId))) {
 			const session = await createSessionDb({
 				name: 'New Session',

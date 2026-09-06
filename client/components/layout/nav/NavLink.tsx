@@ -1,5 +1,6 @@
-import Tag from '@/components/common/Tag';
 import {NavLinkProps} from '@/components/layout/nav/nav-links';
+import {Badge} from '@/components/ui/badge';
+import {Tooltip} from '@/components/ui/tooltip';
 import {useMe} from '@/util/hooks/useMe';
 import {Lock} from 'phosphor-react';
 import React, {ReactNode} from 'react';
@@ -17,9 +18,17 @@ export default function NavLink(props: Props) {
 
 	let infoTag: ReactNode = null;
 	if (loginRequired && !me) {
-		infoTag = <Tag icon={<Lock weight="fill" />} textColor="orange" />;
+		infoTag = (
+			<Badge variant="unfilled" size="sm" className="text-amber-600" aria-label="Restricted">
+				<Lock weight="fill" />
+			</Badge>
+		);
 	} else if (newTag) {
-		infoTag = <Tag text="new" textColor="orange" />;
+		infoTag = (
+			<Badge variant="unfilled" size="sm" className="text-amber-600">
+				new
+			</Badge>
+		);
 	}
 
 	const wrapperClasses = ['transition-all', 'group', 'rounded'];
@@ -29,7 +38,7 @@ export default function NavLink(props: Props) {
 		'w-full',
 		'text-text',
 		'h-12',
-		'text-lg',
+		'text-base',
 		'flex',
 		'flex-row',
 		'items-center',
@@ -49,13 +58,16 @@ export default function NavLink(props: Props) {
 		linkClasses.push('justify-center');
 	}
 
+	const linkContent = (
+		<Link to={link} className={linkClasses.join(' ')} aria-label={collapsed ? name : undefined}>
+			<span className="text-xl">{icon}</span>
+			{navLabel}
+		</Link>
+	);
 	return (
 		<div className={wrapperClasses.join(' ')}>
 			<div className="relative">
-				<Link to={link} className={linkClasses.join(' ')}>
-					<span className="text-xl">{icon}</span>
-					{navLabel}
-				</Link>
+				{collapsed ? <Tooltip title={name}>{linkContent}</Tooltip> : linkContent}
 				<div className="absolute top-1/2 right-0 -translate-y-1/2">{infoTag}</div>
 			</div>
 		</div>

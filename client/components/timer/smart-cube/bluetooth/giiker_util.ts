@@ -27,8 +27,8 @@ const g = 5;
 const colors = ['blue', 'yellow', 'orange', 'white', 'red', 'green'];
 
 const lookup = [
-	176, 81, 104, 224, 86, 137, 237, 119, 38, 26, 193, 161, 210, 126, 150, 81, 93, 13, 236, 249, 89, 235, 88, 24, 113,
-	81, 214, 131, 130, 199, 2, 169, 39, 165, 171, 41,
+	176, 81, 104, 224, 86, 137, 237, 119, 38, 26, 193, 161, 210, 126, 150, 81, 93, 13, 236, 249, 89,
+	235, 88, 24, 113, 81, 214, 131, 130, 199, 2, 169, 39, 165, 171, 41,
 ];
 
 const turns = {
@@ -151,7 +151,10 @@ export default class GiikerUtil extends EventEmitter {
 
 		this._state = (await this._parseCubeValue(value)).state;
 
-		characteristic.addEventListener('characteristicvaluechanged', this._onCharacteristicValueChanged);
+		characteristic.addEventListener(
+			'characteristicvaluechanged',
+			this._onCharacteristicValueChanged,
+		);
 
 		this._systemService = await server.getPrimaryService(SYSTEM_SERVICE_UUID);
 
@@ -231,7 +234,7 @@ export default class GiikerUtil extends EventEmitter {
 			const mappedColors = this._mapCornerColors(
 				cornerColors[cp - 1],
 				this._state.cornerOrientations[index],
-				index
+				index,
 			);
 			state.corners.push({
 				position: cornerLocations[index].map((f) => faces[f]),
@@ -239,7 +242,10 @@ export default class GiikerUtil extends EventEmitter {
 			});
 		});
 		this._state.edgePositions.forEach((ep, index) => {
-			const mappedColors = this._mapEdgeColors(edgeColors[ep - 1], this._state.edgeOrientations[index]);
+			const mappedColors = this._mapEdgeColors(
+				edgeColors[ep - 1],
+				this._state.edgeOrientations[index],
+			);
 			state.edges.push({
 				position: edgeLocations[index].map((f) => faces[f]),
 				colors: mappedColors.map((c) => colors[c]),
@@ -294,13 +300,15 @@ export default class GiikerUtil extends EventEmitter {
 
 		state.corners.forEach((corner, cornerIndex) => {
 			corner.position.forEach((face, faceIndex) => {
-				faces[cornerFaceIndices[cornerIndex][faceIndex]] = colorFaceMapping[corner.colors[faceIndex]];
+				faces[cornerFaceIndices[cornerIndex][faceIndex]] =
+					colorFaceMapping[corner.colors[faceIndex]];
 			});
 		});
 
 		state.edges.forEach((edge, edgeIndex) => {
 			edge.position.forEach((face, faceIndex) => {
-				faces[edgeFaceIndices[edgeIndex][faceIndex]] = colorFaceMapping[edge.colors[faceIndex]];
+				faces[edgeFaceIndices[edgeIndex][faceIndex]] =
+					colorFaceMapping[edge.colors[faceIndex]];
 			});
 		});
 

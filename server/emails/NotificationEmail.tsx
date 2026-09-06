@@ -19,7 +19,7 @@ const linkStyle: React.CSSProperties = {
 
 export default function NotificationEmail({user, message, link, linkText}: NotificationEmailProps) {
 	return (
-		<EmailLayout previewText={message} firstName={user.first_name}>
+		<EmailLayout previewText={message} username={user.username}>
 			<Text style={text}>{message}</Text>
 			<Text style={text}>
 				<Link href={link} style={linkStyle}>

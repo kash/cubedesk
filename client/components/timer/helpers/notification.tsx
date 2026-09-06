@@ -1,4 +1,5 @@
-import Tag, {TagProps} from '@/components/common/Tag';
+import {Badge, badgeVariants} from '@/components/ui/badge';
+import {VariantProps} from 'class-variance-authority';
 import {setTimerParam, setTimerParams} from '@/components/timer/helpers/params';
 import {NOTIFICATION_TIMEOUT, setTimer, stopTimer} from '@/components/timer/helpers/timers';
 import {getTimerStore} from '@/util/store/getTimer';
@@ -8,7 +9,15 @@ import React from 'react';
 const HIDE_NOTIF_TIMEOUT = 7000;
 
 // This is for the notification that shows up above the scramble
-export function displayTimerAlert(tagProps: TagProps, dontHide?: boolean) {
+export interface TimerAlertOptions {
+	text: string;
+	variant?: VariantProps<typeof badgeVariants>['variant'];
+}
+
+export function displayTimerAlert(
+	{text, variant = 'secondary'}: TimerAlertOptions,
+	dontHide?: boolean,
+) {
 	setTimerParams({
 		notification: (
 			<div
@@ -17,7 +26,13 @@ export function displayTimerAlert(tagProps: TagProps, dontHide?: boolean) {
 					dontHide && 'opacity-100',
 				)}
 			>
-				<Tag glow {...tagProps} />
+				<Badge
+					variant={variant}
+					role="status"
+					className="h-auto min-h-7 max-w-full py-1 text-center break-words whitespace-normal"
+				>
+					{text}
+				</Badge>
 			</div>
 		),
 	});

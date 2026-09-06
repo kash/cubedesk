@@ -1,6 +1,6 @@
 import {getMe} from '@/actions/account';
-import Button from '@/components/common/Button';
 import UploadCover from '@/components/common/UploadCover';
+import {Button} from '@/components/ui/button';
 import {api} from '@/util/api';
 import {useMe} from '@/util/hooks/useMe';
 import {getStorageURL} from '@/util/storage';
@@ -60,7 +60,9 @@ export default function TimerBackground() {
 				) : null}
 			</div>
 			{image ? (
-				<Button flat text="Reset background" danger onClick={resetBackgroundImage} />
+				<Button variant="destructive" onClick={resetBackgroundImage} size="sm">
+					{'Reset background'}
+				</Button>
 			) : null}
 		</div>
 	);

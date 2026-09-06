@@ -27,11 +27,11 @@ const text: React.CSSProperties = {
 
 interface EmailLayoutProps {
 	previewText: string;
-	firstName?: string | null;
+	username?: string | null;
 	children: React.ReactNode;
 }
 
-export default function EmailLayout({previewText, firstName, children}: EmailLayoutProps) {
+export default function EmailLayout({previewText, username, children}: EmailLayoutProps) {
 	return (
 		<Html>
 			<Head />
@@ -46,7 +46,7 @@ export default function EmailLayout({previewText, firstName, children}: EmailLay
 
 					<Hr style={divider} />
 
-					<Text style={text}>Hey {firstName || 'there'},</Text>
+					<Text style={text}>Hey {username || 'there'},</Text>
 
 					{children}
 

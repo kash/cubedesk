@@ -1,5 +1,6 @@
-import Button from '@/components/common/Button';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
 import Loading from '@/components/common/Loading';
+import {Button} from '@/components/ui/button';
 import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '@/shared/integration';
 import {SafeIntegration} from '@/types/integration';
 import {Serialized} from '@/types/serialized';
@@ -69,44 +70,48 @@ export default function IntegrationService(props: Props) {
 	let revokeButton: ReactNode = null;
 	if (integration) {
 		revokeButton = (
-			<Button
-				text="Revoke"
-				flat
-				danger
-				confirmModalProps={{
+			<ConfirmDialog
+				{...{
 					hideInput: true,
 					title: `Unlink ${service.name} account`,
 					description: 'Are you sure you want to unlink this account?',
 					buttonText: 'Unlink account',
 					triggerAction: removeIntegration,
 				}}
-			/>
+			>
+				<Button variant="destructive" size="sm">
+					{'Revoke'}
+				</Button>
+			</ConfirmDialog>
 		);
 	}
 
 	return (
-		<div className="relative flex w-full flex-col items-center">
+		<div className="relative flex h-full w-full flex-col items-center">
 			<div className="flex flex-col items-center">
 				<img
-					className="h-auto w-16"
+					className="h-16 w-16 object-contain"
 					alt={`Logo for ${service.name}`}
 					src={service.logoSrc}
 				/>
 				<h4 className="mt-2.5 opacity-90">{service.name}</h4>
 			</div>
-			<div className="mt-1.5 mb-2.5 opacity-70">
+			<div className="mt-1.5 mb-2.5 flex-1 opacity-70">
 				<p>{service.description}</p>
 			</div>
 			<div className="flex w-full flex-col items-center gap-1.5">
 				<Button
-					fullWidth
-					large
-					primary
+					variant="default"
 					disabled={!!integration}
-					text={integration ? 'Account Linked' : 'Link Account'}
-					icon={integration ? <Check /> : <ArrowRight />}
-					to={serviceUri}
-				/>
+					size="lg"
+					className="w-full"
+					asChild
+				>
+					<a href={serviceUri}>
+						{integration ? 'Account Linked' : 'Link Account'}
+						{integration ? <Check /> : <ArrowRight />}
+					</a>
+				</Button>
 				{revokeButton}
 			</div>
 		</div>

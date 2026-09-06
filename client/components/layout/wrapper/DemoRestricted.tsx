@@ -1,5 +1,6 @@
-import Button from '@/components/common/Button';
-import Tag from '@/components/common/Tag';
+import AuthDialog from '@/components/login/AuthDialog';
+import {Badge} from '@/components/ui/badge';
+import {Button} from '@/components/ui/button';
 import {Lock} from 'phosphor-react';
 import React from 'react';
 
@@ -10,15 +11,25 @@ export default function DemoRestricted() {
 				<span className="mb-3 text-xl text-red-500">
 					<Lock weight="fill" />
 				</span>
-				<Tag text="RESTRICTED" bold small backgroundColor="red" textColor="white" />
+				<Badge size="sm" variant="destructive">
+					RESTRICTED
+				</Badge>
 			</div>
 			<div className="my font-label text-text/70 mt-6 mb-10 text-center text-xl">
 				This page is not available in demo mode. Please sign in or create a free account for
 				access.
 			</div>
 			<div className="mx-auto flex flex-row justify-center gap-3">
-				<Button large glow to="/login" text="Log in" />
-				<Button large glow to="/signup" text="Sign up" primary />
+				<AuthDialog view="login">
+					<Button variant="secondary" size="lg">
+						{'Log in'}
+					</Button>
+				</AuthDialog>
+				<AuthDialog view="signup">
+					<Button variant="default" size="lg">
+						{'Sign up'}
+					</Button>
+				</AuthDialog>
 			</div>
 		</div>
 	);

@@ -1,13 +1,13 @@
-import Button from '@/components/common/Button';
-import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/ModalHeader';
 import SessionPicker from '@/components/sessions/SessionPicker';
+import {Button} from '@/components/ui/button';
+import {DialogHeader} from '@/components/ui/dialog';
 import {Session} from '@/types/session';
 import {Solve} from '@/types/solve';
 import {getBasicPlural} from '@/util/strings/plural';
 import React, {ReactNode, useState} from 'react';
 
-interface Props extends IModalProps {
+interface Props {
+	onComplete?: (session: Session) => void;
 	solves: Solve[];
 }
 
@@ -18,7 +18,7 @@ export default function SessionSelector(props: Props) {
 	let selectedSession: ReactNode = null;
 	if (session) {
 		selectedSession = (
-			<p className="text-text border-text/20 mt-4 mb-5 table border-b-4 border-solid text-2xl">
+			<p className="border-text/20 text-text mt-4 mb-5 table border-b-4 border-solid text-2xl">
 				Move <span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
 				<span className="text-warning">{session.name}</span>
 			</p>
@@ -27,7 +27,7 @@ export default function SessionSelector(props: Props) {
 
 	return (
 		<div>
-			<ModalHeader
+			<DialogHeader
 				title="Move solves"
 				description="Select a session to move the selected solves to"
 			/>
@@ -36,12 +36,15 @@ export default function SessionSelector(props: Props) {
 			</div>
 			{selectedSession}
 			<Button
-				large
-				onClick={() => onComplete?.(session)}
+				variant="default"
+				onClick={() => {
+					if (session) onComplete?.(session);
+				}}
 				disabled={!session}
-				primary
-				text="Continue"
-			/>
+				size="lg"
+			>
+				{'Continue'}
+			</Button>
 		</div>
 	);
 }

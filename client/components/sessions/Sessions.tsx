@@ -1,51 +1,45 @@
-import {openModal} from '@/actions/general';
-import Button from '@/components/common/Button';
 import CubePicker from '@/components/common/CubePicker';
-import Input from '@/components/common/inputs/input/Input';
-import Module from '@/components/common/Module';
+import './sessions.css';
 import PageTitle from '@/components/common/PageTitle';
 import History from '@/components/modules/history/History';
-import TimeChart from '@/components/modules/time-chart/TimeChart';
-import TimeDistro from '@/components/modules/time-distro/TimeDistro';
 import CreateNewSession from '@/components/sessions/CreateNewSession';
 import Session from '@/components/sessions/Session';
+import SessionAnalytics from '@/components/sessions/SessionAnalytics';
+import SessionSummary from '@/components/sessions/SessionSummary';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent} from '@/components/ui/dialog';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
 import {fetchSessionById, fetchSessions, getCubeTypesFromSession} from '@/db/sessions/query';
 import {reorderSessions, updateSessionDb} from '@/db/sessions/update';
 import {fetchLastCubeTypeForSession} from '@/db/solves/query';
-import block from '@/styles/bem';
+import {getTotalSolveCount} from '@/db/solves/stats/count';
 import {CubeType} from '@/util/cubes/cube_types';
-import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSessionDb} from '@/util/hooks/useSessionDb';
 import {useSettings} from '@/util/hooks/useSettings';
+import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {
 	closestCenter,
 	DndContext,
 	DragEndEvent,
+	KeyboardSensor,
 	PointerSensor,
 	useSensor,
 	useSensors,
 } from '@dnd-kit/core';
-import {restrictToHorizontalAxis, restrictToVerticalAxis} from '@dnd-kit/modifiers';
+import {restrictToVerticalAxis} from '@dnd-kit/modifiers';
 import {
 	arrayMove,
-	horizontalListSortingStrategy,
 	SortableContext,
+	sortableKeyboardCoordinates,
 	useSortable,
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import classNames from 'classnames';
 import {Plus} from 'phosphor-react';
 import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
 
-function SortableItem({
-	session,
-	selectedSessionId,
-	selectSession,
-	setSelectedSessionId,
-	mobileMode,
-}) {
+function SortableItem({session, selectedSessionId, selectSession, setSelectedSessionId}) {
 	const {
 		attributes,
 		listeners,
@@ -71,41 +65,24 @@ function SortableItem({
 			selectSession={selectSession}
 			style={style}
 			isDragging={isDragging}
-			className={mobileMode ? 'mr-2.5 w-auto min-w-[250px]' : undefined}
 			refCallback={setNodeRef}
 			dragHandleProps={{attributes, listeners, setActivatorNodeRef}}
 		/>
 	);
 }
 
-function SortableList({
-	sessions,
-	selectedSessionId,
-	selectSession,
-	setSelectedSessionId,
-	mobileMode,
-}) {
+function SortableList({sessions, selectedSessionId, selectSession, setSelectedSessionId}) {
 	const items = sessions.map((s) => s.id);
 
 	return (
-		<SortableContext
-			items={items}
-			strategy={mobileMode ? horizontalListSortingStrategy : verticalListSortingStrategy}
-		>
-			<div
-				className={
-					mobileMode
-						? 'flex h-full flex-row overflow-x-scroll'
-						: 'h-[calc(100vh_-_230px)] overflow-auto'
-				}
-			>
+		<SortableContext items={items} strategy={verticalListSortingStrategy}>
+			<div className="sessions-list">
 				{sessions.map((s) => (
 					<SortableItem
 						setSelectedSessionId={setSelectedSessionId}
 						session={s}
 						selectedSessionId={selectedSessionId}
 						selectSession={selectSession}
-						mobileMode={mobileMode}
 						key={s.id}
 					/>
 				))}
@@ -115,41 +92,33 @@ function SortableList({
 }
 
 export default function Sessions() {
-	const dispatch = useDispatch();
+	const [createNewSessionDialog, setCreateNewSessionDialog] = React.useState<{
+		props: React.ComponentProps<typeof CreateNewSession>;
+		onComplete: React.ComponentProps<typeof CreateNewSession>['onComplete'];
+	} | null>(null);
 
 	useSessionDb();
 
-	const mobileMode = useGeneral('mobile_mode');
+	useSolveDb();
 	const currentSessionId = useSettings('session_id');
 
 	const [selectedSessionId, setSelectedSessionId] = useState<string>(currentSessionId);
-	const [cubeType, setCubeType] = useState('');
+	const [cubeSelection, setCubeSelection] = useState<{
+		sessionId: string;
+		cubeType: string;
+	} | null>(null);
 
 	const allSessions = fetchSessions();
-	const session = fetchSessionById(selectedSessionId);
+	const session = fetchSessionById(selectedSessionId) || allSessions[0];
 
 	function selectSession(e, id) {
-		let target = e?.target;
-		while (target) {
-			if (
-				target &&
-				target.classList &&
-				target.classList.contains(block('common-dropdown')())
-			) {
-				return;
-			}
-
-			target = target.parentNode;
-		}
-
 		setSelectedSessionId(id);
 
-		const lastCubeType = fetchLastCubeTypeForSession(id);
-		setCubeType(lastCubeType || '333');
+		setCubeSelection(null);
 	}
 
 	function handleCubeChange(ct: CubeType) {
-		setCubeType(ct.id);
+		if (session) setCubeSelection({sessionId: session.id, cubeType: ct.id});
 	}
 
 	function setSessionName(e) {
@@ -163,16 +132,17 @@ export default function Sessions() {
 	}
 
 	function openCreateNewSession() {
-		dispatch(
-			openModal(<CreateNewSession />, {
-				onComplete: (session) => {
-					setSelectedSessionId(session.id);
-				},
-			}),
-		);
+		setCreateNewSessionDialog({
+			props: {},
+			onComplete: (session) => {
+				setSelectedSessionId(session.id);
+				setCubeSelection(null);
+			},
+		});
 	}
 
 	const sensors = useSensors(
+		useSensor(KeyboardSensor, {coordinateGetter: sortableKeyboardCoordinates}),
 		useSensor(PointerSensor, {
 			activationConstraint: {
 				distance: 6,
@@ -197,110 +167,132 @@ export default function Sessions() {
 		reorderSessions(sessionIds);
 	}
 
-	if (!session || !allSessions || !allSessions.length) {
-		return null;
-	}
-
-	const sessionCubeTypes = getCubeTypesFromSession(session);
+	const sessionCubeTypes = session ? getCubeTypesFromSession(session) : [];
 	const currentCube = String(
-		cubeType || (session ? fetchLastCubeTypeForSession(session.id) : null) || '333',
+		(cubeSelection?.sessionId === session?.id ? cubeSelection?.cubeType : null) ||
+			(session ? fetchLastCubeTypeForSession(session.id) : null) ||
+			'333',
 	);
 
 	const fetchFilter = {
-		session_id: selectedSessionId,
+		session_id: session?.id,
 		cube_type: currentCube,
 	};
 
-	// TODO NOW fix session stats. Replace with QuickStats with proper options
-	const body = (
-		<div>
-			<Module>
-				<div className="col-span-2 flex items-center justify-between">
+	const body = session ? (
+		<div className="sessions-detail">
+			<div className="sessions-detail-header">
+				<div className="sessions-name-field">
+					<Label className="mb-2" htmlFor="session-name">
+						Session name
+					</Label>
 					<Input
+						id="session-name"
 						type="text"
-						noMargin
-						maxWidth
-						placeholder="Session Name"
-						name={selectedSessionId}
+						placeholder="Session name"
+						name={session.id}
 						value={session.name}
 						onChange={setSessionName}
+						maxLength={200}
 					/>
-					<div className="flex flex-row flex-wrap justify-end gap-2">
-						<CubePicker
-							handlePrefix="Stats for "
-							excludeSelected
-							value={currentCube}
-							cubeTypes={sessionCubeTypes}
-							onChange={handleCubeChange}
-							dropdownProps={{
-								noMargin: true,
-								dropdownButtonProps: {
-									noMargin: true,
-								},
-							}}
-						/>
-					</div>
 				</div>
-			</Module>
-			<div className="mt-[30px] grid w-full auto-rows-[300px] grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-5">
-				{/*<Module smallPadding>*/}
-				{/*	<SessionStats filterOptions={fetchFilter} />*/}
-				{/*</Module>*/}
-				<Module smallPadding className="h-full">
-					<History filterOptions={fetchFilter} />
-				</Module>
-				<Module smallPadding className="h-full">
-					<TimeChart filterOptions={fetchFilter} />
-				</Module>
-				<Module smallPadding className="h-full">
-					<TimeDistro filterOptions={fetchFilter} />
-				</Module>
+				<CubePicker
+					handlePrefix="Stats for "
+					excludeSelected
+					value={currentCube}
+					cubeTypes={sessionCubeTypes}
+					onChange={handleCubeChange}
+					pickerProps={{noMargin: true}}
+				/>
 			</div>
+			<SessionSummary filterOptions={fetchFilter} />
+			<div className="sessions-analysis">
+				<section className="sessions-panel sessions-history" aria-label="Solve history">
+					<div className="sessions-panel-heading">
+						<h2>Solve history</h2>
+						<p>Most recent first · Select a time for details</p>
+					</div>
+					<div
+						className="sessions-history-list"
+						style={{
+							height: Math.min(
+								360,
+								Math.max(108, getTotalSolveCount(fetchFilter) * 36),
+							),
+						}}
+					>
+						<History key={`${session.id}-${currentCube}`} filterOptions={fetchFilter} />
+					</div>
+				</section>
+				<SessionAnalytics filterOptions={fetchFilter} />
+			</div>
+		</div>
+	) : (
+		<div className="sessions-panel sessions-empty">
+			<h2>A fresh start</h2>
+			<p>Create a session to start organizing your solves.</p>
+			<Button onClick={openCreateNewSession}>Create a session</Button>
 		</div>
 	);
 
 	return (
-		<div className="relative flex h-full flex-col">
-			<PageTitle pageName="Sessions">
-				<Button
-					primary
-					glow
-					style={{
-						top: 0,
-						right: 0,
-						position: 'absolute',
-					}}
-					large
-					text="New Session"
-					onClick={openCreateNewSession}
-					type="button"
-					icon={<Plus weight="bold" />}
-				/>
-			</PageTitle>
-			<div
-				className={classNames(
-					'box-border grid h-full w-full gap-5',
-					mobileMode
-						? 'grid-cols-1 [grid-template-rows:100px_1fr]'
-						: '[grid-template-columns:290px_1fr]',
-				)}
-			>
-				<DndContext
-					sensors={sensors}
-					collisionDetection={closestCenter}
-					modifiers={[mobileMode ? restrictToHorizontalAxis : restrictToVerticalAxis]}
-					onDragEnd={onDragEnd}
-				>
-					<SortableList
-						mobileMode={mobileMode}
-						selectSession={selectSession}
-						setSelectedSessionId={setSelectedSessionId}
-						sessions={allSessions}
-						selectedSessionId={selectedSessionId}
+		<>
+			<div className="sessions-page">
+				<div className="sessions-page-header">
+					<PageTitle
+						pageName="Sessions"
+						description="A little structure for every practice."
 					/>
-				</DndContext>
-				<div>{body}</div>
+					<Button onClick={openCreateNewSession} type="button">
+						<Plus weight="bold" />
+						New session
+					</Button>
+				</div>
+				<div className="sessions-layout">
+					<aside className="sessions-sidebar" aria-label="Your sessions">
+						<div className="sessions-sidebar-heading">
+							<h2>Your sessions</h2>
+							<span>{allSessions.length}</span>
+						</div>
+						<DndContext
+							sensors={sensors}
+							collisionDetection={closestCenter}
+							modifiers={[restrictToVerticalAxis]}
+							onDragEnd={onDragEnd}
+						>
+							<SortableList
+								selectSession={selectSession}
+								setSelectedSessionId={setSelectedSessionId}
+								sessions={allSessions}
+								selectedSessionId={session?.id}
+							/>
+						</DndContext>
+					</aside>
+					{body}
+				</div>
 			</div>
-		</div>
+			<Dialog
+				open={createNewSessionDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setCreateNewSessionDialog(null);
+					}
+				}}
+			>
+				{createNewSessionDialog && (
+					<DialogContent>
+						<CreateNewSession
+							{...createNewSessionDialog.props}
+							onComplete={(...args) => {
+								setCreateNewSessionDialog((current) =>
+									current === createNewSessionDialog ? null : current,
+								);
+								createNewSessionDialog.onComplete?.(...args);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
 	);
 }

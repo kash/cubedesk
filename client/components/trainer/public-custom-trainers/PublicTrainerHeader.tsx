@@ -1,26 +1,24 @@
-import {CommonType} from '@/components/common/Button';
-import LinkButton from '@/components/common/LinkButton';
+import {Button} from '@/components/ui/button';
 import {ArrowLeft} from 'phosphor-react';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export default function PublicTrainerHeader() {
 	return (
 		<div className="border-tmo-module/10 bg-background relative mx-auto mb-10 h-[300px] w-full overflow-hidden rounded-[15px] border-4">
 			<div className="absolute top-1/2 left-[30px] z-10 -translate-y-1/2">
-				<h1>Trainer Marketplace</h1>
+				<h1 className="font-sans text-3xl font-medium tracking-tight">Trainer Marketplace</h1>
 				<h3 className="mt-[5px] mb-2.5 font-medium opacity-80">
 					Download free trainer algorithms created by the amazing CubeDesk community.
 				</h3>
 			</div>
 			<div className="absolute top-5 left-[30px] z-10">
-				<LinkButton
-					theme={CommonType.WHITE}
-					flat
-					iconFirst
-					icon={<ArrowLeft />}
-					text="Back to Trainer"
-					to="/trainer/333/OLL"
-				/>
+				<Button variant="link" size="sm" asChild>
+					<Link to={'/trainer/333/OLL'}>
+						<ArrowLeft />
+						{'Back to Trainer'}
+					</Link>
+				</Button>
 			</div>
 			<img
 				alt="Floating Rubik's cube"

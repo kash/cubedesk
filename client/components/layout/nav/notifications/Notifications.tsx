@@ -1,6 +1,8 @@
 import Empty from '@/components/common/Empty';
 import Loading from '@/components/common/Loading';
 import Notif from '@/components/layout/nav/notifications/Notif';
+import {Button} from '@/components/ui/button';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {api} from '@/util/api';
 import {cn} from '@/util/cn';
 import {Bell} from 'phosphor-react';
@@ -26,8 +28,6 @@ export default function Notifications({right}: Props) {
 	const endOfListRef = useRef(endOfList);
 	const notificationsRef = useRef(notifications);
 	const pageRef = useRef(page);
-	const bodyRef = useRef<HTMLDivElement | null>(null);
-	const wrapperRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
 		openRef.current = open;
@@ -106,11 +106,11 @@ export default function Notifications({right}: Props) {
 	}, []);
 
 	const scrollList = useCallback(
-		(e: Event) => {
+		(e: React.UIEvent<HTMLDivElement>) => {
 			if (loadingRef.current || endOfListRef.current) return;
 
-			const target = e.target as HTMLElement;
-			if (target.scrollHeight - target.scrollTop === target.clientHeight) {
+			const target = e.currentTarget;
+			if (target.scrollHeight - target.scrollTop <= target.clientHeight + 1) {
 				const nextPage = pageRef.current + 1;
 				setPage(nextPage);
 				getNotifications(nextPage);
@@ -143,55 +143,6 @@ export default function Notifications({right}: Props) {
 		updateNotificationCount();
 	};
 
-	const openDropdown = () => {
-		setOpen(true);
-
-		const notificationList = bodyRef.current;
-		if (!notificationList || !notificationList.parentNode) return;
-
-		notificationList.parentNode.addEventListener('scroll', scrollList);
-	};
-
-	const closeDropdown = useCallback(() => {
-		setOpen(false);
-
-		const notificationList = bodyRef.current;
-		if (!notificationList || !notificationList.parentNode) return;
-
-		notificationList.parentNode.removeEventListener('scroll', scrollList);
-	}, [scrollList]);
-
-	const closeDropdownOnClick = useCallback(
-		(e: MouseEvent) => {
-			if (wrapperRef.current?.contains(e.target as Node)) {
-				return;
-			}
-
-			closeDropdown();
-		},
-		[closeDropdown],
-	);
-
-	useEffect(() => {
-		if (!open) {
-			return;
-		}
-
-		const timeout = setTimeout(() => {
-			window.addEventListener('click', closeDropdownOnClick);
-		}, 50);
-
-		return () => {
-			clearTimeout(timeout);
-			window.removeEventListener('click', closeDropdownOnClick);
-		};
-	}, [open, closeDropdownOnClick]);
-
-	const handleOpen = (e: React.MouseEvent) => {
-		e.preventDefault();
-		openDropdown();
-	};
-
 	let body: ReactNode = null;
 	const loadingBody: ReactNode = loading ? (
 		<div>
@@ -204,11 +155,7 @@ export default function Notifications({right}: Props) {
 
 		if (notifications.length) {
 			body = (
-				<div
-					ref={bodyRef}
-					id="cd-notifications__body"
-					className="box-border flex flex-col gap-2.5 p-2.5"
-				>
+				<div id="cd-notifications__body" className="box-border flex flex-col gap-2.5 p-2.5">
 					{notifications.map((notif: any, i: number) => (
 						<Notif
 							onRead={readNotification}
@@ -225,7 +172,7 @@ export default function Notifications({right}: Props) {
 
 	if ((notifications && !notifications.length) || (!notifications && endOfList)) {
 		body = (
-			<div className="box-border flex h-full w-full items-center justify-center pb-[100px]">
+			<div className="box-border flex w-full items-center justify-center">
 				<Empty text="No notifications" />
 			</div>
 		);
@@ -240,32 +187,36 @@ export default function Notifications({right}: Props) {
 		);
 	}
 
-	let dropdownBody: ReactNode = null;
-	if (open) {
-		dropdownBody = (
-			<div
-				className={cn(
-					'bg-button absolute top-[calc(100%+5px)] right-0 z-[1000000] box-border flex h-[500px] w-[400px] flex-col space-y-1.5 overflow-y-auto rounded p-1 shadow-[0_4px_13px_rgba(0,0,0,0.2)]',
-					!right && 'right-auto left-0',
-				)}
+	return (
+		<Popover open={open} onOpenChange={setOpen}>
+			<PopoverTrigger asChild>
+				<Button
+					type="button"
+					aria-label={
+						unreadCount ? `Notifications (${unreadCount} unread)` : 'Notifications'
+					}
+					variant="ghost"
+					size="icon-sm"
+					className="relative"
+				>
+					<Bell weight="bold" />
+					{unreadSpan}
+				</Button>
+			</PopoverTrigger>
+			<PopoverContent
+				aria-label="Notifications"
+				align={right ? 'end' : 'start'}
+				className={cn('flex flex-col gap-1.5 overflow-y-auto p-1', {
+					'h-[min(500px,var(--radix-popover-content-available-height))] w-[400px]':
+						!!notifications?.length,
+					'w-[280px] max-h-[var(--radix-popover-content-available-height)]':
+						!notifications?.length,
+				})}
+				onScroll={scrollList}
 			>
 				{body}
 				{loadingBody}
-			</div>
-		);
-	}
-
-	return (
-		<div className="relative">
-			{unreadSpan}
-			<div ref={wrapperRef} className="relative flex flex-col items-start">
-				<button className="p-0" onClick={handleOpen}>
-					<div className="text-text flex h-[30px] w-[30px] items-center justify-center rounded-full text-base">
-						<Bell weight="bold" />
-					</div>
-				</button>
-				{dropdownBody}
-			</div>
-		</div>
+			</PopoverContent>
+		</Popover>
 	);
 }

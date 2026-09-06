@@ -1,9 +1,12 @@
-import Button from '@/components/common/Button';
-import {IModalProps} from '@/components/common/modal/Modal';
+import {Button} from '@/components/ui/button';
 import {resourceUri} from '@/util/storage';
 import React from 'react';
 
-export default function SolveCheck(props: IModalProps) {
+interface Props {
+	onComplete?: () => void;
+}
+
+export default function SolveCheck(props: Props) {
 	return (
 		<div className="mt-[15px] flex flex-col items-center">
 			<img
@@ -11,7 +14,9 @@ export default function SolveCheck(props: IModalProps) {
 				src={resourceUri('/images/rubiks_cube_solve.svg')}
 				alt="Solved speed cube"
 			/>
-			<Button text="My cube is solved" primary onClick={props.onComplete} />
+			<Button variant="default" onClick={props.onComplete}>
+				{'My cube is solved'}
+			</Button>
 		</div>
 	);
 }

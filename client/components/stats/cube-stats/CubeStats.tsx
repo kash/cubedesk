@@ -1,5 +1,5 @@
-import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
 import TimeChart from '@/components/modules/time-chart/TimeChart';
+import ActivityChart from '@/components/stats/common/ActivityChart';
 import StatModule from '@/components/stats/common/StatModule';
 import StatSection from '@/components/stats/common/StatSection';
 import SubStats from '@/components/stats/common/SubStats';
@@ -9,31 +9,47 @@ import {useStatsContext} from '@/components/stats/Stats';
 import React from 'react';
 
 export default function CubeStats() {
-	const context = useStatsContext();
-	const filter = context.filterOptions;
-
-	const oneMonth = new Date();
-	oneMonth.setDate(oneMonth.getDate() - 60);
-
+	const {filterOptions} = useStatsContext();
 	return (
-		<div className="grid w-full auto-rows-[350px] grid-cols-[repeat(auto-fill,minmax(500px,1fr))] gap-[30px]">
-			<StatSection title="Overview">
-				<CubeStatsFeatured />
-			</StatSection>
-			<StatSection title="Averages">
-				<CubeStatAverages />
-			</StatSection>
-			<StatSection minWidth="400px" title="Solve Times">
-				<StatModule>
-					<TimeChart filterOptions={filter} />
+		<div className="stats-dashboard">
+			<div className="stats-main-grid">
+				<StatSection
+					title="Personal overview"
+					description="Your best solve and lifetime totals"
+					className="stats-overview"
+				>
+					<CubeStatsFeatured />
+				</StatSection>
+				<StatSection
+					title="Averages"
+					description="Your most recent solves"
+					className="stats-panel"
+				>
+					<CubeStatAverages />
+				</StatSection>
+			</div>
+			<StatSection
+				title="Solve times"
+				description="A closer look at your progress"
+				className="stats-panel"
+			>
+				<StatModule className="stats-chart">
+					<TimeChart filterOptions={filterOptions} />
 				</StatModule>
 			</StatSection>
-			<StatSection title="More Stats">
+			<StatSection
+				title="The details"
+				description="Habits, milestones, and everything in between"
+			>
 				<SubStats />
 			</StatSection>
-			<StatSection colSpan="all" title="Consistency">
-				<StatModule>
-					<SolvesPerDay filterOptions={filter} days={60} />
+			<StatSection
+				title="Solving activity"
+				description="Your daily solves · Last 60 days"
+				className="stats-panel"
+			>
+				<StatModule className="stats-chart">
+					<ActivityChart filterOptions={filterOptions} days={60} />
 				</StatModule>
 			</StatSection>
 		</div>

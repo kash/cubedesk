@@ -1,14 +1,13 @@
-import {openModal} from '@/actions/general';
-import Button from '@/components/common/Button';
-import ConfirmModal from '@/components/common/ConfirmModal';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {initAllSolves} from '@/components/layout/init';
 import EventTypeSelector from '@/components/solves/bulk-actions/actions/EventTypeSelector';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {Solve} from '@/types/solve';
 import {CubeType} from '@/util/cubes/cube_types';
 import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React, {useMemo} from 'react';
-import {useDispatch} from 'react-redux';
 
 interface Props {
 	disabled?: boolean;
@@ -16,28 +15,32 @@ interface Props {
 }
 
 export default function BulkChangeEventSolvesButton(props: Props) {
+	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
+		typeof ConfirmDialog
+	> | null>(null);
+	const [eventTypeSelectorDialog, setEventTypeSelectorDialog] = React.useState<{
+		props: React.ComponentProps<typeof EventTypeSelector>;
+		onComplete: React.ComponentProps<typeof EventTypeSelector>['onComplete'];
+	} | null>(null);
+
 	const {solves, disabled} = props;
-	const dispatch = useDispatch();
 
 	const solveIds = useMemo(() => {
 		return solves.map((solve) => solve.id);
 	}, [solves, solves?.length]);
 
 	function onSelectCubeType(cubeType: CubeType) {
-		dispatch(
-			openModal(
-				<ConfirmModal
-					buttonText={`Change event type`}
-					title="Bulk change event type"
-					description="You are about to set the event type of the selected solves. This is irreversible. Be careful."
-					infoBoxes={[
-						{label: 'Solves', value: solves.length.toLocaleString()},
-						{label: 'New Event Type', value: cubeType.name},
-					]}
-					triggerAction={run}
-				/>,
-			),
-		);
+		setConfirmDialog({
+			buttonText: `Change event type`,
+			title: 'Bulk change event type',
+			description:
+				'You are about to set the event type of the selected solves. This is irreversible. Be careful.',
+			infoBoxes: [
+				{label: 'Solves', value: solves.length.toLocaleString()},
+				{label: 'New Event Type', value: cubeType.name},
+			],
+			triggerAction: run,
+		});
 
 		async function run() {
 			const updateCount = await trpc.bulkActions.updateCubeType.mutate({
@@ -55,12 +58,50 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 	}
 
 	function onClick() {
-		dispatch(
-			openModal(<EventTypeSelector solves={solves} />, {
-				onComplete: onSelectCubeType,
-			}),
-		);
+		setEventTypeSelectorDialog({props: {solves: solves}, onComplete: onSelectCubeType});
 	}
 
-	return <Button disabled={disabled} text="Change Event" gray onClick={onClick} />;
+	return (
+		<>
+			<Button variant="secondary" disabled={disabled} onClick={onClick}>
+				{'Change Event'}
+			</Button>
+			{confirmDialog && (
+				<ConfirmDialog
+					open={confirmDialog !== null}
+					onOpenChange={(open) => {
+						if (!open) {
+							setConfirmDialog(null);
+						}
+					}}
+					{...confirmDialog}
+					onComplete={() => {
+						setConfirmDialog((current) => (current === confirmDialog ? null : current));
+					}}
+				/>
+			)}
+			<Dialog
+				open={eventTypeSelectorDialog !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setEventTypeSelectorDialog(null);
+					}
+				}}
+			>
+				{eventTypeSelectorDialog && (
+					<DialogContent>
+						<EventTypeSelector
+							{...eventTypeSelectorDialog.props}
+							onComplete={(...args) => {
+								setEventTypeSelectorDialog((current) =>
+									current === eventTypeSelectorDialog ? null : current,
+								);
+								eventTypeSelectorDialog.onComplete?.(...args);
+							}}
+						/>
+					</DialogContent>
+				)}
+			</Dialog>
+		</>
+	);
 }

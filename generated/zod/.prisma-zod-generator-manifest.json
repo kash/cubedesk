@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "1.0.0",
-  "generatedAt": "2026-07-05T22:10:28.320Z",
+  "generatedAt": "2026-09-05T23:17:02.261Z",
   "outputPath": "/Users/kash/Developer/cubedesk/generated/zod",
   "files": [
     "schemas/enums/TransactionIsolationLevel.schema.ts",
@@ -45,6 +45,8 @@
     "schemas/enums/CustomTrainerScalarFieldEnum.schema.ts",
     "schemas/enums/CustomTrainerLikeScalarFieldEnum.schema.ts",
     "schemas/enums/CustomTrainerDownloadScalarFieldEnum.schema.ts",
+    "schemas/enums/TrainerAlgorithmScalarFieldEnum.schema.ts",
+    "schemas/enums/TrainerCatalogStateScalarFieldEnum.schema.ts",
     "schemas/enums/TrainerFavoriteScalarFieldEnum.schema.ts",
     "schemas/enums/AlgorithmOverrideScalarFieldEnum.schema.ts",
     "schemas/enums/SettingScalarFieldEnum.schema.ts",
@@ -92,6 +94,8 @@
     "schemas/enums/CustomTrainerOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/CustomTrainerLikeOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/CustomTrainerDownloadOrderByRelevanceFieldEnum.schema.ts",
+    "schemas/enums/TrainerAlgorithmOrderByRelevanceFieldEnum.schema.ts",
+    "schemas/enums/TrainerCatalogStateOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/TrainerFavoriteOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/AlgorithmOverrideOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/SettingOrderByRelevanceFieldEnum.schema.ts",

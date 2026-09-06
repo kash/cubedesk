@@ -1,3 +1,4 @@
+import Empty from '@/components/common/Empty';
 import BarGraph from '@/components/modules/bar-graph/BarGraph';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {getSolveCountByDateData} from '@/db/solves/stats/consistency';
@@ -25,7 +26,11 @@ export default function SolvesPerDay(props: Props) {
 			started_at: startDate.getTime(),
 			ended_at: endDate.getTime(),
 		});
-	}, [jsonStr(filterOptions), filterOptions, solveUpdate]);
+	}, [jsonStr(filterOptions), filterOptions, solveUpdate, days]);
+
+	if (!memoData.some((day) => day.y > 0)) {
+		return <Empty text="No solves in this period" centered />;
+	}
 
 	return <BarGraph data={memoData} />;
 }

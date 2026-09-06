@@ -158,7 +158,7 @@ export default function TimeDisplay() {
 			>
 				{timeStr}
 			</h1>
-			<div className={classNames(context.timeStartedAt && 'pointer-events-none opacity-30')}>{bottomInfo}</div>
+			<div className={classNames(context.timeStartedAt && 'pointer-events-none opacity-10')}>{bottomInfo}</div>
 			{subTimerActions}
 		</>
 	);

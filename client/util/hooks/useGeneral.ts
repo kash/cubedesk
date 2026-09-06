@@ -1,16 +1,7 @@
-import {IModalProps} from '@/components/common/modal/Modal';
 import {RootState} from '@/reducers/reducers';
-import {ReactNode} from 'react';
 import {useSelector} from 'react-redux';
 
-interface ModalListItem {
-	createdAt: number;
-	body: ReactNode;
-	options: IModalProps;
-}
-
 export interface GeneralAllParams {
-	modals: ModalListItem[];
 	mobile_mode: boolean;
 	browser_session_id: string | null;
 	force_nav_collapsed: boolean;

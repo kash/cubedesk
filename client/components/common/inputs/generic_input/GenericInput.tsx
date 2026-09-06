@@ -7,11 +7,6 @@ import React, {ReactElement, ReactNode} from 'react';
 
 const DEFAULT_MAX_WIDTH = 350;
 
-// Shared styles for the raw input/select/textarea elements rendered by leaf
-// input components (Input, TextArea, Select).
-export const inputClassNames =
-	'box-border w-full rounded-md border-none bg-button p-2.5 text-base text-tmo-button transition-all duration-100 ease-in-out placeholder:text-tmo-button/35 focus:border-tmo-button disabled:opacity-60';
-
 export interface GenericInputProps<T extends HTMLElement> {
 	info?: string;
 	legend?: string;
@@ -80,7 +75,7 @@ export default function GenericInput<T extends HTMLElement>(
 	let headerBody: ReactNode = null;
 	if (optional || legend) {
 		headerBody = (
-			<div className="mb-1.5">
+			<div className="mb-2">
 				<InputLegend optional={optional} tag={tagLegend} text={legend} />
 			</div>
 		);

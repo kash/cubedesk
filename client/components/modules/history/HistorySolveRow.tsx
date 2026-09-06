@@ -1,15 +1,14 @@
-import {openModal} from '@/actions/general';
-import Button from '@/components/common/Button';
-import SolveInfo from '@/components/solve-info/SolveInfo';
+import {Button} from '@/components/ui/button';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
-import {deleteSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
+import {cn} from '@/util/cn';
 import {getTimeString} from '@/util/time';
 import {Bluetooth, X} from 'phosphor-react';
 import React, {ReactNode} from 'react';
-import {useDispatch} from 'react-redux';
 
 interface Props {
+	onOpenSolve: (solve: Solve) => void;
+	onDeleteSolve: (solve: Solve) => void;
 	index: number;
 	disabled?: boolean;
 	solve: Solve;
@@ -18,10 +17,8 @@ interface Props {
 export default function HistorySolveRow(props: Props) {
 	const {index, solve, disabled} = props;
 
-	const dispatch = useDispatch();
-
 	function deleteSolve() {
-		deleteSolveDb(solve);
+		props.onDeleteSolve(solve);
 	}
 
 	function plusTwoSolve() {
@@ -33,7 +30,7 @@ export default function HistorySolveRow(props: Props) {
 	}
 
 	function openSolve() {
-		dispatch(openModal(<SolveInfo solve={solve} solveId={solve.id} disabled={disabled} />));
+		props.onOpenSolve(solve);
 	}
 
 	const solveTime = solve.time;
@@ -51,50 +48,39 @@ export default function HistorySolveRow(props: Props) {
 		);
 	}
 
-	function getActionClasses(active: boolean) {
-		return [
-			'text-base',
-			'opacity-30',
-			'transition-opacity',
-			'duration-100',
-			'ease-in-out',
-			'hover:opacity-70',
-			active ? '!opacity-100' : '',
-		]
-			.filter(Boolean)
-			.join(' ');
-	}
-
 	let actions: ReactNode = null;
 	if (!disabled) {
 		actions = (
 			<>
 				<Button
+					variant="ghost"
 					title="Plus two solve"
-					className={getActionClasses(plusTwo)}
-					text="+2"
-					flat
-					white
-					warning={plusTwo}
 					onClick={plusTwoSolve}
-				/>
+					size="sm"
+					aria-pressed={plusTwo}
+					className={cn({'text-warning': plusTwo})}
+				>
+					{'+2'}
+				</Button>
 				<Button
+					variant="ghost"
 					title="DNF solve"
-					className={getActionClasses(dnf)}
-					flat
-					white
-					danger={dnf}
-					text="DNF"
 					onClick={dnfSolve}
-				/>
+					size="sm"
+					aria-pressed={dnf}
+					className={cn({'text-error': dnf})}
+				>
+					{'DNF'}
+				</Button>
 				<Button
+					variant="ghost"
 					title="Delete solve"
-					className={getActionClasses(true)}
-					icon={<X />}
-					flat
-					white
 					onClick={deleteSolve}
-				/>
+					size="icon-sm"
+					aria-label="Delete solve"
+				>
+					<X />
+				</Button>
 			</>
 		);
 	}
@@ -113,12 +99,19 @@ export default function HistorySolveRow(props: Props) {
 				{(index + 1).toLocaleString()}.
 			</div>
 			<div className="text-text w-[150px] text-base">
-				<button className={timeClasses.join(' ')} onClick={openSolve}>
+				<Button
+					variant="ghost"
+					className={cn(
+						'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
+						timeClasses.join(' '),
+					)}
+					onClick={openSolve}
+				>
 					<span className="border-b-2 border-solid border-transparent pt-[3px] text-base text-inherit group-hover:border-current">
 						{time}
 					</span>
 					{bluetoothIcon}
-				</button>
+				</Button>
 			</div>
 
 			<div className="text-text flex w-[calc(100%_-_190px)] flex-row items-center justify-end gap-2.5 pr-[5px] text-right text-base">

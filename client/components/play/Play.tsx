@@ -35,8 +35,8 @@ export function getGameMetaData(gameType: GameType) {
 
 export default function Play() {
 	return (
-		<div className="mx-auto flex flex-row items-center justify-center">
-			<div className="mx-auto flex flex-row flex-wrap gap-3">
+		<div className="w-full">
+			<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 				<PlayRow>
 					<HeadToHead />
 				</PlayRow>
@@ -54,6 +54,6 @@ interface PlayRowProps {
 
 function PlayRow(props: PlayRowProps) {
 	return (
-		<div className="w-full max-w-md rounded-lg border-4 border-solid border-slate-300/10 p-5">{props.children}</div>
+		<div className="rounded-2xl border border-tmo-module/10 bg-tmo-module/[0.025] p-6 sm:p-7">{props.children}</div>
 	);
 }

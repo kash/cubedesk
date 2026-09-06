@@ -16,7 +16,7 @@ export function listenForMatchWarnings() {
 		}
 
 		displayTimerAlert({
-			backgroundColor: 'orange',
+			variant: 'warning',
 			text: message,
 		});
 	});
@@ -32,7 +32,7 @@ export function listenForMatchWarnings() {
 		}
 
 		displayTimerAlert({
-			backgroundColor: 'orange',
+			variant: 'warning',
 			text: message,
 		});
 	});

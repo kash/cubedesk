@@ -42,7 +42,11 @@ export function initAnonymousAppData(callback) {
 	callback();
 }
 
-export async function initAppData(me: UserAccount, dispatch: Dispatch<any>, callback): Promise<any> {
+export async function initAppData(
+	me: UserAccount,
+	dispatch: Dispatch<any>,
+	callback,
+): Promise<any> {
 	if (typeof window === 'undefined') {
 		return;
 	}
@@ -70,7 +74,13 @@ export async function initAppData(me: UserAccount, dispatch: Dispatch<any>, call
 		promises.push(getStatsModule(dispatch));
 		promises.push(getAllSettings(me?.id));
 		promises.push(getAllFriends(dispatch));
-		promises.push(initTrainerData());
+		promises.push(
+			initTrainerData().catch((error) => {
+				// A catalog outage must not block the timer or the admin CSV import page.
+				// The trainer page fetches again and exposes its own retry state.
+				console.error('Could not initialize trainer data', error);
+			}),
+		);
 		promises.push(initNewScramble());
 
 		try {

@@ -1,8 +1,9 @@
-import Button from '@/components/common/Button';
 import CubePicker from '@/components/common/CubePicker';
-import Input from '@/components/common/inputs/input/Input';
-import {IModalProps} from '@/components/common/modal/Modal';
-import ModalHeader from '@/components/common/modal/ModalHeader';
+import {Button} from '@/components/ui/button';
+import {DialogHeader} from '@/components/ui/dialog';
+import {Field, FieldLabel} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
+import {Spinner} from '@/components/ui/spinner';
 import {createSessionDb} from '@/db/sessions/update';
 import {setCubeType, setCurrentSession} from '@/db/settings/update';
 import {CubeType} from '@/util/cubes/cube_types';
@@ -10,7 +11,13 @@ import {useInput} from '@/util/hooks/useInput';
 import {toastError} from '@/util/toast';
 import React, {useState} from 'react';
 
-export default function CreateNewSession(props: IModalProps) {
+interface Props {
+	onComplete?: (session: Awaited<ReturnType<typeof createSessionDb>>) => void;
+}
+
+export default function CreateNewSession(props: Props) {
+	const fieldId = React.useId();
+
 	const {onComplete} = props;
 
 	const [loading, setLoading] = useState(false);
@@ -44,21 +51,24 @@ export default function CreateNewSession(props: IModalProps) {
 
 	return (
 		<div className="flex flex-col items-start">
-			<ModalHeader
+			<DialogHeader
 				title="Create new session"
 				description="In CubeDesk, sessions can have multiple cube types. You can split up sessions however you'd like: by cube type, by day, etc."
 			/>
 			<div className="w-full">
-				<Input
-					placeholder="New Session"
-					maxLength={200}
-					legend="Session Name"
-					value={name}
-					onChange={setName}
-				/>
+				<Field className="mb-2">
+					<FieldLabel htmlFor={`${fieldId}-1`}>{'Session Name'}</FieldLabel>
+					<Input
+						placeholder="New Session"
+						maxLength={200}
+						value={name}
+						onChange={setName}
+						id={`${fieldId}-1`}
+					/>
+				</Field>
 			</div>
 			<CubePicker
-				dropdownProps={{
+				pickerProps={{
 					legend: 'Cube Type',
 					info: 'You can change this later',
 					openLeft: true,
@@ -68,14 +78,15 @@ export default function CreateNewSession(props: IModalProps) {
 			/>
 			<div className="mt-3">
 				<Button
-					glow
-					primary
-					large
-					text="Create Session"
+					variant="default"
 					onClick={createSession}
-					disabled={disabled}
-					loading={loading}
-				/>
+					size="lg"
+					disabled={disabled || loading}
+					aria-busy={loading}
+				>
+					{'Create Session'}
+					{loading ? <Spinner aria-hidden="true" /> : null}
+				</Button>
 			</div>
 		</div>
 	);

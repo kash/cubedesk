@@ -1,4 +1,4 @@
-import ModalHeader from '@/components/common/modal/ModalHeader';
+import {DialogHeader} from '@/components/ui/dialog';
 import React from 'react';
 
 export default function BluetoothErrorMessage() {
@@ -13,7 +13,7 @@ export default function BluetoothErrorMessage() {
 
 	return (
 		<>
-			<ModalHeader title={title} description={description} />
+			<DialogHeader title={title} description={description} />
 			<p>
 				Your browser may not support Web Bluetooth API. Consider using compatible browser,
 				the best choice is:

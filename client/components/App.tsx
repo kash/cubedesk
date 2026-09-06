@@ -14,7 +14,6 @@ import {Provider} from 'react-redux';
 import {BrowserRouter, Switch} from 'react-router-dom';
 import {applyMiddleware, createStore} from 'redux';
 import promise from 'redux-promise-middleware';
-import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/index.css';
 import {thunk} from 'redux-thunk';
 
@@ -56,8 +55,8 @@ const tree = (
 	</TRPCProvider>
 );
 
-// Dev serves an empty shell (no SSR), so client-render instead of hydrate.
-if (process.env.ENV === 'development') {
+// Hydrate server-rendered pages, including the demo homepage in development.
+if (!appNode.hasChildNodes()) {
 	createRoot(appNode).render(tree);
 } else {
 	hydrateRoot(appNode, tree);

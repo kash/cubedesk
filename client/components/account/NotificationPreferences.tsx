@@ -13,14 +13,14 @@ export default function NotificationPreferences() {
 		});
 	}, []);
 
-	function handleChange(e) {
+	function handleChange(key: string, checked: boolean) {
 		const newPrefs = {...prefs};
-		newPrefs[e.target.name] = e.target.checked;
+		newPrefs[key] = checked;
 		setPrefs(newPrefs);
 
 		trpc.notificationPref.set.mutate({
-			key: e.target.name as NotificationPreferenceKey,
-			value: e.target.checked,
+			key: key as NotificationPreferenceKey,
+			value: checked,
 		});
 	}
 
@@ -54,7 +54,7 @@ export default function NotificationPreferences() {
 					key={pref}
 					name={pref}
 					text={label}
-					onChange={handleChange}
+					onCheckedChange={(checked) => handleChange(pref, checked)}
 					checked={prefs[pref]}
 				/>,
 			);

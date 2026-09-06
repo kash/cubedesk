@@ -1,14 +1,15 @@
+import {setGeneral} from '@/actions/general';
 import Nav from '@/components/layout/nav/Nav';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import {updateThemeColors} from '@/components/layout/themes';
 import DemoRestricted from '@/components/layout/wrapper/DemoRestricted';
-import DemoWarning from '@/components/layout/wrapper/DemoWarning';
+import {Toaster} from '@/components/ui/sonner';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import React, {ReactNode, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
-import {ToastContainer} from 'react-toastify';
 
 interface Props {
 	noPadding?: boolean;
@@ -20,6 +21,7 @@ export default function Wrapper(props: Props) {
 	const {hideTopNav, noPadding} = props;
 
 	const me = useMe();
+	const dispatch = useDispatch();
 	const match = useRouteMatch();
 
 	const appLoaded = useGeneral('app_loaded');
@@ -33,6 +35,16 @@ export default function Wrapper(props: Props) {
 	const moduleColor = useSettings('module_color');
 	const buttonColor = useSettings('button_color');
 	const textColor = useSettings('text_color');
+
+	useEffect(() => {
+		function updateLayout() {
+			dispatch(setGeneral('force_nav_collapsed', window.innerWidth <= 1080));
+			dispatch(setGeneral('mobile_mode', window.innerWidth <= 750));
+		}
+		updateLayout();
+		window.addEventListener('resize', updateLayout);
+		return () => window.removeEventListener('resize', updateLayout);
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (!appLoaded || typeof document === 'undefined') {
@@ -51,7 +63,7 @@ export default function Wrapper(props: Props) {
 	]);
 
 	let nav: ReactNode = <Nav />;
-	if (hideTopNav) {
+	if (hideTopNav || !me) {
 		nav = null;
 	}
 
@@ -80,7 +92,7 @@ export default function Wrapper(props: Props) {
 		gridColumns = 'grid-cols-[80px_1fr]';
 	}
 
-	if (focusMode || mobileMode) {
+	if (focusMode || mobileMode || !nav) {
 		gridColumns = 'grid-cols-1';
 	}
 
@@ -93,7 +105,7 @@ export default function Wrapper(props: Props) {
 		'bg-background',
 		gridColumns,
 	];
-	if (mobileMode) {
+	if (mobileMode && nav) {
 		bodyClasses.push('pt-[55px]');
 	}
 
@@ -104,13 +116,10 @@ export default function Wrapper(props: Props) {
 
 	return (
 		<div className="cd">
-			<ToastContainer />
+			<Toaster />
 			<div className={bodyClasses.join(' ')}>
 				{nav}
-				<div className={contentClasses.join(' ')}>
-					<DemoWarning />
-					{body}
-				</div>
+				<div className={contentClasses.join(' ')}>{body}</div>
 			</div>
 		</div>
 	);

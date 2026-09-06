@@ -1,6 +1,7 @@
 import type {Request} from 'express';
 import {PageContext, routes} from '@/components/layout/Routes';
 import {mapSingleRoute} from '@/components/map-route';
+import {getNewScramble} from '@/components/timer/helpers/scramble';
 import reducers from '@/reducers/reducers';
 import {ErrorCode} from '@/server/constants/errors';
 import htmlTemplate, {HtmlPagePayload} from '@/server/html_template';
@@ -66,14 +67,17 @@ function renderFullPage(html, headTags, preloadedState) {
 const isDev = (process.env.ENV || 'development') === 'development';
 
 function createComponents(req, store) {
-	// In dev we skip server-side rendering entirely and ship an empty shell. The
-	// client bundle renders everything (see App.tsx using createRoot in dev). This
-	// keeps client component code out of the render path so editing a component no
-	// longer forces a full server restart — only Vite rebuilds + browser reloads.
-	if (isDev) {
+	const demoHome = req.path === '/' && !store.getState().account.me;
+	// Keep the development shell for other routes; the public demo renders on the
+	// server in every environment so its timer is visible before JavaScript loads.
+	if (isDev && !demoHome) {
 		const preloaded = store.getState();
 		const fullHtml = renderFullPage('', '', preloaded);
 		return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
+	}
+
+	if (demoHome) {
+		store.dispatch({type: 'SET_TIMER_PARAM', payload: {params: {scramble: getNewScramble('333')}}});
 	}
 
 	const staticRouter = (

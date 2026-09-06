@@ -1,6 +1,8 @@
-import Button from '@/components/common/Button';
 import Emblem from '@/components/common/Emblem';
-import {IModalProps} from '@/components/common/modal/Modal';
+import ButtonError from '@/components/common/inputs/Error';
+import {Button} from '@/components/ui/button';
+import {Spinner} from '@/components/ui/spinner';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
@@ -11,7 +13,11 @@ import {toastError, toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React, {useState} from 'react';
 
-export default function PublishSolves(props: IModalProps) {
+interface Props {
+	onComplete?: () => void;
+}
+
+export default function PublishSolves(props: Props) {
 	const {onComplete} = props;
 
 	const cubeTypes = fetchAllCubeTypesSolved(true);
@@ -89,13 +95,13 @@ export default function PublishSolves(props: IModalProps) {
 		const ct = getCubeTypeInfoById(type.cube_type);
 
 		rows.push(
-			<tr key={type.cube_type}>
-				<td>
+			<TableRow key={type.cube_type}>
+				<TableCell>
 					<Emblem text={ct?.name ?? type.cube_type} />
-				</td>
-				<td>{pb && <Emblem text={getTimeString(pb.time)} />}</td>
-				<td>{ao5pb && <Emblem text={getTimeString(ao5pb.time)} />}</td>
-			</tr>,
+				</TableCell>
+				<TableCell>{pb && <Emblem text={getTimeString(pb.time)} />}</TableCell>
+				<TableCell>{ao5pb && <Emblem text={getTimeString(ao5pb.time)} />}</TableCell>
+			</TableRow>,
 		);
 	}
 
@@ -121,25 +127,29 @@ export default function PublishSolves(props: IModalProps) {
 			{exception}
 			{exception ? null : (
 				<>
-					<table className="cd-table mb-3">
-						<thead>
-							<tr>
-								<th>Cube Type</th>
-								<th>Single</th>
-								<th>Average</th>
-							</tr>
-						</thead>
-						<tbody>{rows}</tbody>
-					</table>
-					<Button
-						primary
-						glow
-						large
-						text="Publish to Profile"
-						error={error}
-						loading={publishing}
-						onClick={publishTimes}
-					/>
+					<Table className="mb-3">
+						<TableHeader>
+							<TableRow>
+								<TableHead>Cube Type</TableHead>
+								<TableHead>Single</TableHead>
+								<TableHead>Average</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>{rows}</TableBody>
+					</Table>
+					<div className="flex flex-col items-start">
+						<Button
+							variant="default"
+							onClick={publishTimes}
+							size="lg"
+							disabled={publishing}
+							aria-busy={publishing}
+						>
+							{'Publish to Profile'}
+							{publishing ? <Spinner aria-hidden="true" /> : null}
+						</Button>
+						<ButtonError text={error} />
+					</div>
 				</>
 			)}
 		</div>
