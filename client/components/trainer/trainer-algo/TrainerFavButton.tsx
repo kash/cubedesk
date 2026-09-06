@@ -1,17 +1,23 @@
 import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
-import {Button} from '@/components/ui/button';
+import {Button, type ButtonProps} from '@/components/ui/button';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {toggleTrainerAlgoFavorite} from '@/db/trainer/operations';
+import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
+import {useTrainerDb} from '@/util/hooks/useTrainerDb';
 import {Star} from 'phosphor-react';
 import React from 'react';
 
 interface Props {
 	algoExt: TrainerAlgorithmExtended;
+	className?: string;
+	variant?: ButtonProps['variant'];
+	size?: ButtonProps['size'];
 }
 
 export default function TrainerFavButton(props: Props) {
 	const {algoExt} = props;
-	const algo = cleanTrainerAlgorithm(algoExt);
+	useTrainerDb();
+	const algo = cleanTrainerAlgorithm(fetchTrainerAlgorithmById(algoExt.id) ?? algoExt);
 
 	function favoriteAlgorithm() {
 		toggleTrainerAlgoFavorite(algo);
@@ -19,13 +25,14 @@ export default function TrainerFavButton(props: Props) {
 
 	return (
 		<Button
-			variant={algo.favorite ? 'default' : 'secondary'}
+			className={props.className}
+			variant={props.variant ?? (algo.favorite ? 'default' : 'secondary')}
 			onClick={favoriteAlgorithm}
-			size="icon"
+			size={props.size ?? 'icon'}
 			aria-label={algo.favorite ? 'Remove favorite' : 'Add favorite'}
 			aria-pressed={algo.favorite}
 		>
-			<Star weight="bold" />
+			<Star weight={algo.favorite ? 'fill' : 'regular'} />
 		</Button>
 	);
 }

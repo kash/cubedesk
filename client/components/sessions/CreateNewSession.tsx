@@ -56,7 +56,7 @@ export default function CreateNewSession(props: Props) {
 				description="In CubeDesk, sessions can have multiple cube types. You can split up sessions however you'd like: by cube type, by day, etc."
 			/>
 			<div className="w-full">
-				<Field className="mb-2">
+				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-1`}>{'Session Name'}</FieldLabel>
 					<Input
 						placeholder="New Session"
@@ -76,7 +76,7 @@ export default function CreateNewSession(props: Props) {
 				onChange={onCubeTypeChange}
 				value={sessionCubeType}
 			/>
-			<div className="mt-3">
+			<div className="mt-5">
 				<Button
 					variant="default"
 					onClick={createSession}

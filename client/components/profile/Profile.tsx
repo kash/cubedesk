@@ -1,6 +1,5 @@
 import {getMe} from '@/actions/account';
 import {setSsrValue} from '@/actions/ssr';
-import Avatar from '@/components/common/avatar/Avatar';
 import AvatarDropdown from '@/components/common/avatar/AvatarDropdown';
 import LoadingIcon from '@/components/common/LoadingIcon';
 import UploadCover from '@/components/common/UploadCover';
@@ -14,20 +13,18 @@ import PublishSolves from '@/components/profile/PublishSolves';
 import WCA from '@/components/profile/WCA';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
-import {Separator} from '@/components/ui/separator';
 import {Image} from '@/types/image';
 import {Profile as ProfileSchema} from '@/types/profile';
 import {TopAverage, TopSolve} from '@/types/top-solve';
 import {PublicUserAccount} from '@/types/user';
 import {api} from '@/util/api';
-import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {useSsr} from '@/util/hooks/useSsr';
 import {getStorageURL} from '@/util/storage';
 import {trpc} from '@/util/trpc';
 import {fileToBase64} from '@/util/upload';
 import classNames from 'classnames';
-import {CircleWavyCheck, Plus} from 'phosphor-react';
+import {CalendarBlank, CircleWavyCheck, Plus, Trophy} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
@@ -73,9 +70,8 @@ async function getProfileData(username: string): Promise<IProfileData> {
 		}
 
 		const cubeType = topAverage.cube_type as string;
-		if (pbs[cubeType]) {
-			pbs[cubeType].average = topAverage;
-		}
+		pbs[cubeType] ??= {};
+		pbs[cubeType].average = topAverage;
 	}
 
 	return {
@@ -106,7 +102,6 @@ export default function Profile() {
 	const matchUsername = match?.params?.username;
 
 	const me = useMe();
-	const mobileMode = useGeneral('mobile_mode');
 	const [ssrProfile, setSsrProfile] = useSsr<IProfileData>(matchUsername);
 	const [loading, setLoading] = useState(!ssrProfile);
 	const [profileData, setProfileData] = useState<IProfileData | null>(ssrProfile);
@@ -160,7 +155,8 @@ export default function Profile() {
 		setPublishSolvesDialog({
 			props: {},
 			title: 'Publish your PBs',
-			description: 'Please make sure that the solves below are legitimate and yours.',
+			description:
+				'Share your fastest solves with the community. Review your records before publishing.',
 			onComplete: () => window.location.reload(),
 		});
 	}
@@ -183,96 +179,33 @@ export default function Profile() {
 		return null;
 	}
 
-	const topCubeTypes = Object.keys(pbs);
-
-	const pbCards: React.ReactNode[] = [];
-	for (const ct of topCubeTypes) {
-		let solves: any[] = [];
-		const pb = pbs[ct];
-
-		let topRecord: any = null;
-		if (pb?.single) {
-			solves = [pb.single.solve];
-			topRecord = pb.single;
-		} else if (pb?.average) {
-			const avg = pb.average;
-			solves = [avg.solve_1, avg.solve_2, avg.solve_3, avg.solve_4, avg.solve_5];
-			topRecord = pb.average;
-		}
-
-		pbCards.push(
-			<PbCard key={topRecord.id} solves={solves} topRecord={topRecord} user={user as any} />,
-		);
-	}
-
 	const myProfile = user.id === me?.id;
-
-	let pfp: React.ReactNode = (
-		<div className="relative z-10 flex flex-row items-center">
-			<PFP profile={profile} allowChange={myProfile} />
-			<div
-				className={classNames('relative -top-1 ml-5', {
-					'group-hover/profile-header:hidden': myProfile,
-				})}
-			>
-				<h2 className="text-text flex flex-row items-center text-[4rem] font-bold [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
-					{user.username}
-					{user.verified ? (
-						<CircleWavyCheck
-							className="text-info ml-[15px] table text-[2.5rem]"
-							weight="fill"
-						/>
-					) : null}
-				</h2>
-				<h3 className="text-text text-[1.2rem] opacity-90 [text-shadow:0_1px_7px_rgba(0,0,0,0.1)]">
-					Joined on {new Date(user.created_at).toLocaleDateString()}
-				</h3>
-			</div>
-		</div>
-	);
-
-	if (mobileMode) {
-		pfp = (
-			<div className="relative z-10 flex flex-row items-center">
-				<Avatar user={user as any} profile={profile as any} />
-			</div>
-		);
-	}
-
-	let eloBody: React.ReactNode = null;
-
-	if (user?.elo_rating) {
-		eloBody = (
-			<>
-				<Separator className="my-6" />
-				<ProfileElo eloRating={user.elo_rating} />
-			</>
-		);
-	}
-
-	let pbsDiv: React.ReactNode = null;
-	if (pbCards.length) {
-		pbsDiv = (
-			<>
-				<Separator className="my-6" />
-				<div className="my-[35px]">
-					<h2>Personal Bests</h2>
-					<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">
-						{pbCards}
-					</div>
-				</div>
-			</>
-		);
-	}
-
-	let publishSolves: React.ReactNode = null;
-	if (myProfile) {
-		publishSolves = (
-			<Button variant="default" onClick={openPublishSolves}>
-				{'Publish Your PBs'}
-				<Plus weight="bold" />
-			</Button>
-		);
+	const pbCards: React.ReactNode[] = [];
+	for (const [cubeType, pb] of Object.entries(pbs)) {
+		if (pb.single?.solve) {
+			pbCards.push(
+				<PbCard
+					key={`${cubeType}-single`}
+					solves={[pb.single.solve]}
+					topRecord={pb.single}
+					user={user}
+				/>,
+			);
+		}
+		if (pb.average) {
+			const avg = pb.average;
+			const solves = [avg.solve_1, avg.solve_2, avg.solve_3, avg.solve_4, avg.solve_5];
+			if (solves.every(Boolean)) {
+				pbCards.push(
+					<PbCard
+						key={`${cubeType}-average`}
+						solves={solves}
+						topRecord={avg}
+						user={user}
+					/>,
+				);
+			}
+		}
 	}
 
 	return (
@@ -287,33 +220,99 @@ export default function Profile() {
 					title={user.username + ' Profile | CubeDesk'}
 					description={`Check out ${user.username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more`}
 				/>
-				<div
-					className={classNames('flex flex-col items-center pb-[100px]', {
-						'mx-auto w-[95%] max-w-[1000px]': !me,
-					})}
-				>
-					<div className="group/profile-header relative mb-[7px] box-border flex h-[300px] w-full max-w-[1500px] flex-row items-center p-[25px]">
-						<WCA myProfile={myProfile} user={user} />
-						{pfp}
-						<div className="absolute top-0 left-0 z-0 h-full w-full overflow-hidden rounded-[15px] bg-black">
-							{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
-
+				<div className="mx-auto w-full max-w-[1200px] px-3 pb-16 sm:px-6">
+					<section className="border-tmo-module/10 bg-module overflow-hidden rounded-2xl border">
+						<div className="bg-tmo-module/5 relative isolate h-32 sm:h-44">
 							<img
-								className="h-full w-full object-cover opacity-50"
+								className="h-full w-full object-cover"
 								src={headerUrl}
-								alt="Header photo"
+								alt="Profile cover"
 							/>
+							<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+							{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
 						</div>
-					</div>
-					<div className="relative mx-auto w-full max-w-[1200px]">
-						<div className="absolute top-0 right-0 z-[1000] flex flex-row justify-end gap-2.5">
-							<FriendshipRequest user={user as any} fetchData />
-							{publishSolves}
-							<AvatarDropdown user={user as any} />
+						<div className="relative px-5 pb-5 sm:px-7 sm:pb-6">
+							<div className="relative -mt-10 mb-4 flex items-end justify-between gap-3">
+								<PFP profile={profile} allowChange={myProfile} />
+								<div className="flex flex-wrap items-center justify-end gap-2 pt-12">
+									<FriendshipRequest user={user} fetchData />
+									<WCA myProfile={myProfile} user={user} />
+									<AvatarDropdown
+										user={{...user, profile}}
+										menuProps={{
+											triggerProps: {
+												variant: 'outline',
+												size: 'icon',
+												'aria-label': 'Profile options',
+											},
+										}}
+									/>
+								</div>
+							</div>
+							<h1 className="flex items-center gap-2 text-2xl font-semibold tracking-tight break-all sm:text-3xl">
+								{user.username}
+								{user.verified ? (
+									<CircleWavyCheck
+										className="text-info size-6 shrink-0"
+										weight="fill"
+										aria-label="Verified"
+									/>
+								) : null}
+							</h1>
+							<p className="text-text/50 mt-2 mb-0 flex items-center gap-1.5 text-xs">
+								<CalendarBlank size={14} />
+								Joined{' '}
+								{new Date(user.created_at).toLocaleDateString(undefined, {
+									month: 'long',
+									year: 'numeric',
+								})}
+							</p>
 						</div>
+					</section>
+					<div className="mt-7 grid items-start gap-7 lg:grid-cols-[280px_minmax(0,1fr)]">
 						<About profile={profile} />
-						{eloBody}
-						{pbsDiv}
+						<div className="min-w-0 space-y-8">
+							<section aria-labelledby="personal-bests-heading">
+								<div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+									<div>
+										<h2
+											id="personal-bests-heading"
+											className="flex items-center gap-2 text-lg font-semibold tracking-tight"
+										>
+											<Trophy size={20} className="text-text/50" />
+											Personal bests
+										</h2>
+										<p className="text-text/50 mt-1 mb-0 text-xs">
+											A collection of the fastest solves.
+										</p>
+									</div>
+									{myProfile ? (
+										<Button onClick={openPublishSolves} size="sm">
+											<Plus weight="bold" />
+											Publish PBs
+										</Button>
+									) : null}
+								</div>
+								{pbCards.length ? (
+									<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+										{pbCards}
+									</div>
+								) : (
+									<div className="border-tmo-module/15 flex flex-col items-center rounded-xl border border-dashed px-6 py-12 text-center">
+										<Trophy size={28} className="text-text/30 mb-3" />
+										<p className="mb-0 text-sm font-medium">
+											No records published yet
+										</p>
+										<p className="text-text/50 mt-1 mb-0 max-w-64 text-xs leading-relaxed">
+											{myProfile
+												? 'Your best solves deserve a spot here. Publish your PBs to get started.'
+												: 'Published personal bests will appear here.'}
+										</p>
+									</div>
+								)}
+							</section>
+							{user.elo_rating ? <ProfileElo eloRating={user.elo_rating} /> : null}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -326,8 +325,14 @@ export default function Profile() {
 				}}
 			>
 				{publishSolvesDialog && (
-					<DialogContent>
+					<DialogContent width={540} className="rounded-2xl p-5 sm:p-7">
 						<DialogHeader
+							className="[&_p]:text-text/60 mb-5 space-y-2 [&_[data-slot=dialog-title]]:text-xl [&_p]:text-sm [&_p]:leading-relaxed"
+							topBody={
+								<div className="bg-tmo-module/5 text-text mb-4 flex size-10 items-center justify-center rounded-xl">
+									<Trophy size={22} />
+								</div>
+							}
 							title={publishSolvesDialog.title}
 							description={publishSolvesDialog.description}
 						/>

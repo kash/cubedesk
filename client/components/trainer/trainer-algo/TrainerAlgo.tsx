@@ -1,17 +1,14 @@
 import ConfirmDialog from '@/components/common/ConfirmDialog';
-import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import CustomVisual from '@/components/trainer/CustomVisual';
-import EditAlgo from '@/components/trainer/EditAlgo';
 import {CUSTOM_TRAINER_ALGO_TYPE, useTrainerContext} from '@/components/trainer/Trainer';
 import TrainerFavButton from '@/components/trainer/trainer-algo/TrainerFavButton';
 import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent} from '@/components/ui/card';
-import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {deleteCustomTrainer} from '@/db/trainer/custom';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
-import classNames from 'classnames';
-import {CaretRight, Pencil, Trash} from 'phosphor-react';
+import {cn} from '@/util/cn';
+import {Trash} from 'phosphor-react';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
@@ -20,13 +17,6 @@ interface Props {
 }
 
 export default function TrainerAlgo(props: Props) {
-	const [addCustomDialog, setAddCustomDialog] = React.useState<React.ComponentProps<
-		typeof AddCustom
-	> | null>(null);
-	const [editAlgoDialog, setEditAlgoDialog] = React.useState<React.ComponentProps<
-		typeof EditAlgo
-	> | null>(null);
-
 	const algoExt = props.algoExt;
 
 	const algo = cleanTrainerAlgorithm(algoExt);
@@ -42,15 +32,6 @@ export default function TrainerAlgo(props: Props) {
 		await deleteCustomTrainer(algoExt.id);
 	}
 
-	function editAlgo() {
-		if (isCustom) {
-			// Custom trainer
-			setAddCustomDialog({editingId: algoExt.id});
-		} else {
-			setEditAlgoDialog({algoExt: algoExt});
-		}
-	}
-
 	let originalBy: React.ReactNode = null;
 	if (isCustom && algoExt.copy_of) {
 		const copyUsername = algoExt.copy_of.user.username;
@@ -58,7 +39,7 @@ export default function TrainerAlgo(props: Props) {
 			<div className="text-text mb-2 text-[0.9rem] opacity-70">
 				Original by{' '}
 				<Link
-					className="border-text inline border-b-2 text-inherit"
+					className="border-text relative z-10 inline border-b-2 text-inherit"
 					to={`/user/${copyUsername}`}
 				>
 					{copyUsername}
@@ -69,29 +50,42 @@ export default function TrainerAlgo(props: Props) {
 
 	return (
 		<>
-			<Card>
-				<CardContent>
-					<div className="flex w-full flex-row justify-between">
-						<div className="box-border flex min-h-full flex-col items-start justify-between pr-[15px]">
+			<Card className="group hover:border-text/30 relative transition-colors">
+				<button
+					type="button"
+					className="focus-visible:outline-primary absolute inset-0 cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2"
+					onClick={openTrainer}
+					aria-label={`Train ${algo.name}`}
+				/>
+				<TrainerFavButton
+					algoExt={algoExt}
+					variant="ghost"
+					size="icon-xs"
+					className={cn(
+						'absolute top-2 right-2 z-10 p-1 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100',
+						{
+							'[@media(hover:hover)]:opacity-0': !algo.favorite,
+						},
+					)}
+				/>
+				<CardContent className="pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
+					<div className="flex w-full items-start gap-4 pr-3">
+						<div className="flex min-h-20 min-w-20 shrink-0 items-start justify-center">
+							<CustomVisual
+								cubeletSize={16}
+								colors={algoExt.colors ?? ''}
+								threeD={algoExt.three_d}
+								rotate={algo.rotate ?? undefined}
+								cubeType={algoExt.cube_type}
+							/>
+						</div>
+						<div className="flex min-w-0 flex-1 flex-col items-start gap-2">
 							<div>
-								<h3 className="text-[1.2rem]">{algo.name}</h3>
+								<h3 className="text-[1.2rem] leading-none">{algo.name}</h3>
 								{originalBy}
-								<p className="font-mono">{algo.solution}</p>
+								<p className="mt-2 font-mono break-words">{algo.solution}</p>
 							</div>
-							<div className="flex flex-row gap-2">
-								<Button variant="default" onClick={openTrainer}>
-									{'Start Training'}
-									<CaretRight />
-								</Button>
-								<TrainerFavButton algoExt={algoExt} />
-								<Button
-									variant="secondary"
-									onClick={editAlgo}
-									size="icon"
-									aria-label="Edit algorithm"
-								>
-									<Pencil />
-								</Button>
+							<div className="relative z-10 mt-3 flex flex-row gap-2">
 								<ConfirmDialog
 									{...{
 										buttonText: 'Delete custom trainer',
@@ -113,65 +107,9 @@ export default function TrainerAlgo(props: Props) {
 								</ConfirmDialog>
 							</div>
 						</div>
-						<div
-							className={classNames(
-								'box-border flex w-[100px] items-center justify-center',
-								algoExt.three_d && '-mt-5',
-							)}
-						>
-							<CustomVisual
-								cubeletSize={20}
-								colors={algoExt.colors ?? ''}
-								threeD={algoExt.three_d}
-								rotate={algo.rotate ?? undefined}
-								cubeType={algoExt.cube_type}
-							/>
-						</div>
 					</div>
 				</CardContent>
 			</Card>
-			<Dialog
-				open={addCustomDialog !== null}
-				onOpenChange={(open) => {
-					if (!open) {
-						setAddCustomDialog(null);
-					}
-				}}
-			>
-				{addCustomDialog && (
-					<DialogContent>
-						<AddCustom
-							{...addCustomDialog}
-							onComplete={() => {
-								setAddCustomDialog((current) =>
-									current === addCustomDialog ? null : current,
-								);
-							}}
-						/>
-					</DialogContent>
-				)}
-			</Dialog>
-			<Dialog
-				open={editAlgoDialog !== null}
-				onOpenChange={(open) => {
-					if (!open) {
-						setEditAlgoDialog(null);
-					}
-				}}
-			>
-				{editAlgoDialog && (
-					<DialogContent>
-						<EditAlgo
-							{...editAlgoDialog}
-							onComplete={() => {
-								setEditAlgoDialog((current) =>
-									current === editAlgoDialog ? null : current,
-								);
-							}}
-						/>
-					</DialogContent>
-				)}
-			</Dialog>
 		</>
 	);
 }

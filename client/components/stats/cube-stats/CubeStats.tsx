@@ -30,7 +30,7 @@ export default function CubeStats() {
 			</div>
 			<StatSection
 				title="Solve times"
-				description="A closer look at your progress"
+				description="Completed solves, oldest to latest · Grouped means for longer histories"
 				className="stats-panel"
 			>
 				<StatModule className="stats-chart">

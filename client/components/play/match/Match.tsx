@@ -223,21 +223,21 @@ export default function Match(props: MatchProps) {
 		socketClient().emit('playerAbortedMatch', match.id);
 	}
 
-	function copySpectateLink() {
+	async function copySpectateLink() {
 		if (!match?.spectate_code) {
 			return;
 		}
 		const link = getMatchLinkBase(matchType) + match.spectate_code;
-		copyText(link);
+		if (!(await copyText(link))) return;
 		toastSuccess('Successfully copied Spectate link');
 	}
 
-	function copyPlayLink() {
+	async function copyPlayLink() {
 		if (!match?.link_code) {
 			return;
 		}
 		const link = getMatchLinkBase(matchType) + match.link_code;
-		copyText(link);
+		if (!(await copyText(link))) return;
 		toastSuccess('Successfully copied Play link');
 	}
 

@@ -13,7 +13,7 @@ import React from 'react';
 interface Props {
 	mini?: boolean;
 	user: UserAccountForAdmin | PublicUserAccount | UserAccount;
-	menuProps?: ActionMenuProps;
+	menuProps?: Partial<ActionMenuProps>;
 }
 
 export default function AvatarDropdown(props: Props) {
@@ -37,9 +37,9 @@ export default function AvatarDropdown(props: Props) {
 	const profile = user.profile;
 	const myProfile = me?.id === user.id;
 
-	function copyProfileLink() {
+	async function copyProfileLink() {
 		const link = window.location.href;
-		copyText(link);
+		if (!(await copyText(link))) return;
 		toastSuccess(`Copied profile link for ${user.username}`);
 	}
 

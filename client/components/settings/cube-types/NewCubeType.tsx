@@ -50,12 +50,12 @@ export default function NewCubeType(props: Props) {
 	return (
 		<div>
 			<DialogHeader title="Add cube type" />
-			<Field className="mb-2">
+			<Field className="mb-5">
 				<FieldLabel htmlFor={`${fieldId}-1`}>{'Cube Type Name'}</FieldLabel>
 				<Input value={name} onChange={setName} id={`${fieldId}-1`} />
 			</Field>
 			<ScramblePicker value={scrambleType} onChange={onChangeScrambleType} />
-			<div className="flex flex-col items-start">
+			<div className="mt-5 flex flex-col items-start">
 				<Button
 					variant="default"
 					onClick={createCubeType}

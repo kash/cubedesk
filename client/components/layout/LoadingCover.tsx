@@ -1,4 +1,4 @@
-import LoadingIcon from '@/components/common/LoadingIcon';
+import {Spinner} from '@/components/ui/spinner';
 import React from 'react';
 
 interface Props {
@@ -31,9 +31,7 @@ export default function LoadingCover(props: Props) {
 
 	return (
 		<div className={coverClasses.join(' ')}>
-			<span className="text-[1.7rem] text-inherit">
-				<LoadingIcon />
-			</span>
+			<Spinner className="size-6" />
 		</div>
 	);
 }

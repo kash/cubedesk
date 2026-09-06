@@ -145,7 +145,7 @@ export default function EditProfile(props: Props) {
 						</FieldDescription>
 					</Field>
 				</div>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-2`}>{'YouTube Channel'}</FieldLabel>
 					<Input
 						name="youtubeLink"
@@ -158,7 +158,7 @@ export default function EditProfile(props: Props) {
 						{'Ex: https://youtube.com/user/PewDiePie'}
 					</FieldDescription>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-3`}>{'Twitch Channel'}</FieldLabel>
 					<Input
 						name="twitchLink"
@@ -171,7 +171,7 @@ export default function EditProfile(props: Props) {
 						{'Ex: https://www.twitch.tv/xqcow'}
 					</FieldDescription>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-4`}>{'Twitter Profile'}</FieldLabel>
 					<Input
 						name="twitterLink"
@@ -184,7 +184,7 @@ export default function EditProfile(props: Props) {
 						{'Ex: https://www.twitter.com/nasa'}
 					</FieldDescription>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-5`}>{'Reddit Profile'}</FieldLabel>
 					<Input
 						name="redditLink"
@@ -197,7 +197,7 @@ export default function EditProfile(props: Props) {
 						{'Ex: https://www.reddit.com/user/nasa'}
 					</FieldDescription>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-6`}>{'3x3 Method'}</FieldLabel>
 					<Input
 						name="threeMethod"
@@ -210,7 +210,7 @@ export default function EditProfile(props: Props) {
 						{'Ex: CFOP, ROUX'}
 					</FieldDescription>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-7`}>{'3x3 Goal'}</FieldLabel>
 					<Input
 						name="threeGoal"
@@ -223,7 +223,7 @@ export default function EditProfile(props: Props) {
 						{'Ex: Sub 10'}
 					</FieldDescription>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-8`}>{'Main 3x3 Cube'}</FieldLabel>
 					<Input
 						name="mainThreeCube"
@@ -236,7 +236,7 @@ export default function EditProfile(props: Props) {
 						{'Ex: GAN 11 M Pro 3x3'}
 					</FieldDescription>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-9`}>{'Favorite Event'}</FieldLabel>
 					<Input
 						name="favoriteEvent"

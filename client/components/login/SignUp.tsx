@@ -59,12 +59,12 @@ export default function SignUp() {
 				'bg-module w-[95%] max-w-[400px] rounded-[5px] p-[25px]': !auth,
 			})}
 		>
-			<form onSubmit={signUp}>
-				<Field className="mb-2">
+			<form className="flex flex-col gap-5" onSubmit={signUp}>
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-1`}>{'Email'}</FieldLabel>
 					<Input onChange={setEmail} type="email" value={email} id={`${fieldId}-1`} />
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-2`}>{'Username'}</FieldLabel>
 					<Input
 						onChange={setUsername}
@@ -75,7 +75,7 @@ export default function SignUp() {
 						id={`${fieldId}-2`}
 					/>
 				</Field>
-				<Field className="mb-2">
+				<Field>
 					<FieldLabel htmlFor={`${fieldId}-3`}>{'Password'}</FieldLabel>
 					<Input
 						onChange={setPassword}
@@ -83,9 +83,9 @@ export default function SignUp() {
 						value={password}
 						id={`${fieldId}-3`}
 					/>
+					<PasswordStrength password={password} />
 				</Field>
-				<PasswordStrength password={password} />
-				<div className="mt-4 flex flex-col items-start">
+				<div className="flex flex-col items-start">
 					<Button
 						variant="default"
 						type="submit"

@@ -1,5 +1,6 @@
 import {EloRating} from '@/types/elo';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {Lightning} from 'phosphor-react';
 import React from 'react';
 
 interface Props {
@@ -13,7 +14,7 @@ export default function ProfileElo(props: Props) {
 	const eloBlocks: React.ReactNode[] = [];
 
 	for (const ct of cubeTypes) {
-		if (eloRating[`games_${ct}_count`] === 0) {
+		if (!eloRating[`games_${ct}_count`]) {
 			continue;
 		}
 
@@ -23,21 +24,26 @@ export default function ProfileElo(props: Props) {
 		eloBlocks.push(
 			<div
 				key={ct}
-				className="box-border flex flex-col items-start rounded-[10px] border-4 border-tmo-module/10 bg-module p-5 text-text"
+				className="border-tmo-module/10 bg-module text-text flex flex-col items-start rounded-xl border p-4"
 			>
-				<span className="rounded-[7px] bg-tmo-module/[0.13] px-2 py-1 text-base font-bold">{ctInfo?.name ?? ct}</span>
-				<span className="mt-2.5 text-[2.5rem] font-bold">{eloNum}</span>
-				<span className="text-[0.9rem] font-semibold opacity-70">
+				<span className="text-text/50 text-xs font-medium">{ctInfo?.name ?? ct}</span>
+				<span className="mt-2 text-3xl font-semibold tabular-nums">{eloNum}</span>
+				<span className="text-text/40 mt-1 text-xs">
 					{gameCount} game{gameCount === 1 ? '' : 's'}
 				</span>
-			</div>
+			</div>,
 		);
 	}
 
+	if (!eloBlocks.length) return null;
+
 	return (
-		<div className="my-[35px]">
-			<h2>ELO</h2>
-			<div className="mt-2.5 grid grid-cols-[repeat(auto-fit,minmax(auto,200px))] gap-2.5">{eloBlocks}</div>
+		<div className="">
+			<h2 className="mb-0 flex items-center gap-2 text-lg font-semibold tracking-tight">
+				<Lightning size={20} className="text-text/50" />
+				ELO ratings
+			</h2>
+			<div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">{eloBlocks}</div>
 		</div>
 	);
 }

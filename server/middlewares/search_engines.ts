@@ -1,4 +1,5 @@
 import type {Response} from 'express';
+import path from 'node:path';
 import {Readable} from 'stream';
 
 async function proxy(url: string, res: Response) {
@@ -25,6 +26,11 @@ export function exposeResourcesForSearchEngines() {
 		proxy('https://cdn.cubedesk.io/site/sitemaps/sitemap.xml', res);
 	});
 	global.app.get('/favicon.ico', (req, res) => {
-		proxy('https://cdn.cubedesk.io/static/favicon.ico', res);
+		if ((process.env.ENV || 'development') === 'development') {
+			res.sendFile(path.resolve(__dirname, '../../public/images/branding/favicon.ico'));
+			return;
+		}
+		const resourceBase = process.env.RESOURCES_BASE_URI || 'https://cdn.cubedesk.io/static';
+		proxy(`${resourceBase.replace(/\/$/, '')}/images/branding/favicon.ico`, res);
 	});
 }

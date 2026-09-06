@@ -131,7 +131,7 @@ export default function TimerModule(props: Props) {
 	let dropdown: ReactNode = (
 		<div
 			className={cn(
-				'border-tmo-module/10 bg-module absolute top-0 left-1/2 z-40 flex -translate-x-1/2 items-center rounded-b-md border border-t-0 opacity-0 shadow-lg transition-opacity duration-150 ease-in-out group-hover:opacity-100 focus-within:opacity-100',
+				'border-tmo-module/10 bg-module absolute top-0 left-1/2 z-40 flex -translate-x-1/2 items-center rounded-b-md border border-t-0 opacity-0 shadow-lg transition-opacity duration-150 ease-in-out group-hover:opacity-100 focus-within:opacity-100 has-[[data-state=open]]:opacity-100',
 				{'opacity-100': mobileMode},
 			)}
 		>

@@ -144,7 +144,7 @@ function OpenDialogContent({
 	return (
 		<Primitive.Portal>
 			<Primitive.Overlay
-				className="fixed inset-0 overflow-y-auto bg-black/80"
+				className="fixed inset-0 overflow-y-auto bg-black/80 data-[state=open]:animate-in data-[state=open]:fade-in-0 duration-200 motion-reduce:animate-none"
 				style={{zIndex: 1000000 + order}}
 			>
 				<Primitive.Content
@@ -158,7 +158,9 @@ function OpenDialogContent({
 					data-dialog-id={context.id}
 					className={cn(
 						'border-tmo-background/10 bg-background text-text relative mx-auto my-12 w-[95%] max-w-[600px] rounded-lg border p-6 shadow-md outline-none',
+						'data-[state=open]:animate-in data-[state=open]:fade-in-0 duration-200 motion-reduce:animate-none',
 						{
+							'data-[state=open]:zoom-in-95': !fullSize,
 							'm-0 h-full w-full max-w-none rounded-none': !!fullSize,
 							'overflow-hidden': !!overflowHidden,
 							'p-0': !!noPadding,

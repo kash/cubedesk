@@ -83,7 +83,7 @@ export default function EditAlgo(props: Props) {
 					cubeType={algoExt.cube_type}
 				/>
 			</div>
-			<Field className="mb-2">
+			<Field className="mb-6">
 				<FieldLabel htmlFor={`${fieldId}-1`}>{'Name'}</FieldLabel>
 				<Input
 					value={name}
@@ -92,7 +92,7 @@ export default function EditAlgo(props: Props) {
 					id={`${fieldId}-1`}
 				/>
 			</Field>
-			<Field className="mb-2">
+			<Field className="mb-6">
 				<FieldLabel htmlFor={`${fieldId}-2`}>{'Solution'}</FieldLabel>
 				<Input
 					value={solution}
@@ -101,7 +101,7 @@ export default function EditAlgo(props: Props) {
 					id={`${fieldId}-2`}
 				/>
 			</Field>
-			<Field>
+			<Field className="mb-6">
 				<FieldLabel htmlFor={`${fieldId}-3`}>
 					{'Scrambles'} <span className="text-text/60 font-normal italic">Optional</span>
 				</FieldLabel>

@@ -1,6 +1,6 @@
-import Emblem from '@/components/common/Emblem';
 import ButtonError from '@/components/common/inputs/Error';
 import {Button} from '@/components/ui/button';
+import {DialogClose} from '@/components/ui/dialog';
 import {Spinner} from '@/components/ui/spinner';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
@@ -11,6 +11,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError, toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
+import {CheckCircle, Cube} from 'phosphor-react';
 import React, {useState} from 'react';
 
 interface Props {
@@ -96,17 +97,26 @@ export default function PublishSolves(props: Props) {
 
 		rows.push(
 			<TableRow key={type.cube_type}>
-				<TableCell>
-					<Emblem text={ct?.name ?? type.cube_type} />
+				<TableCell className="py-4 pl-4">
+					<div className="flex items-center gap-2.5">
+						<span className="bg-tmo-module/5 text-text/50 flex size-8 items-center justify-center rounded-lg">
+							<Cube size={18} />
+						</span>
+						<span className="text-sm font-medium">{ct?.name ?? type.cube_type}</span>
+					</div>
 				</TableCell>
-				<TableCell>{pb && <Emblem text={getTimeString(pb.time)} />}</TableCell>
-				<TableCell>{ao5pb && <Emblem text={getTimeString(ao5pb.time)} />}</TableCell>
+				<TableCell className="text-right text-base font-semibold tabular-nums">
+					{pb ? getTimeString(pb.time) : <span className="text-text/30">—</span>}
+				</TableCell>
+				<TableCell className="pr-4 text-right text-base font-semibold tabular-nums">
+					{ao5pb ? getTimeString(ao5pb.time) : <span className="text-text/30">—</span>}
+				</TableCell>
 			</TableRow>,
 		);
 	}
 
 	let exception: React.ReactNode = null;
-	if (!me.username) {
+	if (!me?.username) {
 		exception = (
 			<p>
 				You must <a href="/account/personal-info">set a username</a> before you can publish
@@ -116,8 +126,8 @@ export default function PublishSolves(props: Props) {
 	} else if (!rows.length) {
 		exception = (
 			<p>
-				Your don't have any solves yet. Head over to the <a href="/">Timer Page</a> and
-				start cubing!
+				You don't have any solves yet. Head over to the <a href="/">Timer Page</a> and start
+				cubing!
 			</p>
 		);
 	}
@@ -127,25 +137,39 @@ export default function PublishSolves(props: Props) {
 			{exception}
 			{exception ? null : (
 				<>
-					<Table className="mb-3">
-						<TableHeader>
-							<TableRow>
-								<TableHead>Cube Type</TableHead>
-								<TableHead>Single</TableHead>
-								<TableHead>Average</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>{rows}</TableBody>
-					</Table>
-					<div className="flex flex-col items-start">
+					<div className="border-tmo-module/10 overflow-hidden rounded-xl border">
+						<Table>
+							<TableHeader className="bg-tmo-module/5 text-text/50 text-xs">
+								<TableRow>
+									<TableHead className="pl-4">Event</TableHead>
+									<TableHead className="text-right">Single</TableHead>
+									<TableHead className="pr-4 text-right">Average of 5</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>{rows}</TableBody>
+						</Table>
+					</div>
+					<div className="text-text/50 my-5 flex items-start gap-2 text-xs leading-relaxed">
+						<CheckCircle size={17} className="mt-0.5 shrink-0" />
+						<p className="text-text/50 mb-0 text-xs leading-relaxed">
+							By publishing, you confirm these are your own legitimate solves. Your
+							records will be visible on your profile and the leaderboards.
+						</p>
+					</div>
+					<div className="border-tmo-module/10 flex flex-wrap items-center justify-end gap-2 border-t pt-4">
+						<DialogClose asChild>
+							<Button variant="ghost" disabled={publishing}>
+								Cancel
+							</Button>
+						</DialogClose>
 						<Button
 							variant="default"
 							onClick={publishTimes}
-							size="lg"
+							size="default"
 							disabled={publishing}
 							aria-busy={publishing}
 						>
-							{'Publish to Profile'}
+							{publishing ? 'Publishing…' : 'Publish to profile'}
 							{publishing ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={error} />

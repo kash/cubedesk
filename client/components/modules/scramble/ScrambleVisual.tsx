@@ -19,10 +19,11 @@ interface Props {
 	scramble?: string;
 	width?: string;
 	frontFace?: boolean;
+	compact?: boolean;
 }
 
 export default function ScrambleVisual(props: Props) {
-	const {cubeType, scramble, frontFace} = props;
+	const {cubeType, scramble, frontFace, compact} = props;
 
 	const width = props.width || '100%';
 
@@ -49,11 +50,11 @@ export default function ScrambleVisual(props: Props) {
 
 	const supported = scrambleIsSupported(cubeScramble?.id);
 	if (!supported) {
-		return <Empty text="No scramble visual available" centered />;
+		return <Empty text="No scramble visual available" centered compact={compact} />;
 	}
 
 	if (!visual) {
-		return <Empty text="No scramble yet" centered />;
+		return <Empty text="No scramble yet" centered compact={compact} />;
 	}
 
 	if (frontFace) {

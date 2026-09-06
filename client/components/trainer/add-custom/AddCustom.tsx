@@ -176,15 +176,15 @@ export default function AddCustom(props: Props) {
 		<div>
 			<DialogHeader title="Add custom trainer" />
 			<div>
-				<Field className="mb-2">
+				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-1`}>{'Name'}</FieldLabel>
 					<Input onChange={setName} value={name} id={`${fieldId}-1`} />
 				</Field>
-				<Field className="mb-2">
+				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-2`}>{'Solution'}</FieldLabel>
 					<Input onChange={setSolution} value={solution} id={`${fieldId}-2`} />
 				</Field>
-				<Field>
+				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-3`}>
 						{'Description'}{' '}
 						<span className="text-text/60 font-normal italic">Optional</span>
@@ -202,7 +202,7 @@ export default function AddCustom(props: Props) {
 						</span>
 					</FieldDescription>
 				</Field>
-				<Field>
+				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-4`}>
 						{'Alternate solutions'}{' '}
 						<span className="text-text/60 font-normal italic">Optional</span>

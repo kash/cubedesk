@@ -1,4 +1,3 @@
-import {Button} from '@/components/ui/button';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {Solve} from '@/types/solve';
 import {cn} from '@/util/cn';
@@ -13,6 +12,9 @@ interface Props {
 	disabled?: boolean;
 	solve: Solve;
 }
+
+const textButtonClass =
+	'inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 text-base font-medium outline-none transition-colors';
 
 export default function HistorySolveRow(props: Props) {
 	const {index, solve, disabled} = props;
@@ -52,69 +54,69 @@ export default function HistorySolveRow(props: Props) {
 	if (!disabled) {
 		actions = (
 			<>
-				<Button
-					variant="ghost"
+				<button
+					type="button"
 					title="Plus two solve"
 					onClick={plusTwoSolve}
-					size="sm"
 					aria-pressed={plusTwo}
-					className={cn({'text-warning': plusTwo})}
+					className={cn(textButtonClass, 'focus-visible:underline', {
+						'hover:text-orange-300': !plusTwo,
+						'text-warning': plusTwo,
+					})}
 				>
 					{'+2'}
-				</Button>
-				<Button
-					variant="ghost"
+				</button>
+				<button
+					type="button"
 					title="DNF solve"
 					onClick={dnfSolve}
-					size="sm"
 					aria-pressed={dnf}
-					className={cn({'text-error': dnf})}
+					className={cn(textButtonClass, 'focus-visible:underline', {
+						'hover:text-red-300': !dnf,
+						'text-error': dnf,
+					})}
 				>
 					{'DNF'}
-				</Button>
-				<Button
-					variant="ghost"
+				</button>
+				<button
+					type="button"
 					title="Delete solve"
 					onClick={deleteSolve}
-					size="icon-sm"
+					className="inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 outline-none hover:drop-shadow-[0_0_4px_currentColor] focus-visible:drop-shadow-[0_0_4px_currentColor]"
 					aria-label="Delete solve"
 				>
-					<X />
-				</Button>
+					<X className="size-4" />
+				</button>
 			</>
 		);
 	}
 
-	const timeClasses = [
-		'group flex w-full flex-row items-center pt-0 font-semibold',
-		dnf ? 'text-error' : plusTwo ? 'text-warning' : 'text-secondary',
-	];
-
 	return (
 		<div
-			className="box-border flex h-9 w-full flex-row items-center justify-between pr-[5px]"
+			className="box-border flex h-9 w-full flex-row items-center gap-2.5 pr-[5px]"
 			key={id}
 		>
-			<div className="text-text min-w-10 pr-[5px] pb-[3px] text-base opacity-60">
+			<div className="text-text min-w-10 shrink-0 text-base opacity-60">
 				{(index + 1).toLocaleString()}.
 			</div>
-			<div className="text-text w-[150px] text-base">
-				<Button
-					variant="ghost"
-					className={cn(
-						'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
-						timeClasses.join(' '),
-					)}
-					onClick={openSolve}
-				>
-					<span className="border-b-2 border-solid border-transparent pt-[3px] text-base text-inherit group-hover:border-current">
-						{time}
-					</span>
-					{bluetoothIcon}
-				</Button>
-			</div>
+			<button
+				type="button"
+				className={cn(
+					textButtonClass,
+					'font-semibold underline-offset-4 hover:underline focus-visible:underline',
+					{
+						'text-error': dnf,
+						'text-warning': !dnf && plusTwo,
+						'text-secondary': !dnf && !plusTwo,
+					},
+				)}
+				onClick={openSolve}
+			>
+				{time}
+				{bluetoothIcon}
+			</button>
 
-			<div className="text-text flex w-[calc(100%_-_190px)] flex-row items-center justify-end gap-2.5 pr-[5px] text-right text-base">
+			<div className="text-text ml-auto flex shrink-0 flex-row items-center gap-2.5 pr-[5px] text-base">
 				{actions}
 			</div>
 		</div>
