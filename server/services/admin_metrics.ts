@@ -112,7 +112,11 @@ async function refresh() {
 			throw new Error('Metrics refresh lost its Redis lock before publication');
 		logger.info('Admin metrics refreshed', {durationMs: Date.now() - started});
 	} catch (error) {
-		logger.error('Admin metrics refresh failed', {error, durationMs: Date.now() - started});
+		logger.error('Admin metrics refresh failed', {
+			error,
+			errorMessage: error instanceof Error ? error.message : String(error),
+			durationMs: Date.now() - started,
+		});
 		if (acquired) {
 			try {
 				await redisCommand((redis) =>
