@@ -1,9 +1,18 @@
 import {matchPlayersInLobby} from '@/server/match/pair/pair_logic';
+import {refreshAdminMetrics} from '@/server/services/admin_metrics';
 import {logger} from '@/server/services/logger';
 import {initSiteMapGeneration} from '@/server/services/sitemap';
 import {CronJob} from 'cron';
 
 export function initCronJobs() {
+	void refreshAdminMetrics();
+	new CronJob(
+		'0 0 */6 * * *',
+		() => { void refreshAdminMetrics(); },
+		null,
+		true,
+		'UTC'
+	);
 	initMatchPairingCronJob();
 	initSiteMapGenerationCronJob();
 }

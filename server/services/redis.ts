@@ -7,6 +7,7 @@ let redisPubClient: Redis;
 let redisSubClient: Redis;
 
 export enum RedisNamespace {
+	ADMIN_METRICS = 'cd:admin:metrics',
 	PRO_DATA = 'cd:pro',
 	PLAY = 'cd:play',
 	SITEMAP = 'cd:site:sitemap_lock',

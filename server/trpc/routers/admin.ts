@@ -11,6 +11,7 @@ import {
 	unbanUserAccount,
 	updateUserAccountWithParams,
 } from '@/server/models/user_account';
+import {getAdminMetrics} from '@/server/services/admin_metrics';
 import {resolveReportsOfUserId} from '@/server/trpc/routers/report';
 import {adminProcedure, router} from '@/server/trpc/trpc';
 import {getPaginatedResponse} from '@/server/util/pagination/paginated_response';
@@ -34,6 +35,7 @@ async function getUserOrThrow(userId: string) {
 // The old GraphQL layer's @Authorized([ADMIN, MOD]) ANDed the roles, so all of
 // these were effectively admin-only. Kept as adminProcedure for parity.
 export const adminRouter = router({
+	getMetrics: adminProcedure.query(() => getAdminMetrics()),
 	searchUsers: adminProcedure
 		.input(
 			z.object({
