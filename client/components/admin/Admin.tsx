@@ -3,6 +3,7 @@ import PageTitle from '@/components/common/PageTitle';
 import React from 'react';
 
 const TABS = [
+	{id: 'metrics', link: '/admin/metrics', value: 'Metrics'},
 	{id: 'trainer', link: '/admin/trainer', value: 'Trainer'},
 	{
 		id: 'reports',

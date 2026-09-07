@@ -6,8 +6,9 @@ import NotificationPreferences from '@/components/account/NotificationPreference
 import Password from '@/components/account/Password';
 import PersonalInfo from '@/components/account/PersonalInfo';
 import Admin from '@/components/admin/Admin';
-import AdminUsers from '@/components/admin/AdminUsers';
+import AdminMetrics from '@/components/admin/AdminMetrics';
 import AdminTrainer from '@/components/admin/AdminTrainer';
+import AdminUsers from '@/components/admin/AdminUsers';
 import Reports from '@/components/admin/reports/Reports';
 import Community from '@/components/community/Community';
 import EloBoard from '@/components/community/EloBoard';
@@ -145,6 +146,7 @@ export const routes: (PageContext | RedirectPath)[] = [
 	route('/play/head-to-head/:linkCode', App, PlayWrapper, HeadToHead),
 
 	// Admin
+	route('/admin/metrics', App, Admin, AdminMetrics, true, false, true),
 	route('/admin/reports', App, Admin, Reports, true, false, true),
 	route('/admin/users', App, Admin, AdminUsers, true, false, true),
 	route('/admin/trainer', App, Admin, AdminTrainer, true, false, true),
