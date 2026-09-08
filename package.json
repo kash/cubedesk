@@ -79,7 +79,7 @@
 		"@radix-ui/react-toggle-group": "^1.1.19",
 		"@radix-ui/react-tooltip": "^1.2.16",
 		"@react-email/components": "^1.0.12",
-		"@sentry/browser": "^6.3.5",
+		"@sentry/browser": "^7.119.1",
 		"@sentry/node": "^6.16.1",
 		"@sentry/tracing": "^6.16.1",
 		"@socket.io/redis-adapter": "^8.3.0",
