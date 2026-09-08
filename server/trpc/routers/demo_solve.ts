@@ -1,4 +1,5 @@
-import {publicProcedure, router} from '@/server/trpc/trpc';
+import {demoImportInput, importDemoSolves} from '@/server/models/demo_import';
+import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 import {z} from 'zod';
 
 const demoSolveInputSchema = z.object({
@@ -11,6 +12,9 @@ const demoSolveInputSchema = z.object({
 });
 
 export const demoSolveRouter = router({
+	import: protectedProcedure
+		.input(demoImportInput)
+		.mutation(({ctx, input}) => importDemoSolves(ctx.prisma, ctx.user.id, input)),
 	create: publicProcedure.input(demoSolveInputSchema).mutation(async ({ctx, input}) => {
 		const demoSolve = await ctx.prisma.demoSolve.create({
 			data: {

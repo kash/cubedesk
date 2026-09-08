@@ -1,3 +1,4 @@
+import {useDemoImport} from '@/components/login/DemoImport';
 import {AuthFormContext, AuthView} from '@/components/login/AuthFormContext';
 import Forgot from '@/components/login/Forgot';
 import Login from '@/components/login/Login';
@@ -13,12 +14,16 @@ export default function AuthDialog({
 	children: React.ReactElement;
 	view?: AuthView;
 }) {
+	const {pending} = useDemoImport();
+	const [open, setOpen] = useState(false);
 	const [activeView, setActiveView] = useState(view);
 	const [redirectTo, setRedirectTo] = useState('/');
 
 	return (
 		<Dialog
+			open={open && !pending}
 			onOpenChange={(open) => {
+				setOpen(open);
 				if (open) {
 					setActiveView(view);
 					setRedirectTo(

@@ -15,7 +15,9 @@ export function cleanTrainerAlgorithm(algo: TrainerAlgorithmExtended): TrainerAl
 		favorite: algo.favorite,
 	};
 
-	for (const key of Object.keys(newAlgo)) {
+	// Saved overrides include their own ID and metadata. Only merge editable fields
+	// so actions such as favoriting continue to target the original trainer case.
+	for (const key of ['name', 'solution', 'rotate', 'scrambles']) {
 		if (key in ov) {
 			newAlgo[key] = ov[key];
 		}
