@@ -139,6 +139,7 @@ export const UserFeatureStateScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   received_welcome_screen: 'received_welcome_screen',
+  import_prompt_hidden: 'import_prompt_hidden',
   updated_at: 'updated_at',
   created_at: 'created_at'
 } as const

@@ -1,4 +1,5 @@
 import Pagination, {PaginationTab} from '@/components/common/Pagination';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {MemoryRouter, Route} from 'react-router-dom';
@@ -15,11 +16,13 @@ const tabs: PaginationTab[] = [
 describe('friend navigation', () => {
 	it.each(tabs)('selects $value from the URL on the first render', (tab) => {
 		const html = renderToStaticMarkup(
-			<MemoryRouter initialEntries={[tab.link!]}>
-				<Route path={tab.link}>
-					<Pagination tabs={tabs} itemRow={() => null} />
-				</Route>
-			</MemoryRouter>,
+			<QueryClientProvider client={new QueryClient()}>
+				<MemoryRouter initialEntries={[tab.link!]}>
+					<Route path={tab.link}>
+						<Pagination tabs={tabs} itemRow={() => null} />
+					</Route>
+				</MemoryRouter>
+			</QueryClientProvider>,
 		);
 		const selectedLink = html.match(/<a\b[^>]*aria-current="page"[^>]*>/)?.[0];
 		expect(selectedLink).toContain(`href="${tab.link}"`);

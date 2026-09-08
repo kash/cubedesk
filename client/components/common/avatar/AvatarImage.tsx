@@ -3,7 +3,7 @@ import {Profile} from '@/types/profile';
 import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
 import {cn} from '@/util/cn';
 import {getStorageURL, resourceUri} from '@/util/storage';
-import React from 'react';
+import React, {useState} from 'react';
 
 const COLORS = [
 	'#05445E',
@@ -71,6 +71,13 @@ export default function AvatarImage(props: Props) {
 	const backgroundColor = COLORS[lastIndex] ?? COLORS[0];
 	const src =
 		image || (profile?.pfp_image ? getStorageURL(profile.pfp_image.storage_path) : undefined);
+	const [imageState, setImageState] = useState<{src: string | null | undefined; status: string}>({
+		src,
+		status: 'loading',
+	});
+	const loading = Boolean(
+		src && (imageState.src !== src || !['loaded', 'error'].includes(imageState.status)),
+	);
 	return (
 		<Avatar
 			className={cn('size-[50px]', {
@@ -80,15 +87,24 @@ export default function AvatarImage(props: Props) {
 			})}
 		>
 			<AvatarPhoto
+				key={src}
 				src={src || undefined}
+				onLoadingStatusChange={(status) => setImageState({src, status})}
 				alt={`Profile picture of ${user?.username || 'user'}`}
 			/>
-			<AvatarFallback style={{backgroundColor}}>
-				<img
-					className="size-full object-cover"
-					alt={`Default avatar for ${user?.username || 'user'}`}
-					src={resourceUri('/images/community/default_avatar.png')}
-				/>
+			<AvatarFallback style={loading ? undefined : {backgroundColor}}>
+				{loading ? (
+					<span
+						aria-label="Loading profile picture"
+						className="bg-text/10 size-full motion-safe:animate-pulse"
+					/>
+				) : (
+					<img
+						className="size-full object-cover"
+						alt={`Default avatar for ${user?.username || 'user'}`}
+						src={resourceUri('/images/community/default_avatar.png')}
+					/>
+				)}
 			</AvatarFallback>
 		</Avatar>
 	);

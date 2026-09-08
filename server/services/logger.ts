@@ -9,7 +9,7 @@ export function initLogger() {
 	if (isDev) {
 		addFormats.push(
 			winston.format.timestamp({
-				format: 'YYYY-MM-DD HH:MM:SS',
+				format: 'YYYY-MM-DD HH:mm:ss',
 			})
 		);
 		addFormats.push(

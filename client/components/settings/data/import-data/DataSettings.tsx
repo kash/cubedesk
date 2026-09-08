@@ -8,12 +8,14 @@ import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {Spinner} from '@/components/ui/spinner';
 import {fetchSessions} from '@/db/sessions/query';
 import {fetchSolves} from '@/db/solves/query';
+import {useMe} from '@/util/hooks/useMe';
 import {removeTypename} from '@/util/object';
 import {toastError, toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import fileDownload from 'js-file-download';
 import {CaretDown} from 'phosphor-react';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useHistory, useLocation} from 'react-router-dom';
 
 export default function DataSettings() {
 	const [importDataDialog, setImportDataDialog] = React.useState<React.ComponentProps<
@@ -21,6 +23,18 @@ export default function DataSettings() {
 	> | null>(null);
 
 	const [exportingData, setExportingData] = useState(false);
+	const me = useMe();
+	const location = useLocation();
+	const history = useHistory();
+
+	useEffect(() => {
+		const params = new URLSearchParams(location.search);
+		if (me && params.get('import') === 'cstimer') {
+			setImportDataDialog({importType: ImportDataType.CS_TIMER});
+			params.delete('import');
+			history.replace({...location, search: params.toString() ? `?${params}` : ''});
+		}
+	}, [me, location, history]);
 
 	async function resetSettings() {
 		try {

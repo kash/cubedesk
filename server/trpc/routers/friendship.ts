@@ -50,9 +50,7 @@ function getPaginatedFriendsResponse<T>(
 		tableName,
 		prismaPayload: {
 			where,
-			orderBy: {
-				created_at: 'desc',
-			},
+			orderBy: [{created_at: 'desc'}, {id: 'asc'}],
 			include: {
 				[userKey]: {
 					select: publicUserSelect,

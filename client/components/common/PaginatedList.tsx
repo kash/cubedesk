@@ -1,120 +1,119 @@
 import Empty from '@/components/common/Empty';
-import Loading from '@/components/common/Loading';
+import ListSkeleton from '@/components/common/ListSkeleton';
 import PageControls from '@/components/common/PageControls';
+import {Button} from '@/components/ui/button';
 import {PaginationArgs, PaginationOutput} from '@/types/pagination';
-import {useUrlParamNumber} from '@/util/hooks/useUrlParam';
 import {numberWithCommas} from '@/util/strings/util';
-import React, {ReactNode, useEffect, useState} from 'react';
-import {useHistory, useRouteMatch} from 'react-router-dom';
-
-const DEFAULT_PAGE_SIZE = 50;
+import {useQuery} from '@tanstack/react-query';
+import React, {ReactNode, useEffect, useRef} from 'react';
+import {useHistory, useLocation} from 'react-router-dom';
 
 interface Props<T> {
 	fetchData: (options: PaginationArgs) => Promise<PaginationOutput<T>>;
 	getItemRow: (data: T, index: number) => ReactNode;
 	searchQuery?: string;
+	pageSize?: number;
+	listId?: string;
+	emptyText?: string;
 }
 
-export default function PaginatedList<T>(props: Props<T>) {
-	const {getItemRow, fetchData, searchQuery} = props;
+export const listQueryKey = (id: string, searchQuery: string, pageSize: number, page: number) =>
+	['paginated-list', id, searchQuery, pageSize, page] as const;
 
-	const match = useRouteMatch();
+export default function PaginatedList<T>({
+	fetchData,
+	getItemRow,
+	searchQuery = '',
+	pageSize = 50,
+	listId,
+	emptyText = 'Could not find any records',
+}: Props<T>) {
 	const history = useHistory();
-	const pageUrlParam = useUrlParamNumber('page');
-	const queryUrlParam = useUrlParamNumber('query');
-
-	const [query, setQuery] = useState(searchQuery);
-	const [hasMore, setHasMore] = useState(false);
-	const [totalResults, setTotalResults] = useState(0);
-	const [page, setPage] = useState(pageUrlParam || 0);
-	const [items, setItems] = useState<T[]>([]);
-
-	useEffect(() => {
-		fetchData({
-			page,
-			searchQuery: searchQuery ?? '',
-			pageSize: DEFAULT_PAGE_SIZE,
-		}).then((result) => {
-			setItems(result.items);
-			setHasMore(result.hasMore);
-			setTotalResults(result.total);
-		});
-	}, [page, searchQuery]);
-
-	useEffect(() => {
-		if (query !== searchQuery) {
-			setQuery(searchQuery);
-			setPage(0);
-		}
-	}, [searchQuery]);
+	const location = useLocation();
+	const root = useRef<HTMLDivElement>(null);
+	const params = new URLSearchParams(location.search);
+	// Associate the URL page with its search, so a new search never requests the old page.
+	const queryMatches = (params.get('listQuery') || '') === searchQuery;
+	const requestedPage = Number(params.get('page') || 0);
+	const page =
+		queryMatches && Number.isSafeInteger(requestedPage) && requestedPage >= 0
+			? requestedPage
+			: 0;
+	const id = listId ?? location.pathname;
+	const request = useQuery({
+		queryKey: listQueryKey(id, searchQuery, pageSize, page),
+		queryFn: () => fetchData({page, pageSize, searchQuery}),
+		staleTime: 30_000,
+		retry: 1,
+		refetchOnWindowFocus: false,
+	});
+	const navigationKey = JSON.stringify([id, searchQuery, page]);
+	const previousNavigation = useRef(navigationKey);
 
 	useEffect(() => {
-		updatePageUrlParam(page);
-	}, [page]);
+		if (queryMatches) return;
+		const next = new URLSearchParams(location.search);
+		next.set('page', '0');
+		if (searchQuery) next.set('listQuery', searchQuery);
+		else next.delete('listQuery');
+		history.replace({...location, search: next.toString()});
+	}, [queryMatches, searchQuery, history, location]);
 
-	function prevPage() {
-		if (!page) {
-			return;
+	useEffect(() => {
+		if (previousNavigation.current !== navigationKey) {
+			root.current?.scrollIntoView({block: 'start', behavior: 'instant'});
+			previousNavigation.current = navigationKey;
 		}
+	}, [navigationKey]);
 
-		setPage(page - 1);
+	function changePage(nextPage: number) {
+		const next = new URLSearchParams(location.search);
+		next.set('page', String(nextPage));
+		history.push({...location, search: next.toString()});
 	}
 
-	function nextPage() {
-		if (!hasMore) {
-			return;
-		}
-
-		setPage(page + 1);
-	}
-
-	function updatePageUrlParam(pageNum: number) {
-		const urlParams = new URLSearchParams(location.search);
-		urlParams.set('page', String(pageNum));
-
-		history.push({
-			pathname: match.path,
-			search: urlParams.toString(),
-		});
-	}
-
-	let resultCount: ReactNode = (
-		<span className="text-text">
-			{numberWithCommas(totalResults)} result{totalResults === 1 ? '' : 's'}
-			{searchQuery ? ` for "${searchQuery}"` : ''}
-		</span>
-	);
-
-	let body;
-
-	if (items && items.length) {
-		body = items.map((item, index) => {
-			const itemIndex = page * DEFAULT_PAGE_SIZE + index;
-			return getItemRow(item, itemIndex);
-		});
-	} else if (items && !items.length) {
-		body = <Empty text={`Could not find any records`} />;
-	} else {
-		body = <Loading />;
-		resultCount = null;
-	}
-
-	const totalPages = Math.max(1, Math.ceil(totalResults / DEFAULT_PAGE_SIZE));
-
+	const data = request.data;
 	return (
-		<div className="w-full">
-			<div className="w-full">
-				{resultCount}
-				<div className="">{body}</div>
-				<PageControls
-					className="mt-6"
-					page={page}
-					totalPages={totalPages}
-					hasMore={hasMore}
-					onPrevious={prevPage}
-					onNext={nextPage}
-				/>
-			</div>
+		<div ref={root} className="w-full scroll-mt-4" aria-busy={request.isPending}>
+			{request.isPending ? (
+				<ListSkeleton />
+			) : request.isError ? (
+				<div
+					role="alert"
+					className="border-text/15 bg-module rounded border p-8 text-center"
+				>
+					<p className="text-text mb-4">Unable to load results. Please try again.</p>
+					<Button variant="outline" onClick={() => void request.refetch()}>
+						Try again
+					</Button>
+				</div>
+			) : (
+				data && (
+					<>
+						<p role="status" className="text-text/60 mt-0 mb-2 text-sm">
+							{numberWithCommas(data.total)} result{data.total === 1 ? '' : 's'}
+							{searchQuery ? ` for "${searchQuery}"` : ''}
+						</p>
+						{data.items.length ? (
+							data.items.map((item, index) =>
+								getItemRow(item, page * pageSize + index),
+							)
+						) : (
+							<Empty text={emptyText} />
+						)}
+						{(data.total > 0 || page > 0) && (
+							<PageControls
+								className="mt-6"
+								page={page}
+								totalPages={Math.ceil(data.total / pageSize)}
+								hasMore={data.hasMore}
+								onPrevious={() => changePage(Math.max(0, page - 1))}
+								onNext={() => changePage(page + 1)}
+							/>
+						)}
+					</>
+				)
+			)}
 		</div>
 	);
 }
