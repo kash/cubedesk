@@ -8,7 +8,7 @@ import htmlTemplate, {HtmlPagePayload} from '@/server/html_template';
 import {initUserAccount} from '@/server/models/store';
 import {logger} from '@/server/services/logger';
 import {TRPCProvider} from '@/util/api';
-import {minify} from 'html-minifier';
+import {minify} from 'html-minifier-terser';
 import React, {ReactNode} from 'react';
 import ReactDOM from 'react-dom/server';
 import {HelmetProvider} from 'react-helmet-async';
@@ -66,7 +66,7 @@ function renderFullPage(html, headTags, preloadedState) {
 
 const isDev = (process.env.ENV || 'development') === 'development';
 
-function createComponents(req, store) {
+async function createComponents(req, store) {
 	const demoHome = req.path === '/' && !store.getState().account.me;
 	// Keep the development shell for other routes; the public demo renders on the
 	// server in every environment so its timer is visible before JavaScript loads.
@@ -107,7 +107,7 @@ function createComponents(req, store) {
 }
 
 function appUseRouteForPage(routePath, route: PageContext) {
-	global.app.all(routePath, async (req, res) => {
+	global.app.all(routePath, async (req, res, next) => {
 		const store = createStore(reducers, {}, applyMiddleware(promise, thunk));
 		const promises: ((store: Store<any>, req: Request) => Promise<any>)[] = route.prefetchData || [];
 		const me = await initUserAccount(store, req);
@@ -136,7 +136,13 @@ function appUseRouteForPage(routePath, route: PageContext) {
 		}
 
 		// Initiates the whole store
-		const html = createComponents(req, store);
+		let html: string;
+		try {
+			html = await createComponents(req, store);
+		} catch (error) {
+			next(error);
+			return;
+		}
 
 		if (!code) {
 			code = 500;

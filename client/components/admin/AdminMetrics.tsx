@@ -10,7 +10,11 @@ import React, {useEffect, useState} from 'react';
 const VOLUME: MetricsSeries[] = [
 	{key: 'solves', label: 'Registered solves', color: '#69bfa6'},
 	{key: 'demoSolves', label: 'Demo solves', color: '#83a7f5'},
-	{key: 'imports', label: 'Imports', color: '#db9a53'},
+	{key: 'imports', label: 'Imported solves', color: '#db9a53'},
+];
+const IMPORTS: MetricsSeries[] = [
+	{key: 'importsSucceeded', label: 'Successful imports', color: '#69bfa6'},
+	{key: 'importsFailed', label: 'Failed imports', color: '#e78080'},
 ];
 const ACTIVITY: MetricsSeries[] = [
 	{key: 'activeUsers', label: 'Registered DAU', color: '#69bfa6'},
@@ -143,7 +147,24 @@ export default function AdminMetrics() {
 						<AdminMetricsChart title="Solve volume" days={days} series={VOLUME} />
 						<AdminMetricsChart title="Daily activity" days={days} series={ACTIVITY} />
 					</div>
-					<AdminMetricsChart title="Signups" days={days} series={SIGNUPS} />
+					<div className="grid gap-4 lg:grid-cols-2">
+						<AdminMetricsChart title="Signups" days={days} series={SIGNUPS} />
+						<div className="space-y-2">
+							<AdminMetricsChart
+								title="Import operations"
+								days={days}
+								series={IMPORTS}
+							/>
+							<p className="text-text/50 px-2 text-xs">
+								Import tracking started September 2026. Counts are per import, by
+								start date (UTC).{' '}
+								{days
+									.reduce((sum, day) => sum + day.importsPending, 0)
+									.toLocaleString()}{' '}
+								pending or unresolved in this period.
+							</p>
+						</div>
+					</div>
 					<details className="border-text/15 rounded-xl border p-4">
 						<summary className="cursor-pointer font-medium">
 							Daily figures · last {range} days
@@ -154,11 +175,14 @@ export default function AdminMetrics() {
 									{[
 										'Date (UTC)',
 										'Registered solves',
-										'Imports',
+										'Imported solves',
 										'DAU',
 										'Demo solves',
 										'Demo sessions',
 										'Signups',
+										'Successful imports',
+										'Failed imports',
+										'Pending imports',
 									].map((label) => (
 										<TableHead key={label}>{label}</TableHead>
 									))}
@@ -177,6 +201,9 @@ export default function AdminMetrics() {
 											day.demoSolves,
 											day.demoSessions,
 											day.signups,
+											day.importsSucceeded,
+											day.importsFailed,
+											day.importsPending,
 										].map((value, index) => (
 											<TableCell key={index} className="tabular-nums">
 												{value.toLocaleString()}

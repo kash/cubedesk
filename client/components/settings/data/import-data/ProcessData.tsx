@@ -14,7 +14,7 @@ export default function ProcessData() {
 		onDrop,
 		accept: timerImportData.acceptedFileTypes,
 		maxFiles: 1,
-		disabled: context.importing,
+		disabled: context.importing || context.importLocked,
 	});
 
 	if (timerImportData.preImportCheck && !timerImportData.preImportCheck(context)) {

@@ -241,12 +241,12 @@ export type CustomTrainerLike = Prisma.CustomTrainerLikeModel
 export type CustomTrainerDownload = Prisma.CustomTrainerDownloadModel
 /**
  * Model TrainerAlgorithm
- *
+ * 
  */
 export type TrainerAlgorithm = Prisma.TrainerAlgorithmModel
 /**
  * Model TrainerCatalogState
- *
+ * 
  */
 export type TrainerCatalogState = Prisma.TrainerCatalogStateModel
 /**
@@ -269,3 +269,8 @@ export type Setting = Prisma.SettingModel
  * 
  */
 export type CustomCubeType = Prisma.CustomCubeTypeModel
+/**
+ * Model ImportAttempt
+ * 
+ */
+export type ImportAttempt = Prisma.ImportAttemptModel

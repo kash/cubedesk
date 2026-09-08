@@ -114,7 +114,7 @@ export function updateSolve(id: string, solve: Partial<SolveInput>) {
 	});
 }
 
-export function bulkCreateSolves(user: UserAccount, solves: SolveInput[]) {
+export function prepareImportedSolves(userId: string, solves: SolveInput[]) {
 	const data: Prisma.SolveCreateManyInput[] = [];
 	for (let i = 0; i < solves.length; i += 1) {
 		let solve = solves[i];
@@ -126,23 +126,15 @@ export function bulkCreateSolves(user: UserAccount, solves: SolveInput[]) {
 			...toSolveWriteData(solve),
 			time: requireSolveTime(solve),
 			bulk: true,
+			started_at: Number.isFinite(solve.started_at) ? solve.started_at : null,
+			ended_at: Number.isFinite(solve.ended_at) ? solve.ended_at : null,
 			id,
-			user_id: user.id,
+			user_id: userId,
 			share_code: shareCode,
 		});
 	}
 
-	return getPrisma().$transaction(async (tx) => {
-		const result = await tx.solve.createMany({data});
-		if (result.count > 0) {
-			await tx.userFeatureState.upsert({
-				where: {user_id: user.id},
-				create: {user_id: user.id, import_prompt_hidden: true},
-				update: {import_prompt_hidden: true},
-			});
-		}
-		return result;
-	});
+	return data;
 }
 
 export function createSolve(user: UserAccount, input: SolveInput) {

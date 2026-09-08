@@ -122,7 +122,7 @@
 		"flat": "^5.0.2",
 		"gan-web-bluetooth": "^3.0.2",
 		"hex-to-rgba": "^2.0.1",
-		"html-minifier": "^4.0.0",
+		"html-minifier-terser": "^7.2.0",
 		"ignore-styles": "^5.0.1",
 		"ioredis": "^5.0.5",
 		"jimp": "^0.16.1",
@@ -210,6 +210,14 @@
 		"vite": "^7.3.6"
 	},
 	"pnpm": {
+		"overrides": {
+			"@prisma/config>deepmerge-ts": "^8.0.2",
+			"prisma>mysql2": "^3.23.1",
+			"@prisma/dev>@hono/node-server": "^1.19.15",
+			"@prisma/dev>valibot": "^1.4.2",
+			"ws@>=8.0.0 <8.21.0": "^8.21.0",
+			"qs@<6.16.0": "^6.16.0"
+		},
 		"onlyBuiltDependencies": [
 			"@prisma/engines",
 			"prisma",

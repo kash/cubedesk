@@ -4,6 +4,9 @@ export interface AdminMetricsDay {
 	date: string;
 	solves: number;
 	imports: number;
+	importsSucceeded: number;
+	importsFailed: number;
+	importsPending: number;
 	activeUsers: number;
 	demoSolves: number;
 	demoSessions: number;
@@ -11,7 +14,7 @@ export interface AdminMetricsDay {
 }
 
 export interface AdminMetricsSnapshot {
-	version: 1;
+	version: 2;
 	cutoff: string;
 	completedAt: string;
 	totals: {

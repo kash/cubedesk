@@ -68,6 +68,7 @@ model UserAccount {
   viewed_profiles               ProfileView[]           @relation("viewer")
   reports_created               Report[]                @relation("report_created_by")
   reports_for                   Report[]                @relation("report_for")
+  import_attempts               ImportAttempt[]
   sessions                      Session[]
   settings                      Setting?
   smart_device                  SmartDevice[]
@@ -902,4 +903,35 @@ enum GameType {
 
 enum MetricLogType {
   DELETE_USER_ACCOUNT
+}
+
+enum ImportSource {
+  cstimer
+  cubedesk
+}
+
+enum ImportStatus {
+  pending
+  succeeded
+  failed
+}
+
+model ImportAttempt {
+  id                 String       @id
+  user_id            String
+  source             ImportSource
+  status             ImportStatus @default(pending)
+  request_hash       String
+  requested_sessions Int
+  requested_solves   Int
+  saved_sessions     Int          @default(0)
+  saved_solves       Int          @default(0)
+  started_at         DateTime     @default(now())
+  completed_at       DateTime?
+  failure_code       String?
+  user               UserAccount  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([started_at])
+  @@index([user_id, started_at])
+  @@map("import_attempt")
 }

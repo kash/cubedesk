@@ -429,7 +429,8 @@ export const ModelName = {
   TrainerFavorite: 'TrainerFavorite',
   AlgorithmOverride: 'AlgorithmOverride',
   Setting: 'Setting',
-  CustomCubeType: 'CustomCubeType'
+  CustomCubeType: 'CustomCubeType',
+  ImportAttempt: 'ImportAttempt'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -445,7 +446,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "solveMethodStep" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerAlgorithm" | "trainerCatalogState" | "trainerFavorite" | "algorithmOverride" | "setting" | "customCubeType"
+    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "solveMethodStep" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerAlgorithm" | "trainerCatalogState" | "trainerFavorite" | "algorithmOverride" | "setting" | "customCubeType" | "importAttempt"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3853,6 +3854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ImportAttempt: {
+      payload: Prisma.$ImportAttemptPayload<ExtArgs>
+      fields: Prisma.ImportAttemptFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ImportAttemptFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ImportAttemptFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>
+        }
+        findFirst: {
+          args: Prisma.ImportAttemptFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ImportAttemptFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>
+        }
+        findMany: {
+          args: Prisma.ImportAttemptFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>[]
+        }
+        create: {
+          args: Prisma.ImportAttemptCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>
+        }
+        createMany: {
+          args: Prisma.ImportAttemptCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ImportAttemptCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>[]
+        }
+        delete: {
+          args: Prisma.ImportAttemptDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>
+        }
+        update: {
+          args: Prisma.ImportAttemptUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>
+        }
+        deleteMany: {
+          args: Prisma.ImportAttemptDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ImportAttemptUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ImportAttemptUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>[]
+        }
+        upsert: {
+          args: Prisma.ImportAttemptUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImportAttemptPayload>
+        }
+        aggregate: {
+          args: Prisma.ImportAttemptAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateImportAttempt>
+        }
+        groupBy: {
+          args: Prisma.ImportAttemptGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImportAttemptGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ImportAttemptCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImportAttemptCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -4574,6 +4649,24 @@ export const CustomCubeTypeScalarFieldEnum = {
 export type CustomCubeTypeScalarFieldEnum = (typeof CustomCubeTypeScalarFieldEnum)[keyof typeof CustomCubeTypeScalarFieldEnum]
 
 
+export const ImportAttemptScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  source: 'source',
+  status: 'status',
+  request_hash: 'request_hash',
+  requested_sessions: 'requested_sessions',
+  requested_solves: 'requested_solves',
+  saved_sessions: 'saved_sessions',
+  saved_solves: 'saved_solves',
+  started_at: 'started_at',
+  completed_at: 'completed_at',
+  failure_code: 'failure_code'
+} as const
+
+export type ImportAttemptScalarFieldEnum = (typeof ImportAttemptScalarFieldEnum)[keyof typeof ImportAttemptScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -5110,6 +5203,16 @@ export const CustomCubeTypeOrderByRelevanceFieldEnum = {
 export type CustomCubeTypeOrderByRelevanceFieldEnum = (typeof CustomCubeTypeOrderByRelevanceFieldEnum)[keyof typeof CustomCubeTypeOrderByRelevanceFieldEnum]
 
 
+export const ImportAttemptOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  request_hash: 'request_hash',
+  failure_code: 'failure_code'
+} as const
+
+export type ImportAttemptOrderByRelevanceFieldEnum = (typeof ImportAttemptOrderByRelevanceFieldEnum)[keyof typeof ImportAttemptOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -5218,6 +5321,34 @@ export type EnumGameTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'GameType[]'
  */
 export type ListEnumGameTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ImportSource'
+ */
+export type EnumImportSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportSource'>
+    
+
+
+/**
+ * Reference to a field of type 'ImportSource[]'
+ */
+export type ListEnumImportSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportSource[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ImportStatus'
+ */
+export type EnumImportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ImportStatus[]'
+ */
+export type ListEnumImportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportStatus[]'>
     
 
 /**
@@ -5376,6 +5507,7 @@ export type GlobalOmitConfig = {
   algorithmOverride?: Prisma.AlgorithmOverrideOmit
   setting?: Prisma.SettingOmit
   customCubeType?: Prisma.CustomCubeTypeOmit
+  importAttempt?: Prisma.ImportAttemptOmit
 }
 
 /* Types for Logging */

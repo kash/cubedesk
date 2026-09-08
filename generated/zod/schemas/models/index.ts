@@ -49,3 +49,4 @@ export { TrainerFavoriteSchema } from './TrainerFavorite.schema';
 export { AlgorithmOverrideSchema } from './AlgorithmOverride.schema';
 export { SettingSchema } from './Setting.schema';
 export { CustomCubeTypeSchema } from './CustomCubeType.schema';
+export { ImportAttemptSchema } from './ImportAttempt.schema';

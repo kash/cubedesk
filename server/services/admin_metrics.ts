@@ -5,7 +5,7 @@ import {createRedisKey, getRedisPubClient, RedisNamespace} from '@/server/servic
 import {randomUUID} from 'node:crypto';
 
 export const METRICS_REFRESH_MS = 6 * 60 * 60 * 1000;
-const SNAPSHOT_KEY = createRedisKey(RedisNamespace.ADMIN_METRICS, 'v1').key;
+const SNAPSHOT_KEY = createRedisKey(RedisNamespace.ADMIN_METRICS, 'v2').key;
 const LOCK_KEY = `${SNAPSHOT_KEY}:lock`;
 const RETRY_KEY = `${SNAPSHOT_KEY}:retry`;
 const LEASE_MS = 60_000;
@@ -36,7 +36,7 @@ async function readSnapshot(): Promise<AdminMetricsSnapshot | null> {
 	try {
 		const snapshot = JSON.parse(value) as AdminMetricsSnapshot;
 		if (
-			snapshot.version !== 1 ||
+			snapshot.version !== 2 ||
 			!Number.isFinite(Date.parse(snapshot.cutoff)) ||
 			!Array.isArray(snapshot.days)
 		)

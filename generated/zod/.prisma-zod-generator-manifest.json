@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "1.0.0",
-  "generatedAt": "2026-09-08T04:42:06.603Z",
+  "generatedAt": "2026-09-08T05:01:54.727Z",
   "outputPath": "/Users/kash/Developer/cubedesk/generated/zod",
   "files": [
     "schemas/enums/TransactionIsolationLevel.schema.ts",
@@ -51,6 +51,7 @@
     "schemas/enums/AlgorithmOverrideScalarFieldEnum.schema.ts",
     "schemas/enums/SettingScalarFieldEnum.schema.ts",
     "schemas/enums/CustomCubeTypeScalarFieldEnum.schema.ts",
+    "schemas/enums/ImportAttemptScalarFieldEnum.schema.ts",
     "schemas/enums/SortOrder.schema.ts",
     "schemas/enums/QueryMode.schema.ts",
     "schemas/enums/NullsOrder.schema.ts",
@@ -100,8 +101,11 @@
     "schemas/enums/AlgorithmOverrideOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/SettingOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/CustomCubeTypeOrderByRelevanceFieldEnum.schema.ts",
+    "schemas/enums/ImportAttemptOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/MetricLogType.schema.ts",
-    "schemas/enums/GameType.schema.ts"
+    "schemas/enums/GameType.schema.ts",
+    "schemas/enums/ImportSource.schema.ts",
+    "schemas/enums/ImportStatus.schema.ts"
   ],
   "directories": [
     "schemas/enums"

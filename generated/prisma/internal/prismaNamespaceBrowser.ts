@@ -96,7 +96,8 @@ export const ModelName = {
   TrainerFavorite: 'TrainerFavorite',
   AlgorithmOverride: 'AlgorithmOverride',
   Setting: 'Setting',
-  CustomCubeType: 'CustomCubeType'
+  CustomCubeType: 'CustomCubeType',
+  ImportAttempt: 'ImportAttempt'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -797,6 +798,24 @@ export const CustomCubeTypeScalarFieldEnum = {
 export type CustomCubeTypeScalarFieldEnum = (typeof CustomCubeTypeScalarFieldEnum)[keyof typeof CustomCubeTypeScalarFieldEnum]
 
 
+export const ImportAttemptScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  source: 'source',
+  status: 'status',
+  request_hash: 'request_hash',
+  requested_sessions: 'requested_sessions',
+  requested_solves: 'requested_solves',
+  saved_sessions: 'saved_sessions',
+  saved_solves: 'saved_solves',
+  started_at: 'started_at',
+  completed_at: 'completed_at',
+  failure_code: 'failure_code'
+} as const
+
+export type ImportAttemptScalarFieldEnum = (typeof ImportAttemptScalarFieldEnum)[keyof typeof ImportAttemptScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1331,4 +1350,14 @@ export const CustomCubeTypeOrderByRelevanceFieldEnum = {
 } as const
 
 export type CustomCubeTypeOrderByRelevanceFieldEnum = (typeof CustomCubeTypeOrderByRelevanceFieldEnum)[keyof typeof CustomCubeTypeOrderByRelevanceFieldEnum]
+
+
+export const ImportAttemptOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  request_hash: 'request_hash',
+  failure_code: 'failure_code'
+} as const
+
+export type ImportAttemptOrderByRelevanceFieldEnum = (typeof ImportAttemptOrderByRelevanceFieldEnum)[keyof typeof ImportAttemptOrderByRelevanceFieldEnum]
 

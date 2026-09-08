@@ -1,5 +1,4 @@
 import type {Session} from '@/generated/prisma/client';
-import type {SessionInput} from '@/types/session';
 import {getPrisma} from '@/server/database';
 import uniqid from 'uniqid';
 
@@ -46,15 +45,6 @@ export function createSession(userId: string, input: {id?: string; name: string}
 			user_id: userId,
 			order: 0,
 		},
-	});
-}
-
-export function bulkCreateSessions(userId: string, sessions: SessionInput[]) {
-	return getPrisma().session.createMany({
-		data: sessions.map((session) => ({
-			...session,
-			user_id: userId,
-		})),
 	});
 }
 
