@@ -1,5 +1,4 @@
 import {
-	bulkCreateSessions,
 	createSession,
 	deleteSession,
 	getSessionById,
@@ -14,7 +13,7 @@ import {protectedProcedure, router} from '@/server/trpc/trpc';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 
-const sessionInputSchema = z.object({
+export const sessionInputSchema = z.object({
 	id: z.string().optional(),
 	name: z.string(),
 	order: z.number().int().optional(),
@@ -119,17 +118,4 @@ export const sessionRouter = router({
 			return newSession;
 		}),
 
-	bulkCreate: protectedProcedure
-		.input(
-			z.object({
-				sessions: z
-					.array(sessionInputSchema)
-					.min(1, 'Must include at least one session')
-					.max(1000, 'You cannot import that many sessions'),
-			})
-		)
-		.mutation(async ({ctx, input}) => {
-			await bulkCreateSessions(ctx.user.id, input.sessions);
-			await updateOrderOfSessionsForUser(ctx.user.id);
-		}),
 });

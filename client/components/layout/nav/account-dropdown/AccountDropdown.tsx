@@ -17,7 +17,7 @@ export default function AccountDropdown() {
 	aviDropDownOptions.push({link: '/account/personal-info', text: 'Account'});
 	aviDropDownOptions.push({link: `/user/${me.username}`, text: 'Profile'});
 	if (me.admin) {
-		aviDropDownOptions.push({link: '/admin/reports', text: 'Admin'});
+		aviDropDownOptions.push({link: '/admin/metrics', text: 'Admin'});
 	}
 	aviDropDownOptions.push({link: '/settings/timer', text: 'Settings'});
 	aviDropDownOptions.push({onClick: logOut, text: 'Log out'});

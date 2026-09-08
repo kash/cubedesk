@@ -9,6 +9,7 @@ import {demoSolveRouter} from '@/server/trpc/routers/demo_solve';
 import {forgotPasswordRouter} from '@/server/trpc/routers/forgot_password';
 import {friendshipRouter} from '@/server/trpc/routers/friendship';
 import {gameRouter} from '@/server/trpc/routers/game';
+import {importsRouter} from '@/server/trpc/routers/imports';
 import {integrationRouter} from '@/server/trpc/routers/integration';
 import {leaderboardsRouter} from '@/server/trpc/routers/leaderboards';
 import {matchRouter} from '@/server/trpc/routers/match';
@@ -27,6 +28,7 @@ import {userRouter} from '@/server/trpc/routers/user';
 import {router} from '@/server/trpc/trpc';
 
 export const appRouter = router({
+	imports: importsRouter,
 	adminTrainer: adminTrainerRouter,
 	auth: authRouter,
 	session: sessionRouter,

@@ -1,33 +1,25 @@
 import CubePicker from '@/components/common/CubePicker';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {clearOfflineData} from '@/components/layout/offline';
-import {ImportDataContext} from '@/components/settings/data/import-data/ImportData';
+import {ImportDataContext, ImportDataType} from '@/components/settings/data/import-data/ImportData';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Separator} from '@/components/ui/separator';
 import {Spinner} from '@/components/ui/spinner';
-import {SessionInput} from '@/types/session';
 import {SolveInput} from '@/types/solve';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
+import {TRPCClientError} from '@trpc/client';
 import {X} from 'phosphor-react';
-import React, {ReactNode, useContext} from 'react';
-
-async function bulkImportSessions(sessions: SessionInput[]) {
-	await trpc.session.bulkCreate.mutate({
-		sessions,
-	});
-}
-
-async function bulkImportSolves(solves: SolveInput[]) {
-	await trpc.solve.bulkCreate.mutate({
-		solves,
-	});
-}
+import React, {ReactNode, useContext, useRef} from 'react';
+import {v4 as uuid} from 'uuid';
 
 export default function ReviewImport() {
 	const context = useContext(ImportDataContext);
+	const attempt = useRef<string | null>(null);
+	const submitted = useRef<Parameters<typeof trpc.imports.run.mutate>[0] | null>(null);
+	const running = useRef(false);
 
 	const data = context.importableData;
 	if (!data) {
@@ -35,16 +27,52 @@ export default function ReviewImport() {
 	}
 
 	async function importData() {
+		if (running.current) return;
+		running.current = true;
 		context.setImporting(true);
+		context.setImportLocked(true);
 		try {
-			await bulkImportSessions(data.sessions);
-			await bulkImportSolves(data.solves);
+			if (!attempt.current) {
+				attempt.current = uuid();
+				// Freeze the payload for retries, even if the review controls later change.
+				submitted.current = JSON.parse(
+					JSON.stringify({
+						attemptId: attempt.current,
+						source:
+							context.importType === ImportDataType.CS_TIMER ? 'cstimer' : 'cubedesk',
+						sessions: data.sessions,
+						solves: data.solves,
+					}),
+				);
+			}
+			const result = await trpc.imports.run.mutate(submitted.current!);
+			if (result.status === 'failed') {
+				attempt.current = null;
+				submitted.current = null;
+				context.setImportLocked(false);
+				throw new Error(
+					'Import failed. No data was saved. Please review your file and try again.',
+				);
+			}
+			if (result.status === 'pending') {
+				throw new Error(
+					'This import has not reported a result yet. Check its status again shortly.',
+				);
+			}
 			await clearOfflineData();
 			window.location.href = '/sessions';
 		} catch (e) {
+			if (e instanceof TRPCClientError && e.data?.code === 'BAD_REQUEST') {
+				// Validation rejected the request before an attempt was accepted.
+				attempt.current = null;
+				submitted.current = null;
+				context.setImportLocked(false);
+			}
 			console.error(e);
 			context.setImporting(false);
 			toastError((e as Error).message);
+		} finally {
+			running.current = false;
 		}
 	}
 
@@ -182,16 +210,20 @@ export default function ReviewImport() {
 							{data.sessions.length.toLocaleString()}
 						</span>
 					</h4>
-					{sessionMapper}
+					<div inert={context.importLocked}>{sessionMapper}</div>
 				</div>
 				<Button
 					variant="default"
 					onClick={importData}
 					size="lg"
-					disabled={context.importing || context.importing}
+					disabled={context.importing}
 					aria-busy={context.importing}
 				>
-					{'Import data'}
+					{context.importing
+						? 'Importing…'
+						: context.importLocked
+							? 'Check import status'
+							: 'Import data'}
 					{context.importing ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 			</ImportSection>

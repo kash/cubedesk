@@ -28,6 +28,10 @@ suite('admin metrics PostgreSQL integration', () => {
 			bulk boolean NOT NULL DEFAULT false, cube_type text, match_id text,
 			trainer_name text, from_timer boolean NOT NULL DEFAULT true
 		)`);
+		await db.$executeRawUnsafe(`CREATE TABLE import_attempt (
+			id text PRIMARY KEY, status text NOT NULL, started_at timestamp(3) NOT NULL, completed_at timestamp(3)
+		)`);
+		await db.$executeRawUnsafe('CREATE INDEX ON import_attempt (started_at)');
 		await db.$executeRawUnsafe('CREATE INDEX ON solve (created_at)');
 		await db.$executeRawUnsafe('CREATE INDEX ON solve (bulk)');
 		await db.$executeRawUnsafe(`CREATE TABLE demo_solve (
@@ -118,6 +122,9 @@ suite('admin metrics PostgreSQL integration', () => {
 				date: day.date,
 				solves: Number(solves?.solves ?? 0),
 				imports: Number(solves?.imports ?? 0),
+				importsSucceeded: 0,
+				importsFailed: 0,
+				importsPending: 0,
 				activeUsers: Number(solves?.active ?? 0),
 				demoSolves: Number(demos?.solves ?? 0),
 				demoSessions: Number(demos?.sessions ?? 0),
@@ -157,5 +164,26 @@ suite('admin metrics PostgreSQL integration', () => {
 			FROM solve WHERE created_at < ${midnight}`;
 		expect(snapshot.totals.registeredSolves).toBe(Number(totals.registered));
 		expect(snapshot.totals.importedSolves).toBe(Number(totals.imported));
+	}, 30000);
+	it('uses UTC start dates, excludes the cutoff, and leaves unfinished outcomes pending', async () => {
+		await db.$executeRawUnsafe(`INSERT INTO import_attempt VALUES
+			('success', 'succeeded', '2026-09-06 23:59:59.999', '2026-09-07 01:00'),
+			('failed', 'failed', '2026-09-07 00:00', '2026-09-07 00:01'),
+			('pending', 'pending', '2026-09-07 02:00', NULL),
+			('later-success', 'succeeded', '2026-09-07 03:00', '2026-09-07 12:01'),
+			('cutoff', 'failed', '2026-09-07 12:00', '2026-09-07 12:00'),
+			('before-history', 'succeeded', '2026-06-09 23:59', '2026-06-10 00:01')`);
+		const snapshot = await buildAdminMetrics(cutoff, db);
+		expect(snapshot.days[88]).toMatchObject({
+			importsSucceeded: 1,
+			importsFailed: 0,
+			importsPending: 0,
+		});
+		expect(snapshot.days[89]).toMatchObject({
+			importsSucceeded: 0,
+			importsFailed: 1,
+			importsPending: 2,
+		});
+		expect(snapshot.days.slice(-7).reduce((sum, day) => sum + day.importsSucceeded, 0)).toBe(1);
 	}, 30000);
 });

@@ -23,3 +23,20 @@ export const MetricLogType = {
 } as const
 
 export type MetricLogType = (typeof MetricLogType)[keyof typeof MetricLogType]
+
+
+export const ImportSource = {
+  cstimer: 'cstimer',
+  cubedesk: 'cubedesk'
+} as const
+
+export type ImportSource = (typeof ImportSource)[keyof typeof ImportSource]
+
+
+export const ImportStatus = {
+  pending: 'pending',
+  succeeded: 'succeeded',
+  failed: 'failed'
+} as const
+
+export type ImportStatus = (typeof ImportStatus)[keyof typeof ImportStatus]

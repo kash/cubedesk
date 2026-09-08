@@ -29,6 +29,8 @@ export interface IImportDataContext {
 	setCubeType: reactState<string>;
 	importableData: ImportableData;
 	setImportableData: reactState<ImportableData>;
+	importLocked: boolean;
+	setImportLocked: reactState<boolean>;
 	importing: boolean;
 	setImporting: reactState<boolean>;
 
@@ -58,6 +60,7 @@ export default function ImportData(props: Props) {
 	const [importableData, setImportableData] = useState<ImportableData>(null as any);
 	const [cubeType, setCubeType] = useState<string>('');
 	const [importing, setImporting] = useState<boolean>(false);
+	const [importLocked, setImportLocked] = useState(false);
 
 	let timerImportData: TimerImportData;
 	switch (importType) {
@@ -85,6 +88,8 @@ export default function ImportData(props: Props) {
 		cubeType,
 		importableData,
 		setImportableData,
+		importLocked,
+		setImportLocked,
 		importing,
 		setImporting,
 		setCubeType,

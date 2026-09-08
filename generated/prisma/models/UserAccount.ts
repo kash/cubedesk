@@ -292,6 +292,7 @@ export type UserAccountWhereInput = {
   viewed_profiles?: Prisma.ProfileViewListRelationFilter
   reports_created?: Prisma.ReportListRelationFilter
   reports_for?: Prisma.ReportListRelationFilter
+  import_attempts?: Prisma.ImportAttemptListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   settings?: Prisma.XOR<Prisma.SettingNullableScalarRelationFilter, Prisma.SettingWhereInput> | null
   smart_device?: Prisma.SmartDeviceListRelationFilter
@@ -358,6 +359,7 @@ export type UserAccountOrderByWithRelationInput = {
   viewed_profiles?: Prisma.ProfileViewOrderByRelationAggregateInput
   reports_created?: Prisma.ReportOrderByRelationAggregateInput
   reports_for?: Prisma.ReportOrderByRelationAggregateInput
+  import_attempts?: Prisma.ImportAttemptOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   settings?: Prisma.SettingOrderByWithRelationInput
   smart_device?: Prisma.SmartDeviceOrderByRelationAggregateInput
@@ -428,6 +430,7 @@ export type UserAccountWhereUniqueInput = Prisma.AtLeast<{
   viewed_profiles?: Prisma.ProfileViewListRelationFilter
   reports_created?: Prisma.ReportListRelationFilter
   reports_for?: Prisma.ReportListRelationFilter
+  import_attempts?: Prisma.ImportAttemptListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   settings?: Prisma.XOR<Prisma.SettingNullableScalarRelationFilter, Prisma.SettingWhereInput> | null
   smart_device?: Prisma.SmartDeviceListRelationFilter
@@ -534,6 +537,7 @@ export type UserAccountCreateInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -600,6 +604,7 @@ export type UserAccountUncheckedCreateInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -666,6 +671,7 @@ export type UserAccountUpdateInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -732,6 +738,7 @@ export type UserAccountUncheckedUpdateInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -1591,6 +1598,20 @@ export type UserAccountUpdateOneRequiredWithoutSettingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserAccountUpdateToOneWithWhereWithoutSettingsInput, Prisma.UserAccountUpdateWithoutSettingsInput>, Prisma.UserAccountUncheckedUpdateWithoutSettingsInput>
 }
 
+export type UserAccountCreateNestedOneWithoutImport_attemptsInput = {
+  create?: Prisma.XOR<Prisma.UserAccountCreateWithoutImport_attemptsInput, Prisma.UserAccountUncheckedCreateWithoutImport_attemptsInput>
+  connectOrCreate?: Prisma.UserAccountCreateOrConnectWithoutImport_attemptsInput
+  connect?: Prisma.UserAccountWhereUniqueInput
+}
+
+export type UserAccountUpdateOneRequiredWithoutImport_attemptsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserAccountCreateWithoutImport_attemptsInput, Prisma.UserAccountUncheckedCreateWithoutImport_attemptsInput>
+  connectOrCreate?: Prisma.UserAccountCreateOrConnectWithoutImport_attemptsInput
+  upsert?: Prisma.UserAccountUpsertWithoutImport_attemptsInput
+  connect?: Prisma.UserAccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserAccountUpdateToOneWithWhereWithoutImport_attemptsInput, Prisma.UserAccountUpdateWithoutImport_attemptsInput>, Prisma.UserAccountUncheckedUpdateWithoutImport_attemptsInput>
+}
+
 export type UserAccountCreateWithoutUser_feature_stateInput = {
   id?: string
   email: string
@@ -1644,6 +1665,7 @@ export type UserAccountCreateWithoutUser_feature_stateInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -1709,6 +1731,7 @@ export type UserAccountUncheckedCreateWithoutUser_feature_stateInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -1790,6 +1813,7 @@ export type UserAccountUpdateWithoutUser_feature_stateInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -1855,6 +1879,7 @@ export type UserAccountUncheckedUpdateWithoutUser_feature_stateInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -1919,6 +1944,7 @@ export type UserAccountCreateWithoutIntegrationsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -1984,6 +2010,7 @@ export type UserAccountUncheckedCreateWithoutIntegrationsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -2065,6 +2092,7 @@ export type UserAccountUpdateWithoutIntegrationsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -2130,6 +2158,7 @@ export type UserAccountUncheckedUpdateWithoutIntegrationsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -2195,6 +2224,7 @@ export type UserAccountCreateWithoutNotifications_triggeredInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -2260,6 +2290,7 @@ export type UserAccountUncheckedCreateWithoutNotifications_triggeredInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -2330,6 +2361,7 @@ export type UserAccountCreateWithoutNotificationsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -2395,6 +2427,7 @@ export type UserAccountUncheckedCreateWithoutNotificationsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -2476,6 +2509,7 @@ export type UserAccountUpdateWithoutNotifications_triggeredInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -2541,6 +2575,7 @@ export type UserAccountUncheckedUpdateWithoutNotifications_triggeredInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -2617,6 +2652,7 @@ export type UserAccountUpdateWithoutNotificationsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -2682,6 +2718,7 @@ export type UserAccountUncheckedUpdateWithoutNotificationsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -2747,6 +2784,7 @@ export type UserAccountCreateWithoutAction_logInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -2812,6 +2850,7 @@ export type UserAccountUncheckedCreateWithoutAction_logInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -2893,6 +2932,7 @@ export type UserAccountUpdateWithoutAction_logInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -2958,6 +2998,7 @@ export type UserAccountUncheckedUpdateWithoutAction_logInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -3023,6 +3064,7 @@ export type UserAccountCreateWithoutMetric_logsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -3088,6 +3130,7 @@ export type UserAccountUncheckedCreateWithoutMetric_logsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -3169,6 +3212,7 @@ export type UserAccountUpdateWithoutMetric_logsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -3234,6 +3278,7 @@ export type UserAccountUncheckedUpdateWithoutMetric_logsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -3299,6 +3344,7 @@ export type UserAccountCreateWithoutNotification_preferencesInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -3364,6 +3410,7 @@ export type UserAccountUncheckedCreateWithoutNotification_preferencesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -3445,6 +3492,7 @@ export type UserAccountUpdateWithoutNotification_preferencesInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -3510,6 +3558,7 @@ export type UserAccountUncheckedUpdateWithoutNotification_preferencesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -3575,6 +3624,7 @@ export type UserAccountCreateWithoutFriendship_requests_sentInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -3640,6 +3690,7 @@ export type UserAccountUncheckedCreateWithoutFriendship_requests_sentInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -3710,6 +3761,7 @@ export type UserAccountCreateWithoutFriendships_requests_receivedInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -3775,6 +3827,7 @@ export type UserAccountUncheckedCreateWithoutFriendships_requests_receivedInput 
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -3856,6 +3909,7 @@ export type UserAccountUpdateWithoutFriendship_requests_sentInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -3921,6 +3975,7 @@ export type UserAccountUncheckedUpdateWithoutFriendship_requests_sentInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -3997,6 +4052,7 @@ export type UserAccountUpdateWithoutFriendships_requests_receivedInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -4062,6 +4118,7 @@ export type UserAccountUncheckedUpdateWithoutFriendships_requests_receivedInput 
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -4127,6 +4184,7 @@ export type UserAccountCreateWithoutFriendships_otherInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -4192,6 +4250,7 @@ export type UserAccountUncheckedCreateWithoutFriendships_otherInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -4262,6 +4321,7 @@ export type UserAccountCreateWithoutFriendshipsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -4327,6 +4387,7 @@ export type UserAccountUncheckedCreateWithoutFriendshipsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -4408,6 +4469,7 @@ export type UserAccountUpdateWithoutFriendships_otherInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -4473,6 +4535,7 @@ export type UserAccountUncheckedUpdateWithoutFriendships_otherInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -4549,6 +4612,7 @@ export type UserAccountUpdateWithoutFriendshipsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -4614,6 +4678,7 @@ export type UserAccountUncheckedUpdateWithoutFriendshipsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -4679,6 +4744,7 @@ export type UserAccountCreateWithoutElo_ratingInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -4744,6 +4810,7 @@ export type UserAccountUncheckedCreateWithoutElo_ratingInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -4825,6 +4892,7 @@ export type UserAccountUpdateWithoutElo_ratingInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -4890,6 +4958,7 @@ export type UserAccountUncheckedUpdateWithoutElo_ratingInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -4955,6 +5024,7 @@ export type UserAccountCreateWithoutElo_log_opponentInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -5020,6 +5090,7 @@ export type UserAccountUncheckedCreateWithoutElo_log_opponentInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -5090,6 +5161,7 @@ export type UserAccountCreateWithoutElo_log_playerInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -5155,6 +5227,7 @@ export type UserAccountUncheckedCreateWithoutElo_log_playerInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -5236,6 +5309,7 @@ export type UserAccountUpdateWithoutElo_log_opponentInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -5301,6 +5375,7 @@ export type UserAccountUncheckedUpdateWithoutElo_log_opponentInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -5377,6 +5452,7 @@ export type UserAccountUpdateWithoutElo_log_playerInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -5442,6 +5518,7 @@ export type UserAccountUncheckedUpdateWithoutElo_log_playerInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -5507,6 +5584,7 @@ export type UserAccountCreateWithoutAd_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -5572,6 +5650,7 @@ export type UserAccountUncheckedCreateWithoutAd_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -5653,6 +5732,7 @@ export type UserAccountUpdateWithoutAd_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -5718,6 +5798,7 @@ export type UserAccountUncheckedUpdateWithoutAd_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -5783,6 +5864,7 @@ export type UserAccountCreateWithoutProfileInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -5848,6 +5930,7 @@ export type UserAccountUncheckedCreateWithoutProfileInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -5929,6 +6012,7 @@ export type UserAccountUpdateWithoutProfileInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -5994,6 +6078,7 @@ export type UserAccountUncheckedUpdateWithoutProfileInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -6059,6 +6144,7 @@ export type UserAccountCreateWithoutImageInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -6124,6 +6210,7 @@ export type UserAccountUncheckedCreateWithoutImageInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -6205,6 +6292,7 @@ export type UserAccountUpdateWithoutImageInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -6270,6 +6358,7 @@ export type UserAccountUncheckedUpdateWithoutImageInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -6335,6 +6424,7 @@ export type UserAccountCreateWithoutProfile_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -6400,6 +6490,7 @@ export type UserAccountUncheckedCreateWithoutProfile_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -6470,6 +6561,7 @@ export type UserAccountCreateWithoutViewed_profilesInput = {
   profile_views?: Prisma.ProfileViewCreateNestedManyWithoutProfile_userInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -6535,6 +6627,7 @@ export type UserAccountUncheckedCreateWithoutViewed_profilesInput = {
   profile_views?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutProfile_userInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -6616,6 +6709,7 @@ export type UserAccountUpdateWithoutProfile_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -6681,6 +6775,7 @@ export type UserAccountUncheckedUpdateWithoutProfile_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -6757,6 +6852,7 @@ export type UserAccountUpdateWithoutViewed_profilesInput = {
   profile_views?: Prisma.ProfileViewUpdateManyWithoutProfile_userNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -6822,6 +6918,7 @@ export type UserAccountUncheckedUpdateWithoutViewed_profilesInput = {
   profile_views?: Prisma.ProfileViewUncheckedUpdateManyWithoutProfile_userNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -6887,6 +6984,7 @@ export type UserAccountCreateWithoutForgot_passwordInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -6952,6 +7050,7 @@ export type UserAccountUncheckedCreateWithoutForgot_passwordInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -7033,6 +7132,7 @@ export type UserAccountUpdateWithoutForgot_passwordInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -7098,6 +7198,7 @@ export type UserAccountUncheckedUpdateWithoutForgot_passwordInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -7164,6 +7265,7 @@ export type UserAccountCreateWithoutSolvesInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -7229,6 +7331,7 @@ export type UserAccountUncheckedCreateWithoutSolvesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -7310,6 +7413,7 @@ export type UserAccountUpdateWithoutSolvesInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -7375,6 +7479,7 @@ export type UserAccountUncheckedUpdateWithoutSolvesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -7439,6 +7544,7 @@ export type UserAccountCreateWithoutEmail_logInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -7504,6 +7610,7 @@ export type UserAccountUncheckedCreateWithoutEmail_logInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -7585,6 +7692,7 @@ export type UserAccountUpdateWithoutEmail_logInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -7650,6 +7758,7 @@ export type UserAccountUncheckedUpdateWithoutEmail_logInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -7715,6 +7824,7 @@ export type UserAccountCreateWithoutMatch_sessions_createdInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -7780,6 +7890,7 @@ export type UserAccountUncheckedCreateWithoutMatch_sessions_createdInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -7861,6 +7972,7 @@ export type UserAccountUpdateWithoutMatch_sessions_createdInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -7926,6 +8038,7 @@ export type UserAccountUncheckedUpdateWithoutMatch_sessions_createdInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -7991,6 +8104,7 @@ export type UserAccountCreateWithoutMatches_wonInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -8056,6 +8170,7 @@ export type UserAccountUncheckedCreateWithoutMatches_wonInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -8137,6 +8252,7 @@ export type UserAccountUpdateWithoutMatches_wonInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -8202,6 +8318,7 @@ export type UserAccountUncheckedUpdateWithoutMatches_wonInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -8267,6 +8384,7 @@ export type UserAccountCreateWithoutMatch_lobbiesInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -8332,6 +8450,7 @@ export type UserAccountUncheckedCreateWithoutMatch_lobbiesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -8413,6 +8532,7 @@ export type UserAccountUpdateWithoutMatch_lobbiesInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -8478,6 +8598,7 @@ export type UserAccountUncheckedUpdateWithoutMatch_lobbiesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -8543,6 +8664,7 @@ export type UserAccountCreateWithoutMatch_participationsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -8608,6 +8730,7 @@ export type UserAccountUncheckedCreateWithoutMatch_participationsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -8689,6 +8812,7 @@ export type UserAccountUpdateWithoutMatch_participationsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -8754,6 +8878,7 @@ export type UserAccountUncheckedUpdateWithoutMatch_participationsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -8819,6 +8944,7 @@ export type UserAccountCreateWithoutChat_messagesInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -8884,6 +9010,7 @@ export type UserAccountUncheckedCreateWithoutChat_messagesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -8965,6 +9092,7 @@ export type UserAccountUpdateWithoutChat_messagesInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -9030,6 +9158,7 @@ export type UserAccountUncheckedUpdateWithoutChat_messagesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -9096,6 +9225,7 @@ export type UserAccountCreateWithoutSmart_deviceInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   solves?: Prisma.SolveCreateNestedManyWithoutUserInput
@@ -9161,6 +9291,7 @@ export type UserAccountUncheckedCreateWithoutSmart_deviceInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   solves?: Prisma.SolveUncheckedCreateNestedManyWithoutUserInput
@@ -9242,6 +9373,7 @@ export type UserAccountUpdateWithoutSmart_deviceInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   solves?: Prisma.SolveUpdateManyWithoutUserNestedInput
@@ -9307,6 +9439,7 @@ export type UserAccountUncheckedUpdateWithoutSmart_deviceInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   solves?: Prisma.SolveUncheckedUpdateManyWithoutUserNestedInput
@@ -9371,6 +9504,7 @@ export type UserAccountCreateWithoutBadge_typeInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -9436,6 +9570,7 @@ export type UserAccountUncheckedCreateWithoutBadge_typeInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -9517,6 +9652,7 @@ export type UserAccountUpdateWithoutBadge_typeInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -9582,6 +9718,7 @@ export type UserAccountUncheckedUpdateWithoutBadge_typeInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -9647,6 +9784,7 @@ export type UserAccountCreateWithoutBadgesInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -9712,6 +9850,7 @@ export type UserAccountUncheckedCreateWithoutBadgesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -9793,6 +9932,7 @@ export type UserAccountUpdateWithoutBadgesInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -9858,6 +9998,7 @@ export type UserAccountUncheckedUpdateWithoutBadgesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -9924,6 +10065,7 @@ export type UserAccountCreateWithoutTimer_backgroundInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -9989,6 +10131,7 @@ export type UserAccountUncheckedCreateWithoutTimer_backgroundInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -10070,6 +10213,7 @@ export type UserAccountUpdateWithoutTimer_backgroundInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -10135,6 +10279,7 @@ export type UserAccountUncheckedUpdateWithoutTimer_backgroundInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -10199,6 +10344,7 @@ export type UserAccountCreateWithoutReports_createdInput = {
   profile_views?: Prisma.ProfileViewCreateNestedManyWithoutProfile_userInput
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -10264,6 +10410,7 @@ export type UserAccountUncheckedCreateWithoutReports_createdInput = {
   profile_views?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutProfile_userInput
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -10334,6 +10481,7 @@ export type UserAccountCreateWithoutReports_forInput = {
   profile_views?: Prisma.ProfileViewCreateNestedManyWithoutProfile_userInput
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -10399,6 +10547,7 @@ export type UserAccountUncheckedCreateWithoutReports_forInput = {
   profile_views?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutProfile_userInput
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -10480,6 +10629,7 @@ export type UserAccountUpdateWithoutReports_createdInput = {
   profile_views?: Prisma.ProfileViewUpdateManyWithoutProfile_userNestedInput
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -10545,6 +10695,7 @@ export type UserAccountUncheckedUpdateWithoutReports_createdInput = {
   profile_views?: Prisma.ProfileViewUncheckedUpdateManyWithoutProfile_userNestedInput
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -10621,6 +10772,7 @@ export type UserAccountUpdateWithoutReports_forInput = {
   profile_views?: Prisma.ProfileViewUpdateManyWithoutProfile_userNestedInput
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -10686,6 +10838,7 @@ export type UserAccountUncheckedUpdateWithoutReports_forInput = {
   profile_views?: Prisma.ProfileViewUncheckedUpdateManyWithoutProfile_userNestedInput
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -10751,6 +10904,7 @@ export type UserAccountCreateWithoutBansInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -10816,6 +10970,7 @@ export type UserAccountUncheckedCreateWithoutBansInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -10886,6 +11041,7 @@ export type UserAccountCreateWithoutCreated_bansInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -10951,6 +11107,7 @@ export type UserAccountUncheckedCreateWithoutCreated_bansInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -11032,6 +11189,7 @@ export type UserAccountUpdateWithoutBansInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -11097,6 +11255,7 @@ export type UserAccountUncheckedUpdateWithoutBansInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -11173,6 +11332,7 @@ export type UserAccountUpdateWithoutCreated_bansInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -11238,6 +11398,7 @@ export type UserAccountUncheckedUpdateWithoutCreated_bansInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -11304,6 +11465,7 @@ export type UserAccountCreateWithoutSolve_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -11369,6 +11531,7 @@ export type UserAccountUncheckedCreateWithoutSolve_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -11439,6 +11602,7 @@ export type UserAccountCreateWithoutViewed_solveInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -11504,6 +11668,7 @@ export type UserAccountUncheckedCreateWithoutViewed_solveInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -11585,6 +11750,7 @@ export type UserAccountUpdateWithoutSolve_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -11650,6 +11816,7 @@ export type UserAccountUncheckedUpdateWithoutSolve_viewsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -11726,6 +11893,7 @@ export type UserAccountUpdateWithoutViewed_solveInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -11791,6 +11959,7 @@ export type UserAccountUncheckedUpdateWithoutViewed_solveInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -11855,6 +12024,7 @@ export type UserAccountCreateWithoutGame_sessionsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -11920,6 +12090,7 @@ export type UserAccountUncheckedCreateWithoutGame_sessionsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -12001,6 +12172,7 @@ export type UserAccountUpdateWithoutGame_sessionsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -12066,6 +12238,7 @@ export type UserAccountUncheckedUpdateWithoutGame_sessionsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -12132,6 +12305,7 @@ export type UserAccountCreateWithoutTop_solvesInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -12197,6 +12371,7 @@ export type UserAccountUncheckedCreateWithoutTop_solvesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -12278,6 +12453,7 @@ export type UserAccountUpdateWithoutTop_solvesInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -12343,6 +12519,7 @@ export type UserAccountUncheckedUpdateWithoutTop_solvesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -12408,6 +12585,7 @@ export type UserAccountCreateWithoutTop_averageInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -12473,6 +12651,7 @@ export type UserAccountUncheckedCreateWithoutTop_averageInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -12554,6 +12733,7 @@ export type UserAccountUpdateWithoutTop_averageInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -12619,6 +12799,7 @@ export type UserAccountUncheckedUpdateWithoutTop_averageInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -12684,6 +12865,7 @@ export type UserAccountCreateWithoutSessionsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
   solves?: Prisma.SolveCreateNestedManyWithoutUserInput
@@ -12749,6 +12931,7 @@ export type UserAccountUncheckedCreateWithoutSessionsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
   solves?: Prisma.SolveUncheckedCreateNestedManyWithoutUserInput
@@ -12830,6 +13013,7 @@ export type UserAccountUpdateWithoutSessionsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
   solves?: Prisma.SolveUpdateManyWithoutUserNestedInput
@@ -12895,6 +13079,7 @@ export type UserAccountUncheckedUpdateWithoutSessionsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
   solves?: Prisma.SolveUncheckedUpdateManyWithoutUserNestedInput
@@ -12959,6 +13144,7 @@ export type UserAccountCreateWithoutCustom_trainerInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -13024,6 +13210,7 @@ export type UserAccountUncheckedCreateWithoutCustom_trainerInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -13105,6 +13292,7 @@ export type UserAccountUpdateWithoutCustom_trainerInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -13170,6 +13358,7 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainerInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -13235,6 +13424,7 @@ export type UserAccountCreateWithoutCustom_trainer_likesInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -13300,6 +13490,7 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_likesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -13370,6 +13561,7 @@ export type UserAccountCreateWithoutLiked_custom_trainersInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -13435,6 +13627,7 @@ export type UserAccountUncheckedCreateWithoutLiked_custom_trainersInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -13516,6 +13709,7 @@ export type UserAccountUpdateWithoutCustom_trainer_likesInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -13581,6 +13775,7 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_likesInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -13657,6 +13852,7 @@ export type UserAccountUpdateWithoutLiked_custom_trainersInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -13722,6 +13918,7 @@ export type UserAccountUncheckedUpdateWithoutLiked_custom_trainersInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -13787,6 +13984,7 @@ export type UserAccountCreateWithoutCustom_trainer_downloadsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -13852,6 +14050,7 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_downloadsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -13922,6 +14121,7 @@ export type UserAccountCreateWithoutCustom_trainer_downloadedInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -13987,6 +14187,7 @@ export type UserAccountUncheckedCreateWithoutCustom_trainer_downloadedInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -14068,6 +14269,7 @@ export type UserAccountUpdateWithoutCustom_trainer_downloadsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -14133,6 +14335,7 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_downloadsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -14209,6 +14412,7 @@ export type UserAccountUpdateWithoutCustom_trainer_downloadedInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -14274,6 +14478,7 @@ export type UserAccountUncheckedUpdateWithoutCustom_trainer_downloadedInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -14340,6 +14545,7 @@ export type UserAccountCreateWithoutTrainer_favoriteInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -14405,6 +14611,7 @@ export type UserAccountUncheckedCreateWithoutTrainer_favoriteInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -14486,6 +14693,7 @@ export type UserAccountUpdateWithoutTrainer_favoriteInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -14551,6 +14759,7 @@ export type UserAccountUncheckedUpdateWithoutTrainer_favoriteInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -14615,6 +14824,7 @@ export type UserAccountCreateWithoutAlgorithm_overrideInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
@@ -14680,6 +14890,7 @@ export type UserAccountUncheckedCreateWithoutAlgorithm_overrideInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
@@ -14761,6 +14972,7 @@ export type UserAccountUpdateWithoutAlgorithm_overrideInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
@@ -14826,6 +15038,7 @@ export type UserAccountUncheckedUpdateWithoutAlgorithm_overrideInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
@@ -14892,6 +15105,7 @@ export type UserAccountCreateWithoutSettingsInput = {
   viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
   solves?: Prisma.SolveCreateNestedManyWithoutUserInput
@@ -14957,6 +15171,7 @@ export type UserAccountUncheckedCreateWithoutSettingsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
   reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
   reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  import_attempts?: Prisma.ImportAttemptUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
   solves?: Prisma.SolveUncheckedCreateNestedManyWithoutUserInput
@@ -15038,6 +15253,7 @@ export type UserAccountUpdateWithoutSettingsInput = {
   viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
   solves?: Prisma.SolveUpdateManyWithoutUserNestedInput
@@ -15103,7 +15319,288 @@ export type UserAccountUncheckedUpdateWithoutSettingsInput = {
   viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
   reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
   reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  import_attempts?: Prisma.ImportAttemptUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
+  solves?: Prisma.SolveUncheckedUpdateManyWithoutUserNestedInput
+  solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutUserNestedInput
+  viewed_solve?: Prisma.SolveViewUncheckedUpdateManyWithoutViewerNestedInput
+  timer_background?: Prisma.TimerBackgroundUncheckedUpdateOneWithoutUserNestedInput
+  top_average?: Prisma.TopAverageUncheckedUpdateManyWithoutUserNestedInput
+  top_solves?: Prisma.TopSolveUncheckedUpdateManyWithoutUserNestedInput
+  trainer_favorite?: Prisma.TrainerFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  user_feature_state?: Prisma.UserFeatureStateUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserAccountCreateWithoutImport_attemptsInput = {
+  id?: string
+  email: string
+  password: string
+  join_ip: string
+  join_country: string
+  admin?: boolean
+  created_at?: Date | string
+  username?: string | null
+  verified?: boolean
+  banned_forever?: boolean
+  banned_until?: Date | string | null
+  offline_hash?: string | null
+  unsub_id?: string | null
+  last_solve_at?: Date | string | null
+  action_log?: Prisma.ActionLogCreateNestedManyWithoutUserInput
+  ad_views?: Prisma.AdViewCreateNestedManyWithoutUserInput
+  algorithm_override?: Prisma.AlgorithmOverrideCreateNestedManyWithoutUserInput
+  badges?: Prisma.BadgeCreateNestedManyWithoutUserInput
+  badge_type?: Prisma.BadgeTypeCreateNestedManyWithoutCreated_byInput
+  bans?: Prisma.BanLogCreateNestedManyWithoutBanned_userInput
+  created_bans?: Prisma.BanLogCreateNestedManyWithoutCreated_byInput
+  chat_messages?: Prisma.ChatMessageCreateNestedManyWithoutUserInput
+  custom_trainer?: Prisma.CustomTrainerCreateNestedManyWithoutUserInput
+  custom_trainer_downloads?: Prisma.CustomTrainerDownloadCreateNestedManyWithoutCreatorInput
+  custom_trainer_downloaded?: Prisma.CustomTrainerDownloadCreateNestedManyWithoutUserInput
+  custom_trainer_likes?: Prisma.CustomTrainerLikeCreateNestedManyWithoutCreatorInput
+  liked_custom_trainers?: Prisma.CustomTrainerLikeCreateNestedManyWithoutUserInput
+  elo_log_opponent?: Prisma.EloLogCreateNestedManyWithoutOpponentInput
+  elo_log_player?: Prisma.EloLogCreateNestedManyWithoutPlayerInput
+  elo_rating?: Prisma.EloRatingCreateNestedOneWithoutUserInput
+  email_log?: Prisma.EmailLogCreateNestedManyWithoutUserInput
+  forgot_password?: Prisma.ForgotPasswordCreateNestedManyWithoutUserInput
+  friendships_other?: Prisma.FriendshipCreateNestedManyWithoutOther_userInput
+  friendships?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+  friendship_requests_sent?: Prisma.FriendshipRequestCreateNestedManyWithoutFrom_userInput
+  friendships_requests_received?: Prisma.FriendshipRequestCreateNestedManyWithoutTo_userInput
+  game_sessions?: Prisma.GameSessionCreateNestedManyWithoutUserInput
+  image?: Prisma.ImageCreateNestedManyWithoutUserInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutUserInput
+  matches_won?: Prisma.MatchCreateNestedManyWithoutWinnerInput
+  match_lobbies?: Prisma.MatchLobbyCreateNestedManyWithoutUserInput
+  match_participations?: Prisma.MatchParticipantCreateNestedManyWithoutUserInput
+  match_sessions_created?: Prisma.MatchSessionCreateNestedManyWithoutCreated_byInput
+  metric_logs?: Prisma.MetricLogCreateNestedManyWithoutUserInput
+  notifications_triggered?: Prisma.NotificationCreateNestedManyWithoutTriggering_userInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notification_preferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  profile_views?: Prisma.ProfileViewCreateNestedManyWithoutProfile_userInput
+  viewed_profiles?: Prisma.ProfileViewCreateNestedManyWithoutViewerInput
+  reports_created?: Prisma.ReportCreateNestedManyWithoutCreated_byInput
+  reports_for?: Prisma.ReportCreateNestedManyWithoutReported_userInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  settings?: Prisma.SettingCreateNestedOneWithoutUserInput
+  smart_device?: Prisma.SmartDeviceCreateNestedManyWithoutUserInput
+  solves?: Prisma.SolveCreateNestedManyWithoutUserInput
+  solve_views?: Prisma.SolveViewCreateNestedManyWithoutUserInput
+  viewed_solve?: Prisma.SolveViewCreateNestedManyWithoutViewerInput
+  timer_background?: Prisma.TimerBackgroundCreateNestedOneWithoutUserInput
+  top_average?: Prisma.TopAverageCreateNestedManyWithoutUserInput
+  top_solves?: Prisma.TopSolveCreateNestedManyWithoutUserInput
+  trainer_favorite?: Prisma.TrainerFavoriteCreateNestedManyWithoutUserInput
+  user_feature_state?: Prisma.UserFeatureStateCreateNestedOneWithoutUserInput
+}
+
+export type UserAccountUncheckedCreateWithoutImport_attemptsInput = {
+  id?: string
+  email: string
+  password: string
+  join_ip: string
+  join_country: string
+  admin?: boolean
+  created_at?: Date | string
+  username?: string | null
+  verified?: boolean
+  banned_forever?: boolean
+  banned_until?: Date | string | null
+  offline_hash?: string | null
+  unsub_id?: string | null
+  last_solve_at?: Date | string | null
+  action_log?: Prisma.ActionLogUncheckedCreateNestedManyWithoutUserInput
+  ad_views?: Prisma.AdViewUncheckedCreateNestedManyWithoutUserInput
+  algorithm_override?: Prisma.AlgorithmOverrideUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.BadgeUncheckedCreateNestedManyWithoutUserInput
+  badge_type?: Prisma.BadgeTypeUncheckedCreateNestedManyWithoutCreated_byInput
+  bans?: Prisma.BanLogUncheckedCreateNestedManyWithoutBanned_userInput
+  created_bans?: Prisma.BanLogUncheckedCreateNestedManyWithoutCreated_byInput
+  chat_messages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutUserInput
+  custom_trainer?: Prisma.CustomTrainerUncheckedCreateNestedManyWithoutUserInput
+  custom_trainer_downloads?: Prisma.CustomTrainerDownloadUncheckedCreateNestedManyWithoutCreatorInput
+  custom_trainer_downloaded?: Prisma.CustomTrainerDownloadUncheckedCreateNestedManyWithoutUserInput
+  custom_trainer_likes?: Prisma.CustomTrainerLikeUncheckedCreateNestedManyWithoutCreatorInput
+  liked_custom_trainers?: Prisma.CustomTrainerLikeUncheckedCreateNestedManyWithoutUserInput
+  elo_log_opponent?: Prisma.EloLogUncheckedCreateNestedManyWithoutOpponentInput
+  elo_log_player?: Prisma.EloLogUncheckedCreateNestedManyWithoutPlayerInput
+  elo_rating?: Prisma.EloRatingUncheckedCreateNestedOneWithoutUserInput
+  email_log?: Prisma.EmailLogUncheckedCreateNestedManyWithoutUserInput
+  forgot_password?: Prisma.ForgotPasswordUncheckedCreateNestedManyWithoutUserInput
+  friendships_other?: Prisma.FriendshipUncheckedCreateNestedManyWithoutOther_userInput
+  friendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+  friendship_requests_sent?: Prisma.FriendshipRequestUncheckedCreateNestedManyWithoutFrom_userInput
+  friendships_requests_received?: Prisma.FriendshipRequestUncheckedCreateNestedManyWithoutTo_userInput
+  game_sessions?: Prisma.GameSessionUncheckedCreateNestedManyWithoutUserInput
+  image?: Prisma.ImageUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutUserInput
+  matches_won?: Prisma.MatchUncheckedCreateNestedManyWithoutWinnerInput
+  match_lobbies?: Prisma.MatchLobbyUncheckedCreateNestedManyWithoutUserInput
+  match_participations?: Prisma.MatchParticipantUncheckedCreateNestedManyWithoutUserInput
+  match_sessions_created?: Prisma.MatchSessionUncheckedCreateNestedManyWithoutCreated_byInput
+  metric_logs?: Prisma.MetricLogUncheckedCreateNestedManyWithoutUserInput
+  notifications_triggered?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggering_userInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notification_preferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  profile_views?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutProfile_userInput
+  viewed_profiles?: Prisma.ProfileViewUncheckedCreateNestedManyWithoutViewerInput
+  reports_created?: Prisma.ReportUncheckedCreateNestedManyWithoutCreated_byInput
+  reports_for?: Prisma.ReportUncheckedCreateNestedManyWithoutReported_userInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  settings?: Prisma.SettingUncheckedCreateNestedOneWithoutUserInput
+  smart_device?: Prisma.SmartDeviceUncheckedCreateNestedManyWithoutUserInput
+  solves?: Prisma.SolveUncheckedCreateNestedManyWithoutUserInput
+  solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutUserInput
+  viewed_solve?: Prisma.SolveViewUncheckedCreateNestedManyWithoutViewerInput
+  timer_background?: Prisma.TimerBackgroundUncheckedCreateNestedOneWithoutUserInput
+  top_average?: Prisma.TopAverageUncheckedCreateNestedManyWithoutUserInput
+  top_solves?: Prisma.TopSolveUncheckedCreateNestedManyWithoutUserInput
+  trainer_favorite?: Prisma.TrainerFavoriteUncheckedCreateNestedManyWithoutUserInput
+  user_feature_state?: Prisma.UserFeatureStateUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserAccountCreateOrConnectWithoutImport_attemptsInput = {
+  where: Prisma.UserAccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserAccountCreateWithoutImport_attemptsInput, Prisma.UserAccountUncheckedCreateWithoutImport_attemptsInput>
+}
+
+export type UserAccountUpsertWithoutImport_attemptsInput = {
+  update: Prisma.XOR<Prisma.UserAccountUpdateWithoutImport_attemptsInput, Prisma.UserAccountUncheckedUpdateWithoutImport_attemptsInput>
+  create: Prisma.XOR<Prisma.UserAccountCreateWithoutImport_attemptsInput, Prisma.UserAccountUncheckedCreateWithoutImport_attemptsInput>
+  where?: Prisma.UserAccountWhereInput
+}
+
+export type UserAccountUpdateToOneWithWhereWithoutImport_attemptsInput = {
+  where?: Prisma.UserAccountWhereInput
+  data: Prisma.XOR<Prisma.UserAccountUpdateWithoutImport_attemptsInput, Prisma.UserAccountUncheckedUpdateWithoutImport_attemptsInput>
+}
+
+export type UserAccountUpdateWithoutImport_attemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  join_ip?: Prisma.StringFieldUpdateOperationsInput | string
+  join_country?: Prisma.StringFieldUpdateOperationsInput | string
+  admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_solve_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  action_log?: Prisma.ActionLogUpdateManyWithoutUserNestedInput
+  ad_views?: Prisma.AdViewUpdateManyWithoutUserNestedInput
+  algorithm_override?: Prisma.AlgorithmOverrideUpdateManyWithoutUserNestedInput
+  badges?: Prisma.BadgeUpdateManyWithoutUserNestedInput
+  badge_type?: Prisma.BadgeTypeUpdateManyWithoutCreated_byNestedInput
+  bans?: Prisma.BanLogUpdateManyWithoutBanned_userNestedInput
+  created_bans?: Prisma.BanLogUpdateManyWithoutCreated_byNestedInput
+  chat_messages?: Prisma.ChatMessageUpdateManyWithoutUserNestedInput
+  custom_trainer?: Prisma.CustomTrainerUpdateManyWithoutUserNestedInput
+  custom_trainer_downloads?: Prisma.CustomTrainerDownloadUpdateManyWithoutCreatorNestedInput
+  custom_trainer_downloaded?: Prisma.CustomTrainerDownloadUpdateManyWithoutUserNestedInput
+  custom_trainer_likes?: Prisma.CustomTrainerLikeUpdateManyWithoutCreatorNestedInput
+  liked_custom_trainers?: Prisma.CustomTrainerLikeUpdateManyWithoutUserNestedInput
+  elo_log_opponent?: Prisma.EloLogUpdateManyWithoutOpponentNestedInput
+  elo_log_player?: Prisma.EloLogUpdateManyWithoutPlayerNestedInput
+  elo_rating?: Prisma.EloRatingUpdateOneWithoutUserNestedInput
+  email_log?: Prisma.EmailLogUpdateManyWithoutUserNestedInput
+  forgot_password?: Prisma.ForgotPasswordUpdateManyWithoutUserNestedInput
+  friendships_other?: Prisma.FriendshipUpdateManyWithoutOther_userNestedInput
+  friendships?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+  friendship_requests_sent?: Prisma.FriendshipRequestUpdateManyWithoutFrom_userNestedInput
+  friendships_requests_received?: Prisma.FriendshipRequestUpdateManyWithoutTo_userNestedInput
+  game_sessions?: Prisma.GameSessionUpdateManyWithoutUserNestedInput
+  image?: Prisma.ImageUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutUserNestedInput
+  matches_won?: Prisma.MatchUpdateManyWithoutWinnerNestedInput
+  match_lobbies?: Prisma.MatchLobbyUpdateManyWithoutUserNestedInput
+  match_participations?: Prisma.MatchParticipantUpdateManyWithoutUserNestedInput
+  match_sessions_created?: Prisma.MatchSessionUpdateManyWithoutCreated_byNestedInput
+  metric_logs?: Prisma.MetricLogUpdateManyWithoutUserNestedInput
+  notifications_triggered?: Prisma.NotificationUpdateManyWithoutTriggering_userNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notification_preferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  profile_views?: Prisma.ProfileViewUpdateManyWithoutProfile_userNestedInput
+  viewed_profiles?: Prisma.ProfileViewUpdateManyWithoutViewerNestedInput
+  reports_created?: Prisma.ReportUpdateManyWithoutCreated_byNestedInput
+  reports_for?: Prisma.ReportUpdateManyWithoutReported_userNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  settings?: Prisma.SettingUpdateOneWithoutUserNestedInput
+  smart_device?: Prisma.SmartDeviceUpdateManyWithoutUserNestedInput
+  solves?: Prisma.SolveUpdateManyWithoutUserNestedInput
+  solve_views?: Prisma.SolveViewUpdateManyWithoutUserNestedInput
+  viewed_solve?: Prisma.SolveViewUpdateManyWithoutViewerNestedInput
+  timer_background?: Prisma.TimerBackgroundUpdateOneWithoutUserNestedInput
+  top_average?: Prisma.TopAverageUpdateManyWithoutUserNestedInput
+  top_solves?: Prisma.TopSolveUpdateManyWithoutUserNestedInput
+  trainer_favorite?: Prisma.TrainerFavoriteUpdateManyWithoutUserNestedInput
+  user_feature_state?: Prisma.UserFeatureStateUpdateOneWithoutUserNestedInput
+}
+
+export type UserAccountUncheckedUpdateWithoutImport_attemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  join_ip?: Prisma.StringFieldUpdateOperationsInput | string
+  join_country?: Prisma.StringFieldUpdateOperationsInput | string
+  admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banned_forever?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  banned_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  offline_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unsub_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_solve_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  action_log?: Prisma.ActionLogUncheckedUpdateManyWithoutUserNestedInput
+  ad_views?: Prisma.AdViewUncheckedUpdateManyWithoutUserNestedInput
+  algorithm_override?: Prisma.AlgorithmOverrideUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.BadgeUncheckedUpdateManyWithoutUserNestedInput
+  badge_type?: Prisma.BadgeTypeUncheckedUpdateManyWithoutCreated_byNestedInput
+  bans?: Prisma.BanLogUncheckedUpdateManyWithoutBanned_userNestedInput
+  created_bans?: Prisma.BanLogUncheckedUpdateManyWithoutCreated_byNestedInput
+  chat_messages?: Prisma.ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+  custom_trainer?: Prisma.CustomTrainerUncheckedUpdateManyWithoutUserNestedInput
+  custom_trainer_downloads?: Prisma.CustomTrainerDownloadUncheckedUpdateManyWithoutCreatorNestedInput
+  custom_trainer_downloaded?: Prisma.CustomTrainerDownloadUncheckedUpdateManyWithoutUserNestedInput
+  custom_trainer_likes?: Prisma.CustomTrainerLikeUncheckedUpdateManyWithoutCreatorNestedInput
+  liked_custom_trainers?: Prisma.CustomTrainerLikeUncheckedUpdateManyWithoutUserNestedInput
+  elo_log_opponent?: Prisma.EloLogUncheckedUpdateManyWithoutOpponentNestedInput
+  elo_log_player?: Prisma.EloLogUncheckedUpdateManyWithoutPlayerNestedInput
+  elo_rating?: Prisma.EloRatingUncheckedUpdateOneWithoutUserNestedInput
+  email_log?: Prisma.EmailLogUncheckedUpdateManyWithoutUserNestedInput
+  forgot_password?: Prisma.ForgotPasswordUncheckedUpdateManyWithoutUserNestedInput
+  friendships_other?: Prisma.FriendshipUncheckedUpdateManyWithoutOther_userNestedInput
+  friendships?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+  friendship_requests_sent?: Prisma.FriendshipRequestUncheckedUpdateManyWithoutFrom_userNestedInput
+  friendships_requests_received?: Prisma.FriendshipRequestUncheckedUpdateManyWithoutTo_userNestedInput
+  game_sessions?: Prisma.GameSessionUncheckedUpdateManyWithoutUserNestedInput
+  image?: Prisma.ImageUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutUserNestedInput
+  matches_won?: Prisma.MatchUncheckedUpdateManyWithoutWinnerNestedInput
+  match_lobbies?: Prisma.MatchLobbyUncheckedUpdateManyWithoutUserNestedInput
+  match_participations?: Prisma.MatchParticipantUncheckedUpdateManyWithoutUserNestedInput
+  match_sessions_created?: Prisma.MatchSessionUncheckedUpdateManyWithoutCreated_byNestedInput
+  metric_logs?: Prisma.MetricLogUncheckedUpdateManyWithoutUserNestedInput
+  notifications_triggered?: Prisma.NotificationUncheckedUpdateManyWithoutTriggering_userNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notification_preferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  profile_views?: Prisma.ProfileViewUncheckedUpdateManyWithoutProfile_userNestedInput
+  viewed_profiles?: Prisma.ProfileViewUncheckedUpdateManyWithoutViewerNestedInput
+  reports_created?: Prisma.ReportUncheckedUpdateManyWithoutCreated_byNestedInput
+  reports_for?: Prisma.ReportUncheckedUpdateManyWithoutReported_userNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  settings?: Prisma.SettingUncheckedUpdateOneWithoutUserNestedInput
   smart_device?: Prisma.SmartDeviceUncheckedUpdateManyWithoutUserNestedInput
   solves?: Prisma.SolveUncheckedUpdateManyWithoutUserNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutUserNestedInput
@@ -15156,6 +15653,7 @@ export type UserAccountCountOutputType = {
   viewed_profiles: number
   reports_created: number
   reports_for: number
+  import_attempts: number
   sessions: number
   smart_device: number
   solves: number
@@ -15202,6 +15700,7 @@ export type UserAccountCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   viewed_profiles?: boolean | UserAccountCountOutputTypeCountViewed_profilesArgs
   reports_created?: boolean | UserAccountCountOutputTypeCountReports_createdArgs
   reports_for?: boolean | UserAccountCountOutputTypeCountReports_forArgs
+  import_attempts?: boolean | UserAccountCountOutputTypeCountImport_attemptsArgs
   sessions?: boolean | UserAccountCountOutputTypeCountSessionsArgs
   smart_device?: boolean | UserAccountCountOutputTypeCountSmart_deviceArgs
   solves?: boolean | UserAccountCountOutputTypeCountSolvesArgs
@@ -15470,6 +15969,13 @@ export type UserAccountCountOutputTypeCountReports_forArgs<ExtArgs extends runti
 /**
  * UserAccountCountOutputType without action
  */
+export type UserAccountCountOutputTypeCountImport_attemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ImportAttemptWhereInput
+}
+
+/**
+ * UserAccountCountOutputType without action
+ */
 export type UserAccountCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SessionWhereInput
 }
@@ -15577,6 +16083,7 @@ export type UserAccountSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   viewed_profiles?: boolean | Prisma.UserAccount$viewed_profilesArgs<ExtArgs>
   reports_created?: boolean | Prisma.UserAccount$reports_createdArgs<ExtArgs>
   reports_for?: boolean | Prisma.UserAccount$reports_forArgs<ExtArgs>
+  import_attempts?: boolean | Prisma.UserAccount$import_attemptsArgs<ExtArgs>
   sessions?: boolean | Prisma.UserAccount$sessionsArgs<ExtArgs>
   settings?: boolean | Prisma.UserAccount$settingsArgs<ExtArgs>
   smart_device?: boolean | Prisma.UserAccount$smart_deviceArgs<ExtArgs>
@@ -15682,6 +16189,7 @@ export type UserAccountInclude<ExtArgs extends runtime.Types.Extensions.Internal
   viewed_profiles?: boolean | Prisma.UserAccount$viewed_profilesArgs<ExtArgs>
   reports_created?: boolean | Prisma.UserAccount$reports_createdArgs<ExtArgs>
   reports_for?: boolean | Prisma.UserAccount$reports_forArgs<ExtArgs>
+  import_attempts?: boolean | Prisma.UserAccount$import_attemptsArgs<ExtArgs>
   sessions?: boolean | Prisma.UserAccount$sessionsArgs<ExtArgs>
   settings?: boolean | Prisma.UserAccount$settingsArgs<ExtArgs>
   smart_device?: boolean | Prisma.UserAccount$smart_deviceArgs<ExtArgs>
@@ -15739,6 +16247,7 @@ export type $UserAccountPayload<ExtArgs extends runtime.Types.Extensions.Interna
     viewed_profiles: Prisma.$ProfileViewPayload<ExtArgs>[]
     reports_created: Prisma.$ReportPayload<ExtArgs>[]
     reports_for: Prisma.$ReportPayload<ExtArgs>[]
+    import_attempts: Prisma.$ImportAttemptPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     settings: Prisma.$SettingPayload<ExtArgs> | null
     smart_device: Prisma.$SmartDevicePayload<ExtArgs>[]
@@ -16198,6 +16707,7 @@ export interface Prisma__UserAccountClient<T, Null = never, ExtArgs extends runt
   viewed_profiles<T extends Prisma.UserAccount$viewed_profilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccount$viewed_profilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProfileViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports_created<T extends Prisma.UserAccount$reports_createdArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccount$reports_createdArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports_for<T extends Prisma.UserAccount$reports_forArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccount$reports_forArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  import_attempts<T extends Prisma.UserAccount$import_attemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccount$import_attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.UserAccount$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccount$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   settings<T extends Prisma.UserAccount$settingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccount$settingsArgs<ExtArgs>>): Prisma.Prisma__SettingClient<runtime.Types.Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   smart_device<T extends Prisma.UserAccount$smart_deviceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccount$smart_deviceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SmartDevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -17539,6 +18049,30 @@ export type UserAccount$reports_forArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * UserAccount.import_attempts
+ */
+export type UserAccount$import_attemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ImportAttempt
+   */
+  select?: Prisma.ImportAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ImportAttempt
+   */
+  omit?: Prisma.ImportAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ImportAttemptInclude<ExtArgs> | null
+  where?: Prisma.ImportAttemptWhereInput
+  orderBy?: Prisma.ImportAttemptOrderByWithRelationInput | Prisma.ImportAttemptOrderByWithRelationInput[]
+  cursor?: Prisma.ImportAttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ImportAttemptScalarFieldEnum | Prisma.ImportAttemptScalarFieldEnum[]
 }
 
 /**

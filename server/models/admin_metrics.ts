@@ -20,6 +20,12 @@ export function metricsWindow(cutoff: Date) {
 export function adminMetricsQueries(cutoff: Date) {
 	const {start} = metricsWindow(cutoff);
 	return {
+		importDays: Prisma.sql`SELECT started_at::date::text AS date,
+			count(*) FILTER (WHERE status = 'succeeded' AND completed_at < ${cutoff}) AS succeeded,
+			count(*) FILTER (WHERE status = 'failed' AND completed_at < ${cutoff}) AS failed,
+			count(*) FILTER (WHERE status = 'pending' OR completed_at >= ${cutoff}) AS pending
+			FROM import_attempt WHERE started_at >= ${start} AND started_at < ${cutoff}
+			GROUP BY 1 ORDER BY 1`,
 		// The old created_at predicate required visiting the heap for every solve:
 		// neither existing index covers both created_at and bulk. Count using the
 		// narrow bulk index, then subtract the small indexed range past the cutoff.
@@ -189,6 +195,9 @@ export async function buildAdminMetrics(
 			date: from.toISOString().slice(0, 10),
 			solves: 0,
 			imports: 0,
+			importsSucceeded: 0,
+			importsFailed: 0,
+			importsPending: 0,
 			activeUsers: 0,
 			demoSolves: 0,
 			demoSessions: 0,
@@ -234,9 +243,21 @@ export async function buildAdminMetrics(
 	const signupDays = await query<{date: string; count: bigint}>('signupDays', queries.signupDays);
 	const daysByDate = new Map(days.map((day) => [day.date, day]));
 	for (const row of signupDays) daysByDate.get(row.date)!.signups = count(row.count);
+	const importDays = await query<{
+		date: string;
+		succeeded: bigint;
+		failed: bigint;
+		pending: bigint;
+	}>('importDays', queries.importDays);
+	for (const row of importDays) {
+		const day = daysByDate.get(row.date)!;
+		day.importsSucceeded = count(row.succeeded);
+		day.importsFailed = count(row.failed);
+		day.importsPending = count(row.pending);
+	}
 	assertActive();
 	return {
-		version: 1,
+		version: 2,
 		cutoff: cutoff.toISOString(),
 		completedAt: new Date().toISOString(),
 		totals: {

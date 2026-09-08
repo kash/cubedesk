@@ -2,7 +2,6 @@ import type {Prisma} from '@/generated/prisma/client';
 import type {SolveInput} from '@/types/solve';
 import {getMatchById} from '@/server/models/match';
 import {
-	bulkCreateSolves,
 	createSolve,
 	deleteSolve,
 	getBasicSolve,
@@ -43,7 +42,7 @@ const miniSolveSelect = {
 	ended_at: true,
 } satisfies Prisma.SolveSelect;
 
-const solveInputSchema = z.object({
+export const solveInputSchema = z.object({
 	id: z.string().nullish(),
 	time: z.number().nullish(),
 	raw_time: z.number().nullish(),
@@ -237,13 +236,4 @@ export const solveRouter = router({
 			return serializeSolveTimestamps(deleted);
 		}),
 
-	bulkCreate: protectedProcedure
-		.input(
-			z.object({
-				solves: z.array(solveInputSchema),
-			})
-		)
-		.mutation(async ({ctx, input}) => {
-			await bulkCreateSolves(ctx.user, input.solves as SolveInput[]);
-		}),
 });

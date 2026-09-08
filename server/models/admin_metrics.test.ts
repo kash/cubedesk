@@ -42,6 +42,9 @@ it('keeps empty UTC days and runs only one bounded, read-only query at a time', 
 		date: '2026-09-07',
 		solves: 0,
 		imports: 0,
+		importsSucceeded: 0,
+		importsFailed: 0,
+		importsPending: 0,
 		activeUsers: 0,
 		demoSolves: 0,
 		demoSessions: 0,
@@ -157,4 +160,27 @@ it('does not split or retry connection failures and reports the failing query', 
 		'query solveTotals failed: Error: connection refused',
 	);
 	expect(query).toHaveBeenCalledTimes(1);
+});
+
+it('counts import operations separately from imported solves, grouped by start day', async () => {
+	const {db} = database((sql) => {
+		if (sql.text.includes('FROM import_attempt'))
+			return [
+				{date: '2026-09-06', succeeded: BigInt(2), failed: BigInt(1), pending: BigInt(3)},
+			];
+		return empty(sql);
+	});
+	const snapshot = await buildAdminMetrics(cutoff, db);
+	expect(snapshot.version).toBe(2);
+	expect(snapshot.days.find((day) => day.date === '2026-09-06')).toMatchObject({
+		imports: 0,
+		importsSucceeded: 2,
+		importsFailed: 1,
+		importsPending: 3,
+	});
+	expect(snapshot.days[89]).toMatchObject({
+		importsSucceeded: 0,
+		importsFailed: 0,
+		importsPending: 0,
+	});
 });
