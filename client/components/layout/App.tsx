@@ -1,3 +1,4 @@
+import {DemoImportProvider} from '@/components/login/DemoImport';
 import {setGeneral} from '@/actions/general';
 import Banned from '@/components/layout/Banned';
 import Header from '@/components/layout/Header';
@@ -24,6 +25,14 @@ interface Props {
 }
 
 export default function App(props: Props = {}) {
+	return (
+		<DemoImportProvider>
+			<AppContent {...props} />
+		</DemoImportProvider>
+	);
+}
+
+function AppContent(props: Props) {
 	const {path, standalone, children, hideTopNav, restricted} = props;
 
 	const dispatch = useDispatch();
@@ -56,7 +65,8 @@ export default function App(props: Props = {}) {
 
 	if (typeof window !== 'undefined') {
 		if (!me && restricted) {
-			window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+			window.location.href =
+				'/login?redirect=' + encodeURIComponent(window.location.pathname);
 			return;
 		}
 	}
@@ -71,7 +81,7 @@ export default function App(props: Props = {}) {
 
 	if (standalone) {
 		return (
-			<div className="min-h-screen bg-background">
+			<div className="bg-background min-h-screen">
 				{hideTopNav ? null : <TopNav />}
 				{children}
 			</div>
@@ -85,9 +95,18 @@ export default function App(props: Props = {}) {
 
 	return (
 		<>
-			<Header path={path ?? ''} title={path === '/' && !me ? "CubeDesk - Rubik's Cube Timer | 1v1 | Trainer" : undefined} />
+			<Header
+				path={path ?? ''}
+				title={
+					path === '/' && !me
+						? "CubeDesk - Rubik's Cube Timer | 1v1 | Trainer"
+						: undefined
+				}
+			/>
 			{me ? <LoadingCover fadeOut={appLoaded} /> : null}
-			{appLoaded || (!me && path === '/') ? <Wrapper {...wrapperProps}>{children}</Wrapper> : null}
+			{appLoaded || (!me && path === '/') ? (
+				<Wrapper {...wrapperProps}>{children}</Wrapper>
+			) : null}
 		</>
 	);
 }

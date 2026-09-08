@@ -10,9 +10,9 @@ export default function DemoWarning() {
 	}
 
 	return (
-		<div className="text-center text-base font-normal text-orange-400">
+		<div className="text-center text-base font-normal text-gray-500">
 			<AuthDialog view="signup">
-				<button type="button" className="p-0 text-base text-orange-400 hover:text-orange-300">
+				<button type="button" className="p-0 text-base text-gray-500 hover:text-gray-400">
 					Demo mode. Sign up to save solves
 				</button>
 			</AuthDialog>

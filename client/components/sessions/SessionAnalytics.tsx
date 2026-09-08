@@ -1,4 +1,4 @@
-import {NativeSelect} from '@/components/ui/native-select';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 import {getChartData} from '@/db/solves/stats/chart';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
@@ -128,17 +128,21 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 						<p>Completed solves by time range</p>
 					</div>
 					<div className="w-28 shrink-0">
-						<NativeSelect
-							aria-label="Distribution columns"
-							value={bucketCount}
-							onChange={(event) => setBucketCount(Number(event.target.value))}
+						<Select
+							value={String(bucketCount)}
+							onValueChange={(value) => setBucketCount(Number(value))}
 						>
-							{[4, 5, 6, 7, 8, 9, 10].map((count) => (
-								<option key={count} value={count}>
-									{count} bins
-								</option>
-							))}
-						</NativeSelect>
+							<SelectTrigger className="w-full" aria-label="Distribution columns">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{[4, 5, 6, 7, 8, 9, 10].map((count) => (
+									<SelectItem key={count} value={String(count)}>
+										{count} bins
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
 					</div>
 				</div>
 				<div className="sessions-chart">

@@ -1,3 +1,4 @@
+import {useDemoImport} from '@/components/login/DemoImport';
 import ButtonError from '@/components/common/inputs/Error';
 import PasswordStrength from '@/components/common/PasswordStrength';
 import {AuthFormLink, useAuthForm} from '@/components/login/AuthFormContext';
@@ -15,6 +16,7 @@ import React, {useState} from 'react';
 export default function SignUp() {
 	const fieldId = React.useId();
 	const auth = useAuthForm();
+	const {complete} = useDemoImport();
 
 	const [email, setEmail] = useInput('');
 	const [password, setPassword] = useInput('');
@@ -44,7 +46,7 @@ export default function SignUp() {
 				username: username.trim(),
 				password,
 			});
-			window.location.href = auth?.redirectTo ?? getRedirectLink();
+			complete({mode: 'signup', redirect: auth?.redirectTo ?? getRedirectLink()});
 		} catch (e) {
 			setError(e instanceof Error ? e.message : 'Failed to sign up');
 		}

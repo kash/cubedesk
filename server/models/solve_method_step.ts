@@ -11,7 +11,11 @@ export function deleteSolveMethodSteps(solve: Solve) {
 	});
 }
 
-export function createSolveMethodSteps(solve: Solve, steps: Record<string, SolveStepData | null>) {
+export function createSolveMethodSteps(
+	solve: Pick<Solve, 'id'>,
+	steps: Record<string, SolveStepData | null>,
+	db: Pick<Prisma.TransactionClient, 'solveMethodStep'> = getPrisma(),
+) {
 	const data: Prisma.SolveMethodStepCreateManyInput[] = [];
 
 	for (const step of Object.keys(steps)) {
@@ -39,7 +43,7 @@ export function createSolveMethodSteps(solve: Solve, steps: Record<string, Solve
 		});
 	}
 
-	return getPrisma().solveMethodStep.createMany({
+	return db.solveMethodStep.createMany({
 		data,
 	});
 }

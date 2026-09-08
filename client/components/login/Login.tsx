@@ -1,3 +1,4 @@
+import {useDemoImport} from '@/components/login/DemoImport';
 import ButtonError from '@/components/common/inputs/Error';
 import {AuthFormLink, useAuthForm} from '@/components/login/AuthFormContext';
 import {Button} from '@/components/ui/button';
@@ -13,6 +14,7 @@ import React, {useState} from 'react';
 export default function Login() {
 	const fieldId = React.useId();
 	const auth = useAuthForm();
+	const {complete} = useDemoImport();
 
 	const [email, setEmail] = useInput('');
 	const [password, setPassword] = useInput('');
@@ -34,7 +36,7 @@ export default function Login() {
 			});
 
 			const redirect = auth?.redirectTo ?? getRedirectLink();
-			window.location.href = redirect || '/';
+			complete({mode: 'login', redirect: redirect || '/'});
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Failed to log in');
 		}
