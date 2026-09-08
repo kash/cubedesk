@@ -1,5 +1,6 @@
 import {LogoBrandmark, LogoLockup} from '@/components/common/Logo';
 import AccountDropdown from '@/components/layout/nav/account-dropdown/AccountDropdown';
+import ImportTimesPrompt from '@/components/layout/nav/ImportTimesPrompt';
 import LoginNav from '@/components/layout/nav/LoginNav';
 import MobileNav from '@/components/layout/nav/MobileNav';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
@@ -133,7 +134,8 @@ export default function Nav() {
 						<div className="mt-4">{navLinks}</div>
 						<LoginNav collapsed={navClosed} />
 					</div>
-					<div className="flex flex-col items-center pb-[30px] opacity-70">
+					<div className="flex flex-col items-center pb-[30px]">
+						{me && !navClosed ? <ImportTimesPrompt key={me.id} /> : null}
 						<div className={cn(socialClasses, {hidden: navClosed})}>
 							<SocialIcon
 								href="https://discord.gg/wdVbhDnsQV"

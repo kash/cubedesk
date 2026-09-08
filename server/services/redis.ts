@@ -38,11 +38,12 @@ export async function initRedisClient() {
 
 	const clientConnectionPromise = [
 		new Promise((resolve, reject) => {
-			redisPubClient.on('connect', resolve);
+			// A connected socket can still be authenticating or checking server readiness.
+			redisPubClient.once('ready', resolve);
 			redisPubClient.on('error', (err) => reject(err));
 		}),
 		new Promise((resolve, reject) => {
-			redisSubClient.on('connect', resolve);
+			redisSubClient.once('ready', resolve);
 			redisSubClient.on('error', (err) => reject(err));
 		}),
 	];

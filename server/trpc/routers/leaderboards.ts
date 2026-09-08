@@ -199,9 +199,7 @@ export const leaderboardsRouter = router({
 				tableName: 'eloRating',
 				paginationArgs: input,
 				prismaPayload: {
-					orderBy: {
-						elo_333_rating: 'desc',
-					},
+					orderBy: [{elo_333_rating: 'desc'}, {id: 'asc'}],
 					include: eloRatingWithUserInclude,
 				},
 			})

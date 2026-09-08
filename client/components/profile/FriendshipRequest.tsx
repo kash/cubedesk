@@ -5,6 +5,7 @@ import {PublicUserAccount} from '@/types/user';
 import {useMe} from '@/util/hooks/useMe';
 import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
+import {useQueryClient} from '@tanstack/react-query';
 import {Check, Plus, Timer, X} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,6 +19,7 @@ interface Props {
 
 export default function FriendshipRequest(props: Props) {
 	const dispatch = useDispatch();
+	const queryClient = useQueryClient();
 
 	const {user, fetchData} = props;
 
@@ -103,6 +105,12 @@ export default function FriendshipRequest(props: Props) {
 			setFriendRequestReceived(null);
 			setFriendRequestSent(request);
 		}
+		void queryClient.invalidateQueries({
+			predicate: ({queryKey}) =>
+				queryKey[0] === 'paginated-list' &&
+				typeof queryKey[1] === 'string' &&
+				queryKey[1].startsWith('/community/friends/'),
+		});
 	}
 
 	function getFriendButtonParams(): ButtonProps {

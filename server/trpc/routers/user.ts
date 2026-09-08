@@ -55,6 +55,28 @@ const accountInput = z.object({
 });
 
 export const userRouter = router({
+	importPrompt: protectedProcedure.query(async ({ctx}) => {
+		const state = await ctx.prisma.userFeatureState.findUnique({
+			where: {user_id: ctx.user.id},
+			select: {import_prompt_hidden: true},
+		});
+		if (state?.import_prompt_hidden) return {visible: false};
+
+		const importedSolve = await ctx.prisma.solve.findFirst({
+			where: {user_id: ctx.user.id, bulk: true},
+			select: {id: true},
+		});
+		return {visible: !importedSolve};
+	}),
+
+	dismissImportPrompt: protectedProcedure.mutation(async ({ctx}) => {
+		await ctx.prisma.userFeatureState.upsert({
+			where: {user_id: ctx.user.id},
+			create: {user_id: ctx.user.id, import_prompt_hidden: true},
+			update: {import_prompt_hidden: true},
+		});
+	}),
+
 	me: publicProcedure.query(({ctx}) => {
 		if (!ctx.user) {
 			return null;
@@ -161,6 +183,7 @@ export const userRouter = router({
 				paginationArgs: input,
 				tableName: 'userAccount',
 				prismaPayload: {
+					orderBy: [{username: 'asc'}, {id: 'asc'}],
 					where: {
 						username: {
 							contains: input.searchQuery,

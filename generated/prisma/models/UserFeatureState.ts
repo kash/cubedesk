@@ -28,6 +28,7 @@ export type UserFeatureStateMinAggregateOutputType = {
   id: string | null
   user_id: string | null
   received_welcome_screen: boolean | null
+  import_prompt_hidden: boolean | null
   updated_at: Date | null
   created_at: Date | null
 }
@@ -36,6 +37,7 @@ export type UserFeatureStateMaxAggregateOutputType = {
   id: string | null
   user_id: string | null
   received_welcome_screen: boolean | null
+  import_prompt_hidden: boolean | null
   updated_at: Date | null
   created_at: Date | null
 }
@@ -44,6 +46,7 @@ export type UserFeatureStateCountAggregateOutputType = {
   id: number
   user_id: number
   received_welcome_screen: number
+  import_prompt_hidden: number
   updated_at: number
   created_at: number
   _all: number
@@ -54,6 +57,7 @@ export type UserFeatureStateMinAggregateInputType = {
   id?: true
   user_id?: true
   received_welcome_screen?: true
+  import_prompt_hidden?: true
   updated_at?: true
   created_at?: true
 }
@@ -62,6 +66,7 @@ export type UserFeatureStateMaxAggregateInputType = {
   id?: true
   user_id?: true
   received_welcome_screen?: true
+  import_prompt_hidden?: true
   updated_at?: true
   created_at?: true
 }
@@ -70,6 +75,7 @@ export type UserFeatureStateCountAggregateInputType = {
   id?: true
   user_id?: true
   received_welcome_screen?: true
+  import_prompt_hidden?: true
   updated_at?: true
   created_at?: true
   _all?: true
@@ -151,6 +157,7 @@ export type UserFeatureStateGroupByOutputType = {
   id: string
   user_id: string
   received_welcome_screen: boolean
+  import_prompt_hidden: boolean
   updated_at: Date
   created_at: Date
   _count: UserFeatureStateCountAggregateOutputType | null
@@ -180,6 +187,7 @@ export type UserFeatureStateWhereInput = {
   id?: Prisma.StringFilter<"UserFeatureState"> | string
   user_id?: Prisma.StringFilter<"UserFeatureState"> | string
   received_welcome_screen?: Prisma.BoolFilter<"UserFeatureState"> | boolean
+  import_prompt_hidden?: Prisma.BoolFilter<"UserFeatureState"> | boolean
   updated_at?: Prisma.DateTimeFilter<"UserFeatureState"> | Date | string
   created_at?: Prisma.DateTimeFilter<"UserFeatureState"> | Date | string
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
@@ -189,6 +197,7 @@ export type UserFeatureStateOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   received_welcome_screen?: Prisma.SortOrder
+  import_prompt_hidden?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   user?: Prisma.UserAccountOrderByWithRelationInput
@@ -202,6 +211,7 @@ export type UserFeatureStateWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserFeatureStateWhereInput[]
   NOT?: Prisma.UserFeatureStateWhereInput | Prisma.UserFeatureStateWhereInput[]
   received_welcome_screen?: Prisma.BoolFilter<"UserFeatureState"> | boolean
+  import_prompt_hidden?: Prisma.BoolFilter<"UserFeatureState"> | boolean
   updated_at?: Prisma.DateTimeFilter<"UserFeatureState"> | Date | string
   created_at?: Prisma.DateTimeFilter<"UserFeatureState"> | Date | string
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
@@ -211,6 +221,7 @@ export type UserFeatureStateOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   received_welcome_screen?: Prisma.SortOrder
+  import_prompt_hidden?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   _count?: Prisma.UserFeatureStateCountOrderByAggregateInput
@@ -225,6 +236,7 @@ export type UserFeatureStateScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"UserFeatureState"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"UserFeatureState"> | string
   received_welcome_screen?: Prisma.BoolWithAggregatesFilter<"UserFeatureState"> | boolean
+  import_prompt_hidden?: Prisma.BoolWithAggregatesFilter<"UserFeatureState"> | boolean
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"UserFeatureState"> | Date | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"UserFeatureState"> | Date | string
 }
@@ -232,6 +244,7 @@ export type UserFeatureStateScalarWhereWithAggregatesInput = {
 export type UserFeatureStateCreateInput = {
   id?: string
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: Date | string
   created_at?: Date | string
   user: Prisma.UserAccountCreateNestedOneWithoutUser_feature_stateInput
@@ -241,6 +254,7 @@ export type UserFeatureStateUncheckedCreateInput = {
   id?: string
   user_id: string
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: Date | string
   created_at?: Date | string
 }
@@ -248,6 +262,7 @@ export type UserFeatureStateUncheckedCreateInput = {
 export type UserFeatureStateUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   received_welcome_screen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  import_prompt_hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserAccountUpdateOneRequiredWithoutUser_feature_stateNestedInput
@@ -257,6 +272,7 @@ export type UserFeatureStateUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   received_welcome_screen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  import_prompt_hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -265,6 +281,7 @@ export type UserFeatureStateCreateManyInput = {
   id?: string
   user_id: string
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: Date | string
   created_at?: Date | string
 }
@@ -272,6 +289,7 @@ export type UserFeatureStateCreateManyInput = {
 export type UserFeatureStateUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   received_welcome_screen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  import_prompt_hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -280,6 +298,7 @@ export type UserFeatureStateUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   received_welcome_screen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  import_prompt_hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -299,6 +318,7 @@ export type UserFeatureStateCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   received_welcome_screen?: Prisma.SortOrder
+  import_prompt_hidden?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -307,6 +327,7 @@ export type UserFeatureStateMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   received_welcome_screen?: Prisma.SortOrder
+  import_prompt_hidden?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -315,6 +336,7 @@ export type UserFeatureStateMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   received_welcome_screen?: Prisma.SortOrder
+  import_prompt_hidden?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -354,6 +376,7 @@ export type UserFeatureStateUncheckedUpdateOneWithoutUserNestedInput = {
 export type UserFeatureStateCreateWithoutUserInput = {
   id?: string
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: Date | string
   created_at?: Date | string
 }
@@ -361,6 +384,7 @@ export type UserFeatureStateCreateWithoutUserInput = {
 export type UserFeatureStateUncheckedCreateWithoutUserInput = {
   id?: string
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: Date | string
   created_at?: Date | string
 }
@@ -384,6 +408,7 @@ export type UserFeatureStateUpdateToOneWithWhereWithoutUserInput = {
 export type UserFeatureStateUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   received_welcome_screen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  import_prompt_hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -391,6 +416,7 @@ export type UserFeatureStateUpdateWithoutUserInput = {
 export type UserFeatureStateUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   received_welcome_screen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  import_prompt_hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -401,6 +427,7 @@ export type UserFeatureStateSelect<ExtArgs extends runtime.Types.Extensions.Inte
   id?: boolean
   user_id?: boolean
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: boolean
   created_at?: boolean
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
@@ -410,6 +437,7 @@ export type UserFeatureStateSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   id?: boolean
   user_id?: boolean
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: boolean
   created_at?: boolean
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
@@ -419,6 +447,7 @@ export type UserFeatureStateSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   id?: boolean
   user_id?: boolean
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: boolean
   created_at?: boolean
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
@@ -428,11 +457,12 @@ export type UserFeatureStateSelectScalar = {
   id?: boolean
   user_id?: boolean
   received_welcome_screen?: boolean
+  import_prompt_hidden?: boolean
   updated_at?: boolean
   created_at?: boolean
 }
 
-export type UserFeatureStateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "received_welcome_screen" | "updated_at" | "created_at", ExtArgs["result"]["userFeatureState"]>
+export type UserFeatureStateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "received_welcome_screen" | "import_prompt_hidden" | "updated_at" | "created_at", ExtArgs["result"]["userFeatureState"]>
 export type UserFeatureStateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
 }
@@ -452,6 +482,7 @@ export type $UserFeatureStatePayload<ExtArgs extends runtime.Types.Extensions.In
     id: string
     user_id: string
     received_welcome_screen: boolean
+    import_prompt_hidden: boolean
     updated_at: Date
     created_at: Date
   }, ExtArgs["result"]["userFeatureState"]>
@@ -881,6 +912,7 @@ export interface UserFeatureStateFieldRefs {
   readonly id: Prisma.FieldRef<"UserFeatureState", 'String'>
   readonly user_id: Prisma.FieldRef<"UserFeatureState", 'String'>
   readonly received_welcome_screen: Prisma.FieldRef<"UserFeatureState", 'Boolean'>
+  readonly import_prompt_hidden: Prisma.FieldRef<"UserFeatureState", 'Boolean'>
   readonly updated_at: Prisma.FieldRef<"UserFeatureState", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"UserFeatureState", 'DateTime'>
 }

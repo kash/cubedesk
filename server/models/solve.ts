@@ -132,8 +132,16 @@ export function bulkCreateSolves(user: UserAccount, solves: SolveInput[]) {
 		});
 	}
 
-	return getPrisma().solve.createMany({
-		data,
+	return getPrisma().$transaction(async (tx) => {
+		const result = await tx.solve.createMany({data});
+		if (result.count > 0) {
+			await tx.userFeatureState.upsert({
+				where: {user_id: user.id},
+				create: {user_id: user.id, import_prompt_hidden: true},
+				update: {import_prompt_hidden: true},
+			});
+		}
+		return result;
 	});
 }
 

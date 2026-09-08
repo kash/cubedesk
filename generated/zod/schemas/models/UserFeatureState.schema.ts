@@ -4,6 +4,7 @@ export const UserFeatureStateSchema = z.object({
   id: z.string(),
   user_id: z.string(),
   received_welcome_screen: z.boolean(),
+  import_prompt_hidden: z.boolean(),
   updated_at: z.date(),
   created_at: z.date(),
 });

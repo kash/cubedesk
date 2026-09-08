@@ -19,7 +19,9 @@ export default function UserActions(props: Props) {
 	} | null>(null);
 
 	const {user, updateUser} = props;
-	const banned = user.banned_forever || user.banned_until;
+	const banned =
+		user.banned_forever ||
+		Boolean(user.banned_until && new Date(user.banned_until).getTime() > Date.now());
 
 	async function unbanUser() {
 		await trpc.admin.unbanUser.mutate({
@@ -54,14 +56,11 @@ export default function UserActions(props: Props) {
 
 	return (
 		<>
-			<div className="my-[15px] flex w-full flex-row flex-wrap items-start gap-[7px]">
+			<div className="flex shrink-0 flex-wrap items-center gap-2">
 				<Button variant="destructive" onClick={toggleBan}>
 					{banned ? 'Unban user' : 'Ban user'}
 				</Button>
-				<Button
-					variant={user.verified ? 'secondary' : !user.verified ? 'default' : 'secondary'}
-					onClick={toggleVerifyUser}
-				>
+				<Button variant="outline" onClick={toggleVerifyUser}>
 					{user.verified ? 'Unverify user' : 'Verify user'}
 				</Button>
 			</div>

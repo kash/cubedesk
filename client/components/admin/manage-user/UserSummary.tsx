@@ -1,82 +1,116 @@
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import {UserAccountSolvesSummary, UserAccountSummary} from '@/types/admin';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {getTimeString} from '@/util/time';
+import {CaretDown, Timer} from 'phosphor-react';
 import React from 'react';
 
-interface Props {
-	summary: UserAccountSummary;
+function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummary[]}) {
+	return (
+		<div className="min-w-0">
+			<h4 className="text-text m-0 mb-3 text-sm font-semibold">{title}</h4>
+			{rows.length ? (
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Puzzle</TableHead>
+							<TableHead className="text-right">Solves</TableHead>
+							<TableHead className="text-right">Average</TableHead>
+							<TableHead className="text-right">Best</TableHead>
+							<TableHead className="text-right">Worst</TableHead>
+							<TableHead className="text-right">Total time</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+						{rows.map((row) => (
+							<TableRow key={row.cube_type ?? 'unknown'}>
+								<TableCell className="font-medium">
+									{getCubeTypeInfoById(row.cube_type ?? '')?.name ??
+										row.cube_type ??
+										'Unknown'}
+								</TableCell>
+								<TableCell className="text-right tabular-nums">
+									{row.count.toLocaleString()}
+								</TableCell>
+								{[row.average, row.min_time, row.max_time, row.sum].map(
+									(value, index) => (
+										<TableCell key={index} className="text-right tabular-nums">
+											{value === null ? '—' : getTimeString(value, 2)}
+										</TableCell>
+									),
+								)}
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			) : (
+				<p className="text-text/50 m-0 text-sm">No solves recorded.</p>
+			)}
+		</div>
+	);
 }
 
-export default function UserSummary(props: Props) {
-	const {summary} = props;
-
-	function getPill(title: string, value: string) {
-		return (
-			<div className="rounded-[23px] border-[3px] border-tmo-button/10 bg-button py-[15px] pl-[15px] pr-2.5">
-				<span className="text-[1.1rem] text-tmo-button">{title}</span>
-				<span className="ml-2.5 rounded-[15px] bg-secondary px-[13px] py-1.5 text-[1.1rem] text-tmo-secondary">
-					{value}
-				</span>
-			</div>
-		);
-	}
-
-	function getSummarySection(summaryType: string, cubeTypes: UserAccountSolvesSummary[]) {
-		if (!cubeTypes || !cubeTypes.length) {
-			return (
-				<div>
-					<span className="mb-2.5 mt-[5px] text-[1.1rem] italic text-text/80">No data</span>
-				</div>
-			);
-		}
-
-		return cubeTypes.map((ct, index) => {
-			const cubeTypeId = ct.cube_type ?? '';
-			const cubeType = getCubeTypeInfoById(cubeTypeId);
-
-			return (
-				<div
-					key={`${summaryType}-ss-${cubeTypeId}`}
-					className={index < cubeTypes.length - 1 ? 'mb-[15px]' : ''}
-				>
-					<h4>{cubeType?.name ?? cubeTypeId}</h4>
-					<div className="flex flex-row flex-wrap gap-2.5">
-						{getPill('Solves', ct.count.toLocaleString())}
-						{getPill('Total Time', getTimeString(ct.sum ?? 0, 2))}
-						{getPill('Average', getTimeString(ct.average ?? 0, 2))}
-						{getPill('Min Time', getTimeString(ct.min_time ?? 0, 2))}
-						{getPill('Max Time', getTimeString(ct.max_time ?? 0, 2))}
-					</div>
-				</div>
-			);
-		});
-	}
-
-	const matchWinPercent = 100 - Math.floor((summary.matches.losses / summary.matches.count) * 100) / 10;
+export default function UserSummary({summary}: {summary: UserAccountSummary}) {
+	const stats = [
+		['Solves', summary.solves],
+		['Bans', summary.bans],
+		['Reports received', summary.reports_for],
+		['Reports submitted', summary.reports_created],
+	] as const;
+	const winRate =
+		summary.matches.count > 0
+			? `${((summary.matches.wins / summary.matches.count) * 100).toFixed(1)}%`
+			: '—';
 
 	return (
-		<div className="col-span-2">
-			<div className="border-b-2 border-tmo-module/20 p-[15px]">
-				<h3>Overview</h3>
-				<div className="flex flex-row flex-wrap gap-2.5">
-					{getPill('Solves', summary.solves.toLocaleString())}
-					{getPill('Bans', summary.bans.toLocaleString())}
-					{getPill('Reports Received', summary.reports_for.toLocaleString())}
-					{getPill('Reports Created', summary.reports_created.toLocaleString())}
-					{getPill('Matches Played', summary.matches.count.toLocaleString())}
-					{getPill('Matches Won', summary.matches.wins.toLocaleString())}
-					{getPill('Matches Lost', summary.matches.losses.toLocaleString())}
-					{getPill('Match Win %', matchWinPercent + '%')}
+		<div className="space-y-5">
+			<dl className="m-0 grid grid-cols-2 gap-3 sm:grid-cols-4">
+				{stats.map(([label, value]) => (
+					<div
+						key={label}
+						className="border-tmo-module/10 bg-text/[0.025] rounded-xl border p-4"
+					>
+						<dt className="text-text/55 text-xs">{label}</dt>
+						<dd className="text-text m-0 mt-2 text-2xl font-semibold tracking-tight tabular-nums">
+							{value.toLocaleString()}
+						</dd>
+					</div>
+				))}
+			</dl>
+			<details className="group border-tmo-module/10 rounded-xl border">
+				<summary className="text-text focus-visible:outline-primary flex cursor-pointer list-none items-center gap-3 rounded-xl p-4 focus-visible:outline-2 [&::-webkit-details-marker]:hidden">
+					<Timer size={20} className="text-text/45" aria-hidden />
+					<span className="flex-1">
+						<span className="block text-sm font-medium">Solve statistics</span>
+						<span className="text-text/50 mt-1 block text-xs">
+							Timer times, puzzle breakdowns, and 1v1 performance
+						</span>
+					</span>
+					<CaretDown
+						className="text-text/50 transition-transform group-open:rotate-180"
+						aria-hidden
+					/>
+				</summary>
+				<div className="border-tmo-module/10 space-y-6 border-t p-4 sm:p-5">
+					<dl className="m-0 grid grid-cols-2 gap-4 sm:grid-cols-4">
+						{[
+							['Matches', summary.matches.count.toLocaleString()],
+							['Wins', summary.matches.wins.toLocaleString()],
+							['Losses', summary.matches.losses.toLocaleString()],
+							['Win rate', winRate],
+						].map(([label, value]) => (
+							<div key={label}>
+								<dt className="text-text/50 text-xs">{label}</dt>
+								<dd className="text-text m-0 mt-1 text-lg font-medium tabular-nums">
+									{value}
+								</dd>
+							</div>
+						))}
+					</dl>
+					<SolveTable title="Timer solves" rows={summary.timer_solves} />
+					<SolveTable title="1v1 solves" rows={summary.match_solves} />
 				</div>
-			</div>
-			<div className="border-b-2 border-tmo-module/20 p-[15px]">
-				<h3>Timer Solves</h3>
-				{getSummarySection('match', summary.timer_solves)}
-			</div>
-			<div className="p-[15px]">
-				<h3>1v1 Solves</h3>
-				{getSummarySection('timer', summary.match_solves)}
-			</div>
+			</details>
 		</div>
 	);
 }

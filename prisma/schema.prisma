@@ -87,6 +87,7 @@ model UserFeatureState {
   id                      String      @id @default(uuid())
   user_id                 String      @unique
   received_welcome_screen Boolean     @default(false)
+  import_prompt_hidden    Boolean     @default(false)
   updated_at              DateTime    @updatedAt
   created_at              DateTime    @default(now())
   user                    UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)

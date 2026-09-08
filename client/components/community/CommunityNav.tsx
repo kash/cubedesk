@@ -1,7 +1,7 @@
 import HorizontalNav from '@/components/common/HorizontalNav';
 import PageTitle from '@/components/common/PageTitle';
 import {CommunityContext} from '@/components/community/Community';
-import {InputGroupInput, InputGroup, InputGroupAddon} from '@/components/ui/input-group';
+import {InputGroup, InputGroupAddon, InputGroupInput} from '@/components/ui/input-group';
 import {MagnifyingGlass} from 'phosphor-react';
 import React, {useContext} from 'react';
 import {useRouteMatch} from 'react-router-dom';
@@ -41,6 +41,7 @@ export default function CommunityNav() {
 								</InputGroupAddon>
 								<InputGroupInput
 									placeholder="Search for username"
+									maxLength={250}
 									value={userSearchQuery}
 									onChange={handleQueryChange}
 									aria-label={'Search for username'}
