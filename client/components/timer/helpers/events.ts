@@ -55,7 +55,8 @@ export function endTimer(context: ITimerContext, finalTimeMilli?: number, overri
 		finalTime,
 	});
 
-	resetTimerParams(context);
+	// Prepare the scramble for the case selected after this solve is saved.
+	resetTimerParams({...context, sessionSolveCount: context.sessionSolveCount + 1});
 	setTimeout(() => {
 		saveSolve(context, finalTime, scramble ?? '', timeStartedAt.getTime(), now.getTime(), false, false, overrides);
 		endLocked = false;
