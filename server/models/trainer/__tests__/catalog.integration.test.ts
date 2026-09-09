@@ -3,6 +3,7 @@ import {PrismaClient} from '@/generated/prisma/client';
 import {PrismaPg} from '@prisma/adapter-pg';
 import {readFileSync, readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
+import {catalogCsv} from '@/server/models/trainer/test-fixtures/catalog-csv';
 import {
 	CATALOG_ID,
 	importCatalog,
@@ -16,7 +17,7 @@ suite('trainer catalog PostgreSQL integration', () => {
 	const schema = `trainer_catalog_test_${process.pid}_${Date.now()}`;
 	let setupDb: PrismaClient;
 	let db: PrismaClient;
-	const csv = readFileSync(resolve('trainer-data.csv'), 'utf8');
+	const csv = catalogCsv;
 	beforeAll(async () => {
 		setupDb = new PrismaClient({
 			adapter: new PrismaPg({connectionString: process.env.DATABASE_URL}),

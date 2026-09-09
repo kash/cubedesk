@@ -1,6 +1,6 @@
 import {BufferListStream} from 'bl';
 import {ReadStream} from 'fs';
-import Jimp from 'jimp';
+import {Jimp, JimpMime} from 'jimp';
 
 export interface ImageFileToBuffer {
 	width: number; // -1 for auto
@@ -15,21 +15,22 @@ export async function getImageBufferFromFileStream(
 ): Promise<Buffer> {
 	const fileType = fileName.split('.').pop()?.toLowerCase() ?? '';
 
-	let mimeType: string = Jimp.MIME_PNG;
+	let mimeType: typeof JimpMime.png | typeof JimpMime.gif | typeof JimpMime.jpeg = JimpMime.png;
 	if (fileType === 'gif') {
-		mimeType = Jimp.MIME_GIF;
+		mimeType = JimpMime.gif;
 	} else if (fileType === 'jpeg' || fileType === 'jpg') {
-		mimeType = Jimp.MIME_JPEG;
+		mimeType = JimpMime.jpeg;
 	}
 
 	const readStream = fileStream();
 	const bufferStream = await getFileStreamAsBufferStream(readStream);
 
 	const img = await Jimp.read(bufferStream);
-	return await img
-		.scaleToFit(options.width, options.height)
-		.quality(options.quality || 80)
-		.getBufferAsync(mimeType);
+	img.scaleToFit({w: options.width, h: options.height});
+	if (mimeType === JimpMime.jpeg) {
+		return await img.getBuffer(mimeType, {quality: options.quality || 80});
+	}
+	return await img.getBuffer(mimeType);
 }
 
 async function getFileStreamAsBufferStream(readStream: ReadStream): Promise<Buffer> {

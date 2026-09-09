@@ -1,14 +1,12 @@
-import {readFileSync} from 'node:fs';
-import {resolve} from 'node:path';
+import {catalogCsv} from '@/server/models/trainer/test-fixtures/catalog-csv';
 import {parseCsv, parseTrainerCsv} from '@/server/models/trainer/csv';
 import {catalogChanges} from '@/server/models/trainer/catalog';
 import {MAX_CSV_BYTES, MAX_CSV_RECORDS} from '@/shared/trainer/catalog';
 
 const header = 'id,name,cube_type,algo_type';
 
-test('imports the full Airtable export without paid restrictions or dropping incomplete algorithms', () => {
-	const csv = readFileSync(resolve('trainer-data.csv'), 'utf8');
-	const result = parseTrainerCsv(csv);
+test('imports a bulk legacy-format catalog without paid restrictions or dropping incomplete algorithms', () => {
+	const result = parseTrainerCsv(catalogCsv);
 	expect(result.errors).toEqual([]);
 	expect(result.algorithms).toHaveLength(740);
 	expect(result.algorithms.every((algorithm) => algorithm.active)).toBe(true);
@@ -19,7 +17,7 @@ test('imports the full Airtable export without paid restrictions or dropping inc
 	).toBe(true);
 	expect(result.algorithms[0].scrambles).toContain('\n');
 	expect(result.warnings).toHaveLength(4);
-	for (const id of ['333_zbll-u_31', '333_zbll-l_18']) {
+	for (const id of ['missing_solution_a', 'missing_solution_b']) {
 		expect(result.algorithms.find((algorithm) => algorithm.id === id)).toMatchObject({
 			active: true,
 			solution: '',
