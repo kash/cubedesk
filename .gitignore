@@ -10,3 +10,4 @@ certs
 build
 .envrc
 .tool-versions
+*.tsbuildinfo

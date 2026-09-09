@@ -10,10 +10,11 @@ is available to all signed-in users; no paid restriction applies.
    The existing deployment workflow runs `prisma migrate deploy` before switching
    the application. For local schema development, use `pnpm prisma`.
 2. Open **Admin → Trainer → Upload CSV**. The upload opens a dialog.
-3. Select `trainer-data.csv`, preview the changes, then confirm the import.
-4. Verify **740 records / 740 published** and **PostgreSQL** on the catalog page.
-   The two exported cases missing solutions and scrambles are warnings, not errors;
-   they remain published and their training controls remain enabled.
+3. Select your catalog CSV (see the format below), preview the changes, then
+   confirm the import. A production catalog export is not bundled with the repository.
+4. Verify that the record and published counts match your CSV and that the catalog
+   page shows **PostgreSQL**. Missing solutions and scrambles are warnings, not
+   errors; published cases retain their enabled training controls.
 5. Open the trainer again to fetch the new catalog. An ongoing training session
    is not refreshed underneath the timer.
 
@@ -71,4 +72,5 @@ pnpm run build
 
 Integration tests use `DATABASE_URL` from `.env`, create a uniquely named isolated
 PostgreSQL schema, and remove it afterward. They do not import into the application
-catalog. They cover full import, idempotency, stale previews, merges, and rollback.
+catalog. They use a generated 740-row sample catalog to cover bulk import,
+idempotency, stale previews, merges, and rollback.
