@@ -45,7 +45,8 @@ export default function Manual() {
 				seconds.dnf,
 				seconds.plusTwo,
 			);
-			resetScramble(context);
+			// The context still contains the count from before saveSolve.
+			resetScramble({...context, sessionSolveCount: context.sessionSolveCount + 1});
 
 			setManualTime('');
 			setError(false);
