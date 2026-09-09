@@ -1,4 +1,5 @@
 import {Profile} from '@/types/profile';
+import {normalizeYouTubeChannelLink} from '@/util/youtube';
 import {RedditLogo, TwitchLogo, TwitterLogo, YoutubeLogo} from 'phosphor-react';
 import React from 'react';
 
@@ -41,7 +42,11 @@ export default function About(props: Props) {
 				key={key}
 				target="_blank"
 				rel="noopener noreferrer"
-				href={profile[key]}
+				href={
+					key === 'youtube_link'
+						? normalizeYouTubeChannelLink(profile[key])
+						: profile[key]
+				}
 			>
 				{icon}
 				<span className="ml-2 text-inherit">{name}</span>

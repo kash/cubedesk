@@ -6,6 +6,7 @@ import {Spinner} from '@/components/ui/spinner';
 import {Textarea} from '@/components/ui/textarea';
 import {Profile} from '@/types/profile';
 import {api} from '@/util/api';
+import {normalizeYouTubeChannelLink} from '@/util/youtube';
 import React, {useState} from 'react';
 
 interface Props {
@@ -32,7 +33,7 @@ function getInitialForm(profile: Profile): ProfileForm {
 		mainThreeCube: profile.main_three_cube || '',
 		favoriteEvent: profile.favorite_event || '',
 		twitchLink: profile.twitch_link || '',
-		youtubeLink: profile.youtube_link || '',
+		youtubeLink: normalizeYouTubeChannelLink(profile.youtube_link || ''),
 		twitterLink: profile.twitter_link || '',
 		redditLink: profile.reddit_link || '',
 	};
@@ -74,6 +75,7 @@ export default function EditProfile(props: Props) {
 			mainThreeCube,
 			favoriteEvent,
 		} = form;
+		const normalizedYouTubeLink = normalizeYouTubeChannelLink(youtubeLink);
 
 		if (twitchLink && !/https:\/\/(www\.)?twitch\.tv.+/.test(twitchLink)) {
 			setError('Invalid Twitch link');
@@ -81,9 +83,13 @@ export default function EditProfile(props: Props) {
 		}
 
 		if (
-			youtubeLink &&
-			!/https:\/\/(www\.)?youtube\.com\/(user|channel|u|c)\/.+/.test(youtubeLink) &&
-			!/https:\/\/(www\.)?youtube\.com\/@.+/.test(youtubeLink)
+			normalizedYouTubeLink &&
+			!/^https:\/\/(www\.)?youtube\.com\/(user|channel|u|c)\/[^\s/?#]+(?:[/?#]\S*)?$/i.test(
+				normalizedYouTubeLink,
+			) &&
+			!/^https:\/\/(www\.)?youtube\.com\/@[^\s/?#]+(?:[/?#]\S*)?$/i.test(
+				normalizedYouTubeLink,
+			)
 		) {
 			setError('Invalid YouTube link');
 			return;
@@ -108,7 +114,7 @@ export default function EditProfile(props: Props) {
 			main_three_cube: mainThreeCube,
 			favorite_event: favoriteEvent,
 			twitch_link: twitchLink,
-			youtube_link: youtubeLink,
+			youtube_link: normalizedYouTubeLink,
 			reddit_link: redditLink,
 			twitter_link: twitterLink,
 		};
@@ -155,7 +161,7 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-2-description`}
 					/>
 					<FieldDescription id={`${fieldId}-2-description`}>
-						{'Ex: https://youtube.com/user/PewDiePie'}
+						{'Ex: https://youtube.com/@username'}
 					</FieldDescription>
 				</Field>
 				<Field>
