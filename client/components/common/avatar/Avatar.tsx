@@ -6,6 +6,8 @@ import {Serialized} from '@/types/serialized';
 import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user';
 import {PublicUser} from '@/types/user';
 import {cn} from '@/util/cn';
+import {useTheme} from '@/util/hooks/useTheme';
+import {resourceUri} from '@/util/storage';
 import {CircleWavyCheck} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
@@ -20,6 +22,7 @@ interface Props {
 	showEmail?: boolean;
 	noLink?: boolean;
 	hideBadges?: boolean;
+	showWcaBadge?: boolean;
 	vertical?: boolean;
 	target?: string;
 	showEloType?: '222' | '333' | '444' | 'overall';
@@ -28,6 +31,8 @@ interface Props {
 export default function Avatar(props: Props) {
 	const user = props.user as UserAccountForAdmin;
 	const {small, large, vertical, showOptions, showEloType, tiny, showEmail, hideBadges, target, noLink} = props;
+	const wcaLinked = props.showWcaBadge && user?.integrations?.some((integration) => integration.service_name === 'wca');
+	const moduleTheme = useTheme('module_color');
 
 	function onClick(e) {
 		if (noLink) {
@@ -56,9 +61,23 @@ export default function Avatar(props: Props) {
 	if (user?.username) {
 		nameSpan = (
 			<span className="flex flex-col">
-				<span className="relative flex flex-row content-center break-normal text-base font-medium text-text">
+				<span className="relative flex flex-row items-center break-normal text-base font-medium text-text">
 					{user.username} {verifiedSymbol}
 				</span>
+				{wcaLinked ? (
+					<span
+						aria-label="WCA account linked"
+						title="WCA account linked"
+						className="mt-1 inline-flex items-center gap-1 self-start text-[10px] leading-none font-medium tracking-wide text-text opacity-30"
+					>
+						<img
+							src={resourceUri(`/images/logos/wca-logo-${moduleTheme.isDark ? 'white' : 'black'}.svg`)}
+							alt=""
+							className="size-3 shrink-0 object-contain"
+						/>
+						WCA
+					</span>
+				) : null}
 				{eloSpan}
 			</span>
 		);
@@ -80,7 +99,7 @@ export default function Avatar(props: Props) {
 
 	let emblems: ReactNode = null;
 	if (!hideBadges) {
-		emblems = <Badges small user={user} limit={5} />;
+		emblems = <Badges small user={user} limit={5} hideWca={props.showWcaBadge} />;
 	}
 
 	const link = user?.username ? `/user/${user.username}` : '';

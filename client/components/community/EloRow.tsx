@@ -36,7 +36,7 @@ export default function EloRow(props: Props) {
 					</span>
 				</div>
 				<div className="ml-3">
-					<Avatar hideBadges user={user} />
+					<Avatar hideBadges showWcaBadge user={user} />
 				</div>
 			</div>
 			<div className="flex flex-row items-center">

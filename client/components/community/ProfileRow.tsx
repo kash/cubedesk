@@ -127,7 +127,7 @@ export default function ProfileRow(props: ProfileRowProps) {
 			>
 				<div className="flex w-2/5 flex-row items-center">
 					{indexSpan}
-					<Avatar showOptions small={mobileMode} user={user} />
+					<Avatar showOptions showWcaBadge small={mobileMode} user={user} />
 				</div>
 				{solveRow}
 				<div className="flex w-2/5 flex-row items-center justify-end text-right">

@@ -99,7 +99,7 @@ export default function PbCard(props: Props) {
 					variant="ghost"
 					onClick={deletePb}
 					size="icon-sm"
-					className="text-text/35 hover:bg-error/10 hover:text-error"
+					className="text-text/35 hover:bg-error/10 hover:text-error opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 aria-busy:opacity-100 [@media(hover:none)]:opacity-100"
 					aria-label={`Remove ${cubeType?.name} ${single ? 'single' : 'average'}`}
 					disabled={deleting}
 					aria-busy={deleting}

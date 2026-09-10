@@ -20,7 +20,7 @@ export const LINKED_SERVICES: Record<IntegrationType, LinkedServiceData> = {
 	discord: {
 		id: 'discord',
 		name: 'Discord',
-		description: 'Link your Discord account to allow messaging.',
+		description: 'Connect your Discord account for messaging.',
 		logoSrc: resourceUri('/images/logos/discord_logo.svg'),
 		authEndpoint: 'https://discord.com/api/v8/oauth2/authorize',
 		tokenEndpoint: 'https://discord.com/api/v8/oauth2/token',
@@ -33,7 +33,7 @@ export const LINKED_SERVICES: Record<IntegrationType, LinkedServiceData> = {
 	wca: {
 		id: 'wca',
 		name: 'WCA',
-		description: 'Add a layer of authenticity by adding your WCA account and showing off your official times.',
+		description: 'Show your official WCA profile on CubeDesk.',
 		logoSrc: resourceUri('/images/logos/wca_logo.svg'),
 		tokenEndpoint: 'https://www.worldcubeassociation.org/oauth/token',
 		revokeEndpoint: 'https://www.worldcubeassociation.org/oauth/revoke',

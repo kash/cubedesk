@@ -11,6 +11,8 @@ import PFP from '@/components/profile/PFP';
 import ProfileElo from '@/components/profile/ProfileElo';
 import PublishSolves from '@/components/profile/PublishSolves';
 import WCA from '@/components/profile/WCA';
+import WcaProfileCard from '@/components/profile/WcaProfileCard';
+import {useWcaProfile} from '@/components/profile/useWcaProfile';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {Image} from '@/types/image';
@@ -113,6 +115,11 @@ export default function Profile() {
 	const profile = profileData?.profile;
 	const headerImage = profileData?.headerImage;
 	const pbs = profileData?.pbs ?? {};
+	const wcaProfile = useWcaProfile(
+		!loading && user?.username?.toLowerCase() === String(matchUsername).toLowerCase()
+			? user
+			: undefined,
+	);
 
 	useEffect(() => {
 		if (profileData && profileData?.user?.username === matchUsername) {
@@ -236,7 +243,11 @@ export default function Profile() {
 								<PFP profile={profile} allowChange={myProfile} />
 								<div className="flex flex-wrap items-center justify-end gap-2 pt-12">
 									<FriendshipRequest user={user} fetchData />
-									<WCA myProfile={myProfile} user={user} />
+									<WCA
+										myProfile={myProfile}
+										user={user}
+										profileUrl={wcaProfile.data?.url}
+									/>
 									<AvatarDropdown
 										user={{...user, profile}}
 										menuProps={{
@@ -272,6 +283,7 @@ export default function Profile() {
 					<div className="mt-7 grid items-start gap-7 lg:grid-cols-[280px_minmax(0,1fr)]">
 						<About profile={profile} />
 						<div className="min-w-0 space-y-8">
+							<WcaProfileCard {...wcaProfile} />
 							<section aria-labelledby="personal-bests-heading">
 								<div className="mb-4 flex flex-wrap items-center justify-between gap-3">
 									<div>
