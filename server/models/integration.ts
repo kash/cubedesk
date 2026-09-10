@@ -4,7 +4,13 @@ import {Integration} from '@/types/integration';
 import {UserAccount} from '@/types/user';
 import {v4 as uuid} from 'uuid';
 
-export function createIntegration(user: UserAccount, serviceName, authToken, refreshToken, authExpiresAt) {
+export function createIntegration(
+	user: Pick<UserAccount, 'id'>,
+	serviceName,
+	authToken,
+	refreshToken,
+	authExpiresAt,
+) {
 	return getPrisma().integration.create({
 		data: {
 			id: uuid(),
@@ -30,7 +36,10 @@ export function updateIntegration(integration: Integration, params) {
 	});
 }
 
-export async function getIntegration(user: UserAccount, intType: IntegrationType): Promise<Integration | null> {
+export async function getIntegration(
+	user: Pick<UserAccount, 'id'>,
+	intType: IntegrationType,
+): Promise<Integration | null> {
 	return getPrisma().integration.findFirst({
 		where: {
 			user_id: user.id,

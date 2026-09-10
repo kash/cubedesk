@@ -1,154 +1,207 @@
-import {getDiscordMe} from '@/server/integrations/discord';
 import {createIntegration, getIntegration, updateIntegration} from '@/server/models/integration';
-import {updateUserProfile} from '@/server/models/profile';
+import {getOrCreateUserProfile, updateUserProfile} from '@/server/models/profile';
 import {IntegrationType, LINKED_SERVICES, LinkedServiceData} from '@/shared/integration';
 import {Integration} from '@/types/integration';
-import {InternalUserAccount, UserAccount} from '@/types/user';
+import {UserAccount} from '@/types/user';
+import {TRPCError} from '@trpc/server';
 import axios from 'axios';
 
-export async function linkOAuthAccount(intType: IntegrationType, user: InternalUserAccount, code: string) {
-	const int = await getIntegration(user, intType);
+type OAuthUser = Pick<UserAccount, 'id'>;
 
-	if (int) {
-		return true;
-	}
-
-	const service = LINKED_SERVICES[intType];
-
-	const {accessToken, refreshToken, expiresIn, createdAt} = await getOAuthPostRequest(
-		service,
-		service.tokenEndpoint,
-		{
-			grant_type: 'authorization_code',
-			code,
-		}
-	);
-
-	const integration = await createIntegration(user, intType, accessToken, refreshToken, createdAt + expiresIn);
-
-	if (intType === 'discord') {
-		// Discord has its own column in the user profile
-		const discordMe = await getDiscordMe(user);
-		await updateUserProfile(user.profile, {
-			discord_id: discordMe.id,
+export class RevokedIntegrationError extends TRPCError {
+	constructor() {
+		super({
+			code: 'BAD_REQUEST',
+			message: 'This account is no longer linked. Please link it again.',
 		});
 	}
+}
 
-	return integration;
+function relinkError(type: IntegrationType) {
+	return new TRPCError({
+		code: 'BAD_REQUEST',
+		message: `Please relink your ${LINKED_SERVICES[type].name} account.`,
+	});
+}
+
+export async function linkOAuthAccount(
+	intType: IntegrationType,
+	user: OAuthUser,
+	code: string,
+	redirectUri: string,
+) {
+	const existing = await getIntegration(user, intType);
+	const service = LINKED_SERVICES[intType];
+	const tokens = await getOAuthPostRequest(service, service.tokenEndpoint, {
+		grant_type: 'authorization_code',
+		code,
+		redirect_uri: redirectUri,
+	});
+	const expiresAt = getExpiresAt(tokens);
+
+	// Verify the granted identity before persisting a linked account.
+	const identity = await getIdentity(intType, tokens.access_token).catch(() => {
+		throw new TRPCError({
+			code: 'BAD_GATEWAY',
+			message: `Could not read your ${service.name} account. Please try linking again.`,
+		});
+	});
+	if (intType === 'discord') {
+		const profile = await getOrCreateUserProfile(user);
+		await updateUserProfile(profile, {discord_id: String(identity.id)});
+	}
+
+	if (existing) {
+		return updateIntegration(existing, {
+			auth_token: tokens.access_token,
+			refresh_token: tokens.refresh_token || '',
+			auth_expires_at: expiresAt,
+		});
+	}
+	return createIntegration(
+		user,
+		intType,
+		tokens.access_token,
+		tokens.refresh_token || '',
+		expiresAt,
+	);
 }
 
 async function getOAuthPostRequest(
 	service: LinkedServiceData,
 	serviceEndpoint: string,
-	additionalData: {[key: string]: string} = {}
+	additionalData: {[key: string]: string} = {},
 ) {
-	const intType = service.id;
-	const secretEnvKey = `${intType.toUpperCase()}_SECRET`;
-	const clientSecret = process.env[secretEnvKey];
+	const clientSecret = process.env[`${service.id.toUpperCase()}_SECRET`];
 	if (!clientSecret) {
-		throw new Error(`${secretEnvKey} is not set`);
+		throw new TRPCError({
+			code: 'INTERNAL_SERVER_ERROR',
+			message: `${service.name} linking is not configured. Please try again later.`,
+		});
 	}
-
-	const params = new URLSearchParams();
-	params.append('client_id', service.clientId);
-	params.append('client_secret', clientSecret);
-	params.append('redirect_uri', `${process.env.BASE_URI}/oauth/${intType}`);
-
-	for (const [key, value] of Object.entries(additionalData)) {
-		params.append(key, value);
-	}
-
-	const res = await axios.post(serviceEndpoint, params, {
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
+	const params = new URLSearchParams({
+		client_id: service.clientId,
+		client_secret: clientSecret,
+		...additionalData,
 	});
-
-	return {
-		accessToken: res.data.access_token,
-		refreshToken: res.data.refresh_token,
-		expiresIn: res.data.expires_in,
-		createdAt: new Date().getTime(),
-	};
+	try {
+		const res = await axios.post(serviceEndpoint, params.toString(), {
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			timeout: 15000,
+		});
+		return res.data;
+	} catch (error) {
+		// Axios errors include request credentials. Return only a safe, actionable message.
+		const reason = axios.isAxiosError<{error?: string}>(error)
+			? error.response?.data?.error
+			: undefined;
+		if (reason === 'invalid_grant' && additionalData.grant_type === 'refresh_token') {
+			throw new RevokedIntegrationError();
+		}
+		throw new TRPCError({
+			code: 'BAD_REQUEST',
+			message:
+				reason === 'invalid_grant'
+					? 'This authorization expired or was already used. Please start linking again.'
+					: `Could not connect to ${service.name}. Please try linking again.`,
+		});
+	}
 }
 
-async function getAuthToken(intType: IntegrationType, user: UserAccount): Promise<string | null> {
+function getExpiresAt(tokens: {access_token?: string; expires_in?: number}) {
+	if (
+		!tokens?.access_token ||
+		!Number.isFinite(tokens.expires_in) ||
+		Number(tokens.expires_in) <= 0
+	) {
+		throw new TRPCError({
+			code: 'BAD_GATEWAY',
+			message: 'The service returned an invalid authorization response.',
+		});
+	}
+	// OAuth expires_in and stored auth_expires_at are both in seconds.
+	return Math.floor(Date.now() / 1000) + Number(tokens.expires_in);
+}
+
+async function refreshAuthToken(integration: Integration, type: IntegrationType) {
+	if (!integration.refresh_token) {
+		throw new RevokedIntegrationError();
+	}
+	const service = LINKED_SERVICES[type];
+	const tokens = await getOAuthPostRequest(service, service.tokenEndpoint, {
+		grant_type: 'refresh_token',
+		refresh_token: integration.refresh_token,
+	});
+	const updated = await updateIntegration(integration, {
+		auth_token: tokens.access_token,
+		auth_expires_at: getExpiresAt(tokens),
+		refresh_token: tokens.refresh_token || integration.refresh_token,
+	});
+	return updated.auth_token;
+}
+
+async function getIdentity(type: IntegrationType, authToken: string) {
+	try {
+		const res = await axios.get(LINKED_SERVICES[type].meEndpoint, {
+			headers: {Authorization: `Bearer ${authToken}`},
+			timeout: 15000,
+		});
+		const identity = res.data?.me || res.data;
+		if (!identity?.id) {
+			throw new TRPCError({
+				code: 'BAD_GATEWAY',
+				message: 'The service returned an invalid account.',
+			});
+		}
+		return identity;
+	} catch (error) {
+		if (axios.isAxiosError(error) && error.response?.status === 401) {
+			throw new RevokedIntegrationError();
+		}
+		if (error instanceof TRPCError) throw error;
+		throw relinkError(type);
+	}
+}
+
+export async function getIntegrationGetMe(intType: IntegrationType, user: OAuthUser) {
 	const integration = await getIntegration(user, intType);
 	if (!integration) {
 		return null;
 	}
-
-	let authToken: string | null = integration.auth_token;
-	const expiresAt = new Date(Number(integration.auth_expires_at) * 1000);
-	const now = new Date();
-
-	if (expiresAt < now) {
-		authToken = await getNewAuthToken(integration);
+	const expiresAt = Number(integration.auth_expires_at);
+	// Legacy rows mixed milliseconds with seconds and must be refreshed once.
+	const needsRefresh = expiresAt >= 1e12 || expiresAt <= Math.floor(Date.now() / 1000) + 30;
+	if (needsRefresh) {
+		const token = await refreshAuthToken(integration, intType);
+		return getIdentity(intType, token);
 	}
-
-	return authToken;
-}
-
-async function getNewAuthToken(integration: Integration) {
-	const intType = integration.service_name;
-	const service = LINKED_SERVICES[intType];
 
 	try {
-		const {accessToken, refreshToken, expiresIn, createdAt} = await getOAuthPostRequest(
-			service,
-			service.tokenEndpoint,
-			{
-				grant_type: 'refresh_token',
-				refresh_token: integration.refresh_token,
-			}
-		);
-
-		const int = await updateIntegration(integration, {
-			auth_token: accessToken,
-			auth_expires_at: createdAt + expiresIn,
-			refresh_token: refreshToken,
-		});
-
-		return int.auth_token;
-	} catch (e) {
-		return null;
+		return await getIdentity(intType, integration.auth_token);
+	} catch (error) {
+		if (!(error instanceof RevokedIntegrationError)) throw error;
 	}
+
+	// Retry rejected access once with a fresh token.
+	const token = await refreshAuthToken(integration, intType);
+	return getIdentity(intType, token);
 }
 
-export async function getIntegrationGetMe(intType: IntegrationType, user: UserAccount) {
-	const authToken = await getAuthToken(intType, user);
-	const service = LINKED_SERVICES[intType];
-
-	const res = await axios.get(service.meEndpoint, {
-		headers: {
-			Authorization: 'Bearer ' + authToken,
-		},
-	});
-
-	const me = res?.data?.me;
-
-	if (me) {
-		return me;
-	} else if (!me && res?.data) {
-		return res.data;
-	} else {
-		throw new Error('Invalid request');
+export async function revokeIntegration(intType: IntegrationType, user: OAuthUser) {
+	const integration = await getIntegration(user, intType);
+	if (integration) {
+		const service = LINKED_SERVICES[intType];
+		// Revocation accepts expired tokens; refreshing first can prevent unlinking a broken account.
+		try {
+			await getOAuthPostRequest(service, service.revokeEndpoint, {
+				token: integration.auth_token,
+			});
+		} catch {
+			// Local unlinking must still work if access was already revoked or the provider is unavailable.
+		}
 	}
-}
-
-export async function revokeIntegration(intType: IntegrationType, user: UserAccount) {
-	const service = LINKED_SERVICES[intType];
-	const auth = await getAuthToken(intType, user);
-
-	if (auth) {
-		await getOAuthPostRequest(service, service.revokeEndpoint, {
-			token: auth,
-		});
-	}
-
 	if (intType === 'discord') {
-		await updateUserProfile(user.profile, {
-			discord_id: null,
-		});
+		const profile = await getOrCreateUserProfile(user);
+		await updateUserProfile(profile, {discord_id: null});
 	}
 }

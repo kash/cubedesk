@@ -7,9 +7,10 @@ interface Props {
 	user: any;
 	small?: boolean;
 	limit?: number;
+	hideWca?: boolean;
 }
 
-export default function Badges({user, small, limit}: Props) {
+export default function Badges({user, small, limit, hideWca}: Props) {
 	let ems: ReactNode[] = [];
 	const wca = WCA.getWcaIntegration(user);
 
@@ -29,7 +30,7 @@ export default function Badges({user, small, limit}: Props) {
 		ems.push(<Emblem className="mb-0" small={small} key="admin" text="Admin" red />);
 	}
 
-	if (wca) {
+	if (wca && !hideWca) {
 		ems.push(<Emblem className="mb-0" small={small} key={wca.id} text="WCA Profile" green />);
 	}
 
