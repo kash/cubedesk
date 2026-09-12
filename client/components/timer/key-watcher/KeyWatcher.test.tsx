@@ -8,6 +8,8 @@ let mockHandlers: React.HTMLAttributes<HTMLDivElement>;
 let mockDialogBlocked = false;
 let mockPopupOpen = false;
 let mockContext: Record<string, unknown>;
+let mockWindowKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+let mockFocusedTarget: Target | null;
 
 jest.mock('react-hotkeys', () => ({
 	GlobalHotKeys: ({children}) => {
@@ -40,7 +42,9 @@ jest.mock('@/db/settings/query', () => ({getSettings: () => ({freeze_time: 0})})
 jest.mock('@/util/cubes/util', () => ({getCubeTypeInfoById: () => ({id: '333'})}));
 jest.mock('@/util/hooks/useListener', () => ({
 	useDocumentListener: jest.fn(),
-	useWindowListener: jest.fn(),
+	useWindowListener: (name, handler) => {
+		if (name === 'keydown') mockWindowKeyDown = handler;
+	},
 }));
 jest.mock('@/util/hooks/useSettings', () => ({
 	useSettings: (key) => (key === 'timer_type' ? 'keyboard' : false),
@@ -50,6 +54,9 @@ jest.mock('@/util/timer/hotkeys', () => ({HOTKEY_MAP: {}}));
 // These tests exercise event routing without mounting the timer's application dependencies.
 class Target {
 	constructor(private tag: string) {}
+	blur = jest.fn(() => {
+		if (mockFocusedTarget === this) mockFocusedTarget = null;
+	});
 	closest(selector: string) {
 		return selector.split(', ').includes(this.tag) ? this : null;
 	}
@@ -66,6 +73,7 @@ beforeEach(() => {
 	jest.spyOn(globalThis, 'setTimeout').mockImplementation(() => 0 as unknown as NodeJS.Timeout);
 	mockDialogBlocked = false;
 	mockPopupOpen = false;
+	mockFocusedTarget = null;
 	mockContext = {cubeType: '333', startEnabled: true};
 });
 afterEach(() => {
@@ -76,11 +84,11 @@ function setup(pointer = true) {
 	renderToStaticMarkup(<KeyWatcher>Timer</KeyWatcher>);
 	if (pointer) mockHandlers.onPointerDownCapture!({} as React.PointerEvent<HTMLDivElement>);
 }
-function key(key = ' ', tag = 'button') {
+function key(key = ' ', target: string | Target = 'button') {
 	return {
 		key,
-		keyCode: key === ' ' ? 32 : 9,
-		target: new Target(tag),
+		keyCode: key === ' ' ? 32 : key === 'Tab' ? 9 : key.charCodeAt(0),
+		target: typeof target === 'string' ? new Target(target) : target,
 		defaultPrevented: false,
 		preventDefault(this: {defaultPrevented: boolean}) {
 			this.defaultPrevented = true;
@@ -150,4 +158,36 @@ it('reclaims space after a pointer-opened popup closes and restores button focus
 	mockPopupOpen = false;
 	mockHandlers.onKeyDownCapture!(key());
 	expect(setTimerParams).toHaveBeenCalled();
+});
+
+it.each(['a', 'Enter', 'ArrowLeft', ' '])(
+	'releases picker focus so %s can stop the next solve',
+	(stopKey) => {
+		mockContext.spaceTimerStarted = Date.now();
+		mockPopupOpen = true;
+		setup();
+		const picker = new Target('button');
+		mockPopupOpen = false;
+		mockFocusedTarget = picker;
+		mockHandlers.onKeyDownCapture!(key(' ', picker));
+		expect(picker.blur).not.toHaveBeenCalled();
+		mockHandlers.onKeyUpCapture!(key(' ', picker));
+		expect(startTimer).toHaveBeenCalledTimes(1);
+		expect(mockFocusedTarget).toBeNull();
+
+		mockContext.timeStartedAt = Date.now();
+		setup(false);
+		mockWindowKeyDown(key(stopKey, mockFocusedTarget ?? 'body'));
+		expect(endTimer).toHaveBeenCalledTimes(1);
+	},
+);
+
+it('keeps focus on a button activated through keyboard navigation', () => {
+	setup(false);
+	const button = new Target('button');
+	mockFocusedTarget = button;
+	mockHandlers.onKeyDownCapture!(key(' ', button));
+	mockHandlers.onKeyUpCapture!(key(' ', button));
+	expect(mockFocusedTarget).toBe(button);
+	expect(button.blur).not.toHaveBeenCalled();
 });

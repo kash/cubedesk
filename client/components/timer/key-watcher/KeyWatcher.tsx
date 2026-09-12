@@ -295,6 +295,9 @@ export default function KeyWatcher(props: Props) {
 					event.preventDefault();
 					event.stopPropagation();
 					keyupSpace(event);
+					// Release picker focus once the timer takes over so subsequent keys
+					// reach the timer instead of being ignored as button interactions.
+					if (event.target instanceof Element) event.target.closest('button')?.blur();
 				}}
 			>
 				{props.children}
