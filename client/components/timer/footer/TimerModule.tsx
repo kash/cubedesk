@@ -1,8 +1,10 @@
+import type {TwistyPlayerConfig} from 'cubing/twisty';
 import SelectField from '@/components/common/inputs/SelectField';
 import History from '@/components/modules/history/History';
 import LastSolve from '@/components/modules/last-solve/LastSolve';
 import CustomizeStats from '@/components/modules/quick-stats/customize-stats/CustomizeStats';
 import QuickStats from '@/components/modules/quick-stats/QuickStats';
+import ScrambleGuideDialog from '@/components/modules/scramble/ScrambleGuideDialog';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import SolvesPerDay from '@/components/modules/solves-per-day/SolvesPerDay';
 import TimeChart from '@/components/modules/time-chart/TimeChart';
@@ -15,11 +17,27 @@ import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {setSetting} from '@/db/settings/update';
 import {cn} from '@/util/cn';
+import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {snakeCase} from 'change-case';
-import {Gear} from 'phosphor-react';
+import {Gear, PlayCircle} from 'phosphor-react';
 import React, {ReactNode} from 'react';
+
+const SCRAMBLE_PUZZLES = {
+	'222': '2x2x2',
+	'333': '3x3x3',
+	'333bl': '3x3x3',
+	'444': '4x4x4',
+	'555': '5x5x5',
+	'666': '6x6x6',
+	'777': '7x7x7',
+	pyram: 'pyraminx',
+	skewb: 'skewb',
+	sq1: 'square1',
+	clock: 'clock',
+	minx: 'megaminx',
+} satisfies Record<string, TwistyPlayerConfig['puzzle']>;
 
 interface Props {
 	index: number;
@@ -28,6 +46,7 @@ interface Props {
 }
 
 export default function TimerModule(props: Props) {
+	const [scrambleGuideOpen, setScrambleGuideOpen] = React.useState(false);
 	const [customizeStatsDialog, setCustomizeStatsDialog] = React.useState<{
 		props: React.ComponentProps<typeof CustomizeStats>;
 		title: React.ReactNode;
@@ -39,6 +58,9 @@ export default function TimerModule(props: Props) {
 
 	const context = useTimerContext();
 	const {scramble, cubeType, solvesFilter} = context;
+	const scrambleTypeId = getCubeTypeInfoById(cubeType ?? '')?.scramble ?? '';
+	const scrambleSize = getScrambleTypeById(scrambleTypeId)?.size;
+	const scramblePuzzle = SCRAMBLE_PUZZLES[scrambleTypeId];
 	const mobileMode = useGeneral('mobile_mode');
 
 	const timerModules = useSettings('timer_modules');
@@ -88,7 +110,30 @@ export default function TimerModule(props: Props) {
 			),
 		},
 		[TimerModuleType.SCRAMBLE]: {
-			module: <Scramble cubeType={cubeType} scramble={scramble} />,
+			module: (
+				<div className="flex h-full min-h-0 flex-col items-center">
+					<div className="min-h-0 w-full flex-1">
+						<Scramble
+							cubeType={cubeType}
+							scramble={scramble}
+							maxWidth={
+								mobileMode || context.timerLayout !== 'bottom' ? '240px' : undefined
+							}
+						/>
+					</div>
+					{scramble && scramblePuzzle && (
+						<Button
+							variant="ghost"
+							size="sm"
+							className="text-primary hover:text-primary mb-1 shrink-0"
+							onClick={() => setScrambleGuideOpen(true)}
+						>
+							<PlayCircle aria-hidden="true" />
+							How to scramble
+						</Button>
+					)}
+				</div>
+			),
 		},
 		[TimerModuleType.SOLVE_GRAPH]: {
 			module: <TimeChart filterOptions={solvesFilter} />,
@@ -185,6 +230,13 @@ export default function TimerModule(props: Props) {
 				{dropdown}
 				<div className="h-full w-full">{visual.module}</div>
 			</div>
+			<ScrambleGuideDialog
+				open={scrambleGuideOpen}
+				onOpenChange={setScrambleGuideOpen}
+				scramble={scramble ?? ''}
+				size={scrambleSize}
+				puzzle={scramblePuzzle}
+			/>
 			<Dialog
 				open={customizeStatsDialog !== null}
 				onOpenChange={(open) => {

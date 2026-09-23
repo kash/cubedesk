@@ -18,6 +18,7 @@ interface Props {
 	cubeType?: string;
 	scramble?: string;
 	width?: string;
+	maxWidth?: string;
 	frontFace?: boolean;
 	compact?: boolean;
 }
@@ -44,7 +45,7 @@ export default function ScrambleVisual(props: Props) {
 		}
 
 		return layoutScramble(scramble, cubeScramble.size);
-	}, [cubeType, scramble]);
+	}, [cubeType, scramble, cubeScramble]);
 
 	const cubeSize = cubeScramble?.size;
 
@@ -70,6 +71,7 @@ export default function ScrambleVisual(props: Props) {
 			<div
 				className="grid aspect-[4/3] w-full max-w-[320px] grid-cols-4 grid-rows-3 gap-[3%]"
 				key={`body-${cubeSize}`}
+				style={props.maxWidth ? {maxWidth: props.maxWidth} : undefined}
 			>
 				<Face width={width} key={`1-${cubeSize}`} />
 				<Face width={width} key={`2-${cubeSize}`} size={cubeSize} data={visual.U} />
