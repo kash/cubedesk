@@ -1,9 +1,11 @@
 import React from 'react';
+import {useOptionalI18n} from '@/i18n';
 
 export default function ListSkeleton() {
+	const {t} = useOptionalI18n();
 	return (
-		<div role="status" aria-label="Loading results" className="w-full">
-			<span className="sr-only">Loading results…</span>
+		<div role="status" aria-label={t('Loading results')} className="w-full">
+			<span className="sr-only">{t('Loading results')}…</span>
 			<div aria-hidden className="motion-safe:animate-pulse">
 				<div className="bg-text/10 mb-3 h-4 w-28 rounded" />
 				{Array.from({length: 10}, (_, index) => (

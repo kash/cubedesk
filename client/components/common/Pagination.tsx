@@ -5,6 +5,7 @@ import {useQueries} from '@tanstack/react-query';
 import {MagnifyingGlass} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router-dom';
+import {useI18n} from '@/i18n';
 
 export type {PaginationOutput, PaginationArgsInput} from '@/types/pagination';
 import {PaginationArgsInput, PaginationOutput} from '@/types/pagination';
@@ -39,6 +40,7 @@ function PaginationContent<T>({
 	searchQuery: parentSearchQuery,
 	currentTab,
 }: Props & {currentTab: PaginationTab}) {
+	const {t} = useI18n();
 	const location = useLocation();
 	const [searchQuery, setSearchQuery] = useState('');
 	const finalQuery = parentSearchQuery ?? searchQuery;
@@ -72,10 +74,10 @@ function PaginationContent<T>({
 							<MagnifyingGlass weight="bold" />
 						</InputGroupAddon>
 						<InputGroupInput
-							placeholder={`Search for ${currentTab.plural}`}
+							placeholder={`${t('Search')} ${t(currentTab.plural).toLowerCase()}`}
 							value={searchQuery}
 							onChange={(event) => setSearchQuery(event.target.value)}
-							aria-label={`Search for ${currentTab.plural}`}
+							aria-label={`${t('Search')} ${t(currentTab.plural).toLowerCase()}`}
 						/>
 					</InputGroup>
 				</div>
@@ -99,7 +101,7 @@ function PaginationContent<T>({
 				searchQuery={finalQuery}
 				fetchData={currentTab.fetchData}
 				getItemRow={(item) => itemRow(item, currentTab)}
-				emptyText={`Could not find any ${currentTab.plural}`}
+				emptyText={t(`Could not find any ${currentTab.plural}`)}
 			/>
 		</div>
 	);

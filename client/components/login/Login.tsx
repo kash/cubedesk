@@ -10,9 +10,11 @@ import {getRedirectLink, getSignUpLink} from '@/util/auth/login';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
+import {useI18n} from '@/i18n';
 
 export default function Login() {
 	const fieldId = React.useId();
+	const {t} = useI18n();
 	const auth = useAuthForm();
 	const {complete} = useDemoImport();
 
@@ -51,7 +53,7 @@ export default function Login() {
 		>
 			<form onSubmit={login}>
 				<Field className="mb-5">
-					<FieldLabel htmlFor={`${fieldId}-1`}>{'Email'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-1`}>{t('Email')}</FieldLabel>
 					<Input
 						type="email"
 						onChange={setEmail}
@@ -61,7 +63,7 @@ export default function Login() {
 					/>
 				</Field>
 				<Field className="mb-2">
-					<FieldLabel htmlFor={`${fieldId}-2`}>{'Password'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-2`}>{t('Password')}</FieldLabel>
 					<Input
 						onChange={setPassword}
 						type="password"
@@ -75,7 +77,7 @@ export default function Login() {
 					view="forgot"
 					to="/forgot"
 				>
-					Forgot password
+					{t('Forgot password')}
 				</AuthFormLink>
 				<div className="flex flex-col items-start">
 					<Button
@@ -85,20 +87,20 @@ export default function Login() {
 						disabled={logInMutation.isPending}
 						aria-busy={logInMutation.isPending}
 					>
-						{'Log In'}
+						{t('Log In')}
 						{logInMutation.isPending ? <Spinner aria-hidden="true" /> : null}
 					</Button>
 					<ButtonError text={error} />
 				</div>
 			</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
-				Don't have an account?{' '}
+				{t("Don't have an account?")} {' '}
 				<AuthFormLink
 					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
 					view="signup"
 					to={getSignUpLink()}
 				>
-					Sign up
+					{t('Sign up')}
 				</AuthFormLink>
 			</p>
 		</div>

@@ -1,6 +1,7 @@
 import {cn} from '@/util/cn';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import React from 'react';
+import {useOptionalI18n} from '@/i18n';
 
 export function TooltipProvider({
 	delayDuration = 0,
@@ -37,11 +38,12 @@ export function TooltipContent({
 }
 
 export function Tooltip({children, title}: {children: React.ReactElement; title: string}) {
+	const {t} = useOptionalI18n();
 	return (
 		<TooltipProvider>
 			<TooltipRoot>
 				<TooltipTrigger asChild>{children}</TooltipTrigger>
-				<TooltipContent side="right">{title}</TooltipContent>
+				<TooltipContent side="right">{t(title)}</TooltipContent>
 			</TooltipRoot>
 		</TooltipProvider>
 	);

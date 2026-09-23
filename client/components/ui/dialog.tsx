@@ -15,6 +15,7 @@ import React, {
 import {allocateDialogOrder, registerDialog, useActiveDialogs} from './dialog-activity';
 import {consumeEscapeUntilKeyUp, getTopDialog, isDialogEscapeInProgress} from './dialog-keyboard';
 import {isPopupOpen} from './popup';
+import {translateNode, useOptionalI18n} from '@/i18n';
 
 const DialogContext = createContext<{
 	id: string;
@@ -46,11 +47,13 @@ export function Dialog({
 export const DialogTrigger = Primitive.Trigger;
 export const DialogClose = Primitive.Close;
 export function DialogTitle({className, ...props}: ComponentProps<typeof Primitive.Title>) {
+	const {t} = useOptionalI18n();
 	return (
 		<Primitive.Title
 			data-slot="dialog-title"
 			className={cn('text-lg leading-none font-semibold tracking-tight', className)}
 			{...props}
+			children={translateNode(props.children, t)}
 		/>
 	);
 }
@@ -79,11 +82,12 @@ export function DialogHeader({
 	description?: React.ReactNode;
 	topBody?: React.ReactNode;
 }) {
+	const {t} = useOptionalI18n();
 	return (
 		<div {...props} className={cn('text-text mb-6 w-[calc(100%-40px)]', className)}>
 			{topBody}
-			{title && <DialogTitle>{title}</DialogTitle>}
-			{description && <DialogDescription>{description}</DialogDescription>}
+			{title && <DialogTitle>{translateNode(title, t)}</DialogTitle>}
+			{description && <DialogDescription>{translateNode(description, t)}</DialogDescription>}
 			{children}
 		</div>
 	);

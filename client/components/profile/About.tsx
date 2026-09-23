@@ -2,6 +2,7 @@ import {Profile} from '@/types/profile';
 import {normalizeYouTubeChannelLink} from '@/util/youtube';
 import {RedditLogo, TwitchLogo, TwitterLogo, YoutubeLogo} from 'phosphor-react';
 import React from 'react';
+import {useI18n} from '@/i18n';
 
 interface Props {
 	profile: Profile;
@@ -9,6 +10,7 @@ interface Props {
 
 export default function About(props: Props) {
 	const {profile} = props;
+	const {t} = useI18n();
 
 	function addSocial(
 		list: React.ReactNode[],
@@ -107,7 +109,7 @@ export default function About(props: Props) {
 
 	return (
 		<aside className="border-tmo-module/10 bg-module rounded-xl border p-5">
-			<h2 className="mb-0 text-sm font-semibold">About</h2>
+			<h2 className="mb-0 text-sm font-semibold">{t('About')}</h2>
 			<p className="text-text/60 mt-3 mb-0 text-sm leading-relaxed break-words whitespace-pre-wrap">
 				{profile.bio || 'No bio yet.'}
 			</p>

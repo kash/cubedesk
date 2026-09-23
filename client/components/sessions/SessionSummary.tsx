@@ -6,8 +6,10 @@ import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
 import {ChartLine, Hash, Timer, Trophy} from 'phosphor-react';
 import React from 'react';
+import {useI18n} from '@/i18n';
 
 export default function SessionSummary({filterOptions}: {filterOptions: FilterSolvesOptions}) {
+	const {t} = useI18n();
 	useSolveDb();
 	const duration = getTotalSolveTime(filterOptions);
 	const metrics = [
@@ -38,7 +40,7 @@ export default function SessionSummary({filterOptions}: {filterOptions: FilterSo
 				<div key={metric.label}>
 					<dt>
 						<span aria-hidden="true">{metric.icon}</span>
-						{metric.label}
+						{t(metric.label)}
 					</dt>
 					<dd>{metric.value}</dd>
 				</div>

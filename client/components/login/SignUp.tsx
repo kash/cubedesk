@@ -12,9 +12,11 @@ import {validateStrongPassword} from '@/util/auth/password';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
+import {useI18n} from '@/i18n';
 
 export default function SignUp() {
 	const fieldId = React.useId();
+	const {t} = useI18n();
 	const auth = useAuthForm();
 	const {complete} = useDemoImport();
 
@@ -63,11 +65,11 @@ export default function SignUp() {
 		>
 			<form className="flex flex-col gap-5" onSubmit={signUp}>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-1`}>{'Email'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-1`}>{t('Email')}</FieldLabel>
 					<Input onChange={setEmail} type="email" value={email} id={`${fieldId}-1`} />
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-2`}>{'Username'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-2`}>{t('Username')}</FieldLabel>
 					<Input
 						onChange={setUsername}
 						autoCorrect="off"
@@ -78,7 +80,7 @@ export default function SignUp() {
 					/>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-3`}>{'Password'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-3`}>{t('Password')}</FieldLabel>
 					<Input
 						onChange={setPassword}
 						type="password"
@@ -95,20 +97,20 @@ export default function SignUp() {
 						disabled={disabled || createAccountMutation.isPending}
 						aria-busy={createAccountMutation.isPending}
 					>
-						{'Sign up'}
+						{t('Sign up')}
 						{createAccountMutation.isPending ? <Spinner aria-hidden="true" /> : null}
 					</Button>
 					<ButtonError text={error} />
 				</div>
 			</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
-				Already have an account?{' '}
+				{t('Already have an account?')} {' '}
 				<AuthFormLink
 					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
 					view="login"
 					to={getLoginLink()}
 				>
-					Log in
+					{t('Log in')}
 				</AuthFormLink>
 			</p>
 		</div>

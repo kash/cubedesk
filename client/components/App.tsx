@@ -16,6 +16,7 @@ import {applyMiddleware, createStore} from 'redux';
 import promise from 'redux-promise-middleware';
 import '@/styles/index.css';
 import {thunk} from 'redux-thunk';
+import {getInitialLocale, I18nProvider} from '@/i18n';
 
 const preloadedState = JSON.parse(window.__STORE__);
 initThemeFromLocalStorage(preloadedState?.account?.me?.id);
@@ -42,17 +43,19 @@ if (process.env.ENV !== 'development') {
 const appNode = document.getElementById('app')!;
 
 const tree = (
-	<TRPCProvider>
-		<HelmetProvider>
-			<Provider store={store as any}>
-				<BrowserRouter>
-					<ErrorBoundary>
-						<Switch>{routes.map((route) => mapSingleRoute(route))}</Switch>
-					</ErrorBoundary>
-				</BrowserRouter>
-			</Provider>
-		</HelmetProvider>
-	</TRPCProvider>
+	<I18nProvider initialLocale={getInitialLocale()}>
+		<TRPCProvider>
+			<HelmetProvider>
+				<Provider store={store as any}>
+					<BrowserRouter>
+						<ErrorBoundary>
+							<Switch>{routes.map((route) => mapSingleRoute(route))}</Switch>
+						</ErrorBoundary>
+					</BrowserRouter>
+				</Provider>
+			</HelmetProvider>
+		</TRPCProvider>
+	</I18nProvider>
 );
 
 // Hydrate server-rendered pages, including the demo homepage in development.

@@ -1,4 +1,5 @@
 import HorizontalNav, {HorizontalNavTab} from '@/components/common/HorizontalNav';
+import LanguageSelector from '@/components/settings/LanguageSelector';
 import PageTitle from '@/components/common/PageTitle';
 import React, {ReactNode} from 'react';
 import {useRouteMatch} from 'react-router-dom';
@@ -22,6 +23,9 @@ export default function Settings(props: Props) {
 			<PageTitle pageName="Settings">
 				<HorizontalNav tabId={page} tabs={TABS} />
 			</PageTitle>
+			<div className="mt-5">
+				<LanguageSelector />
+			</div>
 			<div className="mt-5 w-full pb-24">{children}</div>
 		</div>
 	);

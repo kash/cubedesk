@@ -5,8 +5,10 @@ import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
 import {ParentSize} from '@visx/responsive';
 import React, {useMemo, useState} from 'react';
+import {useI18n} from '@/i18n';
 
 export default function SessionAnalytics({filterOptions}: {filterOptions: FilterSolvesOptions}) {
+	const {t} = useI18n();
 	const revision = useSolveDb();
 	const [bucketCount, setBucketCount] = useState(6);
 	const {progress, buckets} = useMemo(() => {
@@ -35,15 +37,15 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 
 	return (
 		<div className="sessions-charts">
-			<section className="sessions-panel" aria-label="Solve times">
+			<section className="sessions-panel" aria-label={t('Solve times')}>
 				<div className="sessions-panel-heading">
-					<h2>Solve times</h2>
-					<p>Completed solves, oldest to newest · Grouped for longer sessions</p>
+					<h2>{t('Solve times')}</h2>
+					<p>{t('Completed solves, oldest to newest · Grouped for longer sessions')}</p>
 				</div>
 				<div className="sessions-chart">
 					{!progress.length ? (
 						<div className="sessions-chart-empty">
-							Complete a solve to see your progress.
+							{t('Complete a solve to see your progress.')}
 						</div>
 					) : (
 						<ParentSize>
@@ -109,10 +111,10 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 											</circle>
 										))}
 										<text x={left} y={height - 2}>
-											Oldest
+													{t('Oldest')}
 										</text>
 										<text x={width - 12} y={height - 2} textAnchor="end">
-											Latest
+													{t('Latest')}
 										</text>
 									</svg>
 								);
@@ -121,24 +123,24 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 					)}
 				</div>
 			</section>
-			<section className="sessions-panel" aria-label="Time distribution">
+			<section className="sessions-panel" aria-label={t('Time distribution')}>
 				<div className="sessions-panel-heading sessions-distribution-heading">
 					<div>
-						<h2>Time distribution</h2>
-						<p>Completed solves by time range</p>
+						<h2>{t('Time distribution')}</h2>
+						<p>{t('Completed solves by time range')}</p>
 					</div>
 					<div className="w-28 shrink-0">
 						<Select
 							value={String(bucketCount)}
 							onValueChange={(value) => setBucketCount(Number(value))}
 						>
-							<SelectTrigger className="w-full" aria-label="Distribution columns">
+							<SelectTrigger className="w-full" aria-label={t('Distribution columns')}>
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
 								{[4, 5, 6, 7, 8, 9, 10].map((count) => (
 									<SelectItem key={count} value={String(count)}>
-										{count} bins
+										{count} {t('ranges')}
 									</SelectItem>
 								))}
 							</SelectContent>
@@ -148,7 +150,7 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 				<div className="sessions-chart">
 					{!buckets.length ? (
 						<div className="sessions-chart-empty">
-							Complete a solve to see your time distribution.
+							{t('Complete a solve to see your time distribution.')}
 						</div>
 					) : (
 						<ParentSize>

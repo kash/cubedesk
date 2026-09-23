@@ -2,6 +2,7 @@ import {cn} from '@/util/cn';
 import * as Primitive from '@radix-ui/react-select';
 import {CaretDown, CaretUp, Check} from 'phosphor-react';
 import React from 'react';
+import {translateNode, useOptionalI18n} from '@/i18n';
 import {consumeEscapeUntilKeyUp, getTopDialog} from './dialog-keyboard';
 import {pickerTrigger, popupItem, popupSurface, usePopupActivity} from './popup';
 
@@ -32,8 +33,13 @@ export function SelectTrigger({
 	children,
 	...props
 }: React.ComponentProps<typeof Primitive.Trigger>) {
+	const {t} = useOptionalI18n();
+	const translatedProps = {...props};
+	if (typeof translatedProps['aria-label'] === 'string') {
+		translatedProps['aria-label'] = t(translatedProps['aria-label']);
+	}
 	return (
-		<Primitive.Trigger {...props} className={cn(pickerTrigger, className)}>
+		<Primitive.Trigger {...translatedProps} className={cn(pickerTrigger, className)}>
 			{children}
 			<Primitive.Icon asChild>
 				<CaretDown className="size-4 opacity-60" />
@@ -88,9 +94,10 @@ export function SelectItem({
 	endContent,
 	...props
 }: React.ComponentProps<typeof Primitive.Item> & {endContent?: React.ReactNode}) {
+	const {t} = useOptionalI18n();
 	return (
 		<Primitive.Item {...props} className={cn(popupItem, 'pr-8', className)}>
-			<Primitive.ItemText>{children}</Primitive.ItemText>
+			<Primitive.ItemText>{translateNode(children, t)}</Primitive.ItemText>
 			{endContent && <span className="ml-auto pl-6" aria-hidden="true">{endContent}</span>}
 			<Primitive.ItemIndicator className="absolute right-2">
 				<Check className="size-4" />

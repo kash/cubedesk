@@ -8,10 +8,11 @@ export interface HtmlPagePayload {
 	resourceBase: string;
 	cssFileName: string;
 	jsFileName: string;
+	locale: string;
 }
 
 export default (payload: HtmlPagePayload) => {
-	const {html, cleanState, headTags, distBase, resourceBase, cssFileName, jsFileName} = payload;
+	const {html, cleanState, headTags, distBase, resourceBase, cssFileName, jsFileName, locale} = payload;
 
 	const isDev = (process.env.ENV || 'development') === 'development';
 	const fallbackTitle = headTags.includes('<title') ? '' : '<title>CubeDesk</title>';
@@ -43,7 +44,7 @@ export default (payload: HtmlPagePayload) => {
 
 	return `
 		<!DOCTYPE html>
-		<html lang="en">
+		<html lang="${locale}">
 			<head>
 				<meta charset="UTF-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
