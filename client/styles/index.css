@@ -945,6 +945,21 @@ html {
   background: rgb(var(--primary-color), 1);
 }
 
+.app-html .scramble-guide-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--primary-color), 0.6) transparent;
+}
+.app-html .scramble-guide-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.app-html .scramble-guide-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.app-html .scramble-guide-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+}
+
 .cd-table {
   width: 100%;
   border-collapse: separate;
