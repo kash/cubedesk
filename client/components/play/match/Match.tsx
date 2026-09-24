@@ -22,6 +22,7 @@ import {PublicUserAccount} from '@/types/user';
 import {useMe} from '@/util/hooks/useMe';
 import {isSocketConnected, socketClient} from '@/util/socket/socketio';
 import {toastSuccess} from '@/util/toast';
+import {useI18n} from '@/i18n';
 import {CaretDown, Copy, Flag, Prohibit} from 'phosphor-react';
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
 
@@ -81,6 +82,7 @@ export function useMatchContext(): IMatchContext {
 }
 
 export default function Match(props: MatchProps) {
+	const {t} = useI18n();
 	const [matchOverDialog, setMatchOverDialog] = React.useState<{
 		props: React.ComponentProps<typeof MatchOver>;
 		noPadding: boolean;
@@ -147,7 +149,7 @@ export default function Match(props: MatchProps) {
 		setHistoryDialog({
 			props: {disabled: true, solves: solves as any},
 			width: 600,
-			title: `${challenger.username}'s Times`,
+			title: t("{name}'s Times", {name: challenger.username}),
 		});
 	}
 
@@ -229,7 +231,7 @@ export default function Match(props: MatchProps) {
 		}
 		const link = getMatchLinkBase(matchType) + match.spectate_code;
 		if (!(await copyText(link))) return;
-		toastSuccess('Successfully copied Spectate link');
+		toastSuccess(t('Successfully copied Spectate link'));
 	}
 
 	async function copyPlayLink() {
@@ -238,7 +240,7 @@ export default function Match(props: MatchProps) {
 		}
 		const link = getMatchLinkBase(matchType) + match.link_code;
 		if (!(await copyText(link))) return;
-		toastSuccess('Successfully copied Play link');
+		toastSuccess(t('Successfully copied Play link'));
 	}
 
 	// Timer
@@ -253,27 +255,27 @@ export default function Match(props: MatchProps) {
 			customHeadersLeft: (
 				<ActionMenu
 					openLeft
-					text="Match Options"
+					text={t('Match Options')}
 					icon={<CaretDown weight="bold" />}
 					options={[
 						{
-							text: 'Copy Spectate Link',
+							text: t('Copy Spectate Link'),
 							icon: <Copy weight="bold" />,
 							onClick: copySpectateLink,
 						},
 						{
-							text: 'Copy Play Link',
+							text: t('Copy Play Link'),
 							icon: <Copy weight="bold" />,
 							onClick: copyPlayLink,
 						},
 						{
-							text: 'Resign',
+							text: t('Resign'),
 							disabled: !!match?.ended_at,
 							icon: <Flag weight="bold" />,
 							onClick: resignGame,
 						},
 						{
-							text: 'Abort',
+							text: t('Abort'),
 							disabled: anySolves || !!match?.ended_at,
 							icon: <Prohibit weight="bold" />,
 							onClick: abortGame,

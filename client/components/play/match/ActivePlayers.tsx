@@ -1,6 +1,7 @@
 import {SocketConst} from '@/client/shared/socket_costs';
 import {GameType} from '@/shared/match/consts';
 import {socketClient} from '@/util/socket/socketio';
+import {useI18n} from '@/i18n';
 import React, {useEffect, useState} from 'react';
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export default function ActivePlayers(props: Props) {
+	const {t} = useI18n();
 	const {matchType} = props;
 
 	const [loaded, setLoaded] = useState(false);
@@ -29,7 +31,7 @@ export default function ActivePlayers(props: Props) {
 	}, []);
 
 	function getPlayerName(c) {
-		return c + ' ' + (c === 1 ? 'player' : 'players');
+		return t(c === 1 ? '{count} player' : '{count} players', {count: c});
 	}
 
 	function startWatching() {
@@ -42,7 +44,10 @@ export default function ActivePlayers(props: Props) {
 
 	let body;
 	if (loaded) {
-		body = `${getPlayerName(playersInQueue)} in lobby / ${getPlayerName(playersInMatch)} in a match`;
+		body = t('{queue} in lobby / {match} in a match', {
+			queue: getPlayerName(playersInQueue),
+			match: getPlayerName(playersInMatch),
+		});
 	} else {
 		return null;
 	}

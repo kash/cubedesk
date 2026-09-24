@@ -3,11 +3,13 @@ import {GameContext} from '@/components/play/game/Game';
 import {MatchContext} from '@/components/play/match/Match';
 import {Button} from '@/components/ui/button';
 import {useMe} from '@/util/hooks/useMe';
+import {useI18n} from '@/i18n';
 import classNames from 'classnames';
 import React, {ReactNode, useContext} from 'react';
 
 // Center module that shows game/match status
 export default function TargetStatus() {
+	const {t} = useI18n();
 	const gameContext = useContext(GameContext);
 	const matchContext = useContext(MatchContext);
 	const me = useMe();
@@ -28,7 +30,12 @@ export default function TargetStatus() {
 		case PlayerStatus.Lost: {
 			timeAlert = (
 				<span className="bg-error mt-2.5 rounded-[15px] px-3.5 py-1 text-[0.9rem] font-medium text-white">
-					You completed {solves.length} solve{solves.length === 1 ? '' : 's'}
+					{t(
+						solves.length === 1
+							? 'You completed {count} solve'
+							: 'You completed {count} solves',
+						{count: solves.length},
+					)}
 				</span>
 			);
 
@@ -36,7 +43,7 @@ export default function TargetStatus() {
 			if (!matchOpen) {
 				retryAlert = (
 					<Button variant="secondary" onClick={retrySolve}>
-						{'Retry failed solve'}
+						{t('Retry failed solve')}
 					</Button>
 				);
 			}
@@ -45,7 +52,7 @@ export default function TargetStatus() {
 		case PlayerStatus.Won: {
 			timeAlert = (
 				<span className="bg-success mt-2.5 rounded-[15px] px-3.5 py-1 text-[0.9rem] font-medium text-white">
-					Congrats! You won!
+					{t('Congrats! You won!')}
 				</span>
 			);
 			break;
@@ -56,7 +63,7 @@ export default function TargetStatus() {
 		<div className="relative box-border flex h-full flex-col items-center p-[15px]">
 			<div className="flex flex-col items-center">
 				<h3 className="text-text mt-2.5 text-[1.1rem] font-semibold opacity-80">
-					{playerStatus.statusPrompt}
+					{t(playerStatus.statusPrompt)}
 				</h3>
 				<h2
 					className={classNames('text-text mt-[5px] text-[4.5rem] font-bold', {
@@ -69,7 +76,7 @@ export default function TargetStatus() {
 				<div className="absolute top-0 left-0">{retryAlert}</div>
 				{playerStatus.statusSubHeader ? (
 					<p className="text-text text-[0.9rem] opacity-70">
-						{playerStatus.statusSubHeader}
+						{t(playerStatus.statusSubHeader)}
 					</p>
 				) : null}
 				{timeAlert}

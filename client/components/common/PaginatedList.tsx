@@ -4,6 +4,7 @@ import PageControls from '@/components/common/PageControls';
 import {Button} from '@/components/ui/button';
 import {PaginationArgs, PaginationOutput} from '@/types/pagination';
 import {numberWithCommas} from '@/util/strings/util';
+import {useOptionalI18n} from '@/i18n';
 import {useQuery} from '@tanstack/react-query';
 import React, {ReactNode, useEffect, useRef} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
@@ -28,6 +29,7 @@ export default function PaginatedList<T>({
 	listId,
 	emptyText = 'Could not find any records',
 }: Props<T>) {
+	const {t} = useOptionalI18n();
 	const history = useHistory();
 	const location = useLocation();
 	const root = useRef<HTMLDivElement>(null);
@@ -82,17 +84,18 @@ export default function PaginatedList<T>({
 					role="alert"
 					className="border-text/15 bg-module rounded border p-8 text-center"
 				>
-					<p className="text-text mb-4">Unable to load results. Please try again.</p>
+					<p className="text-text mb-4">{t('Unable to load results. Please try again.')}</p>
 					<Button variant="outline" onClick={() => void request.refetch()}>
-						Try again
+						{t('Try again')}
 					</Button>
 				</div>
 			) : (
 				data && (
 					<>
 						<p role="status" className="text-text/60 mt-0 mb-2 text-sm">
-							{numberWithCommas(data.total)} result{data.total === 1 ? '' : 's'}
-							{searchQuery ? ` for "${searchQuery}"` : ''}
+							{numberWithCommas(data.total)}{' '}
+							{t(data.total === 1 ? 'result' : 'results')}
+							{searchQuery ? ` ${t('for')} "${searchQuery}"` : ''}
 						</p>
 						{data.items.length ? (
 							data.items.map((item, index) =>

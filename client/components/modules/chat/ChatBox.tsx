@@ -8,6 +8,7 @@ import {PublicUserAccount} from '@/types/user';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
 import {socketClient} from '@/util/socket/socketio';
 import {cleanBadWords} from '@/util/strings/chat_filter';
+import {useI18n} from '@/i18n';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export default function ChatBox(props: Props) {
+	const {t} = useI18n();
 	const dispatch = useDispatch();
 
 	const {disabled, match} = props;
@@ -167,7 +169,7 @@ export default function ChatBox(props: Props) {
 				onKeyPress={handleMessageKeyPress}
 				minRows={1}
 				maxRows={4}
-				placeholder="Send message..."
+				placeholder={t('Send message...')}
 				ref={messageInput}
 				className={textBoxClasses.join(' ')}
 			/>

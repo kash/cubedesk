@@ -3,6 +3,7 @@ import {Button} from '@/components/ui/button';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
 import React from 'react';
+import {useI18n} from '@/i18n';
 
 interface Props {
 	white?: boolean;
@@ -10,6 +11,7 @@ interface Props {
 
 export default function TopNav(props: Props) {
 	const {white} = props;
+	const {t} = useI18n();
 
 	const backgroundTheme = useTheme('background_color');
 
@@ -53,12 +55,12 @@ export default function TopNav(props: Props) {
 							size="lg"
 							style={{color: white ? '#444444' : undefined}}
 						>
-							{'Log In'}
+							{t('Log In')}
 						</Button>
 					</AuthDialog>
 					<AuthDialog view="signup">
 						<Button variant="default" size="lg">
-							{'Sign up'}
+						{t('Sign up')}
 						</Button>
 					</AuthDialog>
 				</div>

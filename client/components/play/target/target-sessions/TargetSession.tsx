@@ -10,6 +10,7 @@ import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
+import {useI18n} from '@/i18n';
 
 interface Props {
 	gameType: GameType;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export default function TargetSession(props: Props) {
+	const {t} = useI18n();
 	const [historyDialog, setHistoryDialog] = React.useState<{
 		props: React.ComponentProps<typeof History>;
 		width: number;
@@ -33,7 +35,7 @@ export default function TargetSession(props: Props) {
 		setHistoryDialog({
 			props: {disabled: true, solves: gameSolves},
 			width: 500,
-			title: 'Solves',
+			title: t('Solves'),
 		});
 	}
 
@@ -45,7 +47,7 @@ export default function TargetSession(props: Props) {
 			rejoin = (
 				<Button variant="default" asChild>
 					<Link to={`${getGameLink(gameType)}/${session.match.link_code}`}>
-						{'Rejoin Match'}
+						{t('Rejoin Match')}
 					</Link>
 				</Button>
 			);
@@ -66,7 +68,7 @@ export default function TargetSession(props: Props) {
 								className={`relative w-full py-2 ${index < participants.length - 1 ? 'border-button border-b' : ''}`}
 							>
 								<div className="absolute top-2.5 right-[5px]">
-									{p.won ? <Emblem small text="Winner" green /> : null}
+									{p.won ? <Emblem small text={t('Winner')} green /> : null}
 								</div>
 								<Avatar small target="_blank" user={p.user} />
 							</div>
@@ -85,7 +87,12 @@ export default function TargetSession(props: Props) {
 						<span className="text-primary mr-[5px] inline-block font-bold">
 							{gameSolves.length}
 						</span>
-						solve{gameSolves.length === 1 ? '' : 's'} completed
+						{t(
+							gameSolves.length === 1
+								? '{count} solve completed'
+								: '{count} solves completed',
+							{count: gameSolves.length},
+						)}
 					</h4>
 					<span className="text-text mt-[5px] text-[0.9rem] opacity-70">
 						{new Date(session.created_at).toLocaleString()}
@@ -93,7 +100,7 @@ export default function TargetSession(props: Props) {
 				</div>
 				<div className="absolute top-2.5 right-2.5">
 					<Button variant="secondary" onClick={openSolves}>
-						{'View Solves'}
+						{t('View Solves')}
 					</Button>
 				</div>
 				{players}

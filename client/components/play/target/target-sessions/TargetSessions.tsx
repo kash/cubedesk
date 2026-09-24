@@ -7,6 +7,7 @@ import {GameType} from '@/shared/match/consts';
 import {GameSessionWithRelations} from '@/types/game';
 import {Serialized} from '@/types/serialized';
 import {trpc} from '@/util/trpc';
+import {useI18n} from '@/i18n';
 import React, {useEffect, useState} from 'react';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function TargetSessions(props: Props) {
+	const {t} = useI18n();
 	const {gameType} = props;
 	const {name} = getGameMetaData(gameType);
 
@@ -46,7 +48,7 @@ export default function TargetSessions(props: Props) {
 
 	return (
 		<div>
-			<DialogHeader title={`${name} Sessions`} />
+			<DialogHeader title={t('Sessions for {name}', {name: t(name)})} />
 			<div className="flex flex-col">{body}</div>
 		</div>
 	);

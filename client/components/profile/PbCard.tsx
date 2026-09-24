@@ -14,6 +14,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
+import {useI18n} from '@/i18n';
 import {ArrowUpRight, Trash} from 'phosphor-react';
 import React, {useMemo, useState} from 'react';
 
@@ -32,6 +33,7 @@ export default function PbCard(props: Props) {
 	> | null>(null);
 
 	const {solves, user, topRecord} = props;
+	const {t} = useI18n();
 
 	const single = solves.length === 1;
 	const firstSolve = solves[0];
@@ -57,7 +59,10 @@ export default function PbCard(props: Props) {
 		} else {
 			setHistoryDialog({
 				solves: solves,
-				description: `Average of ${solves.length} by ${user.username}`,
+				description: t('Average of {count} by {username}', {
+					count: solves.length,
+					username: user.username,
+				}),
 			});
 		}
 	}
@@ -100,7 +105,7 @@ export default function PbCard(props: Props) {
 					onClick={deletePb}
 					size="icon-sm"
 					className="text-text/35 hover:bg-error/10 hover:text-error opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 aria-busy:opacity-100 [@media(hover:none)]:opacity-100"
-					aria-label={`Remove ${cubeType?.name} ${single ? 'single' : 'average'}`}
+					aria-label={t('Remove personal best')}
 					disabled={deleting}
 					aria-busy={deleting}
 				>
@@ -125,7 +130,7 @@ export default function PbCard(props: Props) {
 					<div className="mb-5 flex items-center gap-2 pr-7">
 						<span className="text-sm font-semibold">{cubeType.name}</span>
 						<span className="bg-tmo-module/5 text-text/50 rounded-md px-1.5 py-0.5 text-[10px] font-medium">
-							{single ? 'Single' : 'Average of 5'}
+							{t(single ? 'Single' : 'Average of 5')}
 						</span>
 					</div>
 					<div className="flex items-center justify-between gap-3">

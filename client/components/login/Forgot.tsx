@@ -11,6 +11,7 @@ import {validateStrongPassword} from '@/util/auth/password';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
+import {useI18n} from '@/i18n';
 
 enum ForgotStage {
 	EnterEmail,
@@ -20,6 +21,7 @@ enum ForgotStage {
 
 export default function Forgot() {
 	const fieldId = React.useId();
+	const {t} = useI18n();
 	const auth = useAuthForm();
 
 	const [stage, setStage] = useState<ForgotStage>(ForgotStage.EnterEmail);
@@ -53,7 +55,7 @@ export default function Forgot() {
 		switch (stage) {
 			case ForgotStage.EnterEmail: {
 				if (!email.trim()) {
-					setError('Please enter in your email');
+					setError(t('Please enter in your email'));
 					return;
 				}
 
@@ -63,13 +65,13 @@ export default function Forgot() {
 			}
 			case ForgotStage.EnterCode: {
 				if (!code) {
-					setError('Please enter in a code');
+					setError(t('Please enter in a code'));
 					return;
 				}
 
 				const valid = await checkForgotMutation.mutateAsync({email: email.trim(), code});
 				if (!valid) {
-					setError('Invalid code');
+					setError(t('Invalid code'));
 					return;
 				}
 
@@ -101,7 +103,7 @@ export default function Forgot() {
 			body = (
 				<div className="flex flex-col gap-5">
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-1`}>{'Email'}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-1`}>{t('Email')}</FieldLabel>
 						<Input onChange={setEmail} value={email} name="email" id={`${fieldId}-1`} />
 					</Field>
 					<div className="flex flex-col items-start">
@@ -112,7 +114,7 @@ export default function Forgot() {
 							disabled={loading}
 							aria-busy={loading}
 						>
-							{'Get Code'}
+							{t('Get Code')}
 							{loading ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={error} />
@@ -125,11 +127,10 @@ export default function Forgot() {
 			body = (
 				<div className="flex flex-col gap-5">
 					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
-						Please check your email. You should have gotten a code to reset your
-						password.
+						{t('Please check your email. You should have gotten a code to reset your password.')}
 					</p>
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-2`}>{'Code'}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-2`}>{t('Code')}</FieldLabel>
 						<Input onChange={setCode} value={code} name="code" id={`${fieldId}-2`} />
 					</Field>
 					<div className="flex flex-col items-start">
@@ -140,7 +141,7 @@ export default function Forgot() {
 							disabled={loading}
 							aria-busy={loading}
 						>
-							{'Check Code'}
+							{t('Check Code')}
 							{loading ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={error} />
@@ -153,11 +154,10 @@ export default function Forgot() {
 			body = (
 				<div className="flex flex-col gap-5">
 					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
-						Please check your email. You should have gotten a code to reset your
-						password.
+						{t('Please check your email. You should have gotten a code to reset your password.')}
 					</p>
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-3`}>{'New Password'}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-3`}>{t('New Password')}</FieldLabel>
 						<Input
 							type="password"
 							value={newPassword}
@@ -167,7 +167,7 @@ export default function Forgot() {
 						/>
 					</Field>
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-4`}>{'Confirm Password'}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-4`}>{t('Confirm Password')}</FieldLabel>
 						<Input
 							type="password"
 							value={confirmPassword}
@@ -188,7 +188,7 @@ export default function Forgot() {
 							disabled={loading}
 							aria-busy={loading}
 						>
-							{'Change Password & Log in'}
+							{t('Change Password & Log in')}
 							{loading ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={err} />

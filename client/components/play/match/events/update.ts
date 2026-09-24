@@ -9,9 +9,11 @@ import {triggerConfetti} from '@/components/timer/helpers/pb';
 import {emitEvent} from '@/util/event_handler';
 import {useMe} from '@/util/hooks/useMe';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
+import {useI18n} from '@/i18n';
 import {useContext} from 'react';
 
 export function listenForMatchUpdates() {
+	const {t} = useI18n();
 	const gameContext = useContext(GameContext);
 	const matchContext = useMatchContext();
 	const me = useMe();
@@ -28,6 +30,7 @@ export function listenForMatchUpdates() {
 	} = matchContext;
 
 	useSocketListener('matchUpdated', onMatchUpdate, [
+		t,
 		matchContext.match,
 		matchContext.spectating,
 		watchingPlayerId.current,
@@ -111,18 +114,18 @@ export function listenForMatchUpdates() {
 			triggerConfetti();
 			displayTimerAlert({
 				variant: 'success',
-				text: 'You won!',
+				text: t('You won!'),
 			});
 		} else {
 			displayTimerAlert({
 				variant: 'warning',
-				text: `${stand.username} won`,
+				text: t('{name} won', {name: stand.username}),
 			});
 		}
 	}
 
 	function getPlayerCountText(count: number) {
-		return `${count} player${count === 1 ? '' : 's'}`;
+		return t(count === 1 ? '{count} player' : '{count} players', {count});
 	}
 
 	function updateMatchStatus(data: MatchUpdate) {
@@ -143,12 +146,12 @@ export function listenForMatchUpdates() {
 		if (!matchStarted) {
 			const playersNeeded = minPlayers - data.playersInRoomCount;
 
-			message = `Waiting for ${getPlayerCountText(playersNeeded)}...`;
+			message = t('Waiting for {players}...', {players: getPlayerCountText(playersNeeded)});
 			setTimerDisabled(true);
 		}
 
 		if (matchEnded) {
-			message = `Match ended`;
+			message = t('Match ended');
 			setTimerDisabled(true);
 		}
 

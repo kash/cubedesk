@@ -2,6 +2,7 @@ import {cn} from '@/util/cn';
 import {Command as Primitive} from 'cmdk';
 import {MagnifyingGlass} from 'phosphor-react';
 import React from 'react';
+import {useOptionalI18n} from '@/i18n';
 import {popupItem} from './popup';
 
 export function Command({className, ...props}: React.ComponentProps<typeof Primitive>) {
@@ -16,11 +17,16 @@ export function Command({className, ...props}: React.ComponentProps<typeof Primi
 	);
 }
 export function CommandInput({className, ...props}: React.ComponentProps<typeof Primitive.Input>) {
+	const {t} = useOptionalI18n();
+	const translatedProps = {...props};
+	if (typeof translatedProps.placeholder === 'string') {
+		translatedProps.placeholder = t(translatedProps.placeholder);
+	}
 	return (
 		<div className="flex items-center gap-2 border-b border-tmo-module/15 px-3">
 			<MagnifyingGlass className="size-4 shrink-0 opacity-60" />
 			<Primitive.Input
-				{...props}
+				{...translatedProps}
 				className={cn(
 					'h-10 w-full bg-transparent py-3 text-sm outline-none placeholder:text-text/50',
 					className,

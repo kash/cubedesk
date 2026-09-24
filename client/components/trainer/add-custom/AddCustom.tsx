@@ -15,6 +15,7 @@ import {CustomTrainerInput, CustomTrainerWithUser} from '@/types/trainer';
 import {useInput} from '@/util/hooks/useInput';
 import {useToggle} from '@/util/hooks/useToggle';
 import {trpc} from '@/util/trpc';
+import {useI18n} from '@/i18n';
 import Cube from 'cubejs';
 import React, {useEffect, useState} from 'react';
 
@@ -30,6 +31,7 @@ interface Props {
 
 export default function AddCustom(props: Props) {
 	const fieldId = React.useId();
+	const {t} = useI18n();
 
 	const {editingId, onComplete} = props;
 
@@ -109,12 +111,12 @@ export default function AddCustom(props: Props) {
 
 	async function createCustomTrainer() {
 		if (!name) {
-			setError('Please specify a name for this trainer');
+			setError(t('Please specify a name for this trainer'));
 			return;
 		}
 
 		if (!solution) {
-			setError('Please specify a solution for this trainer');
+			setError(t('Please specify a solution for this trainer'));
 			return;
 		}
 
@@ -141,7 +143,7 @@ export default function AddCustom(props: Props) {
 
 			onComplete?.();
 		} catch (e) {
-			setError(e instanceof Error ? e.message : 'Could not save trainer algorithm');
+			setError(e instanceof Error ? e.message : t('Could not save trainer algorithm'));
 			setSaving(false);
 		}
 	}
@@ -174,20 +176,20 @@ export default function AddCustom(props: Props) {
 
 	return (
 		<div>
-			<DialogHeader title="Add custom trainer" />
+			<DialogHeader title={t('Add custom trainer')} />
 			<div>
 				<Field className="mb-5">
-					<FieldLabel htmlFor={`${fieldId}-1`}>{'Name'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-1`}>{t('Name')}</FieldLabel>
 					<Input onChange={setName} value={name} id={`${fieldId}-1`} />
 				</Field>
 				<Field className="mb-5">
-					<FieldLabel htmlFor={`${fieldId}-2`}>{'Solution'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-2`}>{t('Solution')}</FieldLabel>
 					<Input onChange={setSolution} value={solution} id={`${fieldId}-2`} />
 				</Field>
 				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-3`}>
-						{'Description'}{' '}
-						<span className="text-text/60 font-normal italic">Optional</span>
+						{t('Description')}{' '}
+						<span className="text-text/60 font-normal italic">{t('Optional')}</span>
 					</FieldLabel>
 					<AutosizeTextarea
 						onChange={setDescription}
@@ -204,8 +206,8 @@ export default function AddCustom(props: Props) {
 				</Field>
 				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-4`}>
-						{'Alternate solutions'}{' '}
-						<span className="text-text/60 font-normal italic">Optional</span>
+						{t('Alternate solutions')}{' '}
+						<span className="text-text/60 font-normal italic">{t('Optional')}</span>
 					</FieldLabel>
 					<Textarea
 						onChange={setAltSolutions}
@@ -214,13 +216,13 @@ export default function AddCustom(props: Props) {
 						aria-describedby={`${fieldId}-4-description`}
 					/>
 					<FieldDescription id={`${fieldId}-4-description`}>
-						{'These solutions will be reversed and used for scrambles. One per line'}
+						{t('These solutions will be reversed and used for scrambles. One per line')}
 					</FieldDescription>
 				</Field>
 				{data?.copy_of_id ? null : (
 					<Checkbox
 						checked={privateChecked}
-						text="Make trainer private"
+						text={t('Make trainer private')}
 						onCheckedChange={onPrivateChange}
 					/>
 				)}
@@ -250,7 +252,7 @@ export default function AddCustom(props: Props) {
 						disabled={saving}
 						aria-busy={saving}
 					>
-						{`${editing ? 'Edit' : 'Create'} custom trainer`}
+						{t(editing ? 'Edit custom trainer' : 'Create custom trainer')}
 						{saving ? <Spinner aria-hidden="true" /> : null}
 					</Button>
 					<ButtonError text={error} />

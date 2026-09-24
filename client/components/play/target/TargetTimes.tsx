@@ -8,6 +8,7 @@ import {updateSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
 import {cn} from '@/util/cn';
 import {useMe} from '@/util/hooks/useMe';
+import {useI18n} from '@/i18n';
 import {socketClient} from '@/util/socket/socketio';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
@@ -22,6 +23,7 @@ interface Props {
 
 // Left-most module that shows list of times
 export default function TargetTimes(props: Props) {
+	const {t} = useI18n();
 	const [solveInfoDialog, setSolveInfoDialog] = React.useState<React.ComponentProps<
 		typeof SolveInfo
 	> | null>(null);
@@ -36,6 +38,26 @@ export default function TargetTimes(props: Props) {
 
 	function openSolve(solve) {
 		setSolveInfoDialog({disabled: true, solveId: solve.id});
+	}
+
+	function translateSolveDescription(description?: string) {
+		if (!description) return description;
+
+		const round = description.match(/^Round (\d+)$/);
+		if (round) return t('Round {round}', {round: round[1]});
+
+		const winnerWithTime = description.match(/^(.+) won \((.+)\)$/);
+		if (winnerWithTime) {
+			return t('{name} won ({time})', {
+				name: winnerWithTime[1],
+				time: winnerWithTime[2],
+			});
+		}
+
+		const winner = description.match(/^(.+) won$/);
+		if (winner) return t('{name} won', {name: winner[1]});
+
+		return t(description);
 	}
 
 	async function dnfSolve(solve: Solve) {
@@ -165,7 +187,9 @@ export default function TargetTimes(props: Props) {
 			>
 				<div className="text-text text-left font-semibold">
 					{indexText}{' '}
-					<span className="text-inherit opacity-[0.45]">{solveDescription}</span>
+					<span className="text-inherit opacity-[0.45]">
+						{translateSolveDescription(solveDescription)}
+					</span>
 				</div>
 				<div className="flex flex-row items-center justify-end">
 					{actions}

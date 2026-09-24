@@ -5,6 +5,7 @@ import type {WcaBest} from '@/types/wca';
 import {ArrowUpRight, ArrowClockwise} from 'phosphor-react';
 import React from 'react';
 import type {useWcaProfile} from './useWcaProfile';
+import {useI18n} from '@/i18n';
 
 function Result({
 	eventId,
@@ -15,6 +16,7 @@ function Result({
 	best: WcaBest | null;
 	average?: boolean;
 }) {
+	const {t} = useI18n();
 	return (
 		<div>
 			<div className="text-sm font-semibold whitespace-nowrap tabular-nums">
@@ -23,11 +25,11 @@ function Result({
 			{best ? (
 				<div className="text-text/50 mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[11px] tabular-nums">
 					<span>
-						National{' '}
+						{t('National')}{' '}
 						{best.nationalRank ? `#${best.nationalRank.toLocaleString()}` : '—'}
 					</span>
 					<span>
-						World {best.worldRank ? `#${best.worldRank.toLocaleString()}` : '—'}
+						{t('World')} {best.worldRank ? `#${best.worldRank.toLocaleString()}` : '—'}
 					</span>
 				</div>
 			) : null}
@@ -41,6 +43,7 @@ export default function WcaProfileCard({
 	data,
 	retry,
 }: ReturnType<typeof useWcaProfile>) {
+	const {t} = useI18n();
 	if (!linked) return null;
 	const stats = data?.stats;
 	const unavailable = !loading && (!data || data.status === 'unavailable');
@@ -61,10 +64,10 @@ export default function WcaProfileCard({
 							className="size-5 object-contain"
 							alt=""
 						/>
-						Official WCA
+						{t('Official WCA')}
 					</h2>
 					<p className="text-text/50 mt-1 mb-0 text-xs">
-						Personal bests from official competitions.
+						{t('Personal bests from official competitions.')}
 					</p>
 				</div>
 				{data?.url ? (
@@ -74,14 +77,14 @@ export default function WcaProfileCard({
 						rel="noopener noreferrer"
 						className="text-text/60 hover:text-text inline-flex items-center gap-1 text-xs underline-offset-4 hover:underline"
 					>
-						{data.wcaId || 'WCA profile'}
+						{data.wcaId || t('WCA profile')}
 						<ArrowUpRight size={12} aria-hidden="true" />
 					</a>
 				) : null}
 			</div>
 			{loading ? (
 				<div className="px-5 pb-5" role="status">
-					<span className="sr-only">Loading official WCA results</span>
+					<span className="sr-only">{t('Loading official WCA results')}</span>
 					<div aria-hidden="true" className="space-y-3 motion-safe:animate-pulse">
 						{[0, 1, 2].map((row) => (
 							<div key={row} className="bg-tmo-module/5 h-12 rounded-lg" />
@@ -94,34 +97,32 @@ export default function WcaProfileCard({
 					role="status"
 				>
 					<p className="text-text/60 mb-0 text-sm">
-						Official results are temporarily unavailable.
+						{t('Official results are temporarily unavailable.')}
 					</p>
 					<Button variant="outline" size="sm" onClick={retry}>
 						<ArrowClockwise />
-						Try again
+						{t('Try again')}
 					</Button>
 				</div>
 			) : data?.status === 'no_wca_id' ? (
 				<p className="text-text/60 mb-0 px-5 pb-5 text-sm" role="status">
-					This linked WCA account doesn’t have a WCA ID yet. Official results will appear
-					once an ID is assigned and connected to that account.
+					{t('This linked WCA account doesn’t have a WCA ID yet. Official results will appear once an ID is assigned and connected to that account.')}
 				</p>
 			) : data?.status === 'no_results' ? (
 				<p className="text-text/60 mb-0 px-5 pb-5 text-sm" role="status">
-					No official results are available yet. Newly published results may take a day to
-					appear.
+					{t('No official results are available yet. Newly published results may take a day to appear.')}
 				</p>
 			) : stats ? (
 				<>
 					<div className="border-tmo-module/10 mx-5 flex flex-wrap gap-x-8 gap-y-3 border-t pt-4 pb-5">
 						<div>
-							<div className="text-text/50 mb-1 text-xs">Competitions</div>
+							<div className="text-text/50 mb-1 text-xs">{t('Competitions')}</div>
 							<div className="text-sm font-semibold tabular-nums">
 								{stats.competitionCount.toLocaleString()}
 							</div>
 						</div>
 						<div className="min-w-0 flex-1">
-							<div className="text-text/50 mb-1 text-xs">Latest competition</div>
+							<div className="text-text/50 mb-1 text-xs">{t('Latest competition')}</div>
 							{latest ? (
 								<>
 									<a
@@ -155,7 +156,7 @@ export default function WcaProfileCard({
 							) : (
 								<span className="text-text/60 text-sm">
 									{stats.competitionDetailsUnavailable
-										? 'Temporarily unavailable'
+										? t('Temporarily unavailable')
 										: '—'}
 								</span>
 							)}
@@ -165,10 +166,10 @@ export default function WcaProfileCard({
 								variant="ghost"
 								size="sm"
 								onClick={retry}
-								aria-label="Retry loading competition details"
+								aria-label={t('Retry loading competition details')}
 							>
 								<ArrowClockwise />
-								Retry
+								{t('Retry')}
 							</Button>
 						) : null}
 					</div>
@@ -176,18 +177,18 @@ export default function WcaProfileCard({
 						<div className="overflow-x-auto">
 							<table className="w-full text-left">
 								<caption className="sr-only">
-									Official personal bests and national and world rankings by event
+									{t('Official personal bests and national and world rankings by event')}
 								</caption>
 								<thead className="bg-tmo-module/[0.025] text-text/50 text-[11px]">
 									<tr>
 										<th scope="col" className="px-5 py-2.5 font-medium">
-											Event
+											{t('Event')}
 										</th>
 										<th scope="col" className="px-3 py-2.5 font-medium">
-											Single
+											{t('Single')}
 										</th>
 										<th scope="col" className="py-2.5 pr-5 pl-3 font-medium">
-											Average
+											{t('Average')}
 										</th>
 									</tr>
 								</thead>
@@ -223,13 +224,13 @@ export default function WcaProfileCard({
 						</div>
 					) : (
 						<p className="text-text/60 mb-0 px-5 pb-5 text-sm">
-							No successful official results yet.
+							{t('No successful official results yet.')}
 						</p>
 					)}
 				</>
 			) : null}
 			<div className="border-tmo-module/10 text-text/40 border-t px-5 py-3 text-[11px] leading-relaxed">
-				Results maintained by the{' '}
+				{t('Results maintained by the')}{' '}
 				<a
 					href="https://www.worldcubeassociation.org/export/results"
 					target="_blank"
@@ -245,9 +246,9 @@ export default function WcaProfileCard({
 					rel="noopener noreferrer"
 					className="underline underline-offset-2"
 				>
-					unofficial results API
+					{t('unofficial results API')}
 				</a>
-				. Updated daily.
+				. {t('Updated daily.')}
 			</div>
 		</section>
 	);

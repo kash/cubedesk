@@ -28,6 +28,7 @@ import {CubeType} from '@/util/cubes/cube_types';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
 import {useTrainerDb} from '@/util/hooks/useTrainerDb';
+import {useI18n} from '@/i18n';
 import Chance from 'chance';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -63,6 +64,7 @@ const DEFAULT_ALGO_CUBE_TYPE = '333';
 const DEFAULT_ALGO_TYPE = 'OLL';
 
 export default function Trainer() {
+	const {t} = useI18n();
 	const [timerDialog, setTimerDialog] = React.useState<{
 		props: React.ComponentProps<typeof Timer>;
 		fullSize: boolean;
@@ -315,7 +317,7 @@ export default function Trainer() {
 					<PageTitle pageName="Trainer">
 						<div className="absolute top-0 right-0">
 							<Button variant="default" onClick={openCreateCustomTrainer} size="lg">
-								{'Create New'}
+								{t('Create New')}
 								<Plus />
 							</Button>
 						</div>

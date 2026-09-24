@@ -7,6 +7,7 @@ import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {useMe} from '@/util/hooks/useMe';
 import {socketClient} from '@/util/socket/socketio';
+import {useI18n} from '@/i18n';
 import classNames from 'classnames';
 import {Sword} from 'phosphor-react';
 import React, {ReactNode, useMemo, useState} from 'react';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function MatchOver(props: Props) {
+	const {t} = useI18n();
 	const me = useMe();
 
 	const [rematchRequested, setRematchRequested] = useState(false);
@@ -98,23 +100,23 @@ export default function MatchOver(props: Props) {
 
 	let header;
 	if (match.aborted) {
-		header = 'Game aborted';
+		header = t('Game aborted');
 	} else if (isWinner) {
-		header = 'You won!';
+		header = t('You won!');
 	} else if (winner) {
-		header = `${winner.username} won!`;
+		header = t('{name} won!', {name: winner.username});
 	} else {
-		header = 'Match over';
+		header = t('Match over');
 	}
 
 	let endedBy: ReactNode = null;
 	switch (endReason) {
 		case MatchEndedBy.RESIGNATION: {
-			endedBy = 'by resignation';
+			endedBy = t('by resignation');
 			break;
 		}
 		case MatchEndedBy.FORFEITURE: {
-			endedBy = 'by forfeiture';
+			endedBy = t('by forfeiture');
 			break;
 		}
 	}
@@ -123,10 +125,10 @@ export default function MatchOver(props: Props) {
 		endedBy = <span className="text-text text-base opacity-80">{endedBy}</span>;
 	}
 
-	let rematchText = 'Rematch';
+	let rematchText = t('Rematch');
 	let rematchDisabled = false;
 	if (rematchRequested) {
-		rematchText = 'Rematch requested';
+		rematchText = t('Rematch requested');
 		rematchDisabled = true;
 	} else if (!match?.ended_at) {
 		rematchDisabled = true;
@@ -159,7 +161,7 @@ export default function MatchOver(props: Props) {
 			<div className="flex flex-col items-center pb-5">
 				<div className="mb-[15px] flex flex-row flex-wrap gap-[15px]">
 					<Button variant="secondary" onClick={() => setNewMatch(true)} size="lg">
-						{'Join Lobby'}
+						{t('Join Lobby')}
 					</Button>
 					<Button
 						variant="default"
@@ -171,7 +173,7 @@ export default function MatchOver(props: Props) {
 					</Button>
 				</div>
 				<Button variant="ghost" onClick={exitDialog} size="sm">
-					{'Exit'}
+					{t('Exit')}
 				</Button>
 			</div>
 		</div>

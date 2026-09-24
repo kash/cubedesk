@@ -1,5 +1,6 @@
 import {EloRating} from '@/types/elo';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {useI18n} from '@/i18n';
 import {Lightning} from 'phosphor-react';
 import React from 'react';
 
@@ -9,6 +10,7 @@ interface Props {
 
 export default function ProfileElo(props: Props) {
 	const {eloRating} = props;
+	const {t} = useI18n();
 
 	const cubeTypes = ['222', '333', '444'];
 	const eloBlocks: React.ReactNode[] = [];
@@ -29,7 +31,7 @@ export default function ProfileElo(props: Props) {
 				<span className="text-text/50 text-xs font-medium">{ctInfo?.name ?? ct}</span>
 				<span className="mt-2 text-3xl font-semibold tabular-nums">{eloNum}</span>
 				<span className="text-text/40 mt-1 text-xs">
-					{gameCount} game{gameCount === 1 ? '' : 's'}
+					{gameCount} {t(gameCount === 1 ? 'game' : 'games')}
 				</span>
 			</div>,
 		);
@@ -41,7 +43,7 @@ export default function ProfileElo(props: Props) {
 		<div className="">
 			<h2 className="mb-0 flex items-center gap-2 text-lg font-semibold tracking-tight">
 				<Lightning size={20} className="text-text/50" />
-				ELO ratings
+				{t('ELO ratings')}
 			</h2>
 			<div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">{eloBlocks}</div>
 		</div>

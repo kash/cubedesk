@@ -5,9 +5,11 @@ import {getGameMetaData} from '@/components/play/Play';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {socketClient} from '@/util/socket/socketio';
+import {useI18n} from '@/i18n';
 import React, {useContext} from 'react';
 
 export default function GameChallenger() {
+	const {t} = useI18n();
 	const [matchPopupDialog, setMatchPopupDialog] = React.useState<{
 		props: React.ComponentProps<typeof MatchPopup>;
 		title: React.ReactNode;
@@ -33,7 +35,7 @@ export default function GameChallenger() {
 				maxPlayers: maxPlayers,
 				matchType: gameType,
 			},
-			title: `Play ${gameTypeData.name}`,
+			title: t('Play {name}', {name: t(gameTypeData.name)}),
 			onClose: () => {
 				socketClient().emit('playerLeftLobby');
 			},
@@ -43,7 +45,7 @@ export default function GameChallenger() {
 	let joinLobbyButton: React.ReactNode = null;
 	const challengeButton = (
 		<Button variant="ghost" onClick={() => openMatch(false)} size="lg" className="w-full">
-			{'Challenge'}
+			{t('Challenge')}
 		</Button>
 	);
 
@@ -51,7 +53,7 @@ export default function GameChallenger() {
 	if (multiplayerOnly) {
 		joinLobbyButton = (
 			<Button variant="default" onClick={() => openMatch(true)} size="lg" className="w-full">
-				{'Join Lobby'}
+				{t('Join Lobby')}
 			</Button>
 		);
 	}

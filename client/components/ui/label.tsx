@@ -1,8 +1,10 @@
 import {cn} from '@/util/cn';
 import * as LabelPrimitive from '@radix-ui/react-label';
 import React from 'react';
+import {translateNode, useOptionalI18n} from '@/i18n';
 
-export function Label({className, ...props}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+export function Label({className, children, ...props}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+	const {t} = useOptionalI18n();
 	return (
 		<LabelPrimitive.Root
 			data-slot="label"
@@ -11,6 +13,7 @@ export function Label({className, ...props}: React.ComponentProps<typeof LabelPr
 				className,
 			)}
 			{...props}
+			children={translateNode(children, t)}
 		/>
 	);
 }

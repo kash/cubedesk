@@ -21,10 +21,12 @@ import {numberWithCommas} from '@/util/strings/util';
 import jsonStr from 'json-stable-stringify';
 import {Funnel, Share, SortAscending, SortDescending} from 'phosphor-react';
 import React, {ReactNode, useEffect, useState} from 'react';
+import {useI18n} from '@/i18n';
 
 const PAGE_SIZE = 25;
 
 export default function SolvesList() {
+	const {t} = useI18n();
 	const [selectedSolve, setSelectedSolve] =
 		React.useState<React.ComponentProps<typeof SolveInfoDialog>['solve']>(null);
 	const dialogFallbackRef = React.useRef<HTMLDivElement>(null);
@@ -45,7 +47,7 @@ export default function SolvesList() {
 	const [filters, setFilters] = useState<FilterSolvesOptions>({});
 	const updateCount = useSolveDb();
 
-	const solveCountText = `${numberWithCommas(totalResults)} solve${totalResults === 1 ? '' : 's'}`;
+	const solveCountText = `${numberWithCommas(totalResults)} ${t(totalResults === 1 ? 'solve' : 'solves')}`;
 
 	useEffect(() => {
 		const list = fetchSolvesWithFilter();
@@ -171,7 +173,7 @@ export default function SolvesList() {
 
 	let filterText = 'Filter';
 	if (filterCount) {
-		filterText = `${filterCount} filter${filterCount === 1 ? '' : 's'}`;
+		filterText = `${filterCount} ${t(filterCount === 1 ? 'filter' : 'filters')}`;
 	}
 
 	return (
@@ -251,7 +253,7 @@ export default function SolvesList() {
 								disabled={!solves?.length}
 								onClick={viewAsText}
 								size="icon"
-								aria-label="Solves List"
+								aria-label={t('Solves List')}
 							>
 								<Share weight="bold" />
 							</Button>
@@ -267,17 +269,17 @@ export default function SolvesList() {
 								onClick={prevPage}
 								disabled={page === 0}
 							>
-								{'Prev'}
+								{t('Prev')}
 							</Button>
 							<span className="text-text text-center">
-								Page {page + 1} of {Math.ceil(totalResults / 25) || 1}
+								{t('Page {page} of {total}', {page: page + 1, total: Math.ceil(totalResults / 25) || 1})}
 							</span>
 							<Button
 								variant={page > 0 ? 'default' : 'secondary'}
 								onClick={nextPage}
 								disabled={!moreResults}
 							>
-								{'Next'}
+								{t('Next')}
 							</Button>
 						</div>
 					</div>

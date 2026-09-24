@@ -41,6 +41,11 @@ database named `cubedesk`, `cubedesk_dev`, or `cubedesk_test` are accepted. Use 
 actual local PostgreSQL instance; a localhost tunnel to a remote database cannot
 be distinguished from a local database by its URL.
 
+## Documentation
+
+- [Internationalization and language settings](docs/i18n.md)
+- [Trainer catalog](docs/trainer-catalog.md)
+
 ## Infrastructure
 
 The visual below should give you a decent understanding of the infrastructure behind CubeDesk. For a full breakdown, checkout the [Infrasture page on the Wiki](https://github.com/kash/cubedesk/wiki/Infrastructure).

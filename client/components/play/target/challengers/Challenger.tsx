@@ -8,6 +8,7 @@ import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
 import {addEventListener} from '@/util/event_handler';
 import {useMe} from '@/util/hooks/useMe';
+import {useI18n} from '@/i18n';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
 import {Check, Clock, Placeholder, Trophy, WifiSlash, X} from 'phosphor-react';
@@ -33,6 +34,7 @@ const statusIconMap = {
 };
 
 export default function Challenger(props: ChallengerProps) {
+	const {t} = useI18n();
 	const {challenger, onSelect, selectedChallengerId, selectable} = props;
 
 	const matchContext = useContext(MatchContext);
@@ -194,12 +196,12 @@ export default function Challenger(props: ChallengerProps) {
 
 	const solving = timerCounter.current && displayTime && rated;
 	if (solving) {
-		timeStr = 'solving';
+		timeStr = t('solving');
 	}
 
 	const done = standing?.status === PlayerStatus.Waiting;
 	if (done) {
-		timeStr = 'done';
+		timeStr = t('done');
 	}
 
 	return (
@@ -235,7 +237,7 @@ export default function Challenger(props: ChallengerProps) {
 							{standing?.points || 0}
 						</span>
 						<span className="text-text text-center text-[0.67rem] font-black opacity-60">
-							POINT{standing?.points === 1 ? '' : 'S'}
+							{t(standing?.points === 1 ? 'POINT' : 'POINTS')}
 						</span>
 					</div>
 				</div>

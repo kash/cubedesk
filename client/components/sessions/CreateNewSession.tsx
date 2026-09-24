@@ -9,6 +9,7 @@ import {setCubeType, setCurrentSession} from '@/db/settings/update';
 import {CubeType} from '@/util/cubes/cube_types';
 import {useInput} from '@/util/hooks/useInput';
 import {toastError} from '@/util/toast';
+import {useI18n} from '@/i18n';
 import React, {useState} from 'react';
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
 
 export default function CreateNewSession(props: Props) {
 	const fieldId = React.useId();
+	const {t} = useI18n();
 
 	const {onComplete} = props;
 
@@ -70,7 +72,7 @@ export default function CreateNewSession(props: Props) {
 			<CubePicker
 				pickerProps={{
 					legend: 'Cube Type',
-					info: 'You can change this later',
+					info: t('You can change this later'),
 					openLeft: true,
 				}}
 				onChange={onCubeTypeChange}
@@ -84,7 +86,7 @@ export default function CreateNewSession(props: Props) {
 					disabled={disabled || loading}
 					aria-busy={loading}
 				>
-					{'Create Session'}
+					{t('Create Session')}
 					{loading ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 			</div>

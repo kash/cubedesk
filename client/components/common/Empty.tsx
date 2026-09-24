@@ -8,6 +8,7 @@ import {cn} from '@/util/cn';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
 import React from 'react';
+import {useOptionalI18n} from '@/i18n';
 export default function Empty({
 	text,
 	centered,
@@ -18,22 +19,24 @@ export default function Empty({
 	compact?: boolean;
 }) {
 	const moduleColor = useTheme('module_color');
+	const {t} = useOptionalI18n();
+	const emptyText = text ? t(text) : t('No results yet');
 	const icon = moduleColor.isDark ? 'empty_cube_white.svg' : 'empty_cube_black.svg';
 
 	return (
 		<EmptyState
 			className={cn('w-full', {'h-full': centered, 'gap-0 p-0 md:p-0': compact})}
-			title={compact ? text || 'No results yet' : undefined}
+			title={compact ? emptyText : undefined}
 		>
 			<EmptyHeader>
 				<EmptyMedia className={cn({'mb-0': compact})}>
 					<img
 						src={resourceUri(`/images/${icon}`)}
-						alt={compact ? text || 'No results yet' : 'Empty result'}
+					alt={compact ? emptyText : t('Empty result')}
 						className="size-10 opacity-30"
 					/>
 				</EmptyMedia>
-				{!compact && <EmptyDescription>{text || 'No results yet'}</EmptyDescription>}
+				{!compact && <EmptyDescription>{emptyText}</EmptyDescription>}
 			</EmptyHeader>
 		</EmptyState>
 	);

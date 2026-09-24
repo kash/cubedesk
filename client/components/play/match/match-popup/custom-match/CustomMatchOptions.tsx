@@ -4,9 +4,11 @@ import {MatchPopupPage, useMatchPopupContext} from '@/components/play/match/matc
 import {Button} from '@/components/ui/button';
 import {CubeType} from '@/util/cubes/cube_types';
 import {ArrowRight} from 'phosphor-react';
+import {useI18n} from '@/i18n';
 import React from 'react';
 
 export default function CustomMatchOptions() {
+	const {t} = useI18n();
 	const context = useMatchPopupContext();
 
 	function selectPlayerCount(val: string) {
@@ -27,7 +29,7 @@ export default function CustomMatchOptions() {
 		<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">
 			<div className="border-tmo-module/10 box-border flex flex-col items-start rounded border-[3px] p-[15px]">
 				<div className="mb-1">
-					<h3>Cube Type</h3>
+					<h3>{t('Cube Type')}</h3>
 				</div>
 				<CubePicker
 					excludeCustomCubeTypes
@@ -44,10 +46,11 @@ export default function CustomMatchOptions() {
 			</div>
 			<div className="border-tmo-module/10 box-border flex flex-col items-start rounded border-[3px] p-[15px]">
 				<div className="mb-1">
-					<h3>Players</h3>
+					<h3>{t('Players')}</h3>
 					<p>
-						The number of players who will be playing in this match. Note that these
-						many players *must* join before the match can start.
+						{t(
+							'The number of players who will be playing in this match. Note that these many players *must* join before the match can start.',
+						)}
 					</p>
 				</div>
 				<HorizontalNav
@@ -61,7 +64,7 @@ export default function CustomMatchOptions() {
 			</div>
 			<div className="mt-5 w-full justify-end">
 				<Button variant="default" onClick={createMatch} size="lg">
-					{'Create custom match'}
+					{t('Create custom match')}
 					<ArrowRight />
 				</Button>
 			</div>

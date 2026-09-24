@@ -2,6 +2,7 @@ import LinkAccountButton from '@/components/oauth/LinkAccountButton';
 import {LINKED_SERVICES} from '@/shared/integration';
 import {PublicUserAccount} from '@/types/user';
 import {cn} from '@/util/cn';
+import {useI18n} from '@/i18n';
 import {ArrowUpRight, Check} from 'phosphor-react';
 import React from 'react';
 
@@ -24,6 +25,7 @@ function getWcaIntegration(user?: PublicUserAccount) {
 const WCA = Object.assign(
 	function WCA(props: Props) {
 		const {myProfile, user, profileUrl} = props;
+		const {t} = useI18n();
 		const wcaInt = getWcaIntegration(user);
 
 		let body: React.ReactNode = null;
@@ -43,7 +45,7 @@ const WCA = Object.assign(
 						alt=""
 						className="size-5 shrink-0 object-contain"
 					/>
-					<span>WCA linked</span>
+					<span>{t('WCA linked')}</span>
 					<span className="bg-success/10 text-success inline-flex size-4 items-center justify-center rounded-full">
 						<Check size={10} weight="bold" aria-hidden="true" />
 					</span>
@@ -58,13 +60,13 @@ const WCA = Object.assign(
 					rel="noopener noreferrer"
 					href={profileUrl}
 					className={className}
-					aria-label="WCA account linked. View WCA profile (opens in a new tab)"
-					title="View WCA profile"
+					aria-label={t('WCA account linked. View WCA profile (opens in a new tab)')}
+					title={t('View WCA profile')}
 				>
 					{badge}
 				</a>
 			) : (
-				<span className={className} title="WCA account linked">
+				<span className={className} title={t('WCA account linked')}>
 					{badge}
 				</span>
 			);

@@ -3,6 +3,7 @@ import {getSolveCountByDateData} from '@/db/solves/stats/consistency';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {ParentSize} from '@visx/responsive';
 import React, {useMemo} from 'react';
+import {useI18n} from '@/i18n';
 
 interface Props {
 	days: number;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function ActivityChart({days, filterOptions}: Props) {
+	const {t} = useI18n();
 	const solveUpdate = useSolveDb();
 	const data = useMemo(() => {
 		const start = new Date();
@@ -32,10 +34,10 @@ export default function ActivityChart({days, filterOptions}: Props) {
 		<figure className="stats-activity">
 			<figcaption>
 				<span>
-					<strong>{total.toLocaleString()}</strong> solves
+					<strong>{total.toLocaleString()}</strong> {t(total === 1 ? 'solve' : 'solves')}
 				</span>
 				<span>
-					<strong>{activeDays}</strong> active {activeDays === 1 ? 'day' : 'days'}
+					{t(activeDays === 1 ? 'active day' : 'active days', {count: activeDays})}
 				</span>
 			</figcaption>
 			<div className="stats-activity-plot">
@@ -54,7 +56,7 @@ export default function ActivityChart({days, filterOptions}: Props) {
 								width={width}
 								height={height}
 								role="img"
-								aria-label={`${total} solves over the last ${days} days. ${activeDays} active days.`}
+								aria-label={`${total} ${t(total === 1 ? 'solve' : 'solves')} ${t('over the last')} ${days} ${t('days')}. ${activeDays} ${t('active')} ${t('days')}.`}
 							>
 								{[0, step, step * 2, ceiling].map((value) => {
 									const y = 5 + plotHeight * (1 - value / ceiling);
@@ -95,7 +97,7 @@ export default function ActivityChart({days, filterOptions}: Props) {
 											>
 												<title>
 													{day.x}: {day.y.toLocaleString()}{' '}
-													{day.y === 1 ? 'solve' : 'solves'}
+											{t(day.y === 1 ? 'solve' : 'solves')}
 												</title>
 											</rect>
 											{index % tickEvery === 0 && (
@@ -120,7 +122,7 @@ export default function ActivityChart({days, filterOptions}: Props) {
 										fill="var(--stats-muted)"
 										fontSize={12}
 									>
-										No solves in this period
+										{t('No solves in this period')}
 									</text>
 								)}
 							</svg>

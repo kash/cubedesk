@@ -9,6 +9,7 @@ import {useSettings} from '@/util/hooks/useSettings';
 import {toastError} from '@/util/toast';
 import classNames from 'classnames';
 import React, {ReactNode} from 'react';
+import {useI18n} from '@/i18n';
 
 interface Props {
 	title: string;
@@ -40,6 +41,8 @@ export default function SettingRow(props: Props) {
 		settingName,
 		isSwitch,
 	} = props;
+	const {t} = useI18n();
+	const translatedTitle = t(title);
 	const settingKey = settingName as keyof AllSettings;
 	const controlId = React.useId();
 	const settingValue = useSettings(settingKey);
@@ -50,7 +53,7 @@ export default function SettingRow(props: Props) {
 			const number = parseFloat(inputValue);
 			setSetting(settingKey, number);
 		} catch (err) {
-			toastError('Invalid input. Could not save setting');
+			toastError(t('Invalid input. Could not save setting'));
 		}
 	}
 
@@ -65,7 +68,7 @@ export default function SettingRow(props: Props) {
 				id={controlId}
 				checked={Boolean(settingValue)}
 				onCheckedChange={updateSetting}
-				aria-label={title}
+				aria-label={translatedTitle}
 			/>
 		);
 	}
@@ -81,7 +84,7 @@ export default function SettingRow(props: Props) {
 					step={step}
 					onChange={setInputValue}
 					onBlur={inputBlur}
-					aria-label={title}
+					aria-label={translatedTitle}
 					className="mb-2"
 				/>
 			</div>
@@ -110,16 +113,16 @@ export default function SettingRow(props: Props) {
 						htmlFor={controlId}
 						className={classNames('text-base leading-snug', {'opacity-90': sub})}
 					>
-						{title}
+						{translatedTitle}
 					</Label>
 				) : (
 					<Label asChild className={classNames('text-base leading-snug', {'opacity-90': sub})}>
-						<span>{title}</span>
+						<span>{translatedTitle}</span>
 					</Label>
 				)}
 				{description && (
 					<p className="text-text mt-[5px] text-[0.9rem] leading-[1.3rem] opacity-70">
-						{description}
+						{t(description)}
 					</p>
 				)}
 			</div>

@@ -1,5 +1,6 @@
 import {cn} from '@/util/cn';
 import React, {ReactNode} from 'react';
+import {useI18n} from '@/i18n';
 
 interface Props {
 	title: string;
@@ -9,11 +10,12 @@ interface Props {
 }
 
 export default function StatSection({title, description, children, className}: Props) {
+	const {t} = useI18n();
 	return (
-		<section className={cn('stats-section', className)} aria-label={title}>
+		<section className={cn('stats-section', className)} aria-label={t(title)}>
 			<div className="stats-section-heading">
-				<h2>{title}</h2>
-				{description && <p>{description}</p>}
+				<h2>{t(title)}</h2>
+				{description && <p>{t(description)}</p>}
 			</div>
 			{children}
 		</section>

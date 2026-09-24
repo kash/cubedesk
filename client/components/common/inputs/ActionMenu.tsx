@@ -13,6 +13,7 @@ import {CaretDown, Check} from 'phosphor-react';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import GenericInput, {GenericInputProps, InputProps} from './generic_input/GenericInput';
+import {useI18n} from '@/i18n';
 
 export interface ActionMenuOption {
 	text: string;
@@ -57,6 +58,7 @@ export default function ActionMenu(props: ActionMenuProps) {
 		contentClassName,
 		maxHeight,
 	} = props;
+	const {t} = useI18n();
 	return (
 		<GenericInput
 			{...props}
@@ -126,7 +128,7 @@ export default function ActionMenu(props: ActionMenuProps) {
 										const body = (
 											<>
 												{option.icon}
-												<span className="flex-1">{option.text}</span>
+								<span className="flex-1">{t(option.text)}</span>
 												{option.on && !option.checkbox && !option.radio && (
 													<Check className="size-4" />
 												)}

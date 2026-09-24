@@ -14,6 +14,7 @@ import {toastSuccess} from '@/util/toast';
 import {DotsSixVertical, DotsThree} from 'phosphor-react';
 import React, {CSSProperties, ReactNode} from 'react';
 import {v4 as uuid} from 'uuid';
+import {useI18n} from '@/i18n';
 
 interface Props {
 	setSelectedSessionId: reactState<string>;
@@ -32,6 +33,7 @@ interface Props {
 }
 
 export default function Session(props: Props) {
+	const {t} = useI18n();
 	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
 		typeof ConfirmDialog
 	> | null>(null);
@@ -103,12 +105,15 @@ export default function Session(props: Props) {
 
 			props.setSelectedSessionId(updatedSessionId);
 			await deleteSessionDb(session);
-			toastSuccess(`Successfully deleted session "${name}"`);
+			toastSuccess(t('Successfully deleted session "{name}"', {name}));
 		}
 
 		setConfirmDialog2({
 			title: 'Delete session',
-			description: `Be careful here. You are about to delete "${session.name}." This action is irreversible.`,
+			description: t(
+				'Be careful here. You are about to delete "{name}". This action is irreversible.',
+				{name: session.name},
+			),
 			triggerAction: triggerAction,
 			buttonText: 'Delete session',
 		});

@@ -9,6 +9,7 @@ import {Match} from '@/types/match';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
+import {useI18n} from '@/i18n';
 import {ArrowRight, Eye} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 
@@ -20,6 +21,7 @@ export function getMatchLinkBase(gameType: GameType) {
 }
 
 export default function CustomMatch() {
+	const {t} = useI18n();
 	const {minPlayers, maxPlayers, cubeType, matchType} = useMatchPopupContext();
 
 	const [showChallengeLink, setShowChallengeLink] = useState(false);
@@ -92,8 +94,8 @@ export default function CustomMatch() {
 			<div className="flex w-full flex-col items-start">
 				<div className="mx-auto mt-10 mb-[60px] flex flex-col items-center">
 					<div className="mb-[5px] flex w-full flex-row flex-wrap gap-1">
-						<Badge>{ct?.name ?? cubeType}</Badge>
-						<Badge>{`${minPlayers} Players`}</Badge>
+						<Badge>{t(ct?.name ?? cubeType)}</Badge>
+					<Badge>{t('{count} players', {count: minPlayers})}</Badge>
 					</div>
 					<div className="bg-button mb-[5px] box-border rounded-[5px] px-[13px] py-[9px]">
 						{getMatchLinkBody(match)}
@@ -104,12 +106,12 @@ export default function CustomMatch() {
 							onClick={toggleShowChallengeLink}
 							aria-pressed={showChallengeLink}
 						>
-							{'Show Link'}
+							{t('Show Link')}
 							<Eye weight="bold" />
 						</Button>
 						<CopyText
 							buttonProps={{
-								children: 'Copy Link',
+								children: t('Copy Link'),
 								variant: 'default',
 							}}
 							text={matchLink}
@@ -119,7 +121,7 @@ export default function CustomMatch() {
 				<div className="flex w-full flex-row items-end justify-between">
 					<CopyText
 						buttonProps={{
-							children: 'Copy Spectate Link',
+							children: t('Copy Spectate Link'),
 							size: 'lg',
 							variant: 'secondary',
 						}}
@@ -127,7 +129,7 @@ export default function CustomMatch() {
 					/>
 					<Button variant="default" size="lg" asChild>
 						<a href={matchLink}>
-							{'Join Match'}
+							{t('Join Match')}
 							<ArrowRight />
 						</a>
 					</Button>

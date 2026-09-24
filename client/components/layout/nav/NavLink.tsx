@@ -5,6 +5,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {Lock} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
+import {useI18n} from '@/i18n';
 
 interface Props extends NavLinkProps {
 	collapsed?: boolean;
@@ -15,6 +16,8 @@ export default function NavLink(props: Props) {
 	const {name, icon, newTag, loginRequired, collapsed, selected, link} = props;
 
 	const me = useMe();
+	const {t} = useI18n();
+	const translatedName = t(name);
 
 	let infoTag: ReactNode = null;
 	if (loginRequired && !me) {
@@ -51,7 +54,7 @@ export default function NavLink(props: Props) {
 		linkClasses.push('group-hover:opacity-100');
 	}
 
-	let navLabel: ReactNode = <span className="font-roboto text-text ml-4">{name}</span>;
+	let navLabel: ReactNode = <span className="font-roboto text-text ml-4">{translatedName}</span>;
 	if (collapsed) {
 		navLabel = null;
 		infoTag = null;
@@ -59,7 +62,7 @@ export default function NavLink(props: Props) {
 	}
 
 	const linkContent = (
-		<Link to={link} className={linkClasses.join(' ')} aria-label={collapsed ? name : undefined}>
+		<Link to={link} className={linkClasses.join(' ')} aria-label={collapsed ? translatedName : undefined}>
 			<span className="text-xl">{icon}</span>
 			{navLabel}
 		</Link>
@@ -67,7 +70,7 @@ export default function NavLink(props: Props) {
 	return (
 		<div className={wrapperClasses.join(' ')}>
 			<div className="relative">
-				{collapsed ? <Tooltip title={name}>{linkContent}</Tooltip> : linkContent}
+				{collapsed ? <Tooltip title={translatedName}>{linkContent}</Tooltip> : linkContent}
 				<div className="absolute top-1/2 right-0 -translate-y-1/2">{infoTag}</div>
 			</div>
 		</div>

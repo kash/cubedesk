@@ -1,8 +1,10 @@
 import {displayTimerAlert} from '@/components/timer/helpers/notification';
 import {useMe} from '@/util/hooks/useMe';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
+import {useI18n} from '@/i18n';
 
 export function listenForMatchWarnings() {
+	const {t} = useI18n();
 	const me = useMe();
 
 	useSocketListener('inactivityBeforeSolveStartsWarning', (opponent, secondsToStart) => {
@@ -10,30 +12,36 @@ export function listenForMatchWarnings() {
 
 		let message;
 		if (isMe) {
-			message = `You have ${secondsToStart} seconds to start solving`;
+			message = t('You have {seconds} seconds to start solving', {seconds: secondsToStart});
 		} else {
-			message = `${opponent.username} has ${secondsToStart} seconds to start solving`;
+			message = t('{name} has {seconds} seconds to start solving', {
+				name: opponent.username,
+				seconds: secondsToStart,
+			});
 		}
 
 		displayTimerAlert({
 			variant: 'warning',
 			text: message,
 		});
-	});
+	}, [t]);
 
 	useSocketListener('solveTakingTooLongWarning', (opponent, secondsToFinish) => {
 		const isMe = opponent.id === me.id;
 
 		let message;
 		if (isMe) {
-			message = `You have ${secondsToFinish} seconds to finish your solve`;
+			message = t('You have {seconds} seconds to finish your solve', {seconds: secondsToFinish});
 		} else {
-			message = `${opponent.username} has ${secondsToFinish} seconds to finish their solve`;
+			message = t('{name} has {seconds} seconds to finish their solve', {
+				name: opponent.username,
+				seconds: secondsToFinish,
+			});
 		}
 
 		displayTimerAlert({
 			variant: 'warning',
 			text: message,
 		});
-	});
+	}, [t]);
 }

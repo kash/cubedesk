@@ -17,10 +17,12 @@ import {resourceUri} from '@/util/storage';
 import {ArrowLeft, ArrowRight} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 import {useRouteMatch} from 'react-router-dom';
+import {useI18n} from '@/i18n';
 
 export default function Nav() {
 	const match = useRouteMatch();
 	const me = useMe();
+	const {t} = useI18n();
 
 	const focusMode = useSettings('focus_mode');
 	const moduleColor = useTheme('module_color');
@@ -174,7 +176,7 @@ export default function Nav() {
 								) : (
 									<ArrowLeft weight="fill" />
 								)}
-								{navCollapsed ? '' : 'Collapse'}
+								{navCollapsed ? '' : t('Collapse')}
 							</Button>
 						)}
 					</div>

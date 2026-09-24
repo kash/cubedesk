@@ -38,6 +38,7 @@ import {
 import {CSS} from '@dnd-kit/utilities';
 import {Plus} from 'phosphor-react';
 import React, {useState} from 'react';
+import {useI18n} from '@/i18n';
 
 function SortableItem({session, selectedSessionId, selectSession, setSelectedSessionId}) {
 	const {
@@ -92,6 +93,7 @@ function SortableList({sessions, selectedSessionId, selectSession, setSelectedSe
 }
 
 export default function Sessions() {
+	const {t} = useI18n();
 	const [createNewSessionDialog, setCreateNewSessionDialog] = React.useState<{
 		props: React.ComponentProps<typeof CreateNewSession>;
 		onComplete: React.ComponentProps<typeof CreateNewSession>['onComplete'];
@@ -184,12 +186,12 @@ export default function Sessions() {
 			<div className="sessions-detail-header">
 				<div className="sessions-name-field">
 					<Label className="mb-2" htmlFor="session-name">
-						Session name
+						{t('Session name')}
 					</Label>
 					<Input
 						id="session-name"
 						type="text"
-						placeholder="Session name"
+						placeholder={t('Session name')}
 						name={session.id}
 						value={session.name}
 						onChange={setSessionName}
@@ -197,7 +199,7 @@ export default function Sessions() {
 					/>
 				</div>
 				<CubePicker
-					handlePrefix="Stats for "
+						handlePrefix={t('Stats for ')}
 					excludeSelected
 					value={currentCube}
 					cubeTypes={sessionCubeTypes}
@@ -207,10 +209,10 @@ export default function Sessions() {
 			</div>
 			<SessionSummary filterOptions={fetchFilter} />
 			<div className="sessions-analysis">
-				<section className="sessions-panel sessions-history" aria-label="Solve history">
-					<div className="sessions-panel-heading">
-						<h2>Solve history</h2>
-						<p>Most recent first · Select a time for details</p>
+						<section className="sessions-panel sessions-history" aria-label={t('Solve history')}>
+							<div className="sessions-panel-heading">
+								<h2>{t('Solve history')}</h2>
+								<p>{t('Most recent first · Select a time for details')}</p>
 					</div>
 					<div
 						className="sessions-history-list"
@@ -229,9 +231,9 @@ export default function Sessions() {
 		</div>
 	) : (
 		<div className="sessions-panel sessions-empty">
-			<h2>A fresh start</h2>
-			<p>Create a session to start organizing your solves.</p>
-			<Button onClick={openCreateNewSession}>Create a session</Button>
+					<h2>{t('A fresh start')}</h2>
+					<p>{t('Create a session to start organizing your solves.')}</p>
+					<Button onClick={openCreateNewSession}>{t('Create a session')}</Button>
 		</div>
 	);
 
@@ -245,13 +247,13 @@ export default function Sessions() {
 					/>
 					<Button onClick={openCreateNewSession} type="button">
 						<Plus weight="bold" />
-						New session
+						{t('New session')}
 					</Button>
 				</div>
 				<div className="sessions-layout">
-					<aside className="sessions-sidebar" aria-label="Your sessions">
+					<aside className="sessions-sidebar" aria-label={t('Your sessions')}>
 						<div className="sessions-sidebar-heading">
-							<h2>Your sessions</h2>
+							<h2>{t('Your sessions')}</h2>
 							<span>{allSessions.length}</span>
 						</div>
 						<DndContext

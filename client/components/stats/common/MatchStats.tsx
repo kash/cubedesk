@@ -4,8 +4,10 @@ import {Sword} from 'phosphor-react';
 import React from 'react';
 import {PieChart} from 'react-minimal-pie-chart';
 import {Link} from 'react-router-dom';
+import {useI18n} from '@/i18n';
 
 export default function MatchStats() {
+	const {t} = useI18n();
 	const {stats} = useStatsContext();
 	const played = stats.matches_played || 0;
 	const wins = stats.matches_won || 0;
@@ -32,15 +34,15 @@ export default function MatchStats() {
 						/>
 						<div className="stats-ring-label">
 							<strong>{played.toLocaleString()}</strong>
-							<span>matches</span>
+							<span>{t('matches')}</span>
 						</div>
 					</div>
 					<div className="stats-match-results">
-						<h3>Match record</h3>
+						<h3>{t('Match record')}</h3>
 						<p>
 							<span>
 								<i style={{background: '#23C586'}} />
-								Wins
+									{t('Wins')}
 							</span>
 							<strong>
 								{wins.toLocaleString()}{' '}
@@ -50,7 +52,7 @@ export default function MatchStats() {
 						<p>
 							<span>
 								<i style={{background: '#e47878'}} />
-								Losses
+									{t('Losses')}
 							</span>
 							<strong>
 								{losses.toLocaleString()}{' '}
@@ -61,7 +63,7 @@ export default function MatchStats() {
 							<p>
 								<span>
 									<i style={{background: '#8b95a5'}} />
-									Ties
+									{t('Ties')}
 								</span>
 								<strong>{ties.toLocaleString()}</strong>
 							</p>
@@ -73,14 +75,14 @@ export default function MatchStats() {
 					<span className="stats-empty-icon">
 						<Sword size={24} />
 					</span>
-					<h3>Your next challenge awaits</h3>
+					<h3>{t('Your next challenge awaits')}</h3>
 					<p>
-						Go head-to-head with another cuber.
+						{t('Go head-to-head with another cuber.')}
 						<br />
-						Your match record starts here.
+						{t('Your match record starts here.')}
 					</p>
 					<Link to="/play" className="stats-text-link">
-						Play your first match <span aria-hidden="true">↗</span>
+						{t('Play your first match')} <span aria-hidden="true">↗</span>
 					</Link>
 				</div>
 			)}

@@ -17,6 +17,8 @@ import {StaticRouter, Switch} from 'react-router-dom';
 import {applyMiddleware, createStore, Store} from 'redux';
 import promise from 'redux-promise-middleware';
 import {thunk} from 'redux-thunk';
+import {I18nProvider} from '@/i18n';
+import {localeFromCookieHeader} from '@/shared/i18n';
 
 const mappedRoutes: ReactNode[] = [];
 
@@ -45,7 +47,7 @@ function safeStringify(object) {
 		.replace(/\u2029/g, '\\u2029');
 }
 
-function renderFullPage(html, headTags, preloadedState) {
+function renderFullPage(html, headTags, preloadedState, locale) {
 	let cleanState = JSON.stringify(preloadedState).replace(/</g, '\\u003c');
 	cleanState = safeStringify(cleanState);
 
@@ -59,6 +61,7 @@ function renderFullPage(html, headTags, preloadedState) {
 		resourceBase: process.env.RESOURCES_BASE_URI || '',
 		jsFileName: `${deploymentId}.min.js`,
 		cssFileName: `${deploymentId}.min.css`,
+		locale,
 	};
 
 	return htmlTemplate(payload);
@@ -67,12 +70,16 @@ function renderFullPage(html, headTags, preloadedState) {
 const isDev = (process.env.ENV || 'development') === 'development';
 
 async function createComponents(req, store) {
+	const acceptLanguage = Array.isArray(req.headers['accept-language'])
+		? req.headers['accept-language'][0]
+		: req.headers['accept-language'];
+	const locale = localeFromCookieHeader(req.headers.cookie, acceptLanguage);
 	const demoHome = req.path === '/' && !store.getState().account.me;
 	// Keep the development shell for other routes; the public demo renders on the
 	// server in every environment so its timer is visible before JavaScript loads.
 	if (isDev && !demoHome) {
 		const preloaded = store.getState();
-		const fullHtml = renderFullPage('', '', preloaded);
+		const fullHtml = renderFullPage('', '', preloaded, locale);
 		return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
 	}
 
@@ -82,18 +89,20 @@ async function createComponents(req, store) {
 
 	const staticRouter = (
 		<StaticRouter location={req.url} context={{}}>
-			<HelmetProvider>
-				<TRPCProvider>
-					<Provider store={store}>
-						<Switch>
-							{routes.map((route: {[key: string]: any}) => {
-								route.exact = true;
-								return mapSingleRoute(route);
-							})}
-						</Switch>
-					</Provider>
-				</TRPCProvider>
-			</HelmetProvider>
+			<I18nProvider initialLocale={locale}>
+				<HelmetProvider>
+					<TRPCProvider>
+						<Provider store={store}>
+							<Switch>
+								{routes.map((route: {[key: string]: any}) => {
+									route.exact = true;
+									return mapSingleRoute(route);
+								})}
+							</Switch>
+						</Provider>
+					</TRPCProvider>
+				</HelmetProvider>
+			</I18nProvider>
 		</StaticRouter>
 	);
 
@@ -102,7 +111,7 @@ async function createComponents(req, store) {
 	const preloaded = store.getState();
 
 	// Get html and minify it
-	const fullHtml = renderFullPage(bodyMarkup, headTags, preloaded);
+	const fullHtml = renderFullPage(bodyMarkup, headTags, preloaded, locale);
 	return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
 }
 

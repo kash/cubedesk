@@ -13,6 +13,7 @@ import React, {
 import {allocateDialogOrder, registerDialog} from './dialog-activity';
 import {consumeEscapeUntilKeyUp, getTopDialog, isDialogEscapeInProgress} from './dialog-keyboard';
 import {isPopupOpen} from './popup';
+import {translateNode, useOptionalI18n} from '@/i18n';
 
 const Context = createContext<{id: string; open: boolean; setOpen: (open: boolean) => void} | null>(
 	null,
@@ -138,11 +139,13 @@ export function AlertDialogTitle({
 	className,
 	...props
 }: React.ComponentProps<typeof Primitive.Title>) {
+	const {t} = useOptionalI18n();
 	return (
 		<Primitive.Title
 			data-slot="alert-dialog-title"
 			className={cn('text-lg font-semibold', className)}
 			{...props}
+			children={translateNode(props.children, t)}
 		/>
 	);
 }
@@ -150,11 +153,13 @@ export function AlertDialogDescription({
 	className,
 	...props
 }: React.ComponentProps<typeof Primitive.Description>) {
+	const {t} = useOptionalI18n();
 	return (
 		<Primitive.Description
 			data-slot="alert-dialog-description"
 			className={cn('text-text/60 text-sm', className)}
 			{...props}
+			children={translateNode(props.children, t)}
 		/>
 	);
 }
