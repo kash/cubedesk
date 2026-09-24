@@ -48,6 +48,11 @@ const messages: TranslationDictionary = {
 	'Import data from csTimer or CubeDesk': 'Importar datos de csTimer o CubeDesk',
 	'Reset everything in the settings to default values (except for custom cube types)': 'Restablece todos los ajustes a sus valores predeterminados, excepto los tipos de cubo personalizados',
 	'Select StackMat': 'Seleccionar StackMat',
+	'Select StackMat Input': 'Seleccionar StackMat',
+	'StackMat connects to your computer via an audio jack. Click the dropdown below, select your StackMat, and select it. Please note that the input name may not be "StackMat" but rather something like "USB Audio Device."':
+		'El StackMat se conecta al ordenador mediante un conector de audio. Haz clic en el menú desplegable de abajo, selecciona tu StackMat y selecciónalo. Ten en cuenta que el nombre de la entrada puede no ser «StackMat», sino algo como «USB Audio Device».',
+	'StackMat input': 'Entrada de StackMat',
+	'Unnamed audio input': 'Entrada de audio sin nombre',
 	'StackMat': 'StackMat',
 	'Inspection is on': 'La inspección está activada',
 	'Your stats layout': 'Diseño de tus estadísticas',
