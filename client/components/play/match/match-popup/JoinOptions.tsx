@@ -1,9 +1,11 @@
 import {MatchPopupPage, useMatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
 import {Button} from '@/components/ui/button';
+import {useI18n} from '@/i18n';
 import {UserPlus, UsersThree} from 'phosphor-react';
 import React from 'react';
 
 export default function JoinOptions() {
+	const {t} = useI18n();
 	const {setPage} = useMatchPopupContext();
 
 	return (
@@ -15,7 +17,7 @@ export default function JoinOptions() {
 			>
 				<div className="flex flex-col items-center text-[#42a5f5]">
 					<UsersThree className="mb-2.5 text-[2rem] text-inherit" weight="fill" />
-					<h2 className="text-text text-[1.4rem]">Join Lobby</h2>
+					<h2 className="text-text text-[1.4rem]">{t('Join Lobby')}</h2>
 				</div>
 			</Button>
 			<Button
@@ -25,7 +27,7 @@ export default function JoinOptions() {
 			>
 				<div className="flex flex-col items-center text-[#66bb6a]">
 					<UserPlus className="mb-2.5 text-[2rem] text-inherit" weight="fill" />
-					<h2 className="text-text text-[1.4rem]">Create Match</h2>
+					<h2 className="text-text text-[1.4rem]">{t('Create Match')}</h2>
 				</div>
 			</Button>
 		</div>
