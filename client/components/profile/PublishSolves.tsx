@@ -11,6 +11,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError, toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
+import {useI18n} from '@/i18n';
 import {CheckCircle, Cube} from 'phosphor-react';
 import React, {useState} from 'react';
 
@@ -20,6 +21,7 @@ interface Props {
 
 export default function PublishSolves(props: Props) {
 	const {onComplete} = props;
+	const {t} = useI18n();
 
 	const cubeTypes = fetchAllCubeTypesSolved(true);
 
@@ -119,15 +121,17 @@ export default function PublishSolves(props: Props) {
 	if (!me?.username) {
 		exception = (
 			<p>
-				You must <a href="/account/personal-info">set a username</a> before you can publish
-				your times
+				{t('You must')}{' '}
+				<a href="/account/personal-info">{t('set a username')}</a>{' '}
+				{t('before you can publish your times')}
 			</p>
 		);
 	} else if (!rows.length) {
 		exception = (
 			<p>
-				You don't have any solves yet. Head over to the <a href="/">Timer Page</a> and start
-				cubing!
+				{t("You don't have any solves yet. Head over to the")}{' '}
+				<a href="/">{t('Timer Page')}</a>{' '}
+				{t('and start cubing!')}
 			</p>
 		);
 	}
@@ -152,8 +156,9 @@ export default function PublishSolves(props: Props) {
 					<div className="text-text/50 my-5 flex items-start gap-2 text-xs leading-relaxed">
 						<CheckCircle size={17} className="mt-0.5 shrink-0" />
 						<p className="text-text/50 mb-0 text-xs leading-relaxed">
-							By publishing, you confirm these are your own legitimate solves. Your
-							records will be visible on your profile and the leaderboards.
+							{t(
+								'By publishing, you confirm these are your own legitimate solves. Your records will be visible on your profile and the leaderboards.',
+							)}
 						</p>
 					</div>
 					<div className="border-tmo-module/10 flex flex-wrap items-center justify-end gap-2 border-t pt-4">

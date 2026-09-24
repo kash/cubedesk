@@ -25,6 +25,7 @@ import {useSsr} from '@/util/hooks/useSsr';
 import {getStorageURL} from '@/util/storage';
 import {trpc} from '@/util/trpc';
 import {fileToBase64} from '@/util/upload';
+import {useI18n} from '@/i18n';
 import classNames from 'classnames';
 import {CalendarBlank, CircleWavyCheck, Plus, Trophy} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
@@ -91,6 +92,7 @@ export async function prefetchProfileData(store, req) {
 }
 
 export default function Profile() {
+	const {t} = useI18n();
 	const [publishSolvesDialog, setPublishSolvesDialog] = React.useState<{
 		props: React.ComponentProps<typeof PublishSolves>;
 		title: React.ReactNode;
@@ -224,8 +226,11 @@ export default function Profile() {
 			>
 				<Header
 					path={`/profile/${username}`}
-					title={user.username + ' Profile | CubeDesk'}
-					description={`Check out ${user.username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more`}
+					title={t('{username} Profile | CubeDesk', {username: user.username})}
+					description={t(
+					"Check out {username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more",
+					{username: user.username},
+				)}
 				/>
 				<div className="mx-auto w-full max-w-[1200px] px-3 pb-16 sm:px-6">
 					<section className="border-tmo-module/10 bg-module overflow-hidden rounded-2xl border">
@@ -233,7 +238,7 @@ export default function Profile() {
 							<img
 								className="h-full w-full object-cover"
 								src={headerUrl}
-								alt="Profile cover"
+								alt={t('Profile cover')}
 							/>
 							<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 							{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
@@ -254,7 +259,7 @@ export default function Profile() {
 											triggerProps: {
 												variant: 'outline',
 												size: 'icon',
-												'aria-label': 'Profile options',
+												'aria-label': t('Profile options'),
 											},
 										}}
 									/>
@@ -266,13 +271,13 @@ export default function Profile() {
 									<CircleWavyCheck
 										className="text-info size-6 shrink-0"
 										weight="fill"
-										aria-label="Verified"
+										aria-label={t('Verified')}
 									/>
 								) : null}
 							</h1>
 							<p className="text-text/50 mt-2 mb-0 flex items-center gap-1.5 text-xs">
 								<CalendarBlank size={14} />
-								Joined{' '}
+								{t('Joined')}{' '}
 								{new Date(user.created_at).toLocaleDateString(undefined, {
 									month: 'long',
 									year: 'numeric',
@@ -292,16 +297,16 @@ export default function Profile() {
 											className="flex items-center gap-2 text-lg font-semibold tracking-tight"
 										>
 											<Trophy size={20} className="text-text/50" />
-											Personal bests
+											{t('Personal bests')}
 										</h2>
 										<p className="text-text/50 mt-1 mb-0 text-xs">
-											A collection of the fastest solves.
+											{t('A collection of the fastest solves.')}
 										</p>
 									</div>
 									{myProfile ? (
 										<Button onClick={openPublishSolves} size="sm">
 											<Plus weight="bold" />
-											Publish PBs
+											{t('Publish PBs')}
 										</Button>
 									) : null}
 								</div>
@@ -313,12 +318,12 @@ export default function Profile() {
 									<div className="border-tmo-module/15 flex flex-col items-center rounded-xl border border-dashed px-6 py-12 text-center">
 										<Trophy size={28} className="text-text/30 mb-3" />
 										<p className="mb-0 text-sm font-medium">
-											No records published yet
+											{t('No records published yet')}
 										</p>
 										<p className="text-text/50 mt-1 mb-0 max-w-64 text-xs leading-relaxed">
 											{myProfile
-												? 'Your best solves deserve a spot here. Publish your PBs to get started.'
-												: 'Published personal bests will appear here.'}
+												? t('Your best solves deserve a spot here. Publish your PBs to get started.')
+												: t('Published personal bests will appear here.')}
 										</p>
 									</div>
 								)}

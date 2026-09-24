@@ -8,6 +8,7 @@ import sessions from './sessions';
 import stats from './stats';
 import trainer from './trainer';
 import community from './community';
+import profile from './profile';
 import admin from './admin';
 import legal from './legal';
 
@@ -22,6 +23,7 @@ export default {
 	...stats,
 	...trainer,
 	...community,
+	...profile,
 	...admin,
 	...legal,
 };
