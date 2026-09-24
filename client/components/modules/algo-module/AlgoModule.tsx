@@ -8,6 +8,7 @@ import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
 import {useTrainerDb} from '@/util/hooks/useTrainerDb';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
+import {useI18n} from '@/i18n';
 import React from 'react';
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function AlgoModule(props: Props) {
+	const {t} = useI18n();
 	useTrainerDb();
 	const algoExt = fetchTrainerAlgorithmById(props.algoExt.id) ?? props.algoExt;
 
@@ -54,7 +56,7 @@ export default function AlgoModule(props: Props) {
 							onClick={() => toggleShowSolution()}
 							aria-pressed={showSolution}
 						>
-							{showSolution ? 'Hide solution' : 'Show solution'}
+							{t(showSolution ? 'Hide solution' : 'Show solution')}
 						</Button>
 					</div>
 				</div>
