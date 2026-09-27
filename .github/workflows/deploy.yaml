@@ -90,7 +90,6 @@ jobs:
                   echo DISCORD_BOT_SECRET=${{ secrets.DISCORD_BOT_SECRET }} >> .env
                   echo DISCORD_SECRET=${{ secrets.DISCORD_SECRET }} >> .env
                   echo DEPLOYMENT_ID=${{ steps.deployment-id.outputs.id }} >> .env
-                  echo SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} >> .env
                   echo LOG_LEVEL=info
                   echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
                   echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
@@ -133,15 +132,17 @@ jobs:
                   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
                   ECR_REPOSITORY: ${{ inputs.ECR_IMAGE_NAME }}
                   IMAGE_TAG: latest
+                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
               run: |
                   docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . \
                     --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
                     --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
                     --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
                     --build-arg RESOURCES_BASE_URI=${{ inputs.RESOURCES_BASE_URI}} \
+                    --build-arg DIST_BASE_URI=${{ inputs.DIST_BASE_URI }} \
                     --build-arg DEPLOYMENT_ID=${{ steps.deployment-id.outputs.id }} \
                     --build-arg RELEASE_NAME=${{ steps.release-name.outputs.RELEASE_NAME }} \
-                    --build-arg SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} \
+                    --secret id=sentry_auth_token,env=SENTRY_AUTH_TOKEN \
                     --build-arg ENV=${{ inputs.ENV }}
                   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 

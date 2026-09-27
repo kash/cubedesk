@@ -90,7 +90,11 @@ export function SelectItem({
 }: React.ComponentProps<typeof Primitive.Item> & {endContent?: React.ReactNode}) {
 	return (
 		<Primitive.Item {...props} className={cn(popupItem, 'pr-8', className)}>
-			<Primitive.ItemText>{children}</Primitive.ItemText>
+			<Primitive.ItemText>
+				{/* Radix portals these children into the trigger. Keep a stable element for
+				    React to remove when browser translation replaces the label's text nodes. */}
+				<span>{children}</span>
+			</Primitive.ItemText>
 			{endContent && <span className="ml-auto pl-6" aria-hidden="true">{endContent}</span>}
 			<Primitive.ItemIndicator className="absolute right-2">
 				<Check className="size-4" />

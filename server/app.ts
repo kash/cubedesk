@@ -96,9 +96,10 @@ app.set('port', port);
 
 global.siteUrl = process.env.BASE_URI;
 
-if (!isDev) {
+const sentryDsn = process.env.SENTRY_DSN;
+if (!isDev && sentryDsn) {
 	Sentry.init({
-		dsn: 'https://2f30d529a6b242449dc1f86ec18c1ba3@o637154.ingest.sentry.io/5770453',
+		dsn: sentryDsn,
 		release: process.env.RELEASE_NAME,
 		tracesSampleRate: 0.1,
 		environment: env

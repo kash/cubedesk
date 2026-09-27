@@ -4,6 +4,7 @@ import {ITimerContext} from '@/components/timer/Timer';
 import {createSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
 import {emitEvent} from '@/util/event_handler';
+import {toastError} from '@/util/toast';
 import {v4 as uuid} from 'uuid';
 
 export function saveSolve(
@@ -65,7 +66,9 @@ export function saveSolve(
 	};
 
 	if (onSolve) {
-		onSolve(solveObject);
+		Promise.resolve(onSolve(solveObject)).catch(() => {
+			toastError('Could not save solve. Please check your connection.');
+		});
 	} else {
 		createSolveDb(solveObject);
 	}
