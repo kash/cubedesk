@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {ImportDataContext} from '@/components/settings/data/import-data/ImportData';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
 import {Separator} from '@/components/ui/separator';
@@ -7,6 +8,7 @@ import React, {useContext} from 'react';
 import {useDropzone} from 'react-dropzone';
 
 export default function ProcessData() {
+	const {t} = useTranslation();
 	const context = useContext(ImportDataContext);
 	const timerImportData = context.timerImportData;
 
@@ -23,7 +25,7 @@ export default function ProcessData() {
 
 	function onDrop(files: File[]) {
 		if (!files || !files.length) {
-			toastError('Invalid file. Please try again.');
+			toastError(t('settings.import.invalidFile'));
 			return;
 		}
 
@@ -50,7 +52,7 @@ export default function ProcessData() {
 	return (
 		<div>
 			<Separator className="my-6" />
-			<ImportSection title="Select file to import" />
+			<ImportSection title={t('settings.import.selectFile')} />
 
 			<div
 				className={classNames(
@@ -60,7 +62,7 @@ export default function ProcessData() {
 				{...getRootProps()}
 			>
 				<input {...getInputProps()} />
-				<p className="text-text m-0">Drag and drop your file here, or click to select</p>
+				<p className="text-text m-0">{t('settings.import.dropzonePrompt')}</p>
 			</div>
 		</div>
 	);

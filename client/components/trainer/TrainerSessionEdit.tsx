@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {useTimerContext} from '@/components/timer/Timer';
 import AddCustom from '@/components/trainer/add-custom/AddCustom';
 import EditAlgo from '@/components/trainer/EditAlgo';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function TrainerSessionEdit({getAlgorithm}: Props) {
+	const {t} = useTranslation();
 	const {sessionSolveCount, timeStartedAt, inInspection} = useTimerContext();
 	useTrainerDb();
 	const [editing, setEditing] = useState<TrainerAlgorithmExtended | null>(null);
@@ -25,7 +27,7 @@ export default function TrainerSessionEdit({getAlgorithm}: Props) {
 			<Button
 				variant="secondary"
 				size="icon"
-				aria-label="Edit algorithm"
+				aria-label={t('trainer.editAlgorithm')}
 				disabled={!algo || !!timeStartedAt || inInspection}
 				onClick={() => setEditing(algo)}
 			>
@@ -38,7 +40,7 @@ export default function TrainerSessionEdit({getAlgorithm}: Props) {
 				}}
 			>
 				{editing && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						{editing.algo_type === CUSTOM_TRAINER_ALGO_TYPE ? (
 							<AddCustom editingId={editing.id} onComplete={close} />
 						) : (

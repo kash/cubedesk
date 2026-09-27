@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import NumberBlock from '@/components/stats/common/NumberBlock';
@@ -14,6 +15,7 @@ import {CalendarBlank, Hash, Timer, Trophy} from 'phosphor-react';
 import React, {useMemo} from 'react';
 
 export default function CubeStatsFeatured() {
+	const {t, i18n} = useTranslation();
 	const [solveInfoDialog, setSolveInfoDialog] = React.useState<React.ComponentProps<
 		typeof SolveInfo
 	> | null>(null);
@@ -54,7 +56,7 @@ export default function CubeStatsFeatured() {
 					large
 					onClick={pbSolve ? () => openSolve(pbSolve) : undefined}
 					icon={<Trophy weight="bold" />}
-					title="Single PB"
+					title={t('stats.singlePb')}
 					value={getTimeString(singlePb?.time)}
 					color="#23C586"
 				>
@@ -64,7 +66,7 @@ export default function CubeStatsFeatured() {
 								<CalendarBlank size={18} />
 								<div>
 									<p>{pbDate.toLocaleDateString()}</p>
-									<span>{getDateFromNow(pbDate)}</span>
+									<span>{getDateFromNow(pbDate, false, i18n.language)}</span>
 								</div>
 							</div>
 							<div className="stats-pb-preview">
@@ -77,23 +79,21 @@ export default function CubeStatsFeatured() {
 							</div>
 						</div>
 					) : (
-						<p className="text-text/50 text-sm">
-							Your first completed solve starts your record.
-						</p>
+						<p className="text-text/50 text-sm">{t('stats.firstSolvePrompt')}</p>
 					)}
 				</NumberBlock>
 				<StatsGrid rows={2} columns={1}>
 					<NumberBlock
 						center
 						icon={<Hash weight="bold" />}
-						title="Total Solves"
+						title={t('stats.totalSolves')}
 						value={totalSolves}
 						color="#54ACE4"
 					/>
 					<NumberBlock
 						center
 						icon={<Timer weight="bold" />}
-						title="Time Spent Cubing"
+						title={t('stats.timeSpentCubing')}
 						value={
 							timeSpentCubing < 60
 								? `${getTimeString(timeSpentCubing)}s`
@@ -112,8 +112,8 @@ export default function CubeStatsFeatured() {
 				}}
 			>
 				{solveInfoDialog && (
-					<DialogContent>
-						<DialogTitle className="sr-only">Solve details</DialogTitle>
+					<DialogContent closeLabel={t('common.closeDialog')}>
+						<DialogTitle className="sr-only">{t('solves.solveDetails')}</DialogTitle>
 						<SolveInfo
 							{...solveInfoDialog}
 							onComplete={() => {

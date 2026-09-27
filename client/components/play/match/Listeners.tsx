@@ -13,7 +13,7 @@ import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import {getHashCode} from '@/util/strings/util';
 import {toastError} from '@/util/toast';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {ReactNode, useContext, useEffect} from 'react';
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function Listeners(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const me = useMe();
 	const gameContext = useContext(GameContext);
 	const matchContext = useMatchContext();
@@ -51,7 +51,7 @@ export default function Listeners(props: Props) {
 	listenForJoinEvents();
 
 	setExistingMatchData(me, gameContext, matchContext).catch(() =>
-		toastError(t('Invalid match link')),
+		toastError(t('community.invalidMatchLink')),
 	);
 
 	matchLoaded.current = true;

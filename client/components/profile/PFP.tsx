@@ -8,6 +8,7 @@ import {getStorageURL} from '@/util/storage';
 import {fileToBase64} from '@/util/upload';
 import React from 'react';
 import {useDispatch} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	allowChange?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function PFP(props: Props) {
+	const {t} = useTranslation();
 	const {profile, allowChange} = props;
 
 	const dispatch = useDispatch();
@@ -45,7 +47,10 @@ export default function PFP(props: Props) {
 	if (allowChange && myProfile) {
 		cover = (
 			<div className="absolute inset-0 overflow-hidden rounded-full">
-				<UploadCover upload={uploadProfilePicture} />
+				<UploadCover
+					upload={uploadProfilePicture}
+					invalidFileMessage={t('profile.invalidImageFile')}
+				/>
 			</div>
 		);
 	}

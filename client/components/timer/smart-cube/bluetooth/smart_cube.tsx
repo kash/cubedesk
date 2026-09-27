@@ -2,7 +2,6 @@ import {turnSmartCube} from '@/actions/timer';
 import {getStore} from '@/components/store';
 // @ts-nocheck
 import {setTimerParams} from '@/components/timer/helpers/params';
-import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 
 export type PendingSmartDevice = Awaited<ReturnType<typeof trpc.smartDevice.create.mutate>>;
@@ -10,6 +9,9 @@ export interface SmartCubeCallbacks {
 	confirmSolved: (device: PendingSmartDevice) => Promise<boolean>;
 	onDisconnected: () => void;
 	isActive: () => boolean;
+	translate: (
+		key: 'timer.smartCube.macAddressFallback' | 'timer.smartCube.browserMacAddress',
+	) => string;
 }
 
 export default class SmartCube {
@@ -24,7 +26,6 @@ export default class SmartCube {
 	alertDisconnected = () => {
 		if (!this.callbacks.isActive()) return;
 		this.callbacks.onDisconnected();
-		toastError('Smart cube disconnected');
 
 		setTimerParams({
 			smartCubeConnecting: false,

@@ -1,7 +1,9 @@
+import {useTranslation} from 'react-i18next';
 import AvatarImage from '@/components/common/avatar/AvatarImage';
 import {Button} from '@/components/ui/button';
 import {api} from '@/util/api';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {Sword, User} from 'phosphor-react';
 import {ReactNode, useState} from 'react';
@@ -16,6 +18,7 @@ interface Props {
 }
 
 export default function Notif({notif, index, onRead, deleteNotification}: Props) {
+	const {t, i18n} = useTranslation();
 	const [read, setRead] = useState(false);
 
 	const markAsReadMutation = api.notification.markAsRead.useMutation();
@@ -75,7 +78,7 @@ export default function Notif({notif, index, onRead, deleteNotification}: Props)
 
 	let markAsReadBtn: ReactNode = (
 		<Button variant="ghost" size="sm" onClick={markAsRead}>
-			Mark as Read
+			{t('common.markAsRead')}
 		</Button>
 	);
 	if (notif.read_at) {
@@ -96,12 +99,12 @@ export default function Notif({notif, index, onRead, deleteNotification}: Props)
 			</div>
 			<div className="absolute top-2 right-2 flex flex-row opacity-0 transition-opacity duration-100 ease-in-out group-hover:opacity-100 focus-within:opacity-100">
 				<Button variant="ghost" size="sm" onClick={handleDelete}>
-					Delete
+					{t('common.delete')}
 				</Button>
 				{markAsReadBtn}
 			</div>
 			<span className="text-text absolute right-2.5 bottom-2.5 flex text-[0.9rem] opacity-50">
-				{dayjs(notif.created_at).fromNow()}
+				{dayjs(notif.created_at).locale(i18n.language).fromNow()}
 			</span>
 		</div>
 	);

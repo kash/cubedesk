@@ -7,12 +7,14 @@ import {Serialized} from '@/types/serialized';
 import {getDateFromNow} from '@/util/dates';
 import {trpc} from '@/util/trpc';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	reportSummary: Serialized<ReportSummaryData>;
 }
 
 export default function ReportSummary(props: Props) {
+	const {t, i18n} = useTranslation();
 	const {reportSummary} = props;
 
 	const [resolving, setResolving] = useState(false);
@@ -28,15 +30,17 @@ export default function ReportSummary(props: Props) {
 	const count = reportSummary.count;
 	const topInfo = (
 		<div className="absolute top-0 right-0 flex flex-col items-end gap-1.5">
-			<Badge variant="warning">{`${count} report${count === 1 ? '' : 's'}`}</Badge>
-			<Badge
-				size="sm"
-				variant="unfilled"
-			>{`Last reported ${getDateFromNow(reportSummary.last_report)}`}</Badge>
-			<Badge
-				size="sm"
-				variant="unfilled"
-			>{`First reported ${getDateFromNow(reportSummary.first_report)}`}</Badge>
+			<Badge variant="warning">{t('admin.reports.count', {count})}</Badge>
+			<Badge size="sm" variant="unfilled">
+				{t('admin.reports.lastReported', {
+					time: getDateFromNow(reportSummary.last_report, false, i18n.language),
+				})}
+			</Badge>
+			<Badge size="sm" variant="unfilled">
+				{t('admin.reports.firstReported', {
+					time: getDateFromNow(reportSummary.first_report, false, i18n.language),
+				})}
+			</Badge>
 		</div>
 	);
 
@@ -71,7 +75,7 @@ export default function ReportSummary(props: Props) {
 						disabled={resolving}
 						aria-busy={resolving}
 					>
-						{'Mark as Resolve'}
+						{t('admin.reports.markResolved')}
 						{resolving ? <Spinner aria-hidden="true" /> : null}
 					</Button>
 				</div>

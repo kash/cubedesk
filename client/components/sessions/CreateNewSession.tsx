@@ -9,7 +9,7 @@ import {setCubeType, setCurrentSession} from '@/db/settings/update';
 import {CubeType} from '@/util/cubes/cube_types';
 import {useInput} from '@/util/hooks/useInput';
 import {toastError} from '@/util/toast';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {useState} from 'react';
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 
 export default function CreateNewSession(props: Props) {
 	const fieldId = React.useId();
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	const {onComplete} = props;
 
@@ -45,7 +45,7 @@ export default function CreateNewSession(props: Props) {
 			onComplete?.(session);
 		} catch (e) {
 			setLoading(false);
-			toastError('Server Error: Could not create session');
+			toastError(t('sessions.createFailed'));
 		}
 	}
 
@@ -54,14 +54,14 @@ export default function CreateNewSession(props: Props) {
 	return (
 		<div className="flex flex-col items-start">
 			<DialogHeader
-				title="Create new session"
-				description="In CubeDesk, sessions can have multiple cube types. You can split up sessions however you'd like: by cube type, by day, etc."
+				title={t('sessions.createNewSession')}
+				description={t('sessions.organizationHint')}
 			/>
 			<div className="w-full">
 				<Field className="mb-5">
-					<FieldLabel htmlFor={`${fieldId}-1`}>{'Session Name'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-1`}>{t('sessions.sessionName2')}</FieldLabel>
 					<Input
-						placeholder="New Session"
+						placeholder={t('sessions.newSession2')}
 						maxLength={200}
 						value={name}
 						onChange={setName}
@@ -70,9 +70,15 @@ export default function CreateNewSession(props: Props) {
 				</Field>
 			</div>
 			<CubePicker
+				labels={{
+					label: t('common.cubeType2'),
+					placeholder: t('common.selectOption'),
+					searchPlaceholder: t('common.search'),
+					emptyMessage: t('common.noResultsFound'),
+				}}
 				pickerProps={{
-					legend: 'Cube Type',
-					info: t('You can change this later'),
+					legend: t('common.cubeType'),
+					info: t('sessions.youCanChangeThisLater'),
 					openLeft: true,
 				}}
 				onChange={onCubeTypeChange}
@@ -86,7 +92,7 @@ export default function CreateNewSession(props: Props) {
 					disabled={disabled || loading}
 					aria-busy={loading}
 				>
-					{t('Create Session')}
+					{t('sessions.createSession')}
 					{loading ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 			</div>

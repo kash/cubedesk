@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Empty from '@/components/common/Empty';
 import Face from '@/components/modules/scramble/Face';
 import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export default function ScrambleVisual(props: Props) {
+	const {t} = useTranslation();
 	const {cubeType, scramble, frontFace, compact} = props;
 
 	const width = props.width || '100%';
@@ -50,11 +52,11 @@ export default function ScrambleVisual(props: Props) {
 
 	const supported = scrambleIsSupported(cubeScramble?.id);
 	if (!supported) {
-		return <Empty text="No scramble visual available" centered compact={compact} />;
+		return <Empty text={t('timer.noScrambleVisualAvailable')} centered compact={compact} />;
 	}
 
 	if (!visual) {
-		return <Empty text="No scramble yet" centered compact={compact} />;
+		return <Empty text={t('timer.noScrambleYet')} centered compact={compact} />;
 	}
 
 	if (frontFace) {

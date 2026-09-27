@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Empty from '@/components/common/Empty';
 import BarGraph from '@/components/modules/bar-graph/BarGraph';
 import {FilterSolvesOptions} from '@/db/solves/query';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function SolvesPerDay(props: Props) {
+	const {t} = useTranslation();
 	const {days, filterOptions} = props;
 
 	const solveUpdate = useSolveDb();
@@ -29,7 +31,7 @@ export default function SolvesPerDay(props: Props) {
 	}, [jsonStr(filterOptions), filterOptions, solveUpdate, days]);
 
 	if (!memoData.some((day) => day.y > 0)) {
-		return <Empty text="No solves in this period" centered />;
+		return <Empty text={t('solves.noSolvesInThisPeriod')} centered />;
 	}
 
 	return <BarGraph data={memoData} />;

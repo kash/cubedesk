@@ -1,14 +1,20 @@
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select';
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 import {getChartData} from '@/db/solves/stats/chart';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
 import {ParentSize} from '@visx/responsive';
 import React, {useMemo, useState} from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 export default function SessionAnalytics({filterOptions}: {filterOptions: FilterSolvesOptions}) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const revision = useSolveDb();
 	const [bucketCount, setBucketCount] = useState(6);
 	const {progress, buckets} = useMemo(() => {
@@ -37,15 +43,15 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 
 	return (
 		<div className="sessions-charts">
-			<section className="sessions-panel" aria-label={t('Solve times')}>
+			<section className="sessions-panel" aria-label={t('solves.solveTimes')}>
 				<div className="sessions-panel-heading">
-					<h2>{t('Solve times')}</h2>
-					<p>{t('Completed solves, oldest to newest · Grouped for longer sessions')}</p>
+					<h2>{t('solves.solveTimes')}</h2>
+					<p>{t('sessions.chartDescription')}</p>
 				</div>
 				<div className="sessions-chart">
 					{!progress.length ? (
 						<div className="sessions-chart-empty">
-							{t('Complete a solve to see your progress.')}
+							{t('solves.completeASolveToSeeYourProgress')}
 						</div>
 					) : (
 						<ParentSize>
@@ -66,7 +72,7 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 										width={width}
 										height={height}
 										role="img"
-										aria-label="Solve times in chronological order"
+										aria-label={t('sessions.solveTimesChart')}
 									>
 										{[0, ceiling / 2, ceiling].map((value) => (
 											<g key={value}>
@@ -111,10 +117,10 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 											</circle>
 										))}
 										<text x={left} y={height - 2}>
-													{t('Oldest')}
+											{t('common.oldest')}
 										</text>
 										<text x={width - 12} y={height - 2} textAnchor="end">
-													{t('Latest')}
+											{t('common.latest')}
 										</text>
 									</svg>
 								);
@@ -123,24 +129,27 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 					)}
 				</div>
 			</section>
-			<section className="sessions-panel" aria-label={t('Time distribution')}>
+			<section className="sessions-panel" aria-label={t('stats.timeDistribution')}>
 				<div className="sessions-panel-heading sessions-distribution-heading">
 					<div>
-						<h2>{t('Time distribution')}</h2>
-						<p>{t('Completed solves by time range')}</p>
+						<h2>{t('stats.timeDistribution')}</h2>
+						<p>{t('solves.completedSolvesByTimeRange')}</p>
 					</div>
 					<div className="w-28 shrink-0">
 						<Select
 							value={String(bucketCount)}
 							onValueChange={(value) => setBucketCount(Number(value))}
 						>
-							<SelectTrigger className="w-full" aria-label={t('Distribution columns')}>
+							<SelectTrigger
+								className="w-full"
+								aria-label={t('stats.distributionColumns')}
+							>
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
 								{[4, 5, 6, 7, 8, 9, 10].map((count) => (
 									<SelectItem key={count} value={String(count)}>
-										{count} {t('ranges')}
+										{count} {t('common.ranges')}
 									</SelectItem>
 								))}
 							</SelectContent>
@@ -150,7 +159,7 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 				<div className="sessions-chart">
 					{!buckets.length ? (
 						<div className="sessions-chart-empty">
-							{t('Complete a solve to see your time distribution.')}
+							{t('stats.timeDistribution.emptyHint')}
 						</div>
 					) : (
 						<ParentSize>
@@ -165,7 +174,7 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 										width={width}
 										height={height}
 										role="img"
-										aria-label="Number of completed solves in each time range"
+										aria-label={t('sessions.timeDistributionChart')}
 									>
 										<line
 											x1={left}
@@ -190,7 +199,7 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 														<title>
 															{getTimeString(bucket.low, 2)}–
 															{getTimeString(bucket.high, 2)}:{' '}
-															{bucket.count} solves
+															{bucket.count} {t('solves.solves2')}
 														</title>
 													</rect>
 													{bucket.count > 0 && (

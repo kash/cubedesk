@@ -1,4 +1,5 @@
 import PaginatedList, {listQueryKey} from '@/components/common/PaginatedList';
+import type {ListLabels} from '@/components/common/PaginatedList';
 import {PaginationOutput} from '@/types/pagination';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React from 'react';
@@ -6,6 +7,17 @@ import {renderToStaticMarkup} from 'react-dom/server';
 import {MemoryRouter} from 'react-router-dom';
 
 const path = '/community/leaderboards';
+const labels: ListLabels = {
+	loading: 'Loading results',
+	error: 'Unable to load results. Please try again.',
+	retry: 'Try again',
+	empty: 'Could not find any records',
+	previous: 'Previous',
+	next: 'Next',
+	results: (count, query) =>
+		`${count} ${count === 1 ? 'result' : 'results'}${query ? ` for "${query}"` : ''}`,
+	page: (current, total) => `Page ${current} of ${total}`,
+};
 const clients: QueryClient[] = [];
 function client() {
 	const value = new QueryClient({defaultOptions: {queries: {retry: false}}});
@@ -19,6 +31,7 @@ function render(queryClient: QueryClient, url = path, searchQuery = '') {
 		<QueryClientProvider client={queryClient}>
 			<MemoryRouter initialEntries={[url]}>
 				<PaginatedList<string>
+					labels={labels}
 					searchQuery={searchQuery}
 					fetchData={async () => ({items: [], total: 0, hasMore: false})}
 					getItemRow={(item, index) => (

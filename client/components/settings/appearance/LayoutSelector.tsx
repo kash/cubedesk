@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {Button} from '@/components/ui/button';
 import {TimerLayoutPosition} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
@@ -6,6 +7,7 @@ import {AlignBottomSimple, AlignLeftSimple, AlignRightSimple} from 'phosphor-rea
 import React from 'react';
 
 export default function LayoutSelector() {
+	const {t} = useTranslation();
 	const timerLayout = useSettings('timer_layout');
 
 	function selectLayout(timerLayout: TimerLayoutPosition) {
@@ -21,7 +23,7 @@ export default function LayoutSelector() {
 				}}
 				size="lg"
 			>
-				{'Align Left'}
+				{t('settings.layout.alignLeft')}
 				<AlignLeftSimple weight="bold" />
 			</Button>
 			<Button
@@ -31,7 +33,7 @@ export default function LayoutSelector() {
 				}}
 				size="lg"
 			>
-				{'Align Bottom'}
+				{t('settings.layout.alignBottom')}
 				<AlignBottomSimple weight="bold" />
 			</Button>
 			<Button
@@ -41,7 +43,7 @@ export default function LayoutSelector() {
 				}}
 				size="lg"
 			>
-				{'Align Right'}
+				{t('settings.layout.alignRight')}
 				<AlignRightSimple weight="bold" />
 			</Button>
 		</div>

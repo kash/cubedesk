@@ -25,7 +25,7 @@ import {useSsr} from '@/util/hooks/useSsr';
 import {getStorageURL} from '@/util/storage';
 import {trpc} from '@/util/trpc';
 import {fileToBase64} from '@/util/upload';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import classNames from 'classnames';
 import {CalendarBlank, CircleWavyCheck, Plus, Trophy} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
@@ -92,7 +92,7 @@ export async function prefetchProfileData(store, req) {
 }
 
 export default function Profile() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [publishSolvesDialog, setPublishSolvesDialog] = React.useState<{
 		props: React.ComponentProps<typeof PublishSolves>;
 		title: React.ReactNode;
@@ -163,9 +163,8 @@ export default function Profile() {
 	function openPublishSolves() {
 		setPublishSolvesDialog({
 			props: {},
-			title: 'Publish your PBs',
-			description:
-				'Share your fastest solves with the community. Review your records before publishing.',
+			title: t('profile.publishYourPbs'),
+			description: t('profile.publish.intro'),
 			onComplete: () => window.location.reload(),
 		});
 	}
@@ -226,11 +225,8 @@ export default function Profile() {
 			>
 				<Header
 					path={`/profile/${username}`}
-					title={t('{username} Profile | CubeDesk', {username: user.username})}
-					description={t(
-					"Check out {username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more",
-					{username: user.username},
-				)}
+					title={t('profile.profileCubedesk', {username: user.username})}
+					description={t('profile.pageDescription', {username: user.username})}
 				/>
 				<div className="mx-auto w-full max-w-[1200px] px-3 pb-16 sm:px-6">
 					<section className="border-tmo-module/10 bg-module overflow-hidden rounded-2xl border">
@@ -238,10 +234,15 @@ export default function Profile() {
 							<img
 								className="h-full w-full object-cover"
 								src={headerUrl}
-								alt={t('Profile cover')}
+								alt={t('profile.profileCover')}
 							/>
 							<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-							{myProfile ? <UploadCover upload={uploadProfileHeader} /> : null}
+							{myProfile ? (
+								<UploadCover
+									upload={uploadProfileHeader}
+									invalidFileMessage={t('profile.invalidImageFile')}
+								/>
+							) : null}
 						</div>
 						<div className="relative px-5 pb-5 sm:px-7 sm:pb-6">
 							<div className="relative -mt-10 mb-4 flex items-end justify-between gap-3">
@@ -259,7 +260,7 @@ export default function Profile() {
 											triggerProps: {
 												variant: 'outline',
 												size: 'icon',
-												'aria-label': t('Profile options'),
+												'aria-label': t('profile.profileOptions'),
 											},
 										}}
 									/>
@@ -271,13 +272,13 @@ export default function Profile() {
 									<CircleWavyCheck
 										className="text-info size-6 shrink-0"
 										weight="fill"
-										aria-label={t('Verified')}
+										aria-label={t('profile.verified')}
 									/>
 								) : null}
 							</h1>
 							<p className="text-text/50 mt-2 mb-0 flex items-center gap-1.5 text-xs">
 								<CalendarBlank size={14} />
-								{t('Joined')}{' '}
+								{t('profile.joined')}{' '}
 								{new Date(user.created_at).toLocaleDateString(undefined, {
 									month: 'long',
 									year: 'numeric',
@@ -297,16 +298,16 @@ export default function Profile() {
 											className="flex items-center gap-2 text-lg font-semibold tracking-tight"
 										>
 											<Trophy size={20} className="text-text/50" />
-											{t('Personal bests')}
+											{t('profile.personalBests')}
 										</h2>
 										<p className="text-text/50 mt-1 mb-0 text-xs">
-											{t('A collection of the fastest solves.')}
+											{t('profile.aCollectionOfTheFastestSolves')}
 										</p>
 									</div>
 									{myProfile ? (
 										<Button onClick={openPublishSolves} size="sm">
 											<Plus weight="bold" />
-											{t('Publish PBs')}
+											{t('common.publishPbs')}
 										</Button>
 									) : null}
 								</div>
@@ -318,12 +319,12 @@ export default function Profile() {
 									<div className="border-tmo-module/15 flex flex-col items-center rounded-xl border border-dashed px-6 py-12 text-center">
 										<Trophy size={28} className="text-text/30 mb-3" />
 										<p className="mb-0 text-sm font-medium">
-											{t('No records published yet')}
+											{t('common.noRecordsPublishedYet')}
 										</p>
 										<p className="text-text/50 mt-1 mb-0 max-w-64 text-xs leading-relaxed">
 											{myProfile
-												? t('Your best solves deserve a spot here. Publish your PBs to get started.')
-												: t('Published personal bests will appear here.')}
+												? t('profile.publish.emptyPrompt')
+												: t('profile.publish.emptyListHint')}
 										</p>
 									</div>
 								)}
@@ -342,7 +343,11 @@ export default function Profile() {
 				}}
 			>
 				{publishSolvesDialog && (
-					<DialogContent width={540} className="rounded-2xl p-5 sm:p-7">
+					<DialogContent
+						closeLabel={t('common.closeDialog')}
+						width={540}
+						className="rounded-2xl p-5 sm:p-7"
+					>
 						<DialogHeader
 							className="[&_p]:text-text/60 mb-5 space-y-2 [&_[data-slot=dialog-title]]:text-xl [&_p]:text-sm [&_p]:leading-relaxed"
 							topBody={

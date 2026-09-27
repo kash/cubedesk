@@ -81,6 +81,7 @@ describe('button composition', () => {
 		const html = renderToStaticMarkup(
 			<CopyText
 				text="R U R'"
+				labels={{copy: 'Copy text', copied: 'Copied', error: 'Copy failed'}}
 				buttonProps={{children: 'Copy scramble', variant: 'secondary'}}
 			/>,
 		);

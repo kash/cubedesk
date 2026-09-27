@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Emblem from '@/components/common/Emblem';
 import WCA from '@/components/profile/WCA';
 import {getDateFromNow} from '@/util/dates';
@@ -11,27 +12,36 @@ interface Props {
 }
 
 export default function Badges({user, small, limit, hideWca}: Props) {
+	const {t, i18n} = useTranslation();
 	let ems: ReactNode[] = [];
 	const wca = WCA.getWcaIntegration(user);
 
 	if (user.banned_forever || user.banned_until) {
 		let text: string | undefined;
 		if (user.banned_forever) {
-			text = 'Banned Forever';
+			text = t('profile.bannedForever');
 		} else if (user.banned_until) {
-			const until = getDateFromNow(user.banned_until, true);
-			text = `Banned for ${until}`;
+			const until = getDateFromNow(user.banned_until, true, i18n.language);
+			text = t('profile.bannedFor', {duration: until});
 		}
 
 		ems.push(<Emblem className="mb-0" small={small} key="banned" text={text} color="#444" />);
 	}
 
 	if (user.admin) {
-		ems.push(<Emblem className="mb-0" small={small} key="admin" text="Admin" red />);
+		ems.push(<Emblem className="mb-0" small={small} key="admin" text={t('admin.admin')} red />);
 	}
 
 	if (wca && !hideWca) {
-		ems.push(<Emblem className="mb-0" small={small} key={wca.id} text="WCA Profile" green />);
+		ems.push(
+			<Emblem
+				className="mb-0"
+				small={small}
+				key={wca.id}
+				text={t('profile.wcaProfile')}
+				green
+			/>,
+		);
 	}
 
 	const badges = [...(user.badges || [])].sort((a: any, b: any) => a.priority - b.priority);

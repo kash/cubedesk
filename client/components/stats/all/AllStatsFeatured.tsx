@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import NumberBlock from '@/components/stats/common/NumberBlock';
 import StatsGrid from '@/components/stats/common/StatsGrid';
 import {useStatsContext} from '@/components/stats/Stats';
@@ -11,6 +12,7 @@ import {ArrowFatLinesUp, Hash, Timer} from 'phosphor-react';
 import React, {useMemo} from 'react';
 
 export default function AllStatsFeatured() {
+	const {t} = useTranslation();
 	const context = useStatsContext();
 
 	const solveUpdate = useSolveDb();
@@ -44,7 +46,7 @@ export default function AllStatsFeatured() {
 				center
 				colSpan={1}
 				icon={<Timer weight="bold" />}
-				title="Time spent cubing"
+				title={t('solves.timeSpentCubing')}
 				value={
 					timeSpentCubing < 60
 						? `${getTimeString(timeSpentCubing)}s`
@@ -56,7 +58,7 @@ export default function AllStatsFeatured() {
 				center
 				colSpan={1}
 				icon={<Hash weight="bold" />}
-				title="Total solves"
+				title={t('solves.totalSolves')}
 				value={totalSolves}
 				color="#54ACE4"
 			/>
@@ -64,7 +66,7 @@ export default function AllStatsFeatured() {
 				center
 				colSpan={1}
 				icon={<Hash weight="bold" />}
-				title="Events solved"
+				title={t('stats.eventsSolved')}
 				value={cubeTypes.length}
 				color="#6D7D90"
 			/>
@@ -72,7 +74,7 @@ export default function AllStatsFeatured() {
 				center
 				colSpan={1}
 				icon={<ArrowFatLinesUp weight="bold" />}
-				title="Most solved event"
+				title={t('stats.mostSolvedEvent')}
 				value={topCubeType?.name || '-'}
 				color="#6D7D90"
 			/>

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Checkbox from '@/components/common/Checkbox';
 import ButtonError from '@/components/common/inputs/Error';
 import NativeSelectField from '@/components/common/inputs/NativeSelectField';
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export default function BanUser(props: Props) {
+	const {t} = useTranslation();
 	const fieldId = React.useId();
 
 	const {user} = props;
@@ -37,6 +39,14 @@ export default function BanUser(props: Props) {
 	const [error, setError] = useState<string | undefined>(undefined);
 
 	function getDurationMinutes() {
+		const durationLabelKeys: Record<string, string> = {
+			minute: 'admin.users.duration.minute',
+			hour: 'admin.users.duration.hour',
+			day: 'admin.users.duration.day',
+			week: 'admin.users.duration.week',
+			month: 'admin.users.duration.month',
+			year: 'admin.users.duration.year',
+		};
 		const multipliers = {
 			minute: 1,
 			hour: 60,
@@ -52,22 +62,22 @@ export default function BanUser(props: Props) {
 		}
 
 		if (!multipliers[durationUnit]) {
-			throw new Error('Invalid duration type');
+			throw new Error(t('admin.users.invalidDurationType'));
 		}
 
 		if (!duration || duration < 0) {
-			throw new Error('Invalid duration');
+			throw new Error(t('admin.users.invalidDuration'));
 		}
 
 		if (duration > 100) {
-			throw new Error('Duration count cannot be over 100');
+			throw new Error(t('admin.users.durationTooLong'));
 		}
 
 		let minutes = duration * multipliers[durationUnit];
-		let durationText = `${duration} ${durationUnit}${duration === 1 ? '' : 's'}`;
+		let durationText = t(durationLabelKeys[durationUnit], {count: duration});
 
 		if (forever) {
-			durationText = 'forever';
+			durationText = t('admin.users.forever');
 			minutes = -1;
 		}
 
@@ -94,13 +104,13 @@ export default function BanUser(props: Props) {
 				delete_published_solves: deletePublishedSolves,
 			});
 		} catch (e) {
-			setError(e instanceof Error ? e.message : 'Failed to ban user');
+			setError(e instanceof Error ? e.message : t('admin.users.banFailed'));
 			return;
 		} finally {
 			setLoading(false);
 		}
 
-		toastSuccess(`Banned ${user.username} for ${durationText}`);
+		toastSuccess(t('admin.users.bannedFor', {name: user.username, duration: durationText}));
 		props.onComplete?.();
 	}
 
@@ -109,11 +119,11 @@ export default function BanUser(props: Props) {
 	return (
 		<div>
 			<DialogHeader
-				title={`Ban ${user.username}`}
-				description="If this user has broken a rule, you can ban them here. You can either ban them for a set amount of time or forever"
+				title={t('admin.users.banNamedUser', {name: user.username})}
+				description={t('admin.users.banDescription')}
 			/>
 			<Field>
-				<FieldLabel htmlFor={`${fieldId}-1`}>{'Reason (user-facing)'}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-1`}>{t('admin.users.reasonPublic')}</FieldLabel>
 				<AutosizeTextarea
 					onChange={setReason}
 					name="reason"
@@ -125,7 +135,7 @@ export default function BanUser(props: Props) {
 				className={`mt-5 grid grid-cols-2 gap-5 ${forever ? 'pointer-events-none opacity-60' : ''}`}
 			>
 				<Field className="mb-2">
-					<FieldLabel htmlFor={`${fieldId}-2`}>{'Count'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-2`}>{t('admin.users.count')}</FieldLabel>
 					<Input
 						disabled={forever}
 						type="number"
@@ -137,32 +147,32 @@ export default function BanUser(props: Props) {
 				</Field>
 				<NativeSelectField
 					disabled={forever}
-					legend="Duration type"
+					legend={t('admin.users.durationType')}
 					name="durationType"
 					value={durationUnit}
 					onChange={setDurationUnit}
 				>
-					<option value="minute">Minute</option>
-					<option value="hour">Hour</option>
-					<option value="day">Day</option>
-					<option value="week">Week</option>
-					<option value="month">Month</option>
-					<option value="year">Year</option>
+					<option value="minute">{t('common.minute')}</option>
+					<option value="hour">{t('common.hour')}</option>
+					<option value="day">{t('common.day2')}</option>
+					<option value="week">{t('common.week')}</option>
+					<option value="month">{t('common.month')}</option>
+					<option value="year">{t('common.year')}</option>
 				</NativeSelectField>
 			</div>
 			<div className="my-5 w-full">
 				<Checkbox
-					text="Delete all published solves"
+					text={t('admin.users.deletePublishedSolves')}
 					onCheckedChange={() => toggleDeletePublishedSolves()}
 					checked={deletePublishedSolves}
 				/>
 				<Checkbox
-					text="Ban user forever"
+					text={t('admin.users.banForever')}
 					onCheckedChange={() => toggleForever()}
 					checked={forever}
 				/>
 				<Checkbox
-					text="User was cheating in 1v1 (refunds ELO)"
+					text={t('admin.users.cheatingRefundElo')}
 					onCheckedChange={() => toggleCheatingIn1v1()}
 					checked={cheatingIn1v1}
 				/>
@@ -175,7 +185,7 @@ export default function BanUser(props: Props) {
 					disabled={disabled || loading}
 					aria-busy={loading}
 				>
-					{'Ban user'}
+					{t('admin.users.ban')}
 					{loading ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 				<ButtonError text={error} />

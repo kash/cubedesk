@@ -2,6 +2,7 @@ import Cover from '@/components/common/Cover';
 import {useMe} from '@/util/hooks/useMe';
 import React, {ReactNode} from 'react';
 import {useHistory} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	ignore?: boolean;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function LoggedInOnly(props: Props) {
+	const {t} = useTranslation();
 	const {children, ignore, noPadding} = props;
 
 	const history = useHistory();
@@ -26,7 +28,7 @@ export default function LoggedInOnly(props: Props) {
 	}
 
 	return (
-		<Cover tagText="Sign up" noPadding={noPadding} onClick={onClick}>
+		<Cover tagText={t('auth.signUp')} noPadding={noPadding} onClick={onClick}>
 			{children}
 		</Cover>
 	);

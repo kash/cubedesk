@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {Alert, AlertDescription, AlertTitle} from '@/components/ui/alert';
 import {Button} from '@/components/ui/button';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@/components/ui/collapsible';
@@ -18,6 +19,7 @@ export default function TrainerCsvImport({
 	onBusyChange: (busy: boolean) => void;
 	onClose: () => void;
 }) {
+	const {t} = useTranslation();
 	const [csv, setCsv] = useState('');
 	const [preview, setPreview] = useState<Preview | null>(null);
 	const [busy, setBusy] = useState(false);
@@ -34,7 +36,7 @@ export default function TrainerCsvImport({
 		setResult('');
 		if (!file) return;
 		if (file.size > MAX_CSV_BYTES) {
-			setError('Choose a CSV file no larger than 5 MiB.');
+			setError(t('admin.trainer.fileTooLarge'));
 			return;
 		}
 		setBusy(true);
@@ -69,7 +71,12 @@ export default function TrainerCsvImport({
 				fingerprint: preview.fingerprint,
 			});
 			setResult(
-				`Import complete: ${output.created} added, ${output.updated} updated, ${output.unchanged} unchanged. ${output.total} algorithms in the catalog.`,
+				t('admin.trainer.importComplete', {
+					created: output.created,
+					updated: output.updated,
+					unchanged: output.unchanged,
+					total: output.total,
+				}),
 			);
 			setPreview(null);
 			onImported();
@@ -82,24 +89,17 @@ export default function TrainerCsvImport({
 	}
 	return (
 		<section className="space-y-4">
-			<p className="text-text/60 text-sm">
-				Match records by ID. Algorithms absent from the file stay unchanged. Preview all
-				changes before importing. Legacy Pro columns are ignored.
-			</p>
-			<p className="text-text/60 text-sm">
-				Required columns: id, name, cube_type, algo_type. Optional columns default to empty
-				text, published status, and zero rotation when omitted. Blank fields clear existing
-				values.
-			</p>
+			<p className="text-text/60 text-sm">{t('admin.trainer.importInstructions')}</p>
+			<p className="text-text/60 text-sm">{t('admin.trainer.requiredColumns')}</p>
 			<Input
 				type="file"
 				accept=".csv,text/csv"
-				aria-label="Trainer CSV file"
+				aria-label={t('admin.trainerCsvFile')}
 				disabled={busy}
 				onChange={(event) => void readFile(event.target.files?.[0])}
 			/>
 			<Button disabled={busy || !csv} onClick={() => void previewFile()}>
-				{busy ? 'Working…' : 'Preview import'}
+				{busy ? t('common.working') : t('admin.trainer.previewImport')}
 			</Button>
 			{error && (
 				<Alert variant="destructive">
@@ -114,16 +114,17 @@ export default function TrainerCsvImport({
 			{preview && (
 				<div className="space-y-4">
 					<p>
-						{preview.created} new · {preview.updated} changed · {preview.unchanged}{' '}
-						unchanged
+						{preview.created} {t('admin.trainer.newCount')} {preview.updated}{' '}
+						{t('admin.trainer.changedCount')} {preview.unchanged}{' '}
+						{t('admin.trainer.unchangedCount')}
 					</p>
 					{preview.errors.length > 0 && (
 						<Alert variant="destructive">
-							<AlertTitle>Fix these errors before importing:</AlertTitle>
+							<AlertTitle>{t('common.fixTheseErrorsBeforeImporting')}</AlertTitle>
 							<ul className="max-h-48 overflow-auto">
 								{preview.errors.map((issue, i) => (
 									<li key={i}>
-										Row {issue.row}: {issue.message}
+										{t('admin.trainer.row')} {issue.row}: {issue.message}
 									</li>
 								))}
 							</ul>
@@ -131,13 +132,11 @@ export default function TrainerCsvImport({
 					)}
 					{preview.warnings.length > 0 && (
 						<Alert>
-							<AlertTitle>
-								Warnings — these records will still be imported:
-							</AlertTitle>
+							<AlertTitle>{t('admin.trainer.importWarningsTitle')}</AlertTitle>
 							<ul className="max-h-48 overflow-auto">
 								{preview.warnings.map((issue, i) => (
 									<li key={i}>
-										Row {issue.row}: {issue.message}
+										{t('admin.trainer.row')} {issue.row}: {issue.message}
 									</li>
 								))}
 							</ul>
@@ -169,13 +168,14 @@ export default function TrainerCsvImport({
 												<p className="font-semibold">{field.field}</p>
 												<div className="grid gap-2 sm:grid-cols-2">
 													<pre className="text-text/60 break-words whitespace-pre-wrap">
-														Before:{' '}
+														{t('admin.trainer.before')}{' '}
 														{field.before === null
 															? '(new)'
 															: String(field.before) || '(empty)'}
 													</pre>
 													<pre className="break-words whitespace-pre-wrap">
-														After: {String(field.after) || '(empty)'}
+														{t('admin.trainer.after')}{' '}
+														{String(field.after) || '(empty)'}
 													</pre>
 												</div>
 											</div>
@@ -188,12 +188,13 @@ export default function TrainerCsvImport({
 						disabled={busy || !!preview.errors.length}
 						onClick={() => void confirm()}
 					>
-						Confirm import of {preview.total} algorithms
+						{t('admin.trainer.confirmImportOf')} {preview.total}{' '}
+						{t('admin.trainer.algorithms')}
 					</Button>
 				</div>
 			)}
 			<Button variant="secondary" disabled={busy} onClick={onClose}>
-				{result ? 'Done' : 'Cancel'}
+				{result ? t('common.done') : t('common.cancel')}
 			</Button>
 		</section>
 	);

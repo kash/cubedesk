@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {DemoImportProvider} from '@/components/login/DemoImport';
 import {setGeneral} from '@/actions/general';
 import Banned from '@/components/layout/Banned';
@@ -33,6 +34,7 @@ export default function App(props: Props = {}) {
 }
 
 function AppContent(props: Props) {
+	const {t} = useTranslation();
 	const {path, standalone, children, hideTopNav, restricted} = props;
 
 	const dispatch = useDispatch();
@@ -97,11 +99,7 @@ function AppContent(props: Props) {
 		<>
 			<Header
 				path={path ?? ''}
-				title={
-					path === '/' && !me
-						? "CubeDesk - Rubik's Cube Timer | 1v1 | Trainer"
-						: undefined
-				}
+				title={path === '/' && !me ? t('navigation.homePageTitle') : undefined}
 			/>
 			{me ? <LoadingCover fadeOut={appLoaded} /> : null}
 			{appLoaded || (!me && path === '/') ? (

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Emblem from '@/components/common/Emblem';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
@@ -20,6 +21,7 @@ import {Bluetooth, DotsThree} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 
 export default function SmartCube() {
+	const {t, i18n} = useTranslation();
 	const [bluetoothErrorMessageDialog, setBluetoothErrorMessageDialog] = React.useState<{
 		props: Record<string, never>;
 	} | null>(null);
@@ -42,6 +44,7 @@ export default function SmartCube() {
 		() =>
 			new Connect({
 				isActive: () => mountedRef.current,
+				translate: (key) => i18n.t(key),
 				confirmSolved: (device) =>
 					new Promise<boolean>((resolve) => {
 						confirmationRef.current?.(false);
@@ -49,6 +52,7 @@ export default function SmartCube() {
 						setPendingDevice(device);
 					}),
 				onDisconnected: () => {
+					toastError(i18n.t('timer.smartCube.disconnected'));
 					confirmationRef.current?.(false);
 					confirmationRef.current = null;
 					if (mountedRef.current) setPendingDevice(null);
@@ -269,7 +273,7 @@ export default function SmartCube() {
 				setBluetoothErrorMessageDialog({props: {}});
 			}
 		} catch (e) {
-			toastError('Web Bluetooth API error' + (e ? `: ${e}` : ''));
+			toastError(t('timer.bluetooth.apiError', {detail: e ? `: ${e}` : ''}));
 			// chrome://flags/#enable-experimental-web-platform-features
 		}
 	}
@@ -286,31 +290,32 @@ export default function SmartCube() {
 	}
 
 	function toggleManageSmartCubes() {
-		setManageSmartCubesDialog({props: {}, title: 'Manage smart cubes'});
+		setManageSmartCubesDialog({props: {}, title: t('timer.smartCube.manage')});
 	}
 
 	let actionButton: ReactNode = null;
 	const dropdown = (
 		<ActionMenu
+			menuLabel={t('common.openMenu')}
 			triggerProps={{
 				variant: 'ghost',
 			}}
 			icon={<DotsThree />}
 			options={[
 				{
-					text: 'Mark as solved',
+					text: t('timer.smartCube.markAsSolved'),
 					hidden: !smartCubeConnected,
 					disabled: !!timeStartedAt,
 					onClick: () => resetMoves(true),
 				},
 				{
-					text: 'Disconnect',
+					text: t('timer.smartCube.disconnect'),
 					hidden: !smartCubeConnected,
 					disabled: !!timeStartedAt,
 					onClick: disconnectBluetooth,
 				},
 				{
-					text: 'Manage smart cubes',
+					text: t('timer.smartCube.manage'),
 					disabled: !!timeStartedAt,
 					onClick: toggleManageSmartCubes,
 				},
@@ -324,7 +329,7 @@ export default function SmartCube() {
 		emblem = <Emblem small orange icon={<Bluetooth />} />;
 		actionButton = (
 			<Button variant="secondary" disabled>
-				{'Connecting...'}
+				{t('timer.smartCube.connecting')}
 			</Button>
 		);
 		battery = null;
@@ -334,7 +339,7 @@ export default function SmartCube() {
 		emblem = <Emblem small red icon={<Bluetooth />} />;
 		actionButton = (
 			<Button variant="secondary" onClick={connectBluetooth}>
-				{'Connect'}
+				{t('common.connect')}
 			</Button>
 		);
 		battery = null;
@@ -364,7 +369,7 @@ export default function SmartCube() {
 				}}
 			>
 				{bluetoothErrorMessageDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<BluetoothErrorMessage {...bluetoothErrorMessageDialog.props} />
 					</DialogContent>
 				)}
@@ -378,17 +383,21 @@ export default function SmartCube() {
 				}}
 			>
 				{manageSmartCubesDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<DialogHeader title={manageSmartCubesDialog.title} />
 						<ManageSmartCubes {...manageSmartCubesDialog.props} />
 					</DialogContent>
 				)}
 			</Dialog>
 			<Dialog open={pendingDevice !== null} onOpenChange={() => {}}>
-				<DialogContent hideCloseButton closeOnEscape={false}>
+				<DialogContent
+					closeLabel={t('common.closeDialog')}
+					hideCloseButton
+					closeOnEscape={false}
+				>
 					<DialogHeader
-						title="Confirm that cube is solved"
-						description="Please confirm that your smart cube is solved before proceeding."
+						title={t('timer.smartCube.confirmSolved')}
+						description={t('timer.smartCube.confirmSolvedDescription')}
 					/>
 					<SolveCheck
 						onComplete={() => {

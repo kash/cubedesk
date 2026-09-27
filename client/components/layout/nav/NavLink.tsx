@@ -5,7 +5,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {Lock} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 interface Props extends NavLinkProps {
 	collapsed?: boolean;
@@ -16,20 +16,25 @@ export default function NavLink(props: Props) {
 	const {name, icon, newTag, loginRequired, collapsed, selected, link} = props;
 
 	const me = useMe();
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const translatedName = t(name);
 
 	let infoTag: ReactNode = null;
 	if (loginRequired && !me) {
 		infoTag = (
-			<Badge variant="unfilled" size="sm" className="text-amber-600" aria-label="Restricted">
+			<Badge
+				variant="unfilled"
+				size="sm"
+				className="text-amber-600"
+				aria-label={t('navigation.restricted')}
+			>
 				<Lock weight="fill" />
 			</Badge>
 		);
 	} else if (newTag) {
 		infoTag = (
 			<Badge variant="unfilled" size="sm" className="text-amber-600">
-				new
+				{t('navigation.new')}
 			</Badge>
 		);
 	}
@@ -62,7 +67,11 @@ export default function NavLink(props: Props) {
 	}
 
 	const linkContent = (
-		<Link to={link} className={linkClasses.join(' ')} aria-label={collapsed ? translatedName : undefined}>
+		<Link
+			to={link}
+			className={linkClasses.join(' ')}
+			aria-label={collapsed ? translatedName : undefined}
+		>
 			<span className="text-xl">{icon}</span>
 			{navLabel}
 		</Link>

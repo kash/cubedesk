@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
 import {ITimerContext, useTimerContext} from '@/components/timer/Timer';
@@ -6,6 +7,7 @@ import Stackmat from '@/util/vendor/stackmat';
 import React, {useEffect, useRef, useState} from 'react';
 
 export default function StackMat() {
+	const {t} = useTranslation();
 	const stackMatId = useSettings('stackmat_id');
 
 	const context = useTimerContext();
@@ -64,7 +66,8 @@ export default function StackMat() {
 
 	return (
 		<StartInstructions>
-			Place hands on <span>StackMat</span> to start
+			{t('common.placeHandsOn')} <span>{t('timer.inputTypes.stackmat')}</span>{' '}
+			{t('timer.toStart')}
 		</StartInstructions>
 	);
 }

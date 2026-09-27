@@ -10,7 +10,7 @@ import {Serialized} from '@/types/serialized';
 import {Solve} from '@/types/solve';
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	gameType: GameType;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function TargetSession(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [historyDialog, setHistoryDialog] = React.useState<{
 		props: React.ComponentProps<typeof History>;
 		width: number;
@@ -35,7 +35,7 @@ export default function TargetSession(props: Props) {
 		setHistoryDialog({
 			props: {disabled: true, solves: gameSolves},
 			width: 500,
-			title: t('Solves'),
+			title: t('solves.solves'),
 		});
 	}
 
@@ -47,7 +47,7 @@ export default function TargetSession(props: Props) {
 			rejoin = (
 				<Button variant="default" asChild>
 					<Link to={`${getGameLink(gameType)}/${session.match.link_code}`}>
-						{t('Rejoin Match')}
+						{t('community.rejoinMatch')}
 					</Link>
 				</Button>
 			);
@@ -68,7 +68,9 @@ export default function TargetSession(props: Props) {
 								className={`relative w-full py-2 ${index < participants.length - 1 ? 'border-button border-b' : ''}`}
 							>
 								<div className="absolute top-2.5 right-[5px]">
-									{p.won ? <Emblem small text={t('Winner')} green /> : null}
+									{p.won ? (
+										<Emblem small text={t('community.winner')} green />
+									) : null}
 								</div>
 								<Avatar small target="_blank" user={p.user} />
 							</div>
@@ -84,15 +86,7 @@ export default function TargetSession(props: Props) {
 			<div className="border-button relative mb-5 box-border rounded border-2 p-2.5">
 				<div className="flex flex-col">
 					<h4 className="text-text text-[1.4rem]">
-						<span className="text-primary mr-[5px] inline-block font-bold">
-							{gameSolves.length}
-						</span>
-						{t(
-							gameSolves.length === 1
-								? '{count} solve completed'
-								: '{count} solves completed',
-							{count: gameSolves.length},
-						)}
+						{t('community.solvesCompleted', {count: gameSolves.length})}
 					</h4>
 					<span className="text-text mt-[5px] text-[0.9rem] opacity-70">
 						{new Date(session.created_at).toLocaleString()}
@@ -100,7 +94,7 @@ export default function TargetSession(props: Props) {
 				</div>
 				<div className="absolute top-2.5 right-2.5">
 					<Button variant="secondary" onClick={openSolves}>
-						{t('View Solves')}
+						{t('community.viewSolves')}
 					</Button>
 				</div>
 				{players}
@@ -114,7 +108,7 @@ export default function TargetSession(props: Props) {
 				}}
 			>
 				{historyDialog && (
-					<DialogContent width={historyDialog.width}>
+					<DialogContent closeLabel={t('common.closeDialog')} width={historyDialog.width}>
 						<DialogHeader title={historyDialog.title} />
 						<History {...historyDialog.props} />
 					</DialogContent>

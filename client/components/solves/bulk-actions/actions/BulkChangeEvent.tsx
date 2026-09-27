@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {initAllSolves} from '@/components/layout/init';
 import EventTypeSelector from '@/components/solves/bulk-actions/actions/EventTypeSelector';
@@ -15,8 +16,10 @@ interface Props {
 }
 
 export default function BulkChangeEventSolvesButton(props: Props) {
-	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
-		typeof ConfirmDialog
+	const {t} = useTranslation();
+	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
+		React.ComponentProps<typeof ConfirmDialog>,
+		'labels'
 	> | null>(null);
 	const [eventTypeSelectorDialog, setEventTypeSelectorDialog] = React.useState<{
 		props: React.ComponentProps<typeof EventTypeSelector>;
@@ -31,13 +34,12 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 
 	function onSelectCubeType(cubeType: CubeType) {
 		setConfirmDialog({
-			buttonText: `Change event type`,
-			title: 'Bulk change event type',
-			description:
-				'You are about to set the event type of the selected solves. This is irreversible. Be careful.',
+			buttonText: t('solves.bulk.changeEvent.button'),
+			title: t('solves.bulk.changeEvent.title'),
+			description: t('solves.bulk.changeEvent.description'),
 			infoBoxes: [
-				{label: 'Solves', value: solves.length.toLocaleString()},
-				{label: 'New Event Type', value: cubeType.name},
+				{label: t('solves.solves'), value: solves.length.toLocaleString()},
+				{label: t('solves.bulk.changeEvent.newType'), value: cubeType.name},
 			],
 			triggerAction: run,
 		});
@@ -50,9 +52,8 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 
 			await initAllSolves(true);
 
-			const solvesUpdated = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
 			toastSuccess(
-				`Successfully changed the event type of ${solvesUpdated} to ${cubeType.name}.`,
+				t('solves.bulk.changeEvent.success', {count: updateCount, name: cubeType.name}),
 			);
 		}
 	}
@@ -64,10 +65,19 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 	return (
 		<>
 			<Button variant="secondary" disabled={disabled} onClick={onClick}>
-				{'Change Event'}
+				{t('solves.bulk.changeEvent.label')}
 			</Button>
 			{confirmDialog && (
 				<ConfirmDialog
+					labels={{
+						cancel: t('common.cancel'),
+						inputPrompt: t('common.confirmInputPrompt', {
+							word: t('common.confirmWord'),
+						}),
+						confirmWord: t('common.confirmWord'),
+						genericError: t('common.genericError'),
+						defaultDescription: t('common.confirmDescription'),
+					}}
 					open={confirmDialog !== null}
 					onOpenChange={(open) => {
 						if (!open) {
@@ -89,7 +99,7 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 				}}
 			>
 				{eventTypeSelectorDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<EventTypeSelector
 							{...eventTypeSelectorDialog.props}
 							onComplete={(...args) => {

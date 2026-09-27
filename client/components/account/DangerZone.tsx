@@ -2,8 +2,10 @@ import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {Button} from '@/components/ui/button';
 import {api} from '@/util/api';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 export default function DangerZone() {
+	const {t} = useTranslation();
 	const deleteAccountMutation = api.user.deleteAccount.useMutation();
 
 	async function deleteAccount() {
@@ -13,22 +15,24 @@ export default function DangerZone() {
 
 	return (
 		<div>
-			<p>
-				Be careful here. If you click the button below, you will delete your entire account.
-				All of your solves, sessions, stats, etc. will get deleted forever. Proceed with
-				caution.
-			</p>
+			<p>{t('auth.deleteAccountWarning')}</p>
 			<ConfirmDialog
+				labels={{
+					cancel: t('common.cancel'),
+					inputPrompt: t('common.confirmInputPrompt', {word: t('common.confirmWord')}),
+					confirmWord: t('common.confirmWord'),
+					genericError: t('common.genericError'),
+					defaultDescription: t('common.confirmDescription'),
+				}}
 				{...{
-					title: 'Delete account',
-					description:
-						"Be careful here. You're about to delete your entire account. All of your CubeDesk will be deleted and will not be recoverable.",
+					title: t('auth.deleteAccount'),
+					description: t('auth.deleteAccountConfirm'),
 					triggerAction: deleteAccount,
-					buttonText: 'Delete account and all data',
+					buttonText: t('auth.deleteAccountAndData'),
 				}}
 			>
 				<Button variant="destructive" size="lg">
-					{'Delete Account'}
+					{t('auth.deleteAccount')}
 				</Button>
 			</ConfirmDialog>
 		</div>

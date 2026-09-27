@@ -6,6 +6,7 @@ import {Serialized} from '@/types/serialized';
 import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	user: Serialized<AdminUser>;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function UserActions(props: Props) {
+	const {t} = useTranslation();
 	const [banUserDialog, setBanUserDialog] = React.useState<{
 		props: React.ComponentProps<typeof BanUser>;
 		onComplete: React.ComponentProps<typeof BanUser>['onComplete'];
@@ -29,7 +31,7 @@ export default function UserActions(props: Props) {
 		});
 
 		updateUser();
-		toastSuccess('Successfully unbanned user');
+		toastSuccess(t('admin.users.unbanned'));
 	}
 
 	async function toggleVerifyUser() {
@@ -39,11 +41,7 @@ export default function UserActions(props: Props) {
 		});
 
 		updateUser();
-		let flagMessage = 'verified';
-		if (user.verified) {
-			flagMessage = 'unverified';
-		}
-		toastSuccess(`Successfully ${flagMessage} user`);
+		toastSuccess(t(user.verified ? 'admin.users.unverified' : 'admin.users.verified'));
 	}
 
 	function toggleBan() {
@@ -58,10 +56,10 @@ export default function UserActions(props: Props) {
 		<>
 			<div className="flex shrink-0 flex-wrap items-center gap-2">
 				<Button variant="destructive" onClick={toggleBan}>
-					{banned ? 'Unban user' : 'Ban user'}
+					{banned ? t('admin.users.unban') : t('admin.users.ban')}
 				</Button>
 				<Button variant="outline" onClick={toggleVerifyUser}>
-					{user.verified ? 'Unverify user' : 'Verify user'}
+					{user.verified ? t('admin.users.unverify') : t('admin.users.verify')}
 				</Button>
 			</div>
 			<Dialog
@@ -73,7 +71,7 @@ export default function UserActions(props: Props) {
 				}}
 			>
 				{banUserDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<BanUser
 							{...banUserDialog.props}
 							onComplete={(...args) => {

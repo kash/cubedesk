@@ -25,7 +25,7 @@ export default function NativeSelectField(props: InputProps<Props>) {
 				<NativeSelect
 					{...inputProps}
 					disabled={props.disabled}
-					aria-label={props.legend || 'Select option'}
+					aria-label={props.legend || defaultOption}
 					aria-invalid={!!props.error}
 				>
 					{defaultOp}

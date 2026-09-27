@@ -8,6 +8,7 @@ import {trpc} from '@/util/trpc';
 import {Download, ThumbsDown, ThumbsUp} from 'phosphor-react';
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	downloadedByUser: boolean;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function PublicTrainer(props: Props) {
+	const {t} = useTranslation();
 	const {
 		id,
 		colors,
@@ -64,13 +66,11 @@ export default function PublicTrainer(props: Props) {
 			});
 
 			setDownloaded(true);
-			toastSuccess(
-				'Successfully downloaded trainer. You can find it under your Trainer -> Custom Trainer',
-			);
+			toastSuccess(t('trainer.downloadSuccess'));
 		} catch (e) {
 			console.error(e);
 
-			toastError(e instanceof Error ? e.message : 'Could not download trainer');
+			toastError(e instanceof Error ? e.message : t('trainer.downloadFailed'));
 		}
 	}
 
@@ -95,7 +95,7 @@ export default function PublicTrainer(props: Props) {
 			</div>
 			<div className="mt-5 flex flex-row flex-wrap gap-2.5">
 				<Button variant={liked ? 'default' : 'secondary'} onClick={likeTrainer}>
-					{`${likes} Like${likes === 1 ? '' : 's'}`}
+					{t('trainer.likes', {count: likes})}
 					{liked ? <ThumbsUp /> : <ThumbsDown />}
 				</Button>
 				{trainerOwnedByUser ? null : (
@@ -104,7 +104,7 @@ export default function PublicTrainer(props: Props) {
 						disabled={downloadedFinal}
 						onClick={downloadTrainer}
 					>
-						{downloadedFinal ? 'Downloaded' : 'Download'}
+						{downloadedFinal ? t('trainer.downloaded') : t('trainer.download')}
 						<Download weight="bold" />
 					</Button>
 				)}

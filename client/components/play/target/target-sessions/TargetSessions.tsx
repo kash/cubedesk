@@ -7,7 +7,7 @@ import {GameType} from '@/shared/match/consts';
 import {GameSessionWithRelations} from '@/types/game';
 import {Serialized} from '@/types/serialized';
 import {trpc} from '@/util/trpc';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {useEffect, useState} from 'react';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function TargetSessions(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const {gameType} = props;
 	const {name} = getGameMetaData(gameType);
 
@@ -37,10 +37,10 @@ export default function TargetSessions(props: Props) {
 			</div>
 		);
 	} else if (sessions && !sessions.length) {
-		body = <Empty text="You don't have any sessions at the moment" />;
+		body = <Empty text={t('community.noSessions')} />;
 	} else {
 		body = (
-			<div className="mx-auto mb-[100px] mt-[70px] text-2xl text-text">
+			<div className="text-text mx-auto mt-[70px] mb-[100px] text-2xl">
 				<LoadingIcon />
 			</div>
 		);
@@ -48,7 +48,7 @@ export default function TargetSessions(props: Props) {
 
 	return (
 		<div>
-			<DialogHeader title={t('Sessions for {name}', {name: t(name)})} />
+			<DialogHeader title={t('community.sessionsFor', {name: t(name)})} />
 			<div className="flex flex-col">{body}</div>
 		</div>
 	);

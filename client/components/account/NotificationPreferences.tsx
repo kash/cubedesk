@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Checkbox from '@/components/common/Checkbox';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {NotificationPreferenceKey} from '@/types/notification-preference';
@@ -5,6 +6,7 @@ import {trpc} from '@/util/trpc';
 import React, {ReactNode, useEffect, useState} from 'react';
 
 export default function NotificationPreferences() {
+	const {t} = useTranslation();
 	const [prefs, setPrefs] = useState({});
 
 	useEffect(() => {
@@ -27,19 +29,19 @@ export default function NotificationPreferences() {
 	const notificationTypeNames = [
 		{
 			key: 'friend_request',
-			label: 'Friend request accepted',
+			label: t('settings.notifications.friendRequestAccepted'),
 		},
 		{
 			key: 'friend_request_accept',
-			label: 'Friend request received',
+			label: t('settings.notifications.friendRequestReceived'),
 		},
 		{
 			key: 'elo_refund',
-			label: 'ELO refunded after playing a cheater',
+			label: t('settings.notifications.eloRefunded'),
 		},
 		{
 			key: 'marketing_emails',
-			label: 'Tips, updates, and other emails from CubeDesk',
+			label: t('settings.notifications.marketingEmails'),
 		},
 	];
 
@@ -63,7 +65,7 @@ export default function NotificationPreferences() {
 
 	return (
 		<div>
-			<InputLegend text="Email Notifications" />
+			<InputLegend text={t('settings.emailNotifications')} />
 			{checkboxes}
 		</div>
 	);

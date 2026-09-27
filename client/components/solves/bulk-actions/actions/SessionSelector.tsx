@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import SessionPicker from '@/components/sessions/SessionPicker';
 import {Button} from '@/components/ui/button';
 import {DialogHeader} from '@/components/ui/dialog';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function SessionSelector(props: Props) {
+	const {t} = useTranslation();
 	const {solves, onComplete} = props;
 	const [session, setSession] = useState<Session | null>(null);
 
@@ -19,7 +21,8 @@ export default function SessionSelector(props: Props) {
 	if (session) {
 		selectedSession = (
 			<p className="border-text/20 text-text mt-4 mb-5 table border-b-4 border-solid text-2xl">
-				Move <span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
+				{t('common.move')}{' '}
+				<span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
 				<span className="text-warning">{session.name}</span>
 			</p>
 		);
@@ -28,8 +31,8 @@ export default function SessionSelector(props: Props) {
 	return (
 		<div>
 			<DialogHeader
-				title="Move solves"
-				description="Select a session to move the selected solves to"
+				title={t('solves.moveSolves')}
+				description={t('solves.bulk.selectTargetSession')}
 			/>
 			<div className="mb-6">
 				<SessionPicker stateless onChange={(ses) => setSession(ses)} />
@@ -43,7 +46,7 @@ export default function SessionSelector(props: Props) {
 				disabled={!session}
 				size="lg"
 			>
-				{'Continue'}
+				{t('common.continue')}
 			</Button>
 		</div>
 	);

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {Solve} from '@/types/solve';
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default function ExecutionTime(props: Props) {
+	const {t} = useTranslation();
 	const {solve} = props;
 
 	const steps = getSolveStepsWithoutParents(solve);
@@ -30,9 +32,9 @@ export default function ExecutionTime(props: Props) {
 				}}
 			>
 				<p className="m-0 flex min-h-8 items-end text-center text-[0.85rem] opacity-90" />
-				<span className="mt-[3px] table h-[5px] w-full rounded-[3px] bg-button" />
+				<span className="bg-button mt-[3px] table h-[5px] w-full rounded-[3px]" />
 				<p className="m-0 mt-[5px] min-h-8 text-center text-[0.85rem] opacity-70" />
-			</div>
+			</div>,
 		);
 
 		parts.push(
@@ -46,17 +48,19 @@ export default function ExecutionTime(props: Props) {
 				<p className="m-0 flex min-h-8 items-end text-center text-[0.85rem] opacity-90">
 					{STEP_NAME_MAP[step.step_name]}
 				</p>
-				<span className="mt-[3px] table h-[5px] w-full rounded-[3px] bg-primary" />
+				<span className="bg-primary mt-[3px] table h-[5px] w-full rounded-[3px]" />
 				<p className="m-0 mt-[5px] min-h-8 text-center text-[0.85rem] opacity-70">
 					{getTimeString(step.total_time ?? 0, 1)}s
 				</p>
-			</div>
+			</div>,
 		);
 	}
 
 	return (
 		<div>
-			<h3 className="mb-5 mt-0 text-[1.1rem] font-semibold text-text">Execution Time</h3>
+			<h3 className="text-text mt-0 mb-5 text-[1.1rem] font-semibold">
+				{t('trainer.executionTime')}
+			</h3>
 			<div className="flex w-full flex-row items-start">{parts}</div>
 		</div>
 	);

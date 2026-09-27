@@ -3,7 +3,6 @@ import {Button} from '@/components/ui/button';
 import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group';
 import React, {ReactNode, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {useI18n} from '@/i18n';
 
 export interface HorizontalNavTab {
 	id: string;
@@ -15,6 +14,7 @@ export interface HorizontalNavTab {
 interface Props {
 	tabs: HorizontalNavTab[];
 	legend?: string;
+	optionsLabel?: string;
 	showBackgroundForUnselectedTabs?: boolean;
 	onChange?: (id: string, tab: HorizontalNavTab) => void;
 	tab?: HorizontalNavTab; // Selected tab
@@ -22,8 +22,7 @@ interface Props {
 }
 
 export default function HorizontalNav(props: Props) {
-	const {onChange, legend, showBackgroundForUnselectedTabs} = props;
-	const {t} = useI18n();
+	const {onChange, legend, optionsLabel, showBackgroundForUnselectedTabs} = props;
 
 	const {tabs} = props;
 	const [localTabId, setLocalTabId] = useState<string | undefined>(undefined);
@@ -41,11 +40,11 @@ export default function HorizontalNav(props: Props) {
 	if (!tabs.some((tab) => tab.link)) {
 		return (
 			<div className="space-y-2">
-				{legend && <InputLegend text={t(legend)} />}
+				{legend && <InputLegend text={legend} />}
 				<ToggleGroup
 					type="single"
 					value={selectedId}
-					aria-label={t(legend || 'Options')}
+					aria-label={legend || optionsLabel}
 					variant={showBackgroundForUnselectedTabs ? 'outline' : 'default'}
 					className="flex-wrap"
 					onValueChange={(id) => {
@@ -57,7 +56,7 @@ export default function HorizontalNav(props: Props) {
 						.filter((tab) => !tab.skip)
 						.map((tab) => (
 							<ToggleGroupItem key={tab.id} value={tab.id}>
-								{t(tab.value)}
+								{tab.value}
 							</ToggleGroupItem>
 						))}
 				</ToggleGroup>
@@ -86,10 +85,10 @@ export default function HorizontalNav(props: Props) {
 			>
 				{tab.link ? (
 					<Link to={tab.link} aria-current={selected ? 'page' : undefined}>
-						{t(tab.value)}
+						{tab.value}
 					</Link>
 				) : (
-										t(tab.value)
+					tab.value
 				)}
 			</Button>,
 		);
@@ -97,7 +96,7 @@ export default function HorizontalNav(props: Props) {
 
 	let legendDiv: ReactNode = null;
 	if (legend) {
-		legendDiv = <InputLegend text={t(legend)} />;
+		legendDiv = <InputLegend text={legend} />;
 	}
 
 	return (

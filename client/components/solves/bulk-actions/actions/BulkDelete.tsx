@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {initAllSolves} from '@/components/layout/init';
 import {Button} from '@/components/ui/button';
@@ -12,8 +13,10 @@ interface Props {
 }
 
 export default function BulkDeleteSolvesButton(props: Props) {
-	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
-		typeof ConfirmDialog
+	const {t} = useTranslation();
+	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
+		React.ComponentProps<typeof ConfirmDialog>,
+		'labels'
 	> | null>(null);
 
 	const {solves, disabled} = props;
@@ -22,14 +25,11 @@ export default function BulkDeleteSolvesButton(props: Props) {
 	}, [solves, solves?.length]);
 
 	function onClick() {
-		const solvesToDelete = `${solves.length.toLocaleString()} solve${solves.length === 1 ? '' : 's'}`;
-
 		setConfirmDialog({
-			buttonText: `Delete ${solvesToDelete}`,
-			title: 'Bulk delete solves',
-			description:
-				'You are about to do a bulk deletion of solves. This is irreversible. Be careful.',
-			infoBoxes: [{label: 'Solves', value: solves.length.toLocaleString()}],
+			buttonText: t('solves.bulk.delete.button', {count: solves.length}),
+			title: t('solves.bulk.delete.title'),
+			description: t('solves.bulk.delete.description'),
+			infoBoxes: [{label: t('solves.solves'), value: solves.length.toLocaleString()}],
 			triggerAction: run,
 		});
 
@@ -40,18 +40,26 @@ export default function BulkDeleteSolvesButton(props: Props) {
 
 			await initAllSolves(true);
 
-			const solvesDeleted = `${deletedCount} solve${deletedCount === 1 ? '' : 's'}`;
-			toastSuccess(`Successfully deleted ${solvesDeleted}.`);
+			toastSuccess(t('solves.bulk.delete.success', {count: deletedCount}));
 		}
 	}
 
 	return (
 		<>
 			<Button variant="secondary" disabled={disabled} onClick={onClick}>
-				{'Delete'}
+				{t('solves.bulk.delete.label')}
 			</Button>
 			{confirmDialog && (
 				<ConfirmDialog
+					labels={{
+						cancel: t('common.cancel'),
+						inputPrompt: t('common.confirmInputPrompt', {
+							word: t('common.confirmWord'),
+						}),
+						confirmWord: t('common.confirmWord'),
+						genericError: t('common.genericError'),
+						defaultDescription: t('common.confirmDescription'),
+					}}
 					open={confirmDialog !== null}
 					onOpenChange={(open) => {
 						if (!open) {

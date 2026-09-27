@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import TrainerAlgorithmEditor from '@/components/admin/TrainerAlgorithmEditor';
 import TrainerCsvImport from '@/components/admin/TrainerCsvImport';
 import Empty from '@/components/common/Empty';
@@ -16,6 +17,7 @@ import React, {useEffect, useState} from 'react';
 type Result = Awaited<ReturnType<typeof trpc.adminTrainer.list.query>>;
 
 export default function AdminTrainer() {
+	const {t} = useTranslation();
 	const [query, setQuery] = useState('');
 	const [cubeType, setCubeType] = useState('');
 	const [algoType, setAlgoType] = useState('');
@@ -60,35 +62,36 @@ export default function AdminTrainer() {
 		<div className="space-y-5">
 			<div className="flex flex-wrap items-center justify-between gap-3">
 				<div>
-					<h2 className="text-xl font-semibold">Trainer algorithms</h2>
+					<h2 className="text-xl font-semibold">{t('trainer.trainerAlgorithms')}</h2>
 					<p className="text-text/60 text-sm">
 						{data?.initialized
-							? `PostgreSQL · ${data.catalogTotal} records · ${data.published} published`
-							: 'Awaiting first CSV import · using the legacy cache when available'}
+							? t('admin.trainer.catalogSummary', {
+									records: data.catalogTotal,
+									published: data.published,
+								})
+							: t('admin.trainer.awaitingFirstImport')}
 					</p>
 				</div>
 				<div className="flex gap-3">
 					<Button variant="secondary" onClick={() => setImporting(true)}>
-						Upload CSV
+						{t('common.uploadCsv')}
 					</Button>
 					<Button
 						disabled={!data?.initialized || loading || !!error}
 						onClick={() => setEditor({initial: null, revision: data!.revision})}
 					>
-						New algorithm
+						{t('trainer.newAlgorithm')}
 					</Button>
 				</div>
 			</div>
 			{data && !data.initialized && (
-				<p className="text-text/60 text-sm">
-					Upload your trainer CSV to initialize the catalog and start editing algorithms.
-				</p>
+				<p className="text-text/60 text-sm">{t('admin.trainer.initializeCatalogHint')}</p>
 			)}
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 				<Input
 					className="w-full"
-					placeholder="Search by ID or name"
-					aria-label="Search algorithms"
+					placeholder={t('common.searchByIdOrName')}
+					aria-label={t('trainer.searchAlgorithms')}
 					value={query}
 					onChange={(event) => {
 						setQuery(event.target.value);
@@ -96,7 +99,7 @@ export default function AdminTrainer() {
 					}}
 				/>
 				<NativeSelect
-					aria-label="Cube type filter"
+					aria-label={t('common.cubeTypeFilter')}
 					value={cubeType}
 					onChange={(event) => {
 						setCubeType(event.target.value);
@@ -104,7 +107,7 @@ export default function AdminTrainer() {
 						setPage(0);
 					}}
 				>
-					<option value="">All cubes</option>
+					<option value="">{t('common.allCubes')}</option>
 					{[...new Set(data?.sets.map((set) => set.cube_type))].sort().map((cube) => (
 						<option key={cube} value={cube}>
 							{cube}
@@ -112,14 +115,14 @@ export default function AdminTrainer() {
 					))}
 				</NativeSelect>
 				<NativeSelect
-					aria-label="Algorithm set filter"
+					aria-label={t('trainer.algorithmSetFilter')}
 					value={algoType}
 					onChange={(event) => {
 						setAlgoType(event.target.value);
 						setPage(0);
 					}}
 				>
-					<option value="">All sets</option>
+					<option value="">{t('common.allSets')}</option>
 					{[
 						...new Set(
 							data?.sets
@@ -135,26 +138,30 @@ export default function AdminTrainer() {
 						))}
 				</NativeSelect>
 				<NativeSelect
-					aria-label="Published status filter"
+					aria-label={t('admin.publishedStatusFilter')}
 					value={status}
 					onChange={(event) => {
 						setStatus(event.target.value as typeof status);
 						setPage(0);
 					}}
 				>
-					<option value="all">All statuses</option>
-					<option value="published">Published</option>
-					<option value="unpublished">Unpublished</option>
+					<option value="all">{t('common.allStatuses')}</option>
+					<option value="published">{t('common.published')}</option>
+					<option value="unpublished">{t('common.unpublished')}</option>
 				</NativeSelect>
 			</div>
 			{error && (
 				<Alert variant="destructive">
 					<AlertDescription>{error}</AlertDescription>
-					<Button onClick={refresh}>Retry</Button>
+					<Button onClick={refresh}>{t('common.retry')}</Button>
 				</Alert>
 			)}
 			{loading ? (
-				<div role="status" aria-label="Loading algorithms" className="space-y-3">
+				<div
+					role="status"
+					aria-label={t('trainer.loadingAlgorithms')}
+					className="space-y-3"
+				>
 					{[0, 1, 2, 3, 4].map((key) => (
 						<Skeleton key={key} aria-hidden className="h-12 w-full" />
 					))}
@@ -167,7 +174,13 @@ export default function AdminTrainer() {
 							<Table>
 								<TableHeader>
 									<TableRow>
-										{['ID', 'Name', 'Cube / set', 'Status', ''].map((label) => (
+										{[
+											'ID',
+											t('common.name'),
+											t('admin.trainer.cubeOrSet'),
+											t('common.status'),
+											'',
+										].map((label) => (
 											<TableHead key={label}>{label}</TableHead>
 										))}
 									</TableRow>
@@ -186,7 +199,9 @@ export default function AdminTrainer() {
 												{algorithm.cube_type} / {algorithm.algo_type}
 											</TableCell>
 											<TableCell>
-												{algorithm.active ? 'Published' : 'Unpublished'}
+												{algorithm.active
+													? t('common.published')
+													: t('common.unpublished')}
 											</TableCell>
 											<TableCell>
 												<Button
@@ -197,16 +212,18 @@ export default function AdminTrainer() {
 															revision: data.revision,
 														})
 													}
-													aria-label={`Edit ${algorithm.id}`}
+													aria-label={t('admin.trainer.editAlgorithm', {
+														id: algorithm.id,
+													})}
 												>
-													Edit
+													{t('common.edit')}
 												</Button>
 											</TableCell>
 										</TableRow>
 									))}
 								</TableBody>
 							</Table>
-							{!data.items.length && <Empty text="No matching algorithms." />}
+							{!data.items.length && <Empty text={t('admin.noMatchingAlgorithms')} />}
 						</div>
 						<PageControls
 							page={page}
@@ -214,6 +231,12 @@ export default function AdminTrainer() {
 							hasMore={(page + 1) * 25 < data.total}
 							onPrevious={() => setPage(page - 1)}
 							onNext={() => setPage(page + 1)}
+							previousLabel={t('common.previous')}
+							nextLabel={t('common.next')}
+							pageLabel={t('common.pageOf', {
+								page: page + 1,
+								total: Math.max(1, Math.ceil(data.total / 25)),
+							})}
 						/>
 					</>
 				)
@@ -224,9 +247,14 @@ export default function AdminTrainer() {
 					if (!importBusy) setImporting(open);
 				}}
 			>
-				<DialogContent width={900} hideCloseButton={importBusy} closeOnEscape={!importBusy}>
+				<DialogContent
+					closeLabel={t('common.closeDialog')}
+					width={900}
+					hideCloseButton={importBusy}
+					closeOnEscape={!importBusy}
+				>
 					<DialogTitle className="mb-4 text-xl font-semibold">
-						Import trainer CSV
+						{t('admin.importTrainerCsv')}
 					</DialogTitle>
 					<TrainerCsvImport
 						onImported={refresh}
@@ -242,9 +270,11 @@ export default function AdminTrainer() {
 				}}
 			>
 				{editor && (
-					<DialogContent className="max-w-3xl">
+					<DialogContent closeLabel={t('common.closeDialog')} className="max-w-3xl">
 						<DialogTitle>
-							{editor.initial ? 'Edit algorithm' : 'New algorithm'}
+							{editor.initial
+								? t('admin.trainer.editTitle')
+								: t('trainer.newAlgorithm')}
 						</DialogTitle>
 						<TrainerAlgorithmEditor
 							{...editor}

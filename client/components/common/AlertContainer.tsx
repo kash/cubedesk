@@ -26,15 +26,7 @@ export default function AlertContainer({header, fill, loading, body, type, actio
 				) : (
 					<Alert variant={type === 'error' ? 'destructive' : 'default'}>
 						<Icon aria-hidden />
-						<AlertTitle>
-							{header ||
-								{
-									success: 'Success',
-									error: 'Something went wrong',
-									warning: 'Warning',
-									info: 'Information',
-								}[type]}
-						</AlertTitle>
+						{header && <AlertTitle>{header}</AlertTitle>}
 						{body && <AlertDescription>{body}</AlertDescription>}
 						{actionBody && <div className="mt-2">{actionBody}</div>}
 					</Alert>

@@ -13,7 +13,7 @@ import {Match} from '@/types/match';
 import {Solve} from '@/types/solve';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import {useRouteMatch} from 'react-router-dom';
 
@@ -32,7 +32,6 @@ export interface PlayerStatusInfo {
 	status: PlayerStatus;
 	statusBody: string;
 	points: number;
-	statusSubHeader?: string;
 	statusPrompt: string;
 }
 
@@ -111,7 +110,7 @@ export default function Game(props: GameProps) {
 
 	const {getScramble, multiplayerOnly, defaultCubeType, gameType, loaded} = props;
 	const {color, name, description, icon} = getGameMetaData(gameType);
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const translatedName = t(name);
 
 	if (!loaded) {
@@ -212,7 +211,7 @@ export default function Game(props: GameProps) {
 
 	let playButton: ReactNode = (
 		<Button variant="default" onClick={toggleTimer} size="lg" className="w-full">
-			{t('Play {name}', {name: translatedName})}
+			{t('community.play2', {name: translatedName})}
 		</Button>
 	);
 	if (multiplayerOnly) {
@@ -228,10 +227,19 @@ export default function Game(props: GameProps) {
 					<div className="flex h-full flex-col gap-5">
 						<div className="flex flex-col items-start gap-3">
 							<div className="flex flex-row items-center gap-3">
-								<span className="flex size-10 items-center justify-center rounded-xl bg-tmo-module/5 text-xl leading-none" style={{color}}>{icon}</span>
-								<h2 className="m-0 font-sans text-xl font-medium tracking-tight">{translatedName}</h2>
+								<span
+									className="bg-tmo-module/5 flex size-10 items-center justify-center rounded-xl text-xl leading-none"
+									style={{color}}
+								>
+									{icon}
+								</span>
+								<h2 className="m-0 font-sans text-xl font-medium tracking-tight">
+									{translatedName}
+								</h2>
 							</div>
-							<p className="m-0 text-base leading-relaxed font-normal text-text/60">{t(description)}</p>
+							<p className="text-text/60 m-0 text-base leading-relaxed font-normal">
+								{t(description)}
+							</p>
 						</div>
 
 						<div className="mt-auto flex flex-col gap-2">
@@ -250,7 +258,7 @@ export default function Game(props: GameProps) {
 				}}
 			>
 				{targetSessionsDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<TargetSessions {...targetSessionsDialog} />
 					</DialogContent>
 				)}

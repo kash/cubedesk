@@ -2,7 +2,6 @@ import {cn} from '@/util/cn';
 import {Slot} from '@radix-ui/react-slot';
 import {cva, type VariantProps} from 'class-variance-authority';
 import React from 'react';
-import {translateNode, useOptionalI18n} from '@/i18n';
 
 export const buttonVariants = cva(
 	'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-invalid:ring-error/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4',
@@ -48,18 +47,10 @@ export function Button({
 	...props
 }: ButtonProps) {
 	const Component = asChild ? Slot : 'button';
-	const {t} = useOptionalI18n();
-	const translatedProps = {...props};
-	if (typeof translatedProps['aria-label'] === 'string') {
-		translatedProps['aria-label'] = t(translatedProps['aria-label']);
-	}
-	if (typeof translatedProps.title === 'string') {
-		translatedProps.title = t(translatedProps.title);
-	}
 	return (
 		<Component
-			{...translatedProps}
-			children={translateNode(children, t)}
+			{...props}
+			children={children}
 			data-slot="button"
 			className={cn(buttonVariants({variant, size}), className)}
 			{...(!asChild ? {type, disabled} : {})}

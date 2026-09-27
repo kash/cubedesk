@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import CubeBuilder from '@/components/trainer/add-custom/CubeBuilder';
 import AlgoVisual from '@/components/trainer/AlgoVisual';
 import {Alert, AlertDescription} from '@/components/ui/alert';
@@ -27,6 +28,7 @@ export default function TrainerAlgorithmEditor({
 	onSaved: () => void;
 	onCancel: () => void;
 }) {
+	const {t} = useTranslation();
 	const [algorithm, setAlgorithm] = useState<CatalogAlgorithm>(
 		initial ?? {
 			id: '',
@@ -85,9 +87,9 @@ export default function TrainerAlgorithmEditor({
 								{
 									{
 										id: 'ID',
-										name: 'Name',
-										algo_type: 'Algorithm set',
-										group_name: 'Group',
+										name: t('admin.trainer.algorithmName'),
+										algo_type: t('admin.trainer.algorithmSet'),
+										group_name: t('admin.trainer.group'),
 									}[key]
 								}
 							</span>
@@ -100,7 +102,7 @@ export default function TrainerAlgorithmEditor({
 						</Label>
 					))}
 					<Label className="flex-col items-stretch gap-2 leading-5">
-						<span>Cube type</span>
+						<span>{t('common.cubeType2')}</span>
 						<NativeSelect
 							value={algorithm.cube_type}
 							onChange={(event) => {
@@ -121,12 +123,17 @@ export default function TrainerAlgorithmEditor({
 							checked={algorithm.active}
 							onCheckedChange={(checked) => update('active', checked === true)}
 						/>
-						Published
+
+						{t('common.published')}
 					</Label>
 				</div>
 				{(['solution', 'scrambles'] as const).map((key) => (
 					<Label key={key} className="flex-col items-stretch gap-2 leading-5">
-						<span>{key === 'solution' ? 'Solution' : 'Scrambles (one per line)'}</span>
+						<span>
+							{key === 'solution'
+								? t('trainer.solution')
+								: t('admin.trainer.scramblesOnePerLine')}
+						</span>
 						<Textarea
 							className="font-mono"
 							value={algorithm[key]}
@@ -135,14 +142,14 @@ export default function TrainerAlgorithmEditor({
 					</Label>
 				))}
 				<Label className="flex-col items-stretch gap-2 leading-5">
-					<span>Image link</span>
+					<span>{t('common.imageLink')}</span>
 					<Input
 						value={algorithm.img_link}
 						onChange={(event) => update('img_link', event.target.value)}
 					/>
 				</Label>
 				<Label className="flex-col items-stretch gap-2 leading-5">
-					<span>Colors (comma-separated hex values)</span>
+					<span>{t('common.colorsCommaSeparatedHexValues')}</span>
 					<Textarea
 						value={algorithm.colors}
 						onChange={(event) => {
@@ -152,7 +159,7 @@ export default function TrainerAlgorithmEditor({
 					/>
 				</Label>
 				<Label className="flex-col items-stretch gap-2 leading-5">
-					<span>Rotation (degrees)</span>
+					<span>{t('common.rotationDegrees')}</span>
 					<Input
 						type="number"
 						step="1"
@@ -175,7 +182,9 @@ export default function TrainerAlgorithmEditor({
 						variant="secondary"
 						onClick={() => setPainting(!painting)}
 					>
-						{painting ? 'Close color editor' : 'Edit cube colors'}
+						{painting
+							? t('admin.trainer.closeColorEditor')
+							: t('admin.trainer.editCubeColors')}
 					</Button>
 				)}
 				{painting && (
@@ -188,7 +197,8 @@ export default function TrainerAlgorithmEditor({
 				)}
 				{warnings.length > 0 && (
 					<p className="text-text/60 text-sm">
-						{warnings.join(' · ')}. You can still save and publish this algorithm.
+						{warnings.join(' · ')}
+						{t('admin.trainer.canStillPublish')}
 					</p>
 				)}
 				{error && (
@@ -197,9 +207,11 @@ export default function TrainerAlgorithmEditor({
 					</Alert>
 				)}
 				<div className="flex gap-3">
-					<Button type="submit">{busy ? 'Saving…' : 'Save algorithm'}</Button>
+					<Button type="submit">
+						{busy ? t('common.saving') : t('admin.trainer.saveAlgorithm')}
+					</Button>
 					<Button type="button" variant="secondary" onClick={onCancel}>
-						Cancel
+						{t('common.cancel')}
 					</Button>
 				</div>
 			</fieldset>

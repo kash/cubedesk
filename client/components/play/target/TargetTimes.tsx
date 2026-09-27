@@ -8,7 +8,7 @@ import {updateSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
 import {cn} from '@/util/cn';
 import {useMe} from '@/util/hooks/useMe';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import {socketClient} from '@/util/socket/socketio';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
@@ -23,7 +23,7 @@ interface Props {
 
 // Left-most module that shows list of times
 export default function TargetTimes(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [solveInfoDialog, setSolveInfoDialog] = React.useState<React.ComponentProps<
 		typeof SolveInfo
 	> | null>(null);
@@ -44,20 +44,20 @@ export default function TargetTimes(props: Props) {
 		if (!description) return description;
 
 		const round = description.match(/^Round (\d+)$/);
-		if (round) return t('Round {round}', {round: round[1]});
+		if (round) return t('community.round', {round: round[1]});
 
 		const winnerWithTime = description.match(/^(.+) won \((.+)\)$/);
 		if (winnerWithTime) {
-			return t('{name} won ({time})', {
+			return t('community.won3', {
 				name: winnerWithTime[1],
 				time: winnerWithTime[2],
 			});
 		}
 
 		const winner = description.match(/^(.+) won$/);
-		if (winner) return t('{name} won', {name: winner[1]});
+		if (winner) return t('community.won', {name: winner[1]});
 
-		return t(description);
+		return description;
 	}
 
 	async function dnfSolve(solve: Solve) {
@@ -148,7 +148,7 @@ export default function TargetTimes(props: Props) {
 						{actionsDisabled ? null : (
 							<Button
 								variant="ghost"
-								title="Plus two solve"
+								title={t('community.plusTwoSolve')}
 								onClick={() => plusTwoSolve(solve)}
 								size="sm"
 								aria-pressed={plusTwo}
@@ -160,13 +160,13 @@ export default function TargetTimes(props: Props) {
 						{actionsDisabled ? null : (
 							<Button
 								variant="ghost"
-								title="DNF solve"
+								title={t('solves.dnfSolve')}
 								onClick={() => dnfSolve(solve)}
 								size="sm"
 								aria-pressed={dnf}
 								className={cn({'text-error': dnf})}
 							>
-								{'DNF'}
+								{t('solves.dnf')}
 							</Button>
 						)}
 					</div>
@@ -228,8 +228,8 @@ export default function TargetTimes(props: Props) {
 				}}
 			>
 				{solveInfoDialog && (
-					<DialogContent>
-						<DialogTitle className="sr-only">Solve details</DialogTitle>
+					<DialogContent closeLabel={t('common.closeDialog')}>
+						<DialogTitle className="sr-only">{t('solves.solveDetails')}</DialogTitle>
 						<SolveInfo
 							{...solveInfoDialog}
 							onComplete={() => {

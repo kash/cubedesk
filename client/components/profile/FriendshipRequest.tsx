@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {addFriendship, removeFriendship} from '@/actions/account';
 import {Button, type ButtonProps} from '@/components/ui/button';
 import {FriendshipRequest as FriendshipRequestSchema} from '@/types/friendship';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function FriendshipRequest(props: Props) {
+	const {t} = useTranslation();
 	const dispatch = useDispatch();
 	const queryClient = useQueryClient();
 
@@ -72,7 +74,7 @@ export default function FriendshipRequest(props: Props) {
 			});
 
 			dispatch(removeFriendship(user.id));
-			toastSuccess(`Successfully unfriended ${user.username}`);
+			toastSuccess(t('profile.friends.unfriended', {name: user.username}));
 
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
@@ -81,7 +83,7 @@ export default function FriendshipRequest(props: Props) {
 				friendshipRequestId: friendRequestSent.id,
 			});
 
-			toastSuccess(`Cancelled friend request for ${user.username}`);
+			toastSuccess(t('profile.friends.cancelled', {name: user.username}));
 
 			setFriendRequestReceived(null);
 			setFriendRequestSent(null);
@@ -90,7 +92,7 @@ export default function FriendshipRequest(props: Props) {
 				friendshipRequestId: friendRequestReceived.id,
 			});
 
-			toastSuccess(`Accepted ${user.username}'s friend request`);
+			toastSuccess(t('profile.friends.accepted', {name: user.username}));
 			dispatch(addFriendship(friendship));
 
 			setFriendRequestReceived(null);
@@ -100,7 +102,7 @@ export default function FriendshipRequest(props: Props) {
 				toUserId: user.id,
 			});
 
-			toastSuccess(`Friend request sent to ${user.username}`);
+			toastSuccess(t('profile.friends.sent', {name: user.username}));
 
 			setFriendRequestReceived(null);
 			setFriendRequestSent(request);
@@ -117,7 +119,7 @@ export default function FriendshipRequest(props: Props) {
 		let friendButtonParams: ButtonProps = {
 			children: (
 				<>
-					{'Add Friend'} <Plus weight="bold" />{' '}
+					{t('profile.friends.add')} <Plus weight="bold" />{' '}
 				</>
 			),
 			variant: 'secondary',
@@ -127,7 +129,7 @@ export default function FriendshipRequest(props: Props) {
 			friendButtonParams = {
 				children: (
 					<>
-						{'Friends'} <Check weight="bold" />{' '}
+						{t('community.friends')} <Check weight="bold" />{' '}
 					</>
 				),
 				variant: 'secondary',
@@ -137,7 +139,7 @@ export default function FriendshipRequest(props: Props) {
 				friendButtonParams = {
 					children: (
 						<>
-							{'Remove Friend'} <X weight="bold" />{' '}
+							{t('profile.friends.remove')} <X weight="bold" />{' '}
 						</>
 					),
 					variant: 'destructive',
@@ -147,7 +149,7 @@ export default function FriendshipRequest(props: Props) {
 			friendButtonParams = {
 				children: (
 					<>
-						{'Accept Friend Request'} <Plus weight="bold" />{' '}
+						{t('profile.friends.accept')} <Plus weight="bold" />{' '}
 					</>
 				),
 				variant: 'default',
@@ -156,7 +158,7 @@ export default function FriendshipRequest(props: Props) {
 			friendButtonParams = {
 				children: (
 					<>
-						{'Friend Request Sent'} <Timer weight="bold" />{' '}
+						{t('profile.friends.requestSent')} <Timer weight="bold" />{' '}
 					</>
 				),
 				variant: 'secondary',
@@ -166,7 +168,7 @@ export default function FriendshipRequest(props: Props) {
 				friendButtonParams = {
 					children: (
 						<>
-							{'Cancel Friend Request'} <X weight="bold" />{' '}
+							{t('profile.friends.cancel')} <X weight="bold" />{' '}
 						</>
 					),
 					variant: 'destructive',

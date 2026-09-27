@@ -9,7 +9,7 @@ import {
 import {useMe} from '@/util/hooks/useMe';
 import {SignIn} from 'phosphor-react';
 import React from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	collapsed: boolean;
@@ -17,7 +17,7 @@ interface Props {
 
 export default function LoginNav(props: Props) {
 	const me = useMe();
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	if (me) {
 		return null;
@@ -30,12 +30,16 @@ export default function LoginNav(props: Props) {
 					<TooltipRoot>
 						<AuthDialog view="signup">
 							<TooltipTrigger asChild>
-								<Button variant="secondary" size="icon" aria-label={t('Sign up')}>
+								<Button
+									variant="secondary"
+									size="icon"
+									aria-label={t('auth.signUp')}
+								>
 									<SignIn weight="bold" />
 								</Button>
 							</TooltipTrigger>
 						</AuthDialog>
-						<TooltipContent side="right">{t('Sign up')}</TooltipContent>
+						<TooltipContent side="right">{t('auth.signUp')}</TooltipContent>
 					</TooltipRoot>
 				</TooltipProvider>
 			</div>
@@ -46,12 +50,12 @@ export default function LoginNav(props: Props) {
 		<div className="mt-4 grid w-full grid-cols-2 gap-2">
 			<AuthDialog view="login">
 				<Button variant="secondary" className="w-full">
-					{t('Log in')}
+					{t('auth.logIn')}
 				</Button>
 			</AuthDialog>
 			<AuthDialog view="signup">
 				<Button variant="default" className="w-full">
-					{t('Sign up')}
+					{t('auth.signUp')}
 				</Button>
 			</AuthDialog>
 		</div>

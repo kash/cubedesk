@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Empty from '@/components/common/Empty';
 import Loading from '@/components/common/Loading';
 import SmartManage from '@/components/timer/smart-cube/manage-smart-cubes/SmartManage';
@@ -5,6 +6,7 @@ import {api} from '@/util/api';
 import React from 'react';
 
 export default function ManageSmartCubes() {
+	const {t} = useTranslation();
 	const smartDevicesQuery = api.smartDevice.list.useQuery();
 	const smartDevices = smartDevicesQuery.data;
 
@@ -12,7 +14,7 @@ export default function ManageSmartCubes() {
 	if (!smartDevices) {
 		body = <Loading />;
 	} else if (!smartDevices.length) {
-		body = <Empty text="You have not connected any smart cubes yet" />;
+		body = <Empty text={t('timer.noSmartCubesConnected')} />;
 	} else {
 		body = smartDevices.map((sc) => <SmartManage key={sc.id} cube={sc} />);
 	}

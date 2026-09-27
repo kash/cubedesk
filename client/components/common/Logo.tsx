@@ -15,7 +15,7 @@ export function LogoBrandmark(props: LogoProps) {
 		<img
 			className="h-auto w-full"
 			src={resourceUri(`/images/branding/${fileName}`)}
-			alt="CubeDesk Logo"
+			alt="CubeDesk"
 		/>
 	);
 }
@@ -31,7 +31,7 @@ export function LogoLockup(props: LogoProps) {
 		<img
 			className="h-auto w-full"
 			src={resourceUri(`/images/branding/${fileName}`)}
-			alt="CubeDesk Logo"
+			alt="CubeDesk"
 		/>
 	);
 }

@@ -4,11 +4,11 @@ import {MatchPopupPage, useMatchPopupContext} from '@/components/play/match/matc
 import {Button} from '@/components/ui/button';
 import {CubeType} from '@/util/cubes/cube_types';
 import {ArrowRight} from 'phosphor-react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React from 'react';
 
 export default function CustomMatchOptions() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const context = useMatchPopupContext();
 
 	function selectPlayerCount(val: string) {
@@ -29,9 +29,15 @@ export default function CustomMatchOptions() {
 		<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">
 			<div className="border-tmo-module/10 box-border flex flex-col items-start rounded border-[3px] p-[15px]">
 				<div className="mb-1">
-					<h3>{t('Cube Type')}</h3>
+					<h3>{t('community.cubeType')}</h3>
 				</div>
 				<CubePicker
+					labels={{
+						label: t('common.cubeType2'),
+						placeholder: t('common.selectOption'),
+						searchPlaceholder: t('common.search'),
+						emptyMessage: t('common.noResultsFound'),
+					}}
 					excludeCustomCubeTypes
 					excludeOtherCubeType
 					value={context.cubeType}
@@ -46,12 +52,8 @@ export default function CustomMatchOptions() {
 			</div>
 			<div className="border-tmo-module/10 box-border flex flex-col items-start rounded border-[3px] p-[15px]">
 				<div className="mb-1">
-					<h3>{t('Players')}</h3>
-					<p>
-						{t(
-							'The number of players who will be playing in this match. Note that these many players *must* join before the match can start.',
-						)}
-					</p>
+					<h3>{t('community.players')}</h3>
+					<p>{t('community.match.requiredPlayersHint')}</p>
 				</div>
 				<HorizontalNav
 					tabId={String(context.minPlayers)}
@@ -64,7 +66,7 @@ export default function CustomMatchOptions() {
 			</div>
 			<div className="mt-5 w-full justify-end">
 				<Button variant="default" onClick={createMatch} size="lg">
-					{t('Create custom match')}
+					{t('community.createCustomMatch')}
 					<ArrowRight />
 				</Button>
 			</div>

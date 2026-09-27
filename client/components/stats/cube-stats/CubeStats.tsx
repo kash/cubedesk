@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import TimeChart from '@/components/modules/time-chart/TimeChart';
 import ActivityChart from '@/components/stats/common/ActivityChart';
 import StatModule from '@/components/stats/common/StatModule';
@@ -9,43 +10,41 @@ import {useStatsContext} from '@/components/stats/Stats';
 import React from 'react';
 
 export default function CubeStats() {
+	const {t} = useTranslation();
 	const {filterOptions} = useStatsContext();
 	return (
 		<div className="stats-dashboard">
 			<div className="stats-main-grid">
 				<StatSection
-					title="Personal overview"
-					description="Your best solve and lifetime totals"
+					title={t('common.personalOverview')}
+					description={t('stats.bestSolveAndTotals')}
 					className="stats-overview"
 				>
 					<CubeStatsFeatured />
 				</StatSection>
 				<StatSection
-					title="Averages"
-					description="Your most recent solves"
+					title={t('stats.averages')}
+					description={t('stats.recentSolves')}
 					className="stats-panel"
 				>
 					<CubeStatAverages />
 				</StatSection>
 			</div>
 			<StatSection
-				title="Solve times"
-				description="Completed solves, oldest to latest · Grouped means for longer histories"
+				title={t('solves.solveTimes')}
+				description={t('stats.completedSolveHistory')}
 				className="stats-panel"
 			>
 				<StatModule className="stats-chart">
 					<TimeChart filterOptions={filterOptions} />
 				</StatModule>
 			</StatSection>
-			<StatSection
-				title="The details"
-				description="Habits, milestones, and everything in between"
-			>
+			<StatSection title={t('common.theDetails')} description={t('stats.overview.subtitle')}>
 				<SubStats />
 			</StatSection>
 			<StatSection
-				title="Solving activity"
-				description="Your daily solves · Last 60 days"
+				title={t('stats.solvingActivity')}
+				description={t('stats.dailySolves60Days')}
 				className="stats-panel"
 			>
 				<StatModule className="stats-chart">

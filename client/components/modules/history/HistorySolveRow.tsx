@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {Solve} from '@/types/solve';
 import {cn} from '@/util/cn';
@@ -17,6 +18,7 @@ const textButtonClass =
 	'inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 text-base font-medium outline-none transition-colors';
 
 export default function HistorySolveRow(props: Props) {
+	const {t} = useTranslation();
 	const {index, solve, disabled} = props;
 
 	function deleteSolve() {
@@ -56,7 +58,7 @@ export default function HistorySolveRow(props: Props) {
 			<>
 				<button
 					type="button"
-					title="Plus two solve"
+					title={t('solves.plusTwoSolve')}
 					onClick={plusTwoSolve}
 					aria-pressed={plusTwo}
 					className={cn(textButtonClass, 'focus-visible:underline', {
@@ -68,7 +70,7 @@ export default function HistorySolveRow(props: Props) {
 				</button>
 				<button
 					type="button"
-					title="DNF solve"
+					title={t('solves.dnfSolve')}
 					onClick={dnfSolve}
 					aria-pressed={dnf}
 					className={cn(textButtonClass, 'focus-visible:underline', {
@@ -76,14 +78,14 @@ export default function HistorySolveRow(props: Props) {
 						'text-error': dnf,
 					})}
 				>
-					{'DNF'}
+					{t('solves.dnf')}
 				</button>
 				<button
 					type="button"
-					title="Delete solve"
+					title={t('solves.deleteSolve')}
 					onClick={deleteSolve}
 					className="inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 outline-none hover:drop-shadow-[0_0_4px_currentColor] focus-visible:drop-shadow-[0_0_4px_currentColor]"
-					aria-label="Delete solve"
+					aria-label={t('solves.deleteSolve')}
 				>
 					<X className="size-4" />
 				</button>
@@ -92,10 +94,7 @@ export default function HistorySolveRow(props: Props) {
 	}
 
 	return (
-		<div
-			className="box-border flex h-9 w-full flex-row items-center gap-2.5 pr-[5px]"
-			key={id}
-		>
+		<div className="box-border flex h-9 w-full flex-row items-center gap-2.5 pr-[5px]" key={id}>
 			<div className="text-text min-w-10 shrink-0 text-base opacity-60">
 				{(index + 1).toLocaleString()}.
 			</div>

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Empty from '@/components/common/Empty';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import DeleteSolveDialog, {useSolveDeletion} from '@/components/solve-info/DeleteSolveDialog';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 function LastSolve(props: Props) {
+	const {t} = useTranslation();
 	const deletion = useSolveDeletion();
 	const [solveInfoDialog, setSolveInfoDialog] = React.useState<React.ComponentProps<
 		typeof SolveInfo
@@ -29,7 +31,7 @@ function LastSolve(props: Props) {
 	const lastSolve = fetchLastSolve(filterOptions);
 
 	if (!lastSolve) {
-		return <Empty text="No solves yet" centered />;
+		return <Empty text={t('common.noSolvesYet')} centered />;
 	}
 
 	const dnf = lastSolve.dnf;
@@ -87,7 +89,7 @@ function LastSolve(props: Props) {
 					<div className="box-border flex w-full flex-row items-start justify-between">
 						<div className="mb-[15px]">
 							<h5 className="text-text text-[0.9rem] font-medium opacity-70">
-								Last Solve
+								{t('timer.lastSolve')}
 							</h5>
 							<h4 className={timeClasses.join(' ')}>{time}</h4>
 							<h6 className="text-text text-base font-medium opacity-70">
@@ -110,7 +112,7 @@ function LastSolve(props: Props) {
 								variant="secondary"
 								onClick={showSolveInfo}
 								size="icon-sm"
-								aria-label="View solve details"
+								aria-label={t('timer.viewSolveDetails')}
 							>
 								<Info weight="bold" />
 							</Button>
@@ -130,17 +132,17 @@ function LastSolve(props: Props) {
 								onClick={dnfAction}
 								size="sm"
 							>
-								{'DNF'}
+								{t('solves.dnf')}
 							</Button>
 						</div>
 						<div className="flex flex-row gap-[5px]">
 							<Button
 								variant="destructive"
-								title="Delete solve"
+								title={t('solves.deleteSolve')}
 								onClick={deleteAction}
 								size="sm"
 							>
-								{'Delete'}
+								{t('common.delete')}
 							</Button>
 						</div>
 					</div>
@@ -154,8 +156,10 @@ function LastSolve(props: Props) {
 					}}
 				>
 					{solveInfoDialog && (
-						<DialogContent>
-							<DialogTitle className="sr-only">Solve details</DialogTitle>
+						<DialogContent closeLabel={t('common.closeDialog')}>
+							<DialogTitle className="sr-only">
+								{t('solves.solveDetails')}
+							</DialogTitle>
 							<SolveInfo
 								{...solveInfoDialog}
 								onComplete={() => {

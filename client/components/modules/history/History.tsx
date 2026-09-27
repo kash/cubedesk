@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import DeleteSolveDialog, {useSolveDeletion} from '@/components/solve-info/DeleteSolveDialog';
 import SolveInfoDialog from '@/components/solve-info/SolveInfoDialog';
 import React from 'react';
@@ -31,6 +32,7 @@ interface Props {
 
 // TODO NOW hotkeys for History
 export default function History(props: Props) {
+	const {t} = useTranslation();
 	const [selectedSolve, setSelectedSolve] =
 		React.useState<React.ComponentProps<typeof SolveInfoDialog>['solve']>(null);
 	const dialogFallbackRef = React.useRef<HTMLDivElement>(null);
@@ -134,7 +136,7 @@ export default function History(props: Props) {
 								.join(' ')}
 						>
 							{!solves.length ? (
-								<Empty text="No solves yet" centered />
+								<Empty text={t('common.noSolvesYet')} centered />
 							) : (
 								<ReactList
 									itemRenderer={renderSolveRow}

@@ -8,7 +8,6 @@ export function Pagination({className, ...props}: React.ComponentProps<'nav'>) {
 	return (
 		<nav
 			role="navigation"
-			aria-label="Pagination"
 			className={cn('mx-auto flex w-full justify-center', className)}
 			{...props}
 		/>
@@ -43,11 +42,10 @@ export function PaginationPrevious({
 	...props
 }: React.ComponentProps<typeof PaginationLink>) {
 	return (
-		<PaginationLink aria-label="Go to previous page" {...props}>
+		<PaginationLink {...props}>
 			{children || (
 				<>
 					<CaretLeft aria-hidden />
-					Previous
 				</>
 			)}
 		</PaginationLink>
@@ -55,21 +53,20 @@ export function PaginationPrevious({
 }
 export function PaginationNext({children, ...props}: React.ComponentProps<typeof PaginationLink>) {
 	return (
-		<PaginationLink aria-label="Go to next page" {...props}>
+		<PaginationLink {...props}>
 			{children || (
 				<>
-					Next
 					<CaretRight aria-hidden />
 				</>
 			)}
 		</PaginationLink>
 	);
 }
-export function PaginationEllipsis() {
+export function PaginationEllipsis({label}: {label: string}) {
 	return (
 		<span className="flex size-9 items-center justify-center">
 			<DotsThree aria-hidden />
-			<span className="sr-only">More pages</span>
+			<span className="sr-only">{label}</span>
 		</span>
 	);
 }

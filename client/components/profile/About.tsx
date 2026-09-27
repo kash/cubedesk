@@ -2,7 +2,7 @@ import {Profile} from '@/types/profile';
 import {normalizeYouTubeChannelLink} from '@/util/youtube';
 import {RedditLogo, TwitchLogo, TwitterLogo, YoutubeLogo} from 'phosphor-react';
 import React from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	profile: Profile;
@@ -10,7 +10,7 @@ interface Props {
 
 export default function About(props: Props) {
 	const {profile} = props;
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	function addSocial(
 		list: React.ReactNode[],
@@ -101,17 +101,17 @@ export default function About(props: Props) {
 	}
 
 	const details = [
-		[t('3x3 method'), profile.three_method],
-		[t('3x3 goal'), profile.three_goal],
-		[t('Main 3x3 cube'), profile.main_three_cube],
-		[t('Favorite event'), profile.favorite_event],
+		[t('profile.value3x3Method'), profile.three_method],
+		[t('profile.value3x3Goal'), profile.three_goal],
+		[t('profile.main3x3Cube'), profile.main_three_cube],
+		[t('profile.favoriteEvent'), profile.favorite_event],
 	];
 
 	return (
 		<aside className="border-tmo-module/10 bg-module rounded-xl border p-5">
-			<h2 className="mb-0 text-sm font-semibold">{t('About')}</h2>
+			<h2 className="mb-0 text-sm font-semibold">{t('common.about')}</h2>
 			<p className="text-text/60 mt-3 mb-0 text-sm leading-relaxed break-words whitespace-pre-wrap">
-				{profile.bio || t('No bio yet.')}
+				{profile.bio || t('profile.noBioYet')}
 			</p>
 			<dl className="border-tmo-module/10 mt-5 grid grid-cols-2 gap-x-4 gap-y-5 border-t pt-5 lg:grid-cols-1">
 				{details.map(([label, value]) => (

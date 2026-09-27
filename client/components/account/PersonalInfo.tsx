@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {Button} from '@/components/ui/button';
 import {Field} from '@/components/ui/field';
 import {Input} from '@/components/ui/input';
@@ -9,6 +10,7 @@ import {toastError} from '@/util/toast';
 import React from 'react';
 
 export default function PersonalInfo() {
+	const {t} = useTranslation();
 	const fieldId = React.useId();
 
 	const me = useMe();
@@ -34,7 +36,7 @@ export default function PersonalInfo() {
 	return (
 		<div className="flex flex-col gap-5">
 			<Field className="gap-2">
-				<Label htmlFor={`${fieldId}-1`}>Username</Label>
+				<Label htmlFor={`${fieldId}-1`}>{t('auth.username')}</Label>
 				<Input
 					value={username}
 					onChange={setUsername}
@@ -43,11 +45,11 @@ export default function PersonalInfo() {
 				/>
 			</Field>
 			<Field className="gap-2">
-				<Label htmlFor={`${fieldId}-2`}>Email</Label>
+				<Label htmlFor={`${fieldId}-2`}>{t('auth.email')}</Label>
 				<Input value={email} onChange={setEmail} name="email" id={`${fieldId}-2`} />
 			</Field>
 			<Button className="self-start" onClick={clickUpdate}>
-				{'Update Info'}
+				{t('auth.personalInfo.update')}
 			</Button>
 		</div>
 	);

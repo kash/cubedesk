@@ -11,10 +11,12 @@ interface Props {
 	onChange?: (scrambleType: ScrambleType) => void;
 	excludeOtherScrambleType?: boolean;
 	pickerProps?: ComboboxFieldOptions;
+	labels: {label: string; placeholder: string; searchPlaceholder: string; emptyMessage: string};
 }
 
 export default function ScramblePicker(props: Props) {
 	const {
+		labels,
 		value,
 		scrambleTypes,
 		handlePrefix,
@@ -61,7 +63,10 @@ export default function ScramblePicker(props: Props) {
 	return (
 		<ComboboxField
 			{...pickerProps}
-			label="Scramble type"
+			label={labels.label}
+			placeholder={labels.placeholder}
+			searchPlaceholder={labels.searchPlaceholder}
+			emptyMessage={labels.emptyMessage}
 			value={value}
 			text={text}
 			options={options}

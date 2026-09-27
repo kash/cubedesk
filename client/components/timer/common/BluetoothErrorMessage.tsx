@@ -1,13 +1,15 @@
 import {DialogHeader} from '@/components/ui/dialog';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 export default function BluetoothErrorMessage() {
+	const {t} = useTranslation();
 	const title = (
-		<span style={{color: 'rgb(var(--error-color))'}}>Bluetooth is not available!</span>
+		<span style={{color: 'rgb(var(--error-color))'}}>{t('timer.bluetooth.unavailable')}</span>
 	);
 	const description = (
 		<span style={{color: 'rgb(var(--warning-color))'}}>
-			Check if Bluetooth is enabled on your system.
+			{t('timer.bluetooth.checkEnabled')}
 		</span>
 	);
 
@@ -15,22 +17,20 @@ export default function BluetoothErrorMessage() {
 		<>
 			<DialogHeader title={title} description={description} />
 			<p>
-				Your browser may not support Web Bluetooth API. Consider using compatible browser,
-				the best choice is:
+				{t('timer.bluetooth.browserSupport')}
 				<ul style={{listStyle: 'disc', margin: '1em', paddingLeft: '1em'}}>
-					<li>Chrome on macOS, Linux, Android or Windows</li>
-					<li>Bluefy on iOS</li>
+					<li>{t('timer.bluetooth.chromePlatforms')}</li>
+					<li>{t('timer.bluetooth.bluefyIos')}</li>
 				</ul>
-				Also you can check &nbsp;
+				{t('timer.bluetooth.checkStatus')}
 				<a
 					style={{textDecoration: 'underline'}}
 					target="_blank"
 					href="https://github.com/WebBluetoothCG/web-bluetooth/blob/main/implementation-status.md"
 				>
-					Web Bluetooth Community Group implementation status
+					{t('timer.bluetooth.implementationStatus')}
 				</a>
-				&nbsp; for complete list of different browsers and supported Web Bluetooth API
-				features.
+				{t('timer.bluetooth.supportedBrowsers')}
 			</p>
 		</>
 	);

@@ -3,6 +3,7 @@ import {ColorName} from '@/shared/colors';
 import {cn} from '@/util/cn';
 import {useColor} from '@/util/hooks/useTheme';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	selected?: boolean;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function CustomizeStatsColor(props: Props) {
+	const {t} = useTranslation();
 	const {onSelectColor, selected, colorName} = props;
 	const colorHex = useColor(colorName, 'background_color');
 
@@ -22,7 +24,7 @@ export default function CustomizeStatsColor(props: Props) {
 		<Button
 			variant="ghost"
 			type="button"
-			aria-label={`${colorName.replaceAll('_', ' ')} color`}
+			aria-label={t('stats.colorOption', {name: colorName.replaceAll('_', ' ')})}
 			aria-pressed={Boolean(selected)}
 			title={colorName.replaceAll('_', ' ')}
 			style={style}

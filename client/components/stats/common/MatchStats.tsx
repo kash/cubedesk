@@ -4,10 +4,10 @@ import {Sword} from 'phosphor-react';
 import React from 'react';
 import {PieChart} from 'react-minimal-pie-chart';
 import {Link} from 'react-router-dom';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 export default function MatchStats() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const {stats} = useStatsContext();
 	const played = stats.matches_played || 0;
 	const wins = stats.matches_won || 0;
@@ -21,28 +21,28 @@ export default function MatchStats() {
 					<div
 						className="stats-ring"
 						role="img"
-						aria-label={`${played} matches: ${wins} wins, ${losses} losses, ${ties} ties`}
+						aria-label={t('stats.matchRecordDescription', {played, wins, losses, ties})}
 					>
 						<PieChart
 							lineWidth={12}
 							startAngle={-90}
 							data={[
-								{title: 'Wins', value: wins, color: '#23C586'},
-								{title: 'Ties', value: ties, color: '#8b95a5'},
-								{title: 'Losses', value: losses, color: '#e47878'},
+								{title: t('community.wins'), value: wins, color: '#23C586'},
+								{title: t('community.ties'), value: ties, color: '#8b95a5'},
+								{title: t('community.losses'), value: losses, color: '#e47878'},
 							]}
 						/>
 						<div className="stats-ring-label">
 							<strong>{played.toLocaleString()}</strong>
-							<span>{t('matches')}</span>
+							<span>{t('community.matches')}</span>
 						</div>
 					</div>
 					<div className="stats-match-results">
-						<h3>{t('Match record')}</h3>
+						<h3>{t('community.matchRecord')}</h3>
 						<p>
 							<span>
 								<i style={{background: '#23C586'}} />
-									{t('Wins')}
+								{t('community.wins')}
 							</span>
 							<strong>
 								{wins.toLocaleString()}{' '}
@@ -52,7 +52,7 @@ export default function MatchStats() {
 						<p>
 							<span>
 								<i style={{background: '#e47878'}} />
-									{t('Losses')}
+								{t('community.losses')}
 							</span>
 							<strong>
 								{losses.toLocaleString()}{' '}
@@ -63,7 +63,7 @@ export default function MatchStats() {
 							<p>
 								<span>
 									<i style={{background: '#8b95a5'}} />
-									{t('Ties')}
+									{t('community.ties')}
 								</span>
 								<strong>{ties.toLocaleString()}</strong>
 							</p>
@@ -75,14 +75,14 @@ export default function MatchStats() {
 					<span className="stats-empty-icon">
 						<Sword size={24} />
 					</span>
-					<h3>{t('Your next challenge awaits')}</h3>
+					<h3>{t('common.yourNextChallengeAwaits')}</h3>
 					<p>
-						{t('Go head-to-head with another cuber.')}
+						{t('common.goHeadToHeadWithAnotherCuber')}
 						<br />
-						{t('Your match record starts here.')}
+						{t('community.yourMatchRecordStartsHere')}
 					</p>
 					<Link to="/play" className="stats-text-link">
-						{t('Play your first match')} <span aria-hidden="true">↗</span>
+						{t('community.playYourFirstMatch')} <span aria-hidden="true">↗</span>
 					</Link>
 				</div>
 			)}

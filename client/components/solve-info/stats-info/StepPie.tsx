@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import HorizontalNav from '@/components/common/HorizontalNav';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
@@ -12,15 +13,15 @@ import React, {useState} from 'react';
 const CHART_TYPES = [
 	{
 		id: 'time',
-		value: 'Time',
+		value: 'solves.time',
 	},
 	{
 		id: 'tps',
-		value: 'TPS',
+		value: 'stats.tps',
 	},
 	{
 		id: 'turns',
-		value: 'Turns',
+		value: 'stats.turns',
 	},
 ];
 
@@ -35,6 +36,7 @@ interface StepPieDatum {
 }
 
 export default function StepPie(props: Props) {
+	const {t} = useTranslation();
 	const {solve} = props;
 
 	const [chartType, setChartType] = useState('time');
@@ -85,7 +87,12 @@ export default function StepPie(props: Props) {
 
 	return (
 		<div className="flex flex-col items-center justify-center pb-10">
-			<HorizontalNav onChange={changeChartType} tabs={CHART_TYPES} tabId={chartType} />
+			<HorizontalNav
+				onChange={changeChartType}
+				tabs={CHART_TYPES.map((tab) => ({...tab, value: t(tab.value)}))}
+				tabId={chartType}
+				optionsLabel={t('common.options')}
+			/>
 
 			<ParentSize
 				className="mt-[50px]"

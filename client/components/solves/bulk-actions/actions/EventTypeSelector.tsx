@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import CubePicker from '@/components/common/CubePicker';
 import {Button} from '@/components/ui/button';
 import {DialogHeader} from '@/components/ui/dialog';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function EventTypeSelector(props: Props) {
+	const {t} = useTranslation();
 	const {solves, onComplete} = props;
 	const [cubeType, setCubeType] = useState<CubeType | null>(null);
 
@@ -19,7 +21,7 @@ export default function EventTypeSelector(props: Props) {
 	if (cubeType) {
 		selectedCubeType = (
 			<p className="border-text/20 text-text mt-4 mb-5 table border-b-4 border-solid text-2xl">
-				Set event type of{' '}
+				{t('solves.bulk.setEventTypeOf')}{' '}
 				<span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
 				<span className="text-warning">{cubeType.name}</span>
 			</p>
@@ -29,11 +31,17 @@ export default function EventTypeSelector(props: Props) {
 	return (
 		<div>
 			<DialogHeader
-				title="Change event type"
-				description="Select which event type to associate the selected solves with"
+				title={t('common.changeEventType')}
+				description={t('solves.bulk.selectEventType')}
 			/>
 			<div className="mb-6">
 				<CubePicker
+					labels={{
+						label: t('common.cubeType2'),
+						placeholder: t('common.selectOption'),
+						searchPlaceholder: t('common.search'),
+						emptyMessage: t('common.noResultsFound'),
+					}}
 					pickerProps={{
 						openLeft: true,
 					}}
@@ -50,7 +58,7 @@ export default function EventTypeSelector(props: Props) {
 				disabled={!cubeType}
 				size="lg"
 			>
-				{'Continue'}
+				{t('common.continue')}
 			</Button>
 		</div>
 	);

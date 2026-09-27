@@ -14,7 +14,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import {ArrowUpRight, Trash} from 'phosphor-react';
 import React, {useMemo, useState} from 'react';
 
@@ -33,7 +33,7 @@ export default function PbCard(props: Props) {
 	> | null>(null);
 
 	const {solves, user, topRecord} = props;
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	const single = solves.length === 1;
 	const firstSolve = solves[0];
@@ -59,7 +59,7 @@ export default function PbCard(props: Props) {
 		} else {
 			setHistoryDialog({
 				solves: solves,
-				description: t('Average of {count} by {username}', {
+				description: t('profile.averageOfBy', {
 					count: solves.length,
 					username: user.username,
 				}),
@@ -105,7 +105,7 @@ export default function PbCard(props: Props) {
 					onClick={deletePb}
 					size="icon-sm"
 					className="text-text/35 hover:bg-error/10 hover:text-error opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 aria-busy:opacity-100 [@media(hover:none)]:opacity-100"
-					aria-label={t('Remove personal best')}
+					aria-label={t('profile.removePersonalBest')}
 					disabled={deleting}
 					aria-busy={deleting}
 				>
@@ -130,7 +130,7 @@ export default function PbCard(props: Props) {
 					<div className="mb-5 flex items-center gap-2 pr-7">
 						<span className="text-sm font-semibold">{cubeType.name}</span>
 						<span className="bg-tmo-module/5 text-text/50 rounded-md px-1.5 py-0.5 text-[10px] font-medium">
-							{t(single ? 'Single' : 'Average of 5')}
+							{t(single ? 'profile.single' : 'stats.averageOf5')}
 						</span>
 					</div>
 					<div className="flex items-center justify-between gap-3">
@@ -171,8 +171,8 @@ export default function PbCard(props: Props) {
 				}}
 			>
 				{solveInfoDialog && (
-					<DialogContent>
-						<DialogTitle className="sr-only">Solve details</DialogTitle>
+					<DialogContent closeLabel={t('common.closeDialog')}>
+						<DialogTitle className="sr-only">{t('solves.solveDetails')}</DialogTitle>
 						<SolveInfo
 							{...solveInfoDialog}
 							onComplete={() => {
@@ -193,8 +193,8 @@ export default function PbCard(props: Props) {
 				}}
 			>
 				{historyDialog && (
-					<DialogContent>
-						<DialogTitle className="sr-only">Solve history</DialogTitle>
+					<DialogContent closeLabel={t('common.closeDialog')}>
+						<DialogTitle className="sr-only">{t('solves.solveHistory')}</DialogTitle>
 						<HistoryDialog {...historyDialog} />
 					</DialogContent>
 				)}

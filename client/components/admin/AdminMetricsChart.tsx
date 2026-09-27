@@ -4,6 +4,7 @@ import {ParentSize} from '@visx/responsive';
 import {scaleLinear, scalePoint} from '@visx/scale';
 import {LinePath} from '@visx/shape';
 import React, {useId, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export type MetricsSeries = {
 	key: Exclude<keyof AdminMetricsDay, 'date'>;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 function Plot({title, days, series, width, height}: Props & {width: number; height: number}) {
+	const {t, i18n} = useTranslation();
 	const [selectedDate, setSelectedDate] = useState<string | null>(null);
 	const tooltipId = useId();
 	const activeIndex = days.findIndex((day) => day.date === selectedDate);
@@ -59,7 +61,7 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 				role="img"
 				tabIndex={0}
 				className="focus-visible:outline-text/40 rounded outline-offset-4 focus-visible:outline-2"
-				aria-label={`${title}, last ${days.length} UTC days. Use left and right arrow keys to explore daily values.`}
+				aria-label={t('admin.metrics.chartDescription', {title, count: days.length})}
 				aria-describedby={active ? tooltipId : undefined}
 				onPointerMove={selectPointer}
 				onPointerDown={selectPointer}
@@ -116,7 +118,7 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 								opacity={0.5}
 								fontSize={10}
 							>
-								{tick.toLocaleString()}
+								{tick.toLocaleString(i18n.language)}
 							</text>
 						</g>
 					))}

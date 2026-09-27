@@ -1,4 +1,13 @@
-const Preset = ['dark', 'light', 'tokyo', 'norman', 'save_the_bees', 'night_owl', 'cyberpunk', 'phd_student'] as const;
+const Preset = [
+	'dark',
+	'light',
+	'tokyo',
+	'norman',
+	'save_the_bees',
+	'night_owl',
+	'cyberpunk',
+	'phd_student',
+] as const;
 
 export interface PresetTheme {
 	values: {
@@ -9,14 +18,12 @@ export interface PresetTheme {
 		button_color: string;
 		module_color: string;
 	};
-	name: string;
 }
-export type PresetThemeValues = {[K in typeof Preset[number]]: PresetTheme};
+export type PresetThemeValues = {[K in (typeof Preset)[number]]: PresetTheme};
 
 export const APP_THEME_PRESETS: PresetThemeValues = {
 	dark: {
-		name: 'Dark',
-			values: {
+		values: {
 			background_color: '0, 0, 0',
 			button_color: '33, 33, 33',
 			module_color: '0, 0, 0',
@@ -26,8 +33,7 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 		},
 	},
 	light: {
-		name: 'Light',
-			values: {
+		values: {
 			background_color: '255, 255, 255',
 			button_color: '212, 212, 212',
 			module_color: '242, 243, 245',
@@ -37,8 +43,7 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 		},
 	},
 	cyberpunk: {
-		name: 'Cyberpunk',
-			values: {
+		values: {
 			background_color: '0,0,0',
 			button_color: '28,49,35',
 			module_color: '0, 7, 1',
@@ -48,8 +53,7 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 		},
 	},
 	tokyo: {
-		name: 'Tokyo',
-			values: {
+		values: {
 			background_color: '26, 27, 39',
 			button_color: '43, 45, 82',
 			module_color: '22, 22, 31',
@@ -59,8 +63,7 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 		},
 	},
 	norman: {
-		name: 'Norman',
-			values: {
+		values: {
 			background_color: '41, 45, 62',
 			button_color: '108, 141, 212',
 			module_color: '36, 40, 55',
@@ -70,8 +73,7 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 		},
 	},
 	save_the_bees: {
-		name: 'Save the Bees',
-			values: {
+		values: {
 			background_color: '241, 243, 245',
 			button_color: '193, 204, 216',
 			module_color: '222, 226, 228',
@@ -81,8 +83,7 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 		},
 	},
 	night_owl: {
-		name: 'Night Owl',
-			values: {
+		values: {
 			background_color: '1, 22, 39',
 			button_color: '14, 80, 134',
 			module_color: '1, 18, 32',
@@ -92,8 +93,7 @@ export const APP_THEME_PRESETS: PresetThemeValues = {
 		},
 	},
 	phd_student: {
-		name: 'The PhD Student',
-			values: {
+		values: {
 			background_color: '254, 63, 255',
 			button_color: '144, 78, 0',
 			module_color: '0, 13, 255',

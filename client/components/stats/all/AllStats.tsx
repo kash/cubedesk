@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import AllStatsCommunity from '@/components/stats/all/AllStatsCommunity';
 import AllStatsFeatured from '@/components/stats/all/AllStatsFeatured';
 import ActivityChart from '@/components/stats/common/ActivityChart';
@@ -9,14 +10,15 @@ import {useStatsContext} from '@/components/stats/Stats';
 import React from 'react';
 
 export default function AllStats() {
+	const {t} = useTranslation();
 	const {filterOptions} = useStatsContext();
 	return (
 		<div className="stats-dashboard">
 			<AllStatsFeatured />
 			<div className="stats-main-grid">
 				<StatSection
-					title="Solving activity"
-					description="Your daily solves · Last 30 days"
+					title={t('stats.solvingActivity')}
+					description={t('solves.yourDailySolvesLast30Days')}
 					className="stats-panel"
 				>
 					<StatModule className="stats-chart">
@@ -24,20 +26,20 @@ export default function AllStats() {
 					</StatModule>
 				</StatSection>
 				<StatSection
-					title="Event breakdown"
-					description="Where you spend your solves"
+					title={t('common.eventBreakdown')}
+					description={t('solves.whereYouSpendYourSolves')}
 					className="stats-panel"
 				>
 					<EventDistribution />
 				</StatSection>
 			</div>
-			<StatSection
-				title="The details"
-				description="Habits, milestones, and everything in between"
-			>
+			<StatSection title={t('common.theDetails')} description={t('stats.overview.subtitle')}>
 				<SubStats />
 			</StatSection>
-			<StatSection title="Community" description="Your results beyond the timer">
+			<StatSection
+				title={t('community.community')}
+				description={t('timer.yourResultsBeyondTheTimer')}
+			>
 				<AllStatsCommunity />
 			</StatSection>
 		</div>

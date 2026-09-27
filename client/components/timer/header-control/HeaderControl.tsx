@@ -20,6 +20,7 @@ import {AllSettings} from '@/db/settings/query';
 import {setCubeType, setSetting} from '@/db/settings/update';
 import {toggleSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
+import {useTranslation} from 'react-i18next';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useTheme} from '@/util/hooks/useTheme';
@@ -38,6 +39,7 @@ import React, {useEffect, useState} from 'react';
 import {GlobalHotKeys} from 'react-hotkeys';
 
 export default function HeaderControl() {
+	const {t} = useTranslation();
 	const [createNewSessionDialog, setCreateNewSessionDialog] = React.useState<React.ComponentProps<
 		typeof CreateNewSession
 	> | null>(null);
@@ -107,6 +109,12 @@ export default function HeaderControl() {
 
 	const cubePicker = !focusMode && !headerOptions.hideCubeType && (
 		<CubePicker
+			labels={{
+				label: t('common.cubeType2'),
+				placeholder: t('common.selectOption'),
+				searchPlaceholder: t('common.search'),
+				emptyMessage: t('common.noResultsFound'),
+			}}
 			pickerProps={{openLeft: true, noMargin: true}}
 			value={cubeType ?? ''}
 			onChange={(ct) => changeCubeType(ct.id)}
@@ -121,13 +129,15 @@ export default function HeaderControl() {
 						<TooltipTrigger asChild>
 							<span
 								tabIndex={0}
-								aria-label="Inspection is on"
-								className="text-text mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+								aria-label={t('timer.aria.inspectionEnabled')}
+								className="text-text focus-visible:outline-primary mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4"
 							>
 								<MagnifyingGlassPlus className="size-4" aria-hidden="true" />
 							</span>
 						</TooltipTrigger>
-						<TooltipContent side="bottom">Inspection is on</TooltipContent>
+						<TooltipContent side="bottom">
+							{t('timer.aria.inspectionEnabled')}
+						</TooltipContent>
 					</TooltipRoot>
 				</TooltipProvider>
 			)}
@@ -137,18 +147,20 @@ export default function HeaderControl() {
 						<TooltipTrigger asChild>
 							<span
 								tabIndex={0}
-								aria-label="Manual entry is on"
-								className="text-text mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+								aria-label={t('timer.aria.manualEntryEnabled')}
+								className="text-text focus-visible:outline-primary mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4"
 							>
 								<Keyboard className="size-4" aria-hidden="true" />
 							</span>
 						</TooltipTrigger>
-						<TooltipContent side="bottom">Manual entry is on</TooltipContent>
+						<TooltipContent side="bottom">
+							{t('timer.aria.manualEntryEnabled')}
+						</TooltipContent>
 					</TooltipRoot>
 				</TooltipProvider>
 			)}
 			<SelectField
-				label="Timer input type"
+				label={t('timer.settings.inputType')}
 				value={timerType}
 				onValueChange={(value) =>
 					value === 'stackmat'
@@ -156,15 +168,19 @@ export default function HeaderControl() {
 						: selectTimerType(value as AllSettings['timer_type'])
 				}
 				options={[
-					{value: 'keyboard', text: 'Keyboard'},
-					{value: 'stackmat', text: 'StackMat'},
-					{value: 'smart', text: 'Smart Cube', disabled: cubeType !== '333'},
-					{value: 'gantimer', text: 'GAN Smart Timer'},
+					{value: 'keyboard', text: t('timer.inputTypes.keyboard')},
+					{value: 'stackmat', text: t('timer.inputTypes.stackmat')},
+					{
+						value: 'smart',
+						text: t('timer.inputTypes.smartCube'),
+						disabled: cubeType !== '333',
+					},
+					{value: 'gantimer', text: t('timer.inputTypes.ganSmartTimer')},
 				]}
 			/>
 			{timerType === 'stackmat' && (
 				<Button variant="secondary" onClick={openStackMat}>
-					{'Configure'}
+					{t('timer.configure')}
 				</Button>
 			)}
 		</div>
@@ -176,31 +192,32 @@ export default function HeaderControl() {
 
 	let topRightButton = (
 		<ActionMenu
+			menuLabel={t('common.openMenu')}
 			noMargin
 			options={[
 				{
-					text: 'Full Screen',
+					text: t('timer.fullScreen'),
 					on: fullScreenMode,
 					hidden: !screenfull.isEnabled,
 					onClick: () => screenfull.toggle(),
 					icon: <FrameCorners />,
 				},
 				{
-					text: 'Focus Mode',
+					text: t('timer.focusMode'),
 					on: focusMode,
 					hidden: headerOptions.hideFocus,
 					onClick: () => toggleSetting('focus_mode'),
 					icon: <CrosshairSimple />,
 				},
 				{
-					text: 'Inspection',
+					text: t('timer.options.inspection'),
 					on: inspection,
 					hidden: headerOptions.hideInspection,
 					onClick: () => toggleSetting('inspection'),
 					icon: <MagnifyingGlassPlus />,
 				},
 				{
-					text: 'Manual Entry',
+					text: t('timer.manualEntry'),
 					on: manualEntry,
 					hidden: headerOptions.hideManualEntry,
 					onClick: () => toggleSetting('manual_entry'),
@@ -208,7 +225,7 @@ export default function HeaderControl() {
 					disabled: manualDisabled,
 				},
 				{
-					text: 'New Session',
+					text: t('sessions.newSession2'),
 					hidden: headerOptions.hideNewSession || !me,
 					onClick: toggleCreateNewSession,
 					icon: <Plus />,
@@ -223,7 +240,7 @@ export default function HeaderControl() {
 				variant="ghost"
 				onClick={() => toggleSetting('focus_mode')}
 				size="icon"
-				aria-label="Exit focus mode"
+				aria-label={t('timer.exitFocusMode')}
 			>
 				<X />
 			</Button>
@@ -268,10 +285,10 @@ export default function HeaderControl() {
 						{!me && (
 							<div className="flex shrink-0 items-center gap-2">
 								<AuthDialog view="login">
-									<Button variant="secondary">{'Log in'}</Button>
+									<Button variant="secondary">{t('auth.logIn')}</Button>
 								</AuthDialog>
 								<AuthDialog view="signup">
-									<Button variant="default">{'Sign up'}</Button>
+									<Button variant="default">{t('auth.signUp')}</Button>
 								</AuthDialog>
 							</div>
 						)}
@@ -287,7 +304,7 @@ export default function HeaderControl() {
 				}}
 			>
 				{createNewSessionDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<CreateNewSession
 							{...createNewSessionDialog}
 							onComplete={() => {
@@ -308,7 +325,7 @@ export default function HeaderControl() {
 				}}
 			>
 				{stackMatPickerDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<StackMatPicker
 							{...stackMatPickerDialog}
 							onComplete={() => {

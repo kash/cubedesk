@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Avatar from '@/components/common/avatar/Avatar';
 import CopyText from '@/components/common/CopyText';
 import HorizontalNav from '@/components/common/HorizontalNav';
@@ -31,6 +32,7 @@ interface Props {
 }
 
 export default function SolveInfo(props: Props) {
+	const {t, i18n} = useTranslation();
 	const {solveId, disabled, onComplete} = props;
 	const deletion = useSolveDeletion(onComplete);
 	const timerFontFamily = useSettings('timer_font_family');
@@ -133,9 +135,9 @@ export default function SolveInfo(props: Props) {
 	if (loadError) {
 		return (
 			<div className="text-text flex flex-col items-center gap-4 py-8">
-				<p>Could not load this solve. Please try again.</p>
+				<p>{t('solves.loadFailed')}</p>
 				<Button variant="secondary" onClick={updateSolve}>
-					{'Try again'}
+					{t('common.tryAgain')}
 				</Button>
 			</div>
 		);
@@ -172,7 +174,7 @@ export default function SolveInfo(props: Props) {
 
 	let editButton: ReactNode = (
 		<Button variant={editMode ? 'default' : 'secondary'} onClick={toggleEditMode}>
-			{editMode ? 'Save' : 'Edit'}
+			{editMode ? t('common.save') : t('common.edit')}
 		</Button>
 	);
 
@@ -195,12 +197,12 @@ export default function SolveInfo(props: Props) {
 			disabled={disabled}
 			onClick={toggleDnf}
 		>
-			{'DNF'}
+			{t('solves.dnf')}
 		</Button>
 	);
 	let deleteButton: ReactNode = (
-		<Button variant="secondary" title="Delete solve" onClick={deleteSolve}>
-			{'Delete'}
+		<Button variant="secondary" title={t('solves.deleteSolve')} onClick={deleteSolve}>
+			{t('common.delete')}
 		</Button>
 	);
 
@@ -229,11 +231,11 @@ export default function SolveInfo(props: Props) {
 	let smartPages = [
 		{
 			id: 'solution',
-			value: 'Solution',
+			value: t('trainer.solution'),
 		},
 		{
 			id: 'stats',
-			value: 'Stats',
+			value: t('stats.stats'),
 		},
 	];
 
@@ -244,12 +246,12 @@ export default function SolveInfo(props: Props) {
 	const pages = [
 		{
 			id: 'scramble',
-			value: 'Scramble',
+			value: t('solves.scramble'),
 		},
 		...smartPages,
 		{
 			id: 'notes',
-			value: 'Notes',
+			value: t('solves.notes'),
 		},
 	];
 
@@ -257,8 +259,13 @@ export default function SolveInfo(props: Props) {
 	if (typeof window !== 'undefined' && !demoSolve && solve.share_code) {
 		shareLink = (
 			<CopyText
+				labels={{
+					copy: t('common.copyText'),
+					copied: t('common.copied'),
+					error: t('common.copyError'),
+				}}
 				buttonProps={{
-					children: 'Share Link',
+					children: t('solves.shareLink'),
 				}}
 				text={window.location.origin + '/solve/' + solve.share_code}
 			/>
@@ -290,7 +297,7 @@ export default function SolveInfo(props: Props) {
 						)}
 						<div className="mt-[15px] flex flex-row items-center gap-2.5">
 							{isSmartCube ? (
-								<Badge size="button" variant="info" title="Smart cube">
+								<Badge size="button" variant="info" title={t('common.smartCube2')}>
 									{smartDevice?.name}
 									<Bluetooth />
 								</Badge>
@@ -305,7 +312,7 @@ export default function SolveInfo(props: Props) {
 						</div>
 						<div className="w-full pt-5">
 							<span className="text-text/60 m-auto table text-sm">
-								{getFullFormattedDate(endedAt)}
+								{getFullFormattedDate(endedAt, i18n.language)}
 							</span>
 						</div>
 					</div>

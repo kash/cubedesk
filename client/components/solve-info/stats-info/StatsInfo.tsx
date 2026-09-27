@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ExecutionTime from '@/components/solve-info/stats-info/ExecutionTime';
 import LLTrainer, {getOllAndPllFromSolve} from '@/components/solve-info/stats-info/LLTrainer';
 import RecognitionChart from '@/components/solve-info/stats-info/RecognitionChart';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function StatsInfo(props: Props) {
+	const {t} = useTranslation();
 	const {solve} = props;
 
 	const time = solve.raw_time ?? solve.time;
@@ -32,13 +34,13 @@ export default function StatsInfo(props: Props) {
 	return (
 		<div className="w-full">
 			<div className="bg-module text-text relative box-border w-full rounded-[13px] p-[15px]">
-				{getStatCard(<ArrowsClockwise />, 'Turns Per Second', tps)}
+				{getStatCard(<ArrowsClockwise />, t('solves.turnsPerSecond'), tps)}
 				{getStatCard(
 					<Timer />,
-					'Inspection Time',
+					t('solves.inspectionTime'),
 					smartInspectionTime ? smartInspectionTime + 's' : '-',
 				)}
-				{getStatCard(<ArrowCounterClockwise />, 'Turns', smartTurnCount)}
+				{getStatCard(<ArrowCounterClockwise />, t('solves.turns'), smartTurnCount)}
 			</div>
 			<Separator className="my-6" />
 			<div className="relative box-border w-full p-0">

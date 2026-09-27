@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import {UserAccountSolvesSummary, UserAccountSummary} from '@/types/admin';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
@@ -6,6 +7,7 @@ import {CaretDown, Timer} from 'phosphor-react';
 import React from 'react';
 
 function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummary[]}) {
+	const {t} = useTranslation();
 	return (
 		<div className="min-w-0">
 			<h4 className="text-text m-0 mb-3 text-sm font-semibold">{title}</h4>
@@ -13,12 +15,12 @@ function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummar
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead>Puzzle</TableHead>
-							<TableHead className="text-right">Solves</TableHead>
-							<TableHead className="text-right">Average</TableHead>
-							<TableHead className="text-right">Best</TableHead>
-							<TableHead className="text-right">Worst</TableHead>
-							<TableHead className="text-right">Total time</TableHead>
+							<TableHead>{t('common.puzzle')}</TableHead>
+							<TableHead className="text-right">{t('solves.solves')}</TableHead>
+							<TableHead className="text-right">{t('stats.average')}</TableHead>
+							<TableHead className="text-right">{t('stats.best')}</TableHead>
+							<TableHead className="text-right">{t('stats.worst')}</TableHead>
+							<TableHead className="text-right">{t('stats.totalTime')}</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -27,7 +29,7 @@ function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummar
 								<TableCell className="font-medium">
 									{getCubeTypeInfoById(row.cube_type ?? '')?.name ??
 										row.cube_type ??
-										'Unknown'}
+										t('common.unknown')}
 								</TableCell>
 								<TableCell className="text-right tabular-nums">
 									{row.count.toLocaleString()}
@@ -44,13 +46,14 @@ function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummar
 					</TableBody>
 				</Table>
 			) : (
-				<p className="text-text/50 m-0 text-sm">No solves recorded.</p>
+				<p className="text-text/50 m-0 text-sm">{t('solves.noSolvesRecorded')}</p>
 			)}
 		</div>
 	);
 }
 
 export default function UserSummary({summary}: {summary: UserAccountSummary}) {
+	const {t} = useTranslation();
 	const stats = [
 		['Solves', summary.solves],
 		['Bans', summary.bans],
@@ -81,9 +84,11 @@ export default function UserSummary({summary}: {summary: UserAccountSummary}) {
 				<summary className="text-text focus-visible:outline-primary flex cursor-pointer list-none items-center gap-3 rounded-xl p-4 focus-visible:outline-2 [&::-webkit-details-marker]:hidden">
 					<Timer size={20} className="text-text/45" aria-hidden />
 					<span className="flex-1">
-						<span className="block text-sm font-medium">Solve statistics</span>
+						<span className="block text-sm font-medium">
+							{t('stats.solveStatistics')}
+						</span>
 						<span className="text-text/50 mt-1 block text-xs">
-							Timer times, puzzle breakdowns, and 1v1 performance
+							{t('admin.users.summaryDescription')}
 						</span>
 					</span>
 					<CaretDown
@@ -94,10 +99,10 @@ export default function UserSummary({summary}: {summary: UserAccountSummary}) {
 				<div className="border-tmo-module/10 space-y-6 border-t p-4 sm:p-5">
 					<dl className="m-0 grid grid-cols-2 gap-4 sm:grid-cols-4">
 						{[
-							['Matches', summary.matches.count.toLocaleString()],
-							['Wins', summary.matches.wins.toLocaleString()],
-							['Losses', summary.matches.losses.toLocaleString()],
-							['Win rate', winRate],
+							[t('community.matches'), summary.matches.count.toLocaleString()],
+							[t('community.wins'), summary.matches.wins.toLocaleString()],
+							[t('community.losses'), summary.matches.losses.toLocaleString()],
+							[t('admin.users.winRate'), winRate],
 						].map(([label, value]) => (
 							<div key={label}>
 								<dt className="text-text/50 text-xs">{label}</dt>
@@ -107,8 +112,11 @@ export default function UserSummary({summary}: {summary: UserAccountSummary}) {
 							</div>
 						))}
 					</dl>
-					<SolveTable title="Timer solves" rows={summary.timer_solves} />
-					<SolveTable title="1v1 solves" rows={summary.match_solves} />
+					<SolveTable title={t('admin.users.timerSolves')} rows={summary.timer_solves} />
+					<SolveTable
+						title={t('admin.users.oneOnOneSolves')}
+						rows={summary.match_solves}
+					/>
 				</div>
 			</details>
 		</div>

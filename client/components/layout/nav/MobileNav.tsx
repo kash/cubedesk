@@ -7,9 +7,11 @@ import {useMe} from '@/util/hooks/useMe';
 import {useTheme} from '@/util/hooks/useTheme';
 import {List} from 'phosphor-react';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {useRouteMatch} from 'react-router-dom';
 
 export default function MobileNav() {
+	const {t} = useTranslation();
 	const me = useMe();
 	const match = useRouteMatch();
 
@@ -21,11 +23,12 @@ export default function MobileNav() {
 			<div className="relative z-[100] flex w-[30%] flex-row justify-end gap-2.5">
 				<Notifications right />
 				<ActionMenu
+					menuLabel={t('common.openMenu')}
 					options={[
-						{text: 'Account', link: '/account/personal-info'},
-						{text: 'Admin', link: '/admin/reports', hidden: !me.admin},
-						{text: 'Profile', link: `/user/${me.username}`},
-						{text: 'Log out', onClick: logOut},
+						{text: t('navigation.account'), link: '/account/personal-info'},
+						{text: t('admin.admin'), link: '/admin/reports', hidden: !me.admin},
+						{text: t('navigation.profile'), link: `/user/${me.username}`},
+						{text: t('auth.logOut'), onClick: logOut},
 					]}
 				/>
 			</div>
@@ -33,15 +36,16 @@ export default function MobileNav() {
 	}
 
 	return (
-		<div className="fixed left-0 top-0 z-[100000] flex h-[55px] w-full justify-center">
+		<div className="fixed top-0 left-0 z-[100000] flex h-[55px] w-full justify-center">
 			<div className="box-border flex w-full items-center justify-between px-[13px]">
 				<div className="relative z-[100] w-[30%]">
 					<ActionMenu
+						menuLabel={t('common.openMenu')}
 						icon={<List />}
 						openLeft
 						options={NAV_LINKS.map((link) => ({
 							link: link.link,
-							text: link.name,
+							text: t(link.name),
 							icon: link.icon,
 							disabled: link.match.test(match.path),
 						}))}
@@ -59,7 +63,7 @@ export default function MobileNav() {
 				</div>
 				{navRight}
 			</div>
-			<span className="absolute left-0 top-0 z-0 h-full w-full bg-module" />
+			<span className="bg-module absolute top-0 left-0 z-0 h-full w-full" />
 		</div>
 	);
 }

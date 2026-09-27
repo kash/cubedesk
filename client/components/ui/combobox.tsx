@@ -2,7 +2,6 @@ import {Button} from '@/components/ui/button';
 import {cn} from '@/util/cn';
 import {CaretDown, Check} from 'phosphor-react';
 import React from 'react';
-import {useOptionalI18n} from '@/i18n';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from './command';
 import {Popover, PopoverContent, PopoverTrigger} from './popover';
 
@@ -13,6 +12,8 @@ export interface ComboboxProps {
 	label: string;
 	text?: string;
 	placeholder?: string;
+	searchPlaceholder?: string;
+	emptyMessage?: string;
 	disabled?: boolean;
 	triggerProps?: React.ComponentProps<'button'>;
 	align?: 'start' | 'center' | 'end';
@@ -23,14 +24,13 @@ export function Combobox({
 	options,
 	label,
 	text,
-	placeholder = 'Select option',
+	placeholder,
+	searchPlaceholder,
+	emptyMessage,
 	disabled,
 	triggerProps,
 	align = 'start',
 }: ComboboxProps) {
-	const {t} = useOptionalI18n();
-	const translatedLabel = t(label);
-	const translatedPlaceholder = t(placeholder);
 	const [open, setOpen] = React.useState(false);
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
@@ -40,7 +40,7 @@ export function Combobox({
 					type="button"
 					role="combobox"
 					aria-expanded={open}
-					aria-label={translatedLabel}
+					aria-label={label}
 					disabled={disabled || triggerProps?.disabled}
 					variant="outline"
 					className={cn('justify-between', triggerProps?.className)}
@@ -52,7 +52,7 @@ export function Combobox({
 					<span className="truncate">
 						{text ||
 							options.find((option) => option.value === value)?.text ||
-							translatedPlaceholder}
+							placeholder}
 					</span>
 					<CaretDown className="size-4 opacity-60" />
 				</Button>
@@ -62,10 +62,10 @@ export function Combobox({
 				className="w-[max(16rem,var(--radix-popover-trigger-width))] p-0"
 				onClick={(event) => event.stopPropagation()}
 			>
-				<Command label={translatedLabel}>
-					<CommandInput placeholder={`${t('Search')} ${translatedLabel.toLowerCase()}…`} />
+				<Command label={label}>
+					<CommandInput placeholder={searchPlaceholder} />
 					<CommandList className="max-h-[min(18rem,calc(var(--radix-popover-content-available-height)-3rem))]">
-						<CommandEmpty>{t('No results found.')}</CommandEmpty>
+						<CommandEmpty>{emptyMessage}</CommandEmpty>
 						{options.map((option) => (
 							<CommandItem
 								key={option.value}
@@ -80,7 +80,7 @@ export function Combobox({
 								<Check
 									className={cn('size-4', {'opacity-0': option.value !== value})}
 								/>
-								{t(option.text)}
+								{option.text}
 							</CommandItem>
 						))}
 					</CommandList>

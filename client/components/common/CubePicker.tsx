@@ -12,10 +12,12 @@ interface Props {
 	onChange?: (cubeType: CubeType) => void;
 	excludeOtherCubeType?: boolean;
 	pickerProps?: ComboboxFieldOptions;
+	labels: {label: string; placeholder: string; searchPlaceholder: string; emptyMessage: string};
 }
 
 export default function CubePicker(props: Props) {
 	const {
+		labels,
 		value,
 		cubeTypes,
 		handlePrefix,
@@ -63,7 +65,10 @@ export default function CubePicker(props: Props) {
 	return (
 		<ComboboxField
 			{...pickerProps}
-			label="Cube type"
+			label={labels.label}
+			placeholder={labels.placeholder}
+			searchPlaceholder={labels.searchPlaceholder}
+			emptyMessage={labels.emptyMessage}
 			value={value}
 			text={text}
 			options={options}

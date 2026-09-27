@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import HistoryDialog from '@/components/modules/history/HistoryDialog';
 import {
 	getStatsBlockDescription,
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export default function QuickStatsBlock(props: Props) {
+	const {t} = useTranslation();
 	const [historyDialog, setHistoryDialog] = React.useState<React.ComponentProps<
 		typeof HistoryDialog
 	> | null>(null);
@@ -40,9 +42,9 @@ export default function QuickStatsBlock(props: Props) {
 	const [statsBlockSolvesFilter, statsBlockDescription] = useMemo(() => {
 		return [
 			getStatsBlockValueFromFilter(statOptions, filterOptions, sessionId),
-			getStatsBlockDescription(statOptions, filterOptions),
+			getStatsBlockDescription(statOptions, filterOptions, t),
 		];
-	}, [jsonStr(filterOptions), statOptions, sessionId, solveDb]);
+	}, [jsonStr(filterOptions), statOptions, sessionId, solveDb, t]);
 
 	const solveCount = statsBlockSolvesFilter?.solves?.length;
 
@@ -106,7 +108,7 @@ export default function QuickStatsBlock(props: Props) {
 		<>
 			<div className="relative h-full w-full">
 				{/* The grid sizes the outer block; containment only applies to its contents. */}
-				<div className="absolute inset-0 [container-type:size]">
+				<div className="[container-type:size] absolute inset-0">
 					<div className={blockClasses.join(' ')}>
 						<div className="flex flex-row">
 							<StatDescription statOptions={statOptions} />
@@ -132,8 +134,8 @@ export default function QuickStatsBlock(props: Props) {
 				}}
 			>
 				{historyDialog && (
-					<DialogContent>
-						<DialogTitle className="sr-only">Solve history</DialogTitle>
+					<DialogContent closeLabel={t('common.closeDialog')}>
+						<DialogTitle className="sr-only">{t('solves.solveHistory')}</DialogTitle>
 						<HistoryDialog {...historyDialog} />
 					</DialogContent>
 				)}
@@ -147,8 +149,8 @@ export default function QuickStatsBlock(props: Props) {
 				}}
 			>
 				{solveInfoDialog && (
-					<DialogContent>
-						<DialogTitle className="sr-only">Solve details</DialogTitle>
+					<DialogContent closeLabel={t('common.closeDialog')}>
+						<DialogTitle className="sr-only">{t('solves.solveDetails')}</DialogTitle>
 						<SolveInfo
 							{...solveInfoDialog}
 							onComplete={() => {
@@ -196,5 +198,5 @@ function StatDescription(props: DescProps) {
 		text.push('worst');
 	}
 
-	return <span className="px-0.5 text-[0.8rem] text-text/70">{text.join(' ')}</span>;
+	return <span className="text-text/70 px-0.5 text-[0.8rem]">{text.join(' ')}</span>;
 }

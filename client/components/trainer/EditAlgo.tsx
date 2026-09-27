@@ -11,7 +11,7 @@ import {deleteTrainerAlgoOverrides, updateTrainerAlgoOverrides} from '@/db/train
 import {AlgorithmOverrideInput} from '@/types/trainer';
 import {useInput} from '@/util/hooks/useInput';
 import {toastError, toastSuccess} from '@/util/toast';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {useState} from 'react';
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 
 export default function EditAlgo(props: Props) {
 	const fieldId = React.useId();
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	const {onComplete, algoExt} = props;
 
@@ -47,7 +47,7 @@ export default function EditAlgo(props: Props) {
 		setSaving(true);
 		try {
 			await updateTrainerAlgoOverrides(algoExt, getOverrides());
-			toastSuccess(t('Updated trainer algorithm'));
+			toastSuccess(t('trainer.updatedTrainerAlgorithm'));
 			onComplete?.();
 		} catch (e) {
 			toastError(e);
@@ -59,7 +59,7 @@ export default function EditAlgo(props: Props) {
 		setResetting(true);
 		try {
 			await deleteTrainerAlgoOverrides(algoExt);
-			toastSuccess(t('Successfully reset trainer algorithm values to default'));
+			toastSuccess(t('trainer.algorithm.resetSuccess'));
 			setOverrides(null);
 			setName(algoExt.name);
 			setRotate(String(algoExt.rotate || 0));
@@ -75,10 +75,8 @@ export default function EditAlgo(props: Props) {
 	return (
 		<div>
 			<DialogHeader
-				title={t('Edit Trainer Algorithm')}
-				description={t(
-					'Below, you can override any of the default values for this trainer algorithm. Removing the value will reset it to its default value.',
-				)}
+				title={t('trainer.editTrainerAlgorithm')}
+				description={t('trainer.algorithm.overridesHint')}
 			/>
 			<div className="flex w-full items-center justify-center px-0 pt-2.5 pb-5">
 				<AlgoVisual
@@ -88,7 +86,7 @@ export default function EditAlgo(props: Props) {
 				/>
 			</div>
 			<Field className="mb-6">
-				<FieldLabel htmlFor={`${fieldId}-1`}>{t('Name')}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-1`}>{t('trainer.name')}</FieldLabel>
 				<Input
 					value={name}
 					placeholder={algoExt.name ?? undefined}
@@ -97,7 +95,7 @@ export default function EditAlgo(props: Props) {
 				/>
 			</Field>
 			<Field className="mb-6">
-				<FieldLabel htmlFor={`${fieldId}-2`}>{t('Solution')}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-2`}>{t('trainer.solution')}</FieldLabel>
 				<Input
 					value={solution}
 					placeholder={algoExt.solution ?? undefined}
@@ -107,8 +105,8 @@ export default function EditAlgo(props: Props) {
 			</Field>
 			<Field className="mb-6">
 				<FieldLabel htmlFor={`${fieldId}-3`}>
-					{t('Scrambles')}{' '}
-					<span className="text-text/60 font-normal italic">{t('Optional')}</span>
+					{t('trainer.scrambles')}{' '}
+					<span className="text-text/60 font-normal italic">{t('common.optional')}</span>
 				</FieldLabel>
 				<AutosizeTextarea
 					value={scrambles}
@@ -118,7 +116,7 @@ export default function EditAlgo(props: Props) {
 				/>
 			</Field>
 			<Radio
-				legend={t('Rotation')}
+				legend={t('trainer.rotation')}
 				onValueChange={setRotate}
 				value={rotate}
 				name="rotate"
@@ -131,7 +129,7 @@ export default function EditAlgo(props: Props) {
 			/>
 			<div className="mt-[30px] flex flex-row items-center justify-between gap-[7px]">
 				<Button variant="secondary" onClick={saveAlgo} disabled={saving} aria-busy={saving}>
-					{t('Save')}
+					{t('common.save')}
 					{saving ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 				{!overrides ? null : (
@@ -142,7 +140,7 @@ export default function EditAlgo(props: Props) {
 						disabled={resetting}
 						aria-busy={resetting}
 					>
-						{t('Reset to Defaults')}
+						{t('trainer.resetToDefaults')}
 						{resetting ? <Spinner aria-hidden="true" /> : null}
 					</Button>
 				)}

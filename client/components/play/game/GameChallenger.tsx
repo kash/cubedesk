@@ -5,11 +5,11 @@ import {getGameMetaData} from '@/components/play/Play';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {socketClient} from '@/util/socket/socketio';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {useContext} from 'react';
 
 export default function GameChallenger() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [matchPopupDialog, setMatchPopupDialog] = React.useState<{
 		props: React.ComponentProps<typeof MatchPopup>;
 		title: React.ReactNode;
@@ -35,7 +35,7 @@ export default function GameChallenger() {
 				maxPlayers: maxPlayers,
 				matchType: gameType,
 			},
-			title: t('Play {name}', {name: t(gameTypeData.name)}),
+			title: t('community.play2', {name: t(gameTypeData.name)}),
 			onClose: () => {
 				socketClient().emit('playerLeftLobby');
 			},
@@ -45,7 +45,7 @@ export default function GameChallenger() {
 	let joinLobbyButton: React.ReactNode = null;
 	const challengeButton = (
 		<Button variant="ghost" onClick={() => openMatch(false)} size="lg" className="w-full">
-			{t('Challenge')}
+			{t('community.challenge')}
 		</Button>
 	);
 
@@ -53,7 +53,7 @@ export default function GameChallenger() {
 	if (multiplayerOnly) {
 		joinLobbyButton = (
 			<Button variant="default" onClick={() => openMatch(true)} size="lg" className="w-full">
-				{t('Join Lobby')}
+				{t('community.joinLobby')}
 			</Button>
 		);
 	}
@@ -75,7 +75,7 @@ export default function GameChallenger() {
 				}}
 			>
 				{matchPopupDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<DialogHeader title={matchPopupDialog.title} />
 						<MatchPopup {...matchPopupDialog.props} />
 					</DialogContent>

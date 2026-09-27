@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import DemoWarning from '@/components/layout/wrapper/DemoWarning';
 import TimerModule from '@/components/timer/footer/TimerModule';
 import {useTimerContext} from '@/components/timer/Timer';
@@ -10,6 +11,7 @@ import {CaretDown, CaretUp} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 
 export default function TimerFooter() {
+	const {t} = useTranslation();
 	const context = useTimerContext();
 	const {timerLayout} = context;
 
@@ -30,7 +32,7 @@ export default function TimerFooter() {
 		mobileHideButton = (
 			<div className="flex h-[30px] w-full items-center justify-end opacity-70">
 				<Button variant="ghost" onClick={toggleMobileHideButton} size="sm">
-					{hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
+					{hideMobileTimerFooter ? t('timer.showFooter') : t('timer.hideFooter')}
 					{hideMobileTimerFooter ? <CaretUp /> : <CaretDown />}
 				</Button>
 			</div>

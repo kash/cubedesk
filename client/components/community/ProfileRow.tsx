@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Avatar from '@/components/common/avatar/Avatar';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import ReportUser from '@/components/profile/ReportUser';
@@ -26,6 +27,7 @@ interface ProfileRowProps {
 }
 
 export default function ProfileRow(props: ProfileRowProps) {
+	const {t} = useTranslation();
 	const [reportUserDialog, setReportUserDialog] = React.useState<React.ComponentProps<
 		typeof ReportUser
 	> | null>(null);
@@ -90,12 +92,21 @@ export default function ProfileRow(props: ProfileRowProps) {
 	let dropdown: ReactNode = (
 		<div className="ml-2">
 			<ActionMenu
+				menuLabel={t('common.openMenu')}
 				noMargin
 				options={[
-					{text: 'View details', icon: <Eye />, onClick: () => openSolve(solve)},
-					{text: 'View profile', icon: <User />, link: `/user/${user.username}`},
 					{
-						text: 'Delete solve',
+						text: t('community.viewDetails'),
+						icon: <Eye />,
+						onClick: () => openSolve(solve),
+					},
+					{
+						text: t('profile.viewProfile'),
+						icon: <User />,
+						link: `/user/${user.username}`,
+					},
+					{
+						text: t('solves.deleteSolve'),
 						hidden: !(solve && (me.admin || me.id === user.id)),
 						icon: <Trash />,
 						onClick: deleteSolve,
@@ -144,7 +155,7 @@ export default function ProfileRow(props: ProfileRowProps) {
 				}}
 			>
 				{reportUserDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<ReportUser
 							{...reportUserDialog}
 							onComplete={() => {

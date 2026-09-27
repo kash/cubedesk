@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ButtonError from '@/components/common/inputs/Error';
 import PasswordStrength from '@/components/common/PasswordStrength';
 import {Button} from '@/components/ui/button';
@@ -11,6 +12,7 @@ import {toastSuccess} from '@/util/toast';
 import React, {useState} from 'react';
 
 export default function Password() {
+	const {t} = useTranslation();
 	const fieldId = React.useId();
 
 	const [oldPassword, setOldPassword] = useInput('');
@@ -26,7 +28,7 @@ export default function Password() {
 
 		const validate = validateStrongPassword(password);
 		if (!validate.number1Check || !validate.cap1Check || !validate.char8Check) {
-			setError('Weak password');
+			setError(t('auth.password.weak'));
 			return;
 		}
 
@@ -36,16 +38,16 @@ export default function Password() {
 				new_password: password,
 			});
 
-			toastSuccess('Successfully updated password');
+			toastSuccess(t('auth.password.updated'));
 		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Could not update password');
+			setError(err instanceof Error ? err.message : t('auth.password.updateFailed'));
 		}
 	}
 
 	return (
 		<div className="flex flex-col gap-5">
 			<Field>
-				<FieldLabel htmlFor={`${fieldId}-1`}>{'Current Password'}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-1`}>{t('auth.password.current')}</FieldLabel>
 				<Input
 					type="password"
 					value={oldPassword}
@@ -54,7 +56,7 @@ export default function Password() {
 				/>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={`${fieldId}-2`}>{'New Password'}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-2`}>{t('auth.newPassword')}</FieldLabel>
 				<Input
 					type="password"
 					value={password}
@@ -70,7 +72,7 @@ export default function Password() {
 					disabled={updatePasswordMutation.isPending}
 					aria-busy={updatePasswordMutation.isPending}
 				>
-					{'Change Password'}
+					{t('auth.password.change')}
 					{updatePasswordMutation.isPending ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 				<ButtonError text={error} />

@@ -1,6 +1,5 @@
 import {cn} from '@/util/cn';
 import React from 'react';
-import {translateNode, useOptionalI18n} from '@/i18n';
 
 export function Card({className, ...props}: React.ComponentProps<'div'>) {
 	return (
@@ -22,25 +21,23 @@ export function CardHeader({className, ...props}: React.ComponentProps<'div'>) {
 }
 
 export function CardTitle({className, ...props}: React.ComponentProps<'div'>) {
-	const {t} = useOptionalI18n();
 	return (
 		<div
 			data-slot="card-title"
 			className={cn('leading-none font-semibold', className)}
 			{...props}
-			children={translateNode(props.children, t)}
+			children={props.children}
 		/>
 	);
 }
 
 export function CardDescription({className, ...props}: React.ComponentProps<'div'>) {
-	const {t} = useOptionalI18n();
 	return (
 		<div
 			data-slot="card-description"
 			className={cn('text-text/60 text-sm', className)}
 			{...props}
-			children={translateNode(props.children, t)}
+			children={props.children}
 		/>
 	);
 }

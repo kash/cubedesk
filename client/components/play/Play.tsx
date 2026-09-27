@@ -16,15 +16,15 @@ const gameTypeData: Record<GameType, GameMetaData> = {
 	[GameType.HEAD_TO_HEAD]: {
 		id: 'head-to-head',
 		icon: <Lightning weight="fill" />,
-		description: 'Go head-to-head with another user. First player to 5 wins',
-		name: '1v1',
+		description: 'community.headToHead.description',
+		name: 'common.value1v1',
 		color: '#ff9800',
 	},
 	[GameType.ELIMINATION]: {
 		id: 'elimination',
 		icon: <Sword weight="fill" />,
-		description: 'Start with 30 seconds, go 5% faster each solve. How many can you do?',
-		name: 'Elimination',
+		description: 'community.elimination.description',
+		name: 'community.elimination',
 		color: '#42a5f5',
 	},
 };
@@ -54,6 +54,8 @@ interface PlayRowProps {
 
 function PlayRow(props: PlayRowProps) {
 	return (
-		<div className="rounded-2xl border border-tmo-module/10 bg-tmo-module/[0.025] p-6 sm:p-7">{props.children}</div>
+		<div className="border-tmo-module/10 bg-tmo-module/[0.025] rounded-2xl border p-6 sm:p-7">
+			{props.children}
+		</div>
 	);
 }

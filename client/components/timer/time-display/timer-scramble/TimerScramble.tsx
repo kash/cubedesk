@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import CopyText from '@/components/common/CopyText';
 import {getStore} from '@/components/store';
 import {setTimerParam} from '@/components/timer/helpers/params';
@@ -15,6 +16,7 @@ import {ArrowClockwise, Lock, PencilSimple} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef} from 'react';
 
 export default function TimerScramble() {
+	const {t} = useTranslation();
 	const context = useTimerContext();
 
 	const scrambleInput = useRef<HTMLTextAreaElement | null>(null);
@@ -95,7 +97,7 @@ export default function TimerScramble() {
 			{/* Match the textarea's wrapping and box model before JavaScript runs. */}
 			<div
 				aria-hidden="true"
-				className={`${scrambleFieldClasses} invisible whitespace-pre-wrap [overflow-wrap:break-word]`}
+				className={`${scrambleFieldClasses} invisible [overflow-wrap:break-word] whitespace-pre-wrap`}
 			>
 				{`${scramble || (hideScramble ? '' : 'scramble')} `}
 			</div>
@@ -104,7 +106,7 @@ export default function TimerScramble() {
 				value={scramble}
 				disabled={!editScramble}
 				rows={1}
-				aria-label="Scramble"
+				aria-label={t('solves.scramble')}
 				placeholder={hideScramble ? '' : 'scramble'}
 				ref={scrambleInput}
 				className={classNames(
@@ -146,10 +148,10 @@ export default function TimerScramble() {
 				<Button
 					variant={!isSmart && editScramble ? 'default' : 'ghost'}
 					onClick={toggleEditScramble}
-					title="Edit scramble"
+					title={t('timer.scramble.edit')}
 					disabled={isSmart || scrambleLocked}
 					size="icon"
-					aria-label="Edit scramble"
+					aria-label={t('timer.scramble.edit')}
 					aria-pressed={!isSmart && editScramble}
 				>
 					<PencilSimple weight="bold" />
@@ -157,14 +159,19 @@ export default function TimerScramble() {
 				<Button
 					variant={scrambleLocked ? 'default' : 'ghost'}
 					onClick={toggleScrambleLock}
-					title="Lock scramble"
+					title={t('timer.scramble.lock')}
 					size="icon"
-					aria-label="Lock scramble"
+					aria-label={t('timer.scramble.lock')}
 					aria-pressed={scrambleLocked}
 				>
 					<Lock weight="bold" />
 				</Button>
 				<CopyText
+					labels={{
+						copy: t('common.copyText'),
+						copied: t('common.copied'),
+						error: t('common.copyError'),
+					}}
 					text={scramble ?? ''}
 					buttonProps={{
 						variant: 'ghost',
@@ -174,9 +181,9 @@ export default function TimerScramble() {
 					variant="ghost"
 					disabled={scrambleLocked}
 					onClick={() => resetScramble(context)}
-					title="Reset scramble"
+					title={t('timer.scramble.reset')}
 					size="icon"
-					aria-label="Reset scramble"
+					aria-label={t('timer.scramble.reset')}
 				>
 					<ArrowClockwise weight="bold" />
 				</Button>

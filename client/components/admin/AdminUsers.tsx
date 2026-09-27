@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ManageUser from '@/components/admin/manage-user/ManageUser';
 import Avatar from '@/components/common/avatar/Avatar';
 import PageControls from '@/components/common/PageControls';
@@ -13,6 +14,7 @@ import {useHistory, useLocation} from 'react-router-dom';
 const PAGE_SIZE = 25;
 
 export default function AdminUsers() {
+	const {t, i18n} = useTranslation();
 	const history = useHistory();
 	const location = useLocation();
 	const params = new URLSearchParams(location.search);
@@ -62,16 +64,16 @@ export default function AdminUsers() {
 				</div>
 				<div>
 					<h2 className="text-text m-0 text-2xl font-semibold tracking-tight">
-						User directory
+						{t('admin.userDirectory')}
 					</h2>
 					<p className="text-text/60 mt-1 mb-0 text-sm">
-						Find an account, review its status, and manage access.
+						{t('admin.users.directoryDescription')}
 					</p>
 				</div>
 			</div>
 
 			<section
-				aria-label="User search"
+				aria-label={t('common.userSearch')}
 				className="bg-module border-tmo-module/10 overflow-hidden rounded-2xl border shadow-xs"
 			>
 				<div className="border-tmo-module/10 border-b p-5 sm:p-6">
@@ -79,7 +81,7 @@ export default function AdminUsers() {
 						htmlFor="admin-user-search"
 						className="text-text mb-2 block text-sm font-medium"
 					>
-						Search users
+						{t('common.searchUsers')}
 					</label>
 					<div className="relative">
 						<MagnifyingGlass
@@ -92,7 +94,7 @@ export default function AdminUsers() {
 							id="admin-user-search"
 							value={query}
 							onChange={(event) => setQuery(event.target.value)}
-							placeholder="Search by username or email…"
+							placeholder={t('admin.users.searchPlaceholder')}
 							maxLength={250}
 							autoComplete="off"
 							spellCheck={false}
@@ -103,7 +105,7 @@ export default function AdminUsers() {
 								variant="ghost"
 								size="icon-sm"
 								onClick={clearSearch}
-								aria-label="Clear search"
+								aria-label={t('common.clearSearch')}
 								className="absolute top-2 right-2"
 							>
 								<X aria-hidden />
@@ -114,21 +116,21 @@ export default function AdminUsers() {
 
 				<div className="border-tmo-module/10 flex items-center justify-between gap-3 border-b px-5 py-4 sm:px-6">
 					<h3 className="text-text m-0 text-sm font-semibold">
-						{searchQuery ? 'Search results' : 'All users'}
+						{searchQuery ? t('admin.users.searchResults') : t('admin.users.allUsers')}
 					</h3>
 					<span role="status" className="text-text/50 text-sm tabular-nums">
 						{loading
-							? 'Searching…'
+							? t('admin.users.searching')
 							: users.isError
-								? 'Search unavailable'
-								: `${(data?.total ?? 0).toLocaleString()} users`}
+								? t('admin.users.searchUnavailable')
+								: t('admin.users.userCount', {count: data?.total ?? 0})}
 					</span>
 				</div>
 
 				<div aria-busy={loading}>
 					{loading ? (
 						<div
-							aria-label="Loading users"
+							aria-label={t('common.loadingUsers')}
 							className="divide-tmo-module/10 divide-y motion-safe:animate-pulse"
 						>
 							{Array.from({length: 5}, (_, index) => (
@@ -144,12 +146,12 @@ export default function AdminUsers() {
 						</div>
 					) : users.isError ? (
 						<div role="alert" className="px-6 py-16 text-center">
-							<p className="text-text font-medium">Unable to load users</p>
+							<p className="text-text font-medium">{t('common.unableToLoadUsers')}</p>
 							<p className="text-text/60 mb-5 text-sm">
-								Please try your search again.
+								{t('common.pleaseTryYourSearchAgain')}
 							</p>
 							<Button variant="outline" onClick={() => void users.refetch()}>
-								Try again
+								{t('common.tryAgain')}
 							</Button>
 						</div>
 					) : !data?.items.length ? (
@@ -159,20 +161,20 @@ export default function AdminUsers() {
 								className="text-text/30 mx-auto mb-4"
 								aria-hidden
 							/>
-							<p className="text-text font-medium">No users found</p>
+							<p className="text-text font-medium">{t('common.noUsersFound')}</p>
 							<p className="text-text/60 mb-5 text-sm">
 								{searchQuery
-									? 'Try a different username or email address.'
-									: 'There are no accounts on this page.'}
+									? t('admin.users.tryDifferentSearch')
+									: t('admin.users.noAccountsOnPage')}
 							</p>
 							{searchQuery ? (
 								<Button variant="outline" onClick={clearSearch}>
-									Clear search
+									{t('common.clearSearch')}
 								</Button>
 							) : (
 								page > 0 && (
 									<Button variant="outline" onClick={() => changePage(0)}>
-										Back to first page
+										{t('common.backToFirstPage')}
 									</Button>
 								)
 							)}
@@ -194,7 +196,7 @@ export default function AdminUsers() {
 										<div className="min-w-0 flex-1 overflow-hidden">
 											<Avatar user={user} small hideBadges />
 											<p className="text-text/45 mt-1.5 mb-0 text-xs">
-												Joined{' '}
+												{t('profile.joined')}{' '}
 												{new Date(user.created_at).toLocaleDateString(
 													undefined,
 													{
@@ -209,28 +211,33 @@ export default function AdminUsers() {
 											{user.admin && (
 												<Badge variant="info" size="sm">
 													<ShieldCheck aria-hidden />
-													Admin
+
+													{t('admin.admin')}
 												</Badge>
 											)}
 											<Badge
 												variant={banned ? 'destructive' : 'success'}
 												size="sm"
 											>
-												{banned ? 'Banned' : 'Active'}
+												{banned
+													? t('admin.users.banned')
+													: t('admin.users.active')}
 											</Badge>
 										</div>
 										<Button
 											variant="outline"
 											size="sm"
-											aria-label={`Manage ${user.username || 'user'}`}
+											aria-label={t('admin.users.manageNamedUser', {
+												name: user.username || t('common.user'),
+											})}
 											onClick={() =>
 												setSelectedUser({
 													id: user.id,
-													name: user.username || 'User',
+													name: user.username || t('common.user'),
 												})
 											}
 										>
-											Manage
+											{t('common.manage')}
 										</Button>
 									</li>
 								);
@@ -242,8 +249,14 @@ export default function AdminUsers() {
 					<div className="border-tmo-module/10 flex flex-col items-center gap-3 border-t px-5 py-4 sm:flex-row sm:justify-between sm:px-6">
 						<p className="text-text/50 m-0 text-xs tabular-nums">
 							{data.items.length
-								? `${(page * PAGE_SIZE + 1).toLocaleString()}–${(page * PAGE_SIZE + data.items.length).toLocaleString()} of ${data.total.toLocaleString()} users`
-								: 'No users on this page'}
+								? t('admin.users.range', {
+										first: (page * PAGE_SIZE + 1).toLocaleString(i18n.language),
+										last: (page * PAGE_SIZE + data.items.length).toLocaleString(
+											i18n.language,
+										),
+										total: data.total.toLocaleString(i18n.language),
+									})
+								: t('admin.users.noUsersOnPage')}
 						</p>
 						<PageControls
 							className="mx-0 w-auto"
@@ -252,6 +265,12 @@ export default function AdminUsers() {
 							hasMore={data.hasMore}
 							onPrevious={() => changePage(page - 1)}
 							onNext={() => changePage(page + 1)}
+							previousLabel={t('common.previous')}
+							nextLabel={t('common.next')}
+							pageLabel={t('common.pageOf', {
+								page: page + 1,
+								total: Math.max(1, Math.ceil(data.total / PAGE_SIZE)),
+							})}
 						/>
 					</div>
 				)}
@@ -266,8 +285,10 @@ export default function AdminUsers() {
 				}}
 			>
 				{selectedUser && (
-					<DialogContent width={1200}>
-						<DialogHeader title={`Manage ${selectedUser.name}`} />
+					<DialogContent closeLabel={t('common.closeDialog')} width={1200}>
+						<DialogHeader
+							title={t('admin.users.manageNamedUser', {name: selectedUser.name})}
+						/>
 						<ManageUser userId={selectedUser.id} />
 					</DialogContent>
 				)}

@@ -1,21 +1,29 @@
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 export default function CsTimerInstructions() {
+	const {t} = useTranslation();
 	return (
 		<div>
-			<ImportSection title="How to export data from csTimer">
+			<ImportSection title={t('settings.import.exportFromCsTimer')}>
 				<ol className="box-border list-decimal pl-[35px]">
-					<li className="text-[1.1rem] leading-[1.6rem] text-text opacity-85">
-						Go to{' '}
-						<a className="text-text underline opacity-70" href="https://cstimer.net" target="_blank">
+					<li className="text-text text-[1.1rem] leading-[1.6rem] opacity-85">
+						{t('settings.import.goTo')}{' '}
+						<a
+							className="text-text underline opacity-70"
+							href="https://cstimer.net"
+							target="_blank"
+						>
 							cstimer.net
 						</a>
 					</li>
-					<li className="text-[1.1rem] leading-[1.6rem] text-text opacity-85">
-						Click the "Export" icon (next to the Settings button)
+					<li className="text-text text-[1.1rem] leading-[1.6rem] opacity-85">
+						{t('settings.import.csTimerExportIcon')}
 					</li>
-					<li className="text-[1.1rem] leading-[1.6rem] text-text opacity-85">Click "Export to file"</li>
+					<li className="text-text text-[1.1rem] leading-[1.6rem] opacity-85">
+						{t('settings.import.csTimerExportFile')}
+					</li>
 				</ol>
 			</ImportSection>
 		</div>

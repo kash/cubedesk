@@ -8,6 +8,7 @@ import {getTimeString} from '@/util/time';
 import {trpc} from '@/util/trpc';
 import {Request} from 'express';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {useRouteMatch} from 'react-router-dom';
 import {Store} from 'redux';
 
@@ -26,6 +27,7 @@ export async function prefetchSolveData(store: Store<any>, req: Request) {
 }
 
 export default function SolvePage() {
+	const {t} = useTranslation();
 	const match = useRouteMatch<{shareCode: string}>();
 	const shareCode = match.params.shareCode;
 	const [solve] = useSsr<Solve>(shareCode);
@@ -39,13 +41,21 @@ export default function SolvePage() {
 	const user = solve.user?.username;
 
 	return (
-		<div className="box-border flex min-h-screen w-full items-start justify-center bg-background py-[100px]">
+		<div className="bg-background box-border flex min-h-screen w-full items-start justify-center py-[100px]">
 			<Header
 				path={`/solve/${shareCode}`}
-				title={`${getTimeString(solve.time)} Solve for ${cubeType} by ${user} | CubeDesk`}
-				description={`View the details of this ${time} ${cubeType} solve by ${user}. CubeDesk is the most advanced speedcubing timer, analytics, and trainer application.`}
+				title={t('solves.sharedPageTitle', {
+					time,
+					cubeType,
+					user: user ?? t('common.user'),
+				})}
+				description={t('solves.sharedPageDescription', {
+					time,
+					cubeType,
+					user: user ?? t('common.user'),
+				})}
 			/>
-			<div className="box-border w-full max-w-[600px] rounded-md bg-module px-5 py-[25px]">
+			<div className="bg-module box-border w-full max-w-[600px] rounded-md px-5 py-[25px]">
 				<SolveInfo disabled solve={solve} solveId={solve.id} />
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {Solve} from '@/types/solve';
@@ -14,10 +15,11 @@ export default function SolveInfoDialog({
 	onOpenChange: (open: boolean) => void;
 	focusFallbackRef?: React.RefObject<HTMLElement | null>;
 }) {
+	const {t} = useTranslation();
 	return (
 		<Dialog open={solve !== null} onOpenChange={onOpenChange}>
-			<DialogContent focusFallbackRef={focusFallbackRef}>
-				<DialogTitle className="sr-only">Solve details</DialogTitle>
+			<DialogContent closeLabel={t('common.closeDialog')} focusFallbackRef={focusFallbackRef}>
+				<DialogTitle className="sr-only">{t('solves.solveDetails')}</DialogTitle>
 				{solve && (
 					<SolveInfo
 						solveId={solve.id}

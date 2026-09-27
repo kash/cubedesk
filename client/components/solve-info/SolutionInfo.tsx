@@ -8,12 +8,14 @@ import {processSmartTurns} from '@/util/smart_scramble';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
 import React, {ReactNode} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	solve: Solve;
 }
 
 export default function SolutionInfo(props: Props) {
+	const {t} = useTranslation();
 	const {solve} = props;
 	const steps = getSolveStepsWithChildren(solve);
 
@@ -49,7 +51,7 @@ export default function SolutionInfo(props: Props) {
 								{getTimeString(step.total_time ?? 0)}s
 							</span>
 							<span className="border-success text-text mr-3 table border-t-[3px] pt-0.5 text-[0.9rem] font-medium opacity-70">
-								{step.turn_count} Turns
+								{step.turn_count} {t('solves.turn', {count: step.turn_count})}
 							</span>
 							<span className="border-warning text-text mr-3 table border-t-[3px] pt-0.5 text-[0.9rem] font-medium opacity-70">
 								{step.tps} TPS
@@ -58,9 +60,14 @@ export default function SolutionInfo(props: Props) {
 					</div>
 
 					<CopyText
+						labels={{
+							copy: t('common.copyText'),
+							copied: t('common.copied'),
+							error: t('common.copyError'),
+						}}
 						text={step.turns ?? ''}
 						buttonProps={{
-							children: 'Copy moves',
+							children: t('solves.copyMoves'),
 						}}
 					/>
 				</div>

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import NewCubeType from '@/components/settings/cube-types/NewCubeType';
 import {Button} from '@/components/ui/button';
@@ -12,6 +13,7 @@ import {Plus, Trash} from 'phosphor-react';
 import React from 'react';
 
 export default function CubeTypes() {
+	const {t} = useTranslation();
 	const [newCubeTypeDialog, setNewCubeTypeDialog] = React.useState<React.ComponentProps<
 		typeof NewCubeType
 	> | null>(null);
@@ -47,15 +49,30 @@ export default function CubeTypes() {
 				<TableCell>{scramble?.name ?? cubeType.scramble}</TableCell>
 				<TableCell>
 					<ConfirmDialog
+						labels={{
+							cancel: t('common.cancel'),
+							inputPrompt: t('common.confirmInputPrompt', {
+								word: t('common.confirmWord'),
+							}),
+							confirmWord: t('common.confirmWord'),
+							genericError: t('common.genericError'),
+							defaultDescription: t('common.confirmDescription'),
+						}}
 						{...{
-							title: 'Delete custom cube type',
-							description: `Are you sure you want to delete "${cubeType.name}"? This will also delete all of your solves for this cube type.`,
-							buttonText: 'Delete cube type',
+							title: t('settings.cubeTypes.deleteTitle'),
+							description: t('settings.cubeTypes.deleteWarning', {
+								name: cubeType.name,
+							}),
+							buttonText: t('settings.cubeTypes.deleteButton'),
 							triggerAction: () => deleteCubeType(cubeType),
 						}}
 					>
 						{cubeType.default ? null : (
-							<Button variant="secondary" size="icon" aria-label="Cube Types">
+							<Button
+								variant="secondary"
+								size="icon"
+								aria-label={t('timer.cubeTypes')}
+							>
 								<Trash />
 							</Button>
 						)}
@@ -70,7 +87,7 @@ export default function CubeTypes() {
 			<div>
 				<div className="flex w-full items-center justify-center py-5">
 					<Button variant="default" onClick={addCustomCubeType}>
-						{'Create New'}
+						{t('settings.cubeTypes.createNew')}
 						<Plus weight="bold" />
 					</Button>
 				</div>
@@ -78,9 +95,9 @@ export default function CubeTypes() {
 					<Table>
 						<TableHeader>
 							<TableRow>
-								<TableHead>Cube Type</TableHead>
-								<TableHead>Scramble Type</TableHead>
-								<TableHead>Actions</TableHead>
+								<TableHead>{t('common.cubeType')}</TableHead>
+								<TableHead>{t('trainer.scrambleType')}</TableHead>
+								<TableHead>{t('common.actions')}</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>{rows}</TableBody>
@@ -96,7 +113,7 @@ export default function CubeTypes() {
 				}}
 			>
 				{newCubeTypeDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<NewCubeType
 							{...newCubeTypeDialog}
 							onComplete={() => {

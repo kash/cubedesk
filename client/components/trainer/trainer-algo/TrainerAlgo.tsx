@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import CustomVisual from '@/components/trainer/CustomVisual';
 import {CUSTOM_TRAINER_ALGO_TYPE, useTrainerContext} from '@/components/trainer/Trainer';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export default function TrainerAlgo(props: Props) {
+	const {t} = useTranslation();
 	const algoExt = props.algoExt;
 
 	const algo = cleanTrainerAlgorithm(algoExt);
@@ -37,7 +39,7 @@ export default function TrainerAlgo(props: Props) {
 		const copyUsername = algoExt.copy_of.user.username;
 		originalBy = (
 			<div className="text-text mb-2 text-[0.9rem] opacity-70">
-				Original by{' '}
+				{t('trainer.originalBy')}{' '}
 				<Link
 					className="border-text relative z-10 inline border-b-2 text-inherit"
 					to={`/user/${copyUsername}`}
@@ -55,7 +57,7 @@ export default function TrainerAlgo(props: Props) {
 					type="button"
 					className="focus-visible:outline-primary absolute inset-0 cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2"
 					onClick={openTrainer}
-					aria-label={`Train ${algo.name}`}
+					aria-label={t('trainer.trainNamedAlgorithm', {name: algo.name})}
 				/>
 				<TrainerFavButton
 					algoExt={algoExt}
@@ -87,11 +89,19 @@ export default function TrainerAlgo(props: Props) {
 							</div>
 							<div className="relative z-10 mt-3 flex flex-row gap-2">
 								<ConfirmDialog
+									labels={{
+										cancel: t('common.cancel'),
+										inputPrompt: t('common.confirmInputPrompt', {
+											word: t('common.confirmWord'),
+										}),
+										confirmWord: t('common.confirmWord'),
+										genericError: t('common.genericError'),
+										defaultDescription: t('common.confirmDescription'),
+									}}
 									{...{
-										buttonText: 'Delete custom trainer',
-										title: 'Delete custom trainer',
-										description:
-											'Deleting this custom trainer will delete all of it solves as well. Be careful here.',
+										buttonText: t('trainer.deleteCustomTrainer'),
+										title: t('trainer.deleteCustomTrainer'),
+										description: t('trainer.deleteCustomTrainerWarning'),
 										triggerAction: deleteCustom,
 									}}
 								>
@@ -99,7 +109,7 @@ export default function TrainerAlgo(props: Props) {
 										<Button
 											variant="secondary"
 											size="icon"
-											aria-label="Delete custom trainer"
+											aria-label={t('trainer.deleteCustomTrainer')}
 										>
 											<Trash />
 										</Button>

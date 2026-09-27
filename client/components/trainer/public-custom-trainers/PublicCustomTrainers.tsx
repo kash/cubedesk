@@ -3,17 +3,19 @@ import PublicTrainer from '@/components/trainer/public-custom-trainers/PublicTra
 import PublicTrainerHeader from '@/components/trainer/public-custom-trainers/PublicTrainerHeader';
 import {trpc} from '@/util/trpc';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {useListLabels} from '@/i18n/useListLabels';
 
-const tabs: PaginationTab[] = [
+const tabs: Omit<PaginationTab, 'value' | 'emptyText'>[] = [
 	{
 		id: 'trainers',
-		value: 'Trainers',
 		fetchData: (args) => trpc.customTrainer.searchPublic.query(args),
-		plural: 'trainers',
 	},
 ];
 
 export default function PublicCustomTrainers() {
+	const {t} = useTranslation();
+	const labels = useListLabels();
 	const [likedIds, setLikedIds] = useState<string[]>([]);
 	const [downloadIds, setDownloadIds] = useState<string[]>([]);
 
@@ -29,7 +31,12 @@ export default function PublicCustomTrainers() {
 		<div>
 			<PublicTrainerHeader />
 			<Pagination
-				tabs={tabs}
+				tabs={tabs.map((tab) => ({
+					...tab,
+					value: t('trainer.publicTrainers'),
+					emptyText: t('trainer.noPublicTrainers'),
+				}))}
+				labels={labels}
 				prefetchData={prefetchData}
 				itemRow={(data) => (
 					<PublicTrainer

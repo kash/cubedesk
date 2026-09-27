@@ -1,7 +1,6 @@
 import {Label} from '@/components/ui/label';
 import {cn} from '@/util/cn';
 import React from 'react';
-import {translateNode, useOptionalI18n} from '@/i18n';
 
 export function Field({className, ...props}: React.ComponentProps<'div'>) {
 	return (
@@ -18,19 +17,17 @@ export function FieldLabel(props: React.ComponentProps<typeof Label>) {
 }
 
 export function FieldDescription({className, ...props}: React.ComponentProps<'p'>) {
-	const {t} = useOptionalI18n();
 	return (
 		<p
 			data-slot="field-description"
 			className={cn('text-text/60 m-0 text-sm', className)}
 			{...props}
-			children={translateNode(props.children, t)}
+			children={props.children}
 		/>
 	);
 }
 
 export function FieldError({className, children, ...props}: React.ComponentProps<'div'>) {
-	const {t} = useOptionalI18n();
 	if (!children) return null;
 	return (
 		<div
@@ -39,7 +36,7 @@ export function FieldError({className, children, ...props}: React.ComponentProps
 			className={cn('text-error text-sm', className)}
 			{...props}
 		>
-			{translateNode(children, t)}
+			{children}
 		</div>
 	);
 }

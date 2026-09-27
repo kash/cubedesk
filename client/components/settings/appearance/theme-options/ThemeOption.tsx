@@ -5,12 +5,25 @@ import {cn} from '@/util/cn';
 import {APP_THEME_PRESETS, PresetThemeValues} from '@/util/themes/theme_consts';
 import jsonStr from 'json-stable-stringify';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
+
+const themeLabels: Record<keyof PresetThemeValues, string> = {
+	dark: 'settings.themes.dark',
+	light: 'settings.themes.light',
+	cyberpunk: 'settings.themes.cyberpunk',
+	tokyo: 'settings.themes.tokyo',
+	save_the_bees: 'settings.themes.saveTheBees',
+	norman: 'settings.themes.norman',
+	night_owl: 'settings.themes.nightOwl',
+	phd_student: 'settings.themes.phdStudent',
+};
 
 interface Props {
 	theme: keyof PresetThemeValues;
 }
 
 export default function ThemeOption(props: Props) {
+	const {t} = useTranslation();
 	const theme = APP_THEME_PRESETS[props.theme];
 	const selected = jsonStr(theme.values) === getCurrentTheme();
 
@@ -59,7 +72,7 @@ export default function ThemeOption(props: Props) {
 					/>
 				</span>
 			</span>
-			<span className="truncate text-sm font-medium">{theme.name}</span>
+			<span className="truncate text-sm font-medium">{t(themeLabels[props.theme])}</span>
 		</Button>
 	);
 }

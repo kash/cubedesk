@@ -1,4 +1,6 @@
 import {ITimerContext} from '@/components/timer/Timer';
+import {getInitialLocale} from '@/i18n';
+import {translations} from '@/i18n/messages';
 import {fetchSessionById} from '@/db/sessions/query';
 import {createSessionDb} from '@/db/sessions/update';
 import {getSetting} from '@/db/settings/query';
@@ -17,7 +19,7 @@ export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext)
 		if (!fetchSessionById('demo')) {
 			await createSessionDb({
 				demo_mode: true,
-				name: 'Demo Session',
+				name: translations[getInitialLocale()]['sessions.demoSession'],
 				id: 'demo',
 			});
 		}
@@ -25,7 +27,7 @@ export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext)
 	} else if (!inDialog) {
 		if (!sessionId || (sessionId && !fetchSessionById(sessionId))) {
 			const session = await createSessionDb({
-				name: 'New Session',
+				name: translations[getInitialLocale()]['sessions.newSession'],
 			});
 			setSetting('session_id', session.id);
 		}

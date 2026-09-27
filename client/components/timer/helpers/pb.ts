@@ -7,10 +7,11 @@ import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useEventListener} from '@/util/event_handler';
 import confetti from 'canvas-confetti';
+import type {TFunction} from 'i18next';
 
 let lastConfetti: Date | null = null;
 
-export function listenForPbEvents(context: ITimerContext) {
+export function listenForPbEvents(context: ITimerContext, t: TFunction) {
 	const ignorePbEvents = !!context.ignorePbEvents;
 
 	// In case the user doesn't have Quick Stats selected, we need to fetch the single and average PB so that it can be
@@ -41,9 +42,9 @@ export function listenForPbEvents(context: ITimerContext) {
 		(ct) => {
 			if (ignorePbEvents) return;
 			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType?.name ?? ct} Single PB!`);
+			pbEventCallback(t('timer.pb.single', {cubeType: cubeType?.name ?? ct}));
 		},
-		[context.cubeType, ignorePbEvents],
+		[context.cubeType, ignorePbEvents, t],
 	);
 
 	useEventListener(
@@ -51,9 +52,9 @@ export function listenForPbEvents(context: ITimerContext) {
 		(ct) => {
 			if (ignorePbEvents) return;
 			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType?.name ?? ct} Average of 5 PB!`);
+			pbEventCallback(t('timer.pb.averageOfFive', {cubeType: cubeType?.name ?? ct}));
 		},
-		[context.cubeType, ignorePbEvents],
+		[context.cubeType, ignorePbEvents, t],
 	);
 
 	useEventListener(
@@ -61,9 +62,9 @@ export function listenForPbEvents(context: ITimerContext) {
 		(ct) => {
 			if (ignorePbEvents) return;
 			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType?.name ?? ct} Single and Average of 5 PB!`);
+			pbEventCallback(t('timer.pb.singleAndAverage', {cubeType: cubeType?.name ?? ct}));
 		},
-		[context.cubeType, ignorePbEvents],
+		[context.cubeType, ignorePbEvents, t],
 	);
 }
 

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {addStatsModuleBlock, removeStatsModuleBlock} from '@/actions/stats';
 import CustomizeStatsEditor from '@/components/modules/quick-stats/customize-stats/CustomizeStatsEditor';
 import QuickStatsBlock from '@/components/modules/quick-stats/QuickStatsBlock';
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export default function CustomizeStats(props: Props) {
+	const {t} = useTranslation();
 	const {filterOptions} = props;
 
 	const dispatch = useDispatch();
@@ -90,7 +92,10 @@ export default function CustomizeStats(props: Props) {
 				variant="ghost"
 				type="button"
 				aria-pressed={selected}
-				aria-label={`Block ${i + 1}: ${getStatsBlockDescription(statOptions)}`}
+				aria-label={t('stats.blockNumberDescription', {
+					number: i + 1,
+					description: getStatsBlockDescription(statOptions, {}, t),
+				})}
 				key={`stats-block-${i}`}
 				className={cn(
 					'h-auto p-0 font-normal whitespace-normal hover:bg-transparent',
@@ -128,9 +133,9 @@ export default function CustomizeStats(props: Props) {
 			<section className="border-tmo-module/10 bg-tmo-module/[0.025] rounded-xl border p-4 md:sticky md:top-0">
 				<div className="mb-4 flex items-center justify-between gap-3">
 					<div>
-						<h3 className="m-0 text-sm font-semibold">Your stats layout</h3>
+						<h3 className="m-0 text-sm font-semibold">{t('timer.yourStatsLayout')}</h3>
 						<span className="text-text/45 text-xs">
-							{blockCount} of {STATS_GRID_SIZE ** 2} blocks
+							{blockCount} of {STATS_GRID_SIZE ** 2} {t('stats.blocks')}
 						</span>
 					</div>
 					<Button
@@ -140,12 +145,12 @@ export default function CustomizeStats(props: Props) {
 						size="sm"
 					>
 						{<Plus size={14} />}
-						{'Add block'}
+						{t('stats.customize.addBlock')}
 					</Button>
 				</div>
 				<div className={className}>{blocks}</div>
 				<p className="text-text/45 mt-4 mb-0 text-xs leading-relaxed">
-					Select any block to edit its value and color. Your changes apply automatically.
+					{t('stats.customize.instructions')}
 				</p>
 			</section>
 			<div className="border-tmo-module/10 min-w-0 rounded-xl border p-4">

@@ -10,12 +10,14 @@ import {ScrambleType} from '@/util/cubes/cube_scrambles';
 import {useInput} from '@/util/hooks/useInput';
 import {trpc} from '@/util/trpc';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	onComplete?: () => void;
 }
 
 export default function NewCubeType(props: Props) {
+	const {t} = useTranslation();
 	const fieldId = React.useId();
 
 	const [name, setName] = useInput('');
@@ -49,12 +51,21 @@ export default function NewCubeType(props: Props) {
 
 	return (
 		<div>
-			<DialogHeader title="Add cube type" />
+			<DialogHeader title={t('settings.cubeTypes.add')} />
 			<Field className="mb-5">
-				<FieldLabel htmlFor={`${fieldId}-1`}>{'Cube Type Name'}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-1`}>{t('settings.cubeTypes.name')}</FieldLabel>
 				<Input value={name} onChange={setName} id={`${fieldId}-1`} />
 			</Field>
-			<ScramblePicker value={scrambleType} onChange={onChangeScrambleType} />
+			<ScramblePicker
+				labels={{
+					label: t('common.scrambleType'),
+					placeholder: t('common.selectOption'),
+					searchPlaceholder: t('common.search'),
+					emptyMessage: t('common.noResultsFound'),
+				}}
+				value={scrambleType}
+				onChange={onChangeScrambleType}
+			/>
 			<div className="mt-5 flex flex-col items-start">
 				<Button
 					variant="default"
@@ -63,7 +74,7 @@ export default function NewCubeType(props: Props) {
 					disabled={disabled || loading}
 					aria-busy={loading}
 				>
-					{'Create Cube Type'}
+					{t('settings.cubeTypes.create')}
 					{loading ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 				<ButtonError text={error} />

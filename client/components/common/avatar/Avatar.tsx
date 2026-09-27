@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import AvatarDropdown from '@/components/common/avatar/AvatarDropdown';
 import AvatarImage from '@/components/common/avatar/AvatarImage';
 import Badges from '@/components/common/avatar/Badges';
@@ -13,7 +14,8 @@ import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
 
 interface Props {
-	user?: UserAccountForAdmin | PublicUserAccount | UserAccount | PublicUser | Serialized<PublicUser>;
+	user?:
+		UserAccountForAdmin | PublicUserAccount | UserAccount | PublicUser | Serialized<PublicUser>;
 	profile?: Profile | null;
 	small?: boolean;
 	tiny?: boolean;
@@ -29,9 +31,23 @@ interface Props {
 }
 
 export default function Avatar(props: Props) {
+	const {t} = useTranslation();
 	const user = props.user as UserAccountForAdmin;
-	const {small, large, vertical, showOptions, showEloType, tiny, showEmail, hideBadges, target, noLink} = props;
-	const wcaLinked = props.showWcaBadge && user?.integrations?.some((integration) => integration.service_name === 'wca');
+	const {
+		small,
+		large,
+		vertical,
+		showOptions,
+		showEloType,
+		tiny,
+		showEmail,
+		hideBadges,
+		target,
+		noLink,
+	} = props;
+	const wcaLinked =
+		props.showWcaBadge &&
+		user?.integrations?.some((integration) => integration.service_name === 'wca');
 	const moduleTheme = useTheme('module_color');
 
 	function onClick(e) {
@@ -45,7 +61,7 @@ export default function Avatar(props: Props) {
 	let verifiedSymbol: ReactNode = null;
 	if (user?.verified) {
 		verifiedSymbol = (
-			<span className="ml-1 table text-info">
+			<span className="text-info ml-1 table">
 				<CircleWavyCheck weight="fill" />
 			</span>
 		);
@@ -54,24 +70,26 @@ export default function Avatar(props: Props) {
 	let eloSpan: ReactNode = null;
 	if (showEloType && user?.elo_rating) {
 		const elo = user.elo_rating[`elo_${showEloType}_rating`];
-		eloSpan = <span className="text-sm text-text/70">{elo}</span>;
+		eloSpan = <span className="text-text/70 text-sm">{elo}</span>;
 	}
 
 	let nameSpan: ReactNode = null;
 	if (user?.username) {
 		nameSpan = (
 			<span className="flex flex-col">
-				<span className="relative flex flex-row items-center break-normal text-base font-medium text-text">
+				<span className="text-text relative flex flex-row items-center text-base font-medium break-normal">
 					{user.username} {verifiedSymbol}
 				</span>
 				{wcaLinked ? (
 					<span
-						aria-label="WCA account linked"
-						title="WCA account linked"
-						className="mt-1 inline-flex items-center gap-1 self-start text-[10px] leading-none font-medium tracking-wide text-text opacity-30"
+						aria-label={t('profile.wcaAccountLinked')}
+						title={t('profile.wcaAccountLinked')}
+						className="text-text mt-1 inline-flex items-center gap-1 self-start text-[10px] leading-none font-medium tracking-wide opacity-30"
 					>
 						<img
-							src={resourceUri(`/images/logos/wca-logo-${moduleTheme.isDark ? 'white' : 'black'}.svg`)}
+							src={resourceUri(
+								`/images/logos/wca-logo-${moduleTheme.isDark ? 'white' : 'black'}.svg`,
+							)}
 							alt=""
 							className="size-3 shrink-0 object-contain"
 						/>
@@ -94,7 +112,11 @@ export default function Avatar(props: Props) {
 
 	let emailSpan: ReactNode = null;
 	if (showEmail && user?.email) {
-		emailSpan = <span className="table break-all text-sm font-normal text-text opacity-80">{user.email}</span>;
+		emailSpan = (
+			<span className="text-text table text-sm font-normal break-all opacity-80">
+				{user.email}
+			</span>
+		);
 	}
 
 	let emblems: ReactNode = null;
@@ -113,11 +135,17 @@ export default function Avatar(props: Props) {
 					onClick={onClick}
 					to={link}
 				>
-					<AvatarImage large={large} tiny={tiny} small={small} user={user} profile={profile} />
+					<AvatarImage
+						large={large}
+						tiny={tiny}
+						small={small}
+						user={user}
+						profile={profile}
+					/>
 					<div
 						className={cn(
 							'flex flex-col items-start gap-1',
-							vertical ? 'mt-1' : 'ml-2 max-w-[calc(100%-58px)]'
+							vertical ? 'mt-1' : 'ml-2 max-w-[calc(100%-58px)]',
 						)}
 					>
 						{nameSpan}

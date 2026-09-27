@@ -11,7 +11,7 @@ import {validateStrongPassword} from '@/util/auth/password';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 enum ForgotStage {
 	EnterEmail,
@@ -21,7 +21,7 @@ enum ForgotStage {
 
 export default function Forgot() {
 	const fieldId = React.useId();
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const auth = useAuthForm();
 
 	const [stage, setStage] = useState<ForgotStage>(ForgotStage.EnterEmail);
@@ -55,7 +55,7 @@ export default function Forgot() {
 		switch (stage) {
 			case ForgotStage.EnterEmail: {
 				if (!email.trim()) {
-					setError(t('Please enter in your email'));
+					setError(t('auth.pleaseEnterInYourEmail'));
 					return;
 				}
 
@@ -65,13 +65,13 @@ export default function Forgot() {
 			}
 			case ForgotStage.EnterCode: {
 				if (!code) {
-					setError(t('Please enter in a code'));
+					setError(t('auth.pleaseEnterInACode'));
 					return;
 				}
 
 				const valid = await checkForgotMutation.mutateAsync({email: email.trim(), code});
 				if (!valid) {
-					setError(t('Invalid code'));
+					setError(t('auth.invalidCode'));
 					return;
 				}
 
@@ -103,7 +103,7 @@ export default function Forgot() {
 			body = (
 				<div className="flex flex-col gap-5">
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-1`}>{t('Email')}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-1`}>{t('auth.email')}</FieldLabel>
 						<Input onChange={setEmail} value={email} name="email" id={`${fieldId}-1`} />
 					</Field>
 					<div className="flex flex-col items-start">
@@ -114,7 +114,7 @@ export default function Forgot() {
 							disabled={loading}
 							aria-busy={loading}
 						>
-							{t('Get Code')}
+							{t('auth.getCode')}
 							{loading ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={error} />
@@ -127,10 +127,10 @@ export default function Forgot() {
 			body = (
 				<div className="flex flex-col gap-5">
 					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
-						{t('Please check your email. You should have gotten a code to reset your password.')}
+						{t('auth.passwordReset.checkEmail')}
 					</p>
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-2`}>{t('Code')}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-2`}>{t('auth.code')}</FieldLabel>
 						<Input onChange={setCode} value={code} name="code" id={`${fieldId}-2`} />
 					</Field>
 					<div className="flex flex-col items-start">
@@ -141,7 +141,7 @@ export default function Forgot() {
 							disabled={loading}
 							aria-busy={loading}
 						>
-							{t('Check Code')}
+							{t('auth.checkCode')}
 							{loading ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={error} />
@@ -154,10 +154,10 @@ export default function Forgot() {
 			body = (
 				<div className="flex flex-col gap-5">
 					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
-						{t('Please check your email. You should have gotten a code to reset your password.')}
+						{t('auth.passwordReset.checkEmail')}
 					</p>
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-3`}>{t('New Password')}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-3`}>{t('auth.newPassword')}</FieldLabel>
 						<Input
 							type="password"
 							value={newPassword}
@@ -167,7 +167,9 @@ export default function Forgot() {
 						/>
 					</Field>
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-4`}>{t('Confirm Password')}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-4`}>
+							{t('auth.confirmPassword')}
+						</FieldLabel>
 						<Input
 							type="password"
 							value={confirmPassword}
@@ -188,7 +190,7 @@ export default function Forgot() {
 							disabled={loading}
 							aria-busy={loading}
 						>
-							{t('Change Password & Log in')}
+							{t('auth.changePasswordLogIn')}
 							{loading ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={err} />
@@ -208,13 +210,13 @@ export default function Forgot() {
 		>
 			<form onSubmit={nextStage}>{body}</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
-				You can also{' '}
+				{t('auth.also')}{' '}
 				<AuthFormLink
 					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
 					view="signup"
 					to="/signup"
 				>
-					sign up
+					{t('auth.signUpLower')}
 				</AuthFormLink>{' '}
 				or{' '}
 				<AuthFormLink
@@ -222,7 +224,7 @@ export default function Forgot() {
 					view="login"
 					to="/login"
 				>
-					login
+					{t('auth.logInLower')}
 				</AuthFormLink>
 				.
 			</p>

@@ -12,13 +12,14 @@ interface Props {
 	resetToRgb?: string;
 	openLeft?: boolean;
 	name?: string;
+	resetLabel?: string;
 	hideReset?: boolean;
 	onChange: (colorRgb: string) => void;
 	selectedColorHex: string;
 }
 
 export default function ColorPicker(props: Props) {
-	const {name, hideReset, onChange, openUp, openLeft, resetToRgb} = props;
+	const {name, resetLabel, hideReset, onChange, openUp, openLeft, resetToRgb} = props;
 	const selectedColorHex = props.selectedColorHex || '#000000';
 
 	const moduleTheme = useTheme('module_color');
@@ -52,7 +53,7 @@ export default function ColorPicker(props: Props) {
 					}}
 					size="sm"
 				>
-					{'Reset'}
+					{resetLabel}
 				</Button>
 			);
 	}
@@ -72,11 +73,11 @@ export default function ColorPicker(props: Props) {
 								backgroundColor: color.hex,
 							}}
 						/>
-						<p className="m-0 text-sm font-medium">{name || 'Select color'}</p>
+						<p className="m-0 text-sm font-medium">{name}</p>
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent
-					aria-label={name || 'Select color'}
+					aria-label={name}
 					align={openLeft ? 'start' : 'end'}
 					side={openUp ? 'top' : 'bottom'}
 					className="[&_.rcp]:bg-module [&_.rcp]:text-text w-auto overflow-hidden p-0 [&_.rcp]:max-w-full [&_input]:max-w-none"

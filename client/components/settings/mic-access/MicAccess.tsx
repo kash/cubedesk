@@ -1,9 +1,11 @@
+import {useTranslation} from 'react-i18next';
 import ButtonError from '@/components/common/inputs/Error';
 import InputInfo from '@/components/common/inputs/input/InputInfo';
 import {Button} from '@/components/ui/button';
 import React, {useEffect, useState} from 'react';
 
 export default function MicAccess() {
+	const {t} = useTranslation();
 	const [status, setStatus] = useState<PermissionState | 'not-determined' | null>(null);
 
 	// not-determined, granted, denied, restricted or unknown.
@@ -53,7 +55,7 @@ export default function MicAccess() {
 	return (
 		<div className="flex flex-col items-start">
 			<Button variant="default" onClick={clickAllow} disabled={disabled}>
-				{'Give Mic Access'}
+				{t('settings.microphone.giveAccess')}
 			</Button>
 			<ButtonError text={error} />
 			<InputInfo text={info} />

@@ -7,7 +7,6 @@ import {
 } from '@/components/ui/select';
 import React from 'react';
 import GenericInput, {GenericInputProps, InputProps} from './generic_input/GenericInput';
-import {useI18n} from '@/i18n';
 
 export interface SelectOption {
 	value: string;
@@ -43,9 +42,6 @@ export default function SelectField({
 	align,
 	...props
 }: SelectFieldProps) {
-	const {t} = useI18n();
-	const translatedText = text ? t(text) : text;
-	const translatedPlaceholder = props.placeholder ? t(props.placeholder) : props.placeholder;
 	return (
 		<GenericInput
 			{...props}
@@ -58,7 +54,7 @@ export default function SelectField({
 				>
 					<SelectTrigger
 						{...triggerProps}
-						aria-label={t(label || props.legend || props.placeholder || 'Select option')}
+						aria-label={label || props.legend || props.placeholder}
 						aria-invalid={!!props.error}
 						onFocus={props.onFocus || triggerProps?.onFocus}
 						onBlur={props.onBlur || triggerProps?.onBlur}
@@ -67,9 +63,7 @@ export default function SelectField({
 							triggerProps?.onClick?.(event);
 						}}
 					>
-						<SelectValue placeholder={translatedPlaceholder || translatedText}>
-							{translatedText}
-						</SelectValue>
+						<SelectValue placeholder={props.placeholder || text}>{text}</SelectValue>
 					</SelectTrigger>
 					<SelectContent
 						align={align || (openLeft ? 'start' : 'end')}
@@ -83,7 +77,7 @@ export default function SelectField({
 								disabled={option.disabled}
 								endContent={option.endContent}
 							>
-								{t(option.text)}
+								{option.text}
 							</SelectItem>
 						))}
 					</SelectContent>

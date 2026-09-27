@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import MatchStats from '@/components/stats/common/MatchStats';
 import NumberBlock from '@/components/stats/common/NumberBlock';
 import StatsGrid from '@/components/stats/common/StatsGrid';
@@ -6,6 +7,7 @@ import {CaretDoubleUp, Eye, Hash} from 'phosphor-react';
 import React from 'react';
 
 export default function AllStatsCommunity() {
+	const {t} = useTranslation();
 	const context = useStatsContext();
 	const {stats} = context;
 
@@ -18,13 +20,13 @@ export default function AllStatsCommunity() {
 			<StatsGrid rows={2} columns={2}>
 				<NumberBlock
 					icon={<Hash weight="bold" />}
-					title="Match solves"
+					title={t('stats.matchSolves')}
 					color="#5A81B5"
 					value={solvesInMatches.toLocaleString()}
 				/>
 				<NumberBlock
 					icon={<CaretDoubleUp weight="bold" />}
-					title="Best win streak"
+					title={t('stats.bestWinStreak')}
 					color="#5A81B5"
 					value={maxWinStreak}
 				/>
@@ -32,7 +34,7 @@ export default function AllStatsCommunity() {
 					colSpan={1}
 					rowSpan={1}
 					icon={<Eye />}
-					title="Solve Views"
+					title={t('stats.solveViews')}
 					value={stats.solve_views ?? 0}
 					color="#667289"
 				/>
@@ -40,7 +42,7 @@ export default function AllStatsCommunity() {
 					colSpan={1}
 					rowSpan={1}
 					icon={<Eye />}
-					title="Profile Views"
+					title={t('stats.profileViews')}
 					value={stats.profile_views ?? 0}
 					color="#667289"
 				/>

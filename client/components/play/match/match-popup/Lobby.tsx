@@ -1,7 +1,7 @@
 import {Button} from '@/components/ui/button';
 import {GameType} from '@/shared/match/consts';
 import {socketClient} from '@/util/socket/socketio';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import {UsersThree} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function Lobby(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const {onCancel} = props;
 	const [updatedDots, setUpdatedDots] = useState(3);
 
@@ -45,9 +45,12 @@ export default function Lobby(props: Props) {
 		<div className="flex items-center justify-center">
 			<div className="text-text box-border flex flex-col items-center px-0 pt-[30px] pb-2.5">
 				<UsersThree className="mb-[5px] text-[1.2rem]" weight="fill" />
-				<p className="mb-5">{t('Looking for players')}{dots}</p>
+				<p className="mb-5">
+					{t('community.lookingForPlayers')}
+					{dots}
+				</p>
 				<Button variant="secondary" onClick={cancelSearch}>
-					{t('Cancel')}
+					{t('common.cancel')}
 				</Button>
 			</div>
 		</div>

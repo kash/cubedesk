@@ -11,6 +11,7 @@ import {useInput} from '@/util/hooks/useInput';
 import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	onComplete?: () => void;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function ReportUser(props: Props) {
+	const {t} = useTranslation();
 	const fieldId = React.useId();
 
 	const {user} = props;
@@ -38,13 +40,13 @@ export default function ReportUser(props: Props) {
 				reason,
 			});
 		} catch (e) {
-			setError(e instanceof Error ? e.message : 'Failed to report user');
+			setError(e instanceof Error ? e.message : t('profile.reportFailed'));
 			return;
 		} finally {
 			setLoading(false);
 		}
 
-		toastSuccess(`Successfully reported ${user!.username}. We will take care of the rest`);
+		toastSuccess(t('profile.reportedSuccess', {name: user!.username}));
 
 		if (props.onComplete) {
 			props.onComplete();
@@ -60,11 +62,11 @@ export default function ReportUser(props: Props) {
 	return (
 		<div>
 			<DialogHeader
-				title={`Report ${user.username}`}
-				description="If you believe that this user has done something report-worthy, please provide a brief reason below and submit the report. We will look into all reports in a fair manner and will take action if needed."
+				title={t('profile.reportNamedUser', {name: user.username})}
+				description={t('profile.reportDescription')}
 			/>
 			<Field>
-				<FieldLabel htmlFor={`${fieldId}-1`}>{'Reason'}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-1`}>{t('common.reason')}</FieldLabel>
 				<Textarea value={reason} name="reason" onChange={setReason} id={`${fieldId}-1`} />
 			</Field>
 			<div className="flex flex-col items-start">
@@ -75,7 +77,7 @@ export default function ReportUser(props: Props) {
 					disabled={disabled || loading}
 					aria-busy={loading}
 				>
-					{'Report profile'}
+					{t('profile.reportProfile')}
 					{loading ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 				<ButtonError text={error} />

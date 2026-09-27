@@ -2,7 +2,7 @@ import CustomVisual from '@/components/trainer/CustomVisual';
 import {Button} from '@/components/ui/button';
 import {cn} from '@/util/cn';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -19,7 +19,7 @@ interface Props {
 
 export default function CubeBuilder(props: Props) {
 	const {cubeType, initColors, threeD, onUpdate} = props;
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	// Non-NxN puzzles have no size; the builder then renders no cubelets
 	const cubeSize = getCubeTypeInfoById(cubeType)?.size ?? 0;
 
@@ -74,7 +74,7 @@ export default function CubeBuilder(props: Props) {
 	const colorPicker = COLORS.map((color) => (
 		<Button
 			variant="ghost"
-			aria-label={t('Paint color {color}', {color})}
+			aria-label={t('trainer.paintColor', {color})}
 			aria-pressed={color === selectedColor}
 			type="button"
 			onClick={() => setSelectedColor(color)}

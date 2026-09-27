@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import UserView from '@/components/admin/manage-user/ManageUser';
 import {copyText} from '@/components/common/CopyText';
 import ActionMenu, {ActionMenuProps} from '@/components/common/inputs/ActionMenu';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export default function AvatarDropdown(props: Props) {
+	const {t} = useTranslation();
 	const [userViewDialog, setUserViewDialog] = React.useState<{
 		props: React.ComponentProps<typeof UserView>;
 		width: number;
@@ -39,8 +41,8 @@ export default function AvatarDropdown(props: Props) {
 
 	async function copyProfileLink() {
 		const link = window.location.href;
-		if (!(await copyText(link))) return;
-		toastSuccess(`Copied profile link for ${user.username}`);
+		if (!(await copyText(link, t('common.copyError')))) return;
+		toastSuccess(t('profile.copiedProfileLink', {name: user.username}));
 	}
 
 	function manageUser() {
@@ -56,12 +58,13 @@ export default function AvatarDropdown(props: Props) {
 			return;
 		}
 
-		setEditProfileDialog({props: {profile: profile}, title: 'Edit Profile'});
+		setEditProfileDialog({props: {profile: profile}, title: t('profile.editProfile')});
 	}
 
 	return (
 		<>
 			<ActionMenu
+				menuLabel={t('common.openMenu')}
 				noMargin
 				icon={<CaretDown weight="bold" />}
 				triggerProps={{
@@ -70,29 +73,29 @@ export default function AvatarDropdown(props: Props) {
 				}}
 				options={[
 					{
-						text: 'View Profile',
+						text: t('profile.viewProfile'),
 						link: `/user/${user.username}`,
 						icon: <User weight="bold" />,
 					},
 					{
-						text: 'Copy Profile Link',
+						text: t('profile.copyProfileLink'),
 						onClick: copyProfileLink,
 						icon: <Copy weight="bold" />,
 					},
 					{
-						text: 'Report',
+						text: t('profile.report'),
 						onClick: reportProfile,
 						icon: <Flag weight="bold" />,
 						hidden: myProfile || !me,
 					},
 					{
-						text: 'Edit',
+						text: t('common.edit'),
 						onClick: editProfile,
 						icon: <Pen weight="bold" />,
 						hidden: !myProfile,
 					},
 					{
-						text: 'Manage User',
+						text: t('profile.manageUser'),
 						onClick: manageUser,
 						icon: <GearSix weight="bold" />,
 						hidden: !amAdmin,
@@ -109,8 +112,11 @@ export default function AvatarDropdown(props: Props) {
 				}}
 			>
 				{userViewDialog && (
-					<DialogContent width={userViewDialog.width}>
-						<DialogTitle className="sr-only">Manage user</DialogTitle>
+					<DialogContent
+						closeLabel={t('common.closeDialog')}
+						width={userViewDialog.width}
+					>
+						<DialogTitle className="sr-only">{t('admin.manageUser')}</DialogTitle>
 						<UserView {...userViewDialog.props} />
 					</DialogContent>
 				)}
@@ -124,7 +130,7 @@ export default function AvatarDropdown(props: Props) {
 				}}
 			>
 				{reportUserDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<ReportUser
 							{...reportUserDialog}
 							onComplete={() => {
@@ -145,7 +151,7 @@ export default function AvatarDropdown(props: Props) {
 				}}
 			>
 				{editProfileDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<DialogHeader title={editProfileDialog.title} />
 						<EditProfile {...editProfileDialog.props} />
 					</DialogContent>

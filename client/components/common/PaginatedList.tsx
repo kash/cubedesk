@@ -3,8 +3,6 @@ import ListSkeleton from '@/components/common/ListSkeleton';
 import PageControls from '@/components/common/PageControls';
 import {Button} from '@/components/ui/button';
 import {PaginationArgs, PaginationOutput} from '@/types/pagination';
-import {numberWithCommas} from '@/util/strings/util';
-import {useOptionalI18n} from '@/i18n';
 import {useQuery} from '@tanstack/react-query';
 import React, {ReactNode, useEffect, useRef} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
@@ -15,7 +13,18 @@ interface Props<T> {
 	searchQuery?: string;
 	pageSize?: number;
 	listId?: string;
-	emptyText?: string;
+	labels: ListLabels;
+}
+
+export interface ListLabels {
+	loading: string;
+	error: string;
+	retry: string;
+	empty: string;
+	previous: string;
+	next: string;
+	results: (count: number, query?: string) => string;
+	page: (current: number, total: number) => string;
 }
 
 export const listQueryKey = (id: string, searchQuery: string, pageSize: number, page: number) =>
@@ -27,9 +36,8 @@ export default function PaginatedList<T>({
 	searchQuery = '',
 	pageSize = 50,
 	listId,
-	emptyText = 'Could not find any records',
+	labels,
 }: Props<T>) {
-	const {t} = useOptionalI18n();
 	const history = useHistory();
 	const location = useLocation();
 	const root = useRef<HTMLDivElement>(null);
@@ -78,31 +86,29 @@ export default function PaginatedList<T>({
 	return (
 		<div ref={root} className="w-full scroll-mt-4" aria-busy={request.isPending}>
 			{request.isPending ? (
-				<ListSkeleton />
+				<ListSkeleton label={labels.loading} />
 			) : request.isError ? (
 				<div
 					role="alert"
 					className="border-text/15 bg-module rounded border p-8 text-center"
 				>
-					<p className="text-text mb-4">{t('Unable to load results. Please try again.')}</p>
+					<p className="text-text mb-4">{labels.error}</p>
 					<Button variant="outline" onClick={() => void request.refetch()}>
-						{t('Try again')}
+						{labels.retry}
 					</Button>
 				</div>
 			) : (
 				data && (
 					<>
 						<p role="status" className="text-text/60 mt-0 mb-2 text-sm">
-							{numberWithCommas(data.total)}{' '}
-							{t(data.total === 1 ? 'result' : 'results')}
-							{searchQuery ? ` ${t('for')} "${searchQuery}"` : ''}
+							{labels.results(data.total, searchQuery || undefined)}
 						</p>
 						{data.items.length ? (
 							data.items.map((item, index) =>
 								getItemRow(item, page * pageSize + index),
 							)
 						) : (
-							<Empty text={emptyText} />
+							<Empty text={labels.empty} />
 						)}
 						{(data.total > 0 || page > 0) && (
 							<PageControls
@@ -112,6 +118,12 @@ export default function PaginatedList<T>({
 								hasMore={data.hasMore}
 								onPrevious={() => changePage(Math.max(0, page - 1))}
 								onNext={() => changePage(page + 1)}
+								previousLabel={labels.previous}
+								nextLabel={labels.next}
+								pageLabel={labels.page(
+									page + 1,
+									Math.max(1, Math.ceil(data.total / pageSize)),
+								)}
 							/>
 						)}
 					</>

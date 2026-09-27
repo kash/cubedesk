@@ -14,6 +14,9 @@ export default function PageControls({
 	hasMore,
 	onPrevious,
 	onNext,
+	previousLabel,
+	nextLabel,
+	pageLabel,
 	className,
 }: {
 	page: number;
@@ -21,16 +24,20 @@ export default function PageControls({
 	hasMore: boolean;
 	onPrevious: () => void;
 	onNext: () => void;
+	previousLabel: string;
+	nextLabel: string;
+	pageLabel: string;
 	className?: string;
 }) {
 	return (
-		<Pagination className={className}>
+		<Pagination className={className} aria-label={pageLabel}>
 			<PaginationContent>
 				<PaginationItem>
-					<PaginationPrevious asChild>
+					<PaginationPrevious asChild aria-label={previousLabel}>
 						<button type="button" disabled={page === 0} onClick={onPrevious}>
 							<CaretLeft aria-hidden />
-							Previous
+
+							{previousLabel}
 						</button>
 					</PaginationPrevious>
 				</PaginationItem>
@@ -39,13 +46,13 @@ export default function PageControls({
 						aria-live="polite"
 						className="text-text/60 px-3 text-sm whitespace-nowrap"
 					>
-						Page {page + 1} of {Math.max(1, totalPages)}
+						{pageLabel}
 					</span>
 				</PaginationItem>
 				<PaginationItem>
-					<PaginationNext asChild>
+					<PaginationNext asChild aria-label={nextLabel}>
 						<button type="button" disabled={!hasMore} onClick={onNext}>
-							Next
+							{nextLabel}
 							<CaretRight aria-hidden />
 						</button>
 					</PaginationNext>

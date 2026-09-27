@@ -4,6 +4,8 @@ import FriendshipRequest from '@/components/profile/FriendshipRequest';
 import {PublicUserAccount} from '@/types/user';
 import {trpc} from '@/util/trpc';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {useListLabels} from '@/i18n/useListLabels';
 
 const tabIdToOtherUserMap = {
 	friends: 'other_user',
@@ -11,35 +13,41 @@ const tabIdToOtherUserMap = {
 	sent: 'to_user',
 };
 
-const tabs: PaginationTab[] = [
+const tabs: Omit<PaginationTab, 'value' | 'emptyText'>[] = [
 	{
 		id: 'friends',
-		value: 'Friends',
 		fetchData: (args) => trpc.friendship.searchFriends.query(args),
 		link: '/community/friends/list',
-		plural: 'friends',
 	},
 	{
 		id: 'received',
-		value: 'Received',
 		fetchData: (args) => trpc.friendship.searchRequestsReceived.query(args),
 		link: '/community/friends/received',
-		plural: 'received requests',
 	},
 	{
 		id: 'sent',
-		value: 'Sent',
 		fetchData: (args) => trpc.friendship.searchRequestsSent.query(args),
 		link: '/community/friends/sent',
-		plural: 'sent requests',
 	},
 ];
 
 export default function Friends() {
+	const {t} = useTranslation();
+	const labels = useListLabels();
+	const tabText = {
+		friends: {value: t('community.friends'), emptyText: t('community.couldNotFindAnyFriends')},
+		received: {
+			value: t('community.received'),
+			emptyText: t('common.couldNotFindAnyReceivedRequests'),
+		},
+		sent: {value: t('community.sent'), emptyText: t('common.couldNotFindAnySentRequests')},
+	};
 	return (
 		<div>
 			<Pagination
-				tabs={tabs}
+				tabs={tabs.map((tab) => ({...tab, ...tabText[tab.id]}))}
+				labels={labels}
+				optionsLabel={t('common.options')}
 				itemRow={(friend, tab) => {
 					const otherUser: PublicUserAccount = friend[tabIdToOtherUserMap[tab.id]];
 

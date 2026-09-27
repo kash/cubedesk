@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {PlayerStatus} from '@/client/shared/match/types';
 import {GameContext, getGameLink} from '@/components/play/game/Game';
 import onSolve from '@/components/play/helpers/on-solve';
@@ -9,6 +10,7 @@ import {useMe} from '@/util/hooks/useMe';
 import React, {ReactNode, useContext} from 'react';
 
 export default function GameTimer() {
+	const {t} = useTranslation();
 	const context = useContext(GameContext);
 	const matchContext = useContext(MatchContext);
 	const me = useMe();
@@ -120,8 +122,8 @@ export default function GameTimer() {
 					if (!open) closeTimer();
 				}}
 			>
-				<DialogContent fullSize overflowHidden>
-					<DialogTitle className="sr-only">Timer</DialogTitle>
+				<DialogContent closeLabel={t('common.closeDialog')} fullSize overflowHidden>
+					<DialogTitle className="sr-only">{t('timer.timer')}</DialogTitle>
 					{timer}
 				</DialogContent>
 			</Dialog>

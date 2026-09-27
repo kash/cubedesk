@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import React from 'react';
 
 interface Props {
@@ -10,20 +11,21 @@ interface Props {
 }
 
 export default function SmartManage(props: Props) {
+	const {t} = useTranslation();
 	const {cube} = props;
 	const solveCount = cube.solves.length;
 
 	return (
-		<div className="flex w-full flex-row items-start justify-between border-b-2 border-button py-[15px] last:border-b-0">
+		<div className="border-button flex w-full flex-row items-start justify-between border-b-2 py-[15px] last:border-b-0">
 			<div>
-				<h4 className="text-[1.1rem] font-semibold text-text">{cube.name}</h4>
-				<h5 className="text-[0.9rem] font-normal text-text opacity-80">
-					Added on {new Date(cube.created_at).toDateString()}
+				<h4 className="text-text text-[1.1rem] font-semibold">{cube.name}</h4>
+				<h5 className="text-text text-[0.9rem] font-normal opacity-80">
+					{t('timer.smartCube.addedOn')} {new Date(cube.created_at).toDateString()}
 				</h5>
 			</div>
 			<div>
-				<p className="text-base text-text">
-					{solveCount} solve{solveCount === 1 ? '' : 's'}
+				<p className="text-text text-base">
+					{solveCount} {t('common.solve', {count: solveCount})}
 				</p>
 			</div>
 		</div>

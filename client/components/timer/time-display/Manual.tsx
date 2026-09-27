@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {saveSolve} from '@/components/timer/helpers/save';
 import {resetScramble} from '@/components/timer/helpers/scramble';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
@@ -10,6 +11,7 @@ import {convertTimeStringToSeconds} from '@/util/time';
 import React, {ReactNode, useRef, useState} from 'react';
 
 export default function Manual() {
+	const {t} = useTranslation();
 	const manualInput = useRef<HTMLInputElement>(null);
 
 	const [manualTime, setManualTime] = useState('');
@@ -77,7 +79,7 @@ export default function Manual() {
 	let input: ReactNode = (
 		<Input
 			ref={manualInput}
-			aria-label="Manual solve time"
+			aria-label={t('timer.manualSolveTime')}
 			aria-invalid={error && !!manualTime}
 			disabled={disabled}
 			style={{
@@ -101,9 +103,7 @@ export default function Manual() {
 		<div>
 			{input}
 			{hideTime ? null : (
-				<StartInstructions>
-					Manually enter time. Append "+2" or enter "DNF" if needed
-				</StartInstructions>
+				<StartInstructions>{t('solves.manualEntry.hint')}</StartInstructions>
 			)}
 		</div>
 	);

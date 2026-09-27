@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {smartCubeSelected} from '@/components/timer/helpers/util';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import GanTimer from '@/components/timer/time-display/GanTimer';
@@ -13,6 +14,7 @@ import classNames from 'classnames';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 
 export default function TimeDisplay() {
+	const {t} = useTranslation();
 	const context = useTimerContext();
 	const [time, setTime] = useState(0);
 	const timerCounter = useRef<NodeJS.Timeout | null>(null);
@@ -54,7 +56,8 @@ export default function TimeDisplay() {
 			stopInterval();
 		} else if (!timerCounter.current && timeStartedAt) {
 			startInterval();
-		} if (!solving && finalTime !== undefined && finalTime < 0) {
+		}
+		if (!solving && finalTime !== undefined && finalTime < 0) {
 			setTime(0);
 		}
 	}, [solving, finalTime, timeStartedAt]);
@@ -102,7 +105,7 @@ export default function TimeDisplay() {
 	let timeStr;
 	let bottomInfo: ReactNode = null;
 	if (inspectionOn) {
-		bottomInfo = <StartInstructions>Inspection on</StartInstructions>;
+		bottomInfo = <StartInstructions>{t('timer.inspectionOn')}</StartInstructions>;
 	}
 
 	if (inInspection) {
@@ -131,13 +134,14 @@ export default function TimeDisplay() {
 		if (preflightChecks(smartTurns, scramble ?? '')) {
 			bottomInfo = (
 				<StartInstructions>
-					Turn <span>smart cube</span> to start
+					{t('timer.turn')} <span>{t('timer.smartCubeName')}</span> {t('timer.toStart')}
 				</StartInstructions>
 			);
 		} else {
 			bottomInfo = (
 				<StartInstructions>
-					Scramble <span>smart cube</span> to start
+					{t('solves.scramble')} <span>{t('timer.smartCubeName')}</span>{' '}
+					{t('timer.toStart')}
 				</StartInstructions>
 			);
 		}
@@ -146,19 +150,24 @@ export default function TimeDisplay() {
 	let body: ReactNode = (
 		<>
 			<h1
-				style={{fontSize: timerTimeSize + 'px', fontFamily: timerFontFamily + ', monospace'}}
+				style={{
+					fontSize: timerTimeSize + 'px',
+					fontFamily: timerFontFamily + ', monospace',
+				}}
 				className={classNames(
-					"m-0 mb-2.5 font-['Roboto_Mono',monospace] font-medium text-text [text-shadow:0_1px_7px_rgba(0,0,0,0.2)]",
+					"text-text m-0 mb-2.5 font-['Roboto_Mono',monospace] font-medium [text-shadow:0_1px_7px_rgba(0,0,0,0.2)]",
 					mobileMode && 'select-none',
 					inInspection && 'text-text/60',
 					canStart && '!text-success',
 					spaceTimerStarted && !canStart && '!text-warning',
-					disabled && 'opacity-20'
+					disabled && 'opacity-20',
 				)}
 			>
 				{timeStr}
 			</h1>
-			<div className={classNames(context.timeStartedAt && 'pointer-events-none opacity-10')}>{bottomInfo}</div>
+			<div className={classNames(context.timeStartedAt && 'pointer-events-none opacity-10')}>
+				{bottomInfo}
+			</div>
 			{subTimerActions}
 		</>
 	);
@@ -173,7 +182,7 @@ export default function TimeDisplay() {
 				'relative z-[1] flex w-full flex-col items-center justify-center p-0',
 				smartCubeSelected(context) && 'w-1/2',
 				mobileMode && 'select-none',
-				context.focusMode && 'h-screen !pt-0'
+				context.focusMode && 'h-screen !pt-0',
 			)}
 		>
 			{body}

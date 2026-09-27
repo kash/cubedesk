@@ -5,12 +5,14 @@ interface Props {
 }
 
 const legalClassByTag: Record<string, string> = {
-	h1: 'mb-[15px] text-[2rem] font-bold text-[#444]',
-	h2: 'mb-2.5 mt-5 text-[1.3rem] font-bold capitalize text-[#444]',
+	h1: 'mb-4 text-[2.25rem] font-semibold tracking-tight text-[#292929]',
+	h2: 'mb-2 mt-10 text-[1.35rem] font-semibold tracking-tight text-[#333]',
+	h3: 'mb-2 mt-6 text-[1.05rem] font-semibold text-[#333]',
+	h4: 'mb-2 mt-5 text-base font-semibold text-[#333]',
 	strong: 'font-bold text-[#444]',
-	p: 'mb-[15px] leading-[1.4rem] text-[#444] opacity-90',
-	li: 'mb-2.5 leading-[1.4rem] text-[#444] opacity-90',
-	ul: 'list-disc pl-[15px]',
+	p: 'mb-4 leading-7 text-[#444] opacity-90',
+	li: 'mb-2 leading-7 text-[#444] opacity-90',
+	ul: 'mb-5 list-disc pl-6',
 	a: 'text-[#444] underline opacity-80',
 };
 
@@ -32,7 +34,7 @@ function applyLegalClasses(node: ReactNode): ReactNode {
 
 export default function LegalContent(props: Props) {
 	return (
-		<div className="mx-auto w-[95%] max-w-[700px] bg-white pb-[100px] pt-[200px]">
+		<div className="mx-auto w-[min(92%,760px)] bg-white pt-28 pb-24 sm:pt-36">
 			{React.Children.map(props.children, applyLegalClasses)}
 		</div>
 	);

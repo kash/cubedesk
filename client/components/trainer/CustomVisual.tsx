@@ -4,6 +4,7 @@ import {getCubeTypeInfoById} from '@/util/cubes/util';
 import classNames from 'classnames';
 import CSS from 'csstype';
 import React, {ReactNode} from 'react';
+import {useTranslation} from 'react-i18next';
 
 const DEFAULT_COLOR = '#3F464F';
 const GRID_GAP_MULTIPLIER = 0.15;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function CustomVisual(props: Props) {
+	const {t} = useTranslation();
 	const {threeD, cubeletSize, onSelect} = props;
 	const colors = typeof props.colors === 'string' ? props.colors.split(',') : props.colors;
 	const edgeSize = cubeletSize / 2;
@@ -58,7 +60,7 @@ export default function CustomVisual(props: Props) {
 					tag = (
 						<Button
 							variant="ghost"
-							aria-label={`Paint cube sticker ${off + 1}`}
+							aria-label={t('trainer.paintSticker', {number: off + 1})}
 							type="button"
 							disabled={empty}
 							onClick={() => onSelect(off)}
@@ -113,7 +115,7 @@ export default function CustomVisual(props: Props) {
 						tag = (
 							<Button
 								variant="ghost"
-								aria-label={`Paint cube sticker ${off + 1}`}
+								aria-label={t('trainer.paintSticker', {number: off + 1})}
 								type="button"
 								onClick={() => onSelect(off)}
 								key={`cubeNumber-${off}`}

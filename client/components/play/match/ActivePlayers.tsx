@@ -1,7 +1,7 @@
 import {SocketConst} from '@/client/shared/socket_costs';
 import {GameType} from '@/shared/match/consts';
 import {socketClient} from '@/util/socket/socketio';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {useEffect, useState} from 'react';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function ActivePlayers(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const {matchType} = props;
 
 	const [loaded, setLoaded] = useState(false);
@@ -31,7 +31,7 @@ export default function ActivePlayers(props: Props) {
 	}, []);
 
 	function getPlayerName(c) {
-		return t(c === 1 ? '{count} player' : '{count} players', {count: c});
+		return t('community.players', {count: c});
 	}
 
 	function startWatching() {
@@ -44,7 +44,7 @@ export default function ActivePlayers(props: Props) {
 
 	let body;
 	if (loaded) {
-		body = t('{queue} in lobby / {match} in a match', {
+		body = t('community.inLobbyInAMatch', {
 			queue: getPlayerName(playersInQueue),
 			match: getPlayerName(playersInMatch),
 		});

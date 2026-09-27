@@ -2,6 +2,7 @@ import ButtonError from '@/components/common/inputs/Error';
 import SelectField from '@/components/common/inputs/SelectField';
 import {Button} from '@/components/ui/button';
 import {DialogHeader} from '@/components/ui/dialog';
+import {useTranslation} from 'react-i18next';
 import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
 import React, {useEffect, useState} from 'react';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function StackMatPicker(props: Props) {
+	const {t} = useTranslation();
 	const {onComplete} = props;
 
 	const stackMatId = useSettings('stackmat_id');
@@ -89,25 +91,27 @@ export default function StackMatPicker(props: Props) {
 	return (
 		<div>
 			<DialogHeader
-				title="Select StackMat Input"
-				description={`StackMat connects to your computer via an audio jack. Click the dropdown below, select your StackMat, and select it. Please note that the input name may not be "StackMat" but rather something like "USB Audio Device."`}
+				title={t('timer.stackmatPicker.title')}
+				description={t('timer.stackmatPicker.description')}
 			/>
 			<div className="mb-2">
 				<SelectField
-					label="StackMat input"
+					label={t('timer.stackmatPicker.inputLabel')}
 					value={selectedStackMatId || ''}
-					placeholder="Select StackMat"
+					placeholder={t('timer.stackmatPicker.selectPlaceholder')}
 					onValueChange={selectAudio}
 					error={error || undefined}
 					options={options.map((device) => ({
 						value: device.deviceId,
-						text: device.label.replace(/\(.+\)/g, '').trim() || 'Unnamed audio input',
+						text:
+							device.label.replace(/\(.+\)/g, '').trim() ||
+							t('timer.stackmatPicker.unnamedInput'),
 					}))}
 				/>
 			</div>
 			<div className="flex flex-col items-start">
 				<Button variant="default" disabled={disabled} onClick={saveSelectedAudio} size="lg">
-					{'Save'}
+					{t('timer.stackmatPicker.save')}
 				</Button>
 				<ButtonError text={error || undefined} />
 			</div>

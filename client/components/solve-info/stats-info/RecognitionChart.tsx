@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {getSolveStepsWithoutParents} from '@/components/solve-info/util/solution';
 import {SolveMethodStep} from '@/types/solve';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function RecognitionChart(props: Props) {
+	const {t} = useTranslation();
 	const {solve} = props;
 	const rawTime = solve.raw_time ?? solve.time;
 
@@ -19,14 +21,16 @@ export default function RecognitionChart(props: Props) {
 	function getChartBar(
 		step: Pick<SolveMethodStep, 'step_name' | 'recognition_time'>,
 		percent: number,
-		gray: boolean = false
+		gray: boolean = false,
 	) {
 		const recTime = step.recognition_time;
 		const percentString = Math.floor((recTime / rawTime) * 1000) / 100;
 
 		return (
 			<div key={step.step_name} className="mb-[15px] grid grid-cols-[100px_1fr]">
-				<div className="text-[0.9rem] font-semibold text-text">{STEP_NAME_MAP[step.step_name]}</div>
+				<div className="text-text text-[0.9rem] font-semibold">
+					{STEP_NAME_MAP[step.step_name]}
+				</div>
 				<div>
 					<span
 						className={classNames('table h-[5px] min-w-[5px] rounded-[3px]', {
@@ -35,7 +39,7 @@ export default function RecognitionChart(props: Props) {
 						})}
 						style={{width: `${percent}%`}}
 					/>
-					<p className="mt-0.5 text-[0.9rem] italic text-text opacity-80">
+					<p className="text-text mt-0.5 text-[0.9rem] italic opacity-80">
 						{getTimeString(recTime, 1)}s {gray ? null : `(${percentString}%)`}
 					</p>
 				</div>
@@ -58,14 +62,16 @@ export default function RecognitionChart(props: Props) {
 
 	return (
 		<div>
-			<h3 className="mb-5 mt-0 text-[1.1rem] font-semibold text-text">Recognition Time</h3>
+			<h3 className="text-text mt-0 mb-5 text-[1.1rem] font-semibold">
+				{t('trainer.recognitionTime')}
+			</h3>
 			{getChartBar(
 				{
 					step_name: 'inspection',
 					recognition_time: solve.inspection_time ?? 0,
 				},
 				100,
-				true
+				true,
 			)}
 			{output}
 		</div>

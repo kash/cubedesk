@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import type {AdminMetricsResponse} from '@/types/admin-metrics';
 import AdminMetricsChart, {type MetricsSeries} from '@/components/admin/AdminMetricsChart';
 import {Button} from '@/components/ui/button';
@@ -8,22 +9,30 @@ import {trpc} from '@/util/trpc';
 import React, {useEffect, useState} from 'react';
 
 const VOLUME: MetricsSeries[] = [
-	{key: 'solves', label: 'Registered solves', color: '#69bfa6'},
-	{key: 'demoSolves', label: 'Demo solves', color: '#83a7f5'},
-	{key: 'imports', label: 'Imported solves', color: '#db9a53'},
+	{key: 'solves', label: 'admin.metrics.registeredSolves', color: '#69bfa6'},
+	{key: 'demoSolves', label: 'admin.metrics.demoSolves', color: '#83a7f5'},
+	{key: 'imports', label: 'admin.metrics.importedSolves', color: '#db9a53'},
 ];
 const IMPORTS: MetricsSeries[] = [
-	{key: 'importsSucceeded', label: 'Successful imports', color: '#69bfa6'},
-	{key: 'importsFailed', label: 'Failed imports', color: '#e78080'},
+	{key: 'importsSucceeded', label: 'admin.metrics.successfulImports', color: '#69bfa6'},
+	{key: 'importsFailed', label: 'admin.metrics.failedImports', color: '#e78080'},
 ];
 const ACTIVITY: MetricsSeries[] = [
-	{key: 'activeUsers', label: 'Registered DAU', color: '#69bfa6'},
-	{key: 'demoSessions', label: 'Active demo sessions', color: '#83a7f5'},
+	{key: 'activeUsers', label: 'admin.metrics.registeredDau', color: '#69bfa6'},
+	{key: 'demoSessions', label: 'admin.metrics.activeDemoSessions', color: '#83a7f5'},
 ];
-const SIGNUPS: MetricsSeries[] = [{key: 'signups', label: 'New accounts', color: '#ad91e3'}];
-const CATEGORY_NAMES = {timer: 'Timer', trainer: 'Trainer', '1v1': '1v1', other: 'Other'};
+const SIGNUPS: MetricsSeries[] = [
+	{key: 'signups', label: 'admin.metrics.newAccounts', color: '#ad91e3'},
+];
+const CATEGORY_NAMES = {
+	timer: 'timer.timer',
+	trainer: 'trainer.trainer',
+	'1v1': 'common.value1v1',
+	other: 'common.other',
+};
 
 export default function AdminMetrics() {
+	const {t, i18n} = useTranslation();
 	const [result, setResult] = useState<AdminMetricsResponse | null>(null);
 	const [range, setRange] = useState(30);
 	const [revision, setRevision] = useState(0);
@@ -56,28 +65,28 @@ export default function AdminMetrics() {
 		snapshot && totals
 			? [
 					[
-						'Total solve records',
+						t('admin.metrics.totalSolveRecords'),
 						totals.registeredSolves + totals.importedSolves + totals.demoSolves,
 					],
-					['Registered solves', totals.registeredSolves],
-					['Imported solves', totals.importedSolves],
-					['Demo solves', totals.demoSolves],
-					['Registered accounts', totals.accounts],
-					['DAU · today', snapshot.activeUsers.daily],
-					['WAU · 7 days', snapshot.activeUsers.weekly],
-					['MAU · 30 days', snapshot.activeUsers.monthly],
+					[t('admin.metrics.registeredSolves'), totals.registeredSolves],
+					[t('admin.metrics.importedSolves'), totals.importedSolves],
+					[t('admin.metrics.demoSolves'), totals.demoSolves],
+					[t('admin.metrics.registeredAccounts'), totals.accounts],
+					[t('admin.metrics.dauToday'), snapshot.activeUsers.daily],
+					[t('admin.metrics.wau7Days'), snapshot.activeUsers.weekly],
+					[t('admin.metrics.mau30Days'), snapshot.activeUsers.monthly],
 				]
 			: [];
 	return (
 		<div className="mx-auto w-full max-w-7xl space-y-6 p-2">
 			<div className="flex flex-wrap items-center justify-between gap-3">
 				<div>
-					<h2 className="text-xl font-semibold">Metrics</h2>
+					<h2 className="text-xl font-semibold">{t('admin.metrics')}</h2>
 					{snapshot && (
 						<div className="text-text/45 mt-1 flex flex-wrap items-center gap-x-2 text-xs">
 							<time dateTime={snapshot.completedAt}>
-								Updated{' '}
-								{new Date(snapshot.completedAt).toLocaleString(undefined, {
+								{t('admin.metrics.updated')}{' '}
+								{new Date(snapshot.completedAt).toLocaleString(i18n.language, {
 									month: 'short',
 									day: 'numeric',
 									hour: '2-digit',
@@ -88,25 +97,23 @@ export default function AdminMetrics() {
 								UTC
 							</time>
 							{result?.status === 'ready' && result.stale && (
-								<span role="status">· Update overdue</span>
+								<span role="status">{t('admin.metrics.updateOverdue')}</span>
 							)}
 						</div>
 					)}
 				</div>
 				<Button variant="secondary" onClick={() => setRevision((value) => value + 1)}>
-					Reload
+					{t('common.reload')}
 				</Button>
 			</div>
 			{(!result || result.status === 'preparing') && (
 				<p role="status" className="text-text/60 py-12 text-center">
-					{result
-						? 'Preparing the first metrics snapshot. This may take a few minutes…'
-						: 'Loading metrics…'}
+					{result ? t('admin.metrics.preparing') : t('admin.metrics.loading')}
 				</p>
 			)}
 			{result?.status === 'unavailable' && (
 				<p role="alert" className="text-text/60 py-12 text-center">
-					Metrics are temporarily unavailable. Try reloading in a few minutes.
+					{t('admin.metrics.unavailable')}
 				</p>
 			)}
 			{snapshot && (
@@ -118,7 +125,7 @@ export default function AdminMetrics() {
 									<h3 className="text-text/60 text-sm">{label}</h3>
 								</CardHeader>
 								<CardContent className="text-3xl font-semibold tabular-nums">
-									{value.toLocaleString()}
+									{value.toLocaleString(i18n.language)}
 								</CardContent>
 							</Card>
 						))}
@@ -126,63 +133,75 @@ export default function AdminMetrics() {
 					<div className="flex flex-wrap items-center justify-between gap-3">
 						<div>
 							<h3 className="text-base font-semibold whitespace-nowrap">
-								Daily trends
+								{t('admin.metrics.dailyTrends')}
 							</h3>
 						</div>
 						<div className="w-40 shrink-0">
 							<NativeSelect
-								aria-label="Daily trend date range"
+								aria-label={t('admin.metrics.dateRange')}
 								value={range}
 								onChange={(event) => setRange(Number(event.target.value))}
 							>
 								{[7, 30, 90].map((value) => (
 									<option key={value} value={value}>
-										Last {value} days
+										{t('admin.metrics.lastDays', {count: value})}
 									</option>
 								))}
 							</NativeSelect>
 						</div>
 					</div>
 					<div className="grid gap-4 lg:grid-cols-2">
-						<AdminMetricsChart title="Solve volume" days={days} series={VOLUME} />
-						<AdminMetricsChart title="Daily activity" days={days} series={ACTIVITY} />
+						<AdminMetricsChart
+							title={t('admin.metrics.solveVolume')}
+							days={days}
+							series={VOLUME.map((entry) => ({...entry, label: t(entry.label)}))}
+						/>
+						<AdminMetricsChart
+							title={t('admin.metrics.dailyActivity')}
+							days={days}
+							series={ACTIVITY.map((entry) => ({...entry, label: t(entry.label)}))}
+						/>
 					</div>
 					<div className="grid gap-4 lg:grid-cols-2">
-						<AdminMetricsChart title="Signups" days={days} series={SIGNUPS} />
+						<AdminMetricsChart
+							title={t('admin.metrics.signups')}
+							days={days}
+							series={SIGNUPS.map((entry) => ({...entry, label: t(entry.label)}))}
+						/>
 						<div className="space-y-2">
 							<AdminMetricsChart
-								title="Import operations"
+								title={t('admin.metrics.importOperations')}
 								days={days}
-								series={IMPORTS}
+								series={IMPORTS.map((entry) => ({...entry, label: t(entry.label)}))}
 							/>
 							<p className="text-text/50 px-2 text-xs">
-								Import tracking started September 2026. Counts are per import, by
-								start date (UTC).{' '}
-								{days
-									.reduce((sum, day) => sum + day.importsPending, 0)
-									.toLocaleString()}{' '}
-								pending or unresolved in this period.
+								{t('admin.metrics.importTrackingSummary', {
+									count: days.reduce((sum, day) => sum + day.importsPending, 0),
+									formattedCount: new Intl.NumberFormat(i18n.language).format(
+										days.reduce((sum, day) => sum + day.importsPending, 0),
+									),
+								})}
 							</p>
 						</div>
 					</div>
 					<details className="border-text/15 rounded-xl border p-4">
 						<summary className="cursor-pointer font-medium">
-							Daily figures · last {range} days
+							{t('admin.metrics.dailyFiguresLastDays', {count: range})}
 						</summary>
 						<Table className="mt-4">
 							<TableHeader>
 								<TableRow>
 									{[
-										'Date (UTC)',
-										'Registered solves',
-										'Imported solves',
-										'DAU',
-										'Demo solves',
-										'Demo sessions',
-										'Signups',
-										'Successful imports',
-										'Failed imports',
-										'Pending imports',
+										t('admin.metrics.dateUtc'),
+										t('admin.metrics.registeredSolves'),
+										t('admin.metrics.importedSolves'),
+										t('admin.metrics.dau'),
+										t('admin.metrics.demoSolves'),
+										t('admin.metrics.demoSessions'),
+										t('admin.metrics.signupsLabel'),
+										t('admin.metrics.successfulImports'),
+										t('admin.metrics.failedImports'),
+										t('admin.metrics.pendingImports'),
 									].map((label) => (
 										<TableHead key={label}>{label}</TableHead>
 									))}
@@ -206,7 +225,7 @@ export default function AdminMetrics() {
 											day.importsPending,
 										].map((value, index) => (
 											<TableCell key={index} className="tabular-nums">
-												{value.toLocaleString()}
+												{value.toLocaleString(i18n.language)}
 											</TableCell>
 										))}
 									</TableRow>
@@ -216,15 +235,17 @@ export default function AdminMetrics() {
 					</details>
 					<Card>
 						<CardHeader>
-							<CardTitle>Solves by puzzle and activity · last 90 days</CardTitle>
+							<CardTitle>{t('admin.metrics.solvesByPuzzleTitle')}</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<Table>
 								<TableHeader>
 									<TableRow>
-										<TableHead>Puzzle</TableHead>
-										<TableHead>Activity</TableHead>
-										<TableHead className="text-right">Solves</TableHead>
+										<TableHead>{t('common.puzzle')}</TableHead>
+										<TableHead>{t('stats.activity')}</TableHead>
+										<TableHead className="text-right">
+											{t('solves.solves')}
+										</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody>
@@ -232,10 +253,12 @@ export default function AdminMetrics() {
 										<TableRow
 											key={JSON.stringify([row.cubeType, row.category])}
 										>
-											<TableCell>{row.cubeType || 'Unknown'}</TableCell>
-											<TableCell>{CATEGORY_NAMES[row.category]}</TableCell>
+											<TableCell>
+												{row.cubeType || t('common.unknown')}
+											</TableCell>
+											<TableCell>{t(CATEGORY_NAMES[row.category])}</TableCell>
 											<TableCell className="text-right tabular-nums">
-												{row.solves.toLocaleString()}
+												{row.solves.toLocaleString(i18n.language)}
 											</TableCell>
 										</TableRow>
 									))}
@@ -243,7 +266,7 @@ export default function AdminMetrics() {
 							</Table>
 							{!snapshot.breakdown.length && (
 								<p className="text-text/60 py-6 text-center">
-									No registered solves in this period.
+									{t('solves.noRegisteredSolvesInThisPeriod')}
 								</p>
 							)}
 						</CardContent>

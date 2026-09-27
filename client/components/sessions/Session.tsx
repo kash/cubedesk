@@ -14,7 +14,7 @@ import {toastSuccess} from '@/util/toast';
 import {DotsSixVertical, DotsThree} from 'phosphor-react';
 import React, {CSSProperties, ReactNode} from 'react';
 import {v4 as uuid} from 'uuid';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	setSelectedSessionId: reactState<string>;
@@ -33,12 +33,14 @@ interface Props {
 }
 
 export default function Session(props: Props) {
-	const {t} = useI18n();
-	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
-		typeof ConfirmDialog
+	const {t, i18n} = useTranslation();
+	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
+		React.ComponentProps<typeof ConfirmDialog>,
+		'labels'
 	> | null>(null);
-	const [confirmDialog2, setConfirmDialog2] = React.useState<React.ComponentProps<
-		typeof ConfirmDialog
+	const [confirmDialog2, setConfirmDialog2] = React.useState<Omit<
+		React.ComponentProps<typeof ConfirmDialog>,
+		'labels'
 	> | null>(null);
 
 	const currentSessionId = useSettings('session_id');
@@ -71,13 +73,16 @@ export default function Session(props: Props) {
 		}
 
 		setConfirmDialog({
-			title: 'Merge sessions',
-			description: `Be careful here. You are about to merge "${session.name}" into "${currentSession.name}". "${session.name}" will be deleted after the merge.`,
+			title: t('sessions.mergeConfirmTitle'),
+			description: t('sessions.mergeConfirmDescription', {
+				source: session.name,
+				target: currentSession.name,
+			}),
 			triggerAction: async () => {
 				await mergeSessionsDb(session.id, currentSessionId);
 				props.setSelectedSessionId(currentSessionId);
 			},
-			buttonText: 'Merge sessions',
+			buttonText: t('sessions.mergeConfirmButton'),
 			buttonProps: {
 				variant: 'destructive',
 			},
@@ -93,7 +98,7 @@ export default function Session(props: Props) {
 				const newId = uuid();
 
 				await createSessionDb({
-					name: 'New Session',
+					name: t('sessions.newSession'),
 					id: newId,
 				});
 
@@ -105,17 +110,16 @@ export default function Session(props: Props) {
 
 			props.setSelectedSessionId(updatedSessionId);
 			await deleteSessionDb(session);
-			toastSuccess(t('Successfully deleted session "{name}"', {name}));
+			toastSuccess(t('sessions.successfullyDeletedSession', {name}));
 		}
 
 		setConfirmDialog2({
-			title: 'Delete session',
-			description: t(
-				'Be careful here. You are about to delete "{name}". This action is irreversible.',
-				{name: session.name},
-			),
+			title: t('sessions.deleteSession'),
+			description: t('sessions.deleteWarning', {
+				name: session.name,
+			}),
 			triggerAction: triggerAction,
-			buttonText: 'Delete session',
+			buttonText: t('sessions.deleteSession'),
 		});
 	}
 
@@ -128,19 +132,19 @@ export default function Session(props: Props) {
 				triggerProps={{
 					variant: 'ghost',
 					size: 'icon-sm',
-					'aria-label': `Actions for ${session.name}`,
+					'aria-label': t('sessions.actionsFor', {name: session.name}),
 				}}
 				options={[
 					{
-						text: 'Make current',
+						text: t('sessions.makeCurrent'),
 						onClick: makeCurrent,
 					},
 					{
-						text: 'Merge session',
+						text: t('sessions.mergeSession'),
 						onClick: mergeSessions,
 					},
 					{
-						text: 'Delete session',
+						text: t('sessions.deleteSession'),
 						onClick: deleteSession,
 					},
 				]}
@@ -170,7 +174,7 @@ export default function Session(props: Props) {
 					className="sessions-drag-handle h-auto p-0 font-normal whitespace-normal hover:bg-transparent"
 					{...dragHandleProps?.attributes}
 					{...dragHandleProps?.listeners}
-					aria-label={`Reorder ${session.name}`}
+					aria-label={t('sessions.reorder', {name: session.name})}
 				>
 					<DotsSixVertical size={18} />
 				</Button>
@@ -181,16 +185,30 @@ export default function Session(props: Props) {
 					onClick={(e) => selectSession(e, session.id)}
 					aria-pressed={sessionIsSelected}
 				>
-					<span className="sessions-item-name">{session.name || 'Untitled session'}</span>
-					<span className="sessions-item-date">
-						Created {getDateFromNow(session.created_at)}
+					<span className="sessions-item-name">
+						{session.name || t('sessions.untitledSession')}
 					</span>
-					{isCurrentSession && <span className="sessions-current">Current</span>}
+					<span className="sessions-item-date">
+						{t('sessions.created')}{' '}
+						{getDateFromNow(session.created_at, false, i18n.language)}
+					</span>
+					{isCurrentSession && (
+						<span className="sessions-current">{t('stats.current')}</span>
+					)}
 				</Button>
 				{dropdown}
 			</div>
 			{confirmDialog && (
 				<ConfirmDialog
+					labels={{
+						cancel: t('common.cancel'),
+						inputPrompt: t('common.confirmInputPrompt', {
+							word: t('common.confirmWord'),
+						}),
+						confirmWord: t('common.confirmWord'),
+						genericError: t('common.genericError'),
+						defaultDescription: t('common.confirmDescription'),
+					}}
 					open={confirmDialog !== null}
 					onOpenChange={(open) => {
 						if (!open) {
@@ -205,6 +223,15 @@ export default function Session(props: Props) {
 			)}
 			{confirmDialog2 && (
 				<ConfirmDialog
+					labels={{
+						cancel: t('common.cancel'),
+						inputPrompt: t('common.confirmInputPrompt', {
+							word: t('common.confirmWord'),
+						}),
+						confirmWord: t('common.confirmWord'),
+						genericError: t('common.genericError'),
+						defaultDescription: t('common.confirmDescription'),
+					}}
 					open={confirmDialog2 !== null}
 					onOpenChange={(open) => {
 						if (!open) {

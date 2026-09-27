@@ -9,7 +9,7 @@ export function getEliminationPlayerStatus(
 	myId: string,
 	timeIndex: number,
 	solves: Solve[],
-	match?: Match
+	match?: Match,
 ): PlayerStatusInfo {
 	let status: PlayerStatus = PlayerStatus.Playing;
 
@@ -33,7 +33,7 @@ export function getEliminationPlayerStatus(
 		status,
 		points: solves.length,
 		statusBody: getTimeString(targetTime),
-		statusPrompt: 'Time to beat',
+		statusPrompt: 'community.timeToBeat',
 	};
 }
 
@@ -41,7 +41,7 @@ export function getEliminationSolveRowInfo(
 	myId: string,
 	timeIndex: number,
 	solves: Solve[],
-	match?: Match
+	match?: Match,
 ): GameSolveRow {
 	let lastSolve: Solve | null = null;
 	if (solves && solves.length) {

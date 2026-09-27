@@ -11,7 +11,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError, toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import {CheckCircle, Cube} from 'phosphor-react';
 import React, {useState} from 'react';
 
@@ -21,7 +21,7 @@ interface Props {
 
 export default function PublishSolves(props: Props) {
 	const {onComplete} = props;
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	const cubeTypes = fetchAllCubeTypesSolved(true);
 
@@ -82,7 +82,7 @@ export default function PublishSolves(props: Props) {
 		if (!errorCount) {
 			onComplete?.();
 		} else if (successCount) {
-			toastSuccess(`Published ${successCount} item${successCount === 1 ? '' : 's'}`);
+			toastSuccess(t('profile.publishedItems', {count: successCount}));
 		}
 	}
 
@@ -121,17 +121,16 @@ export default function PublishSolves(props: Props) {
 	if (!me?.username) {
 		exception = (
 			<p>
-				{t('You must')}{' '}
-				<a href="/account/personal-info">{t('set a username')}</a>{' '}
-				{t('before you can publish your times')}
+				{t('profile.youMust')}{' '}
+				<a href="/account/personal-info">{t('profile.setAUsername')}</a>{' '}
+				{t('profile.beforeYouCanPublishYourTimes')}
 			</p>
 		);
 	} else if (!rows.length) {
 		exception = (
 			<p>
-				{t("You don't have any solves yet. Head over to the")}{' '}
-				<a href="/">{t('Timer Page')}</a>{' '}
-				{t('and start cubing!')}
+				{t('profile.noSolvesPrompt')} <a href="/">{t('profile.timerPage')}</a>{' '}
+				{t('profile.andStartCubing')}
 			</p>
 		);
 	}
@@ -145,9 +144,13 @@ export default function PublishSolves(props: Props) {
 						<Table>
 							<TableHeader className="bg-tmo-module/5 text-text/50 text-xs">
 								<TableRow>
-									<TableHead className="pl-4">Event</TableHead>
-									<TableHead className="text-right">Single</TableHead>
-									<TableHead className="pr-4 text-right">Average of 5</TableHead>
+									<TableHead className="pl-4">{t('profile.event')}</TableHead>
+									<TableHead className="text-right">
+										{t('profile.single')}
+									</TableHead>
+									<TableHead className="pr-4 text-right">
+										{t('stats.averageOf5')}
+									</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>{rows}</TableBody>
@@ -156,15 +159,13 @@ export default function PublishSolves(props: Props) {
 					<div className="text-text/50 my-5 flex items-start gap-2 text-xs leading-relaxed">
 						<CheckCircle size={17} className="mt-0.5 shrink-0" />
 						<p className="text-text/50 mb-0 text-xs leading-relaxed">
-							{t(
-								'By publishing, you confirm these are your own legitimate solves. Your records will be visible on your profile and the leaderboards.',
-							)}
+							{t('profile.publish.confirmation')}
 						</p>
 					</div>
 					<div className="border-tmo-module/10 flex flex-wrap items-center justify-end gap-2 border-t pt-4">
 						<DialogClose asChild>
 							<Button variant="ghost" disabled={publishing}>
-								Cancel
+								{t('common.cancel')}
 							</Button>
 						</DialogClose>
 						<Button
@@ -174,7 +175,7 @@ export default function PublishSolves(props: Props) {
 							disabled={publishing}
 							aria-busy={publishing}
 						>
-							{publishing ? 'Publishing…' : 'Publish to profile'}
+							{publishing ? t('profile.publishing') : t('profile.publishToProfile')}
 							{publishing ? <Spinner aria-hidden="true" /> : null}
 						</Button>
 						<ButtonError text={error} />

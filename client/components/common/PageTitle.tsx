@@ -1,5 +1,4 @@
 import {cn} from '@/util/cn';
-import {useI18n} from '@/i18n';
 import React, {ReactNode} from 'react';
 
 interface Props {
@@ -13,7 +12,6 @@ interface Props {
 
 export default function PageTitle(props: Props) {
 	const {pageName, children, actions, icon, titleClassName, description} = props;
-	const {t} = useI18n();
 
 	let iconBody: ReactNode = null;
 	if (icon) {
@@ -30,12 +28,12 @@ export default function PageTitle(props: Props) {
 					)}
 				>
 					{iconBody}
-					{t(pageName)}
+					{pageName}
 				</h1>
 				{actions && <div className="ml-auto">{actions}</div>}
 			</div>
 			{description && (
-				<p className="text-text/60 mt-2 text-base font-normal">{t(description)}</p>
+				<p className="text-text/60 mt-2 text-base font-normal">{description}</p>
 			)}
 			{children && <div className="mt-6">{children}</div>}
 		</header>

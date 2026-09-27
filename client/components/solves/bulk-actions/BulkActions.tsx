@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import BulkChangeEventSolvesButton from '@/components/solves/bulk-actions/actions/BulkChangeEvent';
 import BulkDeleteSolvesButton from '@/components/solves/bulk-actions/actions/BulkDelete';
 import BulkDnfSolvesButton from '@/components/solves/bulk-actions/actions/BulkDnf';
@@ -8,7 +9,6 @@ import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader, DialogTrigger} from '@/components/ui/dialog';
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
-import {getBasicPlural} from '@/util/strings/plural';
 import jsonStr from 'json-stable-stringify';
 import React, {useMemo} from 'react';
 
@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default function BulkActions(props: Props) {
+	const {t} = useTranslation();
 	const {filter} = props;
 
 	const solveDbCount = useSolveDb();
@@ -28,13 +29,13 @@ export default function BulkActions(props: Props) {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button variant="outline" disabled={disabled}>
-					Bulk actions
+					{t('common.bulkActions')}
 				</Button>
 			</DialogTrigger>
-			<DialogContent width={420}>
+			<DialogContent closeLabel={t('common.closeDialog')} width={420}>
 				<DialogHeader
-					title="Bulk actions"
-					description={`Apply to ${getBasicPlural(solves.length, 'solve')}`}
+					title={t('common.bulkActions')}
+					description={t('solves.bulk.applyToSolves', {count: solves.length})}
 				/>
 				<div className="grid grid-cols-2 gap-2">
 					<BulkDeleteSolvesButton solves={solves} disabled={disabled} />

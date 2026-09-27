@@ -12,7 +12,6 @@ export interface GenericInputProps<T extends HTMLElement> {
 	legend?: string;
 	value?: string | number;
 	noMargin?: boolean;
-	optional?: boolean;
 	style?: CSS.Properties;
 	tagLegend?: boolean;
 	disabled?: boolean;
@@ -54,7 +53,6 @@ export default function GenericInput<T extends HTMLElement>(
 		autoCapitalize,
 		autoCorrect,
 		fullWidth,
-		optional,
 		value,
 		maxWidth,
 		inputWrapper,
@@ -73,10 +71,10 @@ export default function GenericInput<T extends HTMLElement>(
 	}
 
 	let headerBody: ReactNode = null;
-	if (optional || legend) {
+	if (legend) {
 		headerBody = (
 			<div className="mb-2">
-				<InputLegend optional={optional} tag={tagLegend} text={legend} />
+				<InputLegend tag={tagLegend} text={legend} />
 			</div>
 		);
 	}

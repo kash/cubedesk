@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {getMe} from '@/actions/account';
 import UploadCover from '@/components/common/UploadCover';
 import {Button} from '@/components/ui/button';
@@ -9,6 +10,7 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 export default function TimerBackground() {
+	const {t} = useTranslation();
 	const dispatch = useDispatch();
 	const me = useMe();
 
@@ -50,18 +52,21 @@ export default function TimerBackground() {
 	return (
 		<div>
 			<div className="border-tmo-background/40 relative mb-2 h-[130px] w-[200px] cursor-pointer overflow-hidden rounded-[7px] border-[3px]">
-				<UploadCover upload={uploadTimerBackground} />
+				<UploadCover
+					upload={uploadTimerBackground}
+					invalidFileMessage={t('profile.invalidImageFile')}
+				/>
 				{image ? (
 					<img
 						className="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover"
 						src={image}
-						alt="Timer background"
+						alt={t('timer.timerBackground')}
 					/>
 				) : null}
 			</div>
 			{image ? (
 				<Button variant="destructive" onClick={resetBackgroundImage} size="sm">
-					{'Reset background'}
+					{t('settings.appearance.resetBackground')}
 				</Button>
 			) : null}
 		</div>

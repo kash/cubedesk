@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import {clearOfflineData} from '@/components/layout/offline';
@@ -18,6 +19,7 @@ import React, {useEffect, useState} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 
 export default function DataSettings() {
+	const {t} = useTranslation();
 	const [importDataDialog, setImportDataDialog] = React.useState<React.ComponentProps<
 		typeof ImportData
 	> | null>(null);
@@ -76,7 +78,7 @@ export default function DataSettings() {
 		fileDownload(data, filename);
 
 		setExportingData(false);
-		toastSuccess('Successfully download all solve and session data');
+		toastSuccess(t('settings.data.exportedSuccess'));
 	}
 
 	return (
@@ -84,17 +86,17 @@ export default function DataSettings() {
 			<>
 				<SettingRow
 					loggedInOnly
-					title="Hard reload"
-					description="If your data or settings seem out of sync, you can do a hard reload to re-sync with the database."
+					title={t('settings.hardReload')}
+					description={t('settings.sync.reloadHint')}
 				>
 					<Button variant="secondary" onClick={hardReload}>
-						{'Hard reload'}
+						{t('settings.hardReload')}
 					</Button>
 				</SettingRow>
 				<SettingRow
 					loggedInOnly
-					title="Export solve & session data"
-					description="This data can act as a backup for your solve and sessions data, which can be imported later if needed."
+					title={t('settings.exportSolveSessionData')}
+					description={t('settings.export.backupHint')}
 				>
 					<Button
 						variant="secondary"
@@ -102,25 +104,25 @@ export default function DataSettings() {
 						disabled={exportingData}
 						aria-busy={exportingData}
 					>
-						{'Export data'}
+						{t('settings.data.export')}
 						{exportingData ? <Spinner aria-hidden="true" /> : null}
 					</Button>
 				</SettingRow>
 				<SettingRow
 					loggedInOnly
-					title="Import data"
-					description="Import data from csTimer or CubeDesk"
+					title={t('settings.importData')}
+					description={t('timer.importDataFromCstimerOrCubedesk')}
 				>
 					<ActionMenu
-						text="Import data"
+						text={t('settings.importData')}
 						icon={<CaretDown weight="bold" />}
 						options={[
 							{
-								text: 'Import from csTimer',
+								text: t('settings.importFromCsTimer'),
 								onClick: () => openImportDialog(ImportDataType.CS_TIMER),
 							},
 							{
-								text: 'Import from CubeDesk',
+								text: t('settings.importFromCubeDesk'),
 								onClick: () => openImportDialog(ImportDataType.CUBEDESK),
 							},
 						]}
@@ -128,19 +130,27 @@ export default function DataSettings() {
 				</SettingRow>
 				<SettingRow
 					loggedInOnly
-					title="Reset settings"
-					description="Reset everything in the settings to default values (except for custom cube types)"
+					title={t('settings.resetSettings')}
+					description={t('settings.reset.description')}
 				>
 					<ConfirmDialog
+						labels={{
+							cancel: t('common.cancel'),
+							inputPrompt: t('common.confirmInputPrompt', {
+								word: t('common.confirmWord'),
+							}),
+							confirmWord: t('common.confirmWord'),
+							genericError: t('common.genericError'),
+							defaultDescription: t('common.confirmDescription'),
+						}}
 						{...{
-							description:
-								'Be careful here. You are about to reset your settings to the default values. Custom cube types will not be affected.',
-							title: 'Reset settings',
-							buttonText: 'Reset settings',
+							description: t('settings.data.resetWarning'),
+							title: t('settings.resetSettings'),
+							buttonText: t('settings.resetSettings'),
 							triggerAction: resetSettings,
 						}}
 					>
-						<Button variant="destructive">{'Reset settings'}</Button>
+						<Button variant="destructive">{t('settings.resetSettings')}</Button>
 					</ConfirmDialog>
 				</SettingRow>
 			</>
@@ -153,7 +163,7 @@ export default function DataSettings() {
 				}}
 			>
 				{importDataDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<ImportData {...importDataDialog} />
 					</DialogContent>
 				)}

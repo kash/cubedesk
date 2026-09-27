@@ -3,7 +3,7 @@ import {toastError, toastSuccess} from '@/util/toast';
 import {Check, Copy} from 'phosphor-react';
 import React, {useRef, useState} from 'react';
 
-export async function copyText(source: string): Promise<boolean> {
+export async function copyText(source: string, errorMessage?: string): Promise<boolean> {
 	try {
 		if (navigator.clipboard?.writeText) {
 			await navigator.clipboard.writeText(source);
@@ -14,7 +14,8 @@ export async function copyText(source: string): Promise<boolean> {
 	}
 
 	const activeElement = document.activeElement as HTMLElement | null;
-	const container = activeElement?.closest('[role="dialog"], [role="alertdialog"]') || document.body;
+	const container =
+		activeElement?.closest('[role="dialog"], [role="alertdialog"]') || document.body;
 	const el = document.createElement('textarea');
 	el.value = source;
 	el.setAttribute('readonly', '');
@@ -29,7 +30,7 @@ export async function copyText(source: string): Promise<boolean> {
 		}
 		return true;
 	} catch {
-		toastError('Could not copy to the clipboard. Please try again.');
+		if (errorMessage) toastError(errorMessage);
 		return false;
 	} finally {
 		el.remove();
@@ -39,13 +40,14 @@ export async function copyText(source: string): Promise<boolean> {
 
 interface Props {
 	text: 'self' | string;
+	labels: {copy: string; copied: string; error: string};
 	buttonProps?: ButtonProps;
 	toastifyMessageOnCopy?: string;
 	onCopy?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function CopyText(props: Props) {
-	const {text, buttonProps, onCopy, toastifyMessageOnCopy} = props;
+	const {text, labels, buttonProps, onCopy, toastifyMessageOnCopy} = props;
 
 	const textCopiedTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 	const [textCopied, setTextCopied] = useState(false);
@@ -62,7 +64,7 @@ export default function CopyText(props: Props) {
 		}
 
 		// Copy the source
-		if (!(await copyText(source))) {
+		if (!(await copyText(source, labels.error))) {
 			setTextCopied(false);
 			return;
 		}
@@ -85,8 +87,8 @@ export default function CopyText(props: Props) {
 		<Button
 			variant="secondary"
 			size={buttonProps?.children ? 'default' : 'icon'}
-			title="Copy text"
-			aria-label={buttonProps?.children ? undefined : 'Copy text'}
+			title={labels.copy}
+			aria-label={buttonProps?.children ? undefined : labels.copy}
 			{...buttonProps}
 			onClick={(event) => {
 				onClick(event);
@@ -100,7 +102,7 @@ export default function CopyText(props: Props) {
 				<Copy weight="bold" aria-hidden="true" />
 			)}
 			<span className="sr-only" role="status">
-				{textCopied ? 'Copied' : ''}
+				{textCopied ? labels.copied : ''}
 			</span>
 		</Button>
 	);

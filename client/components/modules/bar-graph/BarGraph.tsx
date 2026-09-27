@@ -37,7 +37,7 @@ export default function BarGraph(props: Props) {
 		chartOpacity = 0.1;
 	}
 
-	const maxY = max(data, getY);
+	const maxY = max(data, getY) ?? 0;
 
 	const xScale = scaleBand<string>({
 		domain: data.map(getX),

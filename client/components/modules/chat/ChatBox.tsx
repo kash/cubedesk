@@ -8,7 +8,7 @@ import {PublicUserAccount} from '@/types/user';
 import {useSocketListener} from '@/util/hooks/useSocketListener';
 import {socketClient} from '@/util/socket/socketio';
 import {cleanBadWords} from '@/util/strings/chat_filter';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -27,7 +27,7 @@ interface Props {
 }
 
 export default function ChatBox(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const dispatch = useDispatch();
 
 	const {disabled, match} = props;
@@ -138,7 +138,9 @@ export default function ChatBox(props: Props) {
 		setTimeout(scrollToBottomOfList);
 	}
 
-	const chatMessages = [...aggMessages()].map((m) => <ChatMessage user={m.user} messages={m.messages} key={m.id} />);
+	const chatMessages = [...aggMessages()].map((m) => (
+		<ChatMessage user={m.user} messages={m.messages} key={m.id} />
+	));
 	const textBoxClasses = [
 		'box-border',
 		'w-full',
@@ -169,7 +171,7 @@ export default function ChatBox(props: Props) {
 				onKeyPress={handleMessageKeyPress}
 				minRows={1}
 				maxRows={4}
-				placeholder={t('Send message...')}
+				placeholder={t('community.sendMessage')}
 				ref={messageInput}
 				className={textBoxClasses.join(' ')}
 			/>
@@ -182,7 +184,10 @@ export default function ChatBox(props: Props) {
 
 	return (
 		<div className="relative grid h-full w-full grid-rows-[auto_min-content]">
-			<div className="box-border flex w-full flex-col gap-3 overflow-auto px-[5px] pt-[5px]" ref={chatList}>
+			<div
+				className="box-border flex w-full flex-col gap-3 overflow-auto px-[5px] pt-[5px]"
+				ref={chatList}
+			>
 				{chatMessages}
 			</div>
 			{textArea}

@@ -9,6 +9,7 @@ import {useToggle} from '@/util/hooks/useToggle';
 import {getTimeString} from '@/util/time';
 import {AlignLeft} from 'phosphor-react';
 import React, {useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	solves: Solve[];
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function HistoryDialog(props: Props) {
+	const {t} = useTranslation();
 	const {description, disabled, time, showAsText} = props;
 	const [showText, toggleShowText] = useToggle(showAsText);
 	const [reverseOrder, toggleReverseOrder] = useToggle(false);
@@ -79,7 +81,7 @@ export default function HistoryDialog(props: Props) {
 		<div className="relative flex flex-col items-center pt-[50px]">
 			<div className="absolute top-0 left-0">
 				<Button variant="default" onClick={() => toggleShowText()}>
-					{showText ? 'View as list' : 'View as text'}
+					{showText ? t('solves.viewAsList') : t('solves.viewAsText')}
 					<AlignLeft />
 				</Button>
 			</div>
@@ -99,7 +101,7 @@ export default function HistoryDialog(props: Props) {
 			</div>
 			<div className="mt-10 w-full">
 				<Checkbox
-					text="Reverse order"
+					text={t('solves.reverseOrder')}
 					checked={reverseOrder}
 					onCheckedChange={toggleReverseOrder}
 				/>

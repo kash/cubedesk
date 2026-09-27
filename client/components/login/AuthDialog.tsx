@@ -6,6 +6,7 @@ import SignUp from '@/components/login/SignUp';
 import {Dialog, DialogContent, DialogHeader, DialogTrigger} from '@/components/ui/dialog';
 import {getRedirectLink} from '@/util/auth/login';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export default function AuthDialog({
 	children,
@@ -14,6 +15,7 @@ export default function AuthDialog({
 	children: React.ReactElement;
 	view?: AuthView;
 }) {
+	const {t} = useTranslation();
 	const {pending} = useDemoImport();
 	const [open, setOpen] = useState(false);
 	const [activeView, setActiveView] = useState(view);
@@ -37,10 +39,18 @@ export default function AuthDialog({
 			}}
 		>
 			<DialogTrigger asChild>{children}</DialogTrigger>
-			<DialogContent width={440} aria-describedby={undefined}>
+			<DialogContent
+				closeLabel={t('common.closeDialog')}
+				width={440}
+				aria-describedby={undefined}
+			>
 				<DialogHeader
 					title={
-						{login: 'Log in', signup: 'Sign up', forgot: 'Reset password'}[activeView]
+						{
+							login: t('auth.logIn'),
+							signup: t('auth.signUp'),
+							forgot: t('auth.resetPassword'),
+						}[activeView]
 					}
 				/>
 				<AuthFormContext.Provider value={{onNavigate: setActiveView, redirectTo}}>

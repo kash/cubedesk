@@ -2,6 +2,7 @@ import {validateStrongPassword} from '@/util/auth/password';
 import {cn} from '@/util/cn';
 import {Check} from 'phosphor-react';
 import React, {ReactNode} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	password: string;
@@ -9,20 +10,29 @@ interface Props {
 }
 
 export default function PasswordStrength(props: Props) {
+	const {t} = useTranslation();
 	const {password, confirmPassword} = props;
 	const result = validateStrongPassword(password, confirmPassword);
 
 	let confirm: ReactNode = null;
 	if (typeof confirmPassword === 'string') {
-		confirm = <PasswordCase name="Passwords match" checked={result.confirmMatches} />;
+		confirm = (
+			<PasswordCase
+				name={t('auth.passwordStrength.matches')}
+				checked={result.confirmMatches}
+			/>
+		);
 	}
 
 	return (
 		<div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-			<PasswordCase name="Lowercase" checked={result.lower1Check} />
-			<PasswordCase name="Uppercase" checked={result.cap1Check} />
-			<PasswordCase name="Number" checked={result.number1Check} />
-			<PasswordCase name="8 characters" checked={result.char8Check} />
+			<PasswordCase
+				name={t('auth.passwordStrength.lowercase')}
+				checked={result.lower1Check}
+			/>
+			<PasswordCase name={t('auth.passwordStrength.uppercase')} checked={result.cap1Check} />
+			<PasswordCase name={t('auth.passwordStrength.number')} checked={result.number1Check} />
+			<PasswordCase name={t('auth.passwordStrength.length')} checked={result.char8Check} />
 			{confirm}
 		</div>
 	);

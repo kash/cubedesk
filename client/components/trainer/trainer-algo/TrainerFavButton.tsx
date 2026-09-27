@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {cleanTrainerAlgorithm} from '@/components/trainer/util/clean';
 import {Button, type ButtonProps} from '@/components/ui/button';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function TrainerFavButton(props: Props) {
+	const {t} = useTranslation();
 	const {algoExt} = props;
 	useTrainerDb();
 	const algo = cleanTrainerAlgorithm(fetchTrainerAlgorithmById(algoExt.id) ?? algoExt);
@@ -29,7 +31,7 @@ export default function TrainerFavButton(props: Props) {
 			variant={props.variant ?? (algo.favorite ? 'default' : 'secondary')}
 			onClick={favoriteAlgorithm}
 			size={props.size ?? 'icon'}
-			aria-label={algo.favorite ? 'Remove favorite' : 'Add favorite'}
+			aria-label={algo.favorite ? t('trainer.removeFavorite') : t('trainer.addFavorite')}
 			aria-pressed={algo.favorite}
 		>
 			<Star weight={algo.favorite ? 'fill' : 'regular'} />

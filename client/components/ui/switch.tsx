@@ -1,14 +1,8 @@
 import {cn} from '@/util/cn';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import React from 'react';
-import {useOptionalI18n} from '@/i18n';
 
 export function Switch({className, ...props}: React.ComponentProps<typeof SwitchPrimitive.Root>) {
-	const {t} = useOptionalI18n();
-	const translatedProps = {...props};
-	if (typeof translatedProps['aria-label'] === 'string') {
-		translatedProps['aria-label'] = t(translatedProps['aria-label']);
-	}
 	return (
 		<SwitchPrimitive.Root
 			data-slot="switch"
@@ -16,7 +10,7 @@ export function Switch({className, ...props}: React.ComponentProps<typeof Switch
 				'peer focus-visible:ring-primary/50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-text/15 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-colors outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
 				className,
 			)}
-			{...translatedProps}
+			{...props}
 		>
 			<SwitchPrimitive.Thumb
 				data-slot="switch-thumb"

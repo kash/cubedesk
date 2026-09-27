@@ -9,6 +9,7 @@ import {DialogHeader} from '@/components/ui/dialog';
 import {SessionInput} from '@/types/session';
 import {SolveInput} from '@/types/solve';
 import React, {createContext, ReactNode, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export enum ImportDataType {
 	CS_TIMER,
@@ -54,6 +55,7 @@ interface Props {
 }
 
 export default function ImportData(props: Props) {
+	const {t} = useTranslation();
 	const {importType} = props;
 
 	const [file, setFile] = useState<File>(null as any);
@@ -103,7 +105,7 @@ export default function ImportData(props: Props) {
 				<DialogHeader
 					title={
 						<>
-							Import data from{' '}
+							{t('settings.import.from')}{' '}
 							<span className="text-secondary">{timerImportData.name}</span>
 						</>
 					}

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import Loading from '@/components/common/Loading';
 import LinkAccountButton from '@/components/oauth/LinkAccountButton';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function IntegrationService(props: Props) {
+	const {t} = useTranslation();
 	const {integrationType} = props;
 	const [integration, setIntegration] = useState<Serialized<SafeIntegration> | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -71,7 +73,7 @@ export default function IntegrationService(props: Props) {
 					{integration ? (
 						<span className="bg-success/10 text-success inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-medium">
 							<Check size={12} weight="bold" />
-							Linked
+							{t('auth.accountLinked')}
 						</span>
 					) : null}
 				</div>
@@ -89,13 +91,23 @@ export default function IntegrationService(props: Props) {
 							className="text-text/70 -ml-2"
 						>
 							<ArrowClockwise />
-							Relink
+
+							{t('common.relink')}
 						</LinkAccountButton>
 						<ConfirmDialog
+							labels={{
+								cancel: t('common.cancel'),
+								inputPrompt: t('common.confirmInputPrompt', {
+									word: t('common.confirmWord'),
+								}),
+								confirmWord: t('common.confirmWord'),
+								genericError: t('common.genericError'),
+								defaultDescription: t('common.confirmDescription'),
+							}}
 							hideInput
-							title={`Unlink ${service.name} account`}
-							description="Are you sure you want to unlink this account?"
-							buttonText="Unlink account"
+							title={t('auth.unlinkNamedAccount', {name: service.name})}
+							description={t('auth.confirmUnlinkAccount')}
+							buttonText={t('auth.linkedAccounts.unlink')}
 							triggerAction={removeIntegration}
 						>
 							<Button
@@ -103,7 +115,7 @@ export default function IntegrationService(props: Props) {
 								size="sm"
 								className="text-text/50 hover:bg-error/10 hover:text-error ml-auto"
 							>
-								Unlink
+								{t('common.unlink')}
 							</Button>
 						</ConfirmDialog>
 					</>
@@ -114,7 +126,7 @@ export default function IntegrationService(props: Props) {
 						size="sm"
 						className="ml-auto"
 					>
-						Link account
+						{t('auth.linkAccount')}
 						<ArrowRight />
 					</LinkAccountButton>
 				)}

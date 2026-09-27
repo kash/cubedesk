@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Forgot from '@/components/login/Forgot';
 import Login from '@/components/login/Login';
 import SignUp from '@/components/login/SignUp';
@@ -7,6 +8,7 @@ import React from 'react';
 import {useRouteMatch} from 'react-router-dom';
 
 export default function LoginWrapper() {
+	const {t} = useTranslation();
 	const backgroundColor = useTheme('background_color');
 	const logoColor = backgroundColor.isDark ? 'white' : 'black';
 	const match = useRouteMatch();
@@ -22,15 +24,15 @@ export default function LoginWrapper() {
 	}
 
 	return (
-		<div className="flex h-full min-h-screen w-full flex-col items-center justify-start bg-background">
+		<div className="bg-background flex h-full min-h-screen w-full flex-col items-center justify-start">
 			<a
-				className="mb-8 mt-12 flex min-h-11 shrink-0 items-center rounded-md focus-visible:ring-2 focus-visible:ring-current sm:mt-[100px]"
+				className="mt-12 mb-8 flex min-h-11 shrink-0 items-center rounded-md focus-visible:ring-2 focus-visible:ring-current sm:mt-[100px]"
 				href="/"
 			>
 				<img
 					className="h-auto w-[180px] sm:w-[200px]"
 					src={resourceUri(`/images/branding/cubedesk-lockup-${logoColor}.svg`)}
-					alt="CubeDesk Logo"
+					alt={t('common.logoAlt')}
 				/>
 			</a>
 			{body}

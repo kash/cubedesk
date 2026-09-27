@@ -3,7 +3,7 @@ import {Button} from '@/components/ui/button';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
 import React from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	white?: boolean;
@@ -11,7 +11,7 @@ interface Props {
 
 export default function TopNav(props: Props) {
 	const {white} = props;
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	const backgroundTheme = useTheme('background_color');
 
@@ -43,7 +43,7 @@ export default function TopNav(props: Props) {
 						<img
 							className="h-auto w-[120px] sm:w-[150px]"
 							src={resourceUri(`/images/branding/${logoFile}.svg`)}
-							alt="CubeDesk Logo"
+							alt={t('common.logoAlt')}
 						/>
 					</a>
 				</div>
@@ -55,12 +55,12 @@ export default function TopNav(props: Props) {
 							size="lg"
 							style={{color: white ? '#444444' : undefined}}
 						>
-							{t('Log In')}
+							{t('auth.logIn2')}
 						</Button>
 					</AuthDialog>
 					<AuthDialog view="signup">
 						<Button variant="default" size="lg">
-						{t('Sign up')}
+							{t('auth.signUp')}
 						</Button>
 					</AuthDialog>
 				</div>

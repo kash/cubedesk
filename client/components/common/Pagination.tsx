@@ -5,7 +5,7 @@ import {useQueries} from '@tanstack/react-query';
 import {MagnifyingGlass} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {useLocation} from 'react-router-dom';
-import {useI18n} from '@/i18n';
+import type {ListLabels} from '@/components/common/PaginatedList';
 
 export type {PaginationOutput, PaginationArgsInput} from '@/types/pagination';
 import {PaginationArgsInput, PaginationOutput} from '@/types/pagination';
@@ -13,7 +13,7 @@ import {PaginationArgsInput, PaginationOutput} from '@/types/pagination';
 export interface PaginationTab {
 	id: string;
 	value: string;
-	plural: string;
+	emptyText: string;
 	link?: string;
 	fetchData: (args: PaginationArgsInput) => Promise<PaginationOutput<any>>;
 }
@@ -24,6 +24,9 @@ interface Props {
 	searchable?: boolean;
 	searchQuery?: string;
 	prefetchData?: (page: number, tab?: PaginationTab) => void;
+	labels: ListLabels;
+	searchLabel?: string;
+	optionsLabel?: string;
 }
 
 export default function Pagination<T>(props: Props) {
@@ -39,8 +42,10 @@ function PaginationContent<T>({
 	prefetchData,
 	searchQuery: parentSearchQuery,
 	currentTab,
+	labels,
+	searchLabel,
+	optionsLabel,
 }: Props & {currentTab: PaginationTab}) {
-	const {t} = useI18n();
 	const location = useLocation();
 	const [searchQuery, setSearchQuery] = useState('');
 	const finalQuery = parentSearchQuery ?? searchQuery;
@@ -74,10 +79,10 @@ function PaginationContent<T>({
 							<MagnifyingGlass weight="bold" />
 						</InputGroupAddon>
 						<InputGroupInput
-							placeholder={`${t('Search')} ${t(currentTab.plural).toLowerCase()}`}
+							placeholder={searchLabel}
 							value={searchQuery}
 							onChange={(event) => setSearchQuery(event.target.value)}
-							aria-label={`${t('Search')} ${t(currentTab.plural).toLowerCase()}`}
+							aria-label={searchLabel}
 						/>
 					</InputGroup>
 				</div>
@@ -85,6 +90,7 @@ function PaginationContent<T>({
 			{tabs.length > 1 && (
 				<div className="mb-4 flex justify-center">
 					<HorizontalNav
+						optionsLabel={optionsLabel}
 						tabId={currentTab.id}
 						tabs={tabs.map((tab, index) => ({
 							...tab,
@@ -101,7 +107,7 @@ function PaginationContent<T>({
 				searchQuery={finalQuery}
 				fetchData={currentTab.fetchData}
 				getItemRow={(item) => itemRow(item, currentTab)}
-				emptyText={t(`Could not find any ${currentTab.plural}`)}
+				labels={{...labels, empty: currentTab.emptyText}}
 			/>
 		</div>
 	);

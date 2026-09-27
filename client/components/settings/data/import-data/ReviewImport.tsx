@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import CubePicker from '@/components/common/CubePicker';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {clearOfflineData} from '@/components/layout/offline';
@@ -16,6 +17,7 @@ import React, {ReactNode, useContext, useRef} from 'react';
 import {v4 as uuid} from 'uuid';
 
 export default function ReviewImport() {
+	const {t} = useTranslation();
 	const context = useContext(ImportDataContext);
 	const attempt = useRef<string | null>(null);
 	const submitted = useRef<Parameters<typeof trpc.imports.run.mutate>[0] | null>(null);
@@ -146,12 +148,18 @@ export default function ReviewImport() {
 						<Input
 							value={session.name || ''}
 							onChange={(e) => updateSessionName(sessionId, e.target.value)}
-							aria-label={'Session name'}
+							aria-label={t('sessions.sessionName')}
 							className="mb-2"
 						/>
 					</div>
 					<div className="flex w-1/3 flex-row justify-end">
 						<CubePicker
+							labels={{
+								label: t('common.cubeType2'),
+								placeholder: t('common.selectOption'),
+								searchPlaceholder: t('common.search'),
+								emptyMessage: t('common.noResultsFound'),
+							}}
 							onChange={(ct) => updateSessionCubeType(sessionId, ct.id)}
 							value={cubeType || ''}
 						/>
@@ -161,7 +169,7 @@ export default function ReviewImport() {
 							variant="ghost"
 							onClick={() => removeSession(sessionId)}
 							size="icon"
-							aria-label="Review Import"
+							aria-label={t('settings.import.reviewLabel')}
 						>
 							<X />
 						</Button>
@@ -178,13 +186,13 @@ export default function ReviewImport() {
 				key="session-header-row"
 			>
 				<div className="flex w-1/3 flex-row">
-					<InputLegend text="Session Name" />
+					<InputLegend text={t('sessions.sessionName2')} />
 				</div>
 				<div className="flex w-1/3 flex-row justify-end">
-					<InputLegend text="Cube Type" />
+					<InputLegend text={t('common.cubeType')} />
 				</div>
 				<div className="flex w-1/3 flex-row justify-end">
-					<InputLegend text="Remove" />
+					<InputLegend text={t('common.remove')} />
 				</div>
 			</div>,
 		);
@@ -194,18 +202,18 @@ export default function ReviewImport() {
 		<div>
 			<Separator className="my-6" />
 			<ImportSection
-				title="Review & import"
-				description="Please make sure that the number below look correct. Then click Import data!"
+				title={t('settings.import.reviewTitle')}
+				description={t('settings.import.reviewDescription')}
 			>
 				<div className="my-5">
 					<h4 className="text-text mb-2.5 text-[1.1rem] font-bold">
-						Solves:{' '}
+						{t('settings.import.solves')}{' '}
 						<span className="text-secondary">
 							{data.solves.length.toLocaleString()}
 						</span>
 					</h4>
 					<h4 className="text-text mb-2.5 text-[1.1rem] font-bold">
-						Sessions:{' '}
+						{t('settings.import.sessions')}{' '}
 						<span className="text-secondary">
 							{data.sessions.length.toLocaleString()}
 						</span>
@@ -220,10 +228,10 @@ export default function ReviewImport() {
 					aria-busy={context.importing}
 				>
 					{context.importing
-						? 'Importing…'
+						? t('settings.import.importing')
 						: context.importLocked
-							? 'Check import status'
-							: 'Import data'}
+							? t('settings.import.checkStatus')
+							: t('settings.import.importData')}
 					{context.importing ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 			</ImportSection>

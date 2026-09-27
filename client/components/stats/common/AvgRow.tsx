@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import HistoryDialog from '@/components/modules/history/HistoryDialog';
 import {useStatsContext} from '@/components/stats/Stats';
 import {Button} from '@/components/ui/button';
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function AvgRow(props: Props) {
+	const {t} = useTranslation();
 	const [historyDialog, setHistoryDialog] = React.useState<React.ComponentProps<
 		typeof HistoryDialog
 	> | null>(null);
@@ -38,20 +40,19 @@ export default function AvgRow(props: Props) {
 			return;
 		}
 
-		const descPrefix = pb ? 'Best ' : '';
-		const desc = descPrefix + `Average of ${localCount}`;
+		const desc = t(pb ? 'stats.bestAverageOfCount' : 'stats.averageOfCount', {
+			amount: localCount,
+		});
 		setHistoryDialog({solves: avg.solves ?? [], description: desc});
 	}
-
-	const highlightClass = 'font-medium text-text';
-	const bestSpan = pb ? <span className={highlightClass}>Best</span> : null;
 
 	return (
 		<>
 			<div className={classNames('stats-average-row', className)}>
 				<p>
-					{bestSpan} {pb ? 'a' : 'A'}verage of{' '}
-					<span className={highlightClass}>{count.toLocaleString()}</span>
+					{t(pb ? 'stats.bestAverageOfCount' : 'stats.averageOfCount', {
+						amount: localCount,
+					})}
 				</p>
 				<Button
 					variant="ghost"
@@ -72,8 +73,8 @@ export default function AvgRow(props: Props) {
 				}}
 			>
 				{historyDialog && (
-					<DialogContent>
-						<DialogTitle className="sr-only">Solve history</DialogTitle>
+					<DialogContent closeLabel={t('common.closeDialog')}>
+						<DialogTitle className="sr-only">{t('solves.solveHistory')}</DialogTitle>
 						<HistoryDialog {...historyDialog} />
 					</DialogContent>
 				)}

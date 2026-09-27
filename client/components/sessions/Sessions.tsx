@@ -38,7 +38,7 @@ import {
 import {CSS} from '@dnd-kit/utilities';
 import {Plus} from 'phosphor-react';
 import React, {useState} from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 function SortableItem({session, selectedSessionId, selectSession, setSelectedSessionId}) {
 	const {
@@ -93,7 +93,7 @@ function SortableList({sessions, selectedSessionId, selectSession, setSelectedSe
 }
 
 export default function Sessions() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [createNewSessionDialog, setCreateNewSessionDialog] = React.useState<{
 		props: React.ComponentProps<typeof CreateNewSession>;
 		onComplete: React.ComponentProps<typeof CreateNewSession>['onComplete'];
@@ -186,12 +186,12 @@ export default function Sessions() {
 			<div className="sessions-detail-header">
 				<div className="sessions-name-field">
 					<Label className="mb-2" htmlFor="session-name">
-						{t('Session name')}
+						{t('sessions.sessionName')}
 					</Label>
 					<Input
 						id="session-name"
 						type="text"
-						placeholder={t('Session name')}
+						placeholder={t('sessions.sessionName')}
 						name={session.id}
 						value={session.name}
 						onChange={setSessionName}
@@ -199,7 +199,13 @@ export default function Sessions() {
 					/>
 				</div>
 				<CubePicker
-						handlePrefix={t('Stats for ')}
+					labels={{
+						label: t('common.cubeType2'),
+						placeholder: t('common.selectOption'),
+						searchPlaceholder: t('common.search'),
+						emptyMessage: t('common.noResultsFound'),
+					}}
+					handlePrefix={t('stats.statsFor')}
 					excludeSelected
 					value={currentCube}
 					cubeTypes={sessionCubeTypes}
@@ -209,10 +215,13 @@ export default function Sessions() {
 			</div>
 			<SessionSummary filterOptions={fetchFilter} />
 			<div className="sessions-analysis">
-						<section className="sessions-panel sessions-history" aria-label={t('Solve history')}>
-							<div className="sessions-panel-heading">
-								<h2>{t('Solve history')}</h2>
-								<p>{t('Most recent first · Select a time for details')}</p>
+				<section
+					className="sessions-panel sessions-history"
+					aria-label={t('solves.solveHistory')}
+				>
+					<div className="sessions-panel-heading">
+						<h2>{t('solves.solveHistory')}</h2>
+						<p>{t('solves.list.sortHint')}</p>
 					</div>
 					<div
 						className="sessions-history-list"
@@ -231,9 +240,9 @@ export default function Sessions() {
 		</div>
 	) : (
 		<div className="sessions-panel sessions-empty">
-					<h2>{t('A fresh start')}</h2>
-					<p>{t('Create a session to start organizing your solves.')}</p>
-					<Button onClick={openCreateNewSession}>{t('Create a session')}</Button>
+			<h2>{t('common.aFreshStart')}</h2>
+			<p>{t('sessions.createSessionPrompt')}</p>
+			<Button onClick={openCreateNewSession}>{t('sessions.createASession')}</Button>
 		</div>
 	);
 
@@ -242,18 +251,18 @@ export default function Sessions() {
 			<div className="sessions-page">
 				<div className="sessions-page-header">
 					<PageTitle
-						pageName="Sessions"
-						description="A little structure for every practice."
+						pageName={t('sessions.sessions')}
+						description={t('common.aLittleStructureForEveryPractice')}
 					/>
 					<Button onClick={openCreateNewSession} type="button">
 						<Plus weight="bold" />
-						{t('New session')}
+						{t('sessions.newSession')}
 					</Button>
 				</div>
 				<div className="sessions-layout">
-					<aside className="sessions-sidebar" aria-label={t('Your sessions')}>
+					<aside className="sessions-sidebar" aria-label={t('sessions.yourSessions')}>
 						<div className="sessions-sidebar-heading">
-							<h2>{t('Your sessions')}</h2>
+							<h2>{t('sessions.yourSessions')}</h2>
 							<span>{allSessions.length}</span>
 						</div>
 						<DndContext
@@ -282,7 +291,7 @@ export default function Sessions() {
 				}}
 			>
 				{createNewSessionDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<CreateNewSession
 							{...createNewSessionDialog.props}
 							onComplete={(...args) => {

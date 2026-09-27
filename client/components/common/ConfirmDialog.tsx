@@ -20,6 +20,13 @@ interface ConfirmDialogInfoBox {
 }
 
 export interface ConfirmDialogProps {
+	labels: {
+		cancel: string;
+		inputPrompt: string;
+		confirmWord: string;
+		genericError: string;
+		defaultDescription: string;
+	};
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	children?: ReactNode;
@@ -71,6 +78,7 @@ function ConfirmationForm(props: ConfirmDialogProps) {
 		triggerAction,
 		buttonText,
 		hideInput,
+		labels,
 		onComplete,
 	} = props;
 
@@ -99,8 +107,11 @@ function ConfirmationForm(props: ConfirmDialogProps) {
 			return;
 		}
 
-		if (confirm.toLowerCase() !== 'confirm' && !hideInput) {
-			setError('Please type "confirm" to proceed');
+		if (
+			confirm.trim().toLocaleLowerCase() !== labels.confirmWord.toLocaleLowerCase() &&
+			!hideInput
+		) {
+			setError(labels.inputPrompt);
 			return;
 		}
 		submitting.current = true;
@@ -111,7 +122,7 @@ function ConfirmationForm(props: ConfirmDialogProps) {
 			res = await triggerAction();
 		} catch (e) {
 			if (!mounted.current) return;
-			setError(e instanceof Error ? e.message : 'Something went wrong');
+			setError(e instanceof Error ? e.message : labels.genericError);
 			setLoading(false);
 			submitting.current = false;
 			return;
@@ -126,22 +137,22 @@ function ConfirmationForm(props: ConfirmDialogProps) {
 	let input: ReactNode = (
 		<Field className="mb-2">
 			<Input
-				placeholder="confirm"
+				placeholder={labels.confirmWord}
 				onChange={handleChange}
 				name="confirm"
 				value={confirm}
 				id={`${fieldId}-1`}
-				aria-label={'confirm'}
+				aria-label={labels.inputPrompt}
 				aria-invalid={!!error}
 				aria-describedby={`${fieldId}-1-description${error ? ` ${fieldId}-error` : ''}`}
 			/>
 			<FieldDescription id={`${fieldId}-1-description`}>
-				{`Type "confirm" to proceed`}
+				{labels.inputPrompt}
 			</FieldDescription>
 		</Field>
 	);
 
-	let disabled = confirm.toLowerCase() !== 'confirm';
+	let disabled = confirm.trim().toLocaleLowerCase() !== labels.confirmWord.toLocaleLowerCase();
 	if (hideInput) {
 		input = null;
 		disabled = false;
@@ -169,14 +180,14 @@ function ConfirmationForm(props: ConfirmDialogProps) {
 			<AlertDialogHeader>
 				<AlertDialogTitle>{title}</AlertDialogTitle>
 				<AlertDialogDescription>
-					{description || 'Confirm this action to continue.'}
+					{description || labels.defaultDescription}
 				</AlertDialogDescription>
 			</AlertDialogHeader>
 			{infoBoxContainer}
 			<div>
 				<div className="mb-2">{input}</div>
 				<div className="flex flex-wrap items-center justify-end gap-2">
-					<AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+					<AlertDialogCancel disabled={loading}>{labels.cancel}</AlertDialogCancel>
 					<Button
 						variant="destructive"
 						{...buttonProps}

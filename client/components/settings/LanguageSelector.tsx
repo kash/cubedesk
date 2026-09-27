@@ -1,23 +1,25 @@
 import SelectField from '@/components/common/inputs/SelectField';
 import SettingRow from '@/components/settings/common/SettingRow';
-import {useI18n} from '@/i18n';
+import {useLocale} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import React from 'react';
 
 export default function LanguageSelector() {
-	const {locale, setLocale} = useI18n();
+	const {locale, setLocale} = useLocale();
+	const {t} = useTranslation();
 
 	return (
 		<SettingRow
-			title="Language and region"
-			description="Choose the language used throughout CubeDesk."
+			title={t('settings.languageAndRegion')}
+			description={t('settings.languageDescription')}
 		>
 			<SelectField
-				label="Language"
+				label={t('settings.language')}
 				value={locale}
 				onValueChange={(value) => setLocale(value as typeof locale)}
 				options={[
-					{value: 'en', text: 'English'},
-					{value: 'es', text: 'Spanish'},
+					{value: 'en', text: t('common.english')},
+					{value: 'es', text: t('common.spanish')},
 				]}
 			/>
 		</SettingRow>

@@ -5,6 +5,7 @@ import ThemeOptions from '@/components/settings/appearance/theme-options/ThemeOp
 import TimerBackground from '@/components/settings/appearance/TimerBackground';
 import SettingRow from '@/components/settings/common/SettingRow';
 import SettingSection from '@/components/settings/common/SettingSection';
+import {useTranslation} from 'react-i18next';
 import {Button} from '@/components/ui/button';
 import {AllSettings, getDefaultSetting} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
@@ -28,6 +29,7 @@ const FONT_FAMILIES = [
 ];
 
 export default function Appearance() {
+	const {t} = useTranslation();
 	const timerTimeSize = useSettings('timer_time_size');
 	const timerScrambleSize = useSettings('timer_scramble_size');
 	const timerDecimalPoints = useSettings('timer_decimal_points');
@@ -41,38 +43,29 @@ export default function Appearance() {
 	return (
 		<>
 			<ThemeOptions />
-			<SettingRow
-				title="Timer modules"
-				description="Change the number of modules shown on the timer page. Note that this is the *maximum* number of modules shown (based on your window size)."
-			>
+			<SettingRow title={t('timer.timerModules')} description={t('timer.modules.countHint')}>
 				<SelectField
-					label="Timer modules"
+					label={t('timer.timerModules')}
 					value={String(timerModuleCount)}
 					onValueChange={(value) => updateSetting('timer_module_count', Number(value))}
 					options={[1, 2, 3, 4, 5, 6].map((count) => ({
 						value: String(count),
-						text: String(count) + (count === 3 ? ' (Default)' : ''),
+						text: String(count) + (count === 3 ? ` (${t('common.default')})` : ''),
 					}))}
 				/>
 			</SettingRow>
-			<SettingRow
-				title="Timer layout"
-				description="Change the way your timer looks. If you have a smaller screen, you may want to put the modules to the left or right."
-			>
+			<SettingRow title={t('timer.timerLayout')} description={t('timer.layout.description')}>
 				<LayoutSelector />
 			</SettingRow>
 			<SettingRow
-				title="Timer background"
-				description="Change the background color or image of the timer."
+				title={t('timer.timerBackground')}
+				description={t('timer.background.description')}
 			>
 				<TimerBackground />
 			</SettingRow>
-			<SettingRow
-				title="Timer font"
-				description="Font of the big timer you see on the timer page"
-			>
+			<SettingRow title={t('timer.timerFont')} description={t('timer.display.fontHint')}>
 				<SelectField
-					label="Timer font"
+					label={t('timer.timerFont')}
 					value={timerFontFamily}
 					onValueChange={(value) => updateSetting('timer_font_family', value)}
 					contentClassName="min-w-72"
@@ -95,18 +88,18 @@ export default function Appearance() {
 						onClick={() => updateSetting('timer_font_family', DEFAULT_FONT_FAMILY)}
 						size="sm"
 					>
-						{'Reset'}
+						{t('common.reset')}
 					</Button>
 				)}
 			</SettingRow>
 			<SettingSection>
 				<SettingRow
-					title="Timer font size"
-					description="Font size of the big time you see on the timer page"
+					title={t('timer.timerFontSize')}
+					description={t('timer.display.timeFontSizeHint')}
 				>
 					<Slider
 						min={35}
-						label="Timer font size"
+						label={t('timer.timerFontSize')}
 						value={Number(timerTimeSize)}
 						max={150}
 						onValueChange={(value) => updateSetting('timer_time_size', value)}
@@ -122,7 +115,7 @@ export default function Appearance() {
 							}
 							size="sm"
 						>
-							{'Reset'}
+							{t('common.reset')}
 						</Button>
 					)}
 				</SettingRow>
@@ -140,12 +133,12 @@ export default function Appearance() {
 			</SettingSection>
 			<SettingSection>
 				<SettingRow
-					title="Scramble font size"
-					description="Font size of the scramble you see on the timer page"
+					title={t('timer.scrambleFontSize')}
+					description={t('timer.display.scrambleFontSizeHint')}
 				>
 					<Slider
 						min={10}
-						label="Scramble font size"
+						label={t('timer.scrambleFontSize')}
 						value={Number(timerScrambleSize)}
 						max={40}
 						onValueChange={(value) => updateSetting('timer_scramble_size', value)}
@@ -161,7 +154,7 @@ export default function Appearance() {
 							}
 							size="sm"
 						>
-							{'Reset'}
+							{t('common.reset')}
 						</Button>
 					)}
 				</SettingRow>

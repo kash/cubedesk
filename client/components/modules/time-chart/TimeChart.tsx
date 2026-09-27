@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Empty from '@/components/common/Empty';
 import dummyData from '@/components/modules/time-chart/dummy-data';
 import {FilterSolvesOptions} from '@/db/solves/query';
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function TimeChart({filterOptions, dummy}: Props) {
+	const {t} = useTranslation();
 	const filterStr = jsonStr(filterOptions);
 	const solveUpdate = useSolveDb();
 	const data = useMemo(() => {
@@ -33,7 +35,7 @@ export default function TimeChart({filterOptions, dummy}: Props) {
 	}, [dummy, filterStr, filterOptions, solveUpdate]);
 
 	if (!data.length) {
-		return <Empty text="No dated completed solves yet" centered />;
+		return <Empty text={t('solves.noDatedCompletedSolvesYet')} centered />;
 	}
 
 	const low = Math.min(...data.map((point) => point.value));
@@ -105,7 +107,7 @@ export default function TimeChart({filterOptions, dummy}: Props) {
 							width={width}
 							height={height}
 							role="img"
-							aria-label="Solve times by date, with duration on the vertical axis. Longer histories are grouped into mean times."
+							aria-label={t('stats.timeChartDescription')}
 							style={{
 								display: 'block',
 								fontFamily: 'inherit',
@@ -114,7 +116,7 @@ export default function TimeChart({filterOptions, dummy}: Props) {
 							}}
 						>
 							<text x={left} y={12} fill={muted}>
-								Time
+								{t('solves.time')}
 							</text>
 							{ticks.map((value) => (
 								<g key={value}>

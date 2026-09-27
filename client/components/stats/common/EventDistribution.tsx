@@ -3,13 +3,13 @@ import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {Cube} from 'phosphor-react';
 import React, {useMemo} from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import {PieChart} from 'react-minimal-pie-chart';
 
 const COLORS = ['#83cbb6', '#91b6e8', '#e8ba7c', '#c3a0de', '#e69baf', '#87cbd5', '#acbc8d'];
 
 export default function EventDistribution() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const solveUpdate = useSolveDb();
 	// The local solve database is mutable; its revision invalidates this query.
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,7 +25,7 @@ export default function EventDistribution() {
 		return (
 			<div className="stats-distribution-empty">
 				<Cube size={32} />
-				<p>{t('Complete a solve to see your event breakdown.')}</p>
+				<p>{t('solves.eventBreakdown.emptyHint')}</p>
 			</div>
 		);
 	}
@@ -35,7 +35,7 @@ export default function EventDistribution() {
 			<div
 				className="stats-ring"
 				role="img"
-				aria-label={`Completed solves across ${data.length} events. Breakdown listed below.`}
+				aria-label={t('stats.eventDistributionDescription', {count: data.length})}
 			>
 				<PieChart
 					data={data}
@@ -45,7 +45,7 @@ export default function EventDistribution() {
 				/>
 				<div className="stats-ring-label">
 					<strong>{data.length}</strong>
-					<span>{t(data.length === 1 ? 'event' : 'events')}</span>
+					<span>{t('common.event', {count: data.length})}</span>
 				</div>
 			</div>
 			<ul className="stats-legend">

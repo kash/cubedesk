@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {TimerProps, TimerStore} from '@/components/timer/@types/interfaces';
 import DemoWarning from '@/components/layout/wrapper/DemoWarning';
 import TimerFooter from '@/components/timer/footer/TimerFooter';
@@ -32,6 +33,7 @@ export function useTimerContext(): ITimerContext {
 }
 
 export default function Timer(props: TimerProps) {
+	const {t} = useTranslation();
 	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(!props.demoMode);
@@ -65,7 +67,7 @@ export default function Timer(props: TimerProps) {
 	};
 
 	// Event listeners for single and AVG PBs
-	listenForPbEvents(context);
+	listenForPbEvents(context, t);
 	useWindowListener('resize', windowResize);
 
 	// Initiating timer stuff
@@ -117,14 +119,15 @@ export default function Timer(props: TimerProps) {
 		'relative flex w-full select-none items-center justify-center',
 		mobileMode &&
 			'select-none border-b-[3px] border-dashed border-tmo-background/30 [-webkit-touch-callout:none] [-webkit-user-select:none]',
-		sideLayout && '!h-[calc(100vh_-_70px)]'
+		sideLayout && '!h-[calc(100vh_-_70px)]',
 	);
 	const mainCenterClass = classNames('flex w-full flex-col items-center', {
 		'-mt-[15vh]': sideLayout,
 		'-mt-[10vh]': context.focusMode && !mobileMode,
 	});
 	const mainTimeClass = classNames({
-		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': timerType === 'smart' && cubeType === '333',
+		'flex w-[95%] max-w-[580px] flex-row items-center justify-between':
+			timerType === 'smart' && cubeType === '333',
 	});
 
 	const timeBar = (
@@ -157,9 +160,9 @@ export default function Timer(props: TimerProps) {
 		const backgroundUrl = getStorageURL(backgroundPath);
 		background = (
 			<img
-				alt="Timer background"
+				alt={t('timer.timerBackground')}
 				src={backgroundUrl ?? undefined}
-				className="absolute left-1/2 top-1/2 z-0 h-[calc(100%_+_60px)] w-[calc(100%_+_60px)] -translate-x-1/2 -translate-y-1/2 object-cover opacity-70"
+				className="absolute top-1/2 left-1/2 z-0 h-[calc(100%_+_60px)] w-[calc(100%_+_60px)] -translate-x-1/2 -translate-y-1/2 object-cover opacity-70"
 			/>
 		);
 	}
@@ -167,10 +170,10 @@ export default function Timer(props: TimerProps) {
 	return (
 		<div
 			className={classNames(
-				'relative mx-auto box-border flex flex-col justify-end pb-[calc(10px_+_env(safe-area-inset-bottom))] text-text',
+				'text-text relative mx-auto box-border flex flex-col justify-end pb-[calc(10px_+_env(safe-area-inset-bottom))]',
 				mobileMode && me
 					? 'h-[calc(100vh_-_55px)] supports-[height:100dvh]:h-[calc(100dvh_-_55px)]'
-					: 'h-screen supports-[height:100dvh]:h-dvh'
+					: 'h-screen supports-[height:100dvh]:h-dvh',
 			)}
 		>
 			<TimerContext.Provider value={context}>
@@ -188,7 +191,7 @@ export default function Timer(props: TimerProps) {
 										: hideMobileTimerFooter && mobileMode
 											? 'grid-rows-[1fr_50px]'
 											: 'grid-rows-[1fr_300px]',
-							timerStarted && mobileMode && '!grid-cols-[1fr]'
+							timerStarted && mobileMode && '!grid-cols-[1fr]',
 						)}
 					>
 						{body}

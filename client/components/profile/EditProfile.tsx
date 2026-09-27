@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ButtonError from '@/components/common/inputs/Error';
 import {Button} from '@/components/ui/button';
 import {Field, FieldDescription, FieldLabel} from '@/components/ui/field';
@@ -40,6 +41,7 @@ function getInitialForm(profile: Profile): ProfileForm {
 }
 
 export default function EditProfile(props: Props) {
+	const {t} = useTranslation();
 	const fieldId = React.useId();
 
 	const {profile} = props;
@@ -78,7 +80,7 @@ export default function EditProfile(props: Props) {
 		const normalizedYouTubeLink = normalizeYouTubeChannelLink(youtubeLink);
 
 		if (twitchLink && !/https:\/\/(www\.)?twitch\.tv.+/.test(twitchLink)) {
-			setError('Invalid Twitch link');
+			setError(t('profile.invalidTwitchLink'));
 			return;
 		}
 
@@ -91,17 +93,17 @@ export default function EditProfile(props: Props) {
 				normalizedYouTubeLink,
 			)
 		) {
-			setError('Invalid YouTube link');
+			setError(t('profile.invalidYoutubeLink'));
 			return;
 		}
 
 		if (redditLink && !/https:\/\/(www\.)?reddit\.com\/user\/.+/.test(redditLink)) {
-			setError('Invalid Reddit Profile link');
+			setError(t('profile.invalidRedditLink'));
 			return;
 		}
 
 		if (twitterLink && !/https:\/\/(www\.)?twitter\.com\/.+/.test(twitterLink)) {
-			setError('Invalid Twitter Profile link');
+			setError(t('profile.invalidTwitterLink'));
 			return;
 		}
 
@@ -135,7 +137,7 @@ export default function EditProfile(props: Props) {
 			<div className="mb-5 grid grid-cols-2 gap-5">
 				<div className="col-span-2">
 					<Field>
-						<FieldLabel htmlFor={`${fieldId}-1`}>{'Bio'}</FieldLabel>
+						<FieldLabel htmlFor={`${fieldId}-1`}>{t('profile.edit.bio')}</FieldLabel>
 						<Textarea
 							maxLength={250}
 							value={form.bio}
@@ -152,7 +154,7 @@ export default function EditProfile(props: Props) {
 					</Field>
 				</div>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-2`}>{'YouTube Channel'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-2`}>{t('profile.edit.youtube')}</FieldLabel>
 					<Input
 						name="youtubeLink"
 						value={form.youtubeLink}
@@ -161,11 +163,11 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-2-description`}
 					/>
 					<FieldDescription id={`${fieldId}-2-description`}>
-						{'Ex: https://youtube.com/@username'}
+						{t('profile.edit.youtubeExample')}
 					</FieldDescription>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-3`}>{'Twitch Channel'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-3`}>{t('profile.edit.twitch')}</FieldLabel>
 					<Input
 						name="twitchLink"
 						value={form.twitchLink}
@@ -174,11 +176,11 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-3-description`}
 					/>
 					<FieldDescription id={`${fieldId}-3-description`}>
-						{'Ex: https://www.twitch.tv/xqcow'}
+						{t('profile.edit.twitchExample')}
 					</FieldDescription>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-4`}>{'Twitter Profile'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-4`}>{t('profile.edit.twitter')}</FieldLabel>
 					<Input
 						name="twitterLink"
 						value={form.twitterLink}
@@ -187,11 +189,11 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-4-description`}
 					/>
 					<FieldDescription id={`${fieldId}-4-description`}>
-						{'Ex: https://www.twitter.com/nasa'}
+						{t('profile.edit.twitterExample')}
 					</FieldDescription>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-5`}>{'Reddit Profile'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-5`}>{t('profile.edit.reddit')}</FieldLabel>
 					<Input
 						name="redditLink"
 						value={form.redditLink}
@@ -200,11 +202,11 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-5-description`}
 					/>
 					<FieldDescription id={`${fieldId}-5-description`}>
-						{'Ex: https://www.reddit.com/user/nasa'}
+						{t('profile.edit.redditExample')}
 					</FieldDescription>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-6`}>{'3x3 Method'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-6`}>{t('profile.edit.method')}</FieldLabel>
 					<Input
 						name="threeMethod"
 						value={form.threeMethod}
@@ -213,11 +215,11 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-6-description`}
 					/>
 					<FieldDescription id={`${fieldId}-6-description`}>
-						{'Ex: CFOP, ROUX'}
+						{t('profile.edit.methodExample')}
 					</FieldDescription>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-7`}>{'3x3 Goal'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-7`}>{t('profile.edit.goal')}</FieldLabel>
 					<Input
 						name="threeGoal"
 						value={form.threeGoal}
@@ -226,11 +228,11 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-7-description`}
 					/>
 					<FieldDescription id={`${fieldId}-7-description`}>
-						{'Ex: Sub 10'}
+						{t('profile.edit.goalExample')}
 					</FieldDescription>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-8`}>{'Main 3x3 Cube'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-8`}>{t('profile.edit.mainCube')}</FieldLabel>
 					<Input
 						name="mainThreeCube"
 						value={form.mainThreeCube}
@@ -239,11 +241,13 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-8-description`}
 					/>
 					<FieldDescription id={`${fieldId}-8-description`}>
-						{'Ex: GAN 11 M Pro 3x3'}
+						{t('profile.edit.mainCubeExample')}
 					</FieldDescription>
 				</Field>
 				<Field>
-					<FieldLabel htmlFor={`${fieldId}-9`}>{'Favorite Event'}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-9`}>
+						{t('profile.edit.favoriteEvent')}
+					</FieldLabel>
 					<Input
 						name="favoriteEvent"
 						value={form.favoriteEvent}
@@ -252,7 +256,7 @@ export default function EditProfile(props: Props) {
 						aria-describedby={`${fieldId}-9-description`}
 					/>
 					<FieldDescription id={`${fieldId}-9-description`}>
-						{'Ex: Pyraminx'}
+						{t('profile.edit.favoriteEventExample')}
 					</FieldDescription>
 				</Field>
 			</div>
@@ -264,7 +268,7 @@ export default function EditProfile(props: Props) {
 					disabled={loading}
 					aria-busy={loading}
 				>
-					{'Update Profile'}
+					{t('profile.edit.update')}
 					{loading ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 				<ButtonError text={error} />

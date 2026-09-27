@@ -3,6 +3,7 @@ import ScrambleVisual from '@/components/modules/scramble/ScrambleVisual';
 import {AutosizeTextarea} from '@/components/ui/textarea';
 import {Solve} from '@/types/solve';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	solve: Solve;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function ScrambleInfo(props: Props) {
+	const {t} = useTranslation();
 	const {solve, editMode, handleChange} = props;
 	const scramble = solve.scramble;
 	const cubeType = solve.cube_type;
@@ -29,7 +31,7 @@ export default function ScrambleInfo(props: Props) {
 					value={scramble}
 					name="scramble"
 					onChange={handleChange}
-					aria-label={'Scramble'}
+					aria-label={t('solves.scramble')}
 				/>
 			) : (
 				<p className="text-text mt-0 mb-[15px] text-center font-mono leading-6 opacity-100">
@@ -37,8 +39,13 @@ export default function ScrambleInfo(props: Props) {
 				</p>
 			)}
 			<CopyText
+				labels={{
+					copy: t('common.copyText'),
+					copied: t('common.copied'),
+					error: t('common.copyError'),
+				}}
 				buttonProps={{
-					children: 'Copy Scramble',
+					children: t('solves.copyScramble'),
 				}}
 				text={scramble}
 			/>

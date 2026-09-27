@@ -10,6 +10,7 @@ import TimeDistro from '@/components/modules/time-distro/TimeDistro';
 import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
 import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
 import {resolveModuleVisual} from '@/components/timer/footer/helpers/resolveModuleVisual';
+import {useTranslation} from 'react-i18next';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export default function TimerModule(props: Props) {
+	const {t} = useTranslation();
 	const [customizeStatsDialog, setCustomizeStatsDialog] = React.useState<{
 		props: React.ComponentProps<typeof CustomizeStats>;
 		title: React.ReactNode;
@@ -69,16 +71,16 @@ export default function TimerModule(props: Props) {
 			actions: (
 				<Button
 					type="button"
-					aria-label="Customize Stats"
-					title="Customize Stats"
+					aria-label={t('timer.customizeStats')}
+					title={t('timer.customizeStats')}
 					variant="ghost"
 					size="icon-lg"
 					className="border-tmo-module/10 rounded-l-none border-l"
 					onClick={() =>
 						setCustomizeStatsDialog({
 							props: {filterOptions: solvesFilter},
-							title: 'Customize Stats',
-							description: 'Choose a block in the preview, then make it yours.',
+							title: t('timer.customizeStats'),
+							description: t('timer.customizeStatsDescription'),
 							width: 960,
 						})
 					}
@@ -106,14 +108,14 @@ export default function TimerModule(props: Props) {
 	};
 
 	const moduleDropdownOptions: TimerModuleDropdownOptions[] = customOptions?.dropdownOptions || [
-		{label: 'Solves', value: TimerModuleType.HISTORY},
-		{label: 'Stats', value: TimerModuleType.STATS},
-		{label: 'Last Solve', value: TimerModuleType.LAST_SOLVE},
-		{label: 'Scramble', value: TimerModuleType.SCRAMBLE},
-		{label: 'Consistency', value: TimerModuleType.CONSISTENCY},
-		{label: 'Time Graph', value: TimerModuleType.SOLVE_GRAPH},
-		{label: 'Time Distribution', value: TimerModuleType.TIME_DISTRO},
-		{label: 'None', value: TimerModuleType.NONE},
+		{label: t('timer.module.solves'), value: TimerModuleType.HISTORY},
+		{label: t('timer.module.stats'), value: TimerModuleType.STATS},
+		{label: t('timer.module.lastSolve'), value: TimerModuleType.LAST_SOLVE},
+		{label: t('timer.module.scramble'), value: TimerModuleType.SCRAMBLE},
+		{label: t('timer.module.consistency'), value: TimerModuleType.CONSISTENCY},
+		{label: t('timer.module.timeGraph'), value: TimerModuleType.SOLVE_GRAPH},
+		{label: t('timer.module.timeDistribution'), value: TimerModuleType.TIME_DISTRO},
+		{label: t('timer.module.none'), value: TimerModuleType.NONE},
 	];
 
 	const currentModuleName = moduleDropdownOptions.find(
@@ -136,7 +138,7 @@ export default function TimerModule(props: Props) {
 			)}
 		>
 			<SelectField
-				label="Timer module"
+				label={t('timer.timerModule')}
 				value={moduleType || ''}
 				text={currentModuleName}
 				onValueChange={(value) => selectVisual(value as TimerModuleType)}
@@ -194,7 +196,10 @@ export default function TimerModule(props: Props) {
 				}}
 			>
 				{customizeStatsDialog && (
-					<DialogContent width={customizeStatsDialog.width}>
+					<DialogContent
+						closeLabel={t('common.closeDialog')}
+						width={customizeStatsDialog.width}
+					>
 						<DialogHeader
 							title={customizeStatsDialog.title}
 							description={customizeStatsDialog.description}

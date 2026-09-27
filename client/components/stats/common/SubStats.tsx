@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import NumberBlock from '@/components/stats/common/NumberBlock';
 import {useStatsContext} from '@/components/stats/Stats';
 import {getSolveStreak} from '@/db/solves/stats/streak';
@@ -17,6 +18,7 @@ import React, {useMemo} from 'react';
 const SUB_STATS_COLOR = '#6D7D90';
 
 export default function SubStats() {
+	const {t} = useTranslation();
 	const context = useStatsContext();
 	const {filterOptions} = context;
 
@@ -50,23 +52,23 @@ export default function SubStats() {
 				small
 				center
 				icon={<CaretDoubleRight weight="bold" />}
-				title="Solve Streak"
-				value={`${streak.currentStreak} day${streak.currentStreak === 1 ? '' : 's'}`}
+				title={t('stats.solveStreak')}
+				value={t('stats.streakDays', {count: streak.currentStreak})}
 				color={SUB_STATS_COLOR}
 			/>
 			<NumberBlock
 				small
 				center
 				icon={<CaretDoubleUp weight="bold" />}
-				title="Highest Streak"
-				value={`${streak.highestStreak} day${streak.highestStreak === 1 ? '' : 's'}`}
+				title={t('stats.highestStreak')}
+				value={t('stats.streakDays', {count: streak.highestStreak})}
 				color={SUB_STATS_COLOR}
 			/>
 			<NumberBlock
 				small
 				center
 				icon={<WarningOctagon weight="bold" />}
-				title="DNFs"
+				title={t('solves.dnfs')}
 				value={`${subStats.dnfCount} (${subStats.dnfPercent}%)`}
 				color={SUB_STATS_COLOR}
 			/>
@@ -74,7 +76,7 @@ export default function SubStats() {
 				small
 				center
 				icon={<Warning weight="bold" />}
-				title="+2s"
+				title={t('solves.value2s')}
 				value={`${subStats.plusTwoCount} (${subStats.plusTwoPercent}%)`}
 				color={SUB_STATS_COLOR}
 			/>
@@ -82,7 +84,7 @@ export default function SubStats() {
 				small
 				center
 				icon={<Calculator weight="bold" />}
-				title="Solves per session"
+				title={t('sessions.solvesPerSession')}
 				value={avgSolvesPerSession}
 				color={SUB_STATS_COLOR}
 			/>
@@ -90,7 +92,7 @@ export default function SubStats() {
 				small
 				center
 				icon={<NumberSquareOne weight="bold" />}
-				title="First Solve"
+				title={t('stats.firstSolve')}
 				value={firstSolveTime}
 				color={SUB_STATS_COLOR}
 			/>

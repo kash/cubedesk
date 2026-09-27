@@ -22,7 +22,7 @@ import {PublicUserAccount} from '@/types/user';
 import {useMe} from '@/util/hooks/useMe';
 import {isSocketConnected, socketClient} from '@/util/socket/socketio';
 import {toastSuccess} from '@/util/toast';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import {CaretDown, Copy, Flag, Prohibit} from 'phosphor-react';
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
 
@@ -82,7 +82,7 @@ export function useMatchContext(): IMatchContext {
 }
 
 export default function Match(props: MatchProps) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [matchOverDialog, setMatchOverDialog] = React.useState<{
 		props: React.ComponentProps<typeof MatchOver>;
 		noPadding: boolean;
@@ -149,7 +149,7 @@ export default function Match(props: MatchProps) {
 		setHistoryDialog({
 			props: {disabled: true, solves: solves as any},
 			width: 600,
-			title: t("{name}'s Times", {name: challenger.username}),
+			title: t('community.sTimes', {name: challenger.username}),
 		});
 	}
 
@@ -230,8 +230,8 @@ export default function Match(props: MatchProps) {
 			return;
 		}
 		const link = getMatchLinkBase(matchType) + match.spectate_code;
-		if (!(await copyText(link))) return;
-		toastSuccess(t('Successfully copied Spectate link'));
+		if (!(await copyText(link, t('common.copyError')))) return;
+		toastSuccess(t('community.spectateLinkCopied'));
 	}
 
 	async function copyPlayLink() {
@@ -239,8 +239,8 @@ export default function Match(props: MatchProps) {
 			return;
 		}
 		const link = getMatchLinkBase(matchType) + match.link_code;
-		if (!(await copyText(link))) return;
-		toastSuccess(t('Successfully copied Play link'));
+		if (!(await copyText(link, t('common.copyError')))) return;
+		toastSuccess(t('community.successfullyCopiedPlayLink'));
 	}
 
 	// Timer
@@ -255,27 +255,27 @@ export default function Match(props: MatchProps) {
 			customHeadersLeft: (
 				<ActionMenu
 					openLeft
-					text={t('Match Options')}
+					text={t('community.matchOptions')}
 					icon={<CaretDown weight="bold" />}
 					options={[
 						{
-							text: t('Copy Spectate Link'),
+							text: t('community.copySpectateLink'),
 							icon: <Copy weight="bold" />,
 							onClick: copySpectateLink,
 						},
 						{
-							text: t('Copy Play Link'),
+							text: t('community.copyPlayLink'),
 							icon: <Copy weight="bold" />,
 							onClick: copyPlayLink,
 						},
 						{
-							text: t('Resign'),
+							text: t('community.resign'),
 							disabled: !!match?.ended_at,
 							icon: <Flag weight="bold" />,
 							onClick: resignGame,
 						},
 						{
-							text: t('Abort'),
+							text: t('community.abort'),
 							disabled: anySolves || !!match?.ended_at,
 							icon: <Prohibit weight="bold" />,
 							onClick: abortGame,
@@ -343,8 +343,13 @@ export default function Match(props: MatchProps) {
 					if (!open) exitMatch();
 				}}
 			>
-				<DialogContent width={1500} overflowHidden fullSize>
-					<DialogTitle className="sr-only">Match timer</DialogTitle>
+				<DialogContent
+					closeLabel={t('common.closeDialog')}
+					width={1500}
+					overflowHidden
+					fullSize
+				>
+					<DialogTitle className="sr-only">{t('timer.matchTimer')}</DialogTitle>
 					{timerBody}
 				</DialogContent>
 			</Dialog>
@@ -396,8 +401,11 @@ export default function Match(props: MatchProps) {
 				}}
 			>
 				{matchOverDialog && (
-					<DialogContent noPadding={matchOverDialog.noPadding}>
-						<DialogTitle className="sr-only">Match results</DialogTitle>
+					<DialogContent
+						closeLabel={t('common.closeDialog')}
+						noPadding={matchOverDialog.noPadding}
+					>
+						<DialogTitle className="sr-only">{t('community.matchResults')}</DialogTitle>
 						<MatchOver {...matchOverDialog.props} />
 					</DialogContent>
 				)}
@@ -411,7 +419,7 @@ export default function Match(props: MatchProps) {
 				}}
 			>
 				{historyDialog && (
-					<DialogContent width={historyDialog.width}>
+					<DialogContent closeLabel={t('common.closeDialog')} width={historyDialog.width}>
 						<DialogHeader title={historyDialog.title} />
 						<History {...historyDialog.props} />
 					</DialogContent>

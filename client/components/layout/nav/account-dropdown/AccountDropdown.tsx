@@ -4,11 +4,11 @@ import {ActionMenuOption} from '@/components/common/inputs/ActionMenu';
 import {logOut} from '@/util/auth/logout';
 import {useMe} from '@/util/hooks/useMe';
 import React from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 export default function AccountDropdown() {
 	const me = useMe();
-	const {t} = useI18n();
+	const {t} = useTranslation();
 
 	if (!me) {
 		return null;
@@ -16,17 +16,18 @@ export default function AccountDropdown() {
 
 	const aviDropDownOptions: ActionMenuOption[] = [];
 
-	aviDropDownOptions.push({link: '/account/personal-info', text: t('Account')});
-	aviDropDownOptions.push({link: `/user/${me.username}`, text: t('Profile')});
+	aviDropDownOptions.push({link: '/account/personal-info', text: t('navigation.account')});
+	aviDropDownOptions.push({link: `/user/${me.username}`, text: t('navigation.profile')});
 	if (me.admin) {
-		aviDropDownOptions.push({link: '/admin/metrics', text: t('Admin')});
+		aviDropDownOptions.push({link: '/admin/metrics', text: t('admin.admin')});
 	}
-	aviDropDownOptions.push({link: '/settings/timer', text: t('Settings')});
-	aviDropDownOptions.push({onClick: logOut, text: t('Log out')});
+	aviDropDownOptions.push({link: '/settings/timer', text: t('settings.settings')});
+	aviDropDownOptions.push({onClick: logOut, text: t('auth.logOut')});
 
 	return (
 		<div>
 			<ActionMenu
+				menuLabel={t('navigation.account')}
 				openLeft
 				noMargin
 				options={aviDropDownOptions}

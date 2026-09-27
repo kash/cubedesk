@@ -16,13 +16,13 @@ export function getHeadToHeadPlayerStatusInfo(
 	myId: string,
 	timeIndex: number,
 	solves: Solve[],
-	match?: Match
+	match?: Match,
 ): PlayerStatusInfo {
 	let status = PlayerStatus.Playing;
 
 	const info: PlayerStatusInfo = {
 		status: PlayerStatus.Playing,
-		statusPrompt: `First to ${MatchConst.HEAD_TO_HEAD_FIRST_TO_COUNT} wins`,
+		statusPrompt: 'community.firstToWins',
 		statusBody: '0',
 		points: 0,
 	};
@@ -74,7 +74,7 @@ export function getHeadToHeadSolveRowInfo(
 	myId: string,
 	timeIndex: number,
 	solves: Solve[],
-	match?: Match
+	match?: Match,
 ): GameSolveRow {
 	const mySolve = solves[timeIndex];
 

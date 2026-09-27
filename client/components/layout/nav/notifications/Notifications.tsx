@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Empty from '@/components/common/Empty';
 import Loading from '@/components/common/Loading';
 import Notif from '@/components/layout/nav/notifications/Notif';
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function Notifications({right}: Props) {
+	const {t} = useTranslation();
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(0);
 	const [endOfList, setEndOfList] = useState(false);
@@ -173,7 +175,7 @@ export default function Notifications({right}: Props) {
 	if ((notifications && !notifications.length) || (!notifications && endOfList)) {
 		body = (
 			<div className="box-border flex w-full items-center justify-center">
-				<Empty text="No notifications" />
+				<Empty text={t('navigation.noNotifications')} />
 			</div>
 		);
 	}
@@ -193,7 +195,9 @@ export default function Notifications({right}: Props) {
 				<Button
 					type="button"
 					aria-label={
-						unreadCount ? `Notifications (${unreadCount} unread)` : 'Notifications'
+						unreadCount
+							? t('navigation.unreadNotifications', {count: unreadCount})
+							: t('common.notifications')
 					}
 					variant="ghost"
 					size="icon-sm"
@@ -204,12 +208,12 @@ export default function Notifications({right}: Props) {
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent
-				aria-label="Notifications"
+				aria-label={t('common.notifications')}
 				align={right ? 'end' : 'start'}
 				className={cn('flex flex-col gap-1.5 overflow-y-auto p-1', {
 					'h-[min(500px,var(--radix-popover-content-available-height))] w-[400px]':
 						!!notifications?.length,
-					'w-[280px] max-h-[var(--radix-popover-content-available-height)]':
+					'max-h-[var(--radix-popover-content-available-height)] w-[280px]':
 						!notifications?.length,
 				})}
 				onScroll={scrollList}

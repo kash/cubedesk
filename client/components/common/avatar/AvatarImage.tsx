@@ -4,6 +4,7 @@ import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user'
 import {cn} from '@/util/cn';
 import {getStorageURL, resourceUri} from '@/util/storage';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 const COLORS = [
 	'#05445E',
@@ -61,6 +62,7 @@ interface Props {
 }
 
 export default function AvatarImage(props: Props) {
+	const {t} = useTranslation();
 	const {large, tiny, small, image} = props;
 
 	const user = props.user || props.profile?.user;
@@ -90,18 +92,20 @@ export default function AvatarImage(props: Props) {
 				key={src}
 				src={src || undefined}
 				onLoadingStatusChange={(status) => setImageState({src, status})}
-				alt={`Profile picture of ${user?.username || 'user'}`}
+				alt={t('profile.pictureOf', {name: user?.username || t('common.user')})}
 			/>
 			<AvatarFallback style={loading ? undefined : {backgroundColor}}>
 				{loading ? (
 					<span
-						aria-label="Loading profile picture"
+						aria-label={t('profile.loadingPicture')}
 						className="bg-text/10 size-full motion-safe:animate-pulse"
 					/>
 				) : (
 					<img
 						className="size-full object-cover"
-						alt={`Default avatar for ${user?.username || 'user'}`}
+						alt={t('profile.defaultAvatarFor', {
+							name: user?.username || t('common.user'),
+						})}
 						src={resourceUri('/images/community/default_avatar.png')}
 					/>
 				)}

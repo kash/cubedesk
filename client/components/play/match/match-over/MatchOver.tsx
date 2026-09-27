@@ -7,7 +7,7 @@ import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {useMe} from '@/util/hooks/useMe';
 import {socketClient} from '@/util/socket/socketio';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import classNames from 'classnames';
 import {Sword} from 'phosphor-react';
 import React, {ReactNode, useMemo, useState} from 'react';
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function MatchOver(props: Props) {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const me = useMe();
 
 	const [rematchRequested, setRematchRequested] = useState(false);
@@ -100,23 +100,23 @@ export default function MatchOver(props: Props) {
 
 	let header;
 	if (match.aborted) {
-		header = t('Game aborted');
+		header = t('community.gameAborted');
 	} else if (isWinner) {
-		header = t('You won!');
+		header = t('community.youWon');
 	} else if (winner) {
-		header = t('{name} won!', {name: winner.username});
+		header = t('community.won2', {name: winner.username});
 	} else {
-		header = t('Match over');
+		header = t('community.matchOver');
 	}
 
 	let endedBy: ReactNode = null;
 	switch (endReason) {
 		case MatchEndedBy.RESIGNATION: {
-			endedBy = t('by resignation');
+			endedBy = t('community.byResignation');
 			break;
 		}
 		case MatchEndedBy.FORFEITURE: {
-			endedBy = t('by forfeiture');
+			endedBy = t('community.byForfeiture');
 			break;
 		}
 	}
@@ -125,10 +125,10 @@ export default function MatchOver(props: Props) {
 		endedBy = <span className="text-text text-base opacity-80">{endedBy}</span>;
 	}
 
-	let rematchText = t('Rematch');
+	let rematchText = t('community.rematch');
 	let rematchDisabled = false;
 	if (rematchRequested) {
-		rematchText = t('Rematch requested');
+		rematchText = t('community.rematchRequested');
 		rematchDisabled = true;
 	} else if (!match?.ended_at) {
 		rematchDisabled = true;
@@ -161,7 +161,7 @@ export default function MatchOver(props: Props) {
 			<div className="flex flex-col items-center pb-5">
 				<div className="mb-[15px] flex flex-row flex-wrap gap-[15px]">
 					<Button variant="secondary" onClick={() => setNewMatch(true)} size="lg">
-						{t('Join Lobby')}
+						{t('community.joinLobby')}
 					</Button>
 					<Button
 						variant="default"
@@ -173,7 +173,7 @@ export default function MatchOver(props: Props) {
 					</Button>
 				</div>
 				<Button variant="ghost" onClick={exitDialog} size="sm">
-					{t('Exit')}
+					{t('community.exit')}
 				</Button>
 			</div>
 		</div>

@@ -13,6 +13,7 @@ import {useSettings} from '@/util/hooks/useSettings';
 import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from 'gan-web-bluetooth';
 import {Bluetooth} from 'phosphor-react';
 import React, {useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {SubscriptionLike} from 'rxjs';
 
 // Since this component is singleton and should never have multiple instances,
@@ -22,6 +23,7 @@ let conn: GanTimerConnection | null = null;
 let subs: SubscriptionLike | null = null;
 
 export default function GanTimer() {
+	const {t} = useTranslation();
 	const [bluetoothErrorMessageDialog, setBluetoothErrorMessageDialog] = React.useState<{
 		props: Record<string, never>;
 	} | null>(null);
@@ -106,7 +108,7 @@ export default function GanTimer() {
 			<div onClick={handleConnectButton} style={{userSelect: 'none', cursor: 'pointer'}}>
 				<Emblem
 					icon={<Bluetooth />}
-					text={connected ? 'Connected' : 'Connect to Timer'}
+					text={connected ? t('timer.connected') : t('timer.connectToTimer')}
 					small
 					red={!connected}
 					green={connected}
@@ -121,7 +123,7 @@ export default function GanTimer() {
 				}}
 			>
 				{bluetoothErrorMessageDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<BluetoothErrorMessage {...bluetoothErrorMessageDialog.props} />
 					</DialogContent>
 				)}

@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {initAllSolves} from '@/components/layout/init';
 import SessionSelector from '@/components/solves/bulk-actions/actions/SessionSelector';
@@ -15,8 +16,10 @@ interface Props {
 }
 
 export default function BulkMoveSolvesButton(props: Props) {
-	const [confirmDialog, setConfirmDialog] = React.useState<React.ComponentProps<
-		typeof ConfirmDialog
+	const {t} = useTranslation();
+	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
+		React.ComponentProps<typeof ConfirmDialog>,
+		'labels'
 	> | null>(null);
 	const [sessionSelectorDialog, setSessionSelectorDialog] = React.useState<{
 		props: React.ComponentProps<typeof SessionSelector>;
@@ -30,16 +33,13 @@ export default function BulkMoveSolvesButton(props: Props) {
 	}, [solves, solves?.length]);
 
 	function onSelectSession(session: Session) {
-		const solvesToActOn = `${solves.length.toLocaleString()} solve${solves.length === 1 ? '' : 's'}`;
-
 		setConfirmDialog({
-			buttonText: `Move ${solvesToActOn}`,
-			title: 'Bulk move solves',
-			description:
-				'You are about to do a bulk move of solves. This is irreversible. Be careful.',
+			buttonText: t('solves.bulk.move.button', {count: solves.length}),
+			title: t('solves.bulk.move.title'),
+			description: t('solves.bulk.move.description'),
 			infoBoxes: [
-				{label: 'Solves', value: solves.length.toLocaleString()},
-				{label: 'New Session', value: session.name},
+				{label: t('solves.solves'), value: solves.length.toLocaleString()},
+				{label: t('sessions.newSession2'), value: session.name},
 			],
 			triggerAction: run,
 		});
@@ -52,8 +52,7 @@ export default function BulkMoveSolvesButton(props: Props) {
 
 			await initAllSolves(true);
 
-			const solvesMoved = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
-			toastSuccess(`Successfully moved ${solvesMoved} to ${session.name}.`);
+			toastSuccess(t('solves.bulk.move.success', {count: updateCount, name: session.name}));
 		}
 	}
 
@@ -64,10 +63,19 @@ export default function BulkMoveSolvesButton(props: Props) {
 	return (
 		<>
 			<Button variant="secondary" disabled={disabled} onClick={onClick}>
-				{'Change Session'}
+				{t('solves.bulk.move.label')}
 			</Button>
 			{confirmDialog && (
 				<ConfirmDialog
+					labels={{
+						cancel: t('common.cancel'),
+						inputPrompt: t('common.confirmInputPrompt', {
+							word: t('common.confirmWord'),
+						}),
+						confirmWord: t('common.confirmWord'),
+						genericError: t('common.genericError'),
+						defaultDescription: t('common.confirmDescription'),
+					}}
 					open={confirmDialog !== null}
 					onOpenChange={(open) => {
 						if (!open) {
@@ -89,7 +97,7 @@ export default function BulkMoveSolvesButton(props: Props) {
 				}}
 			>
 				{sessionSelectorDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<SessionSelector
 							{...sessionSelectorDialog.props}
 							onComplete={(...args) => {

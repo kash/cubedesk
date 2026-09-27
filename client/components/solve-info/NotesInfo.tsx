@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {AutosizeTextarea} from '@/components/ui/textarea';
 import {Solve} from '@/types/solve';
 import {useInput} from '@/util/hooks/useInput';
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function NotesInfo(props: Props) {
+	const {t} = useTranslation();
 	const {solve, editMode, handleChange} = props;
 
 	const [notes, setNotes] = useInput(solve.notes);
@@ -17,7 +19,9 @@ export default function NotesInfo(props: Props) {
 	let notesBody = <p className="text-text my-[7px] w-full p-0 text-left opacity-90">{notes}</p>;
 	if (!notes) {
 		notesBody = (
-			<i className="text-text w-full text-center opacity-70">No notes for this solve</i>
+			<i className="text-text w-full text-center opacity-70">
+				{t('solves.noNotesForThisSolve')}
+			</i>
 		);
 	}
 
@@ -31,7 +35,7 @@ export default function NotesInfo(props: Props) {
 						setNotes(e);
 						handleChange(e);
 					}}
-					aria-label={'Notes'}
+					aria-label={t('solves.notes')}
 				/>
 			) : (
 				notesBody

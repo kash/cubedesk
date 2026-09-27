@@ -1,4 +1,5 @@
 import SelectField from '@/components/common/inputs/SelectField';
+import {useTranslation} from 'react-i18next';
 import SettingRow from '@/components/settings/common/SettingRow';
 import SettingSection from '@/components/settings/common/SettingSection';
 import CubeTypes from '@/components/settings/cube-types/CubeTypes';
@@ -11,14 +12,15 @@ import {setSetting} from '@/db/settings/update';
 import {useSettings} from '@/util/hooks/useSettings';
 import React, {ReactNode} from 'react';
 
-export const TIMER_INPUT_TYPE_NAMES = {
-	keyboard: 'Keyboard',
-	stackmat: 'StackMat',
-	smart: 'Smart Cube',
-	gantimer: 'GAN Smart Timer',
-};
+const TIMER_INPUT_TYPES = [
+	{value: 'keyboard', labelKey: 'timer.inputTypes.keyboard'},
+	{value: 'stackmat', labelKey: 'timer.inputTypes.stackmat'},
+	{value: 'smart', labelKey: 'timer.inputTypes.smartCube'},
+	{value: 'gantimer', labelKey: 'timer.inputTypes.ganSmartTimer'},
+] as const;
 
 export default function TimerSettings() {
+	const {t} = useTranslation();
 	const [cubeTypesDialog, setCubeTypesDialog] = React.useState<{
 		props: Record<string, never>;
 		title: React.ReactNode;
@@ -40,9 +42,8 @@ export default function TimerSettings() {
 	function toggleCubeTypes() {
 		setCubeTypesDialog({
 			props: {},
-			title: 'Manage Cube Types',
-			description:
-				"You can use custom scramble types for special events that aren't listed by default. For example 8x8 or Examinx.",
+			title: t('timer.manageCubeTypes'),
+			description: t('timer.customScrambleTypesDescription'),
 		});
 	}
 
@@ -55,19 +56,19 @@ export default function TimerSettings() {
 		inspectionBody = (
 			<>
 				<SettingRow
-					title="Inspection time (s)"
+					title={t('timer.inspectionTimeS')}
 					settingName="inspection_delay"
 					isNumberInput
 				/>
 				<SettingRow
-					title="Play sound"
-					description="Announce when 8 and 12 seconds have lapsed"
+					title={t('common.playSound')}
+					description={t('timer.inspection.announcementHint')}
 					settingName="play_inspection_sound"
 					isSwitch
 				/>
 				<SettingRow
-					title="Inspection auto start"
-					description="Auto start after inspection time is up"
+					title={t('timer.inspectionAutoStart')}
+					description={t('timer.autoStartAfterInspectionTimeIsUp')}
 					settingName="inspection_auto_start"
 					isSwitch
 				/>
@@ -79,91 +80,91 @@ export default function TimerSettings() {
 		<>
 			<>
 				<SettingRow
-					title="Timer decimal points"
-					description="How many decimal points to show on the timer page"
+					title={t('timer.settings.decimalPoints')}
+					description={t('timer.decimalPlacesHint')}
 				>
 					<SelectField
-						label="Timer decimal points"
+						label={t('timer.settings.decimalPoints')}
 						value={String(timerDecimalPoints)}
 						onValueChange={(value) =>
 							updateSetting('timer_decimal_points', Number(value))
 						}
 						options={[0, 1, 2, 3].map((count) => ({
 							value: String(count),
-							text: count + ' decimal point' + (count === 1 ? '' : 's'),
+							text: t('timer.options.decimals', {count}),
 						}))}
 					/>
 				</SettingRow>
 				<SettingRow
-					title="Timer input type"
-					description="Select between using your keyboard (space bar), a StackMat, or a Smart Cube to start the timer."
+					title={t('timer.settings.inputType')}
+					description={t('timer.inputType.description')}
 				>
 					<SelectField
-						label="Timer input type"
+						label={t('timer.settings.inputType')}
 						value={timerType}
 						onValueChange={(value) => updateSetting('timer_type', value)}
-						options={Object.entries(TIMER_INPUT_TYPE_NAMES).map(([value, text]) => ({
+						options={TIMER_INPUT_TYPES.map(({value, labelKey}) => ({
 							value,
-							text,
+							text: t(labelKey),
 						}))}
 					/>
 				</SettingRow>
 				<SettingRow
-					title="Freeze time (s)"
-					description="How many seconds to hold space bar before timer will start."
+					title={t('timer.freezeTimeS')}
+					description={t('timer.holdToStartHint')}
 					settingName="freeze_time"
 					isNumberInput
 					step={0.1}
 				/>
 				<SettingRow
 					loggedInOnly
-					title="Cube Types"
-					description="Add custom cube types with or without scrambles"
+					title={t('timer.cubeTypes')}
+					description={t('settings.cubeTypes.description')}
 				>
 					<Button variant="secondary" onClick={toggleCubeTypes}>
-						{'Manage Cube Types'}
+						{t('timer.manageCubeTypes')}
 					</Button>
 				</SettingRow>
 				<SettingRow
-					title="Use space bar with smart cubes"
-					description="Instead of detecting when cube solve was started/ended by smart cube turns, use space bar like with normal cubes."
+					title={t('timer.useSpaceBarWithSmartCubes')}
+					description={t('timer.smartCube.useSpaceHint')}
 					settingName="use_space_with_smart_cube"
 					isSwitch
 				/>
 				<SettingRow
-					title="Hide time when solving"
+					title={t('timer.hideTimeWhenSolving')}
 					settingName="hide_time_when_solving"
 					isSwitch
 				/>
 				<SettingRow
-					title="Zero out time after solve"
-					description="Instead of showing the time of your last solve, the timer will reset to 0.00 after a solve."
+					title={t('timer.zeroOutTimeAfterSolve')}
+					description={t('timer.resetAfterSolveHint')}
 					settingName="zero_out_time_after_solve"
 					isSwitch
 				/>
 				<SettingRow
-					title="Require period in manual entry"
-					description="Turn this off if you would like the times you manually enter to be divided by 100 automatically"
+					title={t('timer.requirePeriodInManualEntry')}
+					description={t('solves.manualEntry.divideBy100Hint')}
 					settingName="require_period_in_manual_time_entry"
 					isSwitch
 				/>
 				<SettingRow
-					title="Confirm delete solves"
-					description="Get a confirmation box before you can delete a solve"
+					title={t('solves.confirmDeleteSolves')}
+					description={t('solves.confirmBeforeDeleteHint')}
 					settingName="confirm_delete_solve"
 					isSwitch
 				/>
 				<SettingRow
-					title="Personal best confetti"
-					description="Display confetti when you get a personal best"
+					title={t('timer.personalBestConfetti')}
+					description={t('timer.pb.confettiHint')}
 					settingName="pb_confetti"
 					isSwitch
 				/>
 				<SettingSection>
 					<SettingRow
 						parent
-						title="Inspection"
-						description="Limit inspection time. Good for practicing for competitions."
+						title={t('timer.options.inspection')}
+						description={t('timer.inspection.limitHint')}
 						settingName="inspection"
 						isSwitch
 					/>
@@ -172,30 +173,26 @@ export default function TimerSettings() {
 				<SettingSection>
 					<SettingRow
 						parent
-						title="StackMat Options"
-						description="These options will be used when your timer input type is set to StackMat"
+						title={t('timer.stackmatOptions')}
+						description={t('timer.stackmat.optionsHint')}
 					/>
-					<SettingRow
-						sub
-						title="Allow access to microphone (that's how Stackmat transmits data)"
-					>
+					<SettingRow sub title={t('timer.stackmat.microphoneHint')}>
 						<MicAccess />
 					</SettingRow>
-					<SettingRow
-						sub
-						title={`Select your Stackmat device. Usually called "USB Audio Device"`}
-					>
+					<SettingRow sub title={t('timer.stackmat.deviceHint')}>
 						<Button
 							variant={!stackMatId ? 'default' : 'secondary'}
 							onClick={openStackMatPicker}
 						>
-							{stackMatId ? `Selected - Change Input Device` : 'Select StackMat'}
+							{stackMatId
+								? t('timer.stackmat.changeDevice')
+								: t('timer.selectStackMat')}
 						</Button>
 					</SettingRow>
 				</SettingSection>
 				<SettingRow
-					title="Beta tester"
-					description="Unlock features that are still in beta. WARNING: This could mess with your data. Only turn this on if you're okay with some things breaking."
+					title={t('timer.betaTester')}
+					description={t('settings.beta.warning')}
 					settingName="beta_tester"
 					isSwitch
 				/>
@@ -209,7 +206,7 @@ export default function TimerSettings() {
 				}}
 			>
 				{cubeTypesDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<DialogHeader
 							title={cubeTypesDialog.title}
 							description={cubeTypesDialog.description}
@@ -227,7 +224,7 @@ export default function TimerSettings() {
 				}}
 			>
 				{stackMatPickerDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<StackMatPicker
 							{...stackMatPickerDialog}
 							onComplete={() => {

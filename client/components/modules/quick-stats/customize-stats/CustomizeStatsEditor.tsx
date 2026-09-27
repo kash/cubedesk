@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {updateStatsModuleBlock} from '@/actions/stats';
 import Checkbox from '@/components/common/Checkbox';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
@@ -27,6 +28,7 @@ interface Props {
 }
 
 export default function CustomizeStatsEditor(props: Props) {
+	const {t} = useTranslation();
 	const fieldId = React.useId();
 
 	const {stat, index, removeStatsBlock, hideRemoveButton} = props;
@@ -51,13 +53,17 @@ export default function CustomizeStatsEditor(props: Props) {
 		parseInt(effectiveAverageCountStr, 10),
 	);
 
-	const description = getStatsBlockDescription({
-		...stat,
-		statType,
-		sortBy,
-		session,
-		averageCount: averageCountInt,
-	});
+	const description = getStatsBlockDescription(
+		{
+			...stat,
+			statType,
+			sortBy,
+			session,
+			averageCount: averageCountInt,
+		},
+		{},
+		t,
+	);
 
 	useEffect(() => {
 		if (currentIndex.current !== index) {
@@ -88,7 +94,7 @@ export default function CustomizeStatsEditor(props: Props) {
 			.catch(() => {
 				if (!active) return;
 				setSavedStatus(null);
-				setError('Could not save to server. Please try again later.');
+				setError(t('stats.saveFailed'));
 			});
 		return () => {
 			active = false;
@@ -124,7 +130,7 @@ export default function CustomizeStatsEditor(props: Props) {
 
 		const avgInt = Number(averageCount);
 		if (!Number.isInteger(avgInt) || avgInt < 3 || avgInt > 10000) {
-			setError('Changes not saved. Average count must be a number between 3 and 10,000.');
+			setError(t('stats.invalidAverageCount'));
 			return;
 		}
 		setAverageCountInt(avgInt);
@@ -132,7 +138,7 @@ export default function CustomizeStatsEditor(props: Props) {
 
 	function onSelectColor(colorName: ColorName) {
 		if (!colorNames.includes(colorName)) {
-			setError('Changes not saved. Invalid color name.');
+			setError(t('stats.invalidColorName'));
 			return;
 		}
 
@@ -151,7 +157,7 @@ export default function CustomizeStatsEditor(props: Props) {
 			<EditorSection>
 				<div className="border-tmo-module/10 bg-tmo-module/[0.025] rounded-lg border p-3">
 					<Checkbox
-						text="Overall average"
+						text={t('stats.overallAverage')}
 						checked={averageAll}
 						onCheckedChange={toggleSetAverageAll}
 					/>
@@ -159,7 +165,7 @@ export default function CustomizeStatsEditor(props: Props) {
 						<div className="mt-3">
 							<Field className="mb-2">
 								<FieldLabel htmlFor={`${fieldId}-1`}>
-									{'Number of solves'}
+									{t('stats.customize.solveCount')}
 								</FieldLabel>
 								<Input
 									value={averageCount}
@@ -170,13 +176,13 @@ export default function CustomizeStatsEditor(props: Props) {
 									aria-describedby={`${fieldId}-1-description`}
 								/>
 								<FieldDescription id={`${fieldId}-1-description`}>
-									{'Choose 3–10,000 solves'}
+									{t('stats.customize.solveCountRange')}
 								</FieldDescription>
 							</Field>
 							<ToggleGroup
 								type="single"
 								value={String(averageCountInt)}
-								aria-label="Average presets"
+								aria-label={t('stats.averagePresets')}
 								variant="outline"
 								size="sm"
 								className="mt-2 flex-wrap"
@@ -210,14 +216,14 @@ export default function CustomizeStatsEditor(props: Props) {
 	if (savedStatus === 'saved') {
 		saveDiv = (
 			<Badge size="sm" variant="success" role="status">
-				Saved
+				{t('common.saved')}
 				<Check weight="bold" />
 			</Badge>
 		);
 	} else if (savedStatus === 'saving') {
 		saveDiv = (
 			<Badge size="sm" variant="warning" role="status">
-				Saving...
+				{t('common.saving2')}
 			</Badge>
 		);
 	}
@@ -227,7 +233,9 @@ export default function CustomizeStatsEditor(props: Props) {
 			<div className="flex flex-col gap-4">
 				<div className="border-tmo-module/10 border-b pb-4">
 					<div className="mb-1 flex min-h-5 items-center justify-between gap-2">
-						<span className="text-text/45 text-xs">Editing block {index + 1}</span>
+						<span className="text-text/45 text-xs">
+							{t('common.editingBlock')} {index + 1}
+						</span>
 						<span className="text-xs" role="status">
 							{saveDiv}
 						</span>
@@ -238,12 +246,12 @@ export default function CustomizeStatsEditor(props: Props) {
 				<EditorSection removePaddingTop>
 					<StatChoice
 						showBackgroundForUnselectedTabs
-						legend="Stat type"
+						legend={t('stats.statType')}
 						tabId={statType}
 						onChange={(val) => selectStatType(val)}
 						tabs={[
-							{id: 'single', value: 'Single'},
-							{id: 'average', value: 'Average'},
+							{id: 'single', value: t('stats.single')},
+							{id: 'average', value: t('stats.average')},
 						]}
 					/>
 				</EditorSection>
@@ -251,26 +259,30 @@ export default function CustomizeStatsEditor(props: Props) {
 				<EditorSection>
 					<StatChoice
 						showBackgroundForUnselectedTabs
-						legend="Stat result"
+						legend={t('stats.statResult')}
 						tabId={sortBy}
 						onChange={(val) => setSortBy(val as any)}
 						tabs={[
-							{id: 'current', value: 'Current', skip: statType !== 'average'},
-							{id: 'best', value: 'Best'},
-							{id: 'worst', value: 'Worst'},
+							{
+								id: 'current',
+								value: t('stats.current'),
+								skip: statType !== 'average',
+							},
+							{id: 'best', value: t('stats.best')},
+							{id: 'worst', value: t('stats.worst')},
 						]}
 					/>
 				</EditorSection>
 				<EditorSection>
-					<InputLegend text="Options" />
+					<InputLegend text={t('common.options')} />
 					<Checkbox
-						text="Session solves only"
+						text={t('stats.sessionSolvesOnly')}
 						checked={session}
 						onCheckedChange={() => toggleSession()}
 					/>
 				</EditorSection>
 				<EditorSection>
-					<InputLegend text="Stat color" />
+					<InputLegend text={t('stats.statColor')} />
 					<div className="flex flex-row flex-wrap gap-2.5 pt-1">{colorOptions}</div>
 				</EditorSection>
 				<div className="border-tmo-module/10 border-t pt-3">
@@ -285,7 +297,7 @@ export default function CustomizeStatsEditor(props: Props) {
 							size="sm"
 						>
 							{<Trash size={14} />}
-							{'Remove block'}
+							{t('stats.customize.removeBlock')}
 						</Button>
 					)}
 				</div>

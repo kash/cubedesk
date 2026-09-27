@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import Emblem from '@/components/common/Emblem';
 import {Badge} from '@/components/ui/badge';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function SolveListRow(props: Props) {
+	const {t, i18n} = useTranslation();
 	const {solve} = props;
 
 	function openSolve() {
@@ -26,7 +28,7 @@ export default function SolveListRow(props: Props) {
 	const scramble = solve.scramble;
 	const smart = solve.is_smart_cube;
 	const cubeType = getCubeTypeName(solve.cube_type) || 'None';
-	const createdAt = getDateFromNow(solve.started_at ?? 0);
+	const createdAt = getDateFromNow(solve.started_at ?? 0, false, i18n.language);
 
 	let plusTwoEmblem: React.ReactNode = null;
 	let dnfEmblem: React.ReactNode = null;
@@ -51,7 +53,7 @@ export default function SolveListRow(props: Props) {
 	if (smart) {
 		smartEmblem = (
 			<Badge size="sm" variant="unfilled">
-				Smart Cube
+				{t('common.smartCube')}
 			</Badge>
 		);
 	}

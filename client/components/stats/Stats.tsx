@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import './stats.css';
 import HorizontalNav, {HorizontalNavTab} from '@/components/common/HorizontalNav';
 import PageTitle from '@/components/common/PageTitle';
@@ -34,6 +35,7 @@ export function useStatsContext(): IStatsContext {
 }
 
 export default function Stats() {
+	const {t} = useTranslation();
 	const me = useMe();
 	const loggedIn = !!me;
 
@@ -87,7 +89,7 @@ export default function Stats() {
 	const tabs = [
 		{
 			id: ALL_TAB_ID,
-			value: 'All events',
+			value: t('common.allEvents'),
 			link: '/stats',
 		},
 		...cubeTypeTabs,
@@ -108,7 +110,7 @@ export default function Stats() {
 	return (
 		<StatsContext.Provider value={context}>
 			<div className="stats-page">
-				<PageTitle pageName="Stats">
+				<PageTitle pageName={t('stats.stats')}>
 					<div className="stats-toolbar">
 						<HorizontalNav tabs={tabs} tabId={tabId} />
 					</div>

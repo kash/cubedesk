@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ReportSummary from '@/components/admin/reports/ReportSummary';
 import Empty from '@/components/common/Empty';
 import Loading from '@/components/common/Loading';
@@ -7,6 +8,7 @@ import {trpc} from '@/util/trpc';
 import React, {useEffect, useState} from 'react';
 
 export default function Reports() {
+	const {t} = useTranslation();
 	const [reports, setReports] = useState<Serialized<ReportSummaryData>[] | null>(null);
 
 	useEffect(() => {
@@ -24,7 +26,7 @@ export default function Reports() {
 	} else if (!reports.length) {
 		return (
 			<div className="mx-auto w-full max-w-[700px]">
-				<Empty text="No reports to review" />
+				<Empty text={t('admin.noReportsToReview')} />
 			</div>
 		);
 	}

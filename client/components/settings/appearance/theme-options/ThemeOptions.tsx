@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ColorPicker from '@/components/common/ColorPicker';
 import ThemeOption from '@/components/settings/appearance/theme-options/ThemeOption';
 import SettingRow from '@/components/settings/common/SettingRow';
@@ -7,6 +8,7 @@ import {useSettings} from '@/util/hooks/useSettings';
 import React from 'react';
 
 export default function ThemeOptions() {
+	const {t} = useTranslation();
 	const primaryColor = useSettings('primary_color');
 	const secondaryColor = useSettings('secondary_color');
 	const backgroundColor = useSettings('background_color');
@@ -20,12 +22,12 @@ export default function ThemeOptions() {
 
 	return (
 		<>
-			<SettingRow vertical title="Basic theme customization">
+			<SettingRow vertical title={t('settings.basicThemeCustomization')}>
 				<div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
 					<ColorPicker
 						fullWidth
 						hideReset
-						name="Primary color"
+						name={t('settings.colors.primary')}
 						selectedColorHex={primaryColor}
 						resetToRgb={getDefaultSetting('primary_color')}
 						onChange={(color) => updateSetting('primary_color', color)}
@@ -33,7 +35,7 @@ export default function ThemeOptions() {
 					<ColorPicker
 						fullWidth
 						hideReset
-						name="Secondary color"
+						name={t('settings.colors.secondary')}
 						selectedColorHex={secondaryColor}
 						resetToRgb={getDefaultSetting('secondary_color')}
 						onChange={(color) => updateSetting('secondary_color', color)}
@@ -42,8 +44,8 @@ export default function ThemeOptions() {
 			</SettingRow>
 			<SettingRow
 				vertical
-				title="Themes"
-				description="Choose a preset or customize your colors below. Selecting a preset replaces your custom theme colors."
+				title={t('settings.themes')}
+				description={t('settings.chooseThemePreset')}
 			>
 				<div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
 					<ThemeOption theme="dark" />
@@ -56,13 +58,13 @@ export default function ThemeOptions() {
 					<ThemeOption theme="phd_student" />
 				</div>
 			</SettingRow>
-			<SettingRow vertical title="Advanced theme customization">
+			<SettingRow vertical title={t('settings.advancedThemeCustomization')}>
 				<div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
 					<ColorPicker
 						fullWidth
 						openUp
 						hideReset
-						name="Background color"
+						name={t('settings.colors.background')}
 						selectedColorHex={backgroundColor}
 						resetToRgb={getDefaultSetting('background_color')}
 						onChange={(color) => updateSetting('background_color', color)}
@@ -71,7 +73,7 @@ export default function ThemeOptions() {
 						fullWidth
 						openUp
 						hideReset
-						name="Module color"
+						name={t('settings.colors.module')}
 						selectedColorHex={moduleColor}
 						resetToRgb={getDefaultSetting('module_color')}
 						onChange={(color) => updateSetting('module_color', color)}
@@ -80,7 +82,7 @@ export default function ThemeOptions() {
 						fullWidth
 						openUp
 						hideReset
-						name="Text color"
+						name={t('settings.colors.text')}
 						selectedColorHex={textColor}
 						resetToRgb={getDefaultSetting('text_color')}
 						onChange={(color) => updateSetting('text_color', color)}
@@ -89,7 +91,7 @@ export default function ThemeOptions() {
 						fullWidth
 						openUp
 						hideReset
-						name="Button color"
+						name={t('settings.colors.button')}
 						selectedColorHex={buttonColor}
 						resetToRgb={getDefaultSetting('button_color')}
 						onChange={(color) => updateSetting('button_color', color)}

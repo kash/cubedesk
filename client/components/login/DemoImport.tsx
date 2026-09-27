@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import {Button} from '@/components/ui/button';
 import {Combobox} from '@/components/ui/combobox';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
@@ -55,14 +56,15 @@ export function DemoSolveImportDialog({
 	pending: Pending;
 	onComplete: () => void;
 }) {
+	const {t} = useTranslation();
 	const counts = new Map<string, number>();
 	for (const solve of pending.solves)
 		counts.set(solve.cube_type, (counts.get(solve.cube_type) ?? 0) + 1);
 	const puzzleName = (id: string) => getCubeTypeName(id) || id;
 	const [name, setName] = useState(() =>
 		counts.size === 1
-			? `Demo ${puzzleName(pending.solves[0].cube_type)} Session`
-			: 'Demo Session',
+			? t('sessions.demoPuzzleSession', {puzzle: puzzleName(pending.solves[0].cube_type)})
+			: t('sessions.demoSession'),
 	);
 	const [destination, setDestination] = useState('new');
 	const [sessions, setSessions] = useState<{id: string; name: string}[]>([]);
@@ -114,7 +116,7 @@ export function DemoSolveImportDialog({
 			})),
 			destination:
 				pending.mode === 'signup'
-					? {kind: 'new', name: 'New Session'}
+					? {kind: 'new', name: t('sessions.newSession')}
 					: destination === 'new'
 						? {kind: 'new', name: name.trim()}
 						: {kind: 'existing', sessionId: destination},
@@ -128,20 +130,23 @@ export function DemoSolveImportDialog({
 				const code = (err.data as {code?: string} | undefined)?.code;
 				if (code === 'NOT_FOUND' || code === 'BAD_REQUEST') request.current = null;
 			}
-			setError(
-				'Could not import solves. Your demo solves are still here. Please retry or discard them.',
-			);
+			setError(t('auth.demoImportFailed'));
 			setSaving(false);
 			inFlight.current = false;
 		}
 	}
 	return (
 		<Dialog open>
-			<DialogContent width={440} hideCloseButton closeOnEscape={false}>
+			<DialogContent
+				closeLabel={t('common.closeDialog')}
+				width={440}
+				hideCloseButton
+				closeOnEscape={false}
+			>
 				<DialogHeader
-					title="Import demo solves?"
+					title={t('sessions.importDemoSolves')}
 					description={
-						`${pending.solves.length} ${pending.solves.length === 1 ? 'solve' : 'solves'} · ` +
+						`${pending.solves.length} ${t('common.solve', {count: pending.solves.length})} · ` +
 						Array.from(counts, ([id, count]) => `${count} × ${puzzleName(id)}`).join(
 							', ',
 						)
@@ -149,16 +154,19 @@ export function DemoSolveImportDialog({
 				/>
 				<div className="flex flex-col gap-4">
 					{pending.mode === 'signup' ? (
-						<p>Save these solves to your default session.</p>
+						<p>{t('sessions.saveToDefaultPrompt')}</p>
 					) : (
 						<>
 							<Combobox
-								label="Import into session"
+								label={t('sessions.importIntoSession')}
+								placeholder={t('sessions.selectSession')}
+								searchPlaceholder={t('common.search')}
+								emptyMessage={t('common.noResultsFound')}
 								value={destination}
 								onValueChange={setDestination}
 								disabled={saving || !!request.current || loading}
 								options={[
-									{value: 'new', text: 'Create a new session'},
+									{value: 'new', text: t('sessions.createNewSession')},
 									...sessions.map((session) => ({
 										value: session.id,
 										text: session.name,
@@ -167,7 +175,7 @@ export function DemoSolveImportDialog({
 							/>
 							{destination === 'new' && (
 								<div className="flex flex-col gap-2">
-									<label htmlFor={nameId}>Session name</label>
+									<label htmlFor={nameId}>{t('sessions.sessionName')}</label>
 									<Input
 										id={nameId}
 										value={name}
@@ -177,22 +185,24 @@ export function DemoSolveImportDialog({
 									/>
 								</div>
 							)}
-							{loading && <p role="status">Loading sessions…</p>}
+							{loading && <p role="status">{t('sessions.loadingSessions')}</p>}
 							{loadError && (
 								<p role="alert">
-									Could not load existing sessions.{' '}
+									{t('sessions.loadError')}{' '}
 									<Button
 										variant="ghost"
 										onClick={loadSessions}
 										disabled={saving}
 									>
-										Retry
+										{t('common.retry')}
 									</Button>
 								</p>
 							)}
 						</>
 					)}
-					<p className="text-text/60 text-sm">Discarding removes these demo solves.</p>
+					<p className="text-text/60 text-sm">
+						{t('solves.discardingRemovesTheseDemoSolves')}
+					</p>
 					{error && (
 						<p role="alert" className="text-sm">
 							{error}
@@ -200,7 +210,7 @@ export function DemoSolveImportDialog({
 					)}
 					<div className="flex justify-end gap-2">
 						<Button variant="outline" disabled={saving} onClick={onComplete}>
-							Discard solves
+							{t('solves.discardSolves')}
 						</Button>
 						<Button
 							disabled={
@@ -211,7 +221,11 @@ export function DemoSolveImportDialog({
 							aria-busy={saving}
 							onClick={importSolves}
 						>
-							{saving ? 'Importing…' : error ? 'Retry import' : 'Import solves'}
+							{saving
+								? t('settings.import.importing')
+								: error
+									? t('auth.retryImport')
+									: t('auth.importSolves')}
 						</Button>
 					</div>
 				</div>

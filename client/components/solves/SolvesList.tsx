@@ -21,12 +21,12 @@ import {numberWithCommas} from '@/util/strings/util';
 import jsonStr from 'json-stable-stringify';
 import {Funnel, Share, SortAscending, SortDescending} from 'phosphor-react';
 import React, {ReactNode, useEffect, useState} from 'react';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 
 const PAGE_SIZE = 25;
 
 export default function SolvesList() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [selectedSolve, setSelectedSolve] =
 		React.useState<React.ComponentProps<typeof SolveInfoDialog>['solve']>(null);
 	const dialogFallbackRef = React.useRef<HTMLDivElement>(null);
@@ -47,7 +47,7 @@ export default function SolvesList() {
 	const [filters, setFilters] = useState<FilterSolvesOptions>({});
 	const updateCount = useSolveDb();
 
-	const solveCountText = `${numberWithCommas(totalResults)} ${t(totalResults === 1 ? 'solve' : 'solves')}`;
+	const solveCountText = `${numberWithCommas(totalResults)} ${t('common.solve', {count: totalResults})}`;
 
 	useEffect(() => {
 		const list = fetchSolvesWithFilter();
@@ -164,7 +164,7 @@ export default function SolvesList() {
 			</div>
 		);
 	} else if (solves && !solves.length) {
-		body = <Empty text="Could not find any solves" />;
+		body = <Empty text={t('solves.couldNotFindAnySolves')} />;
 	} else {
 		body = <Loading />;
 	}
@@ -173,18 +173,24 @@ export default function SolvesList() {
 
 	let filterText = 'Filter';
 	if (filterCount) {
-		filterText = `${filterCount} ${t(filterCount === 1 ? 'filter' : 'filters')}`;
+		filterText = `${filterCount} ${t('common.filter', {count: filterCount})}`;
 	}
 
 	return (
 		<>
 			<>
 				<div ref={dialogFallbackRef} tabIndex={-1}>
-					<PageTitle pageName="Solves" />
+					<PageTitle pageName={t('solves.solves')} />
 
 					<div className="container mx-auto flex max-w-2xl flex-col gap-2">
 						<div className="container mb-2 flex flex-row flex-wrap items-center gap-2">
 							<CubePicker
+								labels={{
+									label: t('common.cubeType2'),
+									placeholder: t('common.selectOption'),
+									searchPlaceholder: t('common.search'),
+									emptyMessage: t('common.noResultsFound'),
+								}}
 								pickerProps={{
 									openLeft: true,
 								}}
@@ -201,18 +207,39 @@ export default function SolvesList() {
 								}}
 								icon={<Funnel weight="bold" />}
 								options={[
-									getFilterOptionValue('+2 Only', 'plus_two'),
-									getFilterOptionValue('No +2s', 'plus_two', true),
-									getFilterOptionValue('DNF Only', 'dnf'),
-									getFilterOptionValue('No DNFs', 'dnf', true),
-									getFilterOptionValue('Imported', 'bulk'),
-									getFilterOptionValue('Not Imported', 'bulk', true),
-									getFilterOptionValue('Smart Cube', 'is_smart_cube'),
-									getFilterOptionValue('Not Smart Cube', 'is_smart_cube', true),
+									getFilterOptionValue(
+										t('solves.filter.plusTwoOnly'),
+										'plus_two',
+									),
+									getFilterOptionValue(
+										t('solves.filter.noPlusTwos'),
+										'plus_two',
+										true,
+									),
+									getFilterOptionValue(t('solves.filter.dnfOnly'), 'dnf'),
+									getFilterOptionValue(t('solves.filter.noDnfs'), 'dnf', true),
+									getFilterOptionValue(t('solves.filter.imported'), 'bulk'),
+									getFilterOptionValue(
+										t('solves.filter.notImported'),
+										'bulk',
+										true,
+									),
+									getFilterOptionValue(
+										t('solves.filter.smartCube'),
+										'is_smart_cube',
+									),
+									getFilterOptionValue(
+										t('solves.filter.notSmartCube'),
+										'is_smart_cube',
+										true,
+									),
 								]}
 							/>
 							<ActionMenu
-								triggerProps={{'aria-label': 'Sort', title: 'Sort'}}
+								triggerProps={{
+									'aria-label': t('common.sort'),
+									title: t('common.sort'),
+								}}
 								openLeft
 								preventCloseOnInnerClick
 								icon={
@@ -224,19 +251,19 @@ export default function SolvesList() {
 								}
 								options={[
 									{
-										text: 'Date',
+										text: t('common.date'),
 										radio: true,
 										on: sortBy === 'started_at',
 										onChange: () => changeSortBy('started_at'),
 									},
 									{
-										text: 'Time',
+										text: t('solves.time'),
 										radio: true,
 										on: sortBy === 'time',
 										onChange: () => changeSortBy('time'),
 									},
 									{
-										text: 'Reverse Order',
+										text: t('common.reverseOrder'),
 										icon: sortInverse ? (
 											<SortDescending weight="bold" />
 										) : (
@@ -253,7 +280,7 @@ export default function SolvesList() {
 								disabled={!solves?.length}
 								onClick={viewAsText}
 								size="icon"
-								aria-label={t('Solves List')}
+								aria-label={t('solves.solvesList')}
 							>
 								<Share weight="bold" />
 							</Button>
@@ -269,17 +296,20 @@ export default function SolvesList() {
 								onClick={prevPage}
 								disabled={page === 0}
 							>
-								{t('Prev')}
+								{t('common.prev')}
 							</Button>
 							<span className="text-text text-center">
-								{t('Page {page} of {total}', {page: page + 1, total: Math.ceil(totalResults / 25) || 1})}
+								{t('common.pageOf', {
+									page: page + 1,
+									total: Math.ceil(totalResults / 25) || 1,
+								})}
 							</span>
 							<Button
 								variant={page > 0 ? 'default' : 'secondary'}
 								onClick={nextPage}
 								disabled={!moreResults}
 							>
-								{t('Next')}
+								{t('common.next')}
 							</Button>
 						</div>
 					</div>
@@ -293,8 +323,10 @@ export default function SolvesList() {
 					}}
 				>
 					{historyDialog && (
-						<DialogContent>
-							<DialogTitle className="sr-only">Solve history</DialogTitle>
+						<DialogContent closeLabel={t('common.closeDialog')}>
+							<DialogTitle className="sr-only">
+								{t('solves.solveHistory')}
+							</DialogTitle>
 							<HistoryDialog {...historyDialog} />
 						</DialogContent>
 					)}

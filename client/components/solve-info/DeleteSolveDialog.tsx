@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {getSetting} from '@/db/settings/query';
 import {deleteSolveDb} from '@/db/solves/update';
@@ -38,14 +39,22 @@ export default function DeleteSolveDialog({
 	onOpenChange: (open: boolean) => void;
 	onDeleted?: () => void;
 }) {
+	const {t} = useTranslation();
 	if (!solve) return null;
 	return (
 		<ConfirmDialog
+			labels={{
+				cancel: t('common.cancel'),
+				inputPrompt: t('common.confirmInputPrompt', {word: t('common.confirmWord')}),
+				confirmWord: t('common.confirmWord'),
+				genericError: t('common.genericError'),
+				defaultDescription: t('common.confirmDescription'),
+			}}
 			open
 			onOpenChange={onOpenChange}
-			title="Delete solve"
-			description="Are you sure you want to delete this solve?"
-			buttonText="Delete solve"
+			title={t('solves.deleteSolve')}
+			description={t('solves.confirmDelete')}
+			buttonText={t('solves.deleteSolve')}
 			hideInput
 			triggerAction={() => deleteSolveDb(solve)}
 			onComplete={onDeleted}

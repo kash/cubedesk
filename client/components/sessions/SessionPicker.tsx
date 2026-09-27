@@ -7,6 +7,7 @@ import {Session} from '@/types/session';
 import {useSettings} from '@/util/hooks/useSettings';
 import {CaretDown} from 'phosphor-react';
 import React, {useEffect, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	stateless?: boolean;
@@ -15,14 +16,15 @@ interface Props {
 }
 
 export default function SessionPicker(props: Props) {
+	const {t} = useTranslation();
 	useSessionDb();
 	const sessionId = useSettings('session_id');
 
 	const [localSessionId, setLocalSessionId] = useState<string>();
-    const {onChange, hideSessionName, stateless} = props;
-    const selectedSession = fetchSessionById((stateless ? localSessionId : sessionId) || '');
+	const {onChange, hideSessionName, stateless} = props;
+	const selectedSession = fetchSessionById((stateless ? localSessionId : sessionId) || '');
 
-	const options = fetchSessions().map((session) => ({value:session.id, text:session.name}));
+	const options = fetchSessions().map((session) => ({value: session.id, text: session.name}));
 
 	function switchSession(session: Session) {
 		setLocalSessionId(session.id);
@@ -40,14 +42,26 @@ export default function SessionPicker(props: Props) {
 		setCubeType(lastCubeType || '333');
 	}
 
-	let sessionName = 'Select Session';
+	let sessionName = t('sessions.selectSession');
 	if (selectedSession && !hideSessionName) {
 		sessionName = selectedSession.name;
 	}
 
 	return (
 		<div>
-			<Combobox label="Session" value={selectedSession?.id || ''} text={sessionName} options={options} onValueChange={(id) => {const session = fetchSessionById(id); if (session) switchSession(session);}} />
+			<Combobox
+				label={t('sessions.session')}
+				placeholder={t('sessions.selectSession')}
+				searchPlaceholder={t('common.search')}
+				emptyMessage={t('common.noResultsFound')}
+				value={selectedSession?.id || ''}
+				text={sessionName}
+				options={options}
+				onValueChange={(id) => {
+					const session = fetchSessionById(id);
+					if (session) switchSession(session);
+				}}
+			/>
 		</div>
 	);
 }

@@ -7,6 +7,7 @@ import {resourceUri} from '@/util/storage';
 import {CaretDown} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 const MAX_NAV_WIDTH = 1200;
 
@@ -24,18 +25,18 @@ interface NavLinkProps {
 
 const NAV_REST_LINKS: NavLinkProps[] = [
 	{
-		label: 'Play 1v1',
+		label: 'community.play1v1',
 		link: '/play/head-to-head',
 		color: 'green',
 		dropDownOnly: true,
 	},
 	{
-		label: 'Log in',
+		label: 'auth.logIn',
 		link: '/login',
 		permanent: true,
 	},
 	{
-		label: 'Sign up',
+		label: 'auth.signUp',
 		link: '/signup',
 		color: 'primary',
 		permanent: true,
@@ -43,6 +44,7 @@ const NAV_REST_LINKS: NavLinkProps[] = [
 ];
 
 export default function LandingNav(props: Props) {
+	const {t} = useTranslation();
 	const {showBorder} = props;
 
 	const [navSmall, setNavSmall] = useState(false);
@@ -99,18 +101,18 @@ export default function LandingNav(props: Props) {
 				link === '/login' || link === '/signup' ? (
 					<AuthDialog key={link} view={link === '/login' ? 'login' : 'signup'}>
 						<button type="button" className={linkClasses.join(' ')}>
-							{label}
+							{t(label)}
 						</button>
 					</AuthDialog>
 				) : (
 					<a key={link} href={link} className={linkClasses.join(' ')}>
-						{label}
+						{t(label)}
 					</a>
 				),
 			);
 		} else {
 			dropDownOptions.push({
-				text: label,
+				text: t(label),
 				link,
 			});
 		}
@@ -132,12 +134,17 @@ export default function LandingNav(props: Props) {
 						<img
 							className="h-auto w-[120px] sm:w-[144px]"
 							src={resourceUri('/images/branding/cubedesk-lockup-black.svg')}
-							alt="CubeDesk Logo"
+							alt={t('common.logoAlt')}
 						/>
 					</Link>
 				</div>
 				<div className="flex shrink-0 flex-row items-center gap-4 text-inherit sm:gap-[25px]">
-					<ActionMenu flat icon={<CaretDown weight="fill" />} options={dropDownOptions} />
+					<ActionMenu
+						flat
+						icon={<CaretDown weight="fill" />}
+						menuLabel={t('common.openMenu')}
+						options={dropDownOptions}
+					/>
 					{showNavLinks}
 				</div>
 			</div>

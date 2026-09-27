@@ -9,7 +9,7 @@ import {Match} from '@/types/match';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import {ArrowRight, Eye} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 
@@ -21,7 +21,7 @@ export function getMatchLinkBase(gameType: GameType) {
 }
 
 export default function CustomMatch() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const {minPlayers, maxPlayers, cubeType, matchType} = useMatchPopupContext();
 
 	const [showChallengeLink, setShowChallengeLink] = useState(false);
@@ -94,8 +94,8 @@ export default function CustomMatch() {
 			<div className="flex w-full flex-col items-start">
 				<div className="mx-auto mt-10 mb-[60px] flex flex-col items-center">
 					<div className="mb-[5px] flex w-full flex-row flex-wrap gap-1">
-						<Badge>{t(ct?.name ?? cubeType)}</Badge>
-					<Badge>{t('{count} players', {count: minPlayers})}</Badge>
+						<Badge>{ct?.name ?? cubeType}</Badge>
+						<Badge>{t('community.players', {count: minPlayers})}</Badge>
 					</div>
 					<div className="bg-button mb-[5px] box-border rounded-[5px] px-[13px] py-[9px]">
 						{getMatchLinkBody(match)}
@@ -106,12 +106,17 @@ export default function CustomMatch() {
 							onClick={toggleShowChallengeLink}
 							aria-pressed={showChallengeLink}
 						>
-							{t('Show Link')}
+							{t('community.showLink')}
 							<Eye weight="bold" />
 						</Button>
 						<CopyText
+							labels={{
+								copy: t('common.copyText'),
+								copied: t('common.copied'),
+								error: t('common.copyError'),
+							}}
 							buttonProps={{
-								children: t('Copy Link'),
+								children: t('community.copyLink'),
 								variant: 'default',
 							}}
 							text={matchLink}
@@ -120,8 +125,13 @@ export default function CustomMatch() {
 				</div>
 				<div className="flex w-full flex-row items-end justify-between">
 					<CopyText
+						labels={{
+							copy: t('common.copyText'),
+							copied: t('common.copied'),
+							error: t('common.copyError'),
+						}}
 						buttonProps={{
-							children: t('Copy Spectate Link'),
+							children: t('community.copySpectateLink'),
 							size: 'lg',
 							variant: 'secondary',
 						}}
@@ -129,7 +139,7 @@ export default function CustomMatch() {
 					/>
 					<Button variant="default" size="lg" asChild>
 						<a href={matchLink}>
-							{t('Join Match')}
+							{t('community.joinMatch')}
 							<ArrowRight />
 						</a>
 					</Button>

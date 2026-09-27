@@ -28,7 +28,7 @@ import {CubeType} from '@/util/cubes/cube_types';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
 import {useTrainerDb} from '@/util/hooks/useTrainerDb';
-import {useI18n} from '@/i18n';
+import {useTranslation} from 'react-i18next';
 import Chance from 'chance';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -64,7 +64,7 @@ const DEFAULT_ALGO_CUBE_TYPE = '333';
 const DEFAULT_ALGO_TYPE = 'OLL';
 
 export default function Trainer() {
-	const {t} = useI18n();
+	const {t} = useTranslation();
 	const [timerDialog, setTimerDialog] = React.useState<{
 		props: React.ComponentProps<typeof Timer>;
 		fullSize: boolean;
@@ -97,7 +97,7 @@ export default function Trainer() {
 				if (!cancelled) setLoaded(true);
 			})
 			.catch((error) => {
-				if (!cancelled) setLoadError(error.message || 'Could not load trainer algorithms.');
+				if (!cancelled) setLoadError(error.message || t('trainer.loadFailed'));
 			});
 		return () => {
 			cancelled = true;
@@ -151,15 +151,15 @@ export default function Trainer() {
 			return fetchTrainerAlgorithmById(algorithmIds[randomIndex])!;
 		}
 
-		function getCustomScramble(index: number) {
-			const currentAlgo = getCurrentTrainerAlgo(index);
-			const scrambles = (
-				currentAlgo.overrides?.scrambles ??
-				currentAlgo.scrambles ??
-				''
-			).split('\n');
-			return _.sample(scrambles);
-		}
+			function getCustomScramble(index: number) {
+				const currentAlgo = getCurrentTrainerAlgo(index);
+				const scrambles = (
+					currentAlgo.overrides?.scrambles ??
+					currentAlgo.scrambles ??
+					''
+				).split('\n');
+				return _.sample(scrambles) ?? '';
+			}
 
 		const solvesOverride: Partial<Solve> = {
 			training_session_id: sessionId,
@@ -179,7 +179,11 @@ export default function Trainer() {
 						<>
 							<TrainerSessionEdit getAlgorithm={getCurrentTrainerAlgo} />
 							<DialogClose asChild>
-								<Button variant="ghost" size="icon" aria-label="Close trainer">
+								<Button
+									variant="ghost"
+									size="icon"
+									aria-label={t('trainer.closeTrainer')}
+								>
 									<X aria-hidden="true" />
 								</Button>
 							</DialogClose>
@@ -239,16 +243,20 @@ export default function Trainer() {
 	if (!loaded) {
 		return (
 			<div>
-				<PageTitle pageName="Trainer" />
+				<PageTitle pageName={t('trainer.trainer')} />
 				{loadError ? (
 					<Alert variant="destructive">
 						<AlertDescription>{loadError}</AlertDescription>
 						<Button onClick={() => setLoadAttempt((attempt) => attempt + 1)}>
-							Retry
+							{t('common.retry')}
 						</Button>
 					</Alert>
 				) : (
-					<div role="status" aria-label="Loading trainers" className="grid gap-4">
+					<div
+						role="status"
+						aria-label={t('trainer.loadingTrainers')}
+						className="grid gap-4"
+					>
 						{[0, 1, 2].map((key) => (
 							<Card key={key} aria-hidden>
 								<CardContent className="space-y-4">
@@ -307,24 +315,24 @@ export default function Trainer() {
 	if (algos && algos.length) {
 		body = algos.map((algo) => <TrainerAlgo key={algo.id} algoExt={algo} />);
 	} else {
-		body = <Empty text="No algorithms available in this set" />;
+		body = <Empty text={t('trainer.noAlgorithmsAvailableInThisSet')} />;
 	}
 
 	return (
 		<>
 			<TrainerContext.Provider value={context}>
 				<div className="flex h-full min-h-0 flex-col">
-					<PageTitle pageName="Trainer">
+					<PageTitle pageName={t('trainer.trainer')}>
 						<div className="absolute top-0 right-0">
 							<Button variant="default" onClick={openCreateCustomTrainer} size="lg">
-								{t('Create New')}
+								{t('trainer.createNew')}
 								<Plus />
 							</Button>
 						</div>
 						<div className="flex flex-row items-start justify-between">
 							<div className="flex flex-row gap-2.5">
 								<SelectField
-									label="Trainer cube type"
+									label={t('trainer.trainerCubeType')}
 									value={cubeType}
 									onValueChange={selectCubeType}
 									options={cubeTypes.map((cube) => ({
@@ -333,11 +341,14 @@ export default function Trainer() {
 									}))}
 								/>
 								<SelectField
-									label="Algorithm set"
+									label={t('trainer.algorithmSet')}
 									value={algoType}
 									onValueChange={selectAlgoType}
 									options={[
-										{value: CUSTOM_TRAINER_ALGO_TYPE, text: 'Custom'},
+										{
+											value: CUSTOM_TRAINER_ALGO_TYPE,
+											text: t('trainer.custom'),
+										},
 										...algoTypes
 											.filter(
 												(algo) => algo.value !== CUSTOM_TRAINER_ALGO_TYPE,
@@ -349,25 +360,25 @@ export default function Trainer() {
 									variant={favsOnly ? 'default' : 'secondary'}
 									onClick={() => toggleFavsOnly()}
 									size="icon"
-									aria-label="Show favorites only"
+									aria-label={t('trainer.showFavoritesOnly')}
 									aria-pressed={favsOnly}
 								>
 									<Star />
 								</Button>
 								<ActionMenu
-									text="Train"
+									text={t('trainer.train')}
 									openLeft
 									triggerProps={{
 										variant: 'default',
 									}}
 									options={[
 										{
-											text: 'Train All',
+											text: t('trainer.trainAll'),
 											disabled: !algos.length,
 											onClick: () => openTrainer('all'),
 										},
 										{
-											text: 'Train Favorites',
+											text: t('trainer.trainFavorites'),
 											disabled: !favCount,
 											onClick: () => openTrainer('favorites'),
 										},
@@ -377,7 +388,7 @@ export default function Trainer() {
 							<div>
 								<Button variant="secondary" asChild>
 									<Link to={'/trainer/public-trainers'}>
-										{'Marketplace'}
+										{t('trainer.marketplace')}
 										<ArrowRight />
 									</Link>
 								</Button>
@@ -404,12 +415,13 @@ export default function Trainer() {
 			>
 				{timerDialog && (
 					<DialogContent
+						closeLabel={t('common.closeDialog')}
 						fullSize={timerDialog.fullSize}
 						noPadding={timerDialog.fullSize}
 						hideCloseButton
 						className={classNames({'border-0': timerDialog.fullSize})}
 					>
-						<DialogTitle className="sr-only">Timer</DialogTitle>
+						<DialogTitle className="sr-only">{t('timer.timer')}</DialogTitle>
 						<Timer {...timerDialog.props} />
 					</DialogContent>
 				)}
@@ -423,7 +435,7 @@ export default function Trainer() {
 				}}
 			>
 				{addCustomDialog && (
-					<DialogContent>
+					<DialogContent closeLabel={t('common.closeDialog')}>
 						<AddCustom
 							{...addCustomDialog}
 							onComplete={() => {

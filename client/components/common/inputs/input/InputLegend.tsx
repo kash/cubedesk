@@ -2,31 +2,26 @@ import {Badge} from '@/components/ui/badge';
 import {Label} from '@/components/ui/label';
 import {cn} from '@/util/cn';
 import React, {ReactNode} from 'react';
-import {useOptionalI18n} from '@/i18n';
 
 interface Props {
 	text?: string;
 	tag?: boolean;
 	icon?: string;
-	optional?: boolean;
 }
 
 export default function InputLegend(props: Props) {
-	const {text, icon, tag, optional} = props;
-	const {t} = useOptionalI18n();
-	const translatedText = text ? t(text) : text;
+	const {text, icon, tag} = props;
 
 	if (!text) {
 		return null;
 	}
 
 	let body: ReactNode;
-	let optionalSpan: ReactNode = null;
 
 	if (tag) {
 		body = (
 			<Badge size="sm" variant="unfilled">
-				{translatedText}
+				{text}
 				{icon}
 			</Badge>
 		);
@@ -39,25 +34,12 @@ export default function InputLegend(props: Props) {
 		body = (
 			<Label asChild>
 				<span>
-					{translatedText}
+					{text}
 					{iconBody}
 				</span>
 			</Label>
 		);
 	}
 
-	if (optional) {
-		optionalSpan = (
-			<span className="text-text relative m-0 ml-2 table p-0 text-sm font-normal italic opacity-60">
-				{t('Optional')}
-			</span>
-		);
-	}
-
-	return (
-		<div className="flex flex-row items-center">
-			{body}
-			{optionalSpan}
-		</div>
-	);
+	return <div className="flex flex-row items-center">{body}</div>;
 }

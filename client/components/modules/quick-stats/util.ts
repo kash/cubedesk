@@ -8,49 +8,84 @@ import {getWorstTime} from '@/db/solves/stats/solves/single/single-worst';
 import {StatsModuleBlock} from '@/types/stats-module';
 import {getCubeTypeInfo} from '@/util/cubes/util';
 import {trpc} from '@/util/trpc';
+import type {TFunction} from 'i18next';
 
 export const STATS_GRID_SIZE = 4;
 
-export function getStatsBlockDescription(statsOptions: StatsModuleBlock, filterOptions: FilterSolvesOptions = {}) {
-	const solvesFilter = {...filterOptions};
-	const description: string[] = [];
+const DESCRIPTION_KEYS = {
+	bestSolve: {
+		all: 'stats.block.description.bestSolve.all',
+		session: 'stats.block.description.bestSolve.session',
+		cube: 'stats.block.description.bestSolve.cube',
+		sessionCube: 'stats.block.description.bestSolve.sessionCube',
+	},
+	worstSolve: {
+		all: 'stats.block.description.worstSolve.all',
+		session: 'stats.block.description.worstSolve.session',
+		cube: 'stats.block.description.worstSolve.cube',
+		sessionCube: 'stats.block.description.worstSolve.sessionCube',
+	},
+	bestAverage: {
+		all: 'stats.block.description.bestAverage.all',
+		session: 'stats.block.description.bestAverage.session',
+		cube: 'stats.block.description.bestAverage.cube',
+		sessionCube: 'stats.block.description.bestAverage.sessionCube',
+	},
+	bestAverageOfCount: {
+		all: 'stats.block.description.bestAverageOfCount.all',
+		session: 'stats.block.description.bestAverageOfCount.session',
+		cube: 'stats.block.description.bestAverageOfCount.cube',
+		sessionCube: 'stats.block.description.bestAverageOfCount.sessionCube',
+	},
+	currentAverage: {
+		all: 'stats.block.description.currentAverage.all',
+		session: 'stats.block.description.currentAverage.session',
+		cube: 'stats.block.description.currentAverage.cube',
+		sessionCube: 'stats.block.description.currentAverage.sessionCube',
+	},
+	currentAverageOfCount: {
+		all: 'stats.block.description.currentAverageOfCount.all',
+		session: 'stats.block.description.currentAverageOfCount.session',
+		cube: 'stats.block.description.currentAverageOfCount.cube',
+		sessionCube: 'stats.block.description.currentAverageOfCount.sessionCube',
+	},
+} as const;
 
-	if (statsOptions.sortBy === 'worst' && statsOptions.statType === 'single') {
-		description.push('worst');
-	} else if (statsOptions.sortBy === 'best') {
-		description.push('best');
-	} else if (statsOptions.sortBy === 'current') {
-		description.push('current');
-	}
+export function getStatsBlockDescription(
+	statsOptions: StatsModuleBlock,
+	filterOptions: FilterSolvesOptions = {},
+	t: TFunction,
+) {
+	const cubeType =
+		typeof filterOptions.cube_type === 'string' ? filterOptions.cube_type : undefined;
+	const cube = cubeType ? (getCubeTypeInfo(cubeType)?.name ?? cubeType) : undefined;
+	const scope = statsOptions.session
+		? cube
+			? 'sessionCube'
+			: 'session'
+		: cube
+			? 'cube'
+			: 'all';
+	const kind =
+		statsOptions.statType === 'single'
+			? statsOptions.sortBy === 'worst'
+				? 'worstSolve'
+				: 'bestSolve'
+			: statsOptions.sortBy === 'best'
+				? statsOptions.averageCount
+					? 'bestAverageOfCount'
+					: 'bestAverage'
+				: statsOptions.averageCount
+				? 'currentAverageOfCount'
+				: 'currentAverage';
 
-	if (statsOptions.session) {
-		description.push('session');
-	}
-
-	if (solvesFilter?.cube_type) {
-		const cubeType = solvesFilter.cube_type as string;
-
-		const ct = getCubeTypeInfo(cubeType);
-		description.push(ct?.name ?? cubeType);
-	}
-
-	if (statsOptions.statType === 'average') {
-		description.push('average');
-
-		if (statsOptions.averageCount) {
-			description.push(`of ${statsOptions.averageCount}`);
-		}
-	} else {
-		description.push('solve');
-	}
-
-	return description.join(' ');
+	return t(DESCRIPTION_KEYS[kind][scope], {count: statsOptions.averageCount, cube});
 }
 
 export function getStatsBlockValueFromFilter(
 	statsOptions: StatsModuleBlock,
 	filterOptions: FilterSolvesOptions = {},
-	currentSessionId?: string
+	currentSessionId?: string,
 ): SolveStat | null {
 	const solvesFilter = {...filterOptions};
 	if (statsOptions.session) {
