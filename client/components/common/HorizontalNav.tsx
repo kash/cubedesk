@@ -2,6 +2,7 @@ import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {Button} from '@/components/ui/button';
 import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group';
 import React, {ReactNode, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
 export interface HorizontalNavTab {
@@ -14,7 +15,6 @@ export interface HorizontalNavTab {
 interface Props {
 	tabs: HorizontalNavTab[];
 	legend?: string;
-	optionsLabel?: string;
 	showBackgroundForUnselectedTabs?: boolean;
 	onChange?: (id: string, tab: HorizontalNavTab) => void;
 	tab?: HorizontalNavTab; // Selected tab
@@ -22,7 +22,8 @@ interface Props {
 }
 
 export default function HorizontalNav(props: Props) {
-	const {onChange, legend, optionsLabel, showBackgroundForUnselectedTabs} = props;
+	const {t} = useTranslation();
+	const {onChange, legend, showBackgroundForUnselectedTabs} = props;
 
 	const {tabs} = props;
 	const [localTabId, setLocalTabId] = useState<string | undefined>(undefined);
@@ -44,7 +45,7 @@ export default function HorizontalNav(props: Props) {
 				<ToggleGroup
 					type="single"
 					value={selectedId}
-					aria-label={legend || optionsLabel}
+					aria-label={legend || t('common.options')}
 					variant={showBackgroundForUnselectedTabs ? 'outline' : 'default'}
 					className="flex-wrap"
 					onValueChange={(id) => {

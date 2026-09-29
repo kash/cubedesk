@@ -91,7 +91,6 @@ export default function StepPie(props: Props) {
 				onChange={changeChartType}
 				tabs={CHART_TYPES.map((tab) => ({...tab, value: t(tab.value)}))}
 				tabId={chartType}
-				optionsLabel={t('common.options')}
 			/>
 
 			<ParentSize

@@ -105,7 +105,7 @@ export default function ManageUser({userId}: Props) {
 					{[
 						[
 							t('admin.users.joined'),
-							new Date(user.created_at).toLocaleDateString(undefined, {
+							new Date(user.created_at).toLocaleDateString(i18n.language, {
 								year: 'numeric',
 								month: 'short',
 								day: 'numeric',

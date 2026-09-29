@@ -231,12 +231,6 @@ export default function AdminTrainer() {
 							hasMore={(page + 1) * 25 < data.total}
 							onPrevious={() => setPage(page - 1)}
 							onNext={() => setPage(page + 1)}
-							previousLabel={t('common.previous')}
-							nextLabel={t('common.next')}
-							pageLabel={t('common.pageOf', {
-								page: page + 1,
-								total: Math.max(1, Math.ceil(data.total / 25)),
-							})}
 						/>
 					</>
 				)

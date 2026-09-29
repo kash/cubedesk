@@ -115,7 +115,6 @@ const messages: TranslationDictionary = {
 	'solves.time': 'Tiempo',
 	'solves.noSolvesRecorded': 'No hay tiempos registrados.',
 	'solves.noSolvesInThisPeriod': 'No hay tiempos en este periodo',
-	'solves.noRegisteredSolvesInThisPeriod': 'No hay tiempos registrados en este periodo.',
 	'solves.noNotesForThisSolve': 'Esta resolución no tiene notas',
 	'solves.eventBreakdown.emptyHint': 'Resuelve un cubo para ver el desglose por evento.',
 	'solves.completeASolveToSeeYourProgress': 'Resuelve un cubo para ver tu progreso.',

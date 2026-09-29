@@ -113,19 +113,13 @@ export default function TrainerCsvImport({
 			)}
 			{preview && (
 				<div className="space-y-4">
-					<p>
-						{preview.created} {t('admin.trainer.newCount')} {preview.updated}{' '}
-						{t('admin.trainer.changedCount')} {preview.unchanged}{' '}
-						{t('admin.trainer.unchangedCount')}
-					</p>
+					<p>{t('admin.trainer.previewSummary', preview)}</p>
 					{preview.errors.length > 0 && (
 						<Alert variant="destructive">
 							<AlertTitle>{t('common.fixTheseErrorsBeforeImporting')}</AlertTitle>
 							<ul className="max-h-48 overflow-auto">
 								{preview.errors.map((issue, i) => (
-									<li key={i}>
-										{t('admin.trainer.row')} {issue.row}: {issue.message}
-									</li>
+									<li key={i}>{t('admin.trainer.issueAtRow', issue)}</li>
 								))}
 							</ul>
 						</Alert>
@@ -135,9 +129,7 @@ export default function TrainerCsvImport({
 							<AlertTitle>{t('admin.trainer.importWarningsTitle')}</AlertTitle>
 							<ul className="max-h-48 overflow-auto">
 								{preview.warnings.map((issue, i) => (
-									<li key={i}>
-										{t('admin.trainer.row')} {issue.row}: {issue.message}
-									</li>
+									<li key={i}>{t('admin.trainer.issueAtRow', issue)}</li>
 								))}
 							</ul>
 						</Alert>
@@ -170,12 +162,14 @@ export default function TrainerCsvImport({
 													<pre className="text-text/60 break-words whitespace-pre-wrap">
 														{t('admin.trainer.before')}{' '}
 														{field.before === null
-															? '(new)'
-															: String(field.before) || '(empty)'}
+															? t('admin.trainer.newValue')
+															: String(field.before) ||
+																t('admin.trainer.emptyValue')}
 													</pre>
 													<pre className="break-words whitespace-pre-wrap">
 														{t('admin.trainer.after')}{' '}
-														{String(field.after) || '(empty)'}
+														{String(field.after) ||
+															t('admin.trainer.emptyValue')}
 													</pre>
 												</div>
 											</div>

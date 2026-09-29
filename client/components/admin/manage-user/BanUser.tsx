@@ -154,7 +154,7 @@ export default function BanUser(props: Props) {
 				>
 					<option value="minute">{t('common.minute')}</option>
 					<option value="hour">{t('common.hour')}</option>
-					<option value="day">{t('common.day2')}</option>
+					<option value="day">{t('common.day')}</option>
 					<option value="week">{t('common.week')}</option>
 					<option value="month">{t('common.month')}</option>
 					<option value="year">{t('common.year')}</option>

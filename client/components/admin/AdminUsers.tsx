@@ -265,12 +265,6 @@ export default function AdminUsers() {
 							hasMore={data.hasMore}
 							onPrevious={() => changePage(page - 1)}
 							onNext={() => changePage(page + 1)}
-							previousLabel={t('common.previous')}
-							nextLabel={t('common.next')}
-							pageLabel={t('common.pageOf', {
-								page: page + 1,
-								total: Math.max(1, Math.ceil(data.total / PAGE_SIZE)),
-							})}
 						/>
 					</div>
 				)}

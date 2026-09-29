@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/pagination';
 import {CaretLeft, CaretRight} from 'phosphor-react';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 export default function PageControls({
 	page,
@@ -14,9 +15,6 @@ export default function PageControls({
 	hasMore,
 	onPrevious,
 	onNext,
-	previousLabel,
-	nextLabel,
-	pageLabel,
 	className,
 }: {
 	page: number;
@@ -24,20 +22,19 @@ export default function PageControls({
 	hasMore: boolean;
 	onPrevious: () => void;
 	onNext: () => void;
-	previousLabel: string;
-	nextLabel: string;
-	pageLabel: string;
 	className?: string;
 }) {
+	const {t} = useTranslation();
+	const pageLabel = t('common.pageOf', {page: page + 1, total: Math.max(1, totalPages)});
+
 	return (
-		<Pagination className={className} aria-label={pageLabel}>
+		<Pagination className={className}>
 			<PaginationContent>
 				<PaginationItem>
-					<PaginationPrevious asChild aria-label={previousLabel}>
+					<PaginationPrevious asChild>
 						<button type="button" disabled={page === 0} onClick={onPrevious}>
 							<CaretLeft aria-hidden />
-
-							{previousLabel}
+							{t('common.previous')}
 						</button>
 					</PaginationPrevious>
 				</PaginationItem>
@@ -50,9 +47,9 @@ export default function PageControls({
 					</span>
 				</PaginationItem>
 				<PaginationItem>
-					<PaginationNext asChild aria-label={nextLabel}>
+					<PaginationNext asChild>
 						<button type="button" disabled={!hasMore} onClick={onNext}>
-							{nextLabel}
+							{t('common.next')}
 							<CaretRight aria-hidden />
 						</button>
 					</PaginationNext>

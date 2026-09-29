@@ -49,6 +49,7 @@ const messages: TranslationDictionary = {
 	'auth.signUpLower': 'crear una cuenta',
 	'auth.logInLower': 'iniciar sesión',
 	'auth.personalInfo': 'Información personal',
+	'auth.notifications': 'Notificaciones',
 	'auth.dangerZone': 'Zona de peligro',
 	'auth.logOut': 'Cerrar sesión',
 	'auth.logIn': 'Iniciar sesión',

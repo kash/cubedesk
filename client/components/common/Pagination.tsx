@@ -26,7 +26,6 @@ interface Props {
 	prefetchData?: (page: number, tab?: PaginationTab) => void;
 	labels: ListLabels;
 	searchLabel?: string;
-	optionsLabel?: string;
 }
 
 export default function Pagination<T>(props: Props) {
@@ -44,7 +43,6 @@ function PaginationContent<T>({
 	currentTab,
 	labels,
 	searchLabel,
-	optionsLabel,
 }: Props & {currentTab: PaginationTab}) {
 	const location = useLocation();
 	const [searchQuery, setSearchQuery] = useState('');
@@ -90,7 +88,6 @@ function PaginationContent<T>({
 			{tabs.length > 1 && (
 				<div className="mb-4 flex justify-center">
 					<HorizontalNav
-						optionsLabel={optionsLabel}
 						tabId={currentTab.id}
 						tabs={tabs.map((tab, index) => ({
 							...tab,

@@ -48,6 +48,7 @@ const messages: TranslationDictionary = {
 	'auth.signUpLower': 'sign up',
 	'auth.logInLower': 'login',
 	'auth.personalInfo': 'Personal Info',
+	'auth.notifications': 'Notifications',
 	'auth.dangerZone': 'Danger Zone',
 	'auth.logOut': 'Log out',
 	'auth.logIn': 'Log in',

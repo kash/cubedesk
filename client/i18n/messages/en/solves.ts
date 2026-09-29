@@ -112,7 +112,6 @@ const messages: TranslationDictionary = {
 	'solves.time': 'Time',
 	'solves.noSolvesRecorded': 'No solves recorded.',
 	'solves.noSolvesInThisPeriod': 'No solves in this period',
-	'solves.noRegisteredSolvesInThisPeriod': 'No registered solves in this period.',
 	'solves.noNotesForThisSolve': 'No notes for this solve',
 	'solves.eventBreakdown.emptyHint': 'Complete a solve to see your event breakdown.',
 	'solves.completeASolveToSeeYourProgress': 'Complete a solve to see your progress.',

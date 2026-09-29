@@ -47,7 +47,6 @@ export default function Friends() {
 			<Pagination
 				tabs={tabs.map((tab) => ({...tab, ...tabText[tab.id]}))}
 				labels={labels}
-				optionsLabel={t('common.options')}
 				itemRow={(friend, tab) => {
 					const otherUser: PublicUserAccount = friend[tabIdToOtherUserMap[tab.id]];
 

@@ -1,7 +1,7 @@
 import {Button} from '@/components/ui/button';
 import * as Sentry from '@sentry/browser';
 import React, {ErrorInfo, ReactNode} from 'react';
-import {useTranslation} from 'react-i18next';
+import {Translation} from 'react-i18next';
 
 interface Props {
 	children: ReactNode;
@@ -32,22 +32,25 @@ export default class ErrorBoundary extends React.Component<Props, State> {
 
 	render() {
 		if (this.state.error) {
-			return <ErrorFallback />;
+			return (
+				<Translation>
+					{(t) => (
+						<div className="bg-background text-text flex h-screen w-screen flex-col items-center justify-center gap-4 p-8 text-center">
+							<h1 className="text-2xl font-semibold">{t('common.error.title')}</h1>
+							<p className="text-text/70 max-w-md">{t('common.error.description')}</p>
+							<Button
+								variant="default"
+								onClick={() => window.location.reload()}
+								size="lg"
+							>
+								{t('common.error.reload')}
+							</Button>
+						</div>
+					)}
+				</Translation>
+			);
 		}
 
 		return this.props.children;
 	}
-}
-
-function ErrorFallback() {
-	const {t} = useTranslation();
-	return (
-		<div className="bg-background text-text flex h-screen w-screen flex-col items-center justify-center gap-4 p-8 text-center">
-			<h1 className="text-2xl font-semibold">{t('common.error.title')}</h1>
-			<p className="text-text/70 max-w-md">{t('common.error.description')}</p>
-			<Button variant="default" onClick={() => window.location.reload()} size="lg">
-				{t('common.error.reload')}
-			</Button>
-		</div>
-	);
 }

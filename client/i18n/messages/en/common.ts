@@ -25,6 +25,7 @@ const messages: TranslationDictionary = {
 	'common.error.description':
 		'An unexpected error occurred. If you were in the middle of a solve, it may not have been saved. Reloading the page should fix it.',
 	'common.error.reload': 'Reload page',
+	'common.noResultsYet': 'No results yet',
 	'common.solve_one': 'solve',
 	'common.solve_other': 'solves',
 	'common.filter_one': 'filter',
@@ -115,7 +116,7 @@ const messages: TranslationDictionary = {
 	'common.uploadCsv': 'Upload CSV',
 	'common.minute': 'Minute',
 	'common.hour': 'Hour',
-	'common.day2': 'Day',
+	'common.day': 'Day',
 	'common.week': 'Week',
 	'common.month': 'Month',
 	'common.year': 'Year',

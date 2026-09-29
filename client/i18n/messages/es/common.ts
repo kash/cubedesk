@@ -25,6 +25,7 @@ const messages: TranslationDictionary = {
 	'common.error.description':
 		'Se produjo un error inesperado. Si estabas resolviendo un cubo, puede que el tiempo no se haya guardado. Recargar la página debería solucionarlo.',
 	'common.error.reload': 'Recargar página',
+	'common.noResultsYet': 'Todavía no hay resultados',
 	'common.solve_one': 'tiempo',
 	'common.solve_other': 'tiempos',
 	'common.filter_one': 'filtro',
@@ -115,7 +116,7 @@ const messages: TranslationDictionary = {
 	'common.uploadCsv': 'Subir CSV',
 	'common.minute': 'Minuto',
 	'common.hour': 'Hora',
-	'common.day2': 'Día',
+	'common.day': 'Día',
 	'common.week': 'Semana',
 	'common.month': 'Mes',
 	'common.year': 'Año',

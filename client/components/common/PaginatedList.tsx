@@ -118,12 +118,6 @@ export default function PaginatedList<T>({
 								hasMore={data.hasMore}
 								onPrevious={() => changePage(Math.max(0, page - 1))}
 								onNext={() => changePage(page + 1)}
-								previousLabel={labels.previous}
-								nextLabel={labels.next}
-								pageLabel={labels.page(
-									page + 1,
-									Math.max(1, Math.ceil(data.total / pageSize)),
-								)}
 							/>
 						)}
 					</>

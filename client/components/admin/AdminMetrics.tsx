@@ -8,31 +8,42 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {trpc} from '@/util/trpc';
 import React, {useEffect, useState} from 'react';
 
-const VOLUME: MetricsSeries[] = [
-	{key: 'solves', label: 'admin.metrics.registeredSolves', color: '#69bfa6'},
-	{key: 'demoSolves', label: 'admin.metrics.demoSolves', color: '#83a7f5'},
-	{key: 'imports', label: 'admin.metrics.importedSolves', color: '#db9a53'},
-];
-const IMPORTS: MetricsSeries[] = [
-	{key: 'importsSucceeded', label: 'admin.metrics.successfulImports', color: '#69bfa6'},
-	{key: 'importsFailed', label: 'admin.metrics.failedImports', color: '#e78080'},
-];
-const ACTIVITY: MetricsSeries[] = [
-	{key: 'activeUsers', label: 'admin.metrics.registeredDau', color: '#69bfa6'},
-	{key: 'demoSessions', label: 'admin.metrics.activeDemoSessions', color: '#83a7f5'},
-];
-const SIGNUPS: MetricsSeries[] = [
-	{key: 'signups', label: 'admin.metrics.newAccounts', color: '#ad91e3'},
-];
-const CATEGORY_NAMES = {
-	timer: 'timer.timer',
-	trainer: 'trainer.trainer',
-	'1v1': 'common.value1v1',
-	other: 'common.other',
-};
-
 export default function AdminMetrics() {
 	const {t, i18n} = useTranslation();
+	const volume: MetricsSeries[] = [
+		{key: 'solves', label: t('admin.metrics.registeredSolves'), color: '#69bfa6'},
+		{key: 'demoSolves', label: t('admin.metrics.demoSolves'), color: '#83a7f5'},
+		{key: 'imports', label: t('admin.metrics.importedSolves'), color: '#db9a53'},
+	];
+	const imports: MetricsSeries[] = [
+		{
+			key: 'importsSucceeded',
+			label: t('admin.metrics.successfulImports'),
+			color: '#69bfa6',
+		},
+		{
+			key: 'importsFailed',
+			label: t('admin.metrics.failedImports'),
+			color: '#e78080',
+		},
+	];
+	const activity: MetricsSeries[] = [
+		{key: 'activeUsers', label: t('admin.metrics.registeredDau'), color: '#69bfa6'},
+		{
+			key: 'demoSessions',
+			label: t('admin.metrics.activeDemoSessions'),
+			color: '#83a7f5',
+		},
+	];
+	const signups: MetricsSeries[] = [
+		{key: 'signups', label: t('admin.metrics.newAccounts'), color: '#ad91e3'},
+	];
+	const categoryNames = {
+		timer: t('admin.metrics.category.timer'),
+		trainer: t('admin.metrics.category.trainer'),
+		'1v1': t('admin.metrics.category.oneOnOne'),
+		other: t('admin.metrics.category.other'),
+	};
 	const [result, setResult] = useState<AdminMetricsResponse | null>(null);
 	const [range, setRange] = useState(30);
 	const [revision, setRevision] = useState(0);
@@ -61,6 +72,16 @@ export default function AdminMetrics() {
 	const snapshot = result?.status === 'ready' ? result.snapshot : null;
 	const days = snapshot?.days.slice(-range) ?? [];
 	const totals = snapshot?.totals;
+	const completedAt = snapshot
+		? new Date(snapshot.completedAt).toLocaleString(i18n.language, {
+				month: 'short',
+				day: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: false,
+				timeZone: 'UTC',
+			})
+		: '';
 	const cards: [string, number][] =
 		snapshot && totals
 			? [
@@ -85,25 +106,16 @@ export default function AdminMetrics() {
 					{snapshot && (
 						<div className="text-text/45 mt-1 flex flex-wrap items-center gap-x-2 text-xs">
 							<time dateTime={snapshot.completedAt}>
-								{t('admin.metrics.updated')}{' '}
-								{new Date(snapshot.completedAt).toLocaleString(i18n.language, {
-									month: 'short',
-									day: 'numeric',
-									hour: '2-digit',
-									minute: '2-digit',
-									hour12: false,
-									timeZone: 'UTC',
-								})}{' '}
-								UTC
+								{t('admin.metrics.updatedAtUtc', {date: completedAt})}
 							</time>
 							{result?.status === 'ready' && result.stale && (
-								<span role="status">{t('admin.metrics.updateOverdue')}</span>
+								<span role="status">· {t('admin.metrics.updateOverdue')}</span>
 							)}
 						</div>
 					)}
 				</div>
 				<Button variant="secondary" onClick={() => setRevision((value) => value + 1)}>
-					{t('common.reload')}
+					{t('admin.metrics.reload')}
 				</Button>
 			</div>
 			{(!result || result.status === 'preparing') && (
@@ -154,25 +166,25 @@ export default function AdminMetrics() {
 						<AdminMetricsChart
 							title={t('admin.metrics.solveVolume')}
 							days={days}
-							series={VOLUME.map((entry) => ({...entry, label: t(entry.label)}))}
+							series={volume}
 						/>
 						<AdminMetricsChart
 							title={t('admin.metrics.dailyActivity')}
 							days={days}
-							series={ACTIVITY.map((entry) => ({...entry, label: t(entry.label)}))}
+							series={activity}
 						/>
 					</div>
 					<div className="grid gap-4 lg:grid-cols-2">
 						<AdminMetricsChart
 							title={t('admin.metrics.signups')}
 							days={days}
-							series={SIGNUPS.map((entry) => ({...entry, label: t(entry.label)}))}
+							series={signups}
 						/>
 						<div className="space-y-2">
 							<AdminMetricsChart
 								title={t('admin.metrics.importOperations')}
 								days={days}
-								series={IMPORTS.map((entry) => ({...entry, label: t(entry.label)}))}
+								series={imports}
 							/>
 							<p className="text-text/50 px-2 text-xs">
 								{t('admin.metrics.importTrackingSummary', {
@@ -186,7 +198,7 @@ export default function AdminMetrics() {
 					</div>
 					<details className="border-text/15 rounded-xl border p-4">
 						<summary className="cursor-pointer font-medium">
-							{t('admin.metrics.dailyFiguresLastDays', {count: range})}
+							{t('admin.metrics.dailyFiguresLastDays', {range})}
 						</summary>
 						<Table className="mt-4">
 							<TableHeader>
@@ -241,10 +253,10 @@ export default function AdminMetrics() {
 							<Table>
 								<TableHeader>
 									<TableRow>
-										<TableHead>{t('common.puzzle')}</TableHead>
-										<TableHead>{t('stats.activity')}</TableHead>
+										<TableHead>{t('admin.metrics.puzzle')}</TableHead>
+										<TableHead>{t('admin.metrics.activity')}</TableHead>
 										<TableHead className="text-right">
-											{t('solves.solves')}
+											{t('admin.metrics.solves')}
 										</TableHead>
 									</TableRow>
 								</TableHeader>
@@ -254,9 +266,9 @@ export default function AdminMetrics() {
 											key={JSON.stringify([row.cubeType, row.category])}
 										>
 											<TableCell>
-												{row.cubeType || t('common.unknown')}
+												{row.cubeType || t('admin.metrics.unknownPuzzle')}
 											</TableCell>
-											<TableCell>{t(CATEGORY_NAMES[row.category])}</TableCell>
+											<TableCell>{categoryNames[row.category]}</TableCell>
 											<TableCell className="text-right tabular-nums">
 												{row.solves.toLocaleString(i18n.language)}
 											</TableCell>
@@ -266,7 +278,7 @@ export default function AdminMetrics() {
 							</Table>
 							{!snapshot.breakdown.length && (
 								<p className="text-text/60 py-6 text-center">
-									{t('solves.noRegisteredSolvesInThisPeriod')}
+									{t('admin.metrics.noRegisteredSolvesInThisPeriod')}
 								</p>
 							)}
 						</CardContent>
