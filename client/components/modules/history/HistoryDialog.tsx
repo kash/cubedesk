@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function HistoryDialog(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const {description, disabled, time, showAsText} = props;
 	const [showText, toggleShowText] = useToggle(showAsText);
 	const [reverseOrder, toggleReverseOrder] = useToggle(false);
@@ -91,7 +91,7 @@ export default function HistoryDialog(props: Props) {
 					{timeBody}
 				</h2>
 				<p className="text-[1.1rem]">
-					{new Date(lastSolve.started_at ?? 0).toLocaleDateString()}
+					{new Date(lastSolve.started_at ?? 0).toLocaleDateString(i18n.language)}
 				</p>
 				<div>
 					{cubeTypes.map((ct) => (

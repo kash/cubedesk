@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 
 export default function MatchStats() {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const {stats} = useStatsContext();
 	const played = stats.matches_played || 0;
 	const wins = stats.matches_won || 0;
@@ -33,7 +33,7 @@ export default function MatchStats() {
 							]}
 						/>
 						<div className="stats-ring-label">
-							<strong>{played.toLocaleString()}</strong>
+							<strong>{played.toLocaleString(i18n.language)}</strong>
 							<span>{t('community.matches')}</span>
 						</div>
 					</div>
@@ -45,7 +45,7 @@ export default function MatchStats() {
 								{t('community.wins')}
 							</span>
 							<strong>
-								{wins.toLocaleString()}{' '}
+								{wins.toLocaleString(i18n.language)}{' '}
 								<small>{Math.round((wins / played) * 100)}%</small>
 							</strong>
 						</p>
@@ -55,7 +55,7 @@ export default function MatchStats() {
 								{t('community.losses')}
 							</span>
 							<strong>
-								{losses.toLocaleString()}{' '}
+								{losses.toLocaleString(i18n.language)}{' '}
 								<small>{Math.round((losses / played) * 100)}%</small>
 							</strong>
 						</p>
@@ -65,7 +65,7 @@ export default function MatchStats() {
 									<i style={{background: '#8b95a5'}} />
 									{t('community.ties')}
 								</span>
-								<strong>{ties.toLocaleString()}</strong>
+								<strong>{ties.toLocaleString(i18n.language)}</strong>
 							</p>
 						)}
 					</div>

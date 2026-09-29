@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function TargetSession(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const [historyDialog, setHistoryDialog] = React.useState<{
 		props: React.ComponentProps<typeof History>;
 		width: number;
@@ -89,7 +89,7 @@ export default function TargetSession(props: Props) {
 						{t('community.solvesCompleted', {count: gameSolves.length})}
 					</h4>
 					<span className="text-text mt-[5px] text-[0.9rem] opacity-70">
-						{new Date(session.created_at).toLocaleString()}
+						{new Date(session.created_at).toLocaleString(i18n.language)}
 					</span>
 				</div>
 				<div className="absolute top-2.5 right-2.5">

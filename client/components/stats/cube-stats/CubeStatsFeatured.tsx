@@ -65,7 +65,7 @@ export default function CubeStatsFeatured() {
 							<div className="stats-pb-date">
 								<CalendarBlank size={18} />
 								<div>
-									<p>{pbDate.toLocaleDateString()}</p>
+									<p>{pbDate.toLocaleDateString(i18n.language)}</p>
 									<span>{getDateFromNow(pbDate, false, i18n.language)}</span>
 								</div>
 							</div>

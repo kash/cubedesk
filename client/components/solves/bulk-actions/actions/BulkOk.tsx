@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function BulkOkSolvesButton(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
 		React.ComponentProps<typeof ConfirmDialog>,
 		'labels'
@@ -30,7 +30,9 @@ export default function BulkOkSolvesButton(props: Props) {
 			buttonText: t('solves.bulk.ok.button', {count: solves.length}),
 			title: t('solves.bulk.ok.title'),
 			description: t('solves.bulk.ok.description'),
-			infoBoxes: [{label: t('solves.solves'), value: solves.length.toLocaleString()}],
+			infoBoxes: [
+				{label: t('solves.solves'), value: solves.length.toLocaleString(i18n.language)},
+			],
 			triggerAction: run,
 		});
 

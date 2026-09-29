@@ -29,7 +29,7 @@ function RecordCard({
 			<div className="border-tmo-module/10 flex items-center justify-between border-b px-4 py-3">
 				<h3 className="text-text m-0 text-sm font-semibold">{title}</h3>
 				<span className="text-text/45 text-xs tabular-nums">
-					{items.length.toLocaleString()}
+					{items.length.toLocaleString(i18n.language)}
 				</span>
 			</div>
 			{items.length ? (

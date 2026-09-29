@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function TimeChart({filterOptions, dummy}: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const filterStr = jsonStr(filterOptions);
 	const solveUpdate = useSolveDb();
 	const data = useMemo(() => {
@@ -48,7 +48,7 @@ export default function TimeChart({filterOptions, dummy}: Props) {
 	const lastDate = data[data.length - 1].timestamp;
 	const sameDay = new Date(firstDate).toDateString() === new Date(lastDate).toDateString();
 	const dateFormat = new Intl.DateTimeFormat(
-		undefined,
+		i18n.language,
 		sameDay
 			? {
 					hour: 'numeric',
@@ -171,7 +171,7 @@ export default function TimeChart({filterOptions, dummy}: Props) {
 									fill={accent}
 								>
 									<title>
-										{new Date(point.timestamp).toLocaleString()} ·{' '}
+										{new Date(point.timestamp).toLocaleString(i18n.language)} ·{' '}
 										{getTimeString(point.value)}
 									</title>
 								</circle>

@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function AvgRow(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const [historyDialog, setHistoryDialog] = React.useState<React.ComponentProps<
 		typeof HistoryDialog
 	> | null>(null);
@@ -33,7 +33,7 @@ export default function AvgRow(props: Props) {
 		avg = getCurrentAverage(filter, count);
 	}
 
-	const localCount = count.toLocaleString();
+	const localCount = count.toLocaleString(i18n.language);
 
 	function openSolveDialog() {
 		if (!avg) {

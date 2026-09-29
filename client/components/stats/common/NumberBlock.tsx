@@ -2,6 +2,7 @@ import StatModule from '@/components/stats/common/StatModule';
 import {Button} from '@/components/ui/button';
 import {cn} from '@/util/cn';
 import React, {CSSProperties, ReactNode} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	icon: ReactNode;
@@ -22,9 +23,11 @@ interface Props {
 }
 
 export default function NumberBlock(props: Props) {
+	const {i18n} = useTranslation();
 	const {icon, color, title, onClick, large, noPadding, children, small, rowSpan, colSpan} =
 		props;
-	const value = typeof props.value === 'number' ? props.value.toLocaleString() : props.value;
+	const value =
+		typeof props.value === 'number' ? props.value.toLocaleString(i18n.language) : props.value;
 	const content = (
 		<>
 			<span className="stats-number-label">

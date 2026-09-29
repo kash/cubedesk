@@ -18,7 +18,7 @@ const textButtonClass =
 	'inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 text-base font-medium outline-none transition-colors';
 
 export default function HistorySolveRow(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const {index, solve, disabled} = props;
 
 	function deleteSolve() {
@@ -96,7 +96,7 @@ export default function HistorySolveRow(props: Props) {
 	return (
 		<div className="box-border flex h-9 w-full flex-row items-center gap-2.5 pr-[5px]" key={id}>
 			<div className="text-text min-w-10 shrink-0 text-base opacity-60">
-				{(index + 1).toLocaleString()}.
+				{(index + 1).toLocaleString(i18n.language)}.
 			</div>
 			<button
 				type="button"

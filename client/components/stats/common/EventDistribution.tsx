@@ -9,7 +9,7 @@ import {PieChart} from 'react-minimal-pie-chart';
 const COLORS = ['#83cbb6', '#91b6e8', '#e8ba7c', '#c3a0de', '#e69baf', '#87cbd5', '#acbc8d'];
 
 export default function EventDistribution() {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const solveUpdate = useSolveDb();
 	// The local solve database is mutable; its revision invalidates this query.
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,7 +56,7 @@ export default function EventDistribution() {
 							{event.title}
 						</span>
 						<strong>
-							{event.value.toLocaleString()}{' '}
+							{event.value.toLocaleString(i18n.language)}{' '}
 							<small>{Math.round((event.value / total) * 100)}%</small>
 						</strong>
 					</li>

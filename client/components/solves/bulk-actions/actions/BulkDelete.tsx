@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function BulkDeleteSolvesButton(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
 		React.ComponentProps<typeof ConfirmDialog>,
 		'labels'
@@ -29,7 +29,9 @@ export default function BulkDeleteSolvesButton(props: Props) {
 			buttonText: t('solves.bulk.delete.button', {count: solves.length}),
 			title: t('solves.bulk.delete.title'),
 			description: t('solves.bulk.delete.description'),
-			infoBoxes: [{label: t('solves.solves'), value: solves.length.toLocaleString()}],
+			infoBoxes: [
+				{label: t('solves.solves'), value: solves.length.toLocaleString(i18n.language)},
+			],
 			triggerAction: run,
 		});
 

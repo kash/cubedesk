@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function ActivityChart({days, filterOptions}: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const solveUpdate = useSolveDb();
 	const data = useMemo(() => {
 		const start = new Date();
@@ -34,7 +34,8 @@ export default function ActivityChart({days, filterOptions}: Props) {
 		<figure className="stats-activity">
 			<figcaption>
 				<span>
-					<strong>{total.toLocaleString()}</strong> {t('common.solve', {count: total})}
+					<strong>{total.toLocaleString(i18n.language)}</strong>{' '}
+					{t('common.solve', {count: total})}
 				</span>
 				<span>{t('common.activeDays', {count: activeDays})}</span>
 			</figcaption>
@@ -79,7 +80,7 @@ export default function ActivityChart({days, filterOptions}: Props) {
 												fill="var(--stats-muted)"
 												fontSize={10}
 											>
-												{value.toLocaleString()}
+												{value.toLocaleString(i18n.language)}
 											</text>
 										</g>
 									);
@@ -98,7 +99,7 @@ export default function ActivityChart({days, filterOptions}: Props) {
 												fill="#83cbb6"
 											>
 												<title>
-													{day.x}: {day.y.toLocaleString()}{' '}
+													{day.x}: {day.y.toLocaleString(i18n.language)}{' '}
 													{t('common.solve', {count: day.y})}
 												</title>
 											</rect>

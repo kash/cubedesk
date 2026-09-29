@@ -41,7 +41,7 @@ function getInitialForm(profile: Profile): ProfileForm {
 }
 
 export default function EditProfile(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const fieldId = React.useId();
 
 	const {profile} = props;
@@ -148,7 +148,7 @@ export default function EditProfile(props: Props) {
 						/>
 						<FieldDescription id={`${fieldId}-1-description`}>
 							<span className={form.bio?.length >= 250 ? 'text-error' : undefined}>
-								{(250 - (form.bio?.length ?? 0)).toLocaleString()}
+								{(250 - (form.bio?.length ?? 0)).toLocaleString(i18n.language)}
 							</span>
 						</FieldDescription>
 					</Field>

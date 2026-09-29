@@ -7,7 +7,7 @@ import {CaretDoubleUp, Eye, Hash} from 'phosphor-react';
 import React from 'react';
 
 export default function AllStatsCommunity() {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const context = useStatsContext();
 	const {stats} = context;
 
@@ -22,7 +22,7 @@ export default function AllStatsCommunity() {
 					icon={<Hash weight="bold" />}
 					title={t('stats.matchSolves')}
 					color="#5A81B5"
-					value={solvesInMatches.toLocaleString()}
+					value={solvesInMatches.toLocaleString(i18n.language)}
 				/>
 				<NumberBlock
 					icon={<CaretDoubleUp weight="bold" />}

@@ -24,7 +24,7 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 	const activeIndex = days.findIndex((day) => day.date === selectedDate);
 	const active = days[activeIndex];
 	const peak = Math.max(1, ...days.flatMap((day) => series.map((item) => day[item.key])));
-	const left = Math.max(42, peak.toLocaleString().length * 7 + 12);
+	const left = Math.max(42, peak.toLocaleString(i18n.language).length * 7 + 12);
 	const right = Math.max(left, width - 18);
 	const bottom = height - 28;
 	const x = scalePoint({domain: days.map((day) => day.date), range: [left, right]});
@@ -192,12 +192,15 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 				>
 					<div className="mb-2 flex items-center justify-between gap-2 text-xs">
 						<span className="font-semibold">
-							{new Date(`${active.date}T00:00:00Z`).toLocaleDateString(undefined, {
-								month: 'short',
-								day: 'numeric',
-								year: 'numeric',
-								timeZone: 'UTC',
-							})}
+							{new Date(`${active.date}T00:00:00Z`).toLocaleDateString(
+								i18n.language,
+								{
+									month: 'short',
+									day: 'numeric',
+									year: 'numeric',
+									timeZone: 'UTC',
+								},
+							)}
 						</span>
 						<span className="text-text/50">UTC</span>
 					</div>
@@ -215,7 +218,7 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 									{item.label}
 								</span>
 								<span className="font-semibold tabular-nums">
-									{active[item.key].toLocaleString()}
+									{active[item.key].toLocaleString(i18n.language)}
 								</span>
 							</div>
 						))}

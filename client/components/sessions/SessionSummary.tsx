@@ -9,13 +9,13 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 export default function SessionSummary({filterOptions}: {filterOptions: FilterSolvesOptions}) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	useSolveDb();
 	const duration = getTotalSolveTime(filterOptions);
 	const metrics = [
 		{
 			label: t('solves.totalSolves'),
-			value: getTotalSolveCount(filterOptions).toLocaleString(),
+			value: getTotalSolveCount(filterOptions).toLocaleString(i18n.language),
 			icon: <Hash />,
 		},
 		{

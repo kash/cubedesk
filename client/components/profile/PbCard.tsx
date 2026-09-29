@@ -33,7 +33,7 @@ export default function PbCard(props: Props) {
 	> | null>(null);
 
 	const {solves, user, topRecord} = props;
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 
 	const single = solves.length === 1;
 	const firstSolve = solves[0];
@@ -148,7 +148,7 @@ export default function PbCard(props: Props) {
 					</div>
 					<div className="border-tmo-module/10 text-text/40 mt-5 flex items-center justify-between border-t pt-3 text-xs">
 						<span>
-							{new Date(createdAt).toLocaleDateString(undefined, {
+							{new Date(createdAt).toLocaleDateString(i18n.language, {
 								month: 'short',
 								day: 'numeric',
 								year: 'numeric',

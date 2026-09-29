@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function BulkDnfSolvesButton(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
 		React.ComponentProps<typeof ConfirmDialog>,
 		'labels'
@@ -30,7 +30,9 @@ export default function BulkDnfSolvesButton(props: Props) {
 			buttonText: t('solves.bulk.dnf.button', {count: solves.length}),
 			title: t('solves.bulk.dnf.title'),
 			description: t('solves.bulk.dnf.description'),
-			infoBoxes: [{label: t('solves.solves'), value: solves.length.toLocaleString()}],
+			infoBoxes: [
+				{label: t('solves.solves'), value: solves.length.toLocaleString(i18n.language)},
+			],
 			triggerAction: run,
 		});
 

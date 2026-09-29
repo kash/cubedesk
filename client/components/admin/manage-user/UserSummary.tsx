@@ -7,7 +7,7 @@ import {CaretDown, Timer} from 'phosphor-react';
 import React from 'react';
 
 function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummary[]}) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	return (
 		<div className="min-w-0">
 			<h4 className="text-text m-0 mb-3 text-sm font-semibold">{title}</h4>
@@ -32,7 +32,7 @@ function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummar
 										t('common.unknown')}
 								</TableCell>
 								<TableCell className="text-right tabular-nums">
-									{row.count.toLocaleString()}
+									{row.count.toLocaleString(i18n.language)}
 								</TableCell>
 								{[row.average, row.min_time, row.max_time, row.sum].map(
 									(value, index) => (
@@ -53,7 +53,7 @@ function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummar
 }
 
 export default function UserSummary({summary}: {summary: UserAccountSummary}) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const stats = [
 		['Solves', summary.solves],
 		['Bans', summary.bans],
@@ -75,7 +75,7 @@ export default function UserSummary({summary}: {summary: UserAccountSummary}) {
 					>
 						<dt className="text-text/55 text-xs">{label}</dt>
 						<dd className="text-text m-0 mt-2 text-2xl font-semibold tracking-tight tabular-nums">
-							{value.toLocaleString()}
+							{value.toLocaleString(i18n.language)}
 						</dd>
 					</div>
 				))}
@@ -99,9 +99,18 @@ export default function UserSummary({summary}: {summary: UserAccountSummary}) {
 				<div className="border-tmo-module/10 space-y-6 border-t p-4 sm:p-5">
 					<dl className="m-0 grid grid-cols-2 gap-4 sm:grid-cols-4">
 						{[
-							[t('community.matches'), summary.matches.count.toLocaleString()],
-							[t('community.wins'), summary.matches.wins.toLocaleString()],
-							[t('community.losses'), summary.matches.losses.toLocaleString()],
+							[
+								t('community.matches'),
+								summary.matches.count.toLocaleString(i18n.language),
+							],
+							[
+								t('community.wins'),
+								summary.matches.wins.toLocaleString(i18n.language),
+							],
+							[
+								t('community.losses'),
+								summary.matches.losses.toLocaleString(i18n.language),
+							],
 							[t('admin.users.winRate'), winRate],
 						].map(([label, value]) => (
 							<div key={label}>

@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function SolvesText(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const {solves, reverseOrder, description, time} = props;
 
 	const [includeScramble, setIncludeScramble] = useState(true);
@@ -56,7 +56,9 @@ export default function SolvesText(props: Props) {
 			const add: string[] = [];
 			if (includeScramble) add.push(solve.scramble);
 			if (includeCubeType) add.push(cubeType ?? solve.cube_type);
-			if (includeDate) add.push(new Date(solve.ended_at ?? 0).toLocaleString());
+			if (includeDate) {
+				add.push(new Date(solve.ended_at ?? 0).toLocaleString(i18n.language));
+			}
 			if (includeNotes) add.push(solve.notes ?? '');
 
 			for (const a of add) {
