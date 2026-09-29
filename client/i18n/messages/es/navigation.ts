@@ -10,6 +10,10 @@ const messages: TranslationDictionary = {
 	'navigation.account': 'Cuenta',
 	'navigation.profile': 'Perfil',
 	'navigation.noNotifications': 'No hay notificaciones',
+	'navigation.contributors': 'Contribuidores de CubeDesk',
+	'navigation.loadingContributors': 'Cargando contribuidores…',
+	'navigation.contributorsLoadFailed': 'No se pudieron cargar los contribuidores.',
+	'navigation.contributions': 'contribuciones',
 };
 
 export default messages;

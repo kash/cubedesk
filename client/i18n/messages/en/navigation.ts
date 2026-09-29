@@ -10,6 +10,10 @@ const messages: TranslationDictionary = {
 	'navigation.account': 'Account',
 	'navigation.profile': 'Profile',
 	'navigation.noNotifications': 'No notifications',
+	'navigation.contributors': 'CubeDesk contributors',
+	'navigation.loadingContributors': 'Loading contributors…',
+	'navigation.contributorsLoadFailed': 'Could not load contributors.',
+	'navigation.contributions': 'contributions',
 };
 
 export default messages;
