@@ -31,7 +31,7 @@ export default function ProfileElo(props: Props) {
 				<span className="text-text/50 text-xs font-medium">{ctInfo?.name ?? ct}</span>
 				<span className="mt-2 text-3xl font-semibold tabular-nums">{eloNum}</span>
 				<span className="text-text/40 mt-1 text-xs">
-					{gameCount} {t('common.game', {count: gameCount})}
+					{t('profile.gameCount', {count: gameCount})}
 				</span>
 			</div>,
 		);

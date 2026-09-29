@@ -31,7 +31,7 @@ interface Props {
 
 export default function AddCustom(props: Props) {
 	const fieldId = React.useId();
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 
 	const {editingId, onComplete} = props;
 
@@ -188,10 +188,7 @@ export default function AddCustom(props: Props) {
 				</Field>
 				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-3`}>
-						{t('trainer.description')}{' '}
-						<span className="text-text/60 font-normal italic">
-							{t('common.optional')}
-						</span>
+						{t('trainer.descriptionOptional')}
 					</FieldLabel>
 					<AutosizeTextarea
 						onChange={setDescription}
@@ -202,16 +199,13 @@ export default function AddCustom(props: Props) {
 					/>
 					<FieldDescription id={`${fieldId}-3-description`}>
 						<span className={description?.length >= 300 ? 'text-error' : undefined}>
-							{(300 - (description?.length ?? 0)).toLocaleString()}
+							{(300 - (description?.length ?? 0)).toLocaleString(i18n.language)}
 						</span>
 					</FieldDescription>
 				</Field>
 				<Field className="mb-5">
 					<FieldLabel htmlFor={`${fieldId}-4`}>
-						{t('trainer.alternateSolutions')}{' '}
-						<span className="text-text/60 font-normal italic">
-							{t('common.optional')}
-						</span>
+						{t('trainer.alternateSolutionsOptional')}
 					</FieldLabel>
 					<Textarea
 						onChange={setAltSolutions}

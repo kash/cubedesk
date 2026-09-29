@@ -17,7 +17,7 @@ import React, {ReactNode, useContext, useRef} from 'react';
 import {v4 as uuid} from 'uuid';
 
 export default function ReviewImport() {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const context = useContext(ImportDataContext);
 	const attempt = useRef<string | null>(null);
 	const submitted = useRef<Parameters<typeof trpc.imports.run.mutate>[0] | null>(null);
@@ -155,7 +155,7 @@ export default function ReviewImport() {
 					<div className="flex w-1/3 flex-row justify-end">
 						<CubePicker
 							labels={{
-								label: t('common.cubeType2'),
+								label: t('common.cubeType'),
 								placeholder: t('common.selectOption'),
 								searchPlaceholder: t('common.search'),
 								emptyMessage: t('common.noResultsFound'),
@@ -186,7 +186,7 @@ export default function ReviewImport() {
 				key="session-header-row"
 			>
 				<div className="flex w-1/3 flex-row">
-					<InputLegend text={t('sessions.sessionName2')} />
+					<InputLegend text={t('sessions.sessionName')} />
 				</div>
 				<div className="flex w-1/3 flex-row justify-end">
 					<InputLegend text={t('common.cubeType')} />
@@ -207,16 +207,14 @@ export default function ReviewImport() {
 			>
 				<div className="my-5">
 					<h4 className="text-text mb-2.5 text-[1.1rem] font-bold">
-						{t('settings.import.solves')}{' '}
-						<span className="text-secondary">
-							{data.solves.length.toLocaleString()}
-						</span>
+						{t('settings.import.solveCount', {
+							count: data.solves.length.toLocaleString(i18n.language),
+						})}
 					</h4>
 					<h4 className="text-text mb-2.5 text-[1.1rem] font-bold">
-						{t('settings.import.sessions')}{' '}
-						<span className="text-secondary">
-							{data.sessions.length.toLocaleString()}
-						</span>
+						{t('settings.import.sessionCount', {
+							count: data.sessions.length.toLocaleString(i18n.language),
+						})}
 					</h4>
 					<div inert={context.importLocked}>{sessionMapper}</div>
 				</div>

@@ -186,7 +186,7 @@ export default function SolvesList() {
 						<div className="container mb-2 flex flex-row flex-wrap items-center gap-2">
 							<CubePicker
 								labels={{
-									label: t('common.cubeType2'),
+									label: t('common.cubeType'),
 									placeholder: t('common.selectOption'),
 									searchPlaceholder: t('common.search'),
 									emptyMessage: t('common.noResultsFound'),

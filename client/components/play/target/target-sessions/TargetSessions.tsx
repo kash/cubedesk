@@ -17,7 +17,7 @@ interface Props {
 export default function TargetSessions(props: Props) {
 	const {t} = useTranslation();
 	const {gameType} = props;
-	const {name} = getGameMetaData(gameType);
+	const {nameKey} = getGameMetaData(gameType);
 
 	const [sessions, setSessions] = useState<Serialized<GameSessionWithRelations>[] | null>(null);
 
@@ -48,7 +48,7 @@ export default function TargetSessions(props: Props) {
 
 	return (
 		<div>
-			<DialogHeader title={t('community.sessionsFor', {name: t(name)})} />
+			<DialogHeader title={t('community.sessionsFor', {name: t(nameKey)})} />
 			<div className="flex flex-col">{body}</div>
 		</div>
 	);

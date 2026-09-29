@@ -59,9 +59,9 @@ export default function CreateNewSession(props: Props) {
 			/>
 			<div className="w-full">
 				<Field className="mb-5">
-					<FieldLabel htmlFor={`${fieldId}-1`}>{t('sessions.sessionName2')}</FieldLabel>
+					<FieldLabel htmlFor={`${fieldId}-1`}>{t('sessions.sessionName')}</FieldLabel>
 					<Input
-						placeholder={t('sessions.newSession2')}
+						placeholder={t('sessions.newSession')}
 						maxLength={200}
 						value={name}
 						onChange={setName}
@@ -71,7 +71,7 @@ export default function CreateNewSession(props: Props) {
 			</div>
 			<CubePicker
 				labels={{
-					label: t('common.cubeType2'),
+					label: t('common.cubeType'),
 					placeholder: t('common.selectOption'),
 					searchPlaceholder: t('common.search'),
 					emptyMessage: t('common.noResultsFound'),

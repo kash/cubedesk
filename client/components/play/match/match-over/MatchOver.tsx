@@ -104,7 +104,7 @@ export default function MatchOver(props: Props) {
 	} else if (isWinner) {
 		header = t('community.youWon');
 	} else if (winner) {
-		header = t('community.won2', {name: winner.username});
+		header = t('community.winnerAnnouncement', {name: winner.username});
 	} else {
 		header = t('community.matchOver');
 	}

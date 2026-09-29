@@ -35,7 +35,7 @@ export default function GameChallenger() {
 				maxPlayers: maxPlayers,
 				matchType: gameType,
 			},
-			title: t('community.play2', {name: t(gameTypeData.name)}),
+			title: t('community.playNamedGame', {name: t(gameTypeData.nameKey)}),
 			onClose: () => {
 				socketClient().emit('playerLeftLobby');
 			},

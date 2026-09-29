@@ -47,7 +47,6 @@ const messages: TranslationDictionary = {
 	'profile.reportProfile': 'Reportar perfil',
 	'profile.copiedProfileLink': 'Enlace del perfil de {name} copiado',
 	'profile.editProfile': 'Editar perfil',
-	'profile.viaThe': ', mediante la',
 	'profile.loadingPicture': 'Cargando foto de perfil',
 	'profile.reportDescription':
 		'Si crees que este usuario ha hecho algo que se debería denunciar, escribe un motivo breve y envía el informe. Revisaremos todos los informes de forma justa y tomaremos medidas si procede.',
@@ -58,7 +57,9 @@ const messages: TranslationDictionary = {
 	'profile.pageDescription':
 		'Consulta el perfil de CubeDesk de {username} para ver sus mejores tiempos de speedcubing. Consulta también su perfil de la WCA, su biografía cubera, sus enlaces sociales y mucho más',
 	'profile.verified': 'Verificado',
-	'profile.joined': 'Se unió',
+	'profile.joinedOn': 'Se unió en {date}',
+	'profile.gameCount_one': '{count} partida',
+	'profile.gameCount_other': '{count} partidas',
 	'profile.personalBests': 'Mejores marcas personales',
 	'profile.aCollectionOfTheFastestSolves': 'Una colección de las resoluciones más rápidas.',
 	'profile.publishYourPbs': 'Publica tus mejores marcas',
@@ -95,10 +96,9 @@ const messages: TranslationDictionary = {
 		'Reintentar la carga de los detalles de la competición',
 	'profile.wca.resultsDescription':
 		'Mejores marcas personales oficiales y clasificaciones nacionales y mundiales por evento',
+	'profile.wca.dataAttribution':
+		'Resultados mantenidos por la <wcaLink>World Cube Association</wcaLink> mediante la <apiLink>API de resultados no oficial</apiLink>. Se actualizan a diario.',
 	'profile.noSuccessfulOfficialResultsYet': 'Todavía no hay resultados oficiales válidos.',
-	'profile.resultsMaintainedByThe': 'Resultados mantenidos por la',
-	'profile.unofficialResultsApi': 'API de resultados no oficial',
-	'profile.updatedDaily': 'Actualizados a diario.',
 	'profile.national': 'Nacional',
 	'profile.world': 'Mundial',
 	'profile.viewProfile': 'Ver perfil',
@@ -109,12 +109,10 @@ const messages: TranslationDictionary = {
 	'profile.single': 'Individual',
 	'profile.publish.confirmation':
 		'Al publicar, confirmas que estas resoluciones son legítimamente tuyas. Tus marcas serán visibles en tu perfil y en las clasificaciones.',
-	'profile.youMust': 'Debes',
-	'profile.setAUsername': 'establecer un nombre de usuario',
-	'profile.beforeYouCanPublishYourTimes': 'antes de poder publicar tus tiempos',
-	'profile.noSolvesPrompt': 'Todavía no tienes ninguna resolución. Ve a la',
-	'profile.timerPage': 'página del cronómetro',
-	'profile.andStartCubing': '¡y empieza a resolver cubos!',
+	'profile.publish.usernameRequired':
+		'Debes <profileLink>establecer un nombre de usuario</profileLink> antes de poder publicar tus tiempos.',
+	'profile.publish.noSolvesPrompt':
+		'Todavía no tienes ninguna resolución. Ve a la <timerLink>página del cronómetro</timerLink> y empieza a resolver cubos.',
 };
 
 export default messages;

@@ -102,7 +102,7 @@ export default function TrainerAlgorithmEditor({
 						</Label>
 					))}
 					<Label className="flex-col items-stretch gap-2 leading-5">
-						<span>{t('common.cubeType2')}</span>
+						<span>{t('common.cubeType')}</span>
 						<NativeSelect
 							value={algorithm.cube_type}
 							onChange={(event) => {

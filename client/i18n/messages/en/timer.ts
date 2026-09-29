@@ -43,7 +43,9 @@ const messages: TranslationDictionary = {
 	'timer.smartCube.confirmSolved': 'Confirm that cube is solved',
 	'timer.smartCube.confirmSolvedDescription':
 		'Please confirm that your smart cube is solved before proceeding.',
-	'timer.smartCube.addedOn': 'Added on',
+	'timer.smartCube.addedOnDate': 'Added on {date}',
+	'timer.smartCube.solveCount_one': '{count} solve',
+	'timer.smartCube.solveCount_other': '{count} solves',
 	'timer.manualSolveTime': 'Manual solve time',
 	'timer.inspectionOn': 'Inspection on',
 	'timer.turn': 'Turn',

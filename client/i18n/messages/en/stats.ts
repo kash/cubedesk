@@ -31,8 +31,7 @@ const messages: TranslationDictionary = {
 	'stats.block.description.currentAverage.cube': 'current {cube} average',
 	'stats.block.description.currentAverage.sessionCube': 'current session {cube} average',
 	'stats.block.description.currentAverageOfCount.all': 'current average of {count}',
-	'stats.block.description.currentAverageOfCount.session':
-		'current session average of {count}',
+	'stats.block.description.currentAverageOfCount.session': 'current session average of {count}',
 	'stats.block.description.currentAverageOfCount.cube': 'current {cube} average of {count}',
 	'stats.block.description.currentAverageOfCount.sessionCube':
 		'current session {cube} average of {count}',
@@ -46,12 +45,13 @@ const messages: TranslationDictionary = {
 	'stats.streakDays_one': '{count} day',
 	'stats.streakDays_other': '{count} days',
 	'stats.customize.addBlock': 'Add block',
+	'stats.customize.blockCount': '{count} of {total} blocks',
+	'stats.customize.editingBlock': 'Editing block {number}',
 	'stats.customize.removeBlock': 'Remove block',
 	'stats.customize.solveCount': 'Number of solves',
 	'stats.customize.solveCountRange': 'Choose 3–10,000 solves',
 	'stats.averageOfCount': 'Average of {amount}',
 	'stats.bestAverageOfCount': 'Best average of {amount}',
-	'stats.blocks': 'blocks',
 	'stats.customize.instructions':
 		'Select any block to edit its value and color. Your changes apply automatically.',
 	'stats.overallAverage': 'Overall average',

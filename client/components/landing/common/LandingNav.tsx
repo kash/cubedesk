@@ -23,32 +23,22 @@ interface NavLinkProps {
 	permanent?: boolean;
 }
 
-const NAV_REST_LINKS: NavLinkProps[] = [
-	{
-		label: 'community.play1v1',
-		link: '/play/head-to-head',
-		color: 'green',
-		dropDownOnly: true,
-	},
-	{
-		label: 'auth.logIn',
-		link: '/login',
-		permanent: true,
-	},
-	{
-		label: 'auth.signUp',
-		link: '/signup',
-		color: 'primary',
-		permanent: true,
-	},
-];
-
 export default function LandingNav(props: Props) {
 	const {t} = useTranslation();
 	const {showBorder} = props;
 
 	const [navSmall, setNavSmall] = useState(false);
 	const [scrolled, setScrolled] = useState(showBorder);
+	const navRestLinks: NavLinkProps[] = [
+		{
+			label: t('community.play1v1'),
+			link: '/play/head-to-head',
+			color: 'green',
+			dropDownOnly: true,
+		},
+		{label: t('auth.logIn'), link: '/login', permanent: true},
+		{label: t('auth.signUp'), link: '/signup', color: 'primary', permanent: true},
+	];
 
 	useWindowListener('scroll', windowScroll);
 	useWindowListener('resize', windowResize);
@@ -81,7 +71,7 @@ export default function LandingNav(props: Props) {
 	const dropDownOptions: ActionMenuOption[] = [];
 	const showNavLinks: React.ReactNode[] = [];
 
-	for (const nav of NAV_REST_LINKS) {
+	for (const nav of navRestLinks) {
 		const {dropDownOnly, label, link, color, permanent} = nav;
 
 		if (permanent || (!navSmall && !dropDownOnly)) {
@@ -101,18 +91,18 @@ export default function LandingNav(props: Props) {
 				link === '/login' || link === '/signup' ? (
 					<AuthDialog key={link} view={link === '/login' ? 'login' : 'signup'}>
 						<button type="button" className={linkClasses.join(' ')}>
-							{t(label)}
+							{label}
 						</button>
 					</AuthDialog>
 				) : (
 					<a key={link} href={link} className={linkClasses.join(' ')}>
-						{t(label)}
+						{label}
 					</a>
 				),
 			);
 		} else {
 			dropDownOptions.push({
-				text: t(label),
+				text: label,
 				link,
 			});
 		}

@@ -4,8 +4,7 @@ import {Button} from '@/components/ui/button';
 import {DialogHeader} from '@/components/ui/dialog';
 import {Solve} from '@/types/solve';
 import {CubeType} from '@/util/cubes/cube_types';
-import {getBasicPlural} from '@/util/strings/plural';
-import React, {ReactNode, useState} from 'react';
+import React, {useState} from 'react';
 
 interface Props {
 	onComplete?: (cubeType: CubeType) => void;
@@ -17,13 +16,14 @@ export default function EventTypeSelector(props: Props) {
 	const {solves, onComplete} = props;
 	const [cubeType, setCubeType] = useState<CubeType | null>(null);
 
-	let selectedCubeType: ReactNode = null;
+	let selectedCubeType: React.ReactNode = null;
 	if (cubeType) {
 		selectedCubeType = (
 			<p className="border-text/20 text-text mt-4 mb-5 table border-b-4 border-solid text-2xl">
-				{t('solves.bulk.setEventTypeOf')}{' '}
-				<span className="text-success">{getBasicPlural(solves, 'solve')}</span> to{' '}
-				<span className="text-warning">{cubeType.name}</span>
+				{t('solves.bulk.eventTypeSelection', {
+					count: solves.length,
+					event: cubeType.name,
+				})}
 			</p>
 		);
 	}
@@ -37,7 +37,7 @@ export default function EventTypeSelector(props: Props) {
 			<div className="mb-6">
 				<CubePicker
 					labels={{
-						label: t('common.cubeType2'),
+						label: t('common.cubeType'),
 						placeholder: t('common.selectOption'),
 						searchPlaceholder: t('common.search'),
 						emptyMessage: t('common.noResultsFound'),

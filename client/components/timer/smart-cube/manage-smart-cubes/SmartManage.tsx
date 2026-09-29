@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function SmartManage(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const {cube} = props;
 	const solveCount = cube.solves.length;
 
@@ -20,12 +20,18 @@ export default function SmartManage(props: Props) {
 			<div>
 				<h4 className="text-text text-[1.1rem] font-semibold">{cube.name}</h4>
 				<h5 className="text-text text-[0.9rem] font-normal opacity-80">
-					{t('timer.smartCube.addedOn')} {new Date(cube.created_at).toDateString()}
+					{t('timer.smartCube.addedOnDate', {
+						date: new Date(cube.created_at).toLocaleDateString(i18n.language, {
+							month: 'short',
+							day: 'numeric',
+							year: 'numeric',
+						}),
+					})}
 				</h5>
 			</div>
 			<div>
 				<p className="text-text text-base">
-					{solveCount} {t('common.solve', {count: solveCount})}
+					{t('timer.smartCube.solveCount', {count: solveCount})}
 				</p>
 			</div>
 		</div>

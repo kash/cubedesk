@@ -135,7 +135,10 @@ export default function CustomizeStats(props: Props) {
 					<div>
 						<h3 className="m-0 text-sm font-semibold">{t('timer.yourStatsLayout')}</h3>
 						<span className="text-text/45 text-xs">
-							{blockCount} of {STATS_GRID_SIZE ** 2} {t('stats.blocks')}
+							{t('stats.customize.blockCount', {
+								count: blockCount,
+								total: STATS_GRID_SIZE ** 2,
+							})}
 						</span>
 					</div>
 					<Button

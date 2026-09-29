@@ -1,4 +1,4 @@
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import CustomVisual from '@/components/trainer/CustomVisual';
 import {CUSTOM_TRAINER_ALGO_TYPE, useTrainerContext} from '@/components/trainer/Trainer';
@@ -39,13 +39,18 @@ export default function TrainerAlgo(props: Props) {
 		const copyUsername = algoExt.copy_of.user.username;
 		originalBy = (
 			<div className="text-text mb-2 text-[0.9rem] opacity-70">
-				{t('trainer.originalBy')}{' '}
-				<Link
-					className="border-text relative z-10 inline border-b-2 text-inherit"
-					to={`/user/${copyUsername}`}
-				>
-					{copyUsername}
-				</Link>
+				<Trans
+					i18nKey="trainer.originalByUser"
+					values={{username: copyUsername}}
+					components={{
+						profileLink: (
+							<Link
+								className="border-text relative z-10 inline border-b-2 text-inherit"
+								to={`/user/${copyUsername}`}
+							/>
+						),
+					}}
+				/>
 			</div>
 		);
 	}

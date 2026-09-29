@@ -11,7 +11,7 @@ import {validateStrongPassword} from '@/util/auth/password';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 
 enum ForgotStage {
 	EnterEmail,
@@ -210,23 +210,29 @@ export default function Forgot() {
 		>
 			<form onSubmit={nextStage}>{body}</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
-				{t('auth.also')}{' '}
-				<AuthFormLink
-					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
-					view="signup"
-					to="/signup"
-				>
-					{t('auth.signUpLower')}
-				</AuthFormLink>{' '}
-				or{' '}
-				<AuthFormLink
-					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
-					view="login"
-					to="/login"
-				>
-					{t('auth.logInLower')}
-				</AuthFormLink>
-				.
+				<Trans
+					i18nKey="auth.alternateActions"
+					components={{
+						signup: (
+							<AuthFormLink
+								className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
+								view="signup"
+								to="/signup"
+							>
+								{null}
+							</AuthFormLink>
+						),
+						login: (
+							<AuthFormLink
+								className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
+								view="login"
+								to="/login"
+							>
+								{null}
+							</AuthFormLink>
+						),
+					}}
+				/>
 			</p>
 		</div>
 	);

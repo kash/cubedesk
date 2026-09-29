@@ -92,7 +92,7 @@ export async function prefetchProfileData(store, req) {
 }
 
 export default function Profile() {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const [publishSolvesDialog, setPublishSolvesDialog] = React.useState<{
 		props: React.ComponentProps<typeof PublishSolves>;
 		title: React.ReactNode;
@@ -278,10 +278,14 @@ export default function Profile() {
 							</h1>
 							<p className="text-text/50 mt-2 mb-0 flex items-center gap-1.5 text-xs">
 								<CalendarBlank size={14} />
-								{t('profile.joined')}{' '}
-								{new Date(user.created_at).toLocaleDateString(undefined, {
-									month: 'long',
-									year: 'numeric',
+								{t('profile.joinedOn', {
+									date: new Date(user.created_at).toLocaleDateString(
+										i18n.language,
+										{
+											month: 'long',
+											year: 'numeric',
+										},
+									),
 								})}
 							</p>
 						</div>

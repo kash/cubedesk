@@ -109,9 +109,9 @@ export default function Game(props: GameProps) {
 	}
 
 	const {getScramble, multiplayerOnly, defaultCubeType, gameType, loaded} = props;
-	const {color, name, description, icon} = getGameMetaData(gameType);
+	const {color, nameKey, descriptionKey, icon} = getGameMetaData(gameType);
 	const {t} = useTranslation();
-	const translatedName = t(name);
+	const translatedName = t(nameKey);
 
 	if (!loaded) {
 		return null;
@@ -211,7 +211,7 @@ export default function Game(props: GameProps) {
 
 	let playButton: ReactNode = (
 		<Button variant="default" onClick={toggleTimer} size="lg" className="w-full">
-			{t('community.play2', {name: translatedName})}
+			{t('community.playNamedGame', {name: translatedName})}
 		</Button>
 	);
 	if (multiplayerOnly) {
@@ -238,7 +238,7 @@ export default function Game(props: GameProps) {
 								</h2>
 							</div>
 							<p className="text-text/60 m-0 text-base leading-relaxed font-normal">
-								{t(description)}
+								{t(descriptionKey)}
 							</p>
 						</div>
 

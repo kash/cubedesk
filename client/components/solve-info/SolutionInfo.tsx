@@ -51,7 +51,7 @@ export default function SolutionInfo(props: Props) {
 								{getTimeString(step.total_time ?? 0)}s
 							</span>
 							<span className="border-success text-text mr-3 table border-t-[3px] pt-0.5 text-[0.9rem] font-medium opacity-70">
-								{step.turn_count} {t('solves.turn', {count: step.turn_count})}
+								{t('solves.turnCount', {count: step.turn_count})}
 							</span>
 							<span className="border-warning text-text mr-3 table border-t-[3px] pt-0.5 text-[0.9rem] font-medium opacity-70">
 								{step.tps} TPS

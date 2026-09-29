@@ -31,8 +31,7 @@ const messages: TranslationDictionary = {
 	'stats.block.description.currentAverage.cube': 'media actual de {cube}',
 	'stats.block.description.currentAverage.sessionCube': 'media actual de {cube} en la sesión',
 	'stats.block.description.currentAverageOfCount.all': 'media actual de {count}',
-	'stats.block.description.currentAverageOfCount.session':
-		'media actual de {count} de la sesión',
+	'stats.block.description.currentAverageOfCount.session': 'media actual de {count} de la sesión',
 	'stats.block.description.currentAverageOfCount.cube': 'media actual de {count} de {cube}',
 	'stats.block.description.currentAverageOfCount.sessionCube':
 		'media actual de {count} de {cube} en la sesión',
@@ -47,12 +46,13 @@ const messages: TranslationDictionary = {
 	'stats.streakDays_one': '{count} día',
 	'stats.streakDays_other': '{count} días',
 	'stats.customize.addBlock': 'Agregar bloque',
+	'stats.customize.blockCount': '{count} de {total} bloques',
+	'stats.customize.editingBlock': 'Editando el bloque {number}',
 	'stats.customize.removeBlock': 'Quitar bloque',
 	'stats.customize.solveCount': 'Número de soluciones',
 	'stats.customize.solveCountRange': 'Elija entre 3 y 10 000 soluciones',
 	'stats.averageOfCount': 'Media de {amount}',
 	'stats.bestAverageOfCount': 'Mejor media de {amount}',
-	'stats.blocks': 'bloques',
 	'stats.customize.instructions':
 		'Selecciona cualquier bloque para editar su valor y color. Los cambios se aplican automáticamente.',
 	'stats.overallAverage': 'Media general',

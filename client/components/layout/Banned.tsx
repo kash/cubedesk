@@ -1,4 +1,4 @@
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import {Button} from '@/components/ui/button';
 import {logOut} from '@/util/auth/logout';
 import {getDateFromNow} from '@/util/dates';
@@ -13,21 +13,29 @@ export default function Banned() {
 	if (me.banned_forever) {
 		bannedText = (
 			<p>
-				{t('auth.ban.intro')}{' '}
-				<span className="bg-module text-error box-border rounded p-1 font-semibold">
-					{t('auth.ban.permanently')}
-				</span>{' '}
-				{t('auth.ban.banned')}
+				<Trans
+					i18nKey="auth.ban.permanentMessage"
+					components={{
+						status: (
+							<span className="bg-module text-error box-border rounded p-1 font-semibold" />
+						),
+					}}
+				/>
 			</p>
 		);
 	} else {
 		const until = getDateFromNow(me.banned_until, false, i18n.language);
 		bannedText = (
 			<p>
-				{t('auth.ban.lifted')}{' '}
-				<span className="bg-module text-error box-border rounded p-1 font-semibold">
-					{until}
-				</span>
+				<Trans
+					i18nKey="auth.ban.liftedMessage"
+					values={{until}}
+					components={{
+						date: (
+							<span className="bg-module text-error box-border rounded p-1 font-semibold" />
+						),
+					}}
+				/>
 			</p>
 		);
 	}
@@ -55,10 +63,14 @@ export default function Banned() {
 					<p className="m-0">{reason}</p>
 				</div>
 				<p>
-					{t('auth.ban.contact')}{' '}
-					<a className="text-text underline" href="mailto:kash@cubedesk.io">
-						kash@cubedesk.io
-					</a>
+					<Trans
+						i18nKey="auth.ban.contactMessage"
+						components={{
+							email: (
+								<a className="text-text underline" href="mailto:kash@cubedesk.io" />
+							),
+						}}
+					/>
 				</p>
 				<Button variant="secondary" onClick={logOut}>
 					{t('auth.logOut')}

@@ -104,10 +104,7 @@ export default function EditAlgo(props: Props) {
 				/>
 			</Field>
 			<Field className="mb-6">
-				<FieldLabel htmlFor={`${fieldId}-3`}>
-					{t('trainer.scrambles')}{' '}
-					<span className="text-text/60 font-normal italic">{t('common.optional')}</span>
-				</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-3`}>{t('trainer.scramblesOptional')}</FieldLabel>
 				<AutosizeTextarea
 					value={scrambles}
 					placeholder={algoExt.scrambles ?? undefined}

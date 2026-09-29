@@ -10,21 +10,6 @@ import {scaleOrdinal} from '@visx/scale';
 import {Pie} from '@visx/shape';
 import React, {useState} from 'react';
 
-const CHART_TYPES = [
-	{
-		id: 'time',
-		value: 'solves.time',
-	},
-	{
-		id: 'tps',
-		value: 'stats.tps',
-	},
-	{
-		id: 'turns',
-		value: 'stats.turns',
-	},
-];
-
 interface Props {
 	solve: Solve;
 }
@@ -40,6 +25,11 @@ export default function StepPie(props: Props) {
 	const {solve} = props;
 
 	const [chartType, setChartType] = useState('time');
+	const chartTypes = [
+		{id: 'time', value: t('solves.time')},
+		{id: 'tps', value: t('stats.tps')},
+		{id: 'turns', value: t('stats.turns')},
+	];
 
 	function changeChartType(chartType) {
 		setChartType(chartType);
@@ -87,11 +77,7 @@ export default function StepPie(props: Props) {
 
 	return (
 		<div className="flex flex-col items-center justify-center pb-10">
-			<HorizontalNav
-				onChange={changeChartType}
-				tabs={CHART_TYPES.map((tab) => ({...tab, value: t(tab.value)}))}
-				tabId={chartType}
-			/>
+			<HorizontalNav onChange={changeChartType} tabs={chartTypes} tabId={chartType} />
 
 			<ParentSize
 				className="mt-[50px]"

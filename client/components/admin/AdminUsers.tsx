@@ -196,15 +196,15 @@ export default function AdminUsers() {
 										<div className="min-w-0 flex-1 overflow-hidden">
 											<Avatar user={user} small hideBadges />
 											<p className="text-text/45 mt-1.5 mb-0 text-xs">
-												{t('profile.joined')}{' '}
-												{new Date(user.created_at).toLocaleDateString(
-													undefined,
-													{
+												{t('admin.users.joinedOn', {
+													date: new Date(
+														user.created_at,
+													).toLocaleDateString(i18n.language, {
 														month: 'short',
 														day: 'numeric',
 														year: 'numeric',
-													},
-												)}
+													}),
+												})}
 											</p>
 										</div>
 										<div className="flex flex-wrap items-center gap-2">

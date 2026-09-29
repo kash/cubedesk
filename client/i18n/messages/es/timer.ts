@@ -45,7 +45,9 @@ const messages: TranslationDictionary = {
 	'timer.smartCube.confirmSolved': 'Confirma que el cubo está resuelto',
 	'timer.smartCube.confirmSolvedDescription':
 		'Confirma que tu cubo inteligente está resuelto antes de continuar.',
-	'timer.smartCube.addedOn': 'Añadido el',
+	'timer.smartCube.addedOnDate': 'Añadido el {date}',
+	'timer.smartCube.solveCount_one': '{count} resolución',
+	'timer.smartCube.solveCount_other': '{count} resoluciones',
 	'timer.manualSolveTime': 'Tiempo manual',
 	'timer.inspectionOn': 'Inspección activada',
 	'timer.turn': 'Gira el',

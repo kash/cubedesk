@@ -297,7 +297,7 @@ export default function SolveInfo(props: Props) {
 						)}
 						<div className="mt-[15px] flex flex-row items-center gap-2.5">
 							{isSmartCube ? (
-								<Badge size="button" variant="info" title={t('common.smartCube2')}>
+								<Badge size="button" variant="info" title={t('common.smartCube')}>
 									{smartDevice?.name}
 									<Bluetooth />
 								</Badge>

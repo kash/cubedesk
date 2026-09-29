@@ -110,7 +110,7 @@ export default function HeaderControl() {
 	const cubePicker = !focusMode && !headerOptions.hideCubeType && (
 		<CubePicker
 			labels={{
-				label: t('common.cubeType2'),
+				label: t('common.cubeType'),
 				placeholder: t('common.selectOption'),
 				searchPlaceholder: t('common.search'),
 				emptyMessage: t('common.noResultsFound'),
@@ -225,7 +225,7 @@ export default function HeaderControl() {
 					disabled: manualDisabled,
 				},
 				{
-					text: t('sessions.newSession2'),
+					text: t('sessions.newSession'),
 					hidden: headerOptions.hideNewSession || !me,
 					onClick: toggleCreateNewSession,
 					icon: <Plus />,

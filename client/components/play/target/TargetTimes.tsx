@@ -48,7 +48,7 @@ export default function TargetTimes(props: Props) {
 
 		const winnerWithTime = description.match(/^(.+) won \((.+)\)$/);
 		if (winnerWithTime) {
-			return t('community.won3', {
+			return t('community.winnerWithTime', {
 				name: winnerWithTime[1],
 				time: winnerWithTime[2],
 			});

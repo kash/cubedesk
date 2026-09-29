@@ -160,16 +160,22 @@ export default function TrainerCsvImport({
 												<p className="font-semibold">{field.field}</p>
 												<div className="grid gap-2 sm:grid-cols-2">
 													<pre className="text-text/60 break-words whitespace-pre-wrap">
-														{t('admin.trainer.before')}{' '}
-														{field.before === null
-															? t('admin.trainer.newValue')
-															: String(field.before) ||
-																t('admin.trainer.emptyValue')}
+														{t('admin.trainer.beforeValue', {
+															value:
+																field.before === null
+																	? t('admin.trainer.newValue')
+																	: String(field.before) ||
+																		t(
+																			'admin.trainer.emptyValue',
+																		),
+														})}
 													</pre>
 													<pre className="break-words whitespace-pre-wrap">
-														{t('admin.trainer.after')}{' '}
-														{String(field.after) ||
-															t('admin.trainer.emptyValue')}
+														{t('admin.trainer.afterValue', {
+															value:
+																String(field.after) ||
+																t('admin.trainer.emptyValue'),
+														})}
 													</pre>
 												</div>
 											</div>
@@ -182,8 +188,7 @@ export default function TrainerCsvImport({
 						disabled={busy || !!preview.errors.length}
 						onClick={() => void confirm()}
 					>
-						{t('admin.trainer.confirmImportOf')} {preview.total}{' '}
-						{t('admin.trainer.algorithms')}
+						{t('admin.trainer.confirmImport', {count: preview.total})}
 					</Button>
 				</div>
 			)}

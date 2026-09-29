@@ -14,7 +14,7 @@ import React, {useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 export default function SessionAnalytics({filterOptions}: {filterOptions: FilterSolvesOptions}) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const revision = useSolveDb();
 	const [bucketCount, setBucketCount] = useState(6);
 	const {progress, buckets} = useMemo(() => {
@@ -149,7 +149,7 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 							<SelectContent>
 								{[4, 5, 6, 7, 8, 9, 10].map((count) => (
 									<SelectItem key={count} value={String(count)}>
-										{count} {t('common.ranges')}
+										{t('sessions.analytics.rangeCount', {count})}
 									</SelectItem>
 								))}
 							</SelectContent>
@@ -199,7 +199,9 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 														<title>
 															{getTimeString(bucket.low, 2)}–
 															{getTimeString(bucket.high, 2)}:{' '}
-															{bucket.count} {t('solves.solves2')}
+															{t('sessions.analytics.solveCount', {
+																count: bucket.count,
+															})}
 														</title>
 													</rect>
 													{bucket.count > 0 && (
@@ -208,7 +210,9 @@ export default function SessionAnalytics({filterOptions}: {filterOptions: Filter
 															y={plotHeight + 12 - barHeight}
 															textAnchor="middle"
 														>
-															{bucket.count.toLocaleString()}
+															{bucket.count.toLocaleString(
+																i18n.language,
+															)}
 														</text>
 													)}
 													{index % tickEvery === 0 && (

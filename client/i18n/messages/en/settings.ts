@@ -47,13 +47,13 @@ const messages: TranslationDictionary = {
 	'settings.layout.alignLeft': 'Align Left',
 	'settings.layout.alignRight': 'Align Right',
 	'settings.microphone.giveAccess': 'Give Mic Access',
-	'settings.import.goTo': 'Go to',
+	'settings.import.goToCsTimer': 'Go to <csTimerLink>cstimer.net</csTimerLink>.',
 	'settings.import.navigateToSettings':
 		'Navigate to the <settingsLink>Settings</settingsLink> page.',
-	'settings.notifications.unsubscribed':
-		'You are now unsubscribed from all CubeDesk tips, updates, and marketing emails. You can opt back in at any time on the',
+	'settings.notifications.unsubscribedPrompt':
+		'You are now unsubscribed from all CubeDesk tips, updates, and marketing emails. You can opt back in at any time on the <notificationsLink>notifications page</notificationsLink>.',
 	'settings.cubeTypes.add': 'Add cube type',
-	'settings.import.from': 'Import data from',
+	'settings.import.fromSource': 'Import data from {source}',
 	'settings.import.exportFromCsTimer': 'How to export data from csTimer',
 	'settings.import.csTimerExportIcon': 'Click the "Export" icon (next to the Settings button)',
 	'settings.import.csTimerExportFile': 'Click "Export to file"',
@@ -62,11 +62,10 @@ const messages: TranslationDictionary = {
 	'settings.import.reviewTitle': 'Review & import',
 	'settings.import.reviewDescription':
 		'Please make sure that the number below look correct. Then click Import data!',
-	'settings.import.solves': 'Solves:',
-	'settings.import.sessions': 'Sessions:',
+	'settings.import.solveCount': 'Solves: {count}',
+	'settings.import.sessionCount': 'Sessions: {count}',
 	'settings.import.exportFromCubeDesk': 'How to export data from CubeDesk',
 	'settings.import.clickExport': 'Click "Export all data" and save the file',
-	'settings.notifications.page': 'page.',
 	'settings.importFromCsTimer': 'Import from csTimer',
 	'settings.importFromCubeDesk': 'Import from CubeDesk',
 	'settings.settings': 'Settings',

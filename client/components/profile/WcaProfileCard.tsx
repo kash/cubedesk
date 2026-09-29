@@ -5,7 +5,7 @@ import type {WcaBest} from '@/types/wca';
 import {ArrowUpRight, ArrowClockwise} from 'phosphor-react';
 import React from 'react';
 import type {useWcaProfile} from './useWcaProfile';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 
 function Result({
 	eventId,
@@ -16,7 +16,7 @@ function Result({
 	best: WcaBest | null;
 	average?: boolean;
 }) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	return (
 		<div>
 			<div className="text-sm font-semibold whitespace-nowrap tabular-nums">
@@ -26,11 +26,13 @@ function Result({
 				<div className="text-text/50 mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[11px] tabular-nums">
 					<span>
 						{t('profile.national')}{' '}
-						{best.nationalRank ? `#${best.nationalRank.toLocaleString()}` : '—'}
+						{best.nationalRank
+							? `#${best.nationalRank.toLocaleString(i18n.language)}`
+							: '—'}
 					</span>
 					<span>
 						{t('profile.world')}{' '}
-						{best.worldRank ? `#${best.worldRank.toLocaleString()}` : '—'}
+						{best.worldRank ? `#${best.worldRank.toLocaleString(i18n.language)}` : '—'}
 					</span>
 				</div>
 			) : null}
@@ -44,7 +46,7 @@ export default function WcaProfileCard({
 	data,
 	retry,
 }: ReturnType<typeof useWcaProfile>) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	if (!linked) return null;
 	const stats = data?.stats;
 	const unavailable = !loading && (!data || data.status === 'unavailable');
@@ -121,7 +123,7 @@ export default function WcaProfileCard({
 								{t('common.competitions')}
 							</div>
 							<div className="text-sm font-semibold tabular-nums">
-								{stats.competitionCount.toLocaleString()}
+								{stats.competitionCount.toLocaleString(i18n.language)}
 							</div>
 						</div>
 						<div className="min-w-0 flex-1">
@@ -148,7 +150,7 @@ export default function WcaProfileCard({
 										className="text-text/50 mt-1 block text-xs"
 									>
 										{new Date(`${latest.date}T00:00:00Z`).toLocaleDateString(
-											undefined,
+											i18n.language,
 											{
 												month: 'short',
 												day: 'numeric',
@@ -235,25 +237,27 @@ export default function WcaProfileCard({
 				</>
 			) : null}
 			<div className="border-tmo-module/10 text-text/40 border-t px-5 py-3 text-[11px] leading-relaxed">
-				{t('profile.resultsMaintainedByThe')}{' '}
-				<a
-					href="https://www.worldcubeassociation.org/export/results"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="underline underline-offset-2"
-				>
-					{t('common.worldCubeAssociation')}
-				</a>
-				{t('profile.viaThe')}{' '}
-				<a
-					href="https://wca-rest-api.robiningelbrecht.be/"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="underline underline-offset-2"
-				>
-					{t('profile.unofficialResultsApi')}
-				</a>
-				. {t('profile.updatedDaily')}
+				<Trans
+					i18nKey="profile.wca.dataAttribution"
+					components={{
+						wcaLink: (
+							<a
+								href="https://www.worldcubeassociation.org/export/results"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline underline-offset-2"
+							/>
+						),
+						apiLink: (
+							<a
+								href="https://wca-rest-api.robiningelbrecht.be/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline underline-offset-2"
+							/>
+						),
+					}}
+				/>
 			</div>
 		</section>
 	);

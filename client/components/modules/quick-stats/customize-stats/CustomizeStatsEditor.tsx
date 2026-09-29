@@ -28,7 +28,7 @@ interface Props {
 }
 
 export default function CustomizeStatsEditor(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const fieldId = React.useId();
 
 	const {stat, index, removeStatsBlock, hideRemoveButton} = props;
@@ -192,7 +192,7 @@ export default function CustomizeStatsEditor(props: Props) {
 							>
 								{[5, 10, 12, 25, 50, 100, 250, 500, 1000].map((count) => (
 									<ToggleGroupItem key={count} value={String(count)}>
-										{count.toLocaleString()}
+										{count.toLocaleString(i18n.language)}
 									</ToggleGroupItem>
 								))}
 							</ToggleGroup>
@@ -223,7 +223,7 @@ export default function CustomizeStatsEditor(props: Props) {
 	} else if (savedStatus === 'saving') {
 		saveDiv = (
 			<Badge size="sm" variant="warning" role="status">
-				{t('common.saving2')}
+				{t('common.saving')}
 			</Badge>
 		);
 	}
@@ -234,7 +234,7 @@ export default function CustomizeStatsEditor(props: Props) {
 				<div className="border-tmo-module/10 border-b pb-4">
 					<div className="mb-1 flex min-h-5 items-center justify-between gap-2">
 						<span className="text-text/45 text-xs">
-							{t('common.editingBlock')} {index + 1}
+							{t('stats.customize.editingBlock', {number: index + 1})}
 						</span>
 						<span className="text-xs" role="status">
 							{saveDiv}

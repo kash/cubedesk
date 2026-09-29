@@ -55,7 +55,7 @@ export default function TopNav(props: Props) {
 							size="lg"
 							style={{color: white ? '#444444' : undefined}}
 						>
-							{t('auth.logIn2')}
+							{t('auth.logIn')}
 						</Button>
 					</AuthDialog>
 					<AuthDialog view="signup">

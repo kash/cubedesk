@@ -10,7 +10,7 @@ import {getRedirectLink, getSignUpLink} from '@/util/auth/login';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 
 export default function Login() {
 	const fieldId = React.useId();
@@ -87,21 +87,27 @@ export default function Login() {
 						disabled={logInMutation.isPending}
 						aria-busy={logInMutation.isPending}
 					>
-						{t('auth.logIn2')}
+						{t('auth.logIn')}
 						{logInMutation.isPending ? <Spinner aria-hidden="true" /> : null}
 					</Button>
 					<ButtonError text={error} />
 				</div>
 			</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
-				{t('auth.donTHaveAnAccount')}{' '}
-				<AuthFormLink
-					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
-					view="signup"
-					to={getSignUpLink()}
-				>
-					{t('auth.signUp')}
-				</AuthFormLink>
+				<Trans
+					i18nKey="auth.noAccountPrompt"
+					components={{
+						signup: (
+							<AuthFormLink
+								className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
+								view="signup"
+								to={getSignUpLink()}
+							>
+								{null}
+							</AuthFormLink>
+						),
+					}}
+				/>
 			</p>
 		</div>
 	);

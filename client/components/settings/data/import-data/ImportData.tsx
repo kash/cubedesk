@@ -103,12 +103,7 @@ export default function ImportData(props: Props) {
 		<ImportDataContext.Provider value={context}>
 			<div>
 				<DialogHeader
-					title={
-						<>
-							{t('settings.import.from')}{' '}
-							<span className="text-secondary">{timerImportData.name}</span>
-						</>
-					}
+					title={t('settings.import.fromSource', {source: timerImportData.name})}
 				/>
 				{timerImportData.instructions}
 				<ProcessData />

@@ -12,7 +12,7 @@ import {validateStrongPassword} from '@/util/auth/password';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
 import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 
 export default function SignUp() {
 	const fieldId = React.useId();
@@ -104,14 +104,20 @@ export default function SignUp() {
 				</div>
 			</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
-				{t('auth.alreadyHaveAnAccount')}{' '}
-				<AuthFormLink
-					className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
-					view="login"
-					to={getLoginLink()}
-				>
-					{t('auth.logIn')}
-				</AuthFormLink>
+				<Trans
+					i18nKey="auth.existingAccountPrompt"
+					components={{
+						login: (
+							<AuthFormLink
+								className="text-text mb-0 inline-block text-[0.9rem] underline opacity-70"
+								view="login"
+								to={getLoginLink()}
+							>
+								{null}
+							</AuthFormLink>
+						),
+					}}
+				/>
 			</p>
 		</div>
 	);

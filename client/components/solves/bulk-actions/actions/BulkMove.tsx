@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function BulkMoveSolvesButton(props: Props) {
-	const {t} = useTranslation();
+	const {t, i18n} = useTranslation();
 	const [confirmDialog, setConfirmDialog] = React.useState<Omit<
 		React.ComponentProps<typeof ConfirmDialog>,
 		'labels'
@@ -38,8 +38,8 @@ export default function BulkMoveSolvesButton(props: Props) {
 			title: t('solves.bulk.move.title'),
 			description: t('solves.bulk.move.description'),
 			infoBoxes: [
-				{label: t('solves.solves'), value: solves.length.toLocaleString()},
-				{label: t('sessions.newSession2'), value: session.name},
+				{label: t('solves.solves'), value: solves.length.toLocaleString(i18n.language)},
+				{label: t('sessions.newSession'), value: session.name},
 			],
 			triggerAction: run,
 		});

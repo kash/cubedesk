@@ -11,7 +11,7 @@ import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError, toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import {CheckCircle, Cube} from 'phosphor-react';
 import React, {useState} from 'react';
 
@@ -121,16 +121,19 @@ export default function PublishSolves(props: Props) {
 	if (!me?.username) {
 		exception = (
 			<p>
-				{t('profile.youMust')}{' '}
-				<a href="/account/personal-info">{t('profile.setAUsername')}</a>{' '}
-				{t('profile.beforeYouCanPublishYourTimes')}
+				<Trans
+					i18nKey="profile.publish.usernameRequired"
+					components={{profileLink: <a href="/account/personal-info" />}}
+				/>
 			</p>
 		);
 	} else if (!rows.length) {
 		exception = (
 			<p>
-				{t('profile.noSolvesPrompt')} <a href="/">{t('profile.timerPage')}</a>{' '}
-				{t('profile.andStartCubing')}
+				<Trans
+					i18nKey="profile.publish.noSolvesPrompt"
+					components={{timerLink: <a href="/" />}}
+				/>
 			</p>
 		);
 	}

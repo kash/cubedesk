@@ -7,8 +7,8 @@ import React from 'react';
 export interface GameMetaData {
 	id: string;
 	icon: React.ReactElement;
-	description: string;
-	name: string;
+	descriptionKey: string;
+	nameKey: string;
 	color: string;
 }
 
@@ -16,15 +16,15 @@ const gameTypeData: Record<GameType, GameMetaData> = {
 	[GameType.HEAD_TO_HEAD]: {
 		id: 'head-to-head',
 		icon: <Lightning weight="fill" />,
-		description: 'community.headToHead.description',
-		name: 'common.value1v1',
+		descriptionKey: 'community.headToHead.description',
+		nameKey: 'common.value1v1',
 		color: '#ff9800',
 	},
 	[GameType.ELIMINATION]: {
 		id: 'elimination',
 		icon: <Sword weight="fill" />,
-		description: 'community.elimination.description',
-		name: 'community.elimination',
+		descriptionKey: 'community.elimination.description',
+		nameKey: 'community.elimination',
 		color: '#42a5f5',
 	},
 };

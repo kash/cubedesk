@@ -47,7 +47,6 @@ const messages: TranslationDictionary = {
 	'profile.reportProfile': 'Report profile',
 	'profile.copiedProfileLink': 'Copied profile link for {name}',
 	'profile.editProfile': 'Edit profile',
-	'profile.viaThe': ', via the',
 	'profile.loadingPicture': 'Loading profile picture',
 	'profile.reportDescription':
 		'If you believe that this user has done something report-worthy, please provide a brief reason below and submit the report. We will look into all reports in a fair manner and will take action if needed.',
@@ -58,7 +57,9 @@ const messages: TranslationDictionary = {
 	'profile.pageDescription':
 		"Check out {username}'s CubeDesk profile to see their fastest speedcubing times. See their WCA profile, cubing bio, social links, and more",
 	'profile.verified': 'Verified',
-	'profile.joined': 'Joined',
+	'profile.joinedOn': 'Joined {date}',
+	'profile.gameCount_one': '{count} game',
+	'profile.gameCount_other': '{count} games',
 	'profile.personalBests': 'Personal bests',
 	'profile.aCollectionOfTheFastestSolves': 'A collection of the fastest solves.',
 	'profile.publishYourPbs': 'Publish your PBs',
@@ -92,10 +93,9 @@ const messages: TranslationDictionary = {
 	'profile.retryLoadingCompetitionDetails': 'Retry loading competition details',
 	'profile.wca.resultsDescription':
 		'Official personal bests and national and world rankings by event',
+	'profile.wca.dataAttribution':
+		'Results maintained by the <wcaLink>World Cube Association</wcaLink>, via the <apiLink>unofficial results API</apiLink>. Updated daily.',
 	'profile.noSuccessfulOfficialResultsYet': 'No successful official results yet.',
-	'profile.resultsMaintainedByThe': 'Results maintained by the',
-	'profile.unofficialResultsApi': 'unofficial results API',
-	'profile.updatedDaily': 'Updated daily.',
 	'profile.national': 'National',
 	'profile.world': 'World',
 	'profile.viewProfile': 'View Profile',
@@ -106,12 +106,10 @@ const messages: TranslationDictionary = {
 	'profile.single': 'Single',
 	'profile.publish.confirmation':
 		'By publishing, you confirm these are your own legitimate solves. Your records will be visible on your profile and the leaderboards.',
-	'profile.youMust': 'You must',
-	'profile.setAUsername': 'set a username',
-	'profile.beforeYouCanPublishYourTimes': 'before you can publish your times',
-	'profile.noSolvesPrompt': "You don't have any solves yet. Head over to the",
-	'profile.timerPage': 'Timer Page',
-	'profile.andStartCubing': 'and start cubing!',
+	'profile.publish.usernameRequired':
+		'You must <profileLink>set a username</profileLink> before you can publish your times.',
+	'profile.publish.noSolvesPrompt':
+		"You don't have any solves yet. Head over to the <timerLink>Timer Page</timerLink> and start cubing!",
 };
 
 export default messages;

@@ -33,7 +33,7 @@ export default function CustomMatchOptions() {
 				</div>
 				<CubePicker
 					labels={{
-						label: t('common.cubeType2'),
+						label: t('common.cubeType'),
 						placeholder: t('common.selectOption'),
 						searchPlaceholder: t('common.search'),
 						emptyMessage: t('common.noResultsFound'),

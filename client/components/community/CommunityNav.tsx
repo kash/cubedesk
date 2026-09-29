@@ -7,22 +7,13 @@ import {MagnifyingGlass} from 'phosphor-react';
 import React, {useContext} from 'react';
 import {useRouteMatch} from 'react-router-dom';
 
-const TABS = [
-	{
-		id: 'friends',
-		link: '/community/friends/list',
-		value: 'community.friends',
-	},
-	{
-		id: 'leaderboards',
-		link: '/community/leaderboards',
-		value: 'community.leaderboards',
-	},
-];
-
 export default function CommunityNav() {
 	const {t} = useTranslation();
 	const {userSearchQuery, setUserSearchQuery} = useContext(CommunityContext);
+	const tabs = [
+		{id: 'friends', link: '/community/friends/list', value: t('community.friends')},
+		{id: 'leaderboards', link: '/community/leaderboards', value: t('community.leaderboards')},
+	];
 
 	const page = useRouteMatch().path.split('/')[2] || 'leaderboards';
 
@@ -50,10 +41,7 @@ export default function CommunityNav() {
 								/>
 							</InputGroup>
 						</div>
-						<HorizontalNav
-							tabId={page}
-							tabs={TABS.map((tab) => ({...tab, value: t(tab.value)}))}
-						/>
+						<HorizontalNav tabId={page} tabs={tabs} />
 					</div>
 				}
 			/>

@@ -189,8 +189,9 @@ export default function Session(props: Props) {
 						{session.name || t('sessions.untitledSession')}
 					</span>
 					<span className="sessions-item-date">
-						{t('sessions.created')}{' '}
-						{getDateFromNow(session.created_at, false, i18n.language)}
+						{t('sessions.createdAt', {
+							date: getDateFromNow(session.created_at, false, i18n.language),
+						})}
 					</span>
 					{isCurrentSession && (
 						<span className="sessions-current">{t('stats.current')}</span>
