@@ -1,11 +1,12 @@
 import {NavLinkProps} from '@/components/layout/nav/nav-links';
 import {Badge} from '@/components/ui/badge';
 import {Tooltip} from '@/components/ui/tooltip';
+import {cn} from '@/util/cn';
 import {useMe} from '@/util/hooks/useMe';
 import {Lock} from 'phosphor-react';
 import React, {ReactNode} from 'react';
-import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
+import {Link} from 'react-router-dom';
 
 interface Props extends NavLinkProps {
 	collapsed?: boolean;
@@ -39,19 +40,21 @@ export default function NavLink(props: Props) {
 		);
 	}
 
-	const wrapperClasses = ['transition-all', 'group', 'rounded'];
+	const wrapperClasses = ['transition-all', 'duration-200', 'group', 'rounded'];
 
 	const linkClasses = [
-		'transition-opacity',
 		'w-full',
 		'text-text',
 		'h-12',
 		'text-base',
 		'flex',
 		'flex-row',
+		'justify-start',
 		'items-center',
 		'py-3',
 		'rounded',
+		'transition-[padding,opacity]',
+		'duration-300',
 	];
 
 	if (!selected) {
@@ -59,17 +62,31 @@ export default function NavLink(props: Props) {
 		linkClasses.push('group-hover:opacity-100');
 	}
 
-	let navLabel: ReactNode = <span className="font-roboto text-text ml-4">{translatedName}</span>;
+	const navLabel: ReactNode = (
+		<span
+			className={cn(
+				'font-roboto text-text overflow-hidden whitespace-nowrap transition-[max-width,margin,opacity,transform] duration-300 ease-out',
+				{
+					'ml-0 max-w-0 -translate-x-2 opacity-0': collapsed,
+					'ml-4 max-w-[160px] opacity-100 delay-75': !collapsed,
+				},
+			)}
+			aria-hidden={collapsed}
+		>
+			{translatedName}
+		</span>
+	);
 	if (collapsed) {
-		navLabel = null;
 		infoTag = null;
-		linkClasses.push('justify-center');
 	}
 
 	const linkContent = (
 		<Link
 			to={link}
-			className={linkClasses.join(' ')}
+			className={cn(linkClasses.join(' '), {
+				'pl-2.5': collapsed,
+				'pl-0': !collapsed,
+			})}
 			aria-label={collapsed ? translatedName : undefined}
 		>
 			<span className="text-xl">{icon}</span>

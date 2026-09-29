@@ -6,7 +6,6 @@ import {
 	Sword,
 	Timer,
 	Users,
-	Wrench,
 } from 'phosphor-react';
 import React, {ReactElement} from 'react';
 
@@ -64,11 +63,5 @@ export const NAV_LINKS: NavLinkProps[] = [
 		match: /^\/sessions/,
 		link: '/sessions',
 		loginRequired: true,
-	},
-	{
-		name: 'settings.settings',
-		icon: <Wrench weight="bold" />,
-		match: /^\/settings/,
-		link: '/settings/timer',
 	},
 ];

@@ -1,4 +1,3 @@
-import {useTranslation} from 'react-i18next';
 import Empty from '@/components/common/Empty';
 import Loading from '@/components/common/Loading';
 import Notif from '@/components/layout/nav/notifications/Notif';
@@ -8,12 +7,14 @@ import {api} from '@/util/api';
 import {cn} from '@/util/cn';
 import {Bell} from 'phosphor-react';
 import {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
 	right?: boolean;
+	className?: string;
 }
 
-export default function Notifications({right}: Props) {
+export default function Notifications({right, className}: Props) {
 	const {t} = useTranslation();
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(0);
@@ -201,7 +202,7 @@ export default function Notifications({right}: Props) {
 					}
 					variant="ghost"
 					size="icon-sm"
-					className="relative"
+					className={cn('relative', className)}
 				>
 					<Bell weight="bold" />
 					{unreadSpan}
