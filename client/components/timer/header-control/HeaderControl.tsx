@@ -36,6 +36,7 @@ import {
 } from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 import {GlobalHotKeys} from 'react-hotkeys';
+import {Link} from 'react-router-dom';
 
 export default function HeaderControl() {
 	const [createNewSessionDialog, setCreateNewSessionDialog] = React.useState<React.ComponentProps<
@@ -237,7 +238,7 @@ export default function HeaderControl() {
 					className={classNames(
 						'absolute top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
 						context.timeStartedAt && 'pointer-events-none opacity-10',
-						!me && '!grid-cols-[minmax(0,1fr)_auto]',
+						!me && '!grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
 					)}
 				>
 					<div className="flex flex-row items-center justify-start gap-2.5">
@@ -260,7 +261,21 @@ export default function HeaderControl() {
 						{cubePicker}
 						{sessionSwitcher}
 					</div>
-					{me && <div className="flex flex-row items-start justify-center gap-2.5" />}
+					{me ? (
+						<div className="flex flex-row items-start justify-center gap-2.5" />
+					) : (
+						<div className="flex flex-row items-center justify-center">
+							<Link
+								to="/about"
+								className={classNames(
+									'text-text/60 hover:text-text rounded-sm px-2 py-1 font-mono text-xs tracking-[0.2em] uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
+									{hidden: mobileMode},
+								)}
+							>
+								About
+							</Link>
+						</div>
+					)}
 					<div className="flex flex-row items-start justify-end gap-2.5">
 						{timerTypeDropdown}
 						{topRightButton}

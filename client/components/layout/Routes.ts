@@ -1,4 +1,5 @@
 import type {Request} from 'express';
+import About from '@/components/about/About';
 import Account from '@/components/account/Account';
 import DangerZone from '@/components/account/DangerZone';
 import LinkedAccounts from '@/components/account/linked-accounts/LinkedAccounts';
@@ -97,6 +98,7 @@ function routeRedirect(path: string, redirect: string): RedirectPath {
 export const routes: (PageContext | RedirectPath)[] = [
 	// Main tabs
 	route('/', null, App, DefaultTimer, false, false, false, false, true),
+	route('/about', null, App, About, false, true, false, true),
 	route('/signup', null, App, LoginWrapper, false, true, false, true),
 	route('/login', null, App, LoginWrapper, false, true, false, true),
 	route('/forgot', null, App, LoginWrapper, false, true, false, true),

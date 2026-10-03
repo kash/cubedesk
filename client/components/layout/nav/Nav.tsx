@@ -5,6 +5,7 @@ import LoginNav from '@/components/layout/nav/LoginNav';
 import MobileNav from '@/components/layout/nav/MobileNav';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import NavLink from '@/components/layout/nav/NavLink';
+import SocialIcon from '@/components/layout/nav/SocialIcon';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
 import {Button} from '@/components/ui/button';
 import {setSetting} from '@/db/settings/update';
@@ -181,32 +182,5 @@ export default function Nav() {
 				</div>
 			</div>
 		</div>
-	);
-}
-
-interface SocialIconInterface {
-	name: string;
-	href: string;
-	darkPath: string;
-	lightPath: string;
-}
-
-function SocialIcon(props: SocialIconInterface) {
-	const {darkPath, name, href, lightPath} = props;
-	const moduleColor = useTheme('module_color');
-
-	let path = darkPath;
-	if (!moduleColor.isDark) {
-		path = lightPath;
-	}
-
-	return (
-		<a
-			className="hover:bg-tmo-module/10 box-border flex flex-col items-center justify-center rounded-[5px] bg-transparent p-2 font-semibold opacity-70 transition-all duration-100 ease-in-out hover:opacity-100"
-			href={href}
-			target="_blank"
-		>
-			<img className="size-5 shrink-0 object-contain" src={path} alt={`${name} logo`} />
-		</a>
 	);
 }
