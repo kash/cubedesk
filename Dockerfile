@@ -1,72 +1,25 @@
 # syntax=docker/dockerfile:1
-FROM node:24-slim AS builder
-
-WORKDIR /app
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        openssl \
-        zip \
-        awscli \
-        ca-certificates && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-ARG ENV
-ARG AWS_ACCESS_KEY_ID
-ARG AWS_SECRET_ACCESS_KEY
-ARG AWS_DEFAULT_REGION
-ARG RELEASE_NAME
-ARG RESOURCES_BASE_URI
-ARG DIST_BASE_URI
-ARG DEPLOYMENT_ID
-
-ENV ENV=$ENV
-ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-ENV AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
-ENV RESOURCES_BASE_URI=$RESOURCES_BASE_URI
-ENV DIST_BASE_URI=$DIST_BASE_URI
-ENV RELEASE_NAME=$RELEASE_NAME
-ENV DEPLOYMENT_ID=$DEPLOYMENT_ID
-ENV DEPLOYING=true
-
-RUN corepack enable
-
-COPY package.json pnpm-lock.yaml ./
-
-RUN pnpm install --frozen-lockfile
-
-COPY . .
-
-ENV NODE_ENV=production
-
-RUN pnpm exec prisma generate
-
-RUN --mount=type=secret,id=sentry_auth_token,env=SENTRY_AUTH_TOKEN,required=true \
-    test -n "$SENTRY_AUTH_TOKEN" && \
-    pnpm run build
-
-RUN find ./dist -name "*.map" -type f -delete && \
-    find ./build -name "*.map" -type f -delete
-
-RUN aws s3 sync dist s3://cubedesk/dist --delete --cache-control max-age=604800  && \
-    aws s3 sync public s3://cubedesk/static --cache-control max-age=604800
-
-RUN pnpm prune --prod
-
+# The server is built on the CI runner and bundled with all of its dependencies, so the image only
+# needs Node and the build output. Runtime config comes from the ECS task definition's env vars.
 FROM node:24-slim
 
+# Baked in because they must match the client bundle built in the same deploy
+ARG DEPLOYMENT_ID
+ARG RELEASE_NAME
+
 ENV NODE_ENV=production
-RUN apt-get update && \
-    apt-get install -y openssl
+ENV DEPLOYMENT_ID=$DEPLOYMENT_ID
+ENV RELEASE_NAME=$RELEASE_NAME
+
+# RDS signs its certificates with Amazon's own CA, which Node doesn't trust by default.
+# Lets DATABASE_URL use sslmode=verify-full against RDS.
+ADD --chmod=644 --checksum=sha256:733b52e4b589586377e3e00f7c4625b61e14cbf0b5e08cace28b4f8aecc27c66 \
+    https://truststore.pki.rds.amazonaws.com/us-west-2/us-west-2-bundle.pem /etc/ssl/certs/rds-us-west-2.pem
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/rds-us-west-2.pem
 
 WORKDIR /app
 
-COPY --from=builder /app/build/server ./build/server
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/.env ./.env
+COPY build/server ./build/server
 
 EXPOSE 3000
 ENTRYPOINT ["node", "build/server/app.cjs"]

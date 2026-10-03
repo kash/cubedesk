@@ -8,11 +8,11 @@
 	"packageManager": "pnpm@10.9.0",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
-		"build": "pnpm run build:client && pnpm run build:server",
+		"build": "pnpm run \"/^build:(client|server)$/\"",
 		"build:client": "NODE_ENV=production vite build",
 		"build:server": "NODE_ENV=production vite build --ssr server/app.ts",
 		"start": "node build/server/app.cjs",
-		"server": "ts-node-dev -r tsconfig-paths/register --transpile-only --quiet --exit-child --ignore-watch client ./server/app.ts",
+		"server": "ts-node-dev -r tsconfig-paths/register -r ignore-styles --transpile-only --quiet --exit-child --ignore-watch client ./server/app.ts",
 		"dev": "pnpm run server",
 		"devs": "HTTPS=true pnpm run server",
 		"dev2": "PORT=3001 pnpm run server",

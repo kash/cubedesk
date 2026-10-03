@@ -46,19 +46,25 @@ be distinguished from a local database by its URL.
 ### Production builds and Sentry
 
 `pnpm build` uses Vite to build the browser assets into `dist/` and the Node server
-into `build/server/`. `pnpm start` runs the compiled server; `pnpm dev` keeps the
-existing development server and Vite hot reload. Production requires `NODE_ENV=production`
-and `ENV=production` (or `staging`) plus the usual runtime environment variables.
+into `build/server/`. The server build bundles all of its dependencies, so the
+Docker image only contains Node and `build/server/`. `pnpm start` runs the compiled
+server; `pnpm dev` keeps the existing development server and Vite hot reload.
+
+Production runs on ECS Fargate. Pushing to `main` builds on a CodeBuild-hosted
+GitHub Actions runner, uploads `dist/` and `public/` to S3, runs migrations, and
+deploys a new task definition revision with only the image changed. Runtime
+environment variables (`ENV`, `DATABASE_URL`, `REDIS_URL`, ...) live in the ECS task
+definition, not in the repo or the image.
 
 Deployments use the GitHub Actions `SENTRY_AUTH_TOKEN` secret to upload source maps
 to the `frontend` and `backend` projects in the `cubedesk` Sentry organization.
 Both builds and the runtime use the same `RELEASE_NAME`. The token needs permission
-to upload source maps and manage releases for both projects. It is passed as a
-Docker build secret, never written to the deployed `.env` file.
+to upload source maps and manage releases for both projects. It is only available
+to the build step and never reaches the image.
 
 Local builds without `SENTRY_AUTH_TOKEN` skip uploading. Maps are generated with
-embedded source content and removed by Docker after uploading, before publishing
-assets to the CDN or packaging the server. Upload failures stop deployment.
+embedded source content and deleted after uploading, before publishing assets to the
+CDN or packaging the server. Upload failures stop deployment.
 `SENTRY_DSN` is the separate runtime setting that enables backend error reporting.
 
 The visual below should give you a decent understanding of the infrastructure behind CubeDesk. For a full breakdown, checkout the [Infrasture page on the Wiki](https://github.com/kash/cubedesk/wiki/Infrastructure).

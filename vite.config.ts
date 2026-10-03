@@ -111,7 +111,7 @@ export default defineConfig(({command, isSsrBuild}) => {
 					authToken: process.env.SENTRY_AUTH_TOKEN,
 					release: {
 						name: process.env.RELEASE_NAME,
-						// Docker's build context excludes .git.
+						// CI checks out with fetch-depth 1, so there's no history to associate.
 						setCommits: false,
 					},
 					sourcemaps: {assets: `${outDir}/**/*`},
@@ -121,6 +121,16 @@ export default defineConfig(({command, isSsrBuild}) => {
 					telemetry: false,
 				}),
 		],
+		// Bundle every dependency into the server build so the runtime image needs no node_modules
+		...(isSsrBuild
+			? {
+					ssr: {
+						noExternal: true,
+						// vite is only imported by the dev middleware
+						external: ['vite'],
+					},
+				}
+			: {}),
 		resolve: {
 			alias: [
 				{find: '@/generated', replacement: path.resolve(rootDir, 'generated')},
