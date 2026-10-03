@@ -11,7 +11,7 @@ import {getRedisPubClient, getRedisSubClient} from '@/server/services/redis';
 import {GameType} from '@/shared/match/consts';
 import {ClientToServerEvents, ServerToClientEvents} from '@/shared/match/socketio.types';
 import {FullMatch} from '@/types/match';
-import {createAdapter} from '@socket.io/redis-adapter';
+import {createShardedAdapter} from '@socket.io/redis-adapter';
 import {Server, Socket} from 'socket.io';
 
 export type SocketClient = Socket<ClientToServerEvents, ServerToClientEvents>;
@@ -34,8 +34,9 @@ export function initSocket(server) {
 		},
 	});
 
-	const socketAdaptor = createAdapter(getRedisPubClient(), getRedisSubClient());
-	io.adapter(socketAdaptor as any);
+	// ElastiCache Serverless only supports sharded pub/sub; the classic adapter needs PSUBSCRIBE
+	const socketAdaptor = createShardedAdapter(getRedisPubClient(), getRedisSubClient());
+	io.adapter(socketAdaptor);
 
 	// Generic
 	genericIoListen(io);

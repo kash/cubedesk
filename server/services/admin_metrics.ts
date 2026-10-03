@@ -5,7 +5,9 @@ import {createRedisKey, getRedisPubClient, RedisNamespace} from '@/server/servic
 import {randomUUID} from 'node:crypto';
 
 export const METRICS_REFRESH_MS = 6 * 60 * 60 * 1000;
-const SNAPSHOT_KEY = createRedisKey(RedisNamespace.ADMIN_METRICS, 'v2').key;
+// The braces are a cluster hash tag: Redis hashes only the part inside them, so the lock and retry
+// keys share the snapshot's slot and can be used together in one script
+const SNAPSHOT_KEY = `{${createRedisKey(RedisNamespace.ADMIN_METRICS, 'v2').key}}`;
 const LOCK_KEY = `${SNAPSHOT_KEY}:lock`;
 const RETRY_KEY = `${SNAPSHOT_KEY}:retry`;
 const LEASE_MS = 60_000;
