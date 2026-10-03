@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import 'ignore-styles';
 import {initSocket} from '@/server/match/init';
 import {exposeResourcesForSearchEngines} from '@/server/middlewares/search_engines';
 import {mapPathToPage} from '@/server/router';
@@ -39,6 +38,11 @@ BigInt.prototype.toJSON = function() {
 
 const app = express();
 global.app = app;
+
+// Load balancer and CI smoke-test probe; registered first so it skips all other middleware
+app.get('/health', (_req, res) => {
+	res.sendStatus(200);
+});
 
 async function setupViteMiddleware() {
 	if (!isDev) {
