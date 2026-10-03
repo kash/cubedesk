@@ -21,7 +21,7 @@ it('rejects a version 1 snapshot and uses the version 2 cache namespace', async 
 		exists: jest.fn().mockResolvedValue(1),
 	});
 	expect(await getAdminMetrics()).toEqual({status: 'unavailable'});
-	expect(get).toHaveBeenCalledWith('cd:admin:metrics#v2');
+	expect(get).toHaveBeenCalledWith('{cd:admin:metrics#v2}');
 });
 
 it('returns a current version 2 snapshot', async () => {

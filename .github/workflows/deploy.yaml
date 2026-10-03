@@ -86,6 +86,9 @@ jobs:
                   DIST_BASE_URI: ${{ inputs.DIST_BASE_URI }}
                   RESOURCES_BASE_URI: ${{ inputs.RESOURCES_BASE_URI }}
                   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+                  # Bundling every server dependency with source maps needs ~4.5 GB of heap, just over
+                  # Node's default limit, which makes the server build thrash instead of finishing
+                  NODE_OPTIONS: --max-old-space-size=6144
               run: |
                   # prisma.config.ts requires DATABASE_URL, but generating the client never connects
                   DATABASE_URL=postgresql://placeholder pnpm exec prisma generate
