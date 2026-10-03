@@ -71,6 +71,10 @@ jobs:
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
 
+            - name: Set image name
+              id: image
+              run: echo "uri=${{ steps.login-ecr.outputs.registry }}/${{ inputs.ECR_REPOSITORY }}:${{ github.sha }}" >> "$GITHUB_OUTPUT"
+
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
@@ -95,33 +99,23 @@ jobs:
                   aws s3 sync dist s3://${{ inputs.S3_BUCKET }}/dist --cache-control max-age=604800
                   aws s3 sync public s3://${{ inputs.S3_BUCKET }}/static --size-only --cache-control max-age=604800
 
-            - name: Build, smoke test, and push image to Amazon ECR
-              id: image
-              env:
-                  IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ inputs.ECR_REPOSITORY }}:${{ github.sha }}
-                  DOCKER_BUILDKIT: 1
+            # The platform must match the task definition's CPU architecture
+            - name: Build image
               run: |
-                  # Must match the task definition's CPU architecture
-                  docker build --platform linux/arm64 -t "$IMAGE" . \
+                  docker build . --platform linux/arm64 --tag ${{ steps.image.outputs.uri }} \
                     --build-arg DEPLOYMENT_ID=${{ steps.release.outputs.deployment_id }} \
                     --build-arg RELEASE_NAME=${{ steps.release.outputs.name }}
 
-                  # Without REDIS_URL the server serves HTTP but never starts Redis, Discord, cron, or sockets
-                  docker run -d --name smoke -p 3000:3000 -e ENV=${{ inputs.ENV }} "$IMAGE"
-                  for attempt in $(seq 1 20); do
-                    if curl -fsS http://localhost:3000/health; then
-                      break
-                    fi
-                    if [ "$attempt" -eq 20 ]; then
-                      docker logs smoke
-                      exit 1
-                    fi
-                    sleep 1
-                  done
-                  docker rm -f smoke
+            # Without REDIS_URL the server serves HTTP but never starts Redis, Discord, cron, or sockets
+            - name: Smoke test image
+              run: |
+                  docker run --detach --name smoke --publish 3000:3000 --env ENV=${{ inputs.ENV }} ${{ steps.image.outputs.uri }}
+                  curl --fail --silent --show-error --retry 20 --retry-delay 1 --retry-all-errors http://localhost:3000/health \
+                    || { docker logs smoke; exit 1; }
+                  docker rm --force smoke
 
-                  docker push "$IMAGE"
-                  echo "uri=$IMAGE" >> "$GITHUB_OUTPUT"
+            - name: Push image to Amazon ECR
+              run: docker push ${{ steps.image.outputs.uri }}
 
             # Env vars live in the task definition itself, so only the image changes per deploy
             - name: Download task definition
