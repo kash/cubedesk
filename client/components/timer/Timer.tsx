@@ -14,13 +14,15 @@ import {useGeneral} from '@/util/hooks/useGeneral';
 import {useWindowListener} from '@/util/hooks/useListener';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
-import {useVisualViewportHeight} from '@/util/hooks/useVisualViewportHeight';
 import {getStorageURL} from '@/util/storage';
 import classNames from 'classnames';
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-export interface ITimerContext extends TimerProps, TimerStore {}
+export interface ITimerContext extends TimerProps, TimerStore {
+	// Where the mobile manual entry numpad is rendered, below the scramble and time
+	mobileNumpadSlot?: HTMLDivElement | null;
+}
 
 const TimerContext = createContext<ITimerContext | null>(null);
 
@@ -57,9 +59,9 @@ export default function Timer(props: TimerProps) {
 
 	const me = useMe();
 
-	// On mobile, manual entry keeps the keyboard open, so the timer is sized to the visible area above it
+	// On mobile, manual entry shows a numpad pinned to the bottom in place of the footer
 	const mobileManualEntry = mobileMode && manualEntry && timerType !== 'smart';
-	const visualViewportHeight = useVisualViewportHeight(mobileManualEntry);
+	const [mobileNumpadSlot, setMobileNumpadSlot] = useState<HTMLDivElement | null>(null);
 	const showMobileNav = mobileMode && !!me && !focusMode;
 
 	// All default values from the settings should go here
@@ -69,6 +71,7 @@ export default function Timer(props: TimerProps) {
 		...timerStore,
 		...props,
 		timerLayout,
+		mobileNumpadSlot: mobileManualEntry ? mobileNumpadSlot : null,
 	};
 
 	// Event listeners for single and AVG PBs
@@ -158,7 +161,14 @@ export default function Timer(props: TimerProps) {
 		</>
 	);
 
-	if (context.focusMode || mobileManualEntry) {
+	if (mobileManualEntry) {
+		body = (
+			<>
+				{timeBar}
+				<div ref={setMobileNumpadSlot} />
+			</>
+		);
+	} else if (context.focusMode) {
 		body = timeBar;
 	}
 
@@ -183,13 +193,7 @@ export default function Timer(props: TimerProps) {
 				showMobileNav
 					? 'h-[calc(100vh_-_55px)] supports-[height:100dvh]:h-[calc(100dvh_-_55px)]'
 					: 'h-screen supports-[height:100dvh]:h-dvh',
-				{'!pb-2.5': mobileManualEntry && visualViewportHeight !== null},
 			)}
-			style={
-				visualViewportHeight !== null
-					? {height: visualViewportHeight - (showMobileNav ? 55 : 0)}
-					: undefined
-			}
 		>
 			<TimerContext.Provider value={context}>
 				<KeyWatcher>
@@ -199,15 +203,17 @@ export default function Timer(props: TimerProps) {
 							'z-10 box-border grid h-[calc(100vh_-_55px)] w-full gap-[15px]',
 							context.focusMode && !mobileMode
 								? '!grid-cols-[1fr] !grid-rows-none'
-								: context.focusMode || mobileManualEntry
-									? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)]'
-									: timerLayout === 'left'
-										? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
-										: timerLayout === 'right'
-											? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[1fr] !px-2.5 !pb-2.5'
-											: hideMobileTimerFooter && mobileMode
-												? 'grid-rows-[1fr_50px]'
-												: 'grid-rows-[1fr_300px]',
+								: mobileManualEntry
+									? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)_auto]'
+									: context.focusMode
+										? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)]'
+										: timerLayout === 'left'
+											? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
+											: timerLayout === 'right'
+												? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[1fr] !px-2.5 !pb-2.5'
+												: hideMobileTimerFooter && mobileMode
+													? 'grid-rows-[1fr_50px]'
+													: 'grid-rows-[1fr_300px]',
 							timerStarted && mobileMode && '!grid-cols-[1fr]',
 							{
 								// Fill the space below the header instead of a fixed viewport height
