@@ -4,6 +4,7 @@ import {CaretDown, Check} from 'phosphor-react';
 import React from 'react';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from './command';
 import {Popover, PopoverContent, PopoverTrigger} from './popover';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './select';
 
 export interface ComboboxProps {
 	value: string;
@@ -15,6 +16,8 @@ export interface ComboboxProps {
 	disabled?: boolean;
 	triggerProps?: React.ComponentProps<'button'>;
 	align?: 'start' | 'center' | 'end';
+	// When false, renders a plain select (no search input) so mobile keyboards don't pop up
+	searchable?: boolean;
 }
 export function Combobox({
 	value,
@@ -26,8 +29,34 @@ export function Combobox({
 	disabled,
 	triggerProps,
 	align = 'start',
+	searchable = true,
 }: ComboboxProps) {
 	const [open, setOpen] = React.useState(false);
+
+	if (!searchable) {
+		const displayText =
+			text || options.find((option) => option.value === value)?.text || placeholder;
+		return (
+			<Select value={value} onValueChange={(v) => onValueChange?.(v)} disabled={disabled}>
+				<SelectTrigger
+					aria-label={label}
+					className={triggerProps?.className}
+					onClick={(event) => event.stopPropagation()}
+				>
+					<SelectValue placeholder={placeholder}>
+						<span className="truncate">{displayText}</span>
+					</SelectValue>
+				</SelectTrigger>
+				<SelectContent align={align}>
+					{options.map((option) => (
+						<SelectItem key={option.value} value={option.value} disabled={option.disabled}>
+							{option.text}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
+		);
+	}
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
