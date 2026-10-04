@@ -7,8 +7,13 @@ import {decodeSmartTurns, encodeSmartTurns} from '../shared/smart_turns';
 // Usage: pnpm backfill:smart-turns [--dry-run] [--batch-size 1000]
 
 async function main() {
-	const connectionString = process.env.DATABASE_URL;
-	if (!connectionString) throw new Error('DATABASE_URL is not set');
+	if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
+
+	// node-pg treats sslmode=require as verify-full, which RDS's Amazon-issued certificate fails. libpq semantics
+	// (encrypted, not verified) match how prisma migrate deploy reads the same URL in CI
+	const url = new URL(process.env.DATABASE_URL);
+	if (url.searchParams.has('sslmode')) url.searchParams.set('uselibpqcompat', 'true');
+	const connectionString = url.toString();
 
 	const args = process.argv.slice(2).filter((arg) => arg !== '--');
 	const dryRun = args.includes('--dry-run');
