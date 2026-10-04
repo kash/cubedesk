@@ -124,6 +124,11 @@ export default function Timer(props: TimerProps) {
 		'relative flex w-full select-none items-center justify-center',
 		mobileMode && 'select-none [-webkit-touch-callout:none] [-webkit-user-select:none]',
 		sideLayout && '!h-[calc(100vh_-_70px)]',
+		{
+			// When there's lots of room on mobile, sit a bit above center so the gap under the header isn't so big
+			'items-center-safe pb-[22vh]':
+				mobileMode && !mobileManualEntry && (context.focusMode || hideMobileTimerFooter),
+		},
 	);
 	const mainCenterClass = classNames('flex w-full flex-col items-center', {
 		'-mt-[15vh]': sideLayout,
