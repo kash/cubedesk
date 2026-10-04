@@ -1,9 +1,8 @@
-import {cleanTrainerAlgorithm} from './clean';
-import {getLokiDb, initLokiDb} from '@/db/lokijs';
-import type {TrainerAlgorithmExtended} from '@/db/trainer/init';
+import {resetTrainerDb} from '@/db/trainer/init';
 import {toggleTrainerAlgoFavorite} from '@/db/trainer/operations';
 import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
 import {trpc} from '@/util/trpc';
+import {cleanTrainerAlgorithm} from './clean';
 
 jest.mock('@/util/trpc', () => ({
 	trpc: {
@@ -16,8 +15,6 @@ jest.mock('@/util/trpc', () => ({
 
 beforeEach(() => {
 	jest.clearAllMocks();
-	initLokiDb();
-	getLokiDb().addCollection<TrainerAlgorithmExtended>('trainer', {unique: ['id']});
 });
 
 it.each([false, true])('toggles favorite=%s after reloading saved overrides', (favorite) => {
@@ -32,14 +29,14 @@ it.each([false, true])('toggles favorite=%s after reloading saved overrides', (f
 		rotate: 90,
 		scrambles: '',
 	};
-	const algo = getLokiDb().getCollection<TrainerAlgorithmExtended>('trainer').insert({
+	const algo = resetTrainerDb().insert({
 		id: 'case-id',
 		name: 'Original case',
 		cube_type: '333',
 		algo_type: 'OLL',
 		favorite,
 		overrides: savedOverride,
-	})!;
+	});
 	const clean = cleanTrainerAlgorithm(algo);
 
 	expect(clean).toMatchObject({id: 'case-id', name: 'Edited case', solution: "R U R'", rotate: 90});

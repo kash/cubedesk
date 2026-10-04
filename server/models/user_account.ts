@@ -242,3 +242,39 @@ export async function createUserAccount(
 		},
 	});
 }
+
+/**
+ * Clients keep a local copy of their solves and sessions, which they trust only while its hash matches this one.
+ * Changing it makes every client refetch on its next load, so call this after changing solves or sessions on the
+ * server without the client knowing (bulk actions, imports).
+ */
+export function bumpOfflineHash(db: Pick<Prisma.TransactionClient, 'userAccount'>, userId: string) {
+	return db.userAccount.update({
+		where: {id: userId},
+		data: {offline_hash: uuid()},
+		select: {id: true},
+	});
+}
+
+/**
+ * Sets the offline hash to `hash` only if it is currently `expected`, so a client can only claim its local copy is
+ * current if no other client changed data since it last synced. When the check fails the hash is still changed, so
+ * other clients learn about this client's change, but the caller must treat its own copy as stale.
+ */
+export async function swapOfflineHash(userId: string, hash: string, expected: string | null): Promise<boolean> {
+	const swapped = await getPrisma().userAccount.updateMany({
+		where: {id: userId, offline_hash: expected},
+		data: {offline_hash: hash},
+	});
+
+	if (swapped.count === 1) {
+		return true;
+	}
+
+	await getPrisma().userAccount.update({
+		where: {id: userId},
+		data: {offline_hash: hash},
+		select: {id: true},
+	});
+	return false;
+}

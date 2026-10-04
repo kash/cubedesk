@@ -8,16 +8,11 @@ interface FetchSessionOptions {
 }
 
 export function fetchSessionById(id: string) {
-	const sessionDb = getSessionDb();
-	return sessionDb.findOne({
-		id,
-	});
+	return getSessionDb().get(id);
 }
 
 export function fetchSessions(options: FetchSessionOptions = {}) {
-	const sessionDb = getSessionDb();
-	return sessionDb
-		.chain()
+	return getSessionDb()
 		.find(options)
 		.sort((a, b) => {
 			if (a.order < b.order) {
@@ -30,8 +25,7 @@ export function fetchSessions(options: FetchSessionOptions = {}) {
 
 				return bDate.getTime() - aDate.getTime();
 			}
-		})
-		.data();
+		});
 }
 
 export function getCubeTypesFromSession(session: Session) {

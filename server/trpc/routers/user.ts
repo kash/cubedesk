@@ -5,6 +5,7 @@ import {
 	deleteUserAccount,
 	getUserByEmail,
 	getUserByUsername,
+	swapOfflineHash,
 	updateUserAccount,
 	updateUserAccountPassword,
 } from '@/server/models/user_account';
@@ -155,19 +156,27 @@ export const userRouter = router({
 		.input(
 			z.object({
 				hash: z.string(),
+				// When given, the hash only counts as applied if it was still this value (see swapOfflineHash).
+				// Older clients omit it and set the hash unconditionally.
+				expected: z.string().nullable().optional(),
 			})
 		)
 		.mutation(async ({ctx, input}) => {
-			await ctx.prisma.userAccount.update({
-				where: {
-					id: ctx.user.id,
-				},
-				data: {
-					offline_hash: input.hash,
-				},
-			});
+			if (input.expected === undefined) {
+				await ctx.prisma.userAccount.update({
+					where: {
+						id: ctx.user.id,
+					},
+					data: {
+						offline_hash: input.hash,
+					},
+				});
 
-			return input.hash;
+				return {applied: true};
+			}
+
+			const applied = await swapOfflineHash(ctx.user.id, input.hash, input.expected);
+			return {applied};
 		}),
 
 	search: publicProcedure

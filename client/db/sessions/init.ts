@@ -1,29 +1,23 @@
-import {getLokiDb} from '@/db/lokijs';
+import {MemoryTable} from '@/db/memory/table';
 import {Session} from '@/types/session';
+import {emitEvent} from '@/util/event_handler';
 
-export function getSessionDb(): Collection<Session> {
-	const db = getLokiDb();
-	return db.getCollection('sessions');
+// Synchronous mirror of the user's sessions. Persisted to IndexedDB by @/db/persist. Only browser entry points
+// write to it, so it stays empty on the server.
+const sessionDb = new MemoryTable<Session>();
+
+export function getSessionDb(): MemoryTable<Session> {
+	return sessionDb;
 }
 
-export function initSessionCollection() {
-	const db = getLokiDb();
-
-	if (!getSessionDb()) {
-		db.addCollection<Session>('sessions', {
-			unique: ['id'],
-		});
-	}
-}
-
+/**
+ * Replaces all local sessions
+ */
 export function initSessionDb(sessions: Session[]) {
 	if (typeof window === 'undefined') {
 		return;
 	}
 
-	initSessionCollection();
-
-	for (const session of sessions) {
-		getSessionDb().insert(session);
-	}
+	sessionDb.replaceAll(sessions);
+	emitEvent('sessionsDbUpdatedEvent');
 }

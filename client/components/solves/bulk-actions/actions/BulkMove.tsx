@@ -50,7 +50,7 @@ export default function BulkMoveSolvesButton(props: Props) {
 				solveIds,
 			});
 
-			await initAllSolves(true);
+			await initAllSolves();
 
 			const solvesMoved = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
 			toastSuccess(`Successfully moved ${solvesMoved} to ${session.name}.`);

@@ -1,58 +1,28 @@
-import {LokiFetchOptions} from '@/db/lokijs';
+import {FetchOptions, RecordQuery} from '@/db/memory/query';
 import {getSolveDb} from '@/db/solves/init';
-import {cleanFilterOptions} from '@/db/util';
 import {Solve} from '@/types/solve';
 import {getCubeTypeInfoById} from '@/util/cubes/util';
 
-export type FilterSolvesOptions = LokiQuery<Solve>;
+export type FilterSolvesOptions = RecordQuery<Solve>;
+export type SolveFetchOptions = FetchOptions<Solve>;
 
 export function fetchLastSolve(options: FilterSolvesOptions = {}) {
-	const solveDb = getSolveDb();
-	const data = solveDb.chain().find(cleanFilterOptions(options)).simplesort('started_at', true).limit(1).data();
-
-	if (data && data.length) {
-		return data[0];
-	}
-
-	return null;
+	return fetchSingleSolve(options);
 }
 
-export function fetchSolve(solve: string | Solve): Solve | null {
-	const solveDb = getSolveDb();
-
-	if (typeof solve === 'string') {
-		return solveDb.findOne({
-			id: solve,
-		});
-	}
-
-	return solveDb.findObject(solve);
+export function fetchSolve(solve: string | Pick<Solve, 'id'>): Solve | null {
+	return getSolveDb().get(typeof solve === 'string' ? solve : solve.id);
 }
 
 export function fetchLastCubeTypeForSession(sessionId: string): string | null {
-	const solveDb = getSolveDb();
-
-	const last = solveDb
-		.chain()
-		.find({
-			session_id: sessionId,
-		})
-		.simplesort('started_at', true)
-		.limit(1)
-		.data();
-
-	if (last && last.length) {
-		return last[0].cube_type;
-	}
-
-	return null;
+	return fetchLastSolve({session_id: sessionId})?.cube_type ?? null;
 }
 
 // Same as fetchSolves but returns the first in array (if any)
-export function fetchSingleSolve(options: FilterSolvesOptions = {}, fetchOptions?: LokiFetchOptions) {
-	const solves = fetchSolves(options, fetchOptions);
+export function fetchSingleSolve(options: FilterSolvesOptions = {}, fetchOptions?: SolveFetchOptions) {
+	const solves = fetchSolves(options, {...fetchOptions, limit: 1});
 
-	if (!solves || !solves.length) {
+	if (!solves.length) {
 		return null;
 	}
 
@@ -98,30 +68,18 @@ export function fetchAllCubeTypesSolved(defaultsOnly: boolean = false) {
 }
 
 export function fetchSolveCount(options: FilterSolvesOptions = {}) {
-	const solveDb = getSolveDb();
-	return solveDb.find(cleanFilterOptions(options)).length;
+	return getSolveDb().count(options);
 }
 
-export function fetchSolves(options: FilterSolvesOptions = {}, fetchOptions?: LokiFetchOptions) {
-	const solveDb = getSolveDb();
+/**
+ * Returns matching solves, newest first unless another sort is given
+ */
+export function fetchSolves(options: FilterSolvesOptions = {}, fetchOptions: SolveFetchOptions = {}) {
+	const {sortBy, sortInverse, offset, limit} = fetchOptions;
 
-	let out = solveDb.chain().find(cleanFilterOptions(options));
-
-	if (fetchOptions?.sortBy) {
-		out = out.simplesort(fetchOptions.sortBy as any, {
-			desc: !!fetchOptions.sortInverse || false,
-		});
-	} else {
-		out = out.simplesort('started_at', true);
-	}
-
-	if (fetchOptions?.offset) {
-		out = out.offset(fetchOptions.offset);
-	}
-
-	if (fetchOptions?.limit) {
-		out = out.limit(fetchOptions.limit);
-	}
-
-	return out.data();
+	return getSolveDb().find(options, {
+		...(sortBy ? {sortBy, sortInverse: !!sortInverse} : {sortBy: 'started_at', sortInverse: true}),
+		offset,
+		limit,
+	});
 }

@@ -1,12 +1,12 @@
 import CubePicker from '@/components/common/CubePicker';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
-import {clearOfflineData} from '@/components/layout/offline';
 import {ImportDataContext, ImportDataType} from '@/components/settings/data/import-data/ImportData';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Separator} from '@/components/ui/separator';
 import {Spinner} from '@/components/ui/spinner';
+import {clearLocalData} from '@/db/persist/sync';
 import {SolveInput} from '@/types/solve';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
@@ -59,7 +59,7 @@ export default function ReviewImport() {
 					'This import has not reported a result yet. Check its status again shortly.',
 				);
 			}
-			await clearOfflineData();
+			await clearLocalData();
 			window.location.href = '/sessions';
 		} catch (e) {
 			if (e instanceof TRPCClientError && e.data?.code === 'BAD_REQUEST') {

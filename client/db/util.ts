@@ -1,43 +1,15 @@
-import {LokiFetchOptions} from '@/db/lokijs';
-
-export function cleanFilterOptions<T extends object>(options: T): T {
-	const keys = Object.keys(options || {});
-
-	const out: Partial<T> = {};
-	for (const key of keys) {
-		if (options[key] !== undefined) {
-			out[key as keyof T] = options[key];
-		}
-	}
-
-	return out as T;
-}
+import {FetchOptions, RecordQuery} from '@/db/memory/query';
+import {MemoryTable} from '@/db/memory/table';
 
 /**
- * Takes in a query for (LokiJS) db and returns all the records that match the query
+ * Returns all the records in a table that match the query
  */
-export function fetchRecords<G extends object>(
-	db: Collection<G>,
-	options: LokiQuery<G & LokiObj>,
-	fetchOptions?: LokiFetchOptions
+export function fetchRecords<G extends {id: string}>(
+	db: MemoryTable<G>,
+	options: RecordQuery<G>,
+	fetchOptions?: FetchOptions<G>
 ): G[] {
-	let out = db.chain().find(cleanFilterOptions(options));
-
-	if (fetchOptions?.sortBy) {
-		out = out.simplesort(fetchOptions.sortBy as any, {
-			desc: !!fetchOptions.sortInverse || false,
-		});
-	}
-
-	if (fetchOptions?.offset) {
-		out = out.offset(fetchOptions.offset);
-	}
-
-	if (fetchOptions?.limit) {
-		out = out.limit(fetchOptions.limit);
-	}
-
-	return out.data();
+	return db.find(options, fetchOptions);
 }
 
 type DistinctColumnCount = {
@@ -46,11 +18,11 @@ type DistinctColumnCount = {
 };
 
 /**
- * Takes in a query for (LokiJS) db and returns all the distinct values for a given column
+ * Returns all the distinct values for a given column among records that match the query, most common first
  */
-export function fetchUniqueValuesByField<G extends object>(
-	db: Collection<G>,
-	options: LokiQuery<G & LokiObj>,
+export function fetchUniqueValuesByField<G extends {id: string}>(
+	db: MemoryTable<G>,
+	options: RecordQuery<G>,
 	column: keyof G
 ): DistinctColumnCount[] {
 	const typeListMap: Record<string, number> = {};

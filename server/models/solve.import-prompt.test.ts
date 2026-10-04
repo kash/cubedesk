@@ -45,6 +45,7 @@ function setup() {
 		},
 		solve: {createMany: jest.fn().mockResolvedValue({count: 1})},
 		userFeatureState: {upsert: jest.fn().mockResolvedValue({})},
+		userAccount: {update: jest.fn().mockResolvedValue({})},
 	};
 	const db = {importAttempt: attempt, $transaction: jest.fn(async (work) => work(tx))};
 	return {db: db as unknown as Parameters<typeof runImport>[2], tx, transaction: db.$transaction};

@@ -21,8 +21,8 @@ export default function LoadingCover(props: Props) {
 		'bg-background',
 		'text-text',
 		fadeOut
-			? '[transition:opacity_0.15s_0.4s_ease-in-out]'
-			: '[transition:background-color_0.1s_ease-in-out,opacity_0.15s_0.4s_ease-in-out]',
+			? '[transition:opacity_0.15s_ease-in-out]'
+			: '[transition:background-color_0.1s_ease-in-out,opacity_0.15s_ease-in-out]',
 	];
 
 	if (fadeOut) {
@@ -31,7 +31,10 @@ export default function LoadingCover(props: Props) {
 
 	return (
 		<div className={coverClasses.join(' ')}>
-			<Spinner className="size-6" />
+			{/* Only appears if loading is slow, so fast loads don't flash a spinner */}
+			<div className="animate-in fade-in fill-mode-backwards delay-300 duration-200">
+				<Spinner className="size-6" />
+			</div>
 		</div>
 	);
 }

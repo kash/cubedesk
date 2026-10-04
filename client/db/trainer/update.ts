@@ -4,7 +4,7 @@ import {emitEvent} from '@/util/event_handler';
 export function updateTrainerDb(algo: TrainerAlgorithmExtended, input: Partial<TrainerAlgorithmExtended>) {
 	const trainerDb = getTrainerDb();
 
-	trainerDb.update({
+	trainerDb?.update({
 		...algo,
 		...input,
 	});

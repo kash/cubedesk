@@ -1,4 +1,4 @@
-import {getLokiDb} from '@/db/lokijs';
+import {MemoryTable} from '@/db/memory/table';
 
 export interface SettingValue {
 	id: string;
@@ -6,18 +6,12 @@ export interface SettingValue {
 	local: boolean;
 }
 
-export function getSettingsDb(): Collection<SettingValue> {
-	const db = getLokiDb();
-	return db?.getCollection('settings');
-}
+// Rebuilt from the backend and localStorage on every load, so it is never persisted. Stays null on the server and
+// before init, where readers fall back to the default settings.
+let settingsDb: MemoryTable<SettingValue> | null = null;
 
-function initSettingsCollection() {
-	const db = getLokiDb();
-
-	db.removeCollection('settings');
-	db.addCollection<SettingValue>('settings', {
-		unique: ['id'],
-	});
+export function getSettingsDb(): MemoryTable<SettingValue> | null {
+	return settingsDb;
 }
 
 export function initSettingsDb(settings: SettingValue[]) {
@@ -25,9 +19,7 @@ export function initSettingsDb(settings: SettingValue[]) {
 		return;
 	}
 
-	initSettingsCollection();
-
-	for (const set of settings) {
-		getSettingsDb().insert(set);
-	}
+	const table = new MemoryTable<SettingValue>();
+	table.replaceAll(settings);
+	settingsDb = table;
 }

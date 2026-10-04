@@ -1,6 +1,7 @@
 import {getCustomCubeTypesByUserId} from '@/server/models/custom_cube_type';
 import {getSessionById} from '@/server/models/session';
 import {bulkDeleteSolves, bulkDnfSolves, bulkOkSolves, bulkPlusTwoSolves, bulkUpdateSolves} from '@/server/models/solve';
+import {bumpOfflineHash} from '@/server/models/user_account';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
 import {getDefaultCubeTypes} from '@/util/cubes/util';
 import {TRPCError} from '@trpc/server';
@@ -10,14 +11,23 @@ const solveIdsInput = z.object({
 	solveIds: z.array(z.string()).min(1),
 });
 
+// Bulk changes happen only on the server, so other clients' local copies of their solves become stale
+const bulkProcedure = protectedProcedure.use(async ({ctx, next}) => {
+	const result = await next();
+	if (result.ok) {
+		await bumpOfflineHash(ctx.prisma, ctx.user.id);
+	}
+	return result;
+});
+
 // All procedures return the number of records affected
 export const bulkActionsRouter = router({
-	deleteSolves: protectedProcedure.input(solveIdsInput).mutation(async ({ctx, input}) => {
+	deleteSolves: bulkProcedure.input(solveIdsInput).mutation(async ({ctx, input}) => {
 		const deleted = await bulkDeleteSolves(ctx.user.id, input.solveIds);
 		return deleted.count;
 	}),
 
-	moveSolvesToSession: protectedProcedure
+	moveSolvesToSession: bulkProcedure
 		.input(
 			solveIdsInput.extend({
 				sessionId: z.string(),
@@ -35,15 +45,15 @@ export const bulkActionsRouter = router({
 			return updated.count;
 		}),
 
-	dnfSolves: protectedProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkDnfSolves(ctx.user.id, input.solveIds)),
+	dnfSolves: bulkProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkDnfSolves(ctx.user.id, input.solveIds)),
 
-	plusTwoSolves: protectedProcedure
+	plusTwoSolves: bulkProcedure
 		.input(solveIdsInput)
 		.mutation(({ctx, input}) => bulkPlusTwoSolves(ctx.user.id, input.solveIds)),
 
-	okSolves: protectedProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkOkSolves(ctx.user.id, input.solveIds)),
+	okSolves: bulkProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkOkSolves(ctx.user.id, input.solveIds)),
 
-	updateCubeType: protectedProcedure
+	updateCubeType: bulkProcedure
 		.input(
 			solveIdsInput.extend({
 				cubeType: z.string(),

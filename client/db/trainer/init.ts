@@ -1,4 +1,4 @@
-import {getLokiDb} from '@/db/lokijs';
+import {MemoryTable} from '@/db/memory/table';
 import {Serialized} from '@/types/serialized';
 import {
 	AlgorithmOverrideInput,
@@ -14,19 +14,11 @@ export interface TrainerAlgorithmExtended extends TrainerAlgorithmRecord {
 	favorite?: boolean;
 }
 
-export function getTrainerDb(): Collection<TrainerAlgorithmExtended> {
-	const db = getLokiDb();
-	return db.getCollection('trainer');
-}
+// Refetched on every load, so it is never persisted. Null until trainer data has loaded.
+let trainerDb: MemoryTable<TrainerAlgorithmExtended> | null = null;
 
-function initTrainerCollection() {
-	const db = getLokiDb();
-
-	db.removeCollection('trainer');
-	db.addCollection<TrainerAlgorithmExtended>('trainer', {
-		unique: ['id'],
-		indices: ['name', 'cube_type', 'algo_type', 'group_name'],
-	});
+export function getTrainerDb(): MemoryTable<TrainerAlgorithmExtended> | null {
+	return trainerDb;
 }
 
 export function initTrainerDb(
@@ -39,7 +31,7 @@ export function initTrainerDb(
 		return;
 	}
 
-	initTrainerCollection();
+	const table = resetTrainerDb();
 
 	const overrideMap = _.chain(overrides).keyBy('cube_key').value();
 	const faves = _.chain(favorites).keyBy('cube_key').value();
@@ -61,9 +53,14 @@ export function initTrainerDb(
 		}
 
 		try {
-			getTrainerDb().insert(insert);
+			table.insert(insert);
 		} catch (e) {
 			console.error(e);
 		}
 	}
+}
+
+export function resetTrainerDb() {
+	trainerDb = new MemoryTable<TrainerAlgorithmExtended>();
+	return trainerDb;
 }

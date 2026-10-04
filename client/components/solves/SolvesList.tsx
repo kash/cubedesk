@@ -11,8 +11,7 @@ import BulkActions from '@/components/solves/bulk-actions/BulkActions';
 import SolveListRow from '@/components/solves/SolveListRow';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
-import {LokiFetchOptions} from '@/db/lokijs';
-import {fetchSolveCount, fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
+import {fetchSolveCount, fetchSolves, FilterSolvesOptions, SolveFetchOptions} from '@/db/solves/query';
 import {Solve} from '@/types/solve';
 import {CubeType} from '@/util/cubes/cube_types';
 import {useMe} from '@/util/hooks/useMe';
@@ -60,7 +59,7 @@ export default function SolvesList() {
 	function fetchSolvesWithFilter(removeLimit: boolean = false) {
 		const finalFilter = getFinalFilter();
 
-		const options: LokiFetchOptions = {
+		const options: SolveFetchOptions = {
 			sortBy,
 			sortInverse: !sortInverse,
 		};

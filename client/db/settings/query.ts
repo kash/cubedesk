@@ -122,15 +122,14 @@ export function getDefaultSettings() {
 
 export function getSettings(): AllSettings {
 	const settingsDb = getSettingsDb();
-	const settings: Partial<AllSettings> = {};
-
-	let settingsData: any = settingsDb?.data;
-	if (!settingsDb || !settingsData) {
-		settingsData = Object.keys(defaultSettings).map((key) => ({id: key, value: defaultSettings[key]}));
+	if (!settingsDb) {
+		return {...defaultSettings};
 	}
-	settingsData.forEach((setting) => {
+
+	const settings: Partial<AllSettings> = {};
+	for (const setting of settingsDb.all()) {
 		settings[setting.id] = setting.value;
-	});
+	}
 
 	return settings as AllSettings;
 }

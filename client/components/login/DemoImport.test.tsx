@@ -45,7 +45,6 @@ jest.mock('@/util/trpc', () => ({
 	},
 }));
 jest.mock('@/db/solves/init', () => ({getSolveDb: () => ({find: () => []})}));
-jest.mock('@/db/lokijs', () => ({stripLokiJsMetadata: (solve) => solve}));
 
 const solve = {
 	id: '8f16a418-475a-4a30-a95a-5a283eea2242',

@@ -5,16 +5,14 @@ import {trpc} from '@/util/trpc';
 
 export async function updateCustomTrainerDb(id: string, input: CustomTrainerInput) {
 	const trainerDb = getTrainerDb();
-	const trainer = trainerDb.findOne({
-		id,
-	});
+	const trainer = trainerDb?.get(id);
 
 	const algo = {
 		...trainer,
 		...input,
 	};
 
-	trainerDb.update(algo as TrainerAlgorithmExtended);
+	trainerDb?.update(algo as TrainerAlgorithmExtended);
 	emitEvent('trainerDbUpdatedEvent', algo);
 
 	return await trpc.customTrainer.update.mutate({
@@ -24,13 +22,11 @@ export async function updateCustomTrainerDb(id: string, input: CustomTrainerInpu
 }
 
 export async function createCustomTrainerDb(trainer: CustomTrainerInput) {
-	const trainerDb = getTrainerDb();
-
 	emitEvent('trainerDbUpdatedEvent', trainer);
 
 	const newTrainer = await trpc.customTrainer.create.mutate(trainer);
 
-	trainerDb.insert({
+	getTrainerDb()?.insert({
 		...newTrainer,
 	} as unknown as TrainerAlgorithmExtended);
 
@@ -38,13 +34,9 @@ export async function createCustomTrainerDb(trainer: CustomTrainerInput) {
 }
 
 export async function deleteCustomTrainer(id: string) {
-	const trainerDb = getTrainerDb();
-	const trainer = trainerDb.findOne({
-		id,
-	});
+	const trainer = getTrainerDb()?.remove(id);
 
 	if (trainer) {
-		trainerDb.remove(trainer);
 		emitEvent('trainerDbUpdatedEvent', trainer);
 	}
 

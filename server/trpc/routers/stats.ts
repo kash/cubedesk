@@ -1,6 +1,6 @@
 import type {Stats} from '@/types/stats';
 import type {StatsModule, StatsModuleBlock} from '@/types/stats-module';
-import {getSettingsByUserId, setSettingByUserId} from '@/server/models/settings';
+import {getSettingsByUserId, getStatsModuleFromSettings, setSettingByUserId} from '@/server/models/settings';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
 import {z} from 'zod';
 
@@ -13,13 +13,7 @@ const statsModuleBlockSchema = z.object({
 });
 
 async function getStatsModuleByUserId(userId: string): Promise<StatsModule | null> {
-	const settings = await getSettingsByUserId(userId);
-
-	if (settings?.stats_module_json) {
-		return JSON.parse(settings.stats_module_json);
-	}
-
-	return null;
+	return getStatsModuleFromSettings(await getSettingsByUserId(userId));
 }
 
 export const statsRouter = router({

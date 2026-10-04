@@ -1,4 +1,5 @@
 import type {Prisma, Setting} from '@/generated/prisma/client';
+import type {StatsModule} from '@/types/stats-module';
 import {getPrisma} from '@/server/database';
 import {UserAccount} from '@/types/user';
 import {v4 as uuid} from 'uuid';
@@ -12,6 +13,14 @@ export function getSettingsByUserId(userId: string) {
 			custom_cube_types: true,
 		},
 	});
+}
+
+export function getStatsModuleFromSettings(settings: Pick<Setting, 'stats_module_json'> | null): StatsModule | null {
+	if (settings?.stats_module_json) {
+		return JSON.parse(settings.stats_module_json);
+	}
+
+	return null;
 }
 
 export function createSetting(user: UserAccount) {

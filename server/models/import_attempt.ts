@@ -3,6 +3,7 @@ import type {SessionInput} from '@/types/session';
 import type {SolveInput} from '@/types/solve';
 import {getPrisma} from '@/server/database';
 import {prepareImportedSolves} from '@/server/models/solve';
+import {bumpOfflineHash} from '@/server/models/user_account';
 import {logger} from '@/server/services/logger';
 import {TRPCError} from '@trpc/server';
 import {createHash} from 'node:crypto';
@@ -104,6 +105,7 @@ export async function runImport(userId: string, input: ImportInput, db = getPris
 				for (const [order, session] of ordered.entries()) {
 					await tx.session.update({where: {id: session.id}, data: {order}});
 				}
+				await bumpOfflineHash(tx, userId);
 				if (solves.count > 0)
 					await tx.userFeatureState.upsert({
 						where: {user_id: userId},
