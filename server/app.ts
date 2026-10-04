@@ -3,7 +3,6 @@ import {initSocket} from '@/server/match/init';
 import {exposeResourcesForSearchEngines} from '@/server/middlewares/search_engines';
 import {mapPathToPage} from '@/server/router';
 import {initCronJobs} from '@/server/services/cron';
-import Discord from '@/server/services/discord';
 import {initLogger, logger} from '@/server/services/logger';
 import '@sentry/tracing';
 import {initRedisClient} from '@/server/services/redis';
@@ -146,7 +145,6 @@ if (!isDev && sentryDsn) {
 	// Initiate services
 	try {
 		await initRedisClient();
-		await Discord.init();
 		initCronJobs();
 		initSocket(server);
 	} catch (e) {
