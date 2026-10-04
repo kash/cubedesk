@@ -1,5 +1,4 @@
-import {createSolveMethodSteps} from '@/server/models/solve_method_step';
-import {getSolveSteps} from '@/server/util/solve/solve_method';
+import {prepareSmartSolve} from '@/server/util/solve/solve_method';
 import type {PrismaClient} from '@/generated/prisma/client';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
@@ -24,7 +23,6 @@ export const demoImportInput = z
 					is_smart_cube: z.boolean(),
 					smart_turns: z.string().nullable(),
 					smart_turn_count: z.number().int().nonnegative().nullable(),
-					smart_put_down_time: z.number().nonnegative().nullable(),
 				}),
 			)
 			.min(1)
@@ -89,7 +87,7 @@ export async function importDemoSolves(
 		}
 		await tx.solve.createMany({
 			data: input.solves.map((solve) => ({
-				...solve,
+				...prepareSmartSolve(solve),
 				user_id: userId,
 				session_id: sessionId,
 				time: solve.dnf ? -1 : solve.raw_time + (solve.plus_two ? 2 : 0),
@@ -97,18 +95,6 @@ export async function importDemoSolves(
 				bulk: false,
 			})),
 		});
-		for (const solve of input.solves) {
-			if (!solve.is_smart_cube) continue;
-			let steps: ReturnType<typeof getSolveSteps>;
-			try {
-				steps = getSolveSteps(JSON.parse(solve.smart_turns ?? ''));
-			} catch {
-				// Match ordinary solve creation when smart-cube reconstruction fails.
-				await tx.solve.update({where: {id: solve.id}, data: {is_smart_cube: false}});
-				continue;
-			}
-			await createSolveMethodSteps(solve, steps, tx);
-		}
 		await tx.setting.update({where: {user_id: userId}, data: {session_id: sessionId}});
 		return {sessionId, count: input.solves.length};
 	});

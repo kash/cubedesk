@@ -26,7 +26,6 @@ export interface SolveInput {
 	match_participant_id?: string | null;
 	smart_turn_count?: number | null;
 	smart_turns?: string | null;
-	smart_put_down_time?: number | null;
 	inspection_time?: number | null;
 }
 
@@ -58,7 +57,6 @@ export interface Solve {
 	match_participant_id: string | null;
 	smart_turn_count: number | null;
 	smart_turns: string | null;
-	smart_put_down_time: number | null;
 	inspection_time: number | null;
 	// Client-only flag for anonymous/demo solves — never persisted, so DB rows omit it
 	demo_mode?: boolean;

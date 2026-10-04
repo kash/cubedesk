@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "1.0.0",
-  "generatedAt": "2026-09-08T05:01:54.727Z",
+  "generatedAt": "2026-10-04T20:37:24.510Z",
   "outputPath": "/Users/kash/Developer/cubedesk/generated/zod",
   "files": [
     "schemas/enums/TransactionIsolationLevel.schema.ts",
@@ -30,7 +30,6 @@
     "schemas/enums/MatchParticipantScalarFieldEnum.schema.ts",
     "schemas/enums/ChatMessageScalarFieldEnum.schema.ts",
     "schemas/enums/SmartDeviceScalarFieldEnum.schema.ts",
-    "schemas/enums/SolveMethodStepScalarFieldEnum.schema.ts",
     "schemas/enums/BadgeTypeScalarFieldEnum.schema.ts",
     "schemas/enums/BadgeScalarFieldEnum.schema.ts",
     "schemas/enums/TimerBackgroundScalarFieldEnum.schema.ts",
@@ -80,7 +79,6 @@
     "schemas/enums/MatchParticipantOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/ChatMessageOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/SmartDeviceOrderByRelevanceFieldEnum.schema.ts",
-    "schemas/enums/SolveMethodStepOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/BadgeTypeOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/BadgeOrderByRelevanceFieldEnum.schema.ts",
     "schemas/enums/TimerBackgroundOrderByRelevanceFieldEnum.schema.ts",

@@ -430,7 +430,6 @@ export type SolveWhereInput = {
   session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
   smart_device?: Prisma.XOR<Prisma.SmartDeviceNullableScalarRelationFilter, Prisma.SmartDeviceWhereInput> | null
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
-  solve_method_steps?: Prisma.SolveMethodStepListRelationFilter
   solve_views?: Prisma.SolveViewListRelationFilter
   top_average_1?: Prisma.TopAverageListRelationFilter
   top_average_2?: Prisma.TopAverageListRelationFilter
@@ -475,7 +474,6 @@ export type SolveOrderByWithRelationInput = {
   session?: Prisma.SessionOrderByWithRelationInput
   smart_device?: Prisma.SmartDeviceOrderByWithRelationInput
   user?: Prisma.UserAccountOrderByWithRelationInput
-  solve_method_steps?: Prisma.SolveMethodStepOrderByRelationAggregateInput
   solve_views?: Prisma.SolveViewOrderByRelationAggregateInput
   top_average_1?: Prisma.TopAverageOrderByRelationAggregateInput
   top_average_2?: Prisma.TopAverageOrderByRelationAggregateInput
@@ -524,7 +522,6 @@ export type SolveWhereUniqueInput = Prisma.AtLeast<{
   session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
   smart_device?: Prisma.XOR<Prisma.SmartDeviceNullableScalarRelationFilter, Prisma.SmartDeviceWhereInput> | null
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
-  solve_method_steps?: Prisma.SolveMethodStepListRelationFilter
   solve_views?: Prisma.SolveViewListRelationFilter
   top_average_1?: Prisma.TopAverageListRelationFilter
   top_average_2?: Prisma.TopAverageListRelationFilter
@@ -633,7 +630,6 @@ export type SolveCreateInput = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -672,7 +668,6 @@ export type SolveUncheckedCreateInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -711,7 +706,6 @@ export type SolveUpdateInput = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -750,7 +744,6 @@ export type SolveUncheckedUpdateInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -1165,20 +1158,6 @@ export type SolveUncheckedUpdateManyWithoutSmart_deviceNestedInput = {
   deleteMany?: Prisma.SolveScalarWhereInput | Prisma.SolveScalarWhereInput[]
 }
 
-export type SolveCreateNestedOneWithoutSolve_method_stepsInput = {
-  create?: Prisma.XOR<Prisma.SolveCreateWithoutSolve_method_stepsInput, Prisma.SolveUncheckedCreateWithoutSolve_method_stepsInput>
-  connectOrCreate?: Prisma.SolveCreateOrConnectWithoutSolve_method_stepsInput
-  connect?: Prisma.SolveWhereUniqueInput
-}
-
-export type SolveUpdateOneRequiredWithoutSolve_method_stepsNestedInput = {
-  create?: Prisma.XOR<Prisma.SolveCreateWithoutSolve_method_stepsInput, Prisma.SolveUncheckedCreateWithoutSolve_method_stepsInput>
-  connectOrCreate?: Prisma.SolveCreateOrConnectWithoutSolve_method_stepsInput
-  upsert?: Prisma.SolveUpsertWithoutSolve_method_stepsInput
-  connect?: Prisma.SolveWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SolveUpdateToOneWithWhereWithoutSolve_method_stepsInput, Prisma.SolveUpdateWithoutSolve_method_stepsInput>, Prisma.SolveUncheckedUpdateWithoutSolve_method_stepsInput>
-}
-
 export type SolveCreateNestedOneWithoutSolve_viewsInput = {
   create?: Prisma.XOR<Prisma.SolveCreateWithoutSolve_viewsInput, Prisma.SolveUncheckedCreateWithoutSolve_viewsInput>
   connectOrCreate?: Prisma.SolveCreateOrConnectWithoutSolve_viewsInput
@@ -1389,7 +1368,6 @@ export type SolveCreateWithoutUserInput = {
   match_participant?: Prisma.MatchParticipantCreateNestedOneWithoutSolvesInput
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -1427,7 +1405,6 @@ export type SolveUncheckedCreateWithoutUserInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -1525,7 +1502,6 @@ export type SolveCreateWithoutMatchInput = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -1563,7 +1539,6 @@ export type SolveUncheckedCreateWithoutMatchInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -1627,7 +1602,6 @@ export type SolveCreateWithoutMatch_participantInput = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -1665,7 +1639,6 @@ export type SolveUncheckedCreateWithoutMatch_participantInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -1729,7 +1702,6 @@ export type SolveCreateWithoutSmart_deviceInput = {
   match_participant?: Prisma.MatchParticipantCreateNestedOneWithoutSolvesInput
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -1767,7 +1739,6 @@ export type SolveUncheckedCreateWithoutSmart_deviceInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -1803,174 +1774,6 @@ export type SolveUpdateManyWithWhereWithoutSmart_deviceInput = {
   data: Prisma.XOR<Prisma.SolveUpdateManyMutationInput, Prisma.SolveUncheckedUpdateManyWithoutSmart_deviceInput>
 }
 
-export type SolveCreateWithoutSolve_method_stepsInput = {
-  id?: string
-  time: number
-  raw_time?: number | null
-  cube_type?: string | null
-  scramble?: string | null
-  started_at?: bigint | number | null
-  ended_at?: bigint | number | null
-  dnf?: boolean
-  plus_two?: boolean
-  notes?: string | null
-  trainer_name?: string | null
-  created_at?: Date | string
-  bulk?: boolean
-  inspection_time?: number | null
-  is_smart_cube?: boolean
-  smart_put_down_time?: number | null
-  smart_turns?: string | null
-  smart_turn_count?: number | null
-  share_code?: string | null
-  from_timer?: boolean
-  custom_scramble?: boolean
-  training_session_id?: string | null
-  game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
-  match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
-  match_participant?: Prisma.MatchParticipantCreateNestedOneWithoutSolvesInput
-  session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
-  smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
-  user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
-  top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
-  top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
-  top_average_3?: Prisma.TopAverageCreateNestedManyWithoutSolve_3Input
-  top_average_4?: Prisma.TopAverageCreateNestedManyWithoutSolve_4Input
-  top_average_5?: Prisma.TopAverageCreateNestedManyWithoutSolve_5Input
-  top_solve?: Prisma.TopSolveCreateNestedManyWithoutSolveInput
-}
-
-export type SolveUncheckedCreateWithoutSolve_method_stepsInput = {
-  id?: string
-  user_id: string
-  time: number
-  raw_time?: number | null
-  cube_type?: string | null
-  scramble?: string | null
-  session_id?: string | null
-  started_at?: bigint | number | null
-  ended_at?: bigint | number | null
-  dnf?: boolean
-  plus_two?: boolean
-  notes?: string | null
-  trainer_name?: string | null
-  created_at?: Date | string
-  bulk?: boolean
-  inspection_time?: number | null
-  is_smart_cube?: boolean
-  smart_put_down_time?: number | null
-  smart_turns?: string | null
-  smart_turn_count?: number | null
-  smart_device_id?: string | null
-  match_id?: string | null
-  match_participant_id?: string | null
-  share_code?: string | null
-  from_timer?: boolean
-  game_session_id?: string | null
-  custom_scramble?: boolean
-  training_session_id?: string | null
-  solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
-  top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
-  top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
-  top_average_3?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_3Input
-  top_average_4?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_4Input
-  top_average_5?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_5Input
-  top_solve?: Prisma.TopSolveUncheckedCreateNestedManyWithoutSolveInput
-}
-
-export type SolveCreateOrConnectWithoutSolve_method_stepsInput = {
-  where: Prisma.SolveWhereUniqueInput
-  create: Prisma.XOR<Prisma.SolveCreateWithoutSolve_method_stepsInput, Prisma.SolveUncheckedCreateWithoutSolve_method_stepsInput>
-}
-
-export type SolveUpsertWithoutSolve_method_stepsInput = {
-  update: Prisma.XOR<Prisma.SolveUpdateWithoutSolve_method_stepsInput, Prisma.SolveUncheckedUpdateWithoutSolve_method_stepsInput>
-  create: Prisma.XOR<Prisma.SolveCreateWithoutSolve_method_stepsInput, Prisma.SolveUncheckedCreateWithoutSolve_method_stepsInput>
-  where?: Prisma.SolveWhereInput
-}
-
-export type SolveUpdateToOneWithWhereWithoutSolve_method_stepsInput = {
-  where?: Prisma.SolveWhereInput
-  data: Prisma.XOR<Prisma.SolveUpdateWithoutSolve_method_stepsInput, Prisma.SolveUncheckedUpdateWithoutSolve_method_stepsInput>
-}
-
-export type SolveUpdateWithoutSolve_method_stepsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.FloatFieldUpdateOperationsInput | number
-  raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  dnf?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  plus_two?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trainer_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
-  match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
-  match_participant?: Prisma.MatchParticipantUpdateOneWithoutSolvesNestedInput
-  session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
-  smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
-  user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
-  top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
-  top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
-  top_average_3?: Prisma.TopAverageUpdateManyWithoutSolve_3NestedInput
-  top_average_4?: Prisma.TopAverageUpdateManyWithoutSolve_4NestedInput
-  top_average_5?: Prisma.TopAverageUpdateManyWithoutSolve_5NestedInput
-  top_solve?: Prisma.TopSolveUpdateManyWithoutSolveNestedInput
-}
-
-export type SolveUncheckedUpdateWithoutSolve_method_stepsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.FloatFieldUpdateOperationsInput | number
-  raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  dnf?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  plus_two?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trainer_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  match_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  match_participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
-  top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
-  top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
-  top_average_3?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_3NestedInput
-  top_average_4?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_4NestedInput
-  top_average_5?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_5NestedInput
-  top_solve?: Prisma.TopSolveUncheckedUpdateManyWithoutSolveNestedInput
-}
-
 export type SolveCreateWithoutSolve_viewsInput = {
   id?: string
   time: number
@@ -2000,7 +1803,6 @@ export type SolveCreateWithoutSolve_viewsInput = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
   top_average_3?: Prisma.TopAverageCreateNestedManyWithoutSolve_3Input
@@ -2038,7 +1840,6 @@ export type SolveUncheckedCreateWithoutSolve_viewsInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
   top_average_3?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_3Input
@@ -2092,7 +1893,6 @@ export type SolveUpdateWithoutSolve_viewsInput = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
   top_average_3?: Prisma.TopAverageUpdateManyWithoutSolve_3NestedInput
@@ -2130,7 +1930,6 @@ export type SolveUncheckedUpdateWithoutSolve_viewsInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
   top_average_3?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_3NestedInput
@@ -2167,7 +1966,6 @@ export type SolveCreateWithoutGame_sessionInput = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -2205,7 +2003,6 @@ export type SolveUncheckedCreateWithoutGame_sessionInput = {
   from_timer?: boolean
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -2270,7 +2067,6 @@ export type SolveCreateWithoutTop_solveInput = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -2308,7 +2104,6 @@ export type SolveUncheckedCreateWithoutTop_solveInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -2362,7 +2157,6 @@ export type SolveUpdateWithoutTop_solveInput = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -2400,7 +2194,6 @@ export type SolveUncheckedUpdateWithoutTop_solveInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -2438,7 +2231,6 @@ export type SolveCreateWithoutTop_average_1Input = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
   top_average_3?: Prisma.TopAverageCreateNestedManyWithoutSolve_3Input
@@ -2476,7 +2268,6 @@ export type SolveUncheckedCreateWithoutTop_average_1Input = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
   top_average_3?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_3Input
@@ -2519,7 +2310,6 @@ export type SolveCreateWithoutTop_average_2Input = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_3?: Prisma.TopAverageCreateNestedManyWithoutSolve_3Input
@@ -2557,7 +2347,6 @@ export type SolveUncheckedCreateWithoutTop_average_2Input = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_3?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_3Input
@@ -2600,7 +2389,6 @@ export type SolveCreateWithoutTop_average_3Input = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -2638,7 +2426,6 @@ export type SolveUncheckedCreateWithoutTop_average_3Input = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -2681,7 +2468,6 @@ export type SolveCreateWithoutTop_average_4Input = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -2719,7 +2505,6 @@ export type SolveUncheckedCreateWithoutTop_average_4Input = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -2762,7 +2547,6 @@ export type SolveCreateWithoutTop_average_5Input = {
   session?: Prisma.SessionCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -2800,7 +2584,6 @@ export type SolveUncheckedCreateWithoutTop_average_5Input = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -2854,7 +2637,6 @@ export type SolveUpdateWithoutTop_average_1Input = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
   top_average_3?: Prisma.TopAverageUpdateManyWithoutSolve_3NestedInput
@@ -2892,7 +2674,6 @@ export type SolveUncheckedUpdateWithoutTop_average_1Input = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
   top_average_3?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_3NestedInput
@@ -2941,7 +2722,6 @@ export type SolveUpdateWithoutTop_average_2Input = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_3?: Prisma.TopAverageUpdateManyWithoutSolve_3NestedInput
@@ -2979,7 +2759,6 @@ export type SolveUncheckedUpdateWithoutTop_average_2Input = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_3?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_3NestedInput
@@ -3028,7 +2807,6 @@ export type SolveUpdateWithoutTop_average_3Input = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3066,7 +2844,6 @@ export type SolveUncheckedUpdateWithoutTop_average_3Input = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -3115,7 +2892,6 @@ export type SolveUpdateWithoutTop_average_4Input = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3153,7 +2929,6 @@ export type SolveUncheckedUpdateWithoutTop_average_4Input = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -3202,7 +2977,6 @@ export type SolveUpdateWithoutTop_average_5Input = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3240,7 +3014,6 @@ export type SolveUncheckedUpdateWithoutTop_average_5Input = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -3277,7 +3050,6 @@ export type SolveCreateWithoutSessionInput = {
   match_participant?: Prisma.MatchParticipantCreateNestedOneWithoutSolvesInput
   smart_device?: Prisma.SmartDeviceCreateNestedOneWithoutSolvesInput
   user: Prisma.UserAccountCreateNestedOneWithoutSolvesInput
-  solve_method_steps?: Prisma.SolveMethodStepCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageCreateNestedManyWithoutSolve_2Input
@@ -3315,7 +3087,6 @@ export type SolveUncheckedCreateWithoutSessionInput = {
   game_session_id?: string | null
   custom_scramble?: boolean
   training_session_id?: string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedCreateNestedManyWithoutSolveInput
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -3409,7 +3180,6 @@ export type SolveUpdateWithoutUserInput = {
   match_participant?: Prisma.MatchParticipantUpdateOneWithoutSolvesNestedInput
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3447,7 +3217,6 @@ export type SolveUncheckedUpdateWithoutUserInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -3545,7 +3314,6 @@ export type SolveUpdateWithoutMatchInput = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3583,7 +3351,6 @@ export type SolveUncheckedUpdateWithoutMatchInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -3681,7 +3448,6 @@ export type SolveUpdateWithoutMatch_participantInput = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3719,7 +3485,6 @@ export type SolveUncheckedUpdateWithoutMatch_participantInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -3817,7 +3582,6 @@ export type SolveUpdateWithoutSmart_deviceInput = {
   match_participant?: Prisma.MatchParticipantUpdateOneWithoutSolvesNestedInput
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3855,7 +3619,6 @@ export type SolveUncheckedUpdateWithoutSmart_deviceInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -3953,7 +3716,6 @@ export type SolveUpdateWithoutGame_sessionInput = {
   session?: Prisma.SessionUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -3991,7 +3753,6 @@ export type SolveUncheckedUpdateWithoutGame_sessionInput = {
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -4089,7 +3850,6 @@ export type SolveUpdateWithoutSessionInput = {
   match_participant?: Prisma.MatchParticipantUpdateOneWithoutSolvesNestedInput
   smart_device?: Prisma.SmartDeviceUpdateOneWithoutSolvesNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSolvesNestedInput
-  solve_method_steps?: Prisma.SolveMethodStepUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUpdateManyWithoutSolve_2NestedInput
@@ -4127,7 +3887,6 @@ export type SolveUncheckedUpdateWithoutSessionInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  solve_method_steps?: Prisma.SolveMethodStepUncheckedUpdateManyWithoutSolveNestedInput
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -4173,7 +3932,6 @@ export type SolveUncheckedUpdateManyWithoutSessionInput = {
  */
 
 export type SolveCountOutputType = {
-  solve_method_steps: number
   solve_views: number
   top_average_1: number
   top_average_2: number
@@ -4184,7 +3942,6 @@ export type SolveCountOutputType = {
 }
 
 export type SolveCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  solve_method_steps?: boolean | SolveCountOutputTypeCountSolve_method_stepsArgs
   solve_views?: boolean | SolveCountOutputTypeCountSolve_viewsArgs
   top_average_1?: boolean | SolveCountOutputTypeCountTop_average_1Args
   top_average_2?: boolean | SolveCountOutputTypeCountTop_average_2Args
@@ -4202,13 +3959,6 @@ export type SolveCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Select specific fields to fetch from the SolveCountOutputType
    */
   select?: Prisma.SolveCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * SolveCountOutputType without action
- */
-export type SolveCountOutputTypeCountSolve_method_stepsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SolveMethodStepWhereInput
 }
 
 /**
@@ -4296,7 +4046,6 @@ export type SolveSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   session?: boolean | Prisma.Solve$sessionArgs<ExtArgs>
   smart_device?: boolean | Prisma.Solve$smart_deviceArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
-  solve_method_steps?: boolean | Prisma.Solve$solve_method_stepsArgs<ExtArgs>
   solve_views?: boolean | Prisma.Solve$solve_viewsArgs<ExtArgs>
   top_average_1?: boolean | Prisma.Solve$top_average_1Args<ExtArgs>
   top_average_2?: boolean | Prisma.Solve$top_average_2Args<ExtArgs>
@@ -4420,7 +4169,6 @@ export type SolveInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   session?: boolean | Prisma.Solve$sessionArgs<ExtArgs>
   smart_device?: boolean | Prisma.Solve$smart_deviceArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
-  solve_method_steps?: boolean | Prisma.Solve$solve_method_stepsArgs<ExtArgs>
   solve_views?: boolean | Prisma.Solve$solve_viewsArgs<ExtArgs>
   top_average_1?: boolean | Prisma.Solve$top_average_1Args<ExtArgs>
   top_average_2?: boolean | Prisma.Solve$top_average_2Args<ExtArgs>
@@ -4456,7 +4204,6 @@ export type $SolvePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     session: Prisma.$SessionPayload<ExtArgs> | null
     smart_device: Prisma.$SmartDevicePayload<ExtArgs> | null
     user: Prisma.$UserAccountPayload<ExtArgs>
-    solve_method_steps: Prisma.$SolveMethodStepPayload<ExtArgs>[]
     solve_views: Prisma.$SolveViewPayload<ExtArgs>[]
     top_average_1: Prisma.$TopAveragePayload<ExtArgs>[]
     top_average_2: Prisma.$TopAveragePayload<ExtArgs>[]
@@ -4894,7 +4641,6 @@ export interface Prisma__SolveClient<T, Null = never, ExtArgs extends runtime.Ty
   session<T extends Prisma.Solve$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Solve$sessionArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   smart_device<T extends Prisma.Solve$smart_deviceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Solve$smart_deviceArgs<ExtArgs>>): Prisma.Prisma__SmartDeviceClient<runtime.Types.Result.GetResult<Prisma.$SmartDevicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__UserAccountClient<runtime.Types.Result.GetResult<Prisma.$UserAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  solve_method_steps<T extends Prisma.Solve$solve_method_stepsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Solve$solve_method_stepsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolveMethodStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   solve_views<T extends Prisma.Solve$solve_viewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Solve$solve_viewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolveViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   top_average_1<T extends Prisma.Solve$top_average_1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Solve$top_average_1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TopAveragePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   top_average_2<T extends Prisma.Solve$top_average_2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Solve$top_average_2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TopAveragePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5452,30 +5198,6 @@ export type Solve$smart_deviceArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.SmartDeviceInclude<ExtArgs> | null
   where?: Prisma.SmartDeviceWhereInput
-}
-
-/**
- * Solve.solve_method_steps
- */
-export type Solve$solve_method_stepsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SolveMethodStep
-   */
-  select?: Prisma.SolveMethodStepSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SolveMethodStep
-   */
-  omit?: Prisma.SolveMethodStepOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SolveMethodStepInclude<ExtArgs> | null
-  where?: Prisma.SolveMethodStepWhereInput
-  orderBy?: Prisma.SolveMethodStepOrderByWithRelationInput | Prisma.SolveMethodStepOrderByWithRelationInput[]
-  cursor?: Prisma.SolveMethodStepWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SolveMethodStepScalarFieldEnum | Prisma.SolveMethodStepScalarFieldEnum[]
 }
 
 /**

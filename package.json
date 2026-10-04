@@ -17,6 +17,7 @@
 		"devs": "HTTPS=true pnpm run server",
 		"dev2": "PORT=3001 pnpm run server",
 		"seed:dev": "ts-node scripts/seed-dev.ts",
+		"backfill:smart-turns": "ts-node scripts/compact-smart-turns.ts",
 		"prisma": "prisma format && rm -rf generated/zod && prisma generate && prisma migrate dev",
 		"test": "jest",
 		"lint": "pnpm run lint:eslint",

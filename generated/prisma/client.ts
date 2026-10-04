@@ -165,11 +165,6 @@ export type ChatMessage = Prisma.ChatMessageModel
  */
 export type SmartDevice = Prisma.SmartDeviceModel
 /**
- * Model SolveMethodStep
- * 
- */
-export type SolveMethodStep = Prisma.SolveMethodStepModel
-/**
  * Model BadgeType
  * 
  */
