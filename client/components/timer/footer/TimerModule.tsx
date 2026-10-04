@@ -73,7 +73,9 @@ export default function TimerModule(props: Props) {
 					title="Customize Stats"
 					variant="ghost"
 					size="icon-lg"
-					className="border-tmo-module/10 rounded-l-none border-l"
+					className={cn('border-tmo-module/10 rounded-l-none border-l', {
+						'size-9 rounded-none': mobileMode,
+					})}
 					onClick={() =>
 						setCustomizeStatsDialog({
 							props: {filterOptions: solvesFilter},
@@ -131,8 +133,14 @@ export default function TimerModule(props: Props) {
 	let dropdown: ReactNode = (
 		<div
 			className={cn(
-				'border-tmo-module/10 bg-module absolute top-0 left-1/2 z-40 flex -translate-x-1/2 items-center rounded-b-md border border-t-0 opacity-0 shadow-lg transition-opacity duration-150 ease-in-out group-hover:opacity-100 focus-within:opacity-100 has-[[data-state=open]]:opacity-100',
-				{'opacity-100': mobileMode},
+				'border-tmo-module/10 bg-module absolute z-40 flex items-center border transition-opacity duration-150 ease-in-out',
+				{
+					'top-0 left-1/2 -translate-x-1/2 rounded-b-md border-t-0 opacity-0 shadow-lg group-hover:opacity-100 focus-within:opacity-100 has-[[data-state=open]]:opacity-100':
+						!mobileMode,
+					// In mobile, sit in the row above the footer (next to the hide/show toggle)
+					'border-tmo-module/15 -left-px bottom-[calc(100%+9px)] h-9 overflow-hidden rounded-md opacity-100 shadow-xs':
+						mobileMode,
+				},
 			)}
 		>
 			<SelectField
@@ -141,7 +149,9 @@ export default function TimerModule(props: Props) {
 				text={currentModuleName}
 				onValueChange={(value) => selectVisual(value as TimerModuleType)}
 				align="center"
-				triggerProps={{className: 'h-10 rounded-none border-0 px-4 shadow-none'}}
+				triggerProps={{
+					className: cn('h-10 rounded-none border-0 px-4 shadow-none', {'h-9': mobileMode}),
+				}}
 				maxHeight={240}
 				options={moduleDropdownOptions.map((option) => ({
 					value: option.value,
@@ -166,7 +176,7 @@ export default function TimerModule(props: Props) {
 		'p-2.5',
 	];
 	if (mobileMode) {
-		wrapperClass.push('!h-[270px]', '!overflow-visible');
+		wrapperClass.push('!h-[256px]', '!overflow-visible');
 		if (index > 0) {
 			wrapperClass.push('hidden');
 		}

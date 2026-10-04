@@ -11,6 +11,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 interface Props {
 	stateless?: boolean;
 	hideSessionName?: boolean; // Will just show "Session"
+	searchable?: boolean;
 	onChange?: (session: Session) => void;
 }
 
@@ -19,7 +20,7 @@ export default function SessionPicker(props: Props) {
 	const sessionId = useSettings('session_id');
 
 	const [localSessionId, setLocalSessionId] = useState<string>();
-    const {onChange, hideSessionName, stateless} = props;
+    const {onChange, hideSessionName, stateless, searchable} = props;
     const selectedSession = fetchSessionById((stateless ? localSessionId : sessionId) || '');
 
 	const options = fetchSessions().map((session) => ({value:session.id, text:session.name}));
@@ -47,7 +48,7 @@ export default function SessionPicker(props: Props) {
 
 	return (
 		<div>
-			<Combobox label="Session" value={selectedSession?.id || ''} text={sessionName} options={options} onValueChange={(id) => {const session = fetchSessionById(id); if (session) switchSession(session);}} />
+			<Combobox label="Session" searchable={searchable} value={selectedSession?.id || ''} text={sessionName} options={options} onValueChange={(id) => {const session = fetchSessionById(id); if (session) switchSession(session);}} />
 		</div>
 	);
 }

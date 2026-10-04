@@ -6,7 +6,7 @@ import {smartCubeSelected} from '@/components/timer/helpers/util';
 import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartScramble';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
-import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
+import {MOBILE_SCRAMBLE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
 import {setSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
@@ -27,7 +27,7 @@ export default function TimerScramble() {
 
 	const focusMode = context.focusMode;
 	if (mobileMode) {
-		timerScrambleSize *= MOBILE_FONT_SIZE_MULTIPLIER;
+		timerScrambleSize *= MOBILE_SCRAMBLE_FONT_SIZE_MULTIPLIER;
 	}
 
 	const {
@@ -102,7 +102,7 @@ export default function TimerScramble() {
 			{/* Match the textarea's wrapping and box model before JavaScript runs. */}
 			<div
 				aria-hidden="true"
-				className={`${scrambleFieldClasses} invisible whitespace-pre-wrap [overflow-wrap:break-word]`}
+				className={`${scrambleFieldClasses} invisible [overflow-wrap:break-word] whitespace-pre-wrap`}
 			>
 				{`${scramble || (hideScramble ? '' : 'scramble')} `}
 			</div>
@@ -150,7 +150,7 @@ export default function TimerScramble() {
 				)}
 				style={{
 					fontSize: timerScrambleSize + 'px',
-					lineHeight: timerScrambleSize * 1.6 + 'px',
+					lineHeight: timerScrambleSize * (mobileMode ? 1.8 : 1.6) + 'px',
 				}}
 			>
 				{scrambleBody}

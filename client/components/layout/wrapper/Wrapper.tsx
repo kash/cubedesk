@@ -105,7 +105,7 @@ export default function Wrapper(props: Props) {
 		'bg-background',
 		gridColumns,
 	];
-	if (mobileMode && nav) {
+	if (mobileMode && nav && !focusMode) {
 		bodyClasses.push('pt-[55px]');
 	}
 

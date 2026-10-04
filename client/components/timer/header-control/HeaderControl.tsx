@@ -48,6 +48,7 @@ export default function HeaderControl() {
 
 	const me = useMe();
 	const backgroundColor = useTheme('background_color');
+	const moduleColor = useTheme('module_color');
 	const context = useTimerContext();
 	const {focusMode, cubeType} = context;
 	const headerOptions = context.headerOptions || {};
@@ -108,14 +109,15 @@ export default function HeaderControl() {
 
 	const cubePicker = !focusMode && !headerOptions.hideCubeType && (
 		<CubePicker
-			pickerProps={{openLeft: true, noMargin: true}}
+			pickerProps={{openLeft: true, noMargin: true, searchable: !mobileMode}}
 			value={cubeType ?? ''}
 			onChange={(ct) => changeCubeType(ct.id)}
 		/>
 	);
 
-	const timerTypeDropdown = !focusMode && !headerOptions.hideTimerType && !mobileMode && (
-		<div className="flex items-center gap-1">
+	// Shows which timer modes are on (inspection, manual entry)
+	const modeIndicators = !focusMode && (
+		<>
 			{inspection && !headerOptions.hideInspection && (
 				<TooltipProvider>
 					<TooltipRoot>
@@ -123,7 +125,7 @@ export default function HeaderControl() {
 							<span
 								tabIndex={0}
 								aria-label="Inspection is on"
-								className="text-text mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+								className="text-text focus-visible:outline-primary mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4"
 							>
 								<MagnifyingGlassPlus className="size-4" aria-hidden="true" />
 							</span>
@@ -139,7 +141,7 @@ export default function HeaderControl() {
 							<span
 								tabIndex={0}
 								aria-label="Manual entry is on"
-								className="text-text mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+								className="text-text focus-visible:outline-primary mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4"
 							>
 								<Keyboard className="size-4" aria-hidden="true" />
 							</span>
@@ -148,6 +150,12 @@ export default function HeaderControl() {
 					</TooltipRoot>
 				</TooltipProvider>
 			)}
+		</>
+	);
+
+	const timerTypeDropdown = !focusMode && !headerOptions.hideTimerType && !mobileMode && (
+		<div className="flex items-center gap-1">
+			{modeIndicators}
 			<SelectField
 				label="Timer input type"
 				value={timerType}
@@ -172,7 +180,7 @@ export default function HeaderControl() {
 	);
 
 	const sessionSwitcher = me && !focusMode && !headerOptions.hideSessionSelector && (
-		<SessionSwitcher />
+		<SessionSwitcher searchable={!mobileMode} />
 	);
 
 	let topRightButton = (
@@ -231,44 +239,72 @@ export default function HeaderControl() {
 		);
 	}
 
+	const authButtons = !me && (
+		<div className="flex shrink-0 items-center gap-2">
+			<AuthDialog view="login">
+				<Button variant="secondary">{'Log in'}</Button>
+			</AuthDialog>
+			<AuthDialog view="signup">
+				<Button variant="default">{'Sign up'}</Button>
+			</AuthDialog>
+		</div>
+	);
+
+	// On mobile, logged out users get a top bar (logo and auth buttons) that mirrors the logged in mobile nav
+	const mobileLoggedOutBar = mobileMode && !me && !focusMode && (
+		<div
+			className={classNames(
+				'bg-module relative z-30 box-border flex h-[55px] w-full shrink-0 items-center justify-between px-[13px] transition-opacity duration-200 ease-in-out',
+				{'pointer-events-none opacity-10': !!context.timeStartedAt},
+			)}
+		>
+			<a
+				className="flex size-11 shrink-0 items-center justify-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
+				href="/"
+				aria-label="CubeDesk home"
+			>
+				<span className="w-6">
+					<LogoBrandmark dark={!moduleColor.isDark} />
+				</span>
+			</a>
+			{authButtons}
+		</div>
+	);
+
 	return (
 		<>
 			<GlobalHotKeys handlers={handlers} keyMap={HOTKEY_MAP}>
+				{mobileLoggedOutBar}
 				<div
 					className={classNames(
-						'absolute top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
+						'top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
 						context.timeStartedAt && 'pointer-events-none opacity-10',
-						!me && '!grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
+						!me && !mobileMode && '!grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
+						{
+							// In mobile, the header takes up space so the timer is centered between it and the footer
+							'relative shrink-0': mobileMode,
+							absolute: !mobileMode,
+						},
 					)}
 				>
 					<div className="flex flex-row items-center justify-start gap-2.5">
-						{!me && (
-							<div
-								className={
-									mobileMode
-										? 'mr-1 w-[23px] shrink-0'
-										: 'mr-3 w-[120px] shrink-0'
-								}
-							>
-								{mobileMode ? (
-									<LogoBrandmark dark={!backgroundColor.isDark} />
-								) : (
-									<LogoLockup dark={!backgroundColor.isDark} />
-								)}
+						{!me && !mobileMode && !focusMode && (
+							<div className="mr-3 w-[120px] shrink-0">
+								<LogoLockup dark={!backgroundColor.isDark} />
 							</div>
 						)}
-						{headerOptions?.customHeadersLeft}
+						{!focusMode && headerOptions?.customHeadersLeft}
 						{cubePicker}
 						{sessionSwitcher}
 					</div>
-					{me ? (
+					{me || mobileMode ? (
 						<div className="flex flex-row items-start justify-center gap-2.5" />
 					) : (
 						<div className="flex flex-row items-center justify-center">
 							<Link
 								to="/about"
 								className={classNames(
-									'text-text/60 hover:text-text rounded-sm px-2 py-1 font-mono text-xs tracking-[0.2em] uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
+									'text-text/60 hover:text-text focus-visible:outline-primary rounded-sm px-2 py-1 font-mono text-xs tracking-[0.2em] uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-4',
 									{hidden: mobileMode},
 								)}
 							>
@@ -277,19 +313,13 @@ export default function HeaderControl() {
 						</div>
 					)}
 					<div className="flex flex-row items-start justify-end gap-2.5">
+						{mobileMode && (
+							<div className="flex h-9 items-center">{modeIndicators}</div>
+						)}
 						{timerTypeDropdown}
 						{topRightButton}
-						{headerOptions?.customHeadersRight}
-						{!me && (
-							<div className="flex shrink-0 items-center gap-2">
-								<AuthDialog view="login">
-									<Button variant="secondary">{'Log in'}</Button>
-								</AuthDialog>
-								<AuthDialog view="signup">
-									<Button variant="default">{'Sign up'}</Button>
-								</AuthDialog>
-							</div>
-						)}
+						{!focusMode && headerOptions?.customHeadersRight}
+						{!mobileMode && !focusMode && authButtons}
 					</div>
 				</div>
 			</GlobalHotKeys>

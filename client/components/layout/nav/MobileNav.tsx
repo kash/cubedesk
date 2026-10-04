@@ -1,12 +1,16 @@
+import AvatarImage from '@/components/common/avatar/AvatarImage';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import {LogoBrandmark} from '@/components/common/Logo';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import Notifications from '@/components/layout/nav/notifications/Notifications';
+import {RootState} from '@/reducers/reducers';
 import {logOut} from '@/util/auth/logout';
+import {cn} from '@/util/cn';
 import {useMe} from '@/util/hooks/useMe';
 import {useTheme} from '@/util/hooks/useTheme';
 import {List} from 'phosphor-react';
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
 
 export default function MobileNav() {
@@ -14,13 +18,22 @@ export default function MobileNav() {
 	const match = useRouteMatch();
 
 	const moduleColor = useTheme('module_color');
+	const timerRunning = useSelector((state: RootState) => !!state.timer?.timeStartedAt);
 
 	let navRight = <div />;
 	if (me) {
 		navRight = (
-			<div className="relative z-[100] flex w-[30%] flex-row justify-end gap-2.5">
+			<div className="relative z-[100] flex w-[30%] flex-row items-center justify-end gap-2.5">
 				<Notifications right />
 				<ActionMenu
+					noMargin
+					triggerProps={{
+						variant: 'ghost',
+						size: 'icon',
+						'aria-label': 'Account menu',
+						className: 'rounded-full p-0 hover:bg-transparent',
+					}}
+					handle={<AvatarImage small user={me} profile={me.profile} />}
 					options={[
 						{text: 'Account', link: '/account/personal-info'},
 						{text: 'Admin', link: '/admin/reports', hidden: !me.admin},
@@ -33,7 +46,12 @@ export default function MobileNav() {
 	}
 
 	return (
-		<div className="fixed left-0 top-0 z-[100000] flex h-[55px] w-full justify-center">
+		<div
+			className={cn(
+				'fixed left-0 top-0 z-[100000] flex h-[55px] w-full justify-center transition-opacity duration-200 ease-in-out',
+				{'pointer-events-none opacity-10': timerRunning},
+			)}
+		>
 			<div className="box-border flex w-full items-center justify-between px-[13px]">
 				<div className="relative z-[100] w-[30%]">
 					<ActionMenu

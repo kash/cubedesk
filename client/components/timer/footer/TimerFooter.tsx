@@ -28,9 +28,14 @@ export default function TimerFooter() {
 	let mobileHideButton: ReactNode = null;
 	if (mobileMode) {
 		mobileHideButton = (
-			<div className="flex h-[30px] w-full items-center justify-end opacity-70">
-				<Button variant="ghost" onClick={toggleMobileHideButton} size="sm">
-					{hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
+			<div className="mb-2 flex h-9 w-full items-center justify-end">
+				<Button
+					variant="outline"
+					size="icon"
+					onClick={toggleMobileHideButton}
+					aria-label={hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
+					title={hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
+				>
 					{hideMobileTimerFooter ? <CaretUp /> : <CaretDown />}
 				</Button>
 			</div>
@@ -64,7 +69,7 @@ export default function TimerFooter() {
 					'grid auto-rows-[0] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] grid-rows-[auto] divide-x',
 				(timerLayout === 'left' || timerLayout === 'right') &&
 					'grid !grid-cols-[1fr] !grid-rows-[repeat(3,minmax(0,1fr))] divide-y [@media(max-height:600px)]:!grid-rows-[repeat(1,minmax(0,1fr))] [@media(max-height:850px)]:!grid-rows-[repeat(2,minmax(0,1fr))]',
-				mobileMode && 'h-[270px] !divide-x-0 !divide-y-0 !overflow-visible rounded',
+				mobileMode && 'h-[256px] !divide-x-0 !divide-y-0 !overflow-visible rounded',
 			)}
 		>
 			{modules}

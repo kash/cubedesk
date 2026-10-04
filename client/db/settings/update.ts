@@ -6,6 +6,7 @@ import {trpc} from '@/util/trpc';
 import {snakeCase} from 'change-case';
 
 export const MOBILE_FONT_SIZE_MULTIPLIER = 0.75;
+export const MOBILE_SCRAMBLE_FONT_SIZE_MULTIPLIER = 0.9;
 
 export function setCurrentSession(id: string) {
 	return setSetting('session_id', id);
