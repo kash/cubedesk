@@ -3,7 +3,6 @@ import {Combobox} from '@/components/ui/combobox';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
 import {getSolveDb} from '@/db/solves/init';
-import {stripLokiJsMetadata} from '@/db/lokijs';
 import {Solve} from '@/types/solve';
 import {getCubeTypeName} from '@/util/cubes/util';
 import {trpc} from '@/util/trpc';
@@ -25,9 +24,7 @@ export function useDemoImport() {
 export function DemoImportProvider({children}: {children: React.ReactNode}) {
 	const [pending, setPending] = useState<Pending | null>(null);
 	function complete(completion: Completion) {
-		const solves = getSolveDb()
-			.find({demo_mode: true})
-			.map((solve) => stripLokiJsMetadata(solve) as Solve);
+		const solves = getSolveDb().find({demo_mode: true});
 		if (!solves.length) {
 			window.location.href = completion.redirect;
 			return;

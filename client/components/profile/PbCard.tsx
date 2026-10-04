@@ -5,7 +5,7 @@ import {Button} from '@/components/ui/button';
 import {Card} from '@/components/ui/card';
 import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {Spinner} from '@/components/ui/spinner';
-import {getAverage} from '@/db/solves/stats/solves/average/average';
+import {getAverage} from '@/db/solves/stats/solves/average/get-average';
 import {Solve} from '@/types/solve';
 import {TopAverage, TopSolve} from '@/types/top-solve';
 import {PublicUserAccount} from '@/types/user';

@@ -1,4 +1,4 @@
-import {updateOfflineHash} from '@/components/layout/offline';
+import {beginOp, LocalChanges, LocalOp} from '@/db/persist/writes';
 import {getSessionDb} from '@/db/sessions/init';
 import {fetchSessionById, fetchSessions} from '@/db/sessions/query';
 import {getSolveDb} from '@/db/solves/init';
@@ -7,17 +7,24 @@ import {Session} from '@/types/session';
 import {emitEvent} from '@/util/event_handler';
 import {trpc} from '@/util/trpc';
 
-export async function createSessionDb(sessionInput: Partial<Session>) {
-	const sessionDb = getSessionDb();
-	let session = sessionInput as Session;
+export async function createSessionDb(sessionInput: Partial<Session>): Promise<Session> {
+	const session = sessionInput as Session;
 
 	if (!sessionInput.demo_mode) {
-		session = await trpc.session.create.mutate({
-			name: session.name,
-		});
+		return runServerOp(
+			'session.create',
+			() => trpc.session.create.mutate({name: session.name}),
+			(created) => {
+				getSessionDb().insert({...created, order: 0});
+				updateLocalDbOrderValueForAllSessions();
+				postProcessDbUpdate(created, false);
+
+				return {putSessions: getSessionDb().all()};
+			}
+		);
 	}
 
-	sessionDb.insert({
+	getSessionDb().insert({
 		...session,
 		order: 0,
 	});
@@ -29,28 +36,37 @@ export async function createSessionDb(sessionInput: Partial<Session>) {
 }
 
 export async function deleteSessionDb(session: Session) {
-	const sessionDb = getSessionDb();
-	const solveDb = getSolveDb();
-
-	sessionDb.remove(session);
-	solveDb.removeWhere({
+	const removedSolves = getSolveDb().removeWhere({
 		session_id: session.id,
 	});
+	getSessionDb().remove(session.id);
 
 	postProcessDbUpdate(session);
 	updateLocalDbOrderValueForAllSessions();
 
-	await trpc.session.delete.mutate({
-		id: session.id,
-	});
+	await runLocalFirstOp(
+		'session.delete',
+		session,
+		{
+			deleteSessionIds: [session.id],
+			deleteSolveIds: removedSolves.map((solve) => solve.id),
+			putSessions: getSessionDb().all(),
+		},
+		() =>
+			trpc.session.delete.mutate({
+				id: session.id,
+			})
+	);
 }
 
 export async function reorderSessions(sessionIds: string[]) {
 	updateLocalDbOrderValuesForSessionIds(sessionIds);
 
-	await trpc.session.reorder.mutate({
-		ids: sessionIds,
-	});
+	await runLocalFirstOp('session.reorder', null, {putSessions: getSessionDb().all()}, () =>
+		trpc.session.reorder.mutate({
+			ids: sessionIds,
+		})
+	);
 }
 
 function updateLocalDbOrderValueForAllSessions() {
@@ -73,50 +89,44 @@ function updateLocalDbOrderValuesForSessionIds(ids: string[]) {
 			order: i,
 		});
 
-		postProcessDbUpdate(updated, false);
+		if (updated) {
+			postProcessDbUpdate(updated, false);
+		}
 	}
 }
 
 export async function updateSessionDb(session: Session, input: Partial<Session>) {
-	const sessionDb = getSessionDb();
-
-	sessionDb.update({
+	const updated = getSessionDb().update({
 		...session,
 		...input,
 	});
 	postProcessDbUpdate(session, false);
 
-	await trpc.session.update.mutate({
-		id: session.id,
-		data: {
-			name: input.name,
-			order: input.order,
-		},
-	});
+	await runLocalFirstOp('session.update', session, {putSessions: updated ? [updated] : []}, () =>
+		trpc.session.update.mutate({
+			id: session.id,
+			data: {
+				name: input.name,
+				order: input.order,
+			},
+		})
+	);
 }
 
 export async function mergeSessionsDb(oldSessionId: string, newSessionId: string) {
-	const solvesDb = getSolveDb();
-	const sessionsDb = getSessionDb();
-
 	// First, update all the solves with the old session ID to have the new session ID
-	solvesDb.findAndUpdate(
+	const movedSolves = getSolveDb().updateWhere(
 		{
 			session_id: oldSessionId,
 		},
-		(solve) => {
-			solve.session_id = newSessionId;
-		}
+		(solve) => ({...solve, session_id: newSessionId})
 	);
 
 	// Next, delete the old session from the local DB
-	const oldSession = fetchSessionById(oldSessionId);
+	const oldSession = getSessionDb().remove(oldSessionId);
 	const newSession = fetchSessionById(newSessionId);
 
 	if (oldSession) {
-		sessionsDb.remove(oldSession);
-
-		// Finally, update the database
 		postProcessDbUpdate(oldSession, true);
 	}
 
@@ -125,10 +135,69 @@ export async function mergeSessionsDb(oldSessionId: string, newSessionId: string
 	}
 	updateLocalDbOrderValueForAllSessions();
 
-	await trpc.session.merge.mutate({
-		oldSessionId,
-		newSessionId,
-	});
+	// Finally, update the database
+	await runLocalFirstOp(
+		'session.merge',
+		oldSession,
+		{
+			putSolves: movedSolves,
+			deleteSessionIds: [oldSessionId],
+			putSessions: getSessionDb().all(),
+		},
+		() =>
+			trpc.session.merge.mutate({
+				oldSessionId,
+				newSessionId,
+			})
+	);
+}
+
+/**
+ * Persists changes already made in memory, then makes the server change. Server errors are rethrown.
+ */
+async function runLocalFirstOp(
+	kind: string,
+	session: Session | null,
+	changes: LocalChanges,
+	serverCall: () => Promise<unknown>
+) {
+	let op: LocalOp | null = null;
+	if (!session?.demo_mode) {
+		op = beginOp(kind, changes);
+		await op.durable;
+	}
+
+	try {
+		await serverCall();
+	} catch (error) {
+		op?.fail();
+		throw error;
+	}
+
+	op?.confirm();
+}
+
+/**
+ * Makes the server change first, then applies it in memory and persists it. Server errors are rethrown.
+ */
+async function runServerOp<T>(
+	kind: string,
+	serverCall: () => Promise<T>,
+	applyLocally: (result: T) => LocalChanges
+): Promise<T> {
+	const op = beginOp(kind);
+	await op.durable;
+
+	let result: T;
+	try {
+		result = await serverCall();
+	} catch (error) {
+		op.fail();
+		throw error;
+	}
+
+	op.confirm(applyLocally(result));
+	return result;
 }
 
 function postProcessDbUpdate(session: Session, clearSolveCache = true) {
@@ -142,6 +211,4 @@ function postProcessDbUpdate(session: Session, clearSolveCache = true) {
 
 	emitEvent('solveDbUpdatedEvent');
 	emitEvent('sessionsDbUpdatedEvent', session);
-
-	updateOfflineHash();
 }

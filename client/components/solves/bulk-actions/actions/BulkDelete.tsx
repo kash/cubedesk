@@ -38,7 +38,7 @@ export default function BulkDeleteSolvesButton(props: Props) {
 				solveIds,
 			});
 
-			await initAllSolves(true);
+			await initAllSolves();
 
 			const solvesDeleted = `${deletedCount} solve${deletedCount === 1 ? '' : 's'}`;
 			toastSuccess(`Successfully deleted ${solvesDeleted}.`);

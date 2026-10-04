@@ -1,11 +1,11 @@
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
-import {clearOfflineData} from '@/components/layout/offline';
 import SettingRow from '@/components/settings/common/SettingRow';
 import ImportData, {ImportDataType} from '@/components/settings/data/import-data/ImportData';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {Spinner} from '@/components/ui/spinner';
+import {clearLocalData} from '@/db/persist/sync';
 import {fetchSessions} from '@/db/sessions/query';
 import {fetchSolves} from '@/db/solves/query';
 import {useMe} from '@/util/hooks/useMe';
@@ -51,7 +51,7 @@ export default function DataSettings() {
 
 	async function hardReload() {
 		try {
-			await clearOfflineData();
+			await clearLocalData();
 			window.location.reload();
 		} catch (e) {
 			console.error(e);
@@ -61,10 +61,10 @@ export default function DataSettings() {
 	async function exportData() {
 		setExportingData(true);
 
-		const sessions = fetchSessions().map((s) => removeTypename({...s}, true));
+		const sessions = fetchSessions().map((s) => removeTypename({...s}));
 		const solves = fetchSolves({
 			from_timer: true,
-		}).map((s) => removeTypename({...s}, true));
+		}).map((s) => removeTypename({...s}));
 
 		const data = JSON.stringify({
 			sessions,

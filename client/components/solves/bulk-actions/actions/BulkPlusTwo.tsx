@@ -39,7 +39,7 @@ export default function BulkPlusTwoSolvesButton(props: Props) {
 				solveIds,
 			});
 
-			await initAllSolves(true);
+			await initAllSolves();
 
 			const solvesUpdated = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
 			toastSuccess(`Successfully +2'd ${solvesUpdated}.`);

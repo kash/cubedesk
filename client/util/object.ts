@@ -12,13 +12,7 @@ function omitDeep(collection: object, excludeKeys: string[]) {
 	return _.cloneDeepWith(collection, omitFn);
 }
 
-// Strips legacy GraphQL __typename keys (still present in old exported/offline
-// data) and, optionally, LokiJS bookkeeping fields
-export function removeTypename<T extends object>(data: T, removeLokiAndMeta?: boolean): T {
-	const omitKeys = ['__typename'];
-	if (removeLokiAndMeta) {
-		omitKeys.push('$loki', 'meta');
-	}
-
-	return omitDeep(data, omitKeys) as T;
+// Strips legacy GraphQL __typename keys (still present in old exported/offline data)
+export function removeTypename<T extends object>(data: T): T {
+	return omitDeep(data, ['__typename']) as T;
 }

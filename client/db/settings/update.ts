@@ -1,4 +1,3 @@
-import {updateOfflineHash} from '@/components/layout/offline';
 import {getSettingsDb, SettingValue} from '@/db/settings/init';
 import {setLocalSettingValue} from '@/db/settings/local';
 import {AllSettings, getSetting} from '@/db/settings/query';
@@ -17,10 +16,10 @@ export function setCubeType(cubeType: string) {
 }
 
 export async function refreshSettings() {
-	const settingsDb = getSettingsDb();
 	const settings = await trpc.setting.get.query();
+	const settingsDb = getSettingsDb();
 
-	if (!settings) {
+	if (!settings || !settingsDb) {
 		return;
 	}
 
@@ -56,6 +55,9 @@ export function setSetting<T extends keyof AllSettings>(key: T, value: AllSettin
 
 async function updatePartialSettings(payload: Partial<AllSettings>) {
 	const settingsDb = getSettingsDb();
+	if (!settingsDb) {
+		return;
+	}
 
 	const localSettingUpdates: SettingValue[] = [];
 	const apiSettingUpdates: SettingValue[] = [];
@@ -91,7 +93,7 @@ function setSettingLocal(setVals: SettingValue[]) {
 	const settingsDb = getSettingsDb();
 
 	for (const setVal of setVals) {
-		settingsDb.update(setVal);
+		settingsDb?.update(setVal);
 		setLocalSettingValue(setVal.id as any, setVal.value);
 	}
 }
@@ -108,7 +110,7 @@ async function setSettingApi(setVals: SettingValue[]) {
 		return;
 	}
 
-	await Promise.all([updateOfflineHash(), trpc.setting.set.mutate(payload)]);
+	await trpc.setting.set.mutate(payload);
 }
 
 function emitSettingUpdateEvent(setVals: SettingValue[]) {

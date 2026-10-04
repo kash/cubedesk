@@ -39,7 +39,7 @@ export default function BulkOkSolvesButton(props: Props) {
 				solveIds,
 			});
 
-			await initAllSolves(true);
+			await initAllSolves();
 
 			const solvesUpdated = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
 			toastSuccess(`Successfully "okayed" ${solvesUpdated}.`);

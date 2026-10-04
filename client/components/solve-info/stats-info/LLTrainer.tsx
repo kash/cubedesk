@@ -1,6 +1,7 @@
 import AlgoVisual from '@/components/trainer/AlgoVisual';
 import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
 import {Solve} from '@/types/solve';
+import {useTrainerDb} from '@/util/hooks/useTrainerDb';
 import React from 'react';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 export default function LLTrainer(props: Props) {
 	const {solve} = props;
+	useTrainerDb();
 	const ollPll = getOllAndPllFromSolve(solve);
 
 	if (!ollPll) {

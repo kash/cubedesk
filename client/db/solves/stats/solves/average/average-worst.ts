@@ -1,5 +1,5 @@
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
-import {getAverage} from '@/db/solves/stats/solves/average/average';
+import {getAverage} from '@/db/solves/stats/solves/average/get-average';
 import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '@/db/solves/stats/solves/caching';
 import {Solve} from '@/types/solve';
 import SortedArray from '@/util/sorted-array';

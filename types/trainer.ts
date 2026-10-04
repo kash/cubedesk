@@ -56,7 +56,7 @@ export type AlgorithmOverrideInput = {
 	scrambles?: string | null;
 };
 
-// Shape of records in the client's loki "trainer" collection, which mixes
+// Shape of records in the client's in-memory trainer table, which mixes
 // Built-in algorithms (TrainerAlgorithm) with the user's custom trainers
 // (serialized CustomTrainerWithUser rows over tRPC) — fields that only one
 // source provides are optional.

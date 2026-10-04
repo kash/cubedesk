@@ -14,6 +14,7 @@ import * as Sentry from '@sentry/node';
 import {createExpressMiddleware} from '@trpc/server/adapters/express';
 import bodyParser from 'body-parser';
 import colors from 'colors';
+import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import fs from 'fs';
@@ -78,6 +79,8 @@ process.on('SIGINT', () => {
 // Initialize logging
 initLogger();
 
+// Pages and tRPC responses (solve lists of heavy users can be tens of megabytes of repetitive JSON)
+app.use(compression());
 app.use(bodyParser.json({limit: '200mb'}));
 app.use(cookieParser());
 
@@ -117,6 +120,15 @@ if (!isDev && sentryDsn) {
 		createExpressMiddleware({
 			router: appRouter,
 			createContext: createTRPCContext,
+			responseMeta({paths, type, errors}) {
+				// The trainer catalog is the same for everyone and rarely changes. The client requests it on its own
+				// (unbatched) so the URL is stable and the browser can reuse it.
+				if (type === 'query' && !errors.length && paths?.length === 1 && paths[0] === 'trainer.algorithms') {
+					return {headers: {'cache-control': 'private, max-age=3600, stale-while-revalidate=604800'}};
+				}
+
+				return {};
+			},
 		})
 	);
 

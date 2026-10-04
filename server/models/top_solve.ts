@@ -1,5 +1,5 @@
 import type {Solve} from '@/generated/prisma/client';
-import {getAverage} from '@/db/solves/stats/solves/average/average';
+import {getAverage} from '@/db/solves/stats/solves/average/get-average';
 import {Prisma} from '@/generated/prisma/client';
 import {getPrisma} from '@/server/database';
 import {publicUserSelect} from '@/types/user';

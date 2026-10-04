@@ -1,5 +1,5 @@
-import {updateOfflineHash} from '@/components/layout/offline';
 import {getStore} from '@/components/store';
+import {beginOp, LocalOp} from '@/db/persist/writes';
 import {getSolveDb} from '@/db/solves/init';
 import {checkForCurrentAverageUpdate} from '@/db/solves/stats/solves/cache/average-cache';
 import {clearSolveStatCache} from '@/db/solves/stats/solves/caching';
@@ -12,23 +12,27 @@ import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 
 export async function createSolveDb(solveInput: Solve) {
-	const solveDb = getSolveDb();
-
 	const solve = sanitizeSolve(solveInput);
-	solveDb.insert({
+	const stored = getSolveDb().insert({
 		...solve,
 	});
 
 	postProcessDbUpdate(solve, true);
 
-	if (!solve.demo_mode) {
-		try {
-			await trpc.solve.create.mutate(solve);
-		} catch (e) {
-			toastError('Could not save solve. Please check your connection.');
-		}
-	} else {
+	if (solve.demo_mode) {
 		await createDemoSolve(solve);
+		return;
+	}
+
+	const op = beginOp('solve.create', {putSolves: [stored]});
+	await op.durable;
+
+	try {
+		await trpc.solve.create.mutate(solve);
+		op.confirm();
+	} catch (e) {
+		op.fail();
+		toastError('Could not save solve. Please check your connection.');
 	}
 }
 
@@ -50,29 +54,47 @@ async function createDemoSolve(solve: Solve) {
 }
 
 export async function deleteSolveDb(solve: Solve) {
-	if (!solve.demo_mode) {
-		try {
-			await trpc.solve.delete.mutate({id: solve.id});
-		} catch (error) {
-			toastError('Could not delete solve. Please check your connection.');
-			throw error;
-		}
+	if (solve.demo_mode) {
+		removeSolveLocally(solve);
+		return;
 	}
-	getSolveDb().remove(solve);
+
+	const op = beginOp('solve.delete');
+	await op.durable;
+
+	try {
+		await trpc.solve.delete.mutate({id: solve.id});
+	} catch (error) {
+		op.fail();
+		toastError('Could not delete solve. Please check your connection.');
+		throw error;
+	}
+
+	removeSolveLocally(solve);
+	op.confirm({deleteSolveIds: [solve.id]});
+}
+
+function removeSolveLocally(solve: Solve) {
+	getSolveDb().remove(solve.id);
 	postProcessDbUpdate(solve, false);
 }
 
 export async function updateSolveDb(solve: Solve, input: Partial<Solve> = {}, updateLocalDb = true) {
 	updateSolveTime(solve);
-	const solveDb = getSolveDb();
 
+	let op: LocalOp | null = null;
 	if (updateLocalDb) {
-		solveDb.update({
+		const updated = getSolveDb().update({
 			...solve,
 			...input,
 		});
 
 		postProcessDbUpdate(solve, false);
+
+		if (!solve.demo_mode && updated) {
+			op = beginOp('solve.update', {putSolves: [updated]});
+			await op.durable;
+		}
 	}
 
 	if (!solve.demo_mode) {
@@ -84,7 +106,9 @@ export async function updateSolveDb(solve: Solve, input: Partial<Solve> = {}, up
 					time: solve.time,
 				},
 			});
+			op?.confirm();
 		} catch (e) {
+			op?.fail();
 			toastError('Could not update solve. Please check your connection.');
 		}
 	}
@@ -101,10 +125,6 @@ function postProcessDbUpdate(solve: Solve, isNew: boolean) {
 	checkForPB(solve, isNew);
 	checkForWorst(solve, isNew);
 	checkForCurrentAverageUpdate(solve, isNew);
-
-	if (!solve.demo_mode) {
-		updateOfflineHash();
-	}
 
 	emitEvent('solveDbUpdatedEvent', solve);
 }

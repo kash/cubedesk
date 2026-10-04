@@ -1,18 +1,20 @@
 import {addFriendships} from '@/actions/account';
 import {setGeneral} from '@/actions/general';
 import {initStatsModuleStore} from '@/actions/stats';
-import {clearOfflineData, initOfflineData, updateOfflineHash} from '@/components/layout/offline';
-import {getStore} from '@/components/store';
-import {getNewScramble} from '@/components/timer/helpers/scramble';
-import {initTrainerData} from '@/components/trainer/util/init';
-import {initLokiDb} from '@/db/lokijs';
-import {initSessionCollection, initSessionDb} from '@/db/sessions/init';
+import {getMe, getStore} from '@/components/store';
+import {listenForOtherTabChanges} from '@/db/persist/broadcast';
+import {disablePersistence, setActiveUserId} from '@/db/persist/database';
+import {removeLegacyLocalData} from '@/db/persist/legacy';
+import {holdTabLock} from '@/db/persist/locks';
+import {loadLocalSnapshot, refetchSolvesAndSessions} from '@/db/persist/sync';
+import {initSessionDb} from '@/db/sessions/init';
 import {initSettingsDb, SettingValue} from '@/db/settings/init';
 import {getAllLocalSettings} from '@/db/settings/local';
 import {getDefaultSettings} from '@/db/settings/query';
-import {initSolveDb, initSolvesCollection} from '@/db/solves/init';
+import {initSolveDb} from '@/db/solves/init';
+import {clearAllSolveStatCache} from '@/db/solves/stats/solves/caching';
 import {generateId} from '@/shared/code';
-import {Solve} from '@/types/solve';
+import {AppBootstrap} from '@/types/bootstrap';
 import {UserAccount} from '@/types/user';
 import {trpc} from '@/util/trpc';
 import {Dispatch} from 'redux';
@@ -22,12 +24,9 @@ export function initAnonymousAppData(callback) {
 		return;
 	}
 
-	initLokiDb({
-		autoload: false,
-		autosave: false,
-		autosaveInterval: undefined,
-		adapter: undefined,
-	});
+	// Demo solves live only in memory
+	disablePersistence('demo');
+	removeLegacyLocalData();
 
 	const localSettings = getAllLocalSettings('demo');
 	const settingValues = Object.keys(localSettings).map((key) => ({
@@ -36,11 +35,14 @@ export function initAnonymousAppData(callback) {
 		value: localSettings[key],
 	}));
 	initSettingsDb(settingValues);
-	initSessionCollection();
-	initSolvesCollection(true);
+	initSessionDb([]);
+	initSolveDb([]);
 
 	callback();
 }
+
+// Reading the local copy should be much faster than this. If IndexedDB hangs, fetch from the server instead.
+const LOCAL_DATA_TIMEOUT_MS = 8000;
 
 export async function initAppData(
 	me: UserAccount,
@@ -51,75 +53,62 @@ export async function initAppData(
 		return;
 	}
 
-	console.time('loadedFromOffline');
-	await initOfflineData(me, async (passed) => {
-		const promises: Promise<any>[] = [];
+	removeLegacyLocalData();
+	setActiveUserId(me.id);
+	holdTabLock();
+	listenForOtherTabChanges();
 
-		if (!passed) {
-			try {
-				await clearOfflineData();
-			} catch (e) {
-				console.error(e);
-			}
-			initLokiDb({
-				autoload: false,
-			});
+	// Embedded in the page by the server when available, so these usually need no requests
+	const bootstrap = getAppBootstrap();
 
-			promises.push(initAllSolves());
-			promises.push(getAllSessions());
-		} else {
-			console.timeEnd('loadedFromOffline');
-		}
+	const promises: Promise<unknown>[] = [
+		initStatsModule(dispatch, bootstrap),
+		initSettings(me.id, bootstrap),
+		initSolvesAndSessions(me),
+	];
 
-		promises.push(getStatsModule(dispatch));
-		promises.push(getAllSettings(me?.id));
-		promises.push(getAllFriends(dispatch));
-		promises.push(
-			initTrainerData().catch((error) => {
-				// A catalog outage must not block the timer or the admin CSV import page.
-				// The trainer page fetches again and exposes its own retry state.
-				console.error('Could not initialize trainer data', error);
-			}),
-		);
-		promises.push(initNewScramble());
-
-		try {
-			console.time('loadedFromDatabase');
-			await Promise.all(promises);
-			console.timeEnd('loadedFromDatabase');
-
-			initSolvesCollection();
-
-			updateOfflineHash(true);
-		} catch (e) {
-			console.error(e);
-		}
-
-		callback();
+	// Not needed to show the app, so loaded in the background. Trainer data loads when something first needs it.
+	getAllFriends(dispatch).catch((error) => {
+		console.error('Could not load friends', error);
 	});
+
+	try {
+		console.time('loadedFromDatabase');
+		await Promise.all(promises);
+		console.timeEnd('loadedFromDatabase');
+	} catch (e) {
+		console.error(e);
+	}
+
+	// Settings (e.g. custom cube types) are now loaded, so recompute any stats read before then
+	clearAllSolveStatCache();
+
+	callback();
+}
+
+async function initSolvesAndSessions(me: UserAccount) {
+	console.time('loadedFromOffline');
+	const local = await loadLocalSnapshot(me, LOCAL_DATA_TIMEOUT_MS);
+	if (!local) {
+		await refetchSolvesAndSessions(me);
+		return;
+	}
+
+	initSolveDb(local.solves);
+	initSessionDb(local.sessions);
+	console.timeEnd('loadedFromOffline');
 }
 
 /**
- * This may seem out of place but scrambo takes 300ms to load and its best to load it as early as possible
- * (with everything else)
+ * Reloads all solves and sessions from the server, e.g. after a change made only on the server
  */
-async function initNewScramble() {
-	return new Promise((resolve) => {
-		getNewScramble('333');
-		resolve(null);
-	});
-}
-
-export async function initAllSolves(forceRefresh = false) {
-	try {
-		const solves = await trpc.solve.list.query();
-
-		initSolveDb(solves as unknown as Solve[], forceRefresh);
-	} catch (e) {
-		initSolveDb([], forceRefresh);
-	} finally {
-		await updateOfflineHash();
+export async function initAllSolves() {
+	const me = getMe();
+	if (!me) {
+		return;
 	}
+
+	await refetchSolvesAndSessions(me, {forceNewHash: true});
 }
 
 export function setBrowserSessionId(dispatch: Dispatch<any>) {
@@ -133,18 +122,17 @@ export function setBrowserSessionId(dispatch: Dispatch<any>) {
 	dispatch(setGeneral('browser_session_id', newSessionId));
 }
 
-async function getAllSessions() {
-	const sessions = await trpc.session.list.query();
-	initSessionDb(sessions);
+function getAppBootstrap(): AppBootstrap | null {
+	return getStore().getState().ssr?.app_bootstrap ?? null;
 }
 
-async function getStatsModule(dispatch: Dispatch<any>) {
-	const statsModule = await trpc.stats.module.query();
+async function initStatsModule(dispatch: Dispatch<any>, bootstrap: AppBootstrap | null) {
+	const statsModule = bootstrap ? bootstrap.statsModule : await trpc.stats.module.query();
 	dispatch(initStatsModuleStore(statsModule));
 }
 
-async function getAllSettings(userId: string) {
-	const backendSettings = (await trpc.setting.get.query()) ?? {};
+async function initSettings(userId: string, bootstrap: AppBootstrap | null) {
+	const backendSettings = (bootstrap ? bootstrap.settings : await trpc.setting.get.query()) ?? {};
 
 	const settings: SettingValue[] = [];
 	const localSettings = getAllLocalSettings(userId);

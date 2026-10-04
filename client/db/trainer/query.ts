@@ -1,8 +1,8 @@
-import {LokiFetchOptions} from '@/db/lokijs';
+import {FetchOptions, RecordQuery} from '@/db/memory/query';
 import {getTrainerDb, TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {fetchRecords, fetchUniqueValuesByField} from '@/db/util';
 
-export type FilterTrainerOptions = LokiQuery<TrainerAlgorithmExtended>;
+export type FilterTrainerOptions = RecordQuery<TrainerAlgorithmExtended>;
 
 export function fetchTrainerAlgorithmCubeTypes() {
 	const db = getTrainerDb();
@@ -18,17 +18,17 @@ export function fetchTrainerAlgorithmTypes(options: FilterTrainerOptions = {}) {
 
 export function fetchTrainerAlgorithmCount() {
 	const db = getTrainerDb();
-	return db?.count() ?? 0;
+	return db?.size ?? 0;
 }
 
 export function fetchTrainerAlgorithmById(id: string) {
 	const db = getTrainerDb();
-	return db?.findOne({id}) ?? null;
+	return db?.get(id) ?? null;
 }
 
 export function fetchTrainerAlgorithms(
 	options: FilterTrainerOptions = {},
-	fetchOptions?: LokiFetchOptions,
+	fetchOptions?: FetchOptions<TrainerAlgorithmExtended>,
 ) {
 	const db = getTrainerDb();
 	if (!db) return [];

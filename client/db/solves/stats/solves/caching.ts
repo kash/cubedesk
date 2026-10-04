@@ -1,8 +1,6 @@
-import {getSolveCacheDb} from '@/db/solves/init';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {Solve} from '@/types/solve';
 import {getNumberToDecimalPoints} from '@/util/time';
-import flatten from 'flat';
 import jsonStr from 'json-stable-stringify';
 
 type CacheType = 'avg_current' | 'avg_pb' | 'avg_worst' | 'single_pb' | 'single_worst';
@@ -27,19 +25,38 @@ export type SolveStat = SolveCacheKey & {
 	time: number;
 };
 
-type FilterSolveStats = LokiQuery<SolveStat>;
+// Every given field must match. For filterOptions, each given key must equal the stat's filter value for that key.
+interface SolveStatCacheFilter {
+	type?: CacheType;
+	cacheKey?: string;
+	filterOptions?: FilterSolvesOptions;
+	solve?: Pick<Solve, 'id'>;
+}
 
-// Filters get flattened into dotted-key queries, so nested objects (e.g. solve) may be partial
-type SolveStatCacheFilter = FilterSolveStats | {solve: Partial<Solve>};
+// In memory only: rebuilt lazily after every load, and invalidated as solves change
+const solveStatCache = new Map<string, SolveStat>();
 
-function cleanFilterSolvesOptions(filter: SolveStatCacheFilter) {
-	for (const key of Object.keys(filter)) {
-		if (filter[key] === undefined || filter[key] === null) {
-			delete filter[key];
+function matchesFilter(stat: SolveStat, filter: SolveStatCacheFilter): boolean {
+	if (filter.type != null && stat.type !== filter.type) {
+		return false;
+	}
+	if (filter.cacheKey != null && stat.cacheKey !== filter.cacheKey) {
+		return false;
+	}
+	if (filter.solve != null && stat.solve?.id !== filter.solve.id) {
+		return false;
+	}
+
+	if (filter.filterOptions != null) {
+		const options = filter.filterOptions;
+		for (const key of Object.keys(options) as Array<keyof FilterSolvesOptions>) {
+			if (stat.filterOptions?.[key] !== options[key]) {
+				return false;
+			}
 		}
 	}
 
-	return flatten(filter);
+	return true;
 }
 
 function getCacheKeyString(cacheKey: SolveCacheKey): string {
@@ -47,54 +64,40 @@ function getCacheKeyString(cacheKey: SolveCacheKey): string {
 }
 
 export function fetchSolveCache(cacheKey: SolveCacheKey) {
-	const keyStr = getCacheKeyString(cacheKey);
-	return fetchSolveCacheByCacheStr(keyStr);
+	return solveStatCache.get(getCacheKeyString(cacheKey)) ?? null;
 }
 
-function fetchSolveCacheByCacheStr(cacheKey: string) {
-	const out = fetchAllSolveCaches({
-		cacheKey: cacheKey,
-	});
-
-	if (out && out.length) {
-		return out[0];
+// Used for invalidating cache. Returns a snapshot, so callers may clear entries while iterating.
+export function fetchAllSolveCaches(filter: SolveStatCacheFilter) {
+	const out: SolveStat[] = [];
+	for (const stat of solveStatCache.values()) {
+		if (matchesFilter(stat, filter)) {
+			out.push(stat);
+		}
 	}
-
-	return null;
-}
-
-// Used for invalidating cache
-export function fetchAllSolveCaches(filter: FilterSolveStats) {
-	const solveCacheDb = getSolveCacheDb();
-	return solveCacheDb.find(cleanFilterSolvesOptions(filter));
+	return out;
 }
 
 export function clearSingleSolveStatCache(cacheStr: string) {
-	const solveCacheDb = getSolveCacheDb();
-	const cached = fetchSolveCacheByCacheStr(cacheStr);
-	if (cached) {
-		solveCacheDb.remove(cached);
+	solveStatCache.delete(cacheStr);
+}
+
+// Only clears stats made of a single solve (PB and worst singles)
+export function clearSolveStatCache(filter: SolveStatCacheFilter) {
+	for (const stat of fetchAllSolveCaches(filter)) {
+		if (stat.solve) {
+			solveStatCache.delete(stat.cacheKey);
+		}
 	}
 }
 
-export function clearSolveStatCache(filter: SolveStatCacheFilter) {
-	const solveCacheDb = getSolveCacheDb();
-
-	solveCacheDb
-		.chain()
-		.where((stat) => !!stat.solve)
-		.find(cleanFilterSolvesOptions(filter))
-		.data()
-		.forEach((stat) => {
-			solveCacheDb.remove(stat);
-		});
+export function clearAllSolveStatCache() {
+	solveStatCache.clear();
 }
 
 // Caches a result given a key
 export function cacheSolveStat(cacheKey: SolveCacheKey, result: SolveStatInput): SolveStat {
-	const solveCacheDb = getSolveCacheDb();
 	const resultSolves = result.solve ? [result.solve] : result.solves || [];
-
 
 	const cacheVal: SolveStat = {
 		...cacheKey,
@@ -105,7 +108,10 @@ export function cacheSolveStat(cacheKey: SolveCacheKey, result: SolveStatInput):
 		solves: resultSolves,
 	};
 
-	solveCacheDb.insert(cacheVal);
+	// The server never has local solves, and must not share cached state between requests
+	if (typeof window !== 'undefined') {
+		solveStatCache.set(cacheVal.cacheKey, cacheVal);
+	}
 
 	return cacheVal;
 }
