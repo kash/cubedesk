@@ -21,24 +21,30 @@ export default function StatsInfo(props: Props) {
 
 	function getStatCard(icon: ReactNode, title: string, val: number | string) {
 		return (
-			<div className="bg-module text-text box-border rounded-[13px] p-[15px]">
-				{icon}
-				<p className="mt-2.5 text-[0.85rem] text-inherit opacity-70">{title}</p>
-				<h4 className="text-[1.9rem] font-bold text-inherit">{val}</h4>
+			<div className="bg-button/60 text-text flex flex-col gap-1.5 rounded-xl p-3.5">
+				<div className="text-text/60 flex flex-row items-center gap-1.5 text-xs">
+					{icon}
+					<span className="truncate">{title}</span>
+				</div>
+				<span className="text-2xl font-bold tabular-nums">{val}</span>
 			</div>
 		);
 	}
 
 	return (
 		<div className="w-full">
-			<div className="bg-module text-text relative box-border w-full rounded-[13px] p-[15px]">
-				{getStatCard(<ArrowsClockwise />, 'Turns Per Second', tps)}
+			<div className="grid grid-cols-3 gap-2.5">
+				{getStatCard(<ArrowsClockwise className="shrink-0" />, 'TPS', tps)}
 				{getStatCard(
-					<Timer />,
-					'Inspection Time',
+					<Timer className="shrink-0" />,
+					'Inspection',
 					smartInspectionTime ? smartInspectionTime + 's' : '-',
 				)}
-				{getStatCard(<ArrowCounterClockwise />, 'Turns', smartTurnCount)}
+				{getStatCard(
+					<ArrowCounterClockwise className="shrink-0" />,
+					'Turns',
+					smartTurnCount,
+				)}
 			</div>
 			<Separator className="my-6" />
 			<div className="relative box-border w-full p-0">

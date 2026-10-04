@@ -9,7 +9,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {cn} from '@/util/cn';
-import {CaretDown, Check} from 'phosphor-react';
+import {ArrowSquareOut, CaretDown, Check} from 'phosphor-react';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import GenericInput, {GenericInputProps, InputProps} from './generic_input/GenericInput';
@@ -19,6 +19,8 @@ export interface ActionMenuOption {
 	checkbox?: boolean;
 	radio?: boolean;
 	link?: string;
+	// Opens the link in a new tab
+	newTab?: boolean;
 	icon?: React.ReactElement;
 	on?: boolean;
 	disabled?: boolean;
@@ -130,6 +132,9 @@ export default function ActionMenu(props: ActionMenuProps) {
 												{option.on && !option.checkbox && !option.radio && (
 													<Check className="size-4" />
 												)}
+												{option.newTab && (
+													<ArrowSquareOut className="size-4 opacity-60" />
+												)}
 											</>
 										);
 										if (option.radio)
@@ -164,7 +169,15 @@ export default function ActionMenu(props: ActionMenuProps) {
 										if (option.link && !option.disabled)
 											return (
 												<DropdownMenuItem key={index} asChild>
-													{option.link.startsWith('http') ? (
+													{option.newTab ? (
+														<a
+															href={option.link}
+															target="_blank"
+															rel="noopener"
+														>
+															{body}
+														</a>
+													) : option.link.startsWith('http') ? (
 														<a href={option.link}>{body}</a>
 													) : (
 														<Link to={option.link}>{body}</Link>
