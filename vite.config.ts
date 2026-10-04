@@ -58,6 +58,9 @@ export default defineConfig(({command, isSsrBuild}) => {
 					rootDir,
 					isSsrBuild ? 'server/app.ts' : 'client/components/App.tsx',
 				),
+				// Optional native modules that aren't installed. Bundled, Vite swaps them for empty stubs, so the
+				// try/require in ws and pg stops throwing and their pure-JS fallbacks are skipped.
+				...(isSsrBuild ? {external: ['bufferutil', 'utf-8-validate', 'pg-native']} : {}),
 				output: isSsrBuild
 					? {
 							format: 'cjs',
