@@ -164,4 +164,8 @@ jobs:
                   fi
                   echo "::add-mask::$DATABASE_URL"
                   export DATABASE_URL
+                  # DATABASE_URL uses sslmode=verify-full, so Node needs the RDS CA that the Dockerfile also installs
+                  curl --fail --silent --show-error --output rds-ca.pem https://truststore.pki.rds.amazonaws.com/us-west-2/us-west-2-bundle.pem
+                  echo "733b52e4b589586377e3e00f7c4625b61e14cbf0b5e08cace28b4f8aecc27c66  rds-ca.pem" | sha256sum --check --quiet
+                  export NODE_EXTRA_CA_CERTS=$PWD/rds-ca.pem
                   pnpm backfill:smart-turns
