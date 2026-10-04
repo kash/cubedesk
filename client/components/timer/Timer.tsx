@@ -180,6 +180,8 @@ export default function Timer(props: TimerProps) {
 							'z-10 box-border grid h-[calc(100vh_-_55px)] w-full gap-[15px]',
 							context.focusMode && !mobileMode
 								? '!grid-cols-[1fr] !grid-rows-none'
+								: context.focusMode
+									? 'grid-rows-[minmax(0,1fr)]'
 								: timerLayout === 'left'
 									? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
 									: timerLayout === 'right'

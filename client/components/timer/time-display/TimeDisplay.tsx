@@ -180,7 +180,7 @@ export default function TimeDisplay() {
 				'relative z-[1] flex w-full flex-col items-center justify-center p-0',
 				smartCubeSelected(context) && 'w-1/2',
 				mobileMode && 'select-none',
-				context.focusMode && 'h-screen !pt-0'
+				{'h-screen !pt-0': context.focusMode && !mobileMode}
 			)}
 		>
 			{body}
