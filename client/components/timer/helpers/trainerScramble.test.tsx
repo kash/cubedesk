@@ -26,6 +26,7 @@ jest.mock('@/db/settings/query', () => ({getSettings: () => ({})}));
 jest.mock('@/util/event_handler', () => ({emitEvent: jest.fn()}));
 jest.mock('@/util/storage', () => ({resourceUri: (path) => path}));
 jest.mock('@/util/hooks/useSettings', () => ({useSettings: () => false}));
+jest.mock('@/util/hooks/useGeneral', () => ({useGeneral: () => false}));
 jest.mock('@/util/hooks/useListener', () => ({
 	useElementListener: (_element, _event, handler) => {
 		mockManualKeypress = handler;

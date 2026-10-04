@@ -14,6 +14,7 @@ import {useGeneral} from '@/util/hooks/useGeneral';
 import {useWindowListener} from '@/util/hooks/useListener';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
+import {useVisualViewportHeight} from '@/util/hooks/useVisualViewportHeight';
 import {getStorageURL} from '@/util/storage';
 import classNames from 'classnames';
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
@@ -41,6 +42,7 @@ export default function Timer(props: TimerProps) {
 	const hideMobileTimerFooter = useSettings('hide_mobile_timer_footer');
 	const timerType = useSettings('timer_type');
 	const focusMode = useSettings('focus_mode');
+	const manualEntry = useSettings('manual_entry');
 	let timerLayout = props.timerLayout || useSettings('timer_layout');
 
 	const [heightSmall, setHeightSmall] = useState(false);
@@ -54,6 +56,11 @@ export default function Timer(props: TimerProps) {
 	}
 
 	const me = useMe();
+
+	// On mobile, manual entry keeps the keyboard open, so the timer is sized to the visible area above it
+	const mobileManualEntry = mobileMode && manualEntry && timerType !== 'smart';
+	const visualViewportHeight = useVisualViewportHeight(mobileManualEntry);
+	const showMobileNav = mobileMode && !!me && !focusMode;
 
 	// All default values from the settings should go here
 	const context: ITimerContext = {
@@ -116,14 +123,15 @@ export default function Timer(props: TimerProps) {
 	const mainClass = classNames(
 		'relative flex w-full select-none items-center justify-center',
 		mobileMode && 'select-none [-webkit-touch-callout:none] [-webkit-user-select:none]',
-		sideLayout && '!h-[calc(100vh_-_70px)]'
+		sideLayout && '!h-[calc(100vh_-_70px)]',
 	);
 	const mainCenterClass = classNames('flex w-full flex-col items-center', {
 		'-mt-[15vh]': sideLayout,
 		'-mt-[10vh]': context.focusMode && !mobileMode,
 	});
 	const mainTimeClass = classNames({
-		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': timerType === 'smart' && cubeType === '333',
+		'flex w-[95%] max-w-[580px] flex-row items-center justify-between':
+			timerType === 'smart' && cubeType === '333',
 	});
 
 	const timeBar = (
@@ -145,7 +153,7 @@ export default function Timer(props: TimerProps) {
 		</>
 	);
 
-	if (context.focusMode) {
+	if (context.focusMode || mobileManualEntry) {
 		body = timeBar;
 	}
 
@@ -158,7 +166,7 @@ export default function Timer(props: TimerProps) {
 			<img
 				alt="Timer background"
 				src={backgroundUrl ?? undefined}
-				className="absolute left-1/2 top-1/2 z-0 h-[calc(100%_+_60px)] w-[calc(100%_+_60px)] -translate-x-1/2 -translate-y-1/2 object-cover opacity-70"
+				className="absolute top-1/2 left-1/2 z-0 h-[calc(100%_+_60px)] w-[calc(100%_+_60px)] -translate-x-1/2 -translate-y-1/2 object-cover opacity-70"
 			/>
 		);
 	}
@@ -166,11 +174,17 @@ export default function Timer(props: TimerProps) {
 	return (
 		<div
 			className={classNames(
-				'relative mx-auto box-border flex flex-col justify-end pb-[calc(10px_+_env(safe-area-inset-bottom))] text-text',
-				mobileMode && me
+				'text-text relative mx-auto box-border flex flex-col justify-end pb-[calc(10px_+_env(safe-area-inset-bottom))]',
+				showMobileNav
 					? 'h-[calc(100vh_-_55px)] supports-[height:100dvh]:h-[calc(100dvh_-_55px)]'
-					: 'h-screen supports-[height:100dvh]:h-dvh'
+					: 'h-screen supports-[height:100dvh]:h-dvh',
+				{'!pb-2.5': mobileManualEntry && visualViewportHeight !== null},
 			)}
+			style={
+				visualViewportHeight !== null
+					? {height: visualViewportHeight - (showMobileNav ? 55 : 0)}
+					: undefined
+			}
 		>
 			<TimerContext.Provider value={context}>
 				<KeyWatcher>
@@ -180,18 +194,20 @@ export default function Timer(props: TimerProps) {
 							'z-10 box-border grid h-[calc(100vh_-_55px)] w-full gap-[15px]',
 							context.focusMode && !mobileMode
 								? '!grid-cols-[1fr] !grid-rows-none'
-								: timerLayout === 'left'
-									? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
-									: timerLayout === 'right'
-										? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[1fr] !px-2.5 !pb-2.5'
-										: hideMobileTimerFooter && mobileMode
-											? 'grid-rows-[1fr_50px]'
-											: 'grid-rows-[1fr_300px]',
+								: context.focusMode || mobileManualEntry
+									? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)]'
+									: timerLayout === 'left'
+										? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
+										: timerLayout === 'right'
+											? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[1fr] !px-2.5 !pb-2.5'
+											: hideMobileTimerFooter && mobileMode
+												? 'grid-rows-[1fr_50px]'
+												: 'grid-rows-[1fr_300px]',
 							timerStarted && mobileMode && '!grid-cols-[1fr]',
 							{
 								// Fill the space below the header instead of a fixed viewport height
 								'!h-auto min-h-0 flex-1': mobileMode,
-							}
+							},
 						)}
 					>
 						{body}
