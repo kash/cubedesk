@@ -6,7 +6,7 @@ generator client {
   provider        = "prisma-client"
   output          = "../generated/prisma"
   moduleFormat    = "cjs"
-  previewFeatures = ["fullTextSearchPostgres"]
+  previewFeatures = ["fullTextSearchPostgres", "partialIndexes"]
 }
 
 generator zod {
@@ -354,9 +354,9 @@ model Solve {
   trainer_name         String?
   created_at           DateTime          @default(now())
   bulk                 Boolean           @default(false)
-  inspection_time      Float?            @default(0.0)
+  inspection_time      Float?
   is_smart_cube        Boolean           @default(false)
-  smart_put_down_time  Float?            @default(0.0)
+  smart_put_down_time  Float?
   smart_turns          String?
   smart_turn_count     Int?
   smart_device_id      String?
@@ -373,7 +373,6 @@ model Solve {
   session              Session?          @relation(fields: [session_id], references: [id], onDelete: Cascade)
   smart_device         SmartDevice?      @relation(fields: [smart_device_id], references: [id], onDelete: SetDefault)
   user                 UserAccount       @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  solve_method_steps   SolveMethodStep[]
   solve_views          SolveView[]
   top_average_1        TopAverage[]      @relation("solve_1")
   top_average_2        TopAverage[]      @relation("solve_2")
@@ -382,17 +381,14 @@ model Solve {
   top_average_5        TopAverage[]      @relation("solve_5")
   top_solve            TopSolve[]
 
-  @@index([created_at])
-  @@index([match_id])
-  @@index([game_session_id])
-  @@index([match_participant_id])
+  // Solves are inserted in time order, so a BRIN index serves date ranges at a tiny fraction of a btree's size
+  @@index([created_at], type: Brin, map: "solve_created_at_brin_idx")
+  // These are empty on almost every solve, so only rows that have one are indexed
+  @@index([match_id], map: "solve_match_id_present_idx", where: raw("match_id IS NOT NULL"))
+  @@index([game_session_id], map: "solve_game_session_id_present_idx", where: raw("game_session_id IS NOT NULL"))
+  @@index([match_participant_id], map: "solve_match_participant_id_present_idx", where: raw("match_participant_id IS NOT NULL"))
+  @@index([smart_device_id], map: "solve_smart_device_id_present_idx", where: raw("smart_device_id IS NOT NULL"))
   @@index([session_id])
-  @@index([share_code])
-  @@index([bulk])
-  @@index([started_at])
-  @@index([from_timer])
-  @@index([training_session_id])
-  @@index([trainer_name])
   @@index([user_id])
   @@map("solve")
 }
@@ -535,28 +531,6 @@ model SmartDevice {
 
   @@index([user_id])
   @@map("smart_device")
-}
-
-model SolveMethodStep {
-  id               String   @id @default(uuid())
-  solve_id         String
-  turn_count       Int
-  turns            String?
-  method_name      String
-  step_index       Int
-  step_name        String
-  created_at       DateTime @default(now())
-  total_time       Float?
-  tps              Float?
-  parent_name      String?
-  recognition_time Float    @default(0.0)
-  skipped          Boolean  @default(false)
-  oll_case_key     String?
-  pll_case_key     String?
-  solve            Solve    @relation(fields: [solve_id], references: [id], onDelete: Cascade)
-
-  @@index([solve_id])
-  @@map("solve_method_step")
 }
 
 model BadgeType {

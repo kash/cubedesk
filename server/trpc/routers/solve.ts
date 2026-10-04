@@ -10,14 +10,12 @@ import {
 	updateSolve,
 	updateSolveLiteral,
 } from '@/server/models/solve';
-import {createSolveMethodSteps, deleteSolveMethodSteps} from '@/server/models/solve_method_step';
 import {createSolveView, deleteSolveViewsBySolveId} from '@/server/models/solve_view';
 import {deleteTopAverage, deleteTopSolveById} from '@/server/models/top_solve';
 import {updateUserAccountWithParams} from '@/server/models/user_account';
-import {logger} from '@/server/services/logger';
 import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 import {serializeSolveTimestamps} from '@/server/util/serialize';
-import {getSolveSteps} from '@/server/util/solve/solve_method';
+import {getSolveMethodSteps, prepareSmartSolve} from '@/server/util/solve/solve_method';
 import {generateRandomString} from '@/shared/code';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
@@ -65,7 +63,6 @@ export const solveInputSchema = z.object({
 	match_participant_id: z.string().nullish(),
 	smart_turn_count: z.number().int().nullish(),
 	smart_turns: z.string().nullish(),
-	smart_put_down_time: z.number().nullish(),
 	inspection_time: z.number().nullish(),
 });
 
@@ -96,22 +93,7 @@ export const solveRouter = router({
 		}
 
 		input.bulk = false;
-		const createdSolve = await createSolve(user, input as SolveInput);
-
-		if (input.is_smart_cube) {
-			try {
-				const turns = JSON.parse(input.smart_turns ?? '');
-				const steps = getSolveSteps(turns);
-				await createSolveMethodSteps(createdSolve, steps);
-			} catch (e) {
-				logger.warn('Failed to create solve method steps', {
-					error: e,
-				});
-				await updateSolve(createdSolve.id, {
-					is_smart_cube: false,
-				});
-			}
-		}
+		const createdSolve = await createSolve(user, prepareSmartSolve(input) as SolveInput);
 
 		await updateUserAccountWithParams(user.id, {
 			last_solve_at: new Date(),
@@ -143,7 +125,10 @@ export const solveRouter = router({
 				});
 			}
 
-			return serializeSolveTimestamps(solve);
+			return {
+				...serializeSolveTimestamps(solve),
+				solve_method_steps: getSolveMethodSteps(solve),
+			};
 		}),
 
 	getByShareCode: publicProcedure
@@ -163,7 +148,10 @@ export const solveRouter = router({
 				await createSolveView(ctx.user, solve);
 			}
 
-			return serializeSolveTimestamps(solve);
+			return {
+				...serializeSolveTimestamps(solve),
+				solve_method_steps: getSolveMethodSteps(solve),
+			};
 		}),
 
 	update: protectedProcedure
@@ -221,10 +209,6 @@ export const solveRouter = router({
 				solve.top_average_5?.length
 			) {
 				await deleteTopAverage(solve.cube_type, ctx.user);
-			}
-
-			if (solve.solve_method_steps) {
-				await deleteSolveMethodSteps(solve);
 			}
 
 			if (solve.solve_views) {

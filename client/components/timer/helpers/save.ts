@@ -57,7 +57,6 @@ export function saveSolve(
 		match_participant_id: null,
 		smart_turn_count: null,
 		smart_turns: null,
-		smart_put_down_time: null,
 		inspection_time: null,
 		share_code: null,
 		...context.solvesFilter,

@@ -76,7 +76,6 @@ export const ModelName = {
   MatchParticipant: 'MatchParticipant',
   ChatMessage: 'ChatMessage',
   SmartDevice: 'SmartDevice',
-  SolveMethodStep: 'SolveMethodStep',
   BadgeType: 'BadgeType',
   Badge: 'Badge',
   TimerBackground: 'TimerBackground',
@@ -494,27 +493,6 @@ export const SmartDeviceScalarFieldEnum = {
 } as const
 
 export type SmartDeviceScalarFieldEnum = (typeof SmartDeviceScalarFieldEnum)[keyof typeof SmartDeviceScalarFieldEnum]
-
-
-export const SolveMethodStepScalarFieldEnum = {
-  id: 'id',
-  solve_id: 'solve_id',
-  turn_count: 'turn_count',
-  turns: 'turns',
-  method_name: 'method_name',
-  step_index: 'step_index',
-  step_name: 'step_name',
-  created_at: 'created_at',
-  total_time: 'total_time',
-  tps: 'tps',
-  parent_name: 'parent_name',
-  recognition_time: 'recognition_time',
-  skipped: 'skipped',
-  oll_case_key: 'oll_case_key',
-  pll_case_key: 'pll_case_key'
-} as const
-
-export type SolveMethodStepScalarFieldEnum = (typeof SolveMethodStepScalarFieldEnum)[keyof typeof SolveMethodStepScalarFieldEnum]
 
 
 export const BadgeTypeScalarFieldEnum = {
@@ -1119,20 +1097,6 @@ export const SmartDeviceOrderByRelevanceFieldEnum = {
 } as const
 
 export type SmartDeviceOrderByRelevanceFieldEnum = (typeof SmartDeviceOrderByRelevanceFieldEnum)[keyof typeof SmartDeviceOrderByRelevanceFieldEnum]
-
-
-export const SolveMethodStepOrderByRelevanceFieldEnum = {
-  id: 'id',
-  solve_id: 'solve_id',
-  turns: 'turns',
-  method_name: 'method_name',
-  step_name: 'step_name',
-  parent_name: 'parent_name',
-  oll_case_key: 'oll_case_key',
-  pll_case_key: 'pll_case_key'
-} as const
-
-export type SolveMethodStepOrderByRelevanceFieldEnum = (typeof SolveMethodStepOrderByRelevanceFieldEnum)[keyof typeof SolveMethodStepOrderByRelevanceFieldEnum]
 
 
 export const BadgeTypeOrderByRelevanceFieldEnum = {

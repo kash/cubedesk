@@ -409,7 +409,6 @@ export const ModelName = {
   MatchParticipant: 'MatchParticipant',
   ChatMessage: 'ChatMessage',
   SmartDevice: 'SmartDevice',
-  SolveMethodStep: 'SolveMethodStep',
   BadgeType: 'BadgeType',
   Badge: 'Badge',
   TimerBackground: 'TimerBackground',
@@ -446,7 +445,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "solveMethodStep" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerAlgorithm" | "trainerCatalogState" | "trainerFavorite" | "algorithmOverride" | "setting" | "customCubeType" | "importAttempt"
+    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerAlgorithm" | "trainerCatalogState" | "trainerFavorite" | "algorithmOverride" | "setting" | "customCubeType" | "importAttempt"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2297,80 +2296,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SmartDeviceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SmartDeviceCountAggregateOutputType> | number
-        }
-      }
-    }
-    SolveMethodStep: {
-      payload: Prisma.$SolveMethodStepPayload<ExtArgs>
-      fields: Prisma.SolveMethodStepFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.SolveMethodStepFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.SolveMethodStepFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>
-        }
-        findFirst: {
-          args: Prisma.SolveMethodStepFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.SolveMethodStepFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>
-        }
-        findMany: {
-          args: Prisma.SolveMethodStepFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>[]
-        }
-        create: {
-          args: Prisma.SolveMethodStepCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>
-        }
-        createMany: {
-          args: Prisma.SolveMethodStepCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.SolveMethodStepCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>[]
-        }
-        delete: {
-          args: Prisma.SolveMethodStepDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>
-        }
-        update: {
-          args: Prisma.SolveMethodStepUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>
-        }
-        deleteMany: {
-          args: Prisma.SolveMethodStepDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.SolveMethodStepUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.SolveMethodStepUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>[]
-        }
-        upsert: {
-          args: Prisma.SolveMethodStepUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolveMethodStepPayload>
-        }
-        aggregate: {
-          args: Prisma.SolveMethodStepAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSolveMethodStep>
-        }
-        groupBy: {
-          args: Prisma.SolveMethodStepGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SolveMethodStepGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.SolveMethodStepCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SolveMethodStepCountAggregateOutputType> | number
         }
       }
     }
@@ -4347,27 +4272,6 @@ export const SmartDeviceScalarFieldEnum = {
 export type SmartDeviceScalarFieldEnum = (typeof SmartDeviceScalarFieldEnum)[keyof typeof SmartDeviceScalarFieldEnum]
 
 
-export const SolveMethodStepScalarFieldEnum = {
-  id: 'id',
-  solve_id: 'solve_id',
-  turn_count: 'turn_count',
-  turns: 'turns',
-  method_name: 'method_name',
-  step_index: 'step_index',
-  step_name: 'step_name',
-  created_at: 'created_at',
-  total_time: 'total_time',
-  tps: 'tps',
-  parent_name: 'parent_name',
-  recognition_time: 'recognition_time',
-  skipped: 'skipped',
-  oll_case_key: 'oll_case_key',
-  pll_case_key: 'pll_case_key'
-} as const
-
-export type SolveMethodStepScalarFieldEnum = (typeof SolveMethodStepScalarFieldEnum)[keyof typeof SolveMethodStepScalarFieldEnum]
-
-
 export const BadgeTypeScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -4972,20 +4876,6 @@ export const SmartDeviceOrderByRelevanceFieldEnum = {
 export type SmartDeviceOrderByRelevanceFieldEnum = (typeof SmartDeviceOrderByRelevanceFieldEnum)[keyof typeof SmartDeviceOrderByRelevanceFieldEnum]
 
 
-export const SolveMethodStepOrderByRelevanceFieldEnum = {
-  id: 'id',
-  solve_id: 'solve_id',
-  turns: 'turns',
-  method_name: 'method_name',
-  step_name: 'step_name',
-  parent_name: 'parent_name',
-  oll_case_key: 'oll_case_key',
-  pll_case_key: 'pll_case_key'
-} as const
-
-export type SolveMethodStepOrderByRelevanceFieldEnum = (typeof SolveMethodStepOrderByRelevanceFieldEnum)[keyof typeof SolveMethodStepOrderByRelevanceFieldEnum]
-
-
 export const BadgeTypeOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -5486,7 +5376,6 @@ export type GlobalOmitConfig = {
   matchParticipant?: Prisma.MatchParticipantOmit
   chatMessage?: Prisma.ChatMessageOmit
   smartDevice?: Prisma.SmartDeviceOmit
-  solveMethodStep?: Prisma.SolveMethodStepOmit
   badgeType?: Prisma.BadgeTypeOmit
   badge?: Prisma.BadgeOmit
   timerBackground?: Prisma.TimerBackgroundOmit

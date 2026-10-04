@@ -18,6 +18,7 @@ import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
+import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
 import {useSettings} from '@/util/hooks/useSettings';
 import {toastError} from '@/util/toast';
@@ -245,7 +246,7 @@ export default function SmartCube() {
 				smart_device_id: smartDeviceId,
 				is_smart_cube: true,
 				smart_turn_count: smartTurns.length,
-				smart_turns: JSON.stringify(smartTurns),
+				smart_turns: encodeSmartTurns(smartTurns),
 			});
 		}
 
