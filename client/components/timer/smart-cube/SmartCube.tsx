@@ -5,7 +5,12 @@ import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
 import Battery from '@/components/timer/smart-cube/battery/Battery';
 import Connect from '@/components/timer/smart-cube/bluetooth/connect';
-import {PendingSmartDevice} from '@/components/timer/smart-cube/bluetooth/smart_cube';
+import {
+	MacAddressRequestReason,
+	MacAddressResponse,
+	PendingSmartDevice,
+} from '@/components/timer/smart-cube/bluetooth/smart_cube';
+import MacAddressPrompt from '@/components/timer/smart-cube/mac-address/MacAddressPrompt';
 import ManageSmartCubes from '@/components/timer/smart-cube/manage-smart-cubes/ManageSmartCubes';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import SolveCheck from '@/components/timer/smart-cube/solve-check/SolveCheck';
@@ -13,11 +18,14 @@ import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
+import {cn} from '@/util/cn';
 import {useSettings} from '@/util/hooks/useSettings';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {Bluetooth, DotsThree} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
+
+const SOLVED_STATE = new Cube().asString();
 
 export default function SmartCube() {
 	const [bluetoothErrorMessageDialog, setBluetoothErrorMessageDialog] = React.useState<{
@@ -37,7 +45,12 @@ export default function SmartCube() {
 	const cubejs = useRef(new Cube());
 	const [pendingDevice, setPendingDevice] = useState<PendingSmartDevice | null>(null);
 	const confirmationRef = useRef<((confirmed: boolean) => void) | null>(null);
+	const [macAddressRequest, setMacAddressRequest] = useState<MacAddressRequestReason | null>(
+		null,
+	);
+	const macAddressResponseRef = useRef<((response: MacAddressResponse) => void) | null>(null);
 	const mountedRef = useRef(true);
+	const [reconnecting, setReconnecting] = useState(false);
 	const [connection] = useState(
 		() =>
 			new Connect({
@@ -48,11 +61,27 @@ export default function SmartCube() {
 						confirmationRef.current = resolve;
 						setPendingDevice(device);
 					}),
+				onInitialState: (facelets) => applyCubeState(facelets),
+				requestMacAddress: (reason) =>
+					new Promise<MacAddressResponse>((resolve) => {
+						macAddressResponseRef.current?.({action: 'cancel'});
+						macAddressResponseRef.current = resolve;
+						setMacAddressRequest(reason);
+					}),
 				onDisconnected: () => {
 					confirmationRef.current?.(false);
 					confirmationRef.current = null;
-					if (mountedRef.current) setPendingDevice(null);
-					setTimerParams({smartCubeConnecting: false, smartCubeConnected: false});
+					macAddressResponseRef.current?.({action: 'cancel'});
+					macAddressResponseRef.current = null;
+					if (mountedRef.current) {
+						setPendingDevice(null);
+						setMacAddressRequest(null);
+					}
+					setTimerParams({
+						smartCubeConnecting: false,
+						smartCubeConnected: false,
+						smartCubeNeedsSolve: false,
+					});
 				},
 			}),
 	);
@@ -70,24 +99,33 @@ export default function SmartCube() {
 		smartDeviceId,
 		smartCubeConnecting,
 		smartCubeBatteryLevel,
-		smartCurrentState,
 		smartSolvedState,
 		smartCubeConnected,
+		smartCubeNeedsSolve,
 		timeStartedAt,
 	} = context;
 
 	useEffect(() => {
 		mountedRef.current = true;
 		initVisualCube();
+		connection
+			.autoReconnect(() => setReconnecting(true))
+			.finally(() => {
+				if (mountedRef.current) setReconnecting(false);
+			});
 
 		return () => {
 			mountedRef.current = false;
 			confirmationRef.current?.(false);
 			confirmationRef.current = null;
+			macAddressResponseRef.current?.({action: 'cancel'});
+			macAddressResponseRef.current = null;
 			if (turnInterval.current) {
 				clearInterval(turnInterval.current);
 				turnInterval.current = null;
 			}
+			cube.current?.dispose();
+			cube.current = null;
 
 			connection.disconnect();
 		};
@@ -103,12 +141,30 @@ export default function SmartCube() {
 
 		const isSolved = cubejs.current.asString() === smartSolvedState;
 
+		if (isSolved && smartCubeNeedsSolve) {
+			// Turns made while solving aren't part of the next scramble
+			setTimerParams({smartCubeNeedsSolve: false, smartTurns: []});
+		}
+
 		if (!useSpaceWithSmartCube && isSolved && smartTurns.length) {
 			resetMoves();
 		}
 	}, [smartTurns, smartCubeConnecting, smartSolvedState]);
 
-	async function initVisualCube() {
+	// The cube's reported state replaces the assumed solved one, so tracking starts from reality
+	function applyCubeState(facelets: string) {
+		cubejs.current = Cube.fromString(facelets);
+		turns.current = [];
+		setTimerParams({
+			smartCurrentState: facelets,
+			smartSolvedState: SOLVED_STATE,
+			smartTurns: [],
+			smartCubeNeedsSolve: facelets !== SOLVED_STATE,
+		});
+		initVisualCube(facelets);
+	}
+
+	async function initVisualCube(state: string = SOLVED_STATE) {
 		const {default: RubiksCube, materials} =
 			await import('@/components/timer/smart-cube/visual');
 
@@ -122,13 +178,14 @@ export default function SmartCube() {
 			canvasRef.current.width = 200;
 			canvasRef.current.height = 200;
 
+			cube.current?.dispose();
 			cube.current = new RubiksCube(
 				canvasRef.current,
 				materials.classic,
 				0,
 				'400px',
 				'400px',
-				smartCurrentState || '',
+				state,
 			);
 		}
 
@@ -195,14 +252,13 @@ export default function SmartCube() {
 	}
 
 	function initCubeTurner() {
+		// Keep turning even when the window isn't focused, otherwise the visual drifts from the real cube
 		turnInterval.current = setInterval(() => {
-			if (document.hasFocus()) {
-				if (turns.current.length > turnIndex.current) {
-					execTurn();
-				} else if (turns.current.length) {
-					turns.current = [];
-					turnIndex.current = 0;
-				}
+			if (turns.current.length > turnIndex.current) {
+				execTurn();
+			} else if (turns.current.length) {
+				turns.current = [];
+				turnIndex.current = 0;
 			}
 		}, 60);
 	}
@@ -274,7 +330,14 @@ export default function SmartCube() {
 		}
 	}
 
+	async function markSolved() {
+		// Cubes that track their own state are recalibrated too, so they agree with the app from now on
+		if (await connection.resetCubeState()) applyCubeState(SOLVED_STATE);
+		else resetMoves(true);
+	}
+
 	function disconnectBluetooth() {
+		connection.forgetDevice();
 		connection.disconnect();
 		setTimerParams({
 			smartCanStart: false,
@@ -283,6 +346,13 @@ export default function SmartCube() {
 			smartTurns: [],
 			smartDeviceId: '',
 		});
+	}
+
+	function respondToMacAddressRequest(response: MacAddressResponse) {
+		setMacAddressRequest(null);
+		const resolve = macAddressResponseRef.current;
+		macAddressResponseRef.current = null;
+		resolve?.(response);
 	}
 
 	function toggleManageSmartCubes() {
@@ -301,7 +371,7 @@ export default function SmartCube() {
 					text: 'Mark as solved',
 					hidden: !smartCubeConnected,
 					disabled: !!timeStartedAt,
-					onClick: () => resetMoves(true),
+					onClick: markSolved,
 				},
 				{
 					text: 'Disconnect',
@@ -333,27 +403,42 @@ export default function SmartCube() {
 	} else {
 		emblem = <Emblem small red icon={<Bluetooth />} />;
 		actionButton = (
-			<Button variant="secondary" onClick={connectBluetooth}>
-				{'Connect'}
-			</Button>
+			<div className="flex flex-col items-center gap-1.5">
+				<Button variant="secondary" onClick={connectBluetooth}>
+					{'Connect'}
+				</Button>
+				{reconnecting && (
+					<span className="text-text/60 text-xs">Turn your cube to reconnect</span>
+				)}
+			</div>
 		);
 		battery = null;
 	}
 
 	return (
 		<>
-			<div className="relative flex w-1/2 flex-col items-center">
-				<div className="mb-[5px]">
-					<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
-						<canvas width="200px" height="200px" ref={canvasRef} />
+			<div className="mt-[15px] flex w-1/2 flex-col items-center">
+				{/* Controls go beside the cube, or below it when there isn't room. The action button stays centered under the cube */}
+				<div className="grid grid-cols-[auto] items-center justify-items-center gap-x-3 gap-y-2 sm:grid-cols-[auto_auto]">
+					<div className="mb-[5px]">
+						<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
+							<canvas
+								width="200px"
+								height="200px"
+								ref={canvasRef}
+								className={cn('transition-[filter,opacity] duration-300', {
+									'opacity-50 grayscale': !smartCubeConnected,
+								})}
+							/>
+						</div>
 					</div>
-					<div className="absolute top-[7px] right-[25px] z-[100] flex flex-col items-center gap-2.5">
+					<div className="flex flex-row items-center gap-2.5 sm:flex-col">
 						{battery}
 						{emblem}
 						{dropdown}
 					</div>
+					{actionButton && <div className="sm:col-start-1">{actionButton}</div>}
 				</div>
-				{actionButton}
 			</div>
 			<Dialog
 				open={bluetoothErrorMessageDialog !== null}
@@ -381,6 +466,23 @@ export default function SmartCube() {
 					<DialogContent>
 						<DialogHeader title={manageSmartCubesDialog.title} />
 						<ManageSmartCubes {...manageSmartCubesDialog.props} />
+					</DialogContent>
+				)}
+			</Dialog>
+			<Dialog
+				open={macAddressRequest !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						respondToMacAddressRequest({action: 'cancel'});
+					}
+				}}
+			>
+				{macAddressRequest && (
+					<DialogContent>
+						<MacAddressPrompt
+							reason={macAddressRequest}
+							onRespond={respondToMacAddressRequest}
+						/>
 					</DialogContent>
 				)}
 			</Dialog>

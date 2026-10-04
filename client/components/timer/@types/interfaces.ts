@@ -87,6 +87,8 @@ export interface TimerStore {
 	smartDeviceId: string;
 	smartCurrentState: string;
 	smartSolvedState: string;
+	/** Cube connected in an unsolved state, so the scramble is hidden until it's solved */
+	smartCubeNeedsSolve: boolean;
 	// Also exist on TimerProps (props override the store in ITimerContext),
 	// so they stay optional to keep the two interfaces compatible
 	scramble?: string;

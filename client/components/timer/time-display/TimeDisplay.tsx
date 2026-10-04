@@ -23,6 +23,7 @@ export default function TimeDisplay() {
 		hideTime,
 		canStart,
 		smartTurns,
+		smartCubeNeedsSolve,
 		scramble,
 		dnfTime,
 		subTimerActions,
@@ -128,7 +129,13 @@ export default function TimeDisplay() {
 	} else if (ganTimerOn) {
 		bottomInfo = <GanTimer />;
 	} else if (smartCubeSelected(context)) {
-		if (preflightChecks(smartTurns, scramble ?? '')) {
+		if (smartCubeNeedsSolve) {
+			bottomInfo = (
+				<StartInstructions>
+					Solve <span>smart cube</span> to start
+				</StartInstructions>
+			);
+		} else if (preflightChecks(smartTurns, scramble ?? '')) {
 			bottomInfo = (
 				<StartInstructions>
 					Turn <span>smart cube</span> to start

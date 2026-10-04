@@ -8,6 +8,7 @@ const smartState = {
 	smartDeviceId: '',
 	smartCurrentState: 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB',
 	smartSolvedState: 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB',
+	smartCubeNeedsSolve: false,
 };
 
 const defaultTimerState = {

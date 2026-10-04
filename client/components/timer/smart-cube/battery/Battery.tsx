@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import {cn} from '@/util/cn';
 import React from 'react';
 
 interface Props {
@@ -6,26 +6,27 @@ interface Props {
 }
 
 export default function Battery(props: Props) {
-	const {level} = props;
-	let percent = '0%';
-	if (typeof level === 'number') {
-		percent = level + '%';
-	}
+	const level = Math.min(Math.max(props.level, 0), 100);
+	const low = level < 20;
+	const color = {'bg-success': !low, 'bg-warning': low};
 
 	return (
-		<div className="flex flex-row items-center">
+		<div
+			className="flex flex-row items-center"
+			role="img"
+			aria-label={`Battery ${level}%`}
+			title={`${level}%`}
+		>
+			{/* The gap between the outline and the fill keeps partial charge readable at this size */}
 			<div
-				className={classNames(
-					'relative h-2 w-[18px] overflow-hidden rounded-[3px] border-2 border-success',
-					level < 20 && '!border-warning'
-				)}
+				className={cn('h-3 w-6 rounded-[3px] border p-px', {
+					'border-success': !low,
+					'border-warning': low,
+				})}
 			>
-				<div
-					style={{width: percent}}
-					className={classNames('absolute left-0 top-0 h-full bg-success', level < 20 && '!bg-warning')}
-				/>
+				<div style={{width: `${level}%`}} className={cn('h-full rounded-[1px]', color)} />
 			</div>
-			<div className={classNames('h-[7px] w-0.5 rounded-r-sm bg-success', level < 20 && '!bg-warning')} />
+			<div className={cn('h-1 w-0.5 rounded-r-[1px]', color)} />
 		</div>
 	);
 }
