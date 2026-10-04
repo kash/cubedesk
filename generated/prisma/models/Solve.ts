@@ -32,7 +32,6 @@ export type SolveAvgAggregateOutputType = {
   started_at: number | null
   ended_at: number | null
   inspection_time: number | null
-  smart_put_down_time: number | null
   smart_turn_count: number | null
 }
 
@@ -42,7 +41,6 @@ export type SolveSumAggregateOutputType = {
   started_at: bigint | null
   ended_at: bigint | null
   inspection_time: number | null
-  smart_put_down_time: number | null
   smart_turn_count: number | null
 }
 
@@ -64,7 +62,6 @@ export type SolveMinAggregateOutputType = {
   bulk: boolean | null
   inspection_time: number | null
   is_smart_cube: boolean | null
-  smart_put_down_time: number | null
   smart_turns: string | null
   smart_turn_count: number | null
   smart_device_id: string | null
@@ -73,7 +70,6 @@ export type SolveMinAggregateOutputType = {
   share_code: string | null
   from_timer: boolean | null
   game_session_id: string | null
-  custom_scramble: boolean | null
   training_session_id: string | null
 }
 
@@ -95,7 +91,6 @@ export type SolveMaxAggregateOutputType = {
   bulk: boolean | null
   inspection_time: number | null
   is_smart_cube: boolean | null
-  smart_put_down_time: number | null
   smart_turns: string | null
   smart_turn_count: number | null
   smart_device_id: string | null
@@ -104,7 +99,6 @@ export type SolveMaxAggregateOutputType = {
   share_code: string | null
   from_timer: boolean | null
   game_session_id: string | null
-  custom_scramble: boolean | null
   training_session_id: string | null
 }
 
@@ -126,7 +120,6 @@ export type SolveCountAggregateOutputType = {
   bulk: number
   inspection_time: number
   is_smart_cube: number
-  smart_put_down_time: number
   smart_turns: number
   smart_turn_count: number
   smart_device_id: number
@@ -135,7 +128,6 @@ export type SolveCountAggregateOutputType = {
   share_code: number
   from_timer: number
   game_session_id: number
-  custom_scramble: number
   training_session_id: number
   _all: number
 }
@@ -147,7 +139,6 @@ export type SolveAvgAggregateInputType = {
   started_at?: true
   ended_at?: true
   inspection_time?: true
-  smart_put_down_time?: true
   smart_turn_count?: true
 }
 
@@ -157,7 +148,6 @@ export type SolveSumAggregateInputType = {
   started_at?: true
   ended_at?: true
   inspection_time?: true
-  smart_put_down_time?: true
   smart_turn_count?: true
 }
 
@@ -179,7 +169,6 @@ export type SolveMinAggregateInputType = {
   bulk?: true
   inspection_time?: true
   is_smart_cube?: true
-  smart_put_down_time?: true
   smart_turns?: true
   smart_turn_count?: true
   smart_device_id?: true
@@ -188,7 +177,6 @@ export type SolveMinAggregateInputType = {
   share_code?: true
   from_timer?: true
   game_session_id?: true
-  custom_scramble?: true
   training_session_id?: true
 }
 
@@ -210,7 +198,6 @@ export type SolveMaxAggregateInputType = {
   bulk?: true
   inspection_time?: true
   is_smart_cube?: true
-  smart_put_down_time?: true
   smart_turns?: true
   smart_turn_count?: true
   smart_device_id?: true
@@ -219,7 +206,6 @@ export type SolveMaxAggregateInputType = {
   share_code?: true
   from_timer?: true
   game_session_id?: true
-  custom_scramble?: true
   training_session_id?: true
 }
 
@@ -241,7 +227,6 @@ export type SolveCountAggregateInputType = {
   bulk?: true
   inspection_time?: true
   is_smart_cube?: true
-  smart_put_down_time?: true
   smart_turns?: true
   smart_turn_count?: true
   smart_device_id?: true
@@ -250,7 +235,6 @@ export type SolveCountAggregateInputType = {
   share_code?: true
   from_timer?: true
   game_session_id?: true
-  custom_scramble?: true
   training_session_id?: true
   _all?: true
 }
@@ -359,7 +343,6 @@ export type SolveGroupByOutputType = {
   bulk: boolean
   inspection_time: number | null
   is_smart_cube: boolean
-  smart_put_down_time: number | null
   smart_turns: string | null
   smart_turn_count: number | null
   smart_device_id: string | null
@@ -368,7 +351,6 @@ export type SolveGroupByOutputType = {
   share_code: string | null
   from_timer: boolean
   game_session_id: string | null
-  custom_scramble: boolean
   training_session_id: string | null
   _count: SolveCountAggregateOutputType | null
   _avg: SolveAvgAggregateOutputType | null
@@ -413,7 +395,6 @@ export type SolveWhereInput = {
   bulk?: Prisma.BoolFilter<"Solve"> | boolean
   inspection_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
   is_smart_cube?: Prisma.BoolFilter<"Solve"> | boolean
-  smart_put_down_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
   smart_turns?: Prisma.StringNullableFilter<"Solve"> | string | null
   smart_turn_count?: Prisma.IntNullableFilter<"Solve"> | number | null
   smart_device_id?: Prisma.StringNullableFilter<"Solve"> | string | null
@@ -422,7 +403,6 @@ export type SolveWhereInput = {
   share_code?: Prisma.StringNullableFilter<"Solve"> | string | null
   from_timer?: Prisma.BoolFilter<"Solve"> | boolean
   game_session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
-  custom_scramble?: Prisma.BoolFilter<"Solve"> | boolean
   training_session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
   game_session?: Prisma.XOR<Prisma.GameSessionNullableScalarRelationFilter, Prisma.GameSessionWhereInput> | null
   match?: Prisma.XOR<Prisma.MatchNullableScalarRelationFilter, Prisma.MatchWhereInput> | null
@@ -457,7 +437,6 @@ export type SolveOrderByWithRelationInput = {
   bulk?: Prisma.SortOrder
   inspection_time?: Prisma.SortOrderInput | Prisma.SortOrder
   is_smart_cube?: Prisma.SortOrder
-  smart_put_down_time?: Prisma.SortOrderInput | Prisma.SortOrder
   smart_turns?: Prisma.SortOrderInput | Prisma.SortOrder
   smart_turn_count?: Prisma.SortOrderInput | Prisma.SortOrder
   smart_device_id?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -466,7 +445,6 @@ export type SolveOrderByWithRelationInput = {
   share_code?: Prisma.SortOrderInput | Prisma.SortOrder
   from_timer?: Prisma.SortOrder
   game_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  custom_scramble?: Prisma.SortOrder
   training_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   game_session?: Prisma.GameSessionOrderByWithRelationInput
   match?: Prisma.MatchOrderByWithRelationInput
@@ -506,7 +484,6 @@ export type SolveWhereUniqueInput = Prisma.AtLeast<{
   bulk?: Prisma.BoolFilter<"Solve"> | boolean
   inspection_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
   is_smart_cube?: Prisma.BoolFilter<"Solve"> | boolean
-  smart_put_down_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
   smart_turns?: Prisma.StringNullableFilter<"Solve"> | string | null
   smart_turn_count?: Prisma.IntNullableFilter<"Solve"> | number | null
   smart_device_id?: Prisma.StringNullableFilter<"Solve"> | string | null
@@ -514,7 +491,6 @@ export type SolveWhereUniqueInput = Prisma.AtLeast<{
   match_participant_id?: Prisma.StringNullableFilter<"Solve"> | string | null
   from_timer?: Prisma.BoolFilter<"Solve"> | boolean
   game_session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
-  custom_scramble?: Prisma.BoolFilter<"Solve"> | boolean
   training_session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
   game_session?: Prisma.XOR<Prisma.GameSessionNullableScalarRelationFilter, Prisma.GameSessionWhereInput> | null
   match?: Prisma.XOR<Prisma.MatchNullableScalarRelationFilter, Prisma.MatchWhereInput> | null
@@ -549,7 +525,6 @@ export type SolveOrderByWithAggregationInput = {
   bulk?: Prisma.SortOrder
   inspection_time?: Prisma.SortOrderInput | Prisma.SortOrder
   is_smart_cube?: Prisma.SortOrder
-  smart_put_down_time?: Prisma.SortOrderInput | Prisma.SortOrder
   smart_turns?: Prisma.SortOrderInput | Prisma.SortOrder
   smart_turn_count?: Prisma.SortOrderInput | Prisma.SortOrder
   smart_device_id?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -558,7 +533,6 @@ export type SolveOrderByWithAggregationInput = {
   share_code?: Prisma.SortOrderInput | Prisma.SortOrder
   from_timer?: Prisma.SortOrder
   game_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  custom_scramble?: Prisma.SortOrder
   training_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SolveCountOrderByAggregateInput
   _avg?: Prisma.SolveAvgOrderByAggregateInput
@@ -588,7 +562,6 @@ export type SolveScalarWhereWithAggregatesInput = {
   bulk?: Prisma.BoolWithAggregatesFilter<"Solve"> | boolean
   inspection_time?: Prisma.FloatNullableWithAggregatesFilter<"Solve"> | number | null
   is_smart_cube?: Prisma.BoolWithAggregatesFilter<"Solve"> | boolean
-  smart_put_down_time?: Prisma.FloatNullableWithAggregatesFilter<"Solve"> | number | null
   smart_turns?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
   smart_turn_count?: Prisma.IntNullableWithAggregatesFilter<"Solve"> | number | null
   smart_device_id?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
@@ -597,7 +570,6 @@ export type SolveScalarWhereWithAggregatesInput = {
   share_code?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
   from_timer?: Prisma.BoolWithAggregatesFilter<"Solve"> | boolean
   game_session_id?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
-  custom_scramble?: Prisma.BoolWithAggregatesFilter<"Solve"> | boolean
   training_session_id?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
 }
 
@@ -617,12 +589,10 @@ export type SolveCreateInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -657,7 +627,6 @@ export type SolveUncheckedCreateInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -666,7 +635,6 @@ export type SolveUncheckedCreateInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -693,12 +661,10 @@ export type SolveUpdateInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -733,7 +699,6 @@ export type SolveUncheckedUpdateInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -742,7 +707,6 @@ export type SolveUncheckedUpdateInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -771,7 +735,6 @@ export type SolveCreateManyInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -780,7 +743,6 @@ export type SolveCreateManyInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
 }
 
@@ -800,12 +762,10 @@ export type SolveUpdateManyMutationInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -827,7 +787,6 @@ export type SolveUncheckedUpdateManyInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -836,7 +795,6 @@ export type SolveUncheckedUpdateManyInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -874,7 +832,6 @@ export type SolveCountOrderByAggregateInput = {
   bulk?: Prisma.SortOrder
   inspection_time?: Prisma.SortOrder
   is_smart_cube?: Prisma.SortOrder
-  smart_put_down_time?: Prisma.SortOrder
   smart_turns?: Prisma.SortOrder
   smart_turn_count?: Prisma.SortOrder
   smart_device_id?: Prisma.SortOrder
@@ -883,7 +840,6 @@ export type SolveCountOrderByAggregateInput = {
   share_code?: Prisma.SortOrder
   from_timer?: Prisma.SortOrder
   game_session_id?: Prisma.SortOrder
-  custom_scramble?: Prisma.SortOrder
   training_session_id?: Prisma.SortOrder
 }
 
@@ -893,7 +849,6 @@ export type SolveAvgOrderByAggregateInput = {
   started_at?: Prisma.SortOrder
   ended_at?: Prisma.SortOrder
   inspection_time?: Prisma.SortOrder
-  smart_put_down_time?: Prisma.SortOrder
   smart_turn_count?: Prisma.SortOrder
 }
 
@@ -915,7 +870,6 @@ export type SolveMaxOrderByAggregateInput = {
   bulk?: Prisma.SortOrder
   inspection_time?: Prisma.SortOrder
   is_smart_cube?: Prisma.SortOrder
-  smart_put_down_time?: Prisma.SortOrder
   smart_turns?: Prisma.SortOrder
   smart_turn_count?: Prisma.SortOrder
   smart_device_id?: Prisma.SortOrder
@@ -924,7 +878,6 @@ export type SolveMaxOrderByAggregateInput = {
   share_code?: Prisma.SortOrder
   from_timer?: Prisma.SortOrder
   game_session_id?: Prisma.SortOrder
-  custom_scramble?: Prisma.SortOrder
   training_session_id?: Prisma.SortOrder
 }
 
@@ -946,7 +899,6 @@ export type SolveMinOrderByAggregateInput = {
   bulk?: Prisma.SortOrder
   inspection_time?: Prisma.SortOrder
   is_smart_cube?: Prisma.SortOrder
-  smart_put_down_time?: Prisma.SortOrder
   smart_turns?: Prisma.SortOrder
   smart_turn_count?: Prisma.SortOrder
   smart_device_id?: Prisma.SortOrder
@@ -955,7 +907,6 @@ export type SolveMinOrderByAggregateInput = {
   share_code?: Prisma.SortOrder
   from_timer?: Prisma.SortOrder
   game_session_id?: Prisma.SortOrder
-  custom_scramble?: Prisma.SortOrder
   training_session_id?: Prisma.SortOrder
 }
 
@@ -965,7 +916,6 @@ export type SolveSumOrderByAggregateInput = {
   started_at?: Prisma.SortOrder
   ended_at?: Prisma.SortOrder
   inspection_time?: Prisma.SortOrder
-  smart_put_down_time?: Prisma.SortOrder
   smart_turn_count?: Prisma.SortOrder
 }
 
@@ -1356,12 +1306,10 @@ export type SolveCreateWithoutUserInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -1394,7 +1342,6 @@ export type SolveUncheckedCreateWithoutUserInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -1403,7 +1350,6 @@ export type SolveUncheckedCreateWithoutUserInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -1461,7 +1407,6 @@ export type SolveScalarWhereInput = {
   bulk?: Prisma.BoolFilter<"Solve"> | boolean
   inspection_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
   is_smart_cube?: Prisma.BoolFilter<"Solve"> | boolean
-  smart_put_down_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
   smart_turns?: Prisma.StringNullableFilter<"Solve"> | string | null
   smart_turn_count?: Prisma.IntNullableFilter<"Solve"> | number | null
   smart_device_id?: Prisma.StringNullableFilter<"Solve"> | string | null
@@ -1470,7 +1415,6 @@ export type SolveScalarWhereInput = {
   share_code?: Prisma.StringNullableFilter<"Solve"> | string | null
   from_timer?: Prisma.BoolFilter<"Solve"> | boolean
   game_session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
-  custom_scramble?: Prisma.BoolFilter<"Solve"> | boolean
   training_session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
 }
 
@@ -1490,12 +1434,10 @@ export type SolveCreateWithoutMatchInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match_participant?: Prisma.MatchParticipantCreateNestedOneWithoutSolvesInput
@@ -1529,7 +1471,6 @@ export type SolveUncheckedCreateWithoutMatchInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -1537,7 +1478,6 @@ export type SolveUncheckedCreateWithoutMatchInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -1590,12 +1530,10 @@ export type SolveCreateWithoutMatch_participantInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -1629,7 +1567,6 @@ export type SolveUncheckedCreateWithoutMatch_participantInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -1637,7 +1574,6 @@ export type SolveUncheckedCreateWithoutMatch_participantInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -1690,12 +1626,10 @@ export type SolveCreateWithoutSmart_deviceInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -1729,7 +1663,6 @@ export type SolveUncheckedCreateWithoutSmart_deviceInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   match_id?: string | null
@@ -1737,7 +1670,6 @@ export type SolveUncheckedCreateWithoutSmart_deviceInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -1790,12 +1722,10 @@ export type SolveCreateWithoutSolve_viewsInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -1829,7 +1759,6 @@ export type SolveUncheckedCreateWithoutSolve_viewsInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -1838,7 +1767,6 @@ export type SolveUncheckedCreateWithoutSolve_viewsInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -1880,12 +1808,10 @@ export type SolveUpdateWithoutSolve_viewsInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -1919,7 +1845,6 @@ export type SolveUncheckedUpdateWithoutSolve_viewsInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1928,7 +1853,6 @@ export type SolveUncheckedUpdateWithoutSolve_viewsInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -1954,12 +1878,10 @@ export type SolveCreateWithoutGame_sessionInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
   match_participant?: Prisma.MatchParticipantCreateNestedOneWithoutSolvesInput
@@ -1993,7 +1915,6 @@ export type SolveUncheckedCreateWithoutGame_sessionInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -2001,7 +1922,6 @@ export type SolveUncheckedCreateWithoutGame_sessionInput = {
   match_participant_id?: string | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -2054,12 +1974,10 @@ export type SolveCreateWithoutTop_solveInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -2093,7 +2011,6 @@ export type SolveUncheckedCreateWithoutTop_solveInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -2102,7 +2019,6 @@ export type SolveUncheckedCreateWithoutTop_solveInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -2144,12 +2060,10 @@ export type SolveUpdateWithoutTop_solveInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -2183,7 +2097,6 @@ export type SolveUncheckedUpdateWithoutTop_solveInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2192,7 +2105,6 @@ export type SolveUncheckedUpdateWithoutTop_solveInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -2218,12 +2130,10 @@ export type SolveCreateWithoutTop_average_1Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -2257,7 +2167,6 @@ export type SolveUncheckedCreateWithoutTop_average_1Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -2266,7 +2175,6 @@ export type SolveUncheckedCreateWithoutTop_average_1Input = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_2?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_2Input
@@ -2297,12 +2205,10 @@ export type SolveCreateWithoutTop_average_2Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -2336,7 +2242,6 @@ export type SolveUncheckedCreateWithoutTop_average_2Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -2345,7 +2250,6 @@ export type SolveUncheckedCreateWithoutTop_average_2Input = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -2376,12 +2280,10 @@ export type SolveCreateWithoutTop_average_3Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -2415,7 +2317,6 @@ export type SolveUncheckedCreateWithoutTop_average_3Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -2424,7 +2325,6 @@ export type SolveUncheckedCreateWithoutTop_average_3Input = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -2455,12 +2355,10 @@ export type SolveCreateWithoutTop_average_4Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -2494,7 +2392,6 @@ export type SolveUncheckedCreateWithoutTop_average_4Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -2503,7 +2400,6 @@ export type SolveUncheckedCreateWithoutTop_average_4Input = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -2534,12 +2430,10 @@ export type SolveCreateWithoutTop_average_5Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -2573,7 +2467,6 @@ export type SolveUncheckedCreateWithoutTop_average_5Input = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -2582,7 +2475,6 @@ export type SolveUncheckedCreateWithoutTop_average_5Input = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -2624,12 +2516,10 @@ export type SolveUpdateWithoutTop_average_1Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -2663,7 +2553,6 @@ export type SolveUncheckedUpdateWithoutTop_average_1Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2672,7 +2561,6 @@ export type SolveUncheckedUpdateWithoutTop_average_1Input = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_2?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_2NestedInput
@@ -2709,12 +2597,10 @@ export type SolveUpdateWithoutTop_average_2Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -2748,7 +2634,6 @@ export type SolveUncheckedUpdateWithoutTop_average_2Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2757,7 +2642,6 @@ export type SolveUncheckedUpdateWithoutTop_average_2Input = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -2794,12 +2678,10 @@ export type SolveUpdateWithoutTop_average_3Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -2833,7 +2715,6 @@ export type SolveUncheckedUpdateWithoutTop_average_3Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2842,7 +2723,6 @@ export type SolveUncheckedUpdateWithoutTop_average_3Input = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -2879,12 +2759,10 @@ export type SolveUpdateWithoutTop_average_4Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -2918,7 +2796,6 @@ export type SolveUncheckedUpdateWithoutTop_average_4Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2927,7 +2804,6 @@ export type SolveUncheckedUpdateWithoutTop_average_4Input = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -2964,12 +2840,10 @@ export type SolveUpdateWithoutTop_average_5Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -3003,7 +2877,6 @@ export type SolveUncheckedUpdateWithoutTop_average_5Input = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3012,7 +2885,6 @@ export type SolveUncheckedUpdateWithoutTop_average_5Input = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -3038,12 +2910,10 @@ export type SolveCreateWithoutSessionInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
   game_session?: Prisma.GameSessionCreateNestedOneWithoutSolvesInput
   match?: Prisma.MatchCreateNestedOneWithoutSolvesInput
@@ -3076,7 +2946,6 @@ export type SolveUncheckedCreateWithoutSessionInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -3085,7 +2954,6 @@ export type SolveUncheckedCreateWithoutSessionInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
   solve_views?: Prisma.SolveViewUncheckedCreateNestedManyWithoutSolveInput
   top_average_1?: Prisma.TopAverageUncheckedCreateNestedManyWithoutSolve_1Input
@@ -3139,7 +3007,6 @@ export type SolveCreateManyUserInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -3148,7 +3015,6 @@ export type SolveCreateManyUserInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
 }
 
@@ -3168,12 +3034,10 @@ export type SolveUpdateWithoutUserInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -3206,7 +3070,6 @@ export type SolveUncheckedUpdateWithoutUserInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3215,7 +3078,6 @@ export type SolveUncheckedUpdateWithoutUserInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -3243,7 +3105,6 @@ export type SolveUncheckedUpdateManyWithoutUserInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3252,7 +3113,6 @@ export type SolveUncheckedUpdateManyWithoutUserInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -3274,7 +3134,6 @@ export type SolveCreateManyMatchInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -3282,7 +3141,6 @@ export type SolveCreateManyMatchInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
 }
 
@@ -3302,12 +3160,10 @@ export type SolveUpdateWithoutMatchInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match_participant?: Prisma.MatchParticipantUpdateOneWithoutSolvesNestedInput
@@ -3341,7 +3197,6 @@ export type SolveUncheckedUpdateWithoutMatchInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3349,7 +3204,6 @@ export type SolveUncheckedUpdateWithoutMatchInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -3378,7 +3232,6 @@ export type SolveUncheckedUpdateManyWithoutMatchInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3386,7 +3239,6 @@ export type SolveUncheckedUpdateManyWithoutMatchInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -3408,7 +3260,6 @@ export type SolveCreateManyMatch_participantInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -3416,7 +3267,6 @@ export type SolveCreateManyMatch_participantInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
 }
 
@@ -3436,12 +3286,10 @@ export type SolveUpdateWithoutMatch_participantInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -3475,7 +3323,6 @@ export type SolveUncheckedUpdateWithoutMatch_participantInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3483,7 +3330,6 @@ export type SolveUncheckedUpdateWithoutMatch_participantInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -3512,7 +3358,6 @@ export type SolveUncheckedUpdateManyWithoutMatch_participantInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3520,7 +3365,6 @@ export type SolveUncheckedUpdateManyWithoutMatch_participantInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -3542,7 +3386,6 @@ export type SolveCreateManySmart_deviceInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   match_id?: string | null
@@ -3550,7 +3393,6 @@ export type SolveCreateManySmart_deviceInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
 }
 
@@ -3570,12 +3412,10 @@ export type SolveUpdateWithoutSmart_deviceInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -3609,7 +3449,6 @@ export type SolveUncheckedUpdateWithoutSmart_deviceInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   match_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3617,7 +3456,6 @@ export type SolveUncheckedUpdateWithoutSmart_deviceInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -3646,7 +3484,6 @@ export type SolveUncheckedUpdateManyWithoutSmart_deviceInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   match_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3654,7 +3491,6 @@ export type SolveUncheckedUpdateManyWithoutSmart_deviceInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -3676,7 +3512,6 @@ export type SolveCreateManyGame_sessionInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -3684,7 +3519,6 @@ export type SolveCreateManyGame_sessionInput = {
   match_participant_id?: string | null
   share_code?: string | null
   from_timer?: boolean
-  custom_scramble?: boolean
   training_session_id?: string | null
 }
 
@@ -3704,12 +3538,10 @@ export type SolveUpdateWithoutGame_sessionInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
   match_participant?: Prisma.MatchParticipantUpdateOneWithoutSolvesNestedInput
@@ -3743,7 +3575,6 @@ export type SolveUncheckedUpdateWithoutGame_sessionInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3751,7 +3582,6 @@ export type SolveUncheckedUpdateWithoutGame_sessionInput = {
   match_participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -3780,7 +3610,6 @@ export type SolveUncheckedUpdateManyWithoutGame_sessionInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3788,7 +3617,6 @@ export type SolveUncheckedUpdateManyWithoutGame_sessionInput = {
   match_participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -3809,7 +3637,6 @@ export type SolveCreateManySessionInput = {
   bulk?: boolean
   inspection_time?: number | null
   is_smart_cube?: boolean
-  smart_put_down_time?: number | null
   smart_turns?: string | null
   smart_turn_count?: number | null
   smart_device_id?: string | null
@@ -3818,7 +3645,6 @@ export type SolveCreateManySessionInput = {
   share_code?: string | null
   from_timer?: boolean
   game_session_id?: string | null
-  custom_scramble?: boolean
   training_session_id?: string | null
 }
 
@@ -3838,12 +3664,10 @@ export type SolveUpdateWithoutSessionInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_session?: Prisma.GameSessionUpdateOneWithoutSolvesNestedInput
   match?: Prisma.MatchUpdateOneWithoutSolvesNestedInput
@@ -3876,7 +3700,6 @@ export type SolveUncheckedUpdateWithoutSessionInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3885,7 +3708,6 @@ export type SolveUncheckedUpdateWithoutSessionInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_views?: Prisma.SolveViewUncheckedUpdateManyWithoutSolveNestedInput
   top_average_1?: Prisma.TopAverageUncheckedUpdateManyWithoutSolve_1NestedInput
@@ -3913,7 +3735,6 @@ export type SolveUncheckedUpdateManyWithoutSessionInput = {
   bulk?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   is_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  smart_put_down_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   smart_turns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smart_turn_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   smart_device_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3922,7 +3743,6 @@ export type SolveUncheckedUpdateManyWithoutSessionInput = {
   share_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   from_timer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_scramble?: Prisma.BoolFieldUpdateOperationsInput | boolean
   training_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -4029,7 +3849,6 @@ export type SolveSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   bulk?: boolean
   inspection_time?: boolean
   is_smart_cube?: boolean
-  smart_put_down_time?: boolean
   smart_turns?: boolean
   smart_turn_count?: boolean
   smart_device_id?: boolean
@@ -4038,7 +3857,6 @@ export type SolveSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   share_code?: boolean
   from_timer?: boolean
   game_session_id?: boolean
-  custom_scramble?: boolean
   training_session_id?: boolean
   game_session?: boolean | Prisma.Solve$game_sessionArgs<ExtArgs>
   match?: boolean | Prisma.Solve$matchArgs<ExtArgs>
@@ -4074,7 +3892,6 @@ export type SolveSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   bulk?: boolean
   inspection_time?: boolean
   is_smart_cube?: boolean
-  smart_put_down_time?: boolean
   smart_turns?: boolean
   smart_turn_count?: boolean
   smart_device_id?: boolean
@@ -4083,7 +3900,6 @@ export type SolveSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   share_code?: boolean
   from_timer?: boolean
   game_session_id?: boolean
-  custom_scramble?: boolean
   training_session_id?: boolean
   game_session?: boolean | Prisma.Solve$game_sessionArgs<ExtArgs>
   match?: boolean | Prisma.Solve$matchArgs<ExtArgs>
@@ -4111,7 +3927,6 @@ export type SolveSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   bulk?: boolean
   inspection_time?: boolean
   is_smart_cube?: boolean
-  smart_put_down_time?: boolean
   smart_turns?: boolean
   smart_turn_count?: boolean
   smart_device_id?: boolean
@@ -4120,7 +3935,6 @@ export type SolveSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   share_code?: boolean
   from_timer?: boolean
   game_session_id?: boolean
-  custom_scramble?: boolean
   training_session_id?: boolean
   game_session?: boolean | Prisma.Solve$game_sessionArgs<ExtArgs>
   match?: boolean | Prisma.Solve$matchArgs<ExtArgs>
@@ -4148,7 +3962,6 @@ export type SolveSelectScalar = {
   bulk?: boolean
   inspection_time?: boolean
   is_smart_cube?: boolean
-  smart_put_down_time?: boolean
   smart_turns?: boolean
   smart_turn_count?: boolean
   smart_device_id?: boolean
@@ -4157,11 +3970,10 @@ export type SolveSelectScalar = {
   share_code?: boolean
   from_timer?: boolean
   game_session_id?: boolean
-  custom_scramble?: boolean
   training_session_id?: boolean
 }
 
-export type SolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "raw_time" | "cube_type" | "scramble" | "session_id" | "started_at" | "ended_at" | "dnf" | "plus_two" | "notes" | "trainer_name" | "created_at" | "bulk" | "inspection_time" | "is_smart_cube" | "smart_put_down_time" | "smart_turns" | "smart_turn_count" | "smart_device_id" | "match_id" | "match_participant_id" | "share_code" | "from_timer" | "game_session_id" | "custom_scramble" | "training_session_id", ExtArgs["result"]["solve"]>
+export type SolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "raw_time" | "cube_type" | "scramble" | "session_id" | "started_at" | "ended_at" | "dnf" | "plus_two" | "notes" | "trainer_name" | "created_at" | "bulk" | "inspection_time" | "is_smart_cube" | "smart_turns" | "smart_turn_count" | "smart_device_id" | "match_id" | "match_participant_id" | "share_code" | "from_timer" | "game_session_id" | "training_session_id", ExtArgs["result"]["solve"]>
 export type SolveInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   game_session?: boolean | Prisma.Solve$game_sessionArgs<ExtArgs>
   match?: boolean | Prisma.Solve$matchArgs<ExtArgs>
@@ -4230,7 +4042,6 @@ export type $SolvePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     bulk: boolean
     inspection_time: number | null
     is_smart_cube: boolean
-    smart_put_down_time: number | null
     smart_turns: string | null
     smart_turn_count: number | null
     smart_device_id: string | null
@@ -4239,7 +4050,6 @@ export type $SolvePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     share_code: string | null
     from_timer: boolean
     game_session_id: string | null
-    custom_scramble: boolean
     training_session_id: string | null
   }, ExtArgs["result"]["solve"]>
   composites: {}
@@ -4694,7 +4504,6 @@ export interface SolveFieldRefs {
   readonly bulk: Prisma.FieldRef<"Solve", 'Boolean'>
   readonly inspection_time: Prisma.FieldRef<"Solve", 'Float'>
   readonly is_smart_cube: Prisma.FieldRef<"Solve", 'Boolean'>
-  readonly smart_put_down_time: Prisma.FieldRef<"Solve", 'Float'>
   readonly smart_turns: Prisma.FieldRef<"Solve", 'String'>
   readonly smart_turn_count: Prisma.FieldRef<"Solve", 'Int'>
   readonly smart_device_id: Prisma.FieldRef<"Solve", 'String'>
@@ -4703,7 +4512,6 @@ export interface SolveFieldRefs {
   readonly share_code: Prisma.FieldRef<"Solve", 'String'>
   readonly from_timer: Prisma.FieldRef<"Solve", 'Boolean'>
   readonly game_session_id: Prisma.FieldRef<"Solve", 'String'>
-  readonly custom_scramble: Prisma.FieldRef<"Solve", 'Boolean'>
   readonly training_session_id: Prisma.FieldRef<"Solve", 'String'>
 }
     

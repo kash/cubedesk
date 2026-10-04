@@ -356,7 +356,6 @@ model Solve {
   bulk                 Boolean           @default(false)
   inspection_time      Float?
   is_smart_cube        Boolean           @default(false)
-  smart_put_down_time  Float?
   smart_turns          String?
   smart_turn_count     Int?
   smart_device_id      String?
@@ -365,7 +364,6 @@ model Solve {
   share_code           String?           @unique
   from_timer           Boolean           @default(true)
   game_session_id      String?
-  custom_scramble      Boolean           @default(false)
   training_session_id  String?
   game_session         GameSession?      @relation(fields: [game_session_id], references: [id], onDelete: Cascade)
   match                Match?            @relation(fields: [match_id], references: [id], onDelete: Cascade)

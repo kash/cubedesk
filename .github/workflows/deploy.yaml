@@ -152,20 +152,3 @@ jobs:
                   cluster: ${{ inputs.ECS_CLUSTER }}
                   wait-for-service-stability: true
                   wait-max-delay-seconds: 15
-
-            # Temporary: re-encodes legacy smart cube turns once the new code is live. Only rows still in the old JSON
-            # format are touched, so later runs are cheap. Remove along with the dropped solve columns.
-            - name: Compact legacy smart cube turns
-              run: |
-                  DATABASE_URL=$(aws secretsmanager get-secret-value --secret-id ${{ inputs.DATABASE_SECRET_ID }} --query SecretString --output text)
-                  if [ -z "$DATABASE_URL" ]; then
-                    echo "::error::Could not read ${{ inputs.DATABASE_SECRET_ID }} from Secrets Manager"
-                    exit 1
-                  fi
-                  echo "::add-mask::$DATABASE_URL"
-                  export DATABASE_URL
-                  # DATABASE_URL uses sslmode=verify-full, so Node needs the RDS CA that the Dockerfile also installs
-                  curl --fail --silent --show-error --output rds-ca.pem https://truststore.pki.rds.amazonaws.com/us-west-2/us-west-2-bundle.pem
-                  echo "733b52e4b589586377e3e00f7c4625b61e14cbf0b5e08cace28b4f8aecc27c66  rds-ca.pem" | sha256sum --check --quiet
-                  export NODE_EXTRA_CA_CERTS=$PWD/rds-ca.pem
-                  pnpm backfill:smart-turns

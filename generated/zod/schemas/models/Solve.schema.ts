@@ -18,7 +18,6 @@ export const SolveSchema = z.object({
   bulk: z.boolean(),
   inspection_time: z.number().nullable(),
   is_smart_cube: z.boolean(),
-  smart_put_down_time: z.number().nullable(),
   smart_turns: z.string().nullable(),
   smart_turn_count: z.number().int().nullable(),
   smart_device_id: z.string().nullable(),
@@ -27,7 +26,6 @@ export const SolveSchema = z.object({
   share_code: z.string().nullable(),
   from_timer: z.boolean().default(true),
   game_session_id: z.string().nullable(),
-  custom_scramble: z.boolean(),
   training_session_id: z.string().nullable(),
 });
 
