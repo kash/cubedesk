@@ -15,9 +15,9 @@ import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
-import {ArrowLeft, ArrowRight} from 'phosphor-react';
+import {ArrowLeft, ArrowRight, Info} from 'phosphor-react';
 import React, {ReactNode} from 'react';
-import {useRouteMatch} from 'react-router-dom';
+import {Link, useRouteMatch} from 'react-router-dom';
 
 export default function Nav() {
 	const match = useRouteMatch();
@@ -145,12 +145,6 @@ export default function Nav() {
 								name="Discord"
 							/>
 							<SocialIcon
-								href="https://www.instagram.com/cubedesk/"
-								darkPath={resourceUri('/images/logos/instagram_logo_white.svg')}
-								lightPath={resourceUri('/images/logos/instagram_logo_black.svg')}
-								name="Instagram"
-							/>
-							<SocialIcon
 								href="https://www.reddit.com/r/cubedesk"
 								darkPath={resourceUri('/images/logos/reddit_logo_white.svg')}
 								lightPath={resourceUri('/images/logos/reddit_logo_black.svg')}
@@ -162,6 +156,19 @@ export default function Nav() {
 								lightPath={resourceUri('/images/logos/github_logo_black.svg')}
 								name="GitHub"
 							/>
+							<Link
+								to="/about"
+								aria-label="About CubeDesk"
+								className={cn(
+									'hover:bg-tmo-module/10 box-border flex items-center justify-center rounded-[5px] p-2 opacity-70 transition-all duration-100 ease-in-out hover:opacity-100',
+									{
+										'text-white': moduleColor.isDark,
+										'text-black': !moduleColor.isDark,
+									},
+								)}
+							>
+								<Info aria-hidden="true" size={20} weight="bold" />
+							</Link>
 						</div>
 						{forceNavCollapsed ? null : (
 							<Button
