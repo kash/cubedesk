@@ -8,6 +8,7 @@ export type ComboboxFieldOptions = Pick<
 > & {
 	openLeft?: boolean;
 	triggerProps?: ComboboxProps['triggerProps'];
+	searchable?: ComboboxProps['searchable'];
 };
 export default function ComboboxField({
 	legend,

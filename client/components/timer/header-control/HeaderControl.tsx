@@ -108,7 +108,7 @@ export default function HeaderControl() {
 
 	const cubePicker = !focusMode && !headerOptions.hideCubeType && (
 		<CubePicker
-			pickerProps={{openLeft: true, noMargin: true}}
+			pickerProps={{openLeft: true, noMargin: true, searchable: !mobileMode}}
 			value={cubeType ?? ''}
 			onChange={(ct) => changeCubeType(ct.id)}
 		/>
@@ -172,7 +172,7 @@ export default function HeaderControl() {
 	);
 
 	const sessionSwitcher = me && !focusMode && !headerOptions.hideSessionSelector && (
-		<SessionSwitcher />
+		<SessionSwitcher searchable={!mobileMode} />
 	);
 
 	let topRightButton = (
@@ -236,9 +236,14 @@ export default function HeaderControl() {
 			<GlobalHotKeys handlers={handlers} keyMap={HOTKEY_MAP}>
 				<div
 					className={classNames(
-						'absolute top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
+						'top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
 						context.timeStartedAt && 'pointer-events-none opacity-10',
 						!me && '!grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
+						{
+							// In mobile, the header takes up space so the timer is centered between it and the footer
+							'relative shrink-0': mobileMode,
+							absolute: !mobileMode,
+						},
 					)}
 				>
 					<div className="flex flex-row items-center justify-start gap-2.5">
