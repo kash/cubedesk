@@ -2,7 +2,7 @@ import {getStore} from '@/components/store';
 import {beginOp, LocalOp} from '@/db/persist/writes';
 import {getSolveDb} from '@/db/solves/init';
 import {checkForCurrentAverageUpdate} from '@/db/solves/stats/solves/cache/average-cache';
-import {clearSolveStatCache} from '@/db/solves/stats/solves/caching';
+import {clearAllSolveStatCache, clearSolveStatCache} from '@/db/solves/stats/solves/caching';
 import {checkForPB} from '@/db/solves/stats/solves/pb';
 import {checkForWorst} from '@/db/solves/stats/solves/worst';
 import {sanitizeSolve} from '@/shared/solve';
@@ -53,30 +53,34 @@ async function createDemoSolve(solve: Solve) {
 	}
 }
 
-export async function deleteSolveDb(solve: Solve) {
-	if (solve.demo_mode) {
-		removeSolveLocally(solve);
-		return;
-	}
+/**
+ * Removes the solve right away, then deletes it on the server in the background. Restores it if the server fails.
+ */
+export function deleteSolveDb(solve: Solve) {
+	getSolveDb().remove(solve.id);
+	postProcessDbUpdate(solve, false);
 
-	const op = beginOp('solve.delete');
+	if (!solve.demo_mode) {
+		void deleteSolveOnServer(solve);
+	}
+}
+
+async function deleteSolveOnServer(solve: Solve) {
+	const op = beginOp('solve.delete', {deleteSolveIds: [solve.id]});
 	await op.durable;
 
 	try {
 		await trpc.solve.delete.mutate({id: solve.id});
+		op.confirm();
 	} catch (error) {
-		op.fail();
+		getSolveDb().put(solve);
+		// The restored solve may belong in any cached stat, not just the ones it was removed from
+		clearAllSolveStatCache();
+		emitEvent('solveDbUpdatedEvent', solve);
+
+		op.fail({putSolves: [solve]});
 		toastError('Could not delete solve. Please check your connection.');
-		throw error;
 	}
-
-	removeSolveLocally(solve);
-	op.confirm({deleteSolveIds: [solve.id]});
-}
-
-function removeSolveLocally(solve: Solve) {
-	getSolveDb().remove(solve.id);
-	postProcessDbUpdate(solve, false);
 }
 
 export async function updateSolveDb(solve: Solve, input: Partial<Solve> = {}, updateLocalDb = true) {

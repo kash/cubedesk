@@ -10,11 +10,8 @@ export function useSolveDeletion(onDeleted?: () => void) {
 		if (getSetting('confirm_delete_solve')) {
 			setSolve(target);
 		} else {
-			void deleteSolveDb(target)
-				.then(() => onDeleted?.())
-				.catch(() => {
-					/* The mutation reports its error. */
-				});
+			deleteSolveDb(target);
+			onDeleted?.();
 		}
 	}
 	return {
@@ -47,7 +44,7 @@ export default function DeleteSolveDialog({
 			description="Are you sure you want to delete this solve?"
 			buttonText="Delete solve"
 			hideInput
-			triggerAction={() => deleteSolveDb(solve)}
+			triggerAction={async () => deleteSolveDb(solve)}
 			onComplete={onDeleted}
 		/>
 	);

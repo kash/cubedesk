@@ -107,9 +107,10 @@ export interface LocalOp {
 	durable: Promise<void>;
 	// The server accepted the change. Applies any changes that had to wait for the server.
 	confirm: (changes?: LocalChanges) => void;
-	// The server call failed. The local copy may now differ from the server, and the server may still have applied
-	// the change (e.g. a lost response), so the local copy is marked stale and other devices are told to resync.
-	fail: () => void;
+	// The server call failed. Applies any changes that undo the local-first ones. The local copy may still differ from
+	// the server, which may have applied the change (e.g. a lost response), so the local copy is marked stale and other
+	// devices are told to resync.
+	fail: (revert?: LocalChanges) => void;
 }
 
 /**
@@ -140,9 +141,13 @@ export function beginOp(kind: string, localFirst: LocalChanges = {}): LocalOp {
 			});
 			scheduleHashBump(id);
 		},
-		fail: () => {
+		fail: (revert = {}) => {
 			enqueueWrite(kind, async (db) => {
-				await db.meta.update('sync', {valid: false});
+				await db.transaction('rw', [db.solves, db.sessions, db.meta], async () => {
+					await applyChanges(db, revert);
+					await db.meta.update('sync', {valid: false});
+				});
+				notifyOtherTabs(revert);
 			});
 			scheduleHashBump(id);
 		},
