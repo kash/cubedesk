@@ -1,60 +1,136 @@
-// @ts-nocheck
-import SmartCube, {SmartCubeCallbacks} from '@/components/timer/smart-cube/bluetooth/smart_cube';
-import {connectGanCube} from 'gan-web-bluetooth';
+import SmartCube, {
+	SmartCubeCallbacks,
+	SmartCubeConnectionError,
+} from '@/components/timer/smart-cube/bluetooth/smart_cube';
+import {
+	canReadMacAddress,
+	connectGanCube,
+	GanCubeConnection,
+	GanCubeEvent,
+	parseMacAddress,
+	readMacAddress,
+} from '@/util/gan/cube';
+import {trpc} from '@/util/trpc';
+import Cube from 'cubejs';
+
+const SOLVED_STATE = new Cube().asString();
 
 export default class GAN extends SmartCube {
-	device;
-
-	constructor(device, callbacks: SmartCubeCallbacks) {
+	private conn: GanCubeConnection | null = null;
+	constructor(
+		private device: BluetoothDevice,
+		callbacks: SmartCubeCallbacks,
+	) {
 		super(callbacks);
-
-		this.device = device;
 	}
 
-	customMacAddressProvider = async (device, isFallbackCall) => {
-		if (isFallbackCall) {
-			return prompt(
-				'Unable do determine cube MAC address!\nPlease enter MAC address manually:',
+	init = async () => {
+		const mac = await this.resolveMacAddress();
+		if (!mac) throw new SmartCubeConnectionError();
+
+		const conn = await connectGanCube(this.device, mac);
+		// A wrong MAC address decrypts to garbage, which never forms a valid cube state
+		const facelets = await this.readState(conn);
+		if (!facelets) {
+			await conn.disconnect();
+			throw new SmartCubeConnectionError(
+				"Couldn't read your cube's state. If you entered its MAC address manually, double-check it.",
 			);
-		} else {
-			return typeof device.watchAdvertisements == 'function'
-				? null
-				: prompt(
-						'Seems like your browser does not support Web Bluetooth watchAdvertisements() API. Enable following flag in Chrome:\n\nchrome://flags/#enable-experimental-web-platform-features\n\nor enter cube MAC address manually:',
-					);
+		}
+
+		this.conn = conn;
+		conn.events.subscribe(this.handleCubeEvent);
+		await conn.sendCubeCommand('REQUEST_BATTERY');
+
+		console.info('[GAN] Cube reported state', facelets);
+		this.alertInitialState(facelets);
+		await this.alertConnected(
+			{
+				device: {
+					name: this.device.name,
+					id: conn.mac,
+				},
+			},
+			{skipConfirmation: true},
+		);
+	};
+
+	resetToSolved = async () => {
+		if (!this.conn) return false;
+		try {
+			await this.conn.sendCubeCommand('REQUEST_RESET');
+			return (await this.readState(this.conn)) === SOLVED_STATE;
+		} catch {
+			return false;
 		}
 	};
 
-	init = async () => {
-		this.conn = await connectGanCube(this.customMacAddressProvider, this.device);
-		this.conn.events$.subscribe(this.handleCubeEvent);
+	private readState = (conn: GanCubeConnection) =>
+		new Promise<string | null>((resolve) => {
+			const finish = (facelets: string | null) => {
+				clearTimeout(timeout);
+				unsubscribe();
+				resolve(facelets);
+			};
+			const unsubscribe = conn.events.subscribe((event) => {
+				if (event.type === 'FACELETS') finish(event.facelets);
+				if (event.type === 'DISCONNECT') finish(null);
+			});
+			const timeout = setTimeout(() => finish(null), 5000);
+			conn.sendCubeCommand('REQUEST_FACELETS').catch(() => finish(null));
+		});
 
-		await this.conn.sendCubeCommand({type: 'REQUEST_BATTERY'});
-		await this.conn.sendCubeCommand({type: 'REQUEST_HARDWARE'});
+	/** Prefer reading the MAC from the cube, then one saved from a previous connection, then ask the user */
+	private resolveMacAddress = async () => {
+		const canRead = canReadMacAddress(this.device);
+		// Look up in parallel so reading advertisements starts right away
+		const savedPromise = this.findSavedMacAddress();
 
-		const dummyServer = {
-			device: {
-				name: this.hardwareName,
-				id: this.device.mac,
-			},
-		};
-		this.alertConnected(dummyServer);
+		while (this.callbacks.isActive()) {
+			if (canRead) {
+				const mac = await readMacAddress(this.device);
+				if (mac) return mac;
+			}
+			const saved = await savedPromise;
+			if (saved) return saved;
+
+			const response = await this.callbacks.requestMacAddress(
+				canRead ? 'detection-failed' : 'unsupported',
+			);
+			if (response.action === 'submit') return response.macAddress;
+			if (response.action === 'cancel') return null;
+		}
+
+		return null;
 	};
 
-	handleCubeEvent = (event) => {
-		if (event.type != 'GYRO' && event.type != 'FACELETS') console.log('GanCubeEvent', event);
-		if (event.type == 'MOVE') {
-			this.alertTurnCube(event.move);
-		} else if (event.type == 'HARDWARE') {
-			this.hardwareName = event.hardwareName;
-			this.hardwareVersion = event.hardwareVersion;
-			this.softwareVersion = event.softwareVersion;
-			this.productDate = event.productDate;
-			this.gyroSupported = event.gyroSupported;
-		} else if (event.type == 'BATTERY') {
-			this.alertBatteryLevel(this.batteryLevel);
-		} else if (event.type == 'DISCONNECT') {
-			this.alertDisconnected();
+	/** GAN cubes are saved with their MAC address as the device ID, matched by the Bluetooth name */
+	private findSavedMacAddress = async () => {
+		try {
+			const devices = await trpc.smartDevice.list.query();
+			const macs = devices
+				.filter((device) => device.internal_name === this.device.name)
+				.map((device) => parseMacAddress(device.device_id))
+				.filter((mac) => mac !== null);
+			return new Set(macs).size === 1 ? macs[0] : null;
+		} catch {
+			return null;
+		}
+	};
+
+	handleCubeEvent = (event: GanCubeEvent) => {
+		switch (event.type) {
+			case 'MOVE':
+				this.alertTurnCube(event.move);
+				break;
+			case 'BATTERY':
+				this.alertBatteryLevel(event.batteryLevel);
+				break;
+			case 'DISCONNECT':
+				this.alertDisconnected();
+				break;
+			case 'FACELETS':
+				break;
 		}
 	};
 }

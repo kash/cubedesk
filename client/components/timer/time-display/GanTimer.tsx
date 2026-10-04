@@ -9,17 +9,16 @@ import {
 import {setTimerParams} from '@/components/timer/helpers/params';
 import {ITimerContext, useTimerContext} from '@/components/timer/Timer';
 import {Dialog, DialogContent} from '@/components/ui/dialog';
+import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from '@/util/gan/timer';
 import {useSettings} from '@/util/hooks/useSettings';
-import {connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState} from 'gan-web-bluetooth';
 import {Bluetooth} from 'phosphor-react';
 import React, {useEffect, useRef, useState} from 'react';
-import {SubscriptionLike} from 'rxjs';
 
 // Since this component is singleton and should never have multiple instances,
 // also will never be used in different contexts, we won't pollute context
 // with connection status and event subscription. Just use module-scoped variables.
 let conn: GanTimerConnection | null = null;
-let subs: SubscriptionLike | null = null;
+let unsubscribe: (() => void) | null = null;
 
 export default function GanTimer() {
 	const [bluetoothErrorMessageDialog, setBluetoothErrorMessageDialog] = React.useState<{
@@ -37,9 +36,9 @@ export default function GanTimer() {
 
 	// Subscribe/unsubscribe to GAN Smart Timer events when component being mounted/unmounted
 	useEffect(() => {
-		subs = conn?.events$.subscribe(handleTimerEvent) ?? null;
+		unsubscribe = conn?.events.subscribe(handleTimerEvent) ?? null;
 		setConnected(!!conn);
-		return () => subs?.unsubscribe();
+		return () => unsubscribe?.();
 	}, []);
 
 	function handleTimerEvent(event: GanTimerEvent) {
@@ -59,7 +58,7 @@ export default function GanTimer() {
 				break;
 			case GanTimerState.STOPPED:
 				if (event.recordedTime) {
-					endTimer(contextRef.current, event.recordedTime.asTimestamp);
+					endTimer(contextRef.current, event.recordedTime);
 				}
 				break;
 			case GanTimerState.IDLE:
@@ -90,10 +89,10 @@ export default function GanTimer() {
 				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
 			if (bluetoothAvailable) {
 				conn = await connectGanTimer();
-				conn.events$.subscribe(
-					(evt) => evt.state == GanTimerState.DISCONNECT && (conn = null),
-				);
-				subs = conn.events$.subscribe(handleTimerEvent);
+				conn.events.subscribe((evt) => {
+					if (evt.state === GanTimerState.DISCONNECT) conn = null;
+				});
+				unsubscribe = conn.events.subscribe(handleTimerEvent);
 				setConnected(true);
 			} else {
 				setBluetoothErrorMessageDialog({props: {}});

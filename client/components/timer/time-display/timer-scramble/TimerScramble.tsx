@@ -30,7 +30,14 @@ export default function TimerScramble() {
 		timerScrambleSize *= MOBILE_FONT_SIZE_MULTIPLIER;
 	}
 
-	const {editScramble, scrambleLocked, notification, hideScramble, timeStartedAt} = context;
+	const {
+		editScramble,
+		scrambleLocked,
+		notification,
+		hideScramble,
+		timeStartedAt,
+		smartCubeNeedsSolve,
+	} = context;
 	let scramble = context.scramble;
 	const lockedScramble = useSettings('locked_scramble');
 
@@ -117,7 +124,13 @@ export default function TimerScramble() {
 	);
 
 	// Is smart cube
-	if (isSmart && !timeStartedAt && scramble) {
+	if (isSmart && !timeStartedAt && smartCubeNeedsSolve) {
+		scrambleBody = (
+			<span className="text-text/60 [font-family:inherit] [line-height:inherit]">
+				Solve cube to show scramble
+			</span>
+		);
+	} else if (isSmart && !timeStartedAt && scramble) {
 		scrambleBody = <SmartScramble />;
 	}
 

@@ -5,8 +5,12 @@ import * as THREE from 'three';
 export class RubiksCube {
 	private camera: THREE.PerspectiveCamera;
 	private scene: THREE.Scene;
-	private renderer: THREE.Renderer;
+	private renderer: THREE.WebGLRenderer;
 	private locked: boolean = false;
+	private frame: number | null = null;
+	private lastFrameTime: number | null = null;
+	private spinAxis: THREE.Vector3 | null = null;
+	private spinSpeed: number = 0;
 
 	constructor(
 		canvas: HTMLCanvasElement,
@@ -32,7 +36,33 @@ export class RubiksCube {
 		this.renderer.domElement.style.height = height;
 
 		this.resize();
-		this.render();
+		this.frame = window.requestAnimationFrame(this.render);
+	}
+
+	/**
+	 * Continuously roll the whole cube toward a screen direction (x right, y up) while bobbing gently,
+	 * for decorative use
+	 */
+	public spin(direction: {x: number; y: number}, radiansPerSecond: number) {
+		// Center the cube so its corners stay in frame at every angle
+		this.camera.lookAt(0, 0, 0);
+		// Rolling toward a direction on screen means rotating around the screen axis perpendicular to it
+		this.spinAxis = new THREE.Vector3(-direction.y, direction.x, 0)
+			.normalize()
+			.applyQuaternion(this.camera.quaternion);
+		this.spinSpeed = radiansPerSecond;
+	}
+
+	/** Stop rendering and free GPU resources, the shared materials are left alone */
+	public dispose() {
+		if (this.frame !== null) {
+			window.cancelAnimationFrame(this.frame);
+			this.frame = null;
+		}
+		this.scene.traverse((node) => {
+			if (node instanceof CubeMesh) node.geometry.dispose();
+		});
+		this.renderer.dispose();
 	}
 
 	public resize() {
@@ -201,38 +231,46 @@ export class RubiksCube {
 		});
 	}
 
-	private render() {
-		window.requestAnimationFrame(this.render.bind(this));
+	private render = (time: number) => {
+		this.frame = window.requestAnimationFrame(this.render);
+
+		if (this.spinAxis) {
+			// Scale by elapsed time so the spin speed doesn't depend on the display's refresh rate
+			const elapsed = this.lastFrameTime === null ? 0 : (time - this.lastFrameTime) / 1000;
+			this.scene.rotateOnWorldAxis(this.spinAxis, this.spinSpeed * elapsed);
+			this.scene.position.y = Math.sin(time / 800) * 0.15;
+		}
+		this.lastFrameTime = time;
+
 		this.renderer.render(this.scene, this.camera);
-	}
+	};
 
 	private generateCubeCluster(initState: string) {
-		const materialMapping: {[key: string]: number} = {
-			R: 0,
-			L: 1,
-			U: 2,
-			D: 3,
-			F: 4,
-			B: 5,
-		};
-
-		const positionMapping: {[key: string]: string} = {
-			'1,1,1': 'B',
-			'0,1,1': 'U',
-			'0,-1,1': 'U',
-			'0,1,-1': 'U',
-		};
+		// Box geometry material slots are +x, -x, +y, -y, +z, -z, which are the R, L, U, D, F, B faces
+		const faceMaterial = (face: string) => this.materials['RLUDFB'.indexOf(face)];
+		const state = /^[URFDLB]{54}$/.test(initState) ? initState : null;
 
 		const cubes: CubeMesh[] = [];
 		for (let z = -1; z < 2; z++) {
 			for (let y = -1; y < 2; y++) {
 				for (let x = -1; x < 2; x++) {
-					const cube = new CubeMesh({
-						position: new THREE.Vector3(x, y, z),
-						materials: this.materials,
-					});
+					const materials = [...this.materials];
+					if (state) {
+						// Facelet indices follow the Kociemba layout, each face read row by row as seen from outside
+						if (x === 1) materials[0] = faceMaterial(state[9 + (1 - y) * 3 + (1 - z)]);
+						if (x === -1) materials[1] = faceMaterial(state[36 + (1 - y) * 3 + (z + 1)]);
+						if (y === 1) materials[2] = faceMaterial(state[(z + 1) * 3 + (x + 1)]);
+						if (y === -1) materials[3] = faceMaterial(state[27 + (1 - z) * 3 + (x + 1)]);
+						if (z === 1) materials[4] = faceMaterial(state[18 + (1 - y) * 3 + (x + 1)]);
+						if (z === -1) materials[5] = faceMaterial(state[45 + (1 - y) * 3 + (1 - x)]);
+					}
 
-					cubes.push(cube);
+					cubes.push(
+						new CubeMesh({
+							position: new THREE.Vector3(x, y, z),
+							materials
+						})
+					);
 				}
 			}
 		}
