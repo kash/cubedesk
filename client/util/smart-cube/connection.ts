@@ -1,6 +1,5 @@
 // Encrypted smart cube connection shared by GAN and MoYu cubes, adapted from gan-web-bluetooth (MIT) by Andy Fedotov
 import Aes128 from '@/util/smart-cube/aes';
-import {debugLog, toHex} from '@/util/smart-cube/debug';
 import EventStream from '@/util/smart-cube/events';
 import {parseMacAddress} from '@/util/smart-cube/mac';
 import {
@@ -70,6 +69,7 @@ class CubeEncrypter {
 
 export class SmartCubeConnection implements SmartCubeTransport {
 	readonly events = new EventStream<SmartCubeEvent>();
+	private pendingWrite = Promise.resolve();
 
 	constructor(
 		private device: BluetoothDevice,
@@ -84,6 +84,9 @@ export class SmartCubeConnection implements SmartCubeTransport {
 		this.device.addEventListener('gattserverdisconnected', this.onDisconnect);
 		this.stateCharacteristic.addEventListener('characteristicvaluechanged', this.onStateUpdate);
 		await this.stateCharacteristic.startNotifications();
+		for (const message of this.driver.createStartupMessages?.() ?? []) {
+			await this.sendCommandMessage(message);
+		}
 	}
 
 	private onStateUpdate = async () => {
@@ -93,25 +96,34 @@ export class SmartCubeConnection implements SmartCubeTransport {
 		const message = this.encrypter.decrypt(
 			new Uint8Array(value.buffer, value.byteOffset, value.byteLength),
 		);
-		debugLog('Received', {raw: toHex(value), decrypted: toHex(message)});
 		const events = await this.driver.handleStateEvent(this, message);
 		events.forEach((event) => this.events.emit(event));
 	};
 
 	private onDisconnect = async () => {
+		this.events.emit({type: 'DISCONNECT'});
+		await this.detach();
+	};
+
+	/** Stop listening without closing the Bluetooth connection, so it can be reused with another MAC address */
+	detach = async () => {
 		this.device.removeEventListener('gattserverdisconnected', this.onDisconnect);
 		this.stateCharacteristic.removeEventListener(
 			'characteristicvaluechanged',
 			this.onStateUpdate,
 		);
-		this.events.emit({type: 'DISCONNECT'});
 		this.events.clear();
 		await this.stateCharacteristic.stopNotifications().catch(() => {});
 	};
 
-	sendCommandMessage = async (message: Uint8Array) => {
-		debugLog('Sending', toHex(message));
-		await this.commandCharacteristic.writeValue(this.encrypter.encrypt(message));
+	/** Writes are queued because Web Bluetooth rejects one while another is still in progress */
+	sendCommandMessage = (message: Uint8Array) => {
+		const write = this.pendingWrite.then(() => {
+			return this.commandCharacteristic.writeValue(this.encrypter.encrypt(message));
+		});
+		// A failed write shouldn't block the ones after it
+		this.pendingWrite = write.catch(() => {});
+		return write;
 	};
 
 	/** Resolves false if the cube doesn't support the command */
@@ -146,13 +158,17 @@ export async function connectSmartCube(
 		.reverse();
 
 	if (!device.gatt) throw new Error('Bluetooth GATT is unavailable for this device');
-	const gatt = await device.gatt.connect();
+	// Connecting finds the cube far faster while actively scanning, about 2s instead of 5-10s on macOS
+	const scan = new AbortController();
+	device.watchAdvertisements?.({signal: scan.signal}).catch(() => {});
+	let gatt: BluetoothRemoteGATTServer;
+	try {
+		gatt = await device.gatt.connect();
+	} finally {
+		scan.abort();
+	}
 	try {
 		const services = await gatt.getPrimaryServices();
-		debugLog(
-			'Services',
-			services.map((service) => service.uuid),
-		);
 
 		for (const service of services) {
 			const protocol = protocols.find((p) => p.service === service.uuid.toLowerCase());
@@ -170,7 +186,6 @@ export async function connectSmartCube(
 			return conn;
 		}
 	} catch (error) {
-		debugLog('Connection setup failed', error);
 		gatt.disconnect();
 		throw error;
 	}

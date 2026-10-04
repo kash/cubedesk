@@ -25,6 +25,8 @@ export interface SmartCubeTransport {
 export interface SmartCubeProtocolDriver {
 	/** Null if the cube doesn't support the command */
 	createCommandMessage(command: SmartCubeCommand): Uint8Array | null;
+	/** Sent once notifications are on, for cubes that only start reporting after a handshake */
+	createStartupMessages?(): Uint8Array[];
 	handleStateEvent(conn: SmartCubeTransport, message: Uint8Array): Promise<SmartCubeEvent[]>;
 }
 

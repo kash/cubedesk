@@ -36,12 +36,16 @@ export function readMoyuMacAddress(device: BluetoothDevice) {
 }
 
 /**
- * Best guess at the MAC address from the Bluetooth name, which ends with its last 2 bytes. The CF:30:16:00
- * prefix isn't confirmed to be the same on every cube, so the guess has to be verified by connecting.
+ * Likely MAC addresses from the Bluetooth name, which ends with the last 2 bytes. The fourth byte varies
+ * by hardware (02 on a V11 AI), so each guess has to be verified by connecting.
  */
-export function guessMoyuMacAddress(device: BluetoothDevice) {
-	const match = /^WCU_MY3\d_([0-9A-F]{2})([0-9A-F]{2})$/.exec(device.name?.trim() ?? '');
-	return match ? `CF:30:16:00:${match[1]}:${match[2]}` : null;
+export function guessMoyuMacAddresses(device: BluetoothDevice) {
+	const match = /^WCU_MY3(\d)_([0-9A-F]{2})([0-9A-F]{2})$/.exec(device.name?.trim() ?? '');
+	if (!match) return [];
+	const [, model, a, b] = match;
+	// Most likely first, as seen on real cubes
+	const variants = model === '3' ? ['02', '01', '00'] : ['02', '00', '01'];
+	return variants.map((variant) => `CF:30:16:${variant}:${a}:${b}`);
 }
 
 export function connectMoyuCube(device: BluetoothDevice, macAddress: string) {
