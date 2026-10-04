@@ -14,7 +14,10 @@ interface Props {
 }
 
 const textButtonClass =
-	'inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 text-base font-medium outline-none transition-colors';
+	'inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 text-base outline-none';
+
+// Inactive actions are dimmed and brighten on hover. Only an active +2/DNF gets its color.
+const dimmedActionClass = 'opacity-60 hover:opacity-100 focus-visible:opacity-100';
 
 export default function HistorySolveRow(props: Props) {
 	const {index, solve, disabled} = props;
@@ -59,8 +62,8 @@ export default function HistorySolveRow(props: Props) {
 					title="Plus two solve"
 					onClick={plusTwoSolve}
 					aria-pressed={plusTwo}
-					className={cn(textButtonClass, 'focus-visible:underline', {
-						'hover:text-orange-300': !plusTwo,
+					className={cn(textButtonClass, {
+						[dimmedActionClass]: !plusTwo,
 						'text-warning': plusTwo,
 					})}
 				>
@@ -71,8 +74,8 @@ export default function HistorySolveRow(props: Props) {
 					title="DNF solve"
 					onClick={dnfSolve}
 					aria-pressed={dnf}
-					className={cn(textButtonClass, 'focus-visible:underline', {
-						'hover:text-red-300': !dnf,
+					className={cn(textButtonClass, {
+						[dimmedActionClass]: !dnf,
 						'text-error': dnf,
 					})}
 				>
@@ -82,10 +85,15 @@ export default function HistorySolveRow(props: Props) {
 					type="button"
 					title="Delete solve"
 					onClick={deleteSolve}
-					className="inline-flex shrink-0 cursor-pointer items-center bg-transparent p-0 outline-none hover:drop-shadow-[0_0_4px_currentColor] focus-visible:drop-shadow-[0_0_4px_currentColor]"
+					className={cn(
+						textButtonClass,
+						dimmedActionClass,
+						// Larger hit area without changing the layout
+						"relative after:absolute after:-inset-2 after:content-['']",
+					)}
 					aria-label="Delete solve"
 				>
-					<X className="size-4" />
+					<X weight="bold" className="size-4" />
 				</button>
 			</>
 		);
