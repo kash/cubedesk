@@ -4142,7 +4142,6 @@ export const SolveScalarFieldEnum = {
   bulk: 'bulk',
   inspection_time: 'inspection_time',
   is_smart_cube: 'is_smart_cube',
-  smart_put_down_time: 'smart_put_down_time',
   smart_turns: 'smart_turns',
   smart_turn_count: 'smart_turn_count',
   smart_device_id: 'smart_device_id',
@@ -4151,7 +4150,6 @@ export const SolveScalarFieldEnum = {
   share_code: 'share_code',
   from_timer: 'from_timer',
   game_session_id: 'game_session_id',
-  custom_scramble: 'custom_scramble',
   training_session_id: 'training_session_id'
 } as const
 
