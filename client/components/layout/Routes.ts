@@ -1,5 +1,4 @@
 import type {Request} from 'express';
-import About from '@/components/about/About';
 import Account from '@/components/account/Account';
 import DangerZone from '@/components/account/DangerZone';
 import LinkedAccounts from '@/components/account/linked-accounts/LinkedAccounts';
@@ -14,6 +13,8 @@ import Reports from '@/components/admin/reports/Reports';
 import Community from '@/components/community/Community';
 import EloBoard from '@/components/community/EloBoard';
 import Friends from '@/components/community/Friends';
+import {DOC_PAGES} from '@/components/docs/doc-pages';
+import DocsLayout from '@/components/docs/DocsLayout';
 import Landing from '@/components/landing/Landing';
 import Privacy from '@/components/landing/legal/Privacy';
 import Terms from '@/components/landing/legal/Terms';
@@ -98,7 +99,9 @@ function routeRedirect(path: string, redirect: string): RedirectPath {
 export const routes: (PageContext | RedirectPath)[] = [
 	// Main tabs
 	route('/', null, App, DefaultTimer, false, false, false, false, true),
-	route('/about', null, App, About, false, true, false, true),
+	...DOC_PAGES.map((page) =>
+		route(page.path, App, DocsLayout, page.component, false, true, false, true),
+	),
 	route('/signup', null, App, LoginWrapper, false, true, false, true),
 	route('/login', null, App, LoginWrapper, false, true, false, true),
 	route('/forgot', null, App, LoginWrapper, false, true, false, true),

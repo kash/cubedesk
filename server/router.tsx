@@ -119,8 +119,7 @@ function appUseRouteForPage(routePath, route: PageContext) {
 		}
 
 		// Redirect to home page if user is logged in and on login page
-		// The about page is only available in demo mode for now
-		if (me && (routePath === '/login' || routePath === '/signup' || routePath === '/about')) {
+		if (me && (routePath === '/login' || routePath === '/signup')) {
 			res.status(302).redirect('/');
 			return;
 		}
