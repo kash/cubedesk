@@ -167,7 +167,7 @@ export default function Nav() {
 									},
 								)}
 							>
-								<Info aria-hidden="true" size={20} weight="bold" />
+								<Info aria-hidden="true" size={20} weight="fill" />
 							</Link>
 						</div>
 						{forceNavCollapsed ? null : (
