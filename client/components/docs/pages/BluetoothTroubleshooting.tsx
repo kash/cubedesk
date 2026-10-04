@@ -25,6 +25,10 @@ export default function BluetoothTroubleshooting() {
 					2, GAN356 i 3, and Monster Go 3Ai.
 				</li>
 				<li>
+					<strong>MoYu smart cubes:</strong> WeiLong V10 AI and MoYu AI 2023 (WeiLong WRM
+					V10 AI).
+				</li>
+				<li>
 					<strong>GoCube</strong> and <strong>Rubik&apos;s Connected</strong>
 				</li>
 				<li>
@@ -36,8 +40,8 @@ export default function BluetoothTroubleshooting() {
 			</DocList>
 			<DocParagraph>
 				If you pick a cube that isn&apos;t on this list, CubeDesk shows &quot;This smart
-				cube isn&apos;t supported yet.&quot; MoYu and QiYi smart cubes aren&apos;t supported
-				yet.
+				cube isn&apos;t supported yet.&quot; QiYi smart cubes and the original MoYu AI cube
+				aren&apos;t supported yet.
 			</DocParagraph>
 
 			<DocHeading id="supported-browsers">
@@ -105,11 +109,11 @@ export default function BluetoothTroubleshooting() {
 				</li>
 			</DocList>
 
-			<DocHeading id="gan-mac-address">GAN cubes ask for a MAC address</DocHeading>
+			<DocHeading id="gan-mac-address">GAN and MoYu cubes ask for a MAC address</DocHeading>
 			<DocParagraph>
-				GAN cubes encrypt their data, and CubeDesk needs the cube&apos;s MAC address to read
-				it. CubeDesk tries to read the address from the cube automatically, but most
-				browsers block this by default. When that happens, you&apos;ll see{' '}
+				GAN and MoYu cubes encrypt their data, and CubeDesk needs the cube&apos;s MAC
+				address to read it. CubeDesk tries to read the address from the cube automatically,
+				but most browsers block this by default. When that happens, you&apos;ll see{' '}
 				<strong>&quot;Turn on automatic cube detection&quot;</strong>. You only need to do
 				this once:
 			</DocParagraph>
@@ -164,7 +168,8 @@ export default function BluetoothTroubleshooting() {
 				example if you turned the cube while it was disconnected or popped a piece. Solve
 				your real cube, then open the <strong>…</strong> menu next to{' '}
 				<strong>Connect</strong> and choose <strong>Mark as solved</strong>. On GAN cubes,
-				this also resets the state stored on the cube itself.
+				this also resets the state stored on the cube itself. MoYu cubes can&apos;t be reset
+				this way, so they may report the old state again the next time they connect.
 			</DocParagraph>
 			<DocParagraph>
 				GoCube, Rubik&apos;s Connected, and Giiker cubes can&apos;t report their state, so
@@ -212,9 +217,10 @@ export default function BluetoothTroubleshooting() {
 			<DocParagraph>
 				CubeDesk can reconnect the last cube you used without opening the device list. This
 				needs the same browser setting described in{' '}
-				<DocLink to="#gan-mac-address">GAN cubes ask for a MAC address</DocLink>. When the
-				page loads, you&apos;ll see <strong>&quot;Turn your cube to reconnect&quot;</strong>
-				. Turn any face to wake the cube up and it will connect.
+				<DocLink to="#gan-mac-address">GAN and MoYu cubes ask for a MAC address</DocLink>.
+				When the page loads, you&apos;ll see{' '}
+				<strong>&quot;Turn your cube to reconnect&quot;</strong>. Turn any face to wake the
+				cube up and it will connect.
 			</DocParagraph>
 			<DocParagraph>
 				Choosing <strong>Disconnect</strong> from the menu makes CubeDesk forget the cube,

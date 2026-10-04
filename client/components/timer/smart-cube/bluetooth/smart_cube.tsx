@@ -2,6 +2,7 @@ import {turnSmartCube} from '@/actions/timer';
 import {getStore} from '@/components/store';
 // @ts-nocheck
 import {setTimerParams} from '@/components/timer/helpers/params';
+import {SmartCubeOrientation} from '@/util/smart-cube/protocol';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 
@@ -10,8 +11,6 @@ export type PendingSmartDevice = Awaited<ReturnType<typeof trpc.smartDevice.crea
 export type MacAddressRequestReason = 'unsupported' | 'detection-failed';
 export type MacAddressResponse =
 	{action: 'submit'; macAddress: string} | {action: 'retry'} | {action: 'cancel'};
-/** Orientation quaternion with +x toward the R face, +y toward U and +z toward F */
-export type SmartCubeOrientation = {x: number; y: number; z: number; w: number};
 export interface SmartCubeCallbacks {
 	confirmSolved: (device: PendingSmartDevice) => Promise<boolean>;
 	requestMacAddress: (reason: MacAddressRequestReason) => Promise<MacAddressResponse>;
