@@ -5,10 +5,15 @@ export type GanCubeCommand = 'REQUEST_FACELETS' | 'REQUEST_BATTERY' | 'REQUEST_R
 
 export type GanCubeMoveEvent = {type: 'MOVE'; serial: number; move: string};
 
+/** Right-handed coordinate system with +X toward the red (R) face, +Y blue (B) and +Z white (U) */
+export type GanCubeOrientation = {x: number; y: number; z: number; w: number};
+
 export type GanCubeEvent =
 	| GanCubeMoveEvent
 	/** Facelets are in Kociemba order (URFDLB faces), the same format cubejs uses */
 	| {type: 'FACELETS'; serial: number; facelets: string}
+	/** Only sent by cubes with a gyroscope */
+	| {type: 'GYRO'; orientation: GanCubeOrientation}
 	| {type: 'BATTERY'; batteryLevel: number}
 	| {type: 'DISCONNECT'};
 
@@ -141,6 +146,18 @@ function batteryEvent(level: number): GanCubeEvent {
 	return {type: 'BATTERY', batteryLevel: Math.min(level, 100)};
 }
 
+/** Orientation quaternion as four 16 bit words in w, x, y, z order, each a sign bit and a 15 bit magnitude */
+function gyroEvent(msg: BitReader, start: number): GanCubeEvent {
+	const component = (index: number) => {
+		const value = msg.bits(start + index * 16, 16);
+		return ((value >> 15 ? -1 : 1) * (value & 0x7fff)) / 0x7fff;
+	};
+	return {
+		type: 'GYRO',
+		orientation: {w: component(0), x: component(1), y: component(2), z: component(3)},
+	};
+}
+
 /**
  * GAN Gen2 protocol: GAN Mini ui FreePlay, GAN12 ui (FreePlay), GAN356 i Carry (S), GAN356 i 3, Monster Go 3Ai
  */
@@ -161,6 +178,9 @@ export class GanGen2ProtocolDriver implements GanProtocolDriver {
 		const events: GanCubeEvent[] = [];
 
 		switch (msg.bits(0, 4)) {
+			case 0x01:
+				events.push(gyroEvent(msg, 4));
+				break;
 			case 0x02: {
 				// Moves are only accepted after the first facelets event
 				if (this.lastSerial === -1) break;
@@ -432,6 +452,8 @@ export class GanGen4ProtocolDriver extends GanBufferedProtocolDriver {
 					msg.uintLE(16, 2),
 					readFacelets(msg, 32, 53, 69, 113),
 				);
+			case 0xec:
+				return [gyroEvent(msg, 16)];
 			case 0xef:
 				return [batteryEvent(msg.bits(8 + dataLength * 8, 8))];
 			case 0xea:

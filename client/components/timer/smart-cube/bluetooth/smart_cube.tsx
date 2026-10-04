@@ -10,11 +10,15 @@ export type PendingSmartDevice = Awaited<ReturnType<typeof trpc.smartDevice.crea
 export type MacAddressRequestReason = 'unsupported' | 'detection-failed';
 export type MacAddressResponse =
 	{action: 'submit'; macAddress: string} | {action: 'retry'} | {action: 'cancel'};
+/** Orientation quaternion with +x toward the R face, +y toward U and +z toward F */
+export type SmartCubeOrientation = {x: number; y: number; z: number; w: number};
 export interface SmartCubeCallbacks {
 	confirmSolved: (device: PendingSmartDevice) => Promise<boolean>;
 	requestMacAddress: (reason: MacAddressRequestReason) => Promise<MacAddressResponse>;
 	/** Cube reported its actual state on connect, as a Kociemba facelets string */
 	onInitialState: (facelets: string) => void;
+	/** Cube's gyroscope reported a new orientation, only sent by cubes that have one */
+	onOrientation: (orientation: SmartCubeOrientation) => void;
 	onDisconnected: () => void;
 	isActive: () => boolean;
 }
@@ -93,6 +97,10 @@ export default class SmartCube {
 
 	alertInitialState = (facelets: string) => {
 		if (this.callbacks.isActive()) this.callbacks.onInitialState(facelets);
+	};
+
+	alertOrientation = (orientation: SmartCubeOrientation) => {
+		if (this.callbacks.isActive()) this.callbacks.onOrientation(orientation);
 	};
 
 	alertBatteryLevel = (level) => {

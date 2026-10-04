@@ -11,6 +11,9 @@ export class RubiksCube {
 	private lastFrameTime: number | null = null;
 	private spinAxis: THREE.Vector3 | null = null;
 	private spinSpeed: number = 0;
+	// Inverse of the orientation the cube was held in when calibrated, which maps to the default view
+	public orientationBasis: THREE.Quaternion | null = null;
+	private targetOrientation: THREE.Quaternion | null = null;
 
 	constructor(
 		canvas: HTMLCanvasElement,
@@ -51,6 +54,28 @@ export class RubiksCube {
 			.normalize()
 			.applyQuaternion(this.camera.quaternion);
 		this.spinSpeed = radiansPerSecond;
+	}
+
+	/**
+	 * Follow the physical cube's orientation, relative to how it was held when first called or last reset.
+	 * Axes point to the R, U and F faces, the same as the scene's.
+	 */
+	public setOrientation({x, y, z, w}: {x: number; y: number; z: number; w: number}) {
+		const orientation = new THREE.Quaternion(x, y, z, w).normalize();
+		if (!this.orientationBasis) {
+			this.orientationBasis = orientation.clone().conjugate();
+		}
+		if (!this.targetOrientation) {
+			// Center the cube so its corners stay in frame at every angle
+			this.camera.lookAt(0, 0, 0);
+		}
+		this.targetOrientation = orientation.premultiply(this.orientationBasis);
+	}
+
+	/** Treat the cube's next reported orientation as the default view */
+	public resetOrientation() {
+		this.orientationBasis = null;
+		this.targetOrientation?.identity();
 	}
 
 	/** Stop rendering and free GPU resources, the shared materials are left alone */
@@ -234,11 +259,14 @@ export class RubiksCube {
 	private render = (time: number) => {
 		this.frame = window.requestAnimationFrame(this.render);
 
+		// Scale by elapsed time so motion doesn't depend on the display's refresh rate
+		const elapsed = this.lastFrameTime === null ? 0 : (time - this.lastFrameTime) / 1000;
 		if (this.spinAxis) {
-			// Scale by elapsed time so the spin speed doesn't depend on the display's refresh rate
-			const elapsed = this.lastFrameTime === null ? 0 : (time - this.lastFrameTime) / 1000;
 			this.scene.rotateOnWorldAxis(this.spinAxis, this.spinSpeed * elapsed);
 			this.scene.position.y = Math.sin(time / 800) * 0.15;
+		} else if (this.targetOrientation) {
+			// Ease toward the reported orientation to smooth out gyroscope jitter
+			this.scene.quaternion.slerp(this.targetOrientation, 1 - Math.pow(0.75, elapsed * 60));
 		}
 		this.lastFrameTime = time;
 
