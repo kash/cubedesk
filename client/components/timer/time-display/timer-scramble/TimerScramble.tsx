@@ -102,7 +102,7 @@ export default function TimerScramble() {
 			{/* Match the textarea's wrapping and box model before JavaScript runs. */}
 			<div
 				aria-hidden="true"
-				className={`${scrambleFieldClasses} invisible whitespace-pre-wrap [overflow-wrap:break-word]`}
+				className={`${scrambleFieldClasses} invisible [overflow-wrap:break-word] whitespace-pre-wrap`}
 			>
 				{`${scramble || (hideScramble ? '' : 'scramble')} `}
 			</div>
@@ -150,7 +150,7 @@ export default function TimerScramble() {
 				)}
 				style={{
 					fontSize: timerScrambleSize + 'px',
-					lineHeight: timerScrambleSize * 1.6 + 'px',
+					lineHeight: timerScrambleSize * (mobileMode ? 1.8 : 1.6) + 'px',
 				}}
 			>
 				{scrambleBody}

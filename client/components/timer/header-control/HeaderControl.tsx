@@ -48,6 +48,7 @@ export default function HeaderControl() {
 
 	const me = useMe();
 	const backgroundColor = useTheme('background_color');
+	const moduleColor = useTheme('module_color');
 	const context = useTimerContext();
 	const {focusMode, cubeType} = context;
 	const headerOptions = context.headerOptions || {};
@@ -238,14 +239,47 @@ export default function HeaderControl() {
 		);
 	}
 
+	const authButtons = !me && (
+		<div className="flex shrink-0 items-center gap-2">
+			<AuthDialog view="login">
+				<Button variant="secondary">{'Log in'}</Button>
+			</AuthDialog>
+			<AuthDialog view="signup">
+				<Button variant="default">{'Sign up'}</Button>
+			</AuthDialog>
+		</div>
+	);
+
+	// On mobile, logged out users get a top bar (logo and auth buttons) that mirrors the logged in mobile nav
+	const mobileLoggedOutBar = mobileMode && !me && !focusMode && (
+		<div
+			className={classNames(
+				'bg-module relative z-30 box-border flex h-[55px] w-full shrink-0 items-center justify-between px-[13px] transition-opacity duration-200 ease-in-out',
+				{'pointer-events-none opacity-10': !!context.timeStartedAt},
+			)}
+		>
+			<a
+				className="flex size-11 shrink-0 items-center justify-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
+				href="/"
+				aria-label="CubeDesk home"
+			>
+				<span className="w-6">
+					<LogoBrandmark dark={!moduleColor.isDark} />
+				</span>
+			</a>
+			{authButtons}
+		</div>
+	);
+
 	return (
 		<>
 			<GlobalHotKeys handlers={handlers} keyMap={HOTKEY_MAP}>
+				{mobileLoggedOutBar}
 				<div
 					className={classNames(
 						'top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
 						context.timeStartedAt && 'pointer-events-none opacity-10',
-						!me && '!grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
+						!me && !mobileMode && '!grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
 						{
 							// In mobile, the header takes up space so the timer is centered between it and the footer
 							'relative shrink-0': mobileMode,
@@ -254,26 +288,16 @@ export default function HeaderControl() {
 					)}
 				>
 					<div className="flex flex-row items-center justify-start gap-2.5">
-						{!me && (
-							<div
-								className={
-									mobileMode
-										? 'mr-1 w-[23px] shrink-0'
-										: 'mr-3 w-[120px] shrink-0'
-								}
-							>
-								{mobileMode ? (
-									<LogoBrandmark dark={!backgroundColor.isDark} />
-								) : (
-									<LogoLockup dark={!backgroundColor.isDark} />
-								)}
+						{!me && !mobileMode && !focusMode && (
+							<div className="mr-3 w-[120px] shrink-0">
+								<LogoLockup dark={!backgroundColor.isDark} />
 							</div>
 						)}
-						{headerOptions?.customHeadersLeft}
+						{!focusMode && headerOptions?.customHeadersLeft}
 						{cubePicker}
 						{sessionSwitcher}
 					</div>
-					{me ? (
+					{me || mobileMode ? (
 						<div className="flex flex-row items-start justify-center gap-2.5" />
 					) : (
 						<div className="flex flex-row items-center justify-center">
@@ -294,17 +318,8 @@ export default function HeaderControl() {
 						)}
 						{timerTypeDropdown}
 						{topRightButton}
-						{headerOptions?.customHeadersRight}
-						{!me && (
-							<div className="flex shrink-0 items-center gap-2">
-								<AuthDialog view="login">
-									<Button variant="secondary">{'Log in'}</Button>
-								</AuthDialog>
-								<AuthDialog view="signup">
-									<Button variant="default">{'Sign up'}</Button>
-								</AuthDialog>
-							</div>
-						)}
+						{!focusMode && headerOptions?.customHeadersRight}
+						{!mobileMode && !focusMode && authButtons}
 					</div>
 				</div>
 			</GlobalHotKeys>

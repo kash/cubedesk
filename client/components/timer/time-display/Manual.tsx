@@ -212,8 +212,9 @@ export default function Manual() {
 			className={cn(
 				"border-button text-text mx-auto my-[5px] box-border h-auto w-[95%] max-w-[600px] rounded-lg border-2 bg-transparent px-0.5 py-0 text-center font-['Roboto_Mono',monospace] font-medium transition-all duration-100 ease-in-out disabled:opacity-30",
 				{
-					'border-error': showError,
-					'my-0 w-full [appearance:textfield] py-1 leading-tight [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none':
+					'border-error focus-visible:border-error': showError,
+					'focus-visible:border-button': mobileMode && !showError,
+					'my-0 w-full [appearance:textfield] py-1 leading-tight focus-visible:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none':
 						mobileMode,
 				},
 			)}
