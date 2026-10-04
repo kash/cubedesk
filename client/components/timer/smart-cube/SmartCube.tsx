@@ -51,6 +51,7 @@ export default function SmartCube() {
 	const macAddressResponseRef = useRef<((response: MacAddressResponse) => void) | null>(null);
 	const mountedRef = useRef(true);
 	const [reconnecting, setReconnecting] = useState(false);
+	const [hasGyro, setHasGyro] = useState(false);
 	const [connection] = useState(
 		() =>
 			new Connect({
@@ -62,6 +63,10 @@ export default function SmartCube() {
 						setPendingDevice(device);
 					}),
 				onInitialState: (facelets) => applyCubeState(facelets),
+				onOrientation: (orientation) => {
+					setHasGyro(true);
+					cube.current?.setOrientation(orientation);
+				},
 				requestMacAddress: (reason) =>
 					new Promise<MacAddressResponse>((resolve) => {
 						macAddressResponseRef.current?.({action: 'cancel'});
@@ -76,7 +81,9 @@ export default function SmartCube() {
 					if (mountedRef.current) {
 						setPendingDevice(null);
 						setMacAddressRequest(null);
+						setHasGyro(false);
 					}
+					cube.current?.resetOrientation();
 					setTimerParams({
 						smartCubeConnecting: false,
 						smartCubeConnected: false,
@@ -178,6 +185,8 @@ export default function SmartCube() {
 			canvasRef.current.width = 200;
 			canvasRef.current.height = 200;
 
+			// Keep the gyroscope calibration when the cube is rebuilt
+			const orientationBasis = cube.current?.orientationBasis ?? null;
 			cube.current?.dispose();
 			cube.current = new RubiksCube(
 				canvasRef.current,
@@ -187,6 +196,7 @@ export default function SmartCube() {
 				'400px',
 				state,
 			);
+			cube.current.orientationBasis = orientationBasis;
 		}
 
 		setTimeout(() => {
@@ -372,6 +382,11 @@ export default function SmartCube() {
 					hidden: !smartCubeConnected,
 					disabled: !!timeStartedAt,
 					onClick: markSolved,
+				},
+				{
+					text: 'Reset orientation',
+					hidden: !smartCubeConnected || !hasGyro,
+					onClick: () => cube.current?.resetOrientation(),
 				},
 				{
 					text: 'Disconnect',

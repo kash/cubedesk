@@ -126,6 +126,12 @@ export default class GAN extends SmartCube {
 			case 'BATTERY':
 				this.alertBatteryLevel(event.batteryLevel);
 				break;
+			case 'GYRO': {
+				// GAN axes point to R, B and U, swap them to point to R, U and F
+				const {x, y, z, w} = event.orientation;
+				this.alertOrientation({x, y: z, z: -y, w});
+				break;
+			}
 			case 'DISCONNECT':
 				this.alertDisconnected();
 				break;
