@@ -188,7 +188,7 @@ export default function DocsLayout(props: Props) {
 					<DocsNav path={page.path} />
 				</aside>
 
-				<main className="w-full max-w-2xl min-w-0 pt-10 pb-16 sm:pt-12">
+				<main className="mx-auto w-full max-w-2xl min-w-0 pt-10 pb-16 sm:pt-12">
 					<article className="relative z-10 flex flex-col gap-6">{children}</article>
 
 					{nextPage ? (
