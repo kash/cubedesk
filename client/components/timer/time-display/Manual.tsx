@@ -7,22 +7,20 @@ import {Input} from '@/components/ui/input';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
 import {cn} from '@/util/cn';
 import {useGeneral} from '@/util/hooks/useGeneral';
-import {useElementListener} from '@/util/hooks/useListener';
+import {useElementListener, useWindowListener} from '@/util/hooks/useListener';
 import {useSettings} from '@/util/hooks/useSettings';
 import {convertTimeStringToSeconds} from '@/util/time';
-import React, {ReactNode, useEffect, useRef, useState} from 'react';
+import {Backspace} from 'phosphor-react';
+import React, {ReactNode, useRef, useState} from 'react';
+import {createPortal} from 'react-dom';
 
-// The manual entry input is a bit smaller than the regular timer on mobile so everything fits above the keyboard
+// The manual entry display is a bit smaller than the regular timer on mobile so everything fits above the numpad
 const MOBILE_MANUAL_FONT_SIZE_MULTIPLIER = 0.7;
 
-// Elements that should keep focus when tapped instead of handing it back to the manual entry input
-const INTERACTIVE_SELECTOR =
-	'button, a, input, textarea, select, label, [role="dialog"], [role="menu"], [role="listbox"]';
-const OPEN_OVERLAY_SELECTOR =
-	'[role="dialog"], [role="menu"], [role="listbox"], [role="alertdialog"]';
+const NUMPAD_DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 /**
- * The numeric keyboard on mobile has no colon, so digit-only times longer than 4 digits are read
+ * Typing a colon on the numpad is optional, so digit-only times longer than 4 digits are read
  * like a stackmat display (e.g. "12345" -> "1:23.45").
  */
 function parseManualTime(value: string, requirePeriod: boolean) {
@@ -44,11 +42,9 @@ export default function Manual() {
 	const [error, setError] = useState(false);
 	const [plusTwo, setPlusTwo] = useState(false);
 	const [dnf, setDnf] = useState(false);
-	// Number inputs report an empty value for text they can't parse (e.g. "1:23")
-	const [badInput, setBadInput] = useState(false);
 
 	const context = useTimerContext();
-	const {scramble, disabled, hideTime} = context;
+	const {scramble, disabled, hideTime, mobileNumpadSlot} = context;
 
 	const mobileMode = useGeneral('mobile_mode');
 	const timerTimeSize = useSettings('timer_time_size');
@@ -57,59 +53,8 @@ export default function Manual() {
 
 	useElementListener(manualInput.current, 'keypress', handleKeyPress, [manualInput?.current]);
 
-	// On mobile, keep the keyboard open so times can be entered back to back
-	useEffect(() => {
-		if (!mobileMode || hideTime || disabled) {
-			return;
-		}
-
-		let refocusTimeout: ReturnType<typeof setTimeout> | null = null;
-
-		function nothingElseFocused() {
-			const active = document.activeElement;
-			const nothingFocused = !active || active === document.body;
-			return nothingFocused && !document.querySelector(OPEN_OVERLAY_SELECTOR);
-		}
-
-		function focusInput() {
-			manualInput.current?.focus({preventScroll: true});
-		}
-
-		function handleBlur() {
-			if (refocusTimeout) {
-				clearTimeout(refocusTimeout);
-			}
-			// Wait for whatever was tapped (menus, dialogs) to take focus first
-			refocusTimeout = setTimeout(() => {
-				if (nothingElseFocused()) {
-					focusInput();
-				}
-			}, 150);
-		}
-
-		// Tapping empty space should bring the keyboard back. iOS only opens the keyboard when focus
-		// happens during a user gesture, so this is done synchronously in the click handler.
-		function handleDocumentClick(e: MouseEvent) {
-			const target = e.target as Element | null;
-			if (target?.closest(INTERACTIVE_SELECTOR) || !nothingElseFocused()) {
-				return;
-			}
-			focusInput();
-		}
-
-		const input = manualInput.current;
-		focusInput();
-		input?.addEventListener('blur', handleBlur);
-		document.addEventListener('click', handleDocumentClick);
-
-		return () => {
-			if (refocusTimeout) {
-				clearTimeout(refocusTimeout);
-			}
-			input?.removeEventListener('blur', handleBlur);
-			document.removeEventListener('click', handleDocumentClick);
-		};
-	}, [mobileMode, hideTime, disabled]);
+	// The on-screen numpad replaces the native keyboard on mobile, but hardware keyboards should still work
+	useWindowListener('keydown', handleMobileKeyDown);
 
 	function handleKeyPress(e) {
 		if (e.key !== 'Enter') {
@@ -150,14 +95,41 @@ export default function Manual() {
 
 		setManualTime('');
 		setError(false);
-		setBadInput(false);
 		setPlusTwo(false);
 		setDnf(false);
 	}
 
-	function handleManualEntryChange(e) {
-		const val = e.target.value;
+	function handleMobileKeyDown(e: KeyboardEvent) {
+		const target = e.target as HTMLElement | null;
+		if (
+			!mobileMode ||
+			disabled ||
+			e.metaKey ||
+			e.ctrlKey ||
+			e.altKey ||
+			target?.closest('input, textarea, select, [contenteditable="true"]') ||
+			document.querySelector('[role="dialog"], [role="alertdialog"], [role="menu"]')
+		) {
+			return;
+		}
 
+		if (/^[\d.:]$/.test(e.key)) {
+			e.preventDefault();
+			updateManualTime(manualTime + e.key);
+		} else if (e.key === 'Backspace') {
+			e.preventDefault();
+			updateManualTime(manualTime.slice(0, -1));
+		} else if (e.key === 'Enter') {
+			e.preventDefault();
+			addManualTime();
+		}
+	}
+
+	function handleManualEntryChange(e) {
+		updateManualTime(e.target.value);
+	}
+
+	function updateManualTime(val: string) {
 		let manualEntryErr = false;
 		let time;
 		try {
@@ -172,12 +144,6 @@ export default function Manual() {
 
 		setManualTime(val);
 		setError(manualEntryErr);
-		setBadInput(!!e.target.validity?.badInput);
-	}
-
-	// Keeps the input focused (and the keyboard open) when tapping the mobile buttons
-	function keepInputFocused(e: React.PointerEvent | React.MouseEvent) {
-		e.preventDefault();
 	}
 
 	if (hideTime) {
@@ -187,7 +153,61 @@ export default function Manual() {
 	const fontSize = mobileMode
 		? timerTimeSize * MOBILE_FONT_SIZE_MULTIPLIER * MOBILE_MANUAL_FONT_SIZE_MULTIPLIER
 		: timerTimeSize;
-	const showError = (error && !!manualTime) || badInput;
+	const showError = error && !!manualTime;
+
+	const inputClassName = cn(
+		"border-button text-text mx-auto my-[5px] box-border h-auto w-[95%] max-w-[600px] rounded-lg border-2 bg-transparent px-0.5 py-0 text-center font-['Roboto_Mono',monospace] font-medium transition-all duration-100 ease-in-out disabled:opacity-30",
+		{
+			'border-error focus-visible:border-error': showError,
+		},
+	);
+	const inputStyle = {
+		fontSize: fontSize + 'px',
+		fontFamily: timerFontFamily + ', monospace',
+	};
+
+	if (mobileMode) {
+		// Shown instead of a real input so the native keyboard never opens
+		const display = (
+			<div
+				role="textbox"
+				aria-label="Manual solve time"
+				aria-readonly
+				aria-invalid={showError}
+				aria-disabled={disabled}
+				style={{...inputStyle, minHeight: fontSize * 1.25 + 8 + 'px'}}
+				className={cn(
+					inputClassName,
+					'my-0 flex w-full items-center justify-center py-1 leading-tight',
+					{
+						'opacity-30': disabled,
+					},
+				)}
+			>
+				{manualTime}
+			</div>
+		);
+
+		const numpad = (
+			<Numpad
+				disabled={disabled}
+				plusTwo={plusTwo}
+				dnf={dnf}
+				onKey={(key) => updateManualTime(manualTime + key)}
+				onBackspace={() => updateManualTime(manualTime.slice(0, -1))}
+				onTogglePlusTwo={() => setPlusTwo(!plusTwo)}
+				onToggleDnf={() => setDnf(!dnf)}
+				onSubmit={addManualTime}
+			/>
+		);
+
+		return (
+			<div className="box-border w-full px-4">
+				{display}
+				{mobileNumpadSlot ? createPortal(numpad, mobileNumpadSlot) : numpad}
+			</div>
+		);
+	}
 
 	const input: ReactNode = (
 		<Input
@@ -195,70 +215,15 @@ export default function Manual() {
 			aria-label="Manual solve time"
 			aria-invalid={showError}
 			disabled={disabled}
-			// On iOS, a number input opens the numbers layout of the keyboard, which (unlike the
-			// numeric/decimal keypads) has a native submit key
-			type={mobileMode ? 'number' : 'text'}
-			step={mobileMode ? 'any' : undefined}
-			enterKeyHint={mobileMode ? 'send' : undefined}
 			autoComplete="off"
 			autoCorrect="off"
 			spellCheck={false}
-			style={{
-				fontSize: fontSize + 'px',
-				fontFamily: timerFontFamily + ', monospace',
-			}}
+			style={inputStyle}
 			onChange={handleManualEntryChange}
 			value={manualTime}
-			className={cn(
-				"border-button text-text mx-auto my-[5px] box-border h-auto w-[95%] max-w-[600px] rounded-lg border-2 bg-transparent px-0.5 py-0 text-center font-['Roboto_Mono',monospace] font-medium transition-all duration-100 ease-in-out disabled:opacity-30",
-				{
-					'border-error focus-visible:border-error': showError,
-					'focus-visible:border-button': mobileMode && !showError,
-					'my-0 w-full [appearance:textfield] py-1 leading-tight focus-visible:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none':
-						mobileMode,
-				},
-			)}
+			className={inputClassName}
 		/>
 	);
-
-	if (mobileMode) {
-		return (
-			// The form lets the keyboard's submit key save the time
-			<form
-				className="box-border flex w-full flex-col gap-2 px-4"
-				onSubmit={(e) => {
-					e.preventDefault();
-					addManualTime();
-				}}
-			>
-				{input}
-				<div className="grid w-full grid-cols-2 gap-2">
-					<Button
-						variant={plusTwo ? 'default' : 'outline'}
-						size="sm"
-						disabled={disabled}
-						aria-pressed={plusTwo}
-						onPointerDown={keepInputFocused}
-						onMouseDown={keepInputFocused}
-						onClick={() => setPlusTwo(!plusTwo)}
-					>
-						+2
-					</Button>
-					<Button
-						variant={dnf ? 'default' : 'outline'}
-						size="sm"
-						disabled={disabled}
-						aria-pressed={dnf}
-						onPointerDown={keepInputFocused}
-						onMouseDown={keepInputFocused}
-						onClick={() => setDnf(!dnf)}
-					>
-						DNF
-					</Button>
-				</div>
-			</form>
-		);
-	}
 
 	return (
 		<div>
@@ -266,6 +231,121 @@ export default function Manual() {
 			<StartInstructions>
 				Manually enter time. Append "+2" or enter "DNF" if needed
 			</StartInstructions>
+		</div>
+	);
+}
+
+interface NumpadProps {
+	disabled?: boolean;
+	plusTwo: boolean;
+	dnf: boolean;
+	onKey: (key: string) => void;
+	onBackspace: () => void;
+	onTogglePlusTwo: () => void;
+	onToggleDnf: () => void;
+	onSubmit: () => void;
+}
+
+function Numpad(props: NumpadProps) {
+	const {disabled, plusTwo, dnf, onKey, onBackspace, onTogglePlusTwo, onToggleDnf, onSubmit} =
+		props;
+
+	const keyClass = 'h-12 text-xl font-medium';
+
+	return (
+		<div className="box-border grid w-full grid-cols-4 gap-2 px-4">
+			{NUMPAD_DIGITS.slice(0, 3).map((digit) => (
+				<Button
+					key={digit}
+					variant="outline"
+					className={keyClass}
+					disabled={disabled}
+					onClick={() => onKey(digit)}
+				>
+					{digit}
+				</Button>
+			))}
+			<Button
+				variant="outline"
+				className={keyClass}
+				disabled={disabled}
+				aria-label="Backspace"
+				onClick={onBackspace}
+			>
+				<Backspace className="size-6" />
+			</Button>
+			{NUMPAD_DIGITS.slice(3, 6).map((digit) => (
+				<Button
+					key={digit}
+					variant="outline"
+					className={keyClass}
+					disabled={disabled}
+					onClick={() => onKey(digit)}
+				>
+					{digit}
+				</Button>
+			))}
+			<Button
+				variant={plusTwo ? 'default' : 'outline'}
+				className={keyClass}
+				disabled={disabled}
+				aria-pressed={plusTwo}
+				onClick={onTogglePlusTwo}
+			>
+				+2
+			</Button>
+			{NUMPAD_DIGITS.slice(6, 9).map((digit) => (
+				<Button
+					key={digit}
+					variant="outline"
+					className={keyClass}
+					disabled={disabled}
+					onClick={() => onKey(digit)}
+				>
+					{digit}
+				</Button>
+			))}
+			<Button
+				variant={dnf ? 'default' : 'outline'}
+				className={keyClass}
+				disabled={disabled}
+				aria-pressed={dnf}
+				onClick={onToggleDnf}
+			>
+				DNF
+			</Button>
+			<Button
+				variant="outline"
+				className={keyClass}
+				disabled={disabled}
+				onClick={() => onKey(':')}
+			>
+				:
+			</Button>
+			<Button
+				variant="outline"
+				className={keyClass}
+				disabled={disabled}
+				onClick={() => onKey('0')}
+			>
+				0
+			</Button>
+			<Button
+				variant="outline"
+				className={keyClass}
+				disabled={disabled}
+				onClick={() => onKey('.')}
+			>
+				.
+			</Button>
+			<Button
+				className={keyClass}
+				disabled={disabled}
+				aria-label="Save time"
+				onClick={onSubmit}
+			>
+				Enter
+			</Button>
 		</div>
 	);
 }
