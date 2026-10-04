@@ -10,7 +10,6 @@ import {useGeneral} from '@/util/hooks/useGeneral';
 import {useElementListener} from '@/util/hooks/useListener';
 import {useSettings} from '@/util/hooks/useSettings';
 import {convertTimeStringToSeconds} from '@/util/time';
-import {Check} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 
 // The manual entry input is a bit smaller than the regular timer on mobile so everything fits above the keyboard
@@ -45,6 +44,8 @@ export default function Manual() {
 	const [error, setError] = useState(false);
 	const [plusTwo, setPlusTwo] = useState(false);
 	const [dnf, setDnf] = useState(false);
+	// Number inputs report an empty value for text they can't parse (e.g. "1:23")
+	const [badInput, setBadInput] = useState(false);
 
 	const context = useTimerContext();
 	const {scramble, disabled, hideTime} = context;
@@ -149,6 +150,7 @@ export default function Manual() {
 
 		setManualTime('');
 		setError(false);
+		setBadInput(false);
 		setPlusTwo(false);
 		setDnf(false);
 	}
@@ -170,6 +172,7 @@ export default function Manual() {
 
 		setManualTime(val);
 		setError(manualEntryErr);
+		setBadInput(!!e.target.validity?.badInput);
 	}
 
 	// Keeps the input focused (and the keyboard open) when tapping the mobile buttons
@@ -184,7 +187,7 @@ export default function Manual() {
 	const fontSize = mobileMode
 		? timerTimeSize * MOBILE_FONT_SIZE_MULTIPLIER * MOBILE_MANUAL_FONT_SIZE_MULTIPLIER
 		: timerTimeSize;
-	const showError = error && !!manualTime;
+	const showError = (error && !!manualTime) || badInput;
 
 	const input: ReactNode = (
 		<Input
@@ -192,8 +195,11 @@ export default function Manual() {
 			aria-label="Manual solve time"
 			aria-invalid={showError}
 			disabled={disabled}
-			inputMode={mobileMode ? 'decimal' : undefined}
-			enterKeyHint={mobileMode ? 'done' : undefined}
+			// On iOS, a number input opens the numbers layout of the keyboard, which (unlike the
+			// numeric/decimal keypads) has a native submit key
+			type={mobileMode ? 'number' : 'text'}
+			step={mobileMode ? 'any' : undefined}
+			enterKeyHint={mobileMode ? 'send' : undefined}
 			autoComplete="off"
 			autoCorrect="off"
 			spellCheck={false}
@@ -207,20 +213,25 @@ export default function Manual() {
 				"border-button text-text mx-auto my-[5px] box-border h-auto w-[95%] max-w-[600px] rounded-lg border-2 bg-transparent px-0.5 py-0 text-center font-['Roboto_Mono',monospace] font-medium transition-all duration-100 ease-in-out disabled:opacity-30",
 				{
 					'border-error': showError,
-					'my-0 w-full py-1 leading-tight': mobileMode,
+					'my-0 w-full [appearance:textfield] py-1 leading-tight [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none':
+						mobileMode,
 				},
 			)}
 		/>
 	);
 
 	if (mobileMode) {
-		const saveDisabled =
-			disabled || (showError && !(dnf && !manualTime.trim())) || (!manualTime && !dnf);
-
 		return (
-			<div className="box-border flex w-full flex-col gap-2 px-4">
+			// The form lets the keyboard's submit key save the time
+			<form
+				className="box-border flex w-full flex-col gap-2 px-4"
+				onSubmit={(e) => {
+					e.preventDefault();
+					addManualTime();
+				}}
+			>
 				{input}
-				<div className="grid w-full grid-cols-3 gap-2">
+				<div className="grid w-full grid-cols-2 gap-2">
 					<Button
 						variant={plusTwo ? 'default' : 'outline'}
 						size="sm"
@@ -243,20 +254,8 @@ export default function Manual() {
 					>
 						DNF
 					</Button>
-					<Button
-						variant="default"
-						size="sm"
-						disabled={saveDisabled}
-						aria-label="Save time"
-						onPointerDown={keepInputFocused}
-						onMouseDown={keepInputFocused}
-						onClick={addManualTime}
-					>
-						<Check weight="bold" />
-						Save
-					</Button>
 				</div>
-			</div>
+			</form>
 		);
 	}
 
