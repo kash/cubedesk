@@ -28,7 +28,6 @@ export { MatchLobbySchema } from './MatchLobby.schema';
 export { MatchParticipantSchema } from './MatchParticipant.schema';
 export { ChatMessageSchema } from './ChatMessage.schema';
 export { SmartDeviceSchema } from './SmartDevice.schema';
-export { SolveMethodStepSchema } from './SolveMethodStep.schema';
 export { BadgeTypeSchema } from './BadgeType.schema';
 export { BadgeSchema } from './Badge.schema';
 export { TimerBackgroundSchema } from './TimerBackground.schema';

@@ -27,16 +27,13 @@ export function sanitizeSolve<T extends SanitizableSolve>(s: T): T {
 		solve.session_id = null;
 	}
 
+	// Unset rather than 0, which costs nothing to store
 	if (!solve.inspection_time) {
-		solve.inspection_time = 0;
+		solve.inspection_time = null;
 	}
 
 	if (!solve.is_smart_cube) {
 		solve.is_smart_cube = false;
-	}
-
-	if (!solve.smart_put_down_time) {
-		solve.smart_put_down_time = 0;
 	}
 
 	solve.from_timer = true;

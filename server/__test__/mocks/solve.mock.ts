@@ -16,7 +16,6 @@ export const SolveMock = {
 	smart_turn_count: null,
 	share_code: null,
 	smart_turns: null,
-	smart_put_down_time: 0,
 	inspection_time: 0,
 	smart_device: null,
 	solve_method_steps: null,

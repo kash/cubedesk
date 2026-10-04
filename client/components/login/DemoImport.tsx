@@ -107,7 +107,6 @@ export function DemoSolveImportDialog({
 				is_smart_cube: solve.is_smart_cube,
 				smart_turns: solve.smart_turns,
 				smart_turn_count: solve.smart_turn_count,
-				smart_put_down_time: solve.smart_put_down_time,
 			})),
 			destination:
 				pending.mode === 'signup'

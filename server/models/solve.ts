@@ -33,7 +33,6 @@ export function getSolveByShareCode(shareCode) {
 			top_average_5: true,
 			solve_views: true,
 			smart_device: true,
-			solve_method_steps: true,
 		},
 	});
 }
@@ -61,7 +60,6 @@ export function getSolve(id) {
 			top_average_5: true,
 			smart_device: true,
 			solve_views: true,
-			solve_method_steps: true,
 		},
 	});
 }
@@ -195,26 +193,16 @@ export function bulkDnfSolves(userId: string, solveIds: string[]): Promise<numbe
 	`;
 }
 
-export async function bulkPlusTwoSolves(userId: string, solveIds: string[]): Promise<number> {
-	const plusTwoSolves = getPrisma().$executeRaw`
+export function bulkPlusTwoSolves(userId: string, solveIds: string[]): Promise<number> {
+	// A DNF stays a DNF, so its time remains -1
+	return getPrisma().$executeRaw`
         UPDATE
             solve
         SET plus_two = TRUE,
-            "time" = raw_time + 2
+            "time" = CASE WHEN dnf THEN -1 ELSE raw_time + 2 END
 		WHERE user_id = ${userId}
 		  	AND id IN (${Prisma.join(solveIds)})
 	`;
-	const updateTime = getPrisma().$executeRaw`
-        UPDATE
-            solve
-        SET "time" = raw_time + 2
-		WHERE user_id = ${userId}
-		  	AND id IN (${Prisma.join(solveIds)})
-			AND dnf = FALSE
-	`;
-
-	const [updated] = await Promise.all([plusTwoSolves, updateTime]);
-	return updated;
 }
 
 export function bulkOkSolves(userId: string, solveIds: string[]): Promise<number> {

@@ -2,6 +2,7 @@ import CopyText from '@/components/common/CopyText';
 import {STEP_NAME_MAP} from '@/components/solve-info/util/consts';
 import {getSolveStepsWithChildren} from '@/components/solve-info/util/solution';
 import {Separator} from '@/components/ui/separator';
+import {decodeSmartTurns} from '@/shared/smart_turns';
 import {SolveMethodStep} from '@/types/solve';
 import {Solve} from '@/types/solve';
 import {processSmartTurns} from '@/util/smart_scramble';
@@ -73,11 +74,16 @@ export default function SolutionInfo(props: Props) {
 		);
 	}
 
-	const turns = JSON.parse(solve.smart_turns ?? '[]');
-	const solution = processSmartTurns(
-		turns.map((turn) => turn.turn),
-		true,
-	).join(' ');
+	let solution = '';
+	try {
+		const turns = decodeSmartTurns(solve.smart_turns ?? '');
+		solution = processSmartTurns(
+			turns.map((turn) => turn.turn),
+			true,
+		).join(' ');
+	} catch {
+		// A solve whose turns can't be read still shows its steps
+	}
 
 	const stepsBody: ReactNode[] = [];
 	for (const step of steps) {

@@ -61,7 +61,6 @@ const solve = {
 	is_smart_cube: false,
 	smart_turns: null,
 	smart_turn_count: null,
-	smart_put_down_time: null,
 	demo_mode: true,
 	user_id: 'demo',
 	session_id: 'demo',

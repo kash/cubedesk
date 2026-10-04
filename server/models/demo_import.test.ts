@@ -2,11 +2,8 @@ import type {PrismaClient} from '@/generated/prisma/client';
 import {demoImportInput, importDemoSolves} from './demo_import';
 import {demoSolveRouter} from '@/server/trpc/routers/demo_solve';
 import type {TRPCContext} from '@/server/trpc/context';
-import {getSolveSteps} from '@/server/util/solve/solve_method';
-import {createSolveMethodSteps} from '@/server/models/solve_method_step';
 
-jest.mock('@/server/util/solve/solve_method', () => ({getSolveSteps: jest.fn(() => ({}))}));
-jest.mock('@/server/models/solve_method_step', () => ({createSolveMethodSteps: jest.fn()}));
+jest.mock('@/server/services/logger', () => ({logger: {warn: jest.fn()}}));
 
 const solve = {
 	id: '8f16a418-475a-4a30-a95a-5a283eea2242',
@@ -22,7 +19,6 @@ const solve = {
 	is_smart_cube: false,
 	smart_turns: null,
 	smart_turn_count: null,
-	smart_put_down_time: null,
 };
 const input = () =>
 	demoImportInput.parse({solves: [solve], destination: {kind: 'new', name: 'Demo 3x3 Session'}});
@@ -141,13 +137,19 @@ it('propagates write failures out of the transaction instead of reporting succes
 	expect(tx.setting.update).not.toHaveBeenCalled();
 });
 
-it('reconstructs smart-cube steps in the same transaction', async () => {
+it('stores smart-cube turns in the compact format', async () => {
 	const {db, tx} = setup();
 	const data = input();
-	data.solves[0] = {...solve, is_smart_cube: true, smart_turns: '[]'};
+	const turns = [
+		{turn: 'R', completedAt: '2026-10-04T13:37:35.636Z'},
+		{turn: "R'", completedAt: '2026-10-04T13:37:35.815Z'},
+	];
+	data.solves[0] = {...solve, is_smart_cube: true, smart_turns: JSON.stringify(turns)};
 	await importDemoSolves(db, 'user', data);
-	expect(getSolveSteps).toHaveBeenCalledWith([]);
-	expect(createSolveMethodSteps).toHaveBeenCalledWith(data.solves[0], {}, tx);
+	expect(tx.solve.createMany.mock.calls[0][0].data[0]).toMatchObject({
+		is_smart_cube: true,
+		smart_turns: "0R 179R'",
+	});
 });
 
 it('keeps the solve when smart-cube reconstruction fails', async () => {
@@ -155,10 +157,7 @@ it('keeps the solve when smart-cube reconstruction fails', async () => {
 	const data = input();
 	data.solves[0] = {...solve, is_smart_cube: true, smart_turns: 'invalid'};
 	await importDemoSolves(db, 'user', data);
-	expect(tx.solve.update).toHaveBeenCalledWith({
-		where: {id: solve.id},
-		data: {is_smart_cube: false},
-	});
+	expect(tx.solve.createMany.mock.calls[0][0].data[0]).toMatchObject({is_smart_cube: false});
 });
 
 it('requires authentication', async () => {

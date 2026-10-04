@@ -1,5 +1,8 @@
 import {getMatchingOLLState, getMatchingPLLState} from '@/server/util/solve/ll_states';
 import {getLLState, reverseTurns} from '@/server/util/solve/turns';
+import {logger} from '@/server/services/logger';
+import {decodeSmartTurns, encodeSmartTurns, RecordedSmartTurn} from '@/shared/smart_turns';
+import type {SolveMethodStep} from '@/types/solve';
 import {processSmartTurns, SmartTurn} from '@/util/smart_scramble';
 import Cube from 'cubejs';
 
@@ -17,7 +20,7 @@ export interface SolveStepData {
 	pllCaseKey?: string;
 }
 
-export function getSolveSteps(turns) {
+export function getSolveSteps(turns: RecordedSmartTurn[]) {
 	const SOLVED_STATE = 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB';
 
 	const cubejs = new Cube();
@@ -131,11 +134,11 @@ export function getSolveSteps(turns) {
 	const cornerIndices = [0, 2, 6, 8];
 	const edgeIndices = [1, 3, 5, 7];
 	let sides = ['U', 'R', 'F', 'L', 'D', 'B'];
-	let lastStepCompletedAt = new Date(turns[0].completedAt).getTime();
+	let lastStepCompletedAt = turns[0].completedAt;
 
 	for (const [index, turn] of turns.entries()) {
 		const move = turn.turn;
-		const completedAt = new Date(turn.completedAt).getTime();
+		const completedAt = turn.completedAt;
 
 		stepTurns.push(move);
 		cubejs.move(move);
@@ -207,8 +210,8 @@ export function getSolveSteps(turns) {
 
 		const firstTurnIndex = turnsIndex - (moves.length - 1);
 		if (firstTurnIndex > 0) {
-			const lastTime = new Date(turns[firstTurnIndex - 1].completedAt).getTime();
-			const firstTime = new Date(turns[firstTurnIndex].completedAt).getTime();
+			const lastTime = turns[firstTurnIndex - 1].completedAt;
+			const firstTime = turns[firstTurnIndex].completedAt;
 			recognitionTime = (firstTime - lastTime) / 1000;
 		}
 
@@ -256,7 +259,7 @@ export function getSolveSteps(turns) {
 
 		for (const [index, turn] of moves.entries()) {
 			const realTurn = turns[turnIndex + index];
-			const completedAt = new Date(realTurn.completedAt).getTime();
+			const completedAt = realTurn.completedAt;
 
 			if (index === 0) {
 				lastStepCompletedAt = completedAt;
@@ -534,4 +537,63 @@ export function getSolveSteps(turns) {
 	}
 
 	return steps;
+}
+
+// Steps are derived on read rather than stored, since they're fully determined by the recorded turns
+export function getSolveMethodSteps(solve: {
+	id: string;
+	created_at: Date;
+	is_smart_cube: boolean;
+	smart_turns: string | null;
+}): SolveMethodStep[] {
+	if (!solve.is_smart_cube || !solve.smart_turns) return [];
+
+	let steps: Record<string, SolveStepData | null>;
+	try {
+		steps = getSolveSteps(decodeSmartTurns(solve.smart_turns));
+	} catch {
+		return [];
+	}
+
+	const output: SolveMethodStep[] = [];
+	for (const [name, step] of Object.entries(steps)) {
+		if (!step) continue;
+
+		output.push({
+			id: `${solve.id}:${name}`,
+			solve_id: solve.id,
+			turn_count: step.turnCount || 0,
+			turns: step.turnsString,
+			total_time: step.time,
+			parent_name: step.parentName,
+			tps: step.tps,
+			skipped: step.skipped,
+			recognition_time: step.recognitionTime,
+			oll_case_key: step.ollCaseKey || null,
+			pll_case_key: step.pllCaseKey || null,
+			method_name: 'cfop',
+			step_index: step.index,
+			step_name: name,
+			created_at: solve.created_at,
+		});
+	}
+
+	return output;
+}
+
+// Re-encodes turns compactly (older clients still send JSON) and flags the solve as a regular one if its steps
+// can't be reconstructed, so solve pages never show a smart solve without a breakdown
+export function prepareSmartSolve<T extends {is_smart_cube?: boolean | null; smart_turns?: string | null}>(
+	solve: T,
+): T {
+	if (!solve.is_smart_cube) return solve;
+
+	try {
+		const turns = decodeSmartTurns(solve.smart_turns ?? '');
+		getSolveSteps(turns);
+		return {...solve, smart_turns: encodeSmartTurns(turns)};
+	} catch (e) {
+		logger.warn('Failed to reconstruct smart cube solve steps', {error: e});
+		return {...solve, is_smart_cube: false};
+	}
 }

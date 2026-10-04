@@ -1,9 +1,9 @@
-import Emblem from '@/components/common/Emblem';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
 import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
 import Battery from '@/components/timer/smart-cube/battery/Battery';
+import BluetoothStatus from '@/components/timer/smart-cube/bluetooth-status/BluetoothStatus';
 import Connect from '@/components/timer/smart-cube/bluetooth/connect';
 import {
 	MacAddressRequestReason,
@@ -18,11 +18,12 @@ import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
+import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
 import {useSettings} from '@/util/hooks/useSettings';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
-import {Bluetooth, DotsThree} from 'phosphor-react';
+import {DotsThree} from 'phosphor-react';
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
 
 const SOLVED_STATE = new Cube().asString();
@@ -245,7 +246,7 @@ export default function SmartCube() {
 				smart_device_id: smartDeviceId,
 				is_smart_cube: true,
 				smart_turn_count: smartTurns.length,
-				smart_turns: JSON.stringify(smartTurns),
+				smart_turns: encodeSmartTurns(smartTurns),
 			});
 		}
 
@@ -399,14 +400,19 @@ export default function SmartCube() {
 					disabled: !!timeStartedAt,
 					onClick: toggleManageSmartCubes,
 				},
+				{
+					text: 'Troubleshoot',
+					link: '/guides/bluetooth-troubleshooting',
+					newTab: true,
+				},
 			]}
 		/>
 	);
 	let battery: ReactNode = <Battery level={smartCubeBatteryLevel ?? 0} />;
 
-	let emblem: ReactNode;
+	let bluetoothStatus: ReactNode;
 	if (smartCubeConnecting) {
-		emblem = <Emblem small orange icon={<Bluetooth />} />;
+		bluetoothStatus = <BluetoothStatus status="connecting" />;
 		actionButton = (
 			<Button variant="secondary" disabled>
 				{'Connecting...'}
@@ -414,9 +420,9 @@ export default function SmartCube() {
 		);
 		battery = null;
 	} else if (smartCubeConnected) {
-		emblem = <Emblem small green icon={<Bluetooth />} />;
+		bluetoothStatus = <BluetoothStatus status="connected" />;
 	} else {
-		emblem = <Emblem small red icon={<Bluetooth />} />;
+		bluetoothStatus = <BluetoothStatus status="disconnected" />;
 		actionButton = (
 			<div className="flex flex-col items-center gap-1.5">
 				<Button variant="secondary" onClick={connectBluetooth}>
@@ -449,7 +455,7 @@ export default function SmartCube() {
 					</div>
 					<div className="flex flex-row items-center gap-2.5 sm:flex-col">
 						{battery}
-						{emblem}
+						{bluetoothStatus}
 						{dropdown}
 					</div>
 					{actionButton && <div className="sm:col-start-1">{actionButton}</div>}
