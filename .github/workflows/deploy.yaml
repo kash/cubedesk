@@ -56,6 +56,9 @@ jobs:
               uses: actions/setup-node@v5
               with:
                   node-version: "24"
+                  # Otherwise it sees packageManager in package.json and tries to cache with pnpm before
+                  # it's installed. The pnpm store is cached below instead.
+                  package-manager-cache: false
 
             # Corepack fetches the pnpm version pinned in package.json directly, which takes ~1s instead of
             # pnpm/action-setup's ~15s npm install. Node stops bundling Corepack after 24.
