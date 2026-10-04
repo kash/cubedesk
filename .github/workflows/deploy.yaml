@@ -37,11 +37,8 @@ on:
 
 jobs:
     deploy:
-        # CodeBuild-hosted runner inside the VPC: AWS credentials come from the CodeBuild project's role,
-        # and migrations can reach the private RDS instance
         runs-on:
             - codebuild-prod-${{ github.run_id }}-${{ github.run_attempt }}
-        # Queue back-to-back pushes instead of running two rollouts at once
         concurrency:
             group: deploy-${{ inputs.ECS_SERVICE }}
             cancel-in-progress: false
@@ -56,9 +53,8 @@ jobs:
               uses: actions/setup-node@v5
               with:
                   node-version: "24"
+                  package-manager-cache: false
 
-            # Corepack fetches the pnpm version pinned in package.json directly, which takes ~1s instead of
-            # pnpm/action-setup's ~15s npm install. Node stops bundling Corepack after 24.
             - name: Setup pnpm
               id: pnpm
               env:
@@ -98,30 +94,23 @@ jobs:
                   DIST_BASE_URI: ${{ inputs.DIST_BASE_URI }}
                   RESOURCES_BASE_URI: ${{ inputs.RESOURCES_BASE_URI }}
                   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-                  # Bundling every server dependency with source maps needs ~4.5 GB of heap, just over
-                  # Node's default limit, which makes the server build thrash instead of finishing
                   NODE_OPTIONS: --max-old-space-size=6144
               run: |
-                  # prisma.config.ts requires DATABASE_URL, but generating the client never connects
                   DATABASE_URL=postgresql://placeholder pnpm exec prisma generate
                   pnpm run build
-                  # Source maps are uploaded to Sentry during the build and must not be served
                   find dist build -name "*.map" -type f -delete
 
-            # Never --delete: bundle file names are unique per deploy, and older pages still reference previous bundles
             - name: Upload static assets to S3
               run: |
                   aws s3 sync dist s3://${{ inputs.S3_BUCKET }}/dist --cache-control max-age=604800
                   aws s3 sync public s3://${{ inputs.S3_BUCKET }}/static --size-only --cache-control max-age=604800
 
-            # The platform must match the task definition's CPU architecture
             - name: Build image
               run: |
                   docker build . --platform linux/arm64 --tag ${{ steps.image.outputs.uri }} \
                     --build-arg DEPLOYMENT_ID=${{ steps.release.outputs.deployment_id }} \
                     --build-arg RELEASE_NAME=${{ steps.release.outputs.name }}
 
-            # Without REDIS_URL the server serves HTTP but never starts Redis, Discord, cron, or sockets
             - name: Smoke test image
               run: |
                   docker run --detach --name smoke --publish 3000:3000 --env ENV=${{ inputs.ENV }} ${{ steps.image.outputs.uri }}
@@ -132,7 +121,6 @@ jobs:
             - name: Push image to Amazon ECR
               run: docker push ${{ steps.image.outputs.uri }}
 
-            # Env vars live in the task definition itself, so only the image changes per deploy
             - name: Download task definition
               run: |
                   aws ecs describe-task-definition --task-definition ${{ inputs.TASK_DEFINITION }} --query taskDefinition > task-definition.json
@@ -163,6 +151,4 @@ jobs:
                   service: ${{ inputs.ECS_SERVICE }}
                   cluster: ${{ inputs.ECS_CLUSTER }}
                   wait-for-service-stability: true
-                  # Without a cap the waiter backs off up to 120s between checks and notices a finished
-                  # rollout minutes late. 15s is the action's minimum.
                   wait-max-delay-seconds: 15
