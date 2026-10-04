@@ -26,17 +26,32 @@ export default function TimerFooter() {
 	}
 
 	let mobileHideButton: ReactNode = null;
-	if (mobileMode) {
+	if (mobileMode && hideMobileTimerFooter) {
+		mobileHideButton = (
+			<div className="flex h-9 w-full items-center justify-center">
+				<Button
+					variant="ghost"
+					size="icon"
+					className="text-text/70 hover:text-text hover:bg-transparent"
+					onClick={toggleMobileHideButton}
+					aria-label="Show footer"
+					title="Show footer"
+				>
+					<CaretUp size={24} />
+				</Button>
+			</div>
+		);
+	} else if (mobileMode) {
 		mobileHideButton = (
 			<div className="mb-2 flex h-9 w-full items-center justify-end">
 				<Button
 					variant="outline"
 					size="icon"
 					onClick={toggleMobileHideButton}
-					aria-label={hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
-					title={hideMobileTimerFooter ? 'Show footer' : 'Hide footer'}
+					aria-label="Hide footer"
+					title="Hide footer"
 				>
-					{hideMobileTimerFooter ? <CaretUp /> : <CaretDown />}
+					<CaretDown />
 				</Button>
 			</div>
 		);
