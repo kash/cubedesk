@@ -41,7 +41,7 @@ export default function Nav() {
 
 	const navClosed = navCollapsed || forceNavCollapsed;
 
-	if (focusMode && !mobileMode) {
+	if (focusMode) {
 		return null;
 	}
 

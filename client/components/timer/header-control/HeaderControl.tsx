@@ -114,8 +114,9 @@ export default function HeaderControl() {
 		/>
 	);
 
-	const timerTypeDropdown = !focusMode && !headerOptions.hideTimerType && !mobileMode && (
-		<div className="flex items-center gap-1">
+	// Shows which timer modes are on (inspection, manual entry)
+	const modeIndicators = !focusMode && (
+		<>
 			{inspection && !headerOptions.hideInspection && (
 				<TooltipProvider>
 					<TooltipRoot>
@@ -123,7 +124,7 @@ export default function HeaderControl() {
 							<span
 								tabIndex={0}
 								aria-label="Inspection is on"
-								className="text-text mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+								className="text-text focus-visible:outline-primary mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4"
 							>
 								<MagnifyingGlassPlus className="size-4" aria-hidden="true" />
 							</span>
@@ -139,7 +140,7 @@ export default function HeaderControl() {
 							<span
 								tabIndex={0}
 								aria-label="Manual entry is on"
-								className="text-text mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+								className="text-text focus-visible:outline-primary mr-3 inline-flex shrink-0 items-center rounded-sm opacity-40 focus-visible:outline-2 focus-visible:outline-offset-4"
 							>
 								<Keyboard className="size-4" aria-hidden="true" />
 							</span>
@@ -148,6 +149,12 @@ export default function HeaderControl() {
 					</TooltipRoot>
 				</TooltipProvider>
 			)}
+		</>
+	);
+
+	const timerTypeDropdown = !focusMode && !headerOptions.hideTimerType && !mobileMode && (
+		<div className="flex items-center gap-1">
+			{modeIndicators}
 			<SelectField
 				label="Timer input type"
 				value={timerType}
@@ -273,7 +280,7 @@ export default function HeaderControl() {
 							<Link
 								to="/about"
 								className={classNames(
-									'text-text/60 hover:text-text rounded-sm px-2 py-1 font-mono text-xs tracking-[0.2em] uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
+									'text-text/60 hover:text-text focus-visible:outline-primary rounded-sm px-2 py-1 font-mono text-xs tracking-[0.2em] uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-4',
 									{hidden: mobileMode},
 								)}
 							>
@@ -282,6 +289,9 @@ export default function HeaderControl() {
 						</div>
 					)}
 					<div className="flex flex-row items-start justify-end gap-2.5">
+						{mobileMode && (
+							<div className="flex h-9 items-center">{modeIndicators}</div>
+						)}
 						{timerTypeDropdown}
 						{topRightButton}
 						{headerOptions?.customHeadersRight}
