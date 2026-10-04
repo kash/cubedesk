@@ -25,8 +25,8 @@ export default function BluetoothTroubleshooting() {
 					2, GAN356 i 3, and Monster Go 3Ai.
 				</li>
 				<li>
-					<strong>MoYu smart cubes:</strong> WeiLong V10 AI and MoYu AI 2023 (WeiLong WRM
-					V10 AI).
+					<strong>MoYu smart cubes:</strong> WeiLong V10 AI, WeiLong V11 AI, and MoYu AI
+					2023 (WeiLong WRM V10 AI).
 				</li>
 				<li>
 					<strong>GoCube</strong> and <strong>Rubik&apos;s Connected</strong>
@@ -112,7 +112,8 @@ export default function BluetoothTroubleshooting() {
 			<DocHeading id="gan-mac-address">GAN and MoYu cubes ask for a MAC address</DocHeading>
 			<DocParagraph>
 				GAN and MoYu cubes encrypt their data, and CubeDesk needs the cube&apos;s MAC
-				address to read it. CubeDesk tries to read the address from the cube automatically,
+				address to read it. CubeDesk remembers the address after the first time a cube
+				connects. For a new cube, it tries to read the address from the cube automatically,
 				but most browsers block this by default. When that happens, you&apos;ll see{' '}
 				<strong>&quot;Turn on automatic cube detection&quot;</strong>. You only need to do
 				this once:
@@ -134,7 +135,8 @@ export default function BluetoothTroubleshooting() {
 			</DocList>
 			<DocParagraph>
 				With this setting on, CubeDesk also reconnects your cube automatically after you
-				reload the page.
+				reload the page. WeiLong V10 AI and V11 AI cubes can often connect without it,
+				because CubeDesk can usually work out their address from the cube&apos;s name.
 			</DocParagraph>
 
 			<DocSubheading>Entering the MAC address manually</DocSubheading>
@@ -179,11 +181,11 @@ export default function BluetoothTroubleshooting() {
 
 			<DocHeading id="orientation">The 3D cube is rotated the wrong way</DocHeading>
 			<DocParagraph>
-				GAN cubes with a gyroscope rotate the 3D cube as you move your real cube. If
-				it&apos;s pointing the wrong way, hold your cube the way you normally start a solve,
-				then choose <strong>Reset orientation</strong> from the <strong>…</strong> menu.
-				CubeDesk treats the way you&apos;re holding the cube at that moment as the default
-				view. This option only appears for cubes with a gyroscope.
+				GAN and MoYu cubes with a gyroscope rotate the 3D cube as you move your real cube.
+				If it&apos;s pointing the wrong way, hold your cube the way you normally start a
+				solve, then choose <strong>Reset orientation</strong> from the <strong>…</strong>{' '}
+				menu. CubeDesk treats the way you&apos;re holding the cube at that moment as the
+				default view. This option only appears for cubes with a gyroscope.
 			</DocParagraph>
 
 			<DocHeading id="timer-wont-start">The timer won&apos;t start</DocHeading>

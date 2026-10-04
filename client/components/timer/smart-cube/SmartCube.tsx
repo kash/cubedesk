@@ -41,8 +41,6 @@ export default function SmartCube() {
 
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const cube = useRef<RubiksCube | null>(null);
-	const turnIndex = useRef(0);
-	const turnInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 	const cubejs = useRef(new Cube());
 	const [pendingDevice, setPendingDevice] = useState<PendingSmartDevice | null>(null);
 	const confirmationRef = useRef<((confirmed: boolean) => void) | null>(null);
@@ -94,9 +92,6 @@ export default function SmartCube() {
 			}),
 	);
 
-	// Turn queue that an interval picks up every 50ms or so
-	const turns = useRef<string[]>([]);
-
 	const [scrambleCompletedAt, setScrambleCompletedAt] = useState<Date | null>(null);
 	const [inspectionTime, setInspectionTime] = useState(0);
 
@@ -128,10 +123,6 @@ export default function SmartCube() {
 			confirmationRef.current = null;
 			macAddressResponseRef.current?.({action: 'cancel'});
 			macAddressResponseRef.current = null;
-			if (turnInterval.current) {
-				clearInterval(turnInterval.current);
-				turnInterval.current = null;
-			}
 			cube.current?.dispose();
 			cube.current = null;
 
@@ -162,7 +153,6 @@ export default function SmartCube() {
 	// The cube's reported state replaces the assumed solved one, so tracking starts from reality
 	function applyCubeState(facelets: string) {
 		cubejs.current = Cube.fromString(facelets);
-		turns.current = [];
 		setTimerParams({
 			smartCurrentState: facelets,
 			smartSolvedState: SOLVED_STATE,
@@ -176,12 +166,6 @@ export default function SmartCube() {
 		const {default: RubiksCube, materials} =
 			await import('@/components/timer/smart-cube/visual');
 
-		if (turnInterval.current) {
-			clearInterval(turnInterval.current);
-			turnInterval.current = null;
-			turnIndex.current = 0;
-		}
-
 		if (canvasRef.current) {
 			canvasRef.current.width = 200;
 			canvasRef.current.height = 200;
@@ -192,17 +176,13 @@ export default function SmartCube() {
 			cube.current = new RubiksCube(
 				canvasRef.current,
 				materials.classic,
-				0,
+				window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 80,
 				'400px',
 				'400px',
 				state,
 			);
 			cube.current.orientationBasis = orientationBasis;
 		}
-
-		setTimeout(() => {
-			initCubeTurner();
-		}, 500);
 	}
 
 	function cubeIsSolved() {
@@ -234,9 +214,9 @@ export default function SmartCube() {
 		}
 	}
 
-	function addTurn(...t: string[]) {
+	function addTurn(turn: string) {
 		checkForStartAfterTurn();
-		turns.current = [...turns.current, ...t];
+		execTurn(turn);
 	}
 
 	function resetMoves(markSolved: boolean = false) {
@@ -262,29 +242,13 @@ export default function SmartCube() {
 		}, 50);
 	}
 
-	function initCubeTurner() {
-		// Keep turning even when the window isn't focused, otherwise the visual drifts from the real cube
-		turnInterval.current = setInterval(() => {
-			if (turns.current.length > turnIndex.current) {
-				execTurn();
-			} else if (turns.current.length) {
-				turns.current = [];
-				turnIndex.current = 0;
-			}
-		}, 60);
-	}
-
-	function execTurn() {
+	function execTurn(turn: string) {
 		if (!cube.current) {
 			return;
 		}
 
-		let turn = turns.current[turnIndex.current];
-
 		const prime = !(turn.indexOf("'") > -1);
-		turn = turn.replace(/'|\s/g, '');
-
-		switch (turn) {
+		switch (turn.replace(/'|\s/g, '')) {
 			case 'R': {
 				cube.current.R(prime);
 				break;
@@ -322,8 +286,6 @@ export default function SmartCube() {
 				break;
 			}
 		}
-
-		turnIndex.current += 1;
 	}
 
 	async function connectBluetooth() {
