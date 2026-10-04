@@ -99,7 +99,7 @@ function AppContent(props: Props) {
 				path={path ?? ''}
 				title={
 					path === '/' && !me
-						? "CubeDesk - Free Online Rubik's Cube Timer, 1v1 Races & Alg Trainer"
+						? "CubeDesk - Rubik's Cube Timer | 1v1 | Trainer"
 						: undefined
 				}
 			/>
