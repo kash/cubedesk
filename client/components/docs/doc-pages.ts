@@ -55,9 +55,9 @@ export const DOC_SECTIONS: DocSection[] = [
 			{
 				path: '/guides/bluetooth-troubleshooting',
 				navTitle: 'Troubleshooting Bluetooth',
-				title: 'Smart Cube Bluetooth Troubleshooting (GAN, GoCube, Giiker) | CubeDesk',
+				title: 'Smart Cube Bluetooth Troubleshooting (GAN, MoYu, GoCube, Giiker) | CubeDesk',
 				description:
-					"Fix smart cube and GAN Smart Timer connection problems on CubeDesk. Supported browsers, GAN MAC address setup, auto-reconnect, and how to recalibrate a cube that's out of sync.",
+					"Fix smart cube and GAN Smart Timer connection problems on CubeDesk. Supported browsers, GAN and MoYu MAC address setup, auto-reconnect, and how to recalibrate a cube that's out of sync.",
 				component: BluetoothTroubleshooting,
 			},
 			{

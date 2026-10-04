@@ -1,4 +1,4 @@
-// Minimal AES-128 block cipher, only what's needed for the GAN cube encryption scheme
+// Minimal AES-128 block cipher, only what's needed for the smart cube encryption scheme
 
 const SBOX = new Uint8Array(256);
 const INV_SBOX = new Uint8Array(256);

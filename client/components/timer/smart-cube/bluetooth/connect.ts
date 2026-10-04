@@ -1,11 +1,13 @@
 import GAN from '@/components/timer/smart-cube/bluetooth/gan';
 import Giiker from '@/components/timer/smart-cube/bluetooth/giiker';
+import MoYu from '@/components/timer/smart-cube/bluetooth/moyu';
 import Particula from '@/components/timer/smart-cube/bluetooth/particula';
 import SmartCube, {
 	SmartCubeCallbacks,
 	SmartCubeConnectionError,
 } from '@/components/timer/smart-cube/bluetooth/smart_cube';
 import {GAN_CIC_LIST} from '@/util/gan/cube';
+import {MOYU_CIC_LIST, MOYU32_NAME_PREFIX, MOYU32_SERVICE} from '@/util/moyu/cube';
 import {toastError} from '@/util/toast';
 
 const LAST_DEVICE_KEY = 'smart_cube_last_device_id';
@@ -21,6 +23,7 @@ const REQUEST_DEVICE_OPTIONS: RequestDeviceOptions = {
 		{namePrefix: 'AiCube'},
 		{namePrefix: 'GoCube'},
 		{namePrefix: 'Rubiks'},
+		{namePrefix: MOYU32_NAME_PREFIX},
 
 		// Giiker
 		{services: ['0000aadb-0000-1000-8000-00805f9b34fb']},
@@ -58,9 +61,11 @@ const REQUEST_DEVICE_OPTIONS: RequestDeviceOptions = {
 		'00000010-0000-fff7-fff6-fff5fff4fff0',
 
 		'00001805-0000-1000-8000-00805f9b34fb',
+
+		MOYU32_SERVICE,
 	],
-	// GAN cubes advertise their MAC address (needed for decryption) in manufacturer data
-	optionalManufacturerData: GAN_CIC_LIST,
+	// GAN and MoYu cubes advertise their MAC address (needed for decryption) in manufacturer data
+	optionalManufacturerData: [...GAN_CIC_LIST, ...MOYU_CIC_LIST],
 };
 
 type Attempt = {isActive: () => boolean; callbacks: SmartCubeCallbacks};
@@ -79,6 +84,9 @@ function createCube(device: BluetoothDevice, callbacks: SmartCubeCallbacks) {
 	}
 	if (name.startsWith('GoCube') || name.startsWith('Rubiks')) {
 		return new Particula(device, callbacks);
+	}
+	if (name.startsWith(MOYU32_NAME_PREFIX)) {
+		return new MoYu(device, callbacks);
 	}
 	return null;
 }

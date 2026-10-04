@@ -2,11 +2,17 @@ import CubeMesh from '@/components/timer/smart-cube/visual/core/CubeMesh';
 import {Axis} from '@/components/timer/smart-cube/visual/core/types';
 import * as THREE from 'three';
 
+type Turn = {
+	group: THREE.Object3D;
+	axis: Axis;
+	angle: number;
+	start: number;
+};
+
 export class RubiksCube {
 	private camera: THREE.PerspectiveCamera;
 	private scene: THREE.Scene;
 	private renderer: THREE.WebGLRenderer;
-	private locked: boolean = false;
 	private frame: number | null = null;
 	private lastFrameTime: number | null = null;
 	private spinAxis: THREE.Vector3 | null = null;
@@ -14,11 +20,13 @@ export class RubiksCube {
 	// Inverse of the orientation the cube was held in when calibrated, which maps to the default view
 	public orientationBasis: THREE.Quaternion | null = null;
 	private targetOrientation: THREE.Quaternion | null = null;
+	private turning: Turn | null = null;
 
 	constructor(
 		canvas: HTMLCanvasElement,
 		private materials: THREE.MeshBasicMaterial[],
-		private speed: number = 1000,
+		// How long a turn animates for in ms, a new turn cuts the previous one short so the view never lags further
+		private turnDuration: number = 80,
 		width: string = '100%',
 		height: string = '100%',
 		initState: string
@@ -104,156 +112,111 @@ export class RubiksCube {
 	}
 
 	// Front
-	public async F(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh && node.position.z === 1);
-		await this.rotate(cubes, Axis.z, clockwise, duration);
+	public F(clockwise: boolean = true) {
+		this.rotate((p) => p.z === 1, Axis.z, clockwise);
 	}
 
 	// Back
-	public async B(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh && node.position.z === -1);
-		await this.rotate(cubes, Axis.z, clockwise, duration);
+	public B(clockwise: boolean = true) {
+		this.rotate((p) => p.z === -1, Axis.z, clockwise);
 	}
 
 	// Up
-	public async U(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh && node.position.y === 1);
-		await this.rotate(cubes, Axis.y, clockwise, duration);
+	public U(clockwise: boolean = true) {
+		this.rotate((p) => p.y === 1, Axis.y, clockwise);
 	}
 
 	// Down
-	public async D(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh && node.position.y === -1);
-		await this.rotate(cubes, Axis.y, clockwise, duration);
+	public D(clockwise: boolean = true) {
+		this.rotate((p) => p.y === -1, Axis.y, clockwise);
 	}
 
 	// Left
-	public async L(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh && node.position.x === -1);
-		await this.rotate(cubes, Axis.x, clockwise, duration);
+	public L(clockwise: boolean = true) {
+		this.rotate((p) => p.x === -1, Axis.x, clockwise);
 	}
 
 	// Right
-	public async R(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh && node.position.x === 1);
-		await this.rotate(cubes, Axis.x, clockwise, duration);
+	public R(clockwise: boolean = true) {
+		this.rotate((p) => p.x === 1, Axis.x, clockwise);
 	}
 
 	// Front two layers
-	public async f(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter(
-			(node) => node instanceof CubeMesh && (node.position.z === 1 || node.position.z === 0)
-		);
-		await this.rotate(cubes, Axis.z, clockwise, duration);
+	public f(clockwise: boolean = true) {
+		this.rotate((p) => p.z !== -1, Axis.z, clockwise);
 	}
 
 	// Back two layers
-	public async b(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter(
-			(node) => node instanceof CubeMesh && (node.position.z === -1 || node.position.z === 0)
-		);
-		await this.rotate(cubes, Axis.z, clockwise, duration);
+	public b(clockwise: boolean = true) {
+		this.rotate((p) => p.z !== 1, Axis.z, clockwise);
 	}
 
 	// Up two layers
-	public async u(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter(
-			(node) => node instanceof CubeMesh && (node.position.y === 1 || node.position.y === 0)
-		);
-		await this.rotate(cubes, Axis.y, clockwise, duration);
+	public u(clockwise: boolean = true) {
+		this.rotate((p) => p.y !== -1, Axis.y, clockwise);
 	}
 
 	// Down two layers
-	public async d(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter(
-			(node) => node instanceof CubeMesh && (node.position.y === -1 || node.position.y === 0)
-		);
-		await this.rotate(cubes, Axis.y, clockwise, duration);
+	public d(clockwise: boolean = true) {
+		this.rotate((p) => p.y !== 1, Axis.y, clockwise);
 	}
 
 	// Left two layers
-	public async l(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter(
-			(node) => node instanceof CubeMesh && (node.position.x === -1 || node.position.x === 0)
-		);
-		await this.rotate(cubes, Axis.x, clockwise, duration);
+	public l(clockwise: boolean = true) {
+		this.rotate((p) => p.x !== 1, Axis.x, clockwise);
 	}
 
 	// Right two layers
-	public async r(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter(
-			(node) => node instanceof CubeMesh && (node.position.x === 1 || node.position.x === 0)
-		);
-		await this.rotate(cubes, Axis.x, clockwise, duration);
+	public r(clockwise: boolean = true) {
+		this.rotate((p) => p.x !== -1, Axis.x, clockwise);
 	}
 
 	// Cube on x axis
-	public async x(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh);
-		await this.rotate(cubes, Axis.x, clockwise, duration);
+	public x(clockwise: boolean = true) {
+		this.rotate(() => true, Axis.x, clockwise);
 	}
 
 	// Cube on y axis
-	public async y(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh);
-		await this.rotate(cubes, Axis.y, clockwise, duration);
+	public y(clockwise: boolean = true) {
+		this.rotate(() => true, Axis.y, clockwise);
 	}
 
 	// Cube on z axis
-	public async z(clockwise: boolean = true, duration: number = this.speed) {
-		const cubes = this.scene.children.filter((node) => node instanceof CubeMesh);
-		await this.rotate(cubes, Axis.z, clockwise, duration);
+	public z(clockwise: boolean = true) {
+		this.rotate(() => true, Axis.z, clockwise);
 	}
 
-	private async rotate(cubes: THREE.Object3D[], axis: Axis, clockwise: boolean = false, duration: number) {
-		if (!this.locked) {
-			const group = cubes.reduce((acc, cube) => acc.add(cube), new THREE.Object3D());
+	private rotate(inLayer: (position: THREE.Vector3) => boolean, axis: Axis, clockwise: boolean) {
+		// Settle the turn in progress first, so pieces are picked by where they end up and turns never queue
+		this.finishTurn();
 
-			this.scene.add(group);
+		const group = new THREE.Object3D();
+		group.add(
+			...this.scene.children.filter((node) => node instanceof CubeMesh && inLayer(node.position))
+		);
+		this.scene.add(group);
 
-			await this.rotateObject(group, axis, clockwise, duration);
+		this.turning = {
+			group,
+			axis,
+			angle: (clockwise ? -1 : 1) * (Math.PI / 2),
+			start: performance.now(),
+		};
+		if (this.turnDuration <= 0) this.finishTurn();
+	}
 
-			for (let i = group.children.length - 1; i >= 0; i--) {
-				const child = group.children[i];
-				this.scene.attach(child);
-				child.position.set(
-					Math.round(child.position.x),
-					Math.round(child.position.y),
-					Math.round(child.position.z)
-				);
-			}
+	private finishTurn() {
+		if (!this.turning) return;
 
-			this.scene.remove(group);
-			this.locked = false;
+		const {group, axis, angle} = this.turning;
+		this.turning = null;
+		group.rotation[axis] = angle;
+
+		for (const child of [...group.children]) {
+			this.scene.attach(child);
+			child.position.round();
 		}
-	}
-
-	private async rotateObject(
-		object: THREE.Object3D,
-		axis: Axis,
-		clockwise: boolean,
-		duration: number,
-		start?: number
-	) {
-		return new Promise((resolve) => {
-			const radians = (clockwise ? -1 : 1) * THREE.MathUtils.degToRad(90);
-
-			switch (axis) {
-				case Axis.x:
-					object.rotation.set(radians, 0, 0);
-					break;
-				case Axis.y:
-					object.rotation.set(0, radians, 0);
-					break;
-				case Axis.z:
-					object.rotation.set(0, 0, radians);
-					break;
-				default:
-					break;
-			}
-
-			resolve(null);
-		});
+		this.scene.remove(group);
 	}
 
 	private render = (time: number) => {
@@ -269,6 +232,17 @@ export class RubiksCube {
 			this.scene.quaternion.slerp(this.targetOrientation, 1 - Math.pow(0.75, elapsed * 60));
 		}
 		this.lastFrameTime = time;
+
+		if (this.turning) {
+			const progress = Math.max(0, (time - this.turning.start) / this.turnDuration);
+			if (progress >= 1) {
+				this.finishTurn();
+			} else {
+				// Ease out so most of the turn happens right away and the view feels as quick as the cube
+				const {group, axis, angle} = this.turning;
+				group.rotation[axis] = angle * (1 - Math.pow(1 - progress, 3));
+			}
+		}
 
 		this.renderer.render(this.scene, this.camera);
 	};

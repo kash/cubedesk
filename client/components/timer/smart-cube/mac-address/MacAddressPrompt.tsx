@@ -10,7 +10,7 @@ import {Field, FieldDescription, FieldLabel} from '@/components/ui/field';
 import {Input} from '@/components/ui/input';
 import {Separator} from '@/components/ui/separator';
 import {cn} from '@/util/cn';
-import {parseMacAddress} from '@/util/gan/cube';
+import {parseMacAddress} from '@/util/smart-cube/mac';
 import {CaretDown} from 'phosphor-react';
 import React, {ReactNode, useState} from 'react';
 
@@ -76,10 +76,10 @@ function ManualEntry({onSubmit}: {onSubmit: (macAddress: string) => void}) {
 					}}
 				>
 					<Field>
-						<FieldLabel htmlFor="gan-mac-address">MAC address</FieldLabel>
+						<FieldLabel htmlFor="cube-mac-address">MAC address</FieldLabel>
 						<div className="flex gap-2">
 							<Input
-								id="gan-mac-address"
+								id="cube-mac-address"
 								className="font-mono"
 								placeholder="AB:CD:EF:12:34:56"
 								autoComplete="off"
@@ -112,7 +112,7 @@ export default function MacAddressPrompt({reason, onRespond}: Props) {
 			<>
 				<DialogHeader
 					title="Couldn't find your cube"
-					description="CubeDesk couldn't read your GAN cube's MAC address, which it needs to connect."
+					description="CubeDesk couldn't read your cube's MAC address, which it needs to connect."
 				/>
 				<ol className="m-0 flex list-none flex-col gap-4 p-0">
 					<Step number={1}>Wake your cube up by turning any face</Step>
@@ -136,7 +136,7 @@ export default function MacAddressPrompt({reason, onRespond}: Props) {
 		<>
 			<DialogHeader
 				title="Turn on automatic cube detection"
-				description="GAN cubes need their MAC address to connect. Turn on this browser setting once, and CubeDesk will read it from your cube automatically and reconnect it when you reload."
+				description="Your cube needs its MAC address to connect. Turn on this browser setting once, and CubeDesk will read it from your cube automatically and reconnect it when you reload."
 			/>
 			<ol className="m-0 flex list-none flex-col gap-4 p-0">
 				<Step number={1}>

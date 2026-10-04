@@ -1,5 +1,5 @@
 // GAN smart timer connection, adapted from gan-web-bluetooth (MIT) by Andy Fedotov
-import EventStream from '@/util/gan/events';
+import EventStream from '@/util/smart-cube/events';
 
 const GAN_TIMER_SERVICE = '0000fff0-0000-1000-8000-00805f9b34fb';
 const GAN_TIMER_STATE_CHARACTERISTIC = '0000fff5-0000-1000-8000-00805f9b34fb';

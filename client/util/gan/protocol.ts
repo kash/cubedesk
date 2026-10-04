@@ -1,69 +1,22 @@
 // Protocol drivers for GAN smart cubes, adapted from gan-web-bluetooth (MIT) by Andy Fedotov
+import {
+	batteryEvent,
+	BitReader,
+	commandMessage,
+	FACES,
+	moveEvent,
+	SmartCubeCommand,
+	SmartCubeEvent,
+	SmartCubeMoveEvent,
+	SmartCubeProtocolDriver,
+	SmartCubeTransport,
+} from '@/util/smart-cube/protocol';
 
-/** REQUEST_RESET makes the cube treat its current state as solved, to fix drift in its move tracking */
-export type GanCubeCommand = 'REQUEST_FACELETS' | 'REQUEST_BATTERY' | 'REQUEST_RESET';
-
-export type GanCubeMoveEvent = {type: 'MOVE'; serial: number; move: string};
-
-/** Right-handed coordinate system with +X toward the red (R) face, +Y blue (B) and +Z white (U) */
-export type GanCubeOrientation = {x: number; y: number; z: number; w: number};
-
-export type GanCubeEvent =
-	| GanCubeMoveEvent
-	/** Facelets are in Kociemba order (URFDLB faces), the same format cubejs uses */
-	| {type: 'FACELETS'; serial: number; facelets: string}
-	/** Only sent by cubes with a gyroscope */
-	| {type: 'GYRO'; orientation: GanCubeOrientation}
-	| {type: 'BATTERY'; batteryLevel: number}
-	| {type: 'DISCONNECT'};
-
-export interface GanCubeTransport {
-	sendCommandMessage(message: Uint8Array): Promise<void>;
-	disconnect(): Promise<void>;
-}
-
-export interface GanProtocolDriver {
-	createCommandMessage(command: GanCubeCommand): Uint8Array;
-	handleStateEvent(conn: GanCubeTransport, message: Uint8Array): Promise<GanCubeEvent[]>;
-}
-
-const FACES = 'URFDLB';
 // Solved cube state sent with a reset command, the same for every protocol generation
 const SOLVED_STATE_PAYLOAD = [0x05, 0x39, 0x77, 0x00, 0x00, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab];
 // Face bit masks used by Gen3/Gen4 move events, and face codes used by their move history events
 const MOVE_FACE_MASKS = [2, 32, 8, 1, 16, 4];
 const HISTORY_FACE_CODES = [1, 5, 3, 0, 4, 2];
-
-/** Reads arbitrary length bit words from a message, bits are numbered from the MSB of the first byte */
-class BitReader {
-	constructor(private bytes: Uint8Array) {}
-
-	bits(start: number, length: number) {
-		let value = 0;
-		for (let i = start; i < start + length; i++) {
-			value = value * 2 + ((this.bytes[i >> 3] >> (7 - (i & 7))) & 1);
-		}
-		return value;
-	}
-
-	uintLE(start: number, byteLength: number) {
-		let value = 0;
-		for (let i = byteLength - 1; i >= 0; i--) {
-			value = value * 256 + this.bits(start + i * 8, 8);
-		}
-		return value;
-	}
-}
-
-function commandMessage(length: number, bytes: number[]) {
-	const msg = new Uint8Array(length);
-	msg.set(bytes);
-	return msg;
-}
-
-function moveEvent(serial: number, face: number, direction: number): GanCubeMoveEvent {
-	return {type: 'MOVE', serial, move: FACES[face] + (direction === 1 ? "'" : '')};
-}
 
 // Facelet indices of each corner (URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB) and edge
 // (UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR) position
@@ -142,29 +95,27 @@ function readFacelets(
 	return facelets.join('');
 }
 
-function batteryEvent(level: number): GanCubeEvent {
-	return {type: 'BATTERY', batteryLevel: Math.min(level, 100)};
-}
-
 /** Orientation quaternion as four 16 bit words in w, x, y, z order, each a sign bit and a 15 bit magnitude */
-function gyroEvent(msg: BitReader, start: number): GanCubeEvent {
+function gyroEvent(msg: BitReader, start: number): SmartCubeEvent {
 	const component = (index: number) => {
 		const value = msg.bits(start + index * 16, 16);
 		return ((value >> 15 ? -1 : 1) * (value & 0x7fff)) / 0x7fff;
 	};
+	// GAN axes point to R, B and U, swap them to point to R, U and F
 	return {
 		type: 'GYRO',
-		orientation: {w: component(0), x: component(1), y: component(2), z: component(3)},
+		orientation: {w: component(0), x: component(1), y: component(3), z: -component(2)},
 	};
 }
 
 /**
- * GAN Gen2 protocol: GAN Mini ui FreePlay, GAN12 ui (FreePlay), GAN356 i Carry (S), GAN356 i 3, Monster Go 3Ai
+ * GAN Gen2 protocol: GAN Mini ui FreePlay, GAN12 ui (FreePlay), GAN356 i Carry (S), GAN356 i 3, Monster Go 3Ai,
+ * MoYu AI 2023
  */
-export class GanGen2ProtocolDriver implements GanProtocolDriver {
+export class GanGen2ProtocolDriver implements SmartCubeProtocolDriver {
 	private lastSerial = -1;
 
-	createCommandMessage(command: GanCubeCommand) {
+	createCommandMessage(command: SmartCubeCommand) {
 		const bytes = {
 			REQUEST_FACELETS: [0x04],
 			REQUEST_BATTERY: [0x09],
@@ -173,9 +124,9 @@ export class GanGen2ProtocolDriver implements GanProtocolDriver {
 		return commandMessage(20, bytes[command]);
 	}
 
-	async handleStateEvent(conn: GanCubeTransport, message: Uint8Array) {
+	async handleStateEvent(conn: SmartCubeTransport, message: Uint8Array) {
 		const msg = new BitReader(message);
-		const events: GanCubeEvent[] = [];
+		const events: SmartCubeEvent[] = [];
 
 		switch (msg.bits(0, 4)) {
 			case 0x01:
@@ -220,20 +171,23 @@ export class GanGen2ProtocolDriver implements GanProtocolDriver {
  * Gen3 and Gen4 cubes send one event per move. Moves go through a FIFO buffer so that any gap in serial
  * numbers can be filled by requesting move history from the cube before the moves are emitted.
  */
-abstract class GanBufferedProtocolDriver implements GanProtocolDriver {
+abstract class GanBufferedProtocolDriver implements SmartCubeProtocolDriver {
 	private serial = -1;
 	private lastSerial = -1;
 	private lastMoveTime: number | null = null;
-	private moveBuffer: GanCubeMoveEvent[] = [];
+	private moveBuffer: SmartCubeMoveEvent[] = [];
 
 	protected abstract messageLength: number;
 	protected abstract moveHistoryCommand: number[];
 
-	abstract createCommandMessage(command: GanCubeCommand): Uint8Array;
-	abstract handleStateEvent(conn: GanCubeTransport, message: Uint8Array): Promise<GanCubeEvent[]>;
+	abstract createCommandMessage(command: SmartCubeCommand): Uint8Array;
+	abstract handleStateEvent(
+		conn: SmartCubeTransport,
+		message: Uint8Array,
+	): Promise<SmartCubeEvent[]>;
 
 	protected async handleMove(
-		conn: GanCubeTransport,
+		conn: SmartCubeTransport,
 		serial: number,
 		face: number,
 		direction: number,
@@ -266,10 +220,10 @@ abstract class GanBufferedProtocolDriver implements GanProtocolDriver {
 	}
 
 	protected async handleFacelets(
-		conn: GanCubeTransport,
+		conn: SmartCubeTransport,
 		serial: number,
 		facelets: string | null,
-	): Promise<GanCubeEvent[]> {
+	): Promise<SmartCubeEvent[]> {
 		if (!facelets) return [];
 		this.serial = serial & 0xff;
 		// The cube sends facelets periodically, use them to detect missed moves once turning has settled
@@ -284,7 +238,7 @@ abstract class GanBufferedProtocolDriver implements GanProtocolDriver {
 		return [{type: 'FACELETS', serial: this.serial, facelets}];
 	}
 
-	private async requestMoveHistory(conn: GanCubeTransport, serial: number, count: number) {
+	private async requestMoveHistory(conn: SmartCubeTransport, serial: number, count: number) {
 		// History responses are byte aligned and always start at an odd serial, so request an
 		// odd-aligned window with an even number of moves
 		if (serial % 2 === 0) serial = (serial - 1) & 0xff;
@@ -304,8 +258,8 @@ abstract class GanBufferedProtocolDriver implements GanProtocolDriver {
 	}
 
 	/** Emit buffered moves until a gap is found, then request history to fill the gap if conn is given */
-	private async evictMoveBuffer(conn?: GanCubeTransport) {
-		const evicted: GanCubeEvent[] = [];
+	private async evictMoveBuffer(conn?: SmartCubeTransport) {
+		const evicted: SmartCubeEvent[] = [];
 		while (this.moveBuffer.length > 0) {
 			const head = this.moveBuffer[0];
 			const diff = this.lastSerial === -1 ? 1 : (head.serial - this.lastSerial) & 0xff;
@@ -340,7 +294,7 @@ abstract class GanBufferedProtocolDriver implements GanProtocolDriver {
 		);
 	}
 
-	private injectMissedMove(move: GanCubeMoveEvent) {
+	private injectMissedMove(move: SmartCubeMoveEvent) {
 		if (this.moveBuffer.length > 0) {
 			const head = this.moveBuffer[0];
 			if (this.moveBuffer.some((e) => e.serial === move.serial)) return;
@@ -356,7 +310,7 @@ abstract class GanBufferedProtocolDriver implements GanProtocolDriver {
 		}
 	}
 
-	private async checkIfMoveMissed(conn: GanCubeTransport) {
+	private async checkIfMoveMissed(conn: SmartCubeTransport) {
 		const diff = (this.serial - this.lastSerial) & 0xff;
 		// Skip serial 0 to avoid a firmware bug with the facelets event at the 255 move counter
 		if (diff > 0 && this.serial !== 0) {
@@ -374,7 +328,7 @@ export class GanGen3ProtocolDriver extends GanBufferedProtocolDriver {
 	protected messageLength = 16;
 	protected moveHistoryCommand = [0x68, 0x03];
 
-	createCommandMessage(command: GanCubeCommand) {
+	createCommandMessage(command: SmartCubeCommand) {
 		const bytes = {
 			REQUEST_FACELETS: [0x68, 0x01],
 			REQUEST_BATTERY: [0x68, 0x07],
@@ -383,7 +337,10 @@ export class GanGen3ProtocolDriver extends GanBufferedProtocolDriver {
 		return commandMessage(16, bytes[command]);
 	}
 
-	async handleStateEvent(conn: GanCubeTransport, message: Uint8Array): Promise<GanCubeEvent[]> {
+	async handleStateEvent(
+		conn: SmartCubeTransport,
+		message: Uint8Array,
+	): Promise<SmartCubeEvent[]> {
 		const msg = new BitReader(message);
 		const magic = msg.bits(0, 8);
 		const dataLength = msg.bits(16, 8);
@@ -423,7 +380,7 @@ export class GanGen4ProtocolDriver extends GanBufferedProtocolDriver {
 	protected messageLength = 20;
 	protected moveHistoryCommand = [0xd1, 0x04];
 
-	createCommandMessage(command: GanCubeCommand) {
+	createCommandMessage(command: SmartCubeCommand) {
 		const bytes = {
 			REQUEST_FACELETS: [0xdd, 0x04, 0x00, 0xed, 0x00, 0x00],
 			REQUEST_BATTERY: [0xdd, 0x04, 0x00, 0xef, 0x00, 0x00],
@@ -432,7 +389,10 @@ export class GanGen4ProtocolDriver extends GanBufferedProtocolDriver {
 		return commandMessage(20, bytes[command]);
 	}
 
-	async handleStateEvent(conn: GanCubeTransport, message: Uint8Array): Promise<GanCubeEvent[]> {
+	async handleStateEvent(
+		conn: SmartCubeTransport,
+		message: Uint8Array,
+	): Promise<SmartCubeEvent[]> {
 		const msg = new BitReader(message);
 		const dataLength = msg.bits(8, 8);
 
