@@ -52,14 +52,26 @@ jobs:
             - name: Checkout Latest Repo
               uses: actions/checkout@v5
 
-            - name: Setup pnpm
-              uses: pnpm/action-setup@v6
-
-            - name: Setup Nodejs with pnpm caching
+            - name: Setup Nodejs
               uses: actions/setup-node@v5
               with:
                   node-version: "24"
-                  cache: pnpm
+
+            # Corepack fetches the pnpm version pinned in package.json directly, which takes ~1s instead of
+            # pnpm/action-setup's ~15s npm install. Node stops bundling Corepack after 24.
+            - name: Setup pnpm
+              id: pnpm
+              env:
+                  COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+              run: |
+                  corepack enable
+                  echo "store=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+            - name: Cache pnpm store
+              uses: actions/cache@v6
+              with:
+                  path: ${{ steps.pnpm.outputs.store }}
+                  key: pnpm-store-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml') }}
 
             - name: Generate release identifiers
               id: release
@@ -151,3 +163,6 @@ jobs:
                   service: ${{ inputs.ECS_SERVICE }}
                   cluster: ${{ inputs.ECS_CLUSTER }}
                   wait-for-service-stability: true
+                  # Without a cap the waiter backs off up to 120s between checks and notices a finished
+                  # rollout minutes late. 15s is the action's minimum.
+                  wait-max-delay-seconds: 15
