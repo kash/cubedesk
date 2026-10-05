@@ -1,13 +1,17 @@
 import GAN from '@/components/timer/smart-cube/bluetooth/gan';
 import Giiker from '@/components/timer/smart-cube/bluetooth/giiker';
 import MoYu from '@/components/timer/smart-cube/bluetooth/moyu';
+import MoYuMhc from '@/components/timer/smart-cube/bluetooth/moyu_mhc';
 import Particula from '@/components/timer/smart-cube/bluetooth/particula';
+import QiYi from '@/components/timer/smart-cube/bluetooth/qiyi';
 import SmartCube, {
 	SmartCubeCallbacks,
 	SmartCubeConnectionError,
 } from '@/components/timer/smart-cube/bluetooth/smart_cube';
 import {GAN_CIC_LIST} from '@/util/gan/cube';
 import {MOYU_CIC_LIST, MOYU32_NAME_PREFIX, MOYU32_SERVICE} from '@/util/moyu/cube';
+import {MHC_NAME_PREFIX, MHC_SERVICE} from '@/util/moyu/mhc';
+import {isQiyiCube, QIYI_CIC_LIST, QIYI_NAME_PREFIXES, QIYI_SERVICE} from '@/util/qiyi/cube';
 import {toastError} from '@/util/toast';
 
 const LAST_DEVICE_KEY = 'smart_cube_last_device_id';
@@ -16,6 +20,7 @@ const REQUEST_DEVICE_OPTIONS: RequestDeviceOptions = {
 	filters: [
 		{namePrefix: 'Gi'},
 		{namePrefix: 'Mi Smart Magic Cube'},
+		{namePrefix: 'Hi-'},
 		{namePrefix: 'GAN'},
 		{namePrefix: 'Gan'},
 		{namePrefix: 'gan'},
@@ -24,6 +29,8 @@ const REQUEST_DEVICE_OPTIONS: RequestDeviceOptions = {
 		{namePrefix: 'GoCube'},
 		{namePrefix: 'Rubiks'},
 		{namePrefix: MOYU32_NAME_PREFIX},
+		{namePrefix: MHC_NAME_PREFIX},
+		...QIYI_NAME_PREFIXES.map((namePrefix) => ({namePrefix})),
 
 		// Giiker
 		{services: ['0000aadb-0000-1000-8000-00805f9b34fb']},
@@ -63,16 +70,18 @@ const REQUEST_DEVICE_OPTIONS: RequestDeviceOptions = {
 		'00001805-0000-1000-8000-00805f9b34fb',
 
 		MOYU32_SERVICE,
+		MHC_SERVICE,
+		QIYI_SERVICE,
 	],
-	// GAN and MoYu cubes advertise their MAC address (needed for decryption) in manufacturer data
-	optionalManufacturerData: [...GAN_CIC_LIST, ...MOYU_CIC_LIST],
+	// GAN, MoYu and QiYi cubes advertise their MAC address (needed to talk to them) in manufacturer data
+	optionalManufacturerData: [...GAN_CIC_LIST, ...MOYU_CIC_LIST, ...QIYI_CIC_LIST],
 };
 
 type Attempt = {isActive: () => boolean; callbacks: SmartCubeCallbacks};
 
 function createCube(device: BluetoothDevice, callbacks: SmartCubeCallbacks) {
 	const name = device.name ?? '';
-	if (name.startsWith('Gi') || name.startsWith('Mi Smart Magic Cube')) {
+	if (name.startsWith('Gi') || name.startsWith('Mi Smart Magic Cube') || name.startsWith('Hi-')) {
 		return new Giiker(device, callbacks);
 	}
 	if (
@@ -87,6 +96,12 @@ function createCube(device: BluetoothDevice, callbacks: SmartCubeCallbacks) {
 	}
 	if (name.startsWith(MOYU32_NAME_PREFIX)) {
 		return new MoYu(device, callbacks);
+	}
+	if (name.startsWith(MHC_NAME_PREFIX)) {
+		return new MoYuMhc(device, callbacks);
+	}
+	if (isQiyiCube(name)) {
+		return new QiYi(device, callbacks);
 	}
 	return null;
 }

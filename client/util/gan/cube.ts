@@ -1,10 +1,17 @@
 // GAN smart cube connection, adapted from gan-web-bluetooth (MIT) by Andy Fedotov
+import {GAN_GEN1_DEVICE_INFO_SERVICE, GAN_GEN1_SERVICE, GanGen1Connection} from '@/util/gan/gen1';
 import {
 	GanGen2ProtocolDriver,
 	GanGen3ProtocolDriver,
 	GanGen4ProtocolDriver,
 } from '@/util/gan/protocol';
-import {connectSmartCube, EncryptionKey, SmartCubeProtocol} from '@/util/smart-cube/connection';
+import {
+	connectGatt,
+	connectSmartCube,
+	EncryptionKey,
+	SaltedCubeEncrypter,
+	SmartCubeProtocol,
+} from '@/util/smart-cube/connection';
 import {readMacAddress} from '@/util/smart-cube/mac';
 
 /** Company Identifier Codes GAN cubes may advertise with, every value from 0x0001 to 0xFF01 */
@@ -39,22 +46,25 @@ const GAN_PROTOCOLS: SmartCubeProtocol[] = [
 		commandCharacteristic: '28be4a4a-cd67-11e9-a32f-2a2ae2dbcce4',
 		stateCharacteristic: '28be4cb6-cd67-11e9-a32f-2a2ae2dbcce4',
 		// AiCube is the MoYu AI 2023, which uses the GAN Gen2 protocol with its own key
-		encryptionKey: (device) =>
-			device.name?.startsWith('AiCube') ? GAN_ENCRYPTION_KEYS[1] : GAN_ENCRYPTION_KEYS[0],
+		createEncrypter: (device, mac) =>
+			new SaltedCubeEncrypter(
+				device.name?.startsWith('AiCube') ? GAN_ENCRYPTION_KEYS[1] : GAN_ENCRYPTION_KEYS[0],
+				mac,
+			),
 		createDriver: () => new GanGen2ProtocolDriver(),
 	},
 	{
 		service: '8653000a-43e6-47b7-9cb0-5fc21d4ae340',
 		commandCharacteristic: '8653000c-43e6-47b7-9cb0-5fc21d4ae340',
 		stateCharacteristic: '8653000b-43e6-47b7-9cb0-5fc21d4ae340',
-		encryptionKey: () => GAN_ENCRYPTION_KEYS[0],
+		createEncrypter: (_device, mac) => new SaltedCubeEncrypter(GAN_ENCRYPTION_KEYS[0], mac),
 		createDriver: () => new GanGen3ProtocolDriver(),
 	},
 	{
 		service: '00000010-0000-fff7-fff6-fff5fff4fff0',
 		commandCharacteristic: '0000fff5-0000-1000-8000-00805f9b34fb',
 		stateCharacteristic: '0000fff6-0000-1000-8000-00805f9b34fb',
-		encryptionKey: () => GAN_ENCRYPTION_KEYS[0],
+		createEncrypter: (_device, mac) => new SaltedCubeEncrypter(GAN_ENCRYPTION_KEYS[0], mac),
 		createDriver: () => new GanGen4ProtocolDriver(),
 	},
 ];
@@ -66,4 +76,20 @@ export function readGanMacAddress(device: BluetoothDevice) {
 
 export function connectGanCube(device: BluetoothDevice, macAddress: string) {
 	return connectSmartCube(device, macAddress, GAN_PROTOCOLS);
+}
+
+/**
+ * Gen1 cubes don't need their MAC address, so they're checked for first. Resolves null for newer cubes, which
+ * are checked for before the Gen1 service like csTimer does.
+ */
+export async function connectGanGen1Cube(device: BluetoothDevice) {
+	const gatt = await connectGatt(device);
+	const services = new Set(
+		(await gatt.getPrimaryServices()).map((service) => service.uuid.toLowerCase()),
+	);
+	const isGen1 =
+		!GAN_PROTOCOLS.some((protocol) => services.has(protocol.service)) &&
+		services.has(GAN_GEN1_SERVICE) &&
+		services.has(GAN_GEN1_DEVICE_INFO_SERVICE);
+	return isGen1 ? GanGen1Connection.connect(device, gatt) : null;
 }

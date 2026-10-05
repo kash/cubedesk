@@ -1,4 +1,4 @@
-// Encrypted smart cube connection shared by GAN and MoYu cubes, adapted from gan-web-bluetooth (MIT) by Andy Fedotov
+// Encrypted smart cube connection shared by GAN, MoYu and QiYi cubes, adapted from gan-web-bluetooth (MIT) by Andy Fedotov
 import Aes128 from '@/util/smart-cube/aes';
 import EventStream from '@/util/smart-cube/events';
 import {parseMacAddress} from '@/util/smart-cube/mac';
@@ -11,23 +11,70 @@ import {
 
 export type EncryptionKey = {key: number[]; iv: number[]};
 
+export interface MessageEncrypter {
+	encrypt(data: Uint8Array): Uint8Array<ArrayBuffer>;
+	decrypt(data: Uint8Array): Uint8Array;
+}
+
+/** A connected cube that reports its moves and state as events */
+export interface CubeConnection {
+	/** Saved as the cube's device ID */
+	readonly id: string;
+	readonly events: EventStream<SmartCubeEvent>;
+	/** Resolves false if the cube doesn't support the command */
+	sendCubeCommand(command: SmartCubeCommand): Promise<boolean>;
+	/** Stop listening without closing the Bluetooth connection */
+	detach(): Promise<void>;
+}
+
+/** Web Bluetooth rejects a GATT operation while another is still in progress, so they have to run one at a time */
+export class GattQueue {
+	private pending: Promise<unknown> = Promise.resolve();
+
+	run<T>(operation: () => Promise<T>): Promise<T> {
+		const result = this.pending.then(operation);
+		// A failed operation shouldn't block the ones after it
+		this.pending = result.catch(() => {});
+		return result;
+	}
+}
+
+/** Connecting finds the cube far faster while actively scanning, about 2s instead of 5-10s on macOS */
+export async function connectGatt(device: BluetoothDevice) {
+	if (!device.gatt) throw new Error('Bluetooth GATT is unavailable for this device');
+	const scan = new AbortController();
+	device.watchAdvertisements?.({signal: scan.signal}).catch(() => {});
+	try {
+		return await device.gatt.connect();
+	} finally {
+		scan.abort();
+	}
+}
+
+/** mac is the cube's MAC address in AA:BB:CC:DD:EE:FF format */
 export type SmartCubeProtocol = {
 	service: string;
 	commandCharacteristic: string;
 	stateCharacteristic: string;
-	encryptionKey: (device: BluetoothDevice) => EncryptionKey;
-	createDriver: () => SmartCubeProtocolDriver;
+	createEncrypter: (device: BluetoothDevice, mac: string) => MessageEncrypter;
+	createDriver: (mac: string) => SmartCubeProtocolDriver;
 };
 
 /**
- * Messages are encrypted by running AES-128-CBC over a 16 byte chunk aligned to the start of the message,
- * then over another one aligned to the end of the message, each as a standalone single block
+ * GAN and MoYu messages are encrypted by running AES-128-CBC over a 16 byte chunk aligned to the start of the
+ * message, then over another one aligned to the end of the message, each as a standalone single block. The key
+ * is salted with the MAC address.
  */
-class CubeEncrypter {
+export class SaltedCubeEncrypter implements MessageEncrypter {
 	private aes: Aes128;
 	private iv: Uint8Array;
 
-	constructor({key, iv}: EncryptionKey, salt: number[]) {
+	constructor({key, iv}: EncryptionKey, mac: string) {
+		// MAC address bytes in reverse order are used to salt the encryption key
+		const salt = mac
+			.split(':')
+			.map((byte) => parseInt(byte, 16))
+			.reverse();
 		const saltedKey = new Uint8Array(key);
 		const saltedIv = new Uint8Array(iv);
 		for (let i = 0; i < 6; i++) {
@@ -67,18 +114,23 @@ class CubeEncrypter {
 	}
 }
 
-export class SmartCubeConnection implements SmartCubeTransport {
+export class SmartCubeConnection implements SmartCubeTransport, CubeConnection {
 	readonly events = new EventStream<SmartCubeEvent>();
-	private pendingWrite = Promise.resolve();
+	private queue = new GattQueue();
 
 	constructor(
 		private device: BluetoothDevice,
 		readonly mac: string,
 		private commandCharacteristic: BluetoothRemoteGATTCharacteristic,
 		private stateCharacteristic: BluetoothRemoteGATTCharacteristic,
-		private encrypter: CubeEncrypter,
+		private encrypter: MessageEncrypter,
 		private driver: SmartCubeProtocolDriver,
 	) {}
+
+	/** Cubes are saved with their MAC address as the device ID */
+	get id() {
+		return this.mac;
+	}
 
 	async start() {
 		this.device.addEventListener('gattserverdisconnected', this.onDisconnect);
@@ -116,15 +168,10 @@ export class SmartCubeConnection implements SmartCubeTransport {
 		await this.stateCharacteristic.stopNotifications().catch(() => {});
 	};
 
-	/** Writes are queued because Web Bluetooth rejects one while another is still in progress */
-	sendCommandMessage = (message: Uint8Array) => {
-		const write = this.pendingWrite.then(() => {
-			return this.commandCharacteristic.writeValue(this.encrypter.encrypt(message));
-		});
-		// A failed write shouldn't block the ones after it
-		this.pendingWrite = write.catch(() => {});
-		return write;
-	};
+	sendCommandMessage = (message: Uint8Array) =>
+		this.queue.run(() =>
+			this.commandCharacteristic.writeValue(this.encrypter.encrypt(message)),
+		);
 
 	/** Resolves false if the cube doesn't support the command */
 	sendCubeCommand = async (command: SmartCubeCommand) => {
@@ -151,22 +198,7 @@ export async function connectSmartCube(
 	const mac = parseMacAddress(macAddress);
 	if (!mac) throw new Error(`Invalid cube MAC address: ${macAddress}`);
 
-	// MAC address bytes in reverse order are used to salt the encryption key
-	const salt = mac
-		.split(':')
-		.map((byte) => parseInt(byte, 16))
-		.reverse();
-
-	if (!device.gatt) throw new Error('Bluetooth GATT is unavailable for this device');
-	// Connecting finds the cube far faster while actively scanning, about 2s instead of 5-10s on macOS
-	const scan = new AbortController();
-	device.watchAdvertisements?.({signal: scan.signal}).catch(() => {});
-	let gatt: BluetoothRemoteGATTServer;
-	try {
-		gatt = await device.gatt.connect();
-	} finally {
-		scan.abort();
-	}
+	const gatt = await connectGatt(device);
 	try {
 		const services = await gatt.getPrimaryServices();
 
@@ -179,8 +211,8 @@ export async function connectSmartCube(
 				mac,
 				await service.getCharacteristic(protocol.commandCharacteristic),
 				await service.getCharacteristic(protocol.stateCharacteristic),
-				new CubeEncrypter(protocol.encryptionKey(device), salt),
-				protocol.createDriver(),
+				protocol.createEncrypter(device, mac),
+				protocol.createDriver(mac),
 			);
 			await conn.start();
 			return conn;
