@@ -3,6 +3,7 @@ import DemoWarning from '@/components/layout/wrapper/DemoWarning';
 import TimerFooter from '@/components/timer/footer/TimerFooter';
 import HeaderControl from '@/components/timer/header-control/HeaderControl';
 import {initTimer} from '@/components/timer/helpers/init';
+import {smartCubeSelected} from '@/components/timer/helpers/util';
 import {listenForPbEvents} from '@/components/timer/helpers/pb';
 import {stopAllTimers} from '@/components/timer/helpers/timers';
 import KeyWatcher from '@/components/timer/key-watcher/KeyWatcher';
@@ -112,8 +113,9 @@ export default function Timer(props: TimerProps) {
 		}
 	}
 
+	const isSmart = smartCubeSelected(context);
 	let smartCubeVisual: ReactNode = null;
-	if (timerType === 'smart' && cubeType === '333') {
+	if (isSmart) {
 		smartCubeVisual = <SmartCube />;
 	}
 
@@ -138,8 +140,7 @@ export default function Timer(props: TimerProps) {
 		'-mt-[10vh]': context.focusMode && !mobileMode,
 	});
 	const mainTimeClass = classNames({
-		'flex w-[95%] max-w-[580px] flex-row items-center justify-between':
-			timerType === 'smart' && cubeType === '333',
+		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': isSmart,
 	});
 
 	const timeBar = (

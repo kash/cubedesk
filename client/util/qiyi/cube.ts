@@ -42,7 +42,7 @@ const QIYI_PROTOCOL: SmartCubeProtocol = {
 	commandCharacteristic: QIYI_CHARACTERISTIC,
 	stateCharacteristic: QIYI_CHARACTERISTIC,
 	createEncrypter: () => new QiyiEncrypter(),
-	createDriver: (mac) => new QiyiProtocolDriver(mac),
+	createDriver: (_device, mac) => new QiyiProtocolDriver(mac),
 };
 
 export function isQiyiCube(name: string) {

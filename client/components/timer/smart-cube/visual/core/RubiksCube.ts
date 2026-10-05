@@ -21,6 +21,8 @@ export class RubiksCube {
 	public orientationBasis: THREE.Quaternion | null = null;
 	private targetOrientation: THREE.Quaternion | null = null;
 	private turning: Turn | null = null;
+	// Cubie coordinate of the outer layers, cubies are 1 unit apart and centered on the origin
+	private outer: number;
 
 	constructor(
 		canvas: HTMLCanvasElement,
@@ -29,11 +31,17 @@ export class RubiksCube {
 		private turnDuration: number = 80,
 		width: string = '100%',
 		height: string = '100%',
-		initState: string
+		initState: string,
+		// Layers per side, 2 or 3 since the state is always a 3x3 facelets string
+		size: number = 3
 	) {
+		this.outer = (size - 1) / 2;
+
+		// Scale the view with the cube so every size appears the same size on screen
+		const scale = size / 3;
 		this.camera = new THREE.PerspectiveCamera();
-		this.camera.position.set(4, 4, 4);
-		this.camera.lookAt(0, -0.33, 0);
+		this.camera.position.set(4 * scale, 4 * scale, 4 * scale);
+		this.camera.lookAt(0, -0.33 * scale, 0);
 
 		this.scene = new THREE.Scene();
 		this.scene.add(...this.generateCubeCluster(initState));
@@ -113,62 +121,62 @@ export class RubiksCube {
 
 	// Front
 	public F(clockwise: boolean = true) {
-		this.rotate((p) => p.z === 1, Axis.z, clockwise);
+		this.rotate((p) => p.z === this.outer, Axis.z, clockwise);
 	}
 
 	// Back
 	public B(clockwise: boolean = true) {
-		this.rotate((p) => p.z === -1, Axis.z, clockwise);
+		this.rotate((p) => p.z === -this.outer, Axis.z, clockwise);
 	}
 
 	// Up
 	public U(clockwise: boolean = true) {
-		this.rotate((p) => p.y === 1, Axis.y, clockwise);
+		this.rotate((p) => p.y === this.outer, Axis.y, clockwise);
 	}
 
 	// Down
 	public D(clockwise: boolean = true) {
-		this.rotate((p) => p.y === -1, Axis.y, clockwise);
+		this.rotate((p) => p.y === -this.outer, Axis.y, clockwise);
 	}
 
 	// Left
 	public L(clockwise: boolean = true) {
-		this.rotate((p) => p.x === -1, Axis.x, clockwise);
+		this.rotate((p) => p.x === -this.outer, Axis.x, clockwise);
 	}
 
 	// Right
 	public R(clockwise: boolean = true) {
-		this.rotate((p) => p.x === 1, Axis.x, clockwise);
+		this.rotate((p) => p.x === this.outer, Axis.x, clockwise);
 	}
 
 	// Front two layers
 	public f(clockwise: boolean = true) {
-		this.rotate((p) => p.z !== -1, Axis.z, clockwise);
+		this.rotate((p) => p.z !== -this.outer, Axis.z, clockwise);
 	}
 
 	// Back two layers
 	public b(clockwise: boolean = true) {
-		this.rotate((p) => p.z !== 1, Axis.z, clockwise);
+		this.rotate((p) => p.z !== this.outer, Axis.z, clockwise);
 	}
 
 	// Up two layers
 	public u(clockwise: boolean = true) {
-		this.rotate((p) => p.y !== -1, Axis.y, clockwise);
+		this.rotate((p) => p.y !== -this.outer, Axis.y, clockwise);
 	}
 
 	// Down two layers
 	public d(clockwise: boolean = true) {
-		this.rotate((p) => p.y !== 1, Axis.y, clockwise);
+		this.rotate((p) => p.y !== this.outer, Axis.y, clockwise);
 	}
 
 	// Left two layers
 	public l(clockwise: boolean = true) {
-		this.rotate((p) => p.x !== 1, Axis.x, clockwise);
+		this.rotate((p) => p.x !== this.outer, Axis.x, clockwise);
 	}
 
 	// Right two layers
 	public r(clockwise: boolean = true) {
-		this.rotate((p) => p.x !== -1, Axis.x, clockwise);
+		this.rotate((p) => p.x !== -this.outer, Axis.x, clockwise);
 	}
 
 	// Cube on x axis
@@ -214,7 +222,8 @@ export class RubiksCube {
 
 		for (const child of [...group.children]) {
 			this.scene.attach(child);
-			child.position.round();
+			// Positions are whole or half units depending on the size, so snap to the nearest half
+			child.position.multiplyScalar(2).round().multiplyScalar(0.5);
 		}
 		this.scene.remove(group);
 	}
@@ -252,24 +261,28 @@ export class RubiksCube {
 		const faceMaterial = (face: string) => this.materials['RLUDFB'.indexOf(face)];
 		const state = /^[URFDLB]{54}$/.test(initState) ? initState : null;
 
+		// A 2x2 is the corners of the 3x3 state, so its cubies read the stickers of the 3x3 corner they stand for
+		const outer = this.outer;
+
 		const cubes: CubeMesh[] = [];
-		for (let z = -1; z < 2; z++) {
-			for (let y = -1; y < 2; y++) {
-				for (let x = -1; x < 2; x++) {
+		for (let pz = -outer; pz <= outer; pz++) {
+			for (let py = -outer; py <= outer; py++) {
+				for (let px = -outer; px <= outer; px++) {
+					const [x, y, z] = [Math.sign(px), Math.sign(py), Math.sign(pz)];
 					const materials = [...this.materials];
 					if (state) {
 						// Facelet indices follow the Kociemba layout, each face read row by row as seen from outside
-						if (x === 1) materials[0] = faceMaterial(state[9 + (1 - y) * 3 + (1 - z)]);
-						if (x === -1) materials[1] = faceMaterial(state[36 + (1 - y) * 3 + (z + 1)]);
-						if (y === 1) materials[2] = faceMaterial(state[(z + 1) * 3 + (x + 1)]);
-						if (y === -1) materials[3] = faceMaterial(state[27 + (1 - z) * 3 + (x + 1)]);
-						if (z === 1) materials[4] = faceMaterial(state[18 + (1 - y) * 3 + (x + 1)]);
-						if (z === -1) materials[5] = faceMaterial(state[45 + (1 - y) * 3 + (1 - x)]);
+						if (px === outer) materials[0] = faceMaterial(state[9 + (1 - y) * 3 + (1 - z)]);
+						if (px === -outer) materials[1] = faceMaterial(state[36 + (1 - y) * 3 + (z + 1)]);
+						if (py === outer) materials[2] = faceMaterial(state[(z + 1) * 3 + (x + 1)]);
+						if (py === -outer) materials[3] = faceMaterial(state[27 + (1 - z) * 3 + (x + 1)]);
+						if (pz === outer) materials[4] = faceMaterial(state[18 + (1 - y) * 3 + (x + 1)]);
+						if (pz === -outer) materials[5] = faceMaterial(state[45 + (1 - y) * 3 + (1 - x)]);
 					}
 
 					cubes.push(
 						new CubeMesh({
-							position: new THREE.Vector3(x, y, z),
+							position: new THREE.Vector3(px, py, pz),
 							materials
 						})
 					);

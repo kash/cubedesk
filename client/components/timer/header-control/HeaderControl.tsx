@@ -22,6 +22,7 @@ import {toggleSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
+import {isSmartCubeType} from '@/util/smart-cube/puzzle';
 import {useTheme} from '@/util/hooks/useTheme';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
 import screenfull from '@/util/vendor/screenfull';
@@ -167,7 +168,7 @@ export default function HeaderControl() {
 				options={[
 					{value: 'keyboard', text: 'Keyboard'},
 					{value: 'stackmat', text: 'StackMat'},
-					{value: 'smart', text: 'Smart Cube', disabled: cubeType !== '333'},
+					{value: 'smart', text: 'Smart Cube', disabled: !isSmartCubeType(cubeType)},
 					{value: 'gantimer', text: 'GAN Smart Timer'},
 				]}
 			/>

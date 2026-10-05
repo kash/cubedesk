@@ -2,12 +2,13 @@ import CopyText from '@/components/common/CopyText';
 import {getStore} from '@/components/store';
 import {setTimerParam} from '@/components/timer/helpers/params';
 import {resetScramble} from '@/components/timer/helpers/scramble';
-import {smartCubeSelected} from '@/components/timer/helpers/util';
+import {smartCubeMismatched, smartCubeSelected} from '@/components/timer/helpers/util';
 import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartScramble';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {MOBILE_SCRAMBLE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
-import {setSetting} from '@/db/settings/update';
+import {setCubeType, setSetting} from '@/db/settings/update';
+import {getCubeTypeName} from '@/util/cubes/util';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import classNames from 'classnames';
@@ -37,6 +38,7 @@ export default function TimerScramble() {
 		hideScramble,
 		timeStartedAt,
 		smartCubeNeedsSolve,
+		smartCubePuzzle,
 	} = context;
 	let scramble = context.scramble;
 	const lockedScramble = useSettings('locked_scramble');
@@ -124,7 +126,21 @@ export default function TimerScramble() {
 	);
 
 	// Is smart cube
-	if (isSmart && !timeStartedAt && smartCubeNeedsSolve) {
+	if (isSmart && !timeStartedAt && smartCubePuzzle && smartCubeMismatched(context)) {
+		const puzzleName = getCubeTypeName(smartCubePuzzle);
+		scrambleBody = (
+			<span className="text-text/60 [font-family:inherit] [line-height:inherit]">
+				Your smart cube is a {puzzleName}.{' '}
+				<Button
+					variant="link"
+					className="h-auto p-0 [font-size:inherit]"
+					onClick={() => setCubeType(smartCubePuzzle)}
+				>
+					Switch to {puzzleName}
+				</Button>
+			</span>
+		);
+	} else if (isSmart && !timeStartedAt && smartCubeNeedsSolve) {
 		scrambleBody = (
 			<span className="text-text/60 [font-family:inherit] [line-height:inherit]">
 				Solve cube to show scramble

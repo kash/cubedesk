@@ -2,6 +2,7 @@ import ActionMenu from '@/components/common/inputs/ActionMenu';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
 import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
+import {smartCubeMismatched} from '@/components/timer/helpers/util';
 import Battery from '@/components/timer/smart-cube/battery/Battery';
 import BluetoothStatus from '@/components/timer/smart-cube/bluetooth-status/BluetoothStatus';
 import Connect from '@/components/timer/smart-cube/bluetooth/connect';
@@ -18,9 +19,11 @@ import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
+import {setCubeType} from '@/db/settings/update';
 import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
 import {useSettings} from '@/util/hooks/useSettings';
+import {SMART_PUZZLES, SmartPuzzle} from '@/util/smart-cube/puzzle';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {DotsThree} from 'phosphor-react';
@@ -61,7 +64,7 @@ export default function SmartCube() {
 						confirmationRef.current = resolve;
 						setPendingDevice(device);
 					}),
-				onInitialState: (facelets) => applyCubeState(facelets),
+				onInitialState: (facelets, puzzleId) => applyCubeState(facelets, puzzleId),
 				onOrientation: (orientation) => {
 					setHasGyro(true);
 					cube.current?.setOrientation(orientation);
@@ -87,6 +90,7 @@ export default function SmartCube() {
 						smartCubeConnecting: false,
 						smartCubeConnected: false,
 						smartCubeNeedsSolve: false,
+						smartCubePuzzle: null,
 					});
 				},
 			}),
@@ -105,8 +109,11 @@ export default function SmartCube() {
 		smartSolvedState,
 		smartCubeConnected,
 		smartCubeNeedsSolve,
+		smartCubePuzzle,
+		cubeType,
 		timeStartedAt,
 	} = context;
+	const puzzle = SMART_PUZZLES[smartCubePuzzle ?? '333'];
 
 	useEffect(() => {
 		mountedRef.current = true;
@@ -138,7 +145,7 @@ export default function SmartCube() {
 			addTurn(turn);
 		}
 
-		const isSolved = cubejs.current.asString() === smartSolvedState;
+		const isSolved = cubeIsSolved();
 
 		if (isSolved && smartCubeNeedsSolve) {
 			// Turns made while solving aren't part of the next scramble
@@ -150,19 +157,28 @@ export default function SmartCube() {
 		}
 	}, [smartTurns, smartCubeConnecting, smartSolvedState]);
 
+	// Time the connected cube's puzzle, and redraw the visual at its size
+	useEffect(() => {
+		if (!smartCubePuzzle) return;
+		if (smartCubePuzzle !== cubeType) setCubeType(smartCubePuzzle);
+		initVisualCube(cubejs.current.asString());
+	}, [smartCubePuzzle]);
+
 	// The cube's reported state replaces the assumed solved one, so tracking starts from reality
-	function applyCubeState(facelets: string) {
+	function applyCubeState(facelets: string, puzzleId: SmartPuzzle) {
+		const {isSolved, size} = SMART_PUZZLES[puzzleId];
 		cubejs.current = Cube.fromString(facelets);
 		setTimerParams({
+			smartCubePuzzle: puzzleId,
 			smartCurrentState: facelets,
 			smartSolvedState: SOLVED_STATE,
 			smartTurns: [],
-			smartCubeNeedsSolve: facelets !== SOLVED_STATE,
+			smartCubeNeedsSolve: !isSolved(facelets, SOLVED_STATE),
 		});
-		initVisualCube(facelets);
+		initVisualCube(facelets, size);
 	}
 
-	async function initVisualCube(state: string = SOLVED_STATE) {
+	async function initVisualCube(state: string = SOLVED_STATE, size = puzzle.size) {
 		const {default: RubiksCube, materials} =
 			await import('@/components/timer/smart-cube/visual');
 
@@ -180,17 +196,19 @@ export default function SmartCube() {
 				'400px',
 				'400px',
 				state,
+				size,
 			);
 			cube.current.orientationBasis = orientationBasis;
 		}
 	}
 
 	function cubeIsSolved() {
-		return cubejs.current.asString() === smartSolvedState;
+		return puzzle.isSolved(cubejs.current.asString(), smartSolvedState);
 	}
 
 	function checkForStartAfterTurn() {
-		if (useSpaceWithSmartCube) {
+		// The scramble is for a different puzzle, so it can't be matched
+		if (useSpaceWithSmartCube || smartCubeMismatched(context)) {
 			return;
 		}
 
@@ -305,7 +323,8 @@ export default function SmartCube() {
 
 	async function markSolved() {
 		// Cubes that track their own state are recalibrated too, so they agree with the app from now on
-		if (await connection.resetCubeState()) applyCubeState(SOLVED_STATE);
+		if (await connection.resetCubeState())
+			applyCubeState(SOLVED_STATE, smartCubePuzzle ?? '333');
 		else resetMoves(true);
 	}
 

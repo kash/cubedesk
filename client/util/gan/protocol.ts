@@ -50,7 +50,8 @@ const isPermutation = (values: number[]) =>
 	new Set(values).size === values.length && values.every((v) => v >= 0 && v < values.length);
 
 /**
- * Read corner/edge permutation and orientation, the last piece of each is implied by the others.
+ * Read corner/edge permutation and orientation, the last piece of each is implied by the others. Edges are left
+ * solved when cornersOnly is set, for 2x2 cubes, which send dummy edge data.
  * Returns null if the result isn't a valid cube, e.g. when decrypted with the wrong MAC address.
  */
 function readFacelets(
@@ -59,6 +60,7 @@ function readFacelets(
 	coStart: number,
 	epStart: number,
 	eoStart: number,
+	cornersOnly = false,
 ) {
 	const cp: number[] = [];
 	const co: number[] = [];
@@ -71,8 +73,8 @@ function readFacelets(
 	cp.push(28 - sum(cp));
 	co.push((3 - (sum(co) % 3)) % 3);
 	for (let i = 0; i < 11; i++) {
-		ep.push(msg.bits(epStart + i * 4, 4));
-		eo.push(msg.bits(eoStart + i, 1));
+		ep.push(cornersOnly ? i : msg.bits(epStart + i * 4, 4));
+		eo.push(cornersOnly ? 0 : msg.bits(eoStart + i, 1));
 	}
 	ep.push(66 - sum(ep));
 	eo.push((2 - (sum(eo) % 2)) % 2);
@@ -374,11 +376,18 @@ export class GanGen3ProtocolDriver extends GanBufferedProtocolDriver {
 }
 
 /**
- * GAN Gen4 protocol: GAN12 ui Maglev, GAN14 ui FreePlay
+ * GAN Gen4 protocol: GAN12 ui Maglev, GAN14 ui FreePlay, GAN 251 ui (2x2)
  */
 export class GanGen4ProtocolDriver extends GanBufferedProtocolDriver {
 	protected messageLength = 20;
 	protected moveHistoryCommand = [0xd1, 0x04];
+	private cornersOnly: boolean;
+
+	/** cornersOnly is for 2x2 cubes, which only report U, R and F moves relative to a fixed DBL corner */
+	constructor({cornersOnly = false}: {cornersOnly?: boolean} = {}) {
+		super();
+		this.cornersOnly = cornersOnly;
+	}
 
 	createCommandMessage(command: SmartCubeCommand) {
 		const bytes = {
@@ -410,7 +419,7 @@ export class GanGen4ProtocolDriver extends GanBufferedProtocolDriver {
 				return this.handleFacelets(
 					conn,
 					msg.uintLE(16, 2),
-					readFacelets(msg, 32, 53, 69, 113),
+					readFacelets(msg, 32, 53, 69, 113, this.cornersOnly),
 				);
 			case 0xec:
 				return [gyroEvent(msg, 16)];

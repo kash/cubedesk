@@ -3,6 +3,7 @@ import {ITimerContext} from '@/components/timer/Timer';
 import {TimerLayoutPosition} from '@/db/settings/query';
 import {Match} from '@/types/match';
 import {Solve} from '@/types/solve';
+import {SmartPuzzle} from '@/util/smart-cube/puzzle';
 import {ReactComponentElement, ReactNode} from 'react';
 
 interface TimerHeaderOptions {
@@ -85,6 +86,8 @@ export interface TimerStore {
 	smartCanStart: boolean;
 	smartTurns: any; // TODO fix
 	smartDeviceId: string;
+	/** Puzzle of the connected smart cube */
+	smartCubePuzzle: SmartPuzzle | null;
 	smartCurrentState: string;
 	smartSolvedState: string;
 	/** Cube connected in an unsolved state, so the scramble is hidden until it's solved */
