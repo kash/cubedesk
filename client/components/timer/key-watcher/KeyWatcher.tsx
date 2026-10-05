@@ -55,7 +55,7 @@ export default function KeyWatcher(props: Props) {
 	const dialogBlocked = useDialogBlocked();
 	const timerType = useSettings('timer_type');
 	const stackMatOn = timerType === 'stackmat';
-	const ganTimerOn = timerType === 'gantimer';
+	const smartTimerOn = timerType === 'smarttimer';
 	const inspection = useSettings('inspection');
 	const manualEntry = useSettings('manual_entry');
 
@@ -123,7 +123,7 @@ export default function KeyWatcher(props: Props) {
 
 		// Checking for various conditions where we don't want to start the timer
 		if (
-			ganTimerOn ||
+			smartTimerOn ||
 			solveOpen ||
 			!startEnabled ||
 			timerDisabled ||
@@ -199,7 +199,7 @@ export default function KeyWatcher(props: Props) {
 		if (
 			dialogBlocked ||
 			isPopupOpen() ||
-			ganTimerOn ||
+			smartTimerOn ||
 			(e.keyCode !== 32 && !touch) ||
 			!spaceTimerStarted ||
 			manualEntry
@@ -243,7 +243,7 @@ export default function KeyWatcher(props: Props) {
 	 * @param e
 	 */
 	function escapePressed(e) {
-		if (dialogBlocked || isPopupOpen() || ganTimerOn || e.code !== 'Escape') {
+		if (dialogBlocked || isPopupOpen() || smartTimerOn || e.code !== 'Escape') {
 			return;
 		}
 

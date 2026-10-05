@@ -3,11 +3,12 @@ import DemoWarning from '@/components/layout/wrapper/DemoWarning';
 import TimerFooter from '@/components/timer/footer/TimerFooter';
 import HeaderControl from '@/components/timer/header-control/HeaderControl';
 import {initTimer} from '@/components/timer/helpers/init';
-import {smartCubeSelected} from '@/components/timer/helpers/util';
+import {smartCubeSelected, smartTimerSelected, timesOnDevice} from '@/components/timer/helpers/util';
 import {listenForPbEvents} from '@/components/timer/helpers/pb';
 import {stopAllTimers} from '@/components/timer/helpers/timers';
 import KeyWatcher from '@/components/timer/key-watcher/KeyWatcher';
 import SmartCube from '@/components/timer/smart-cube/SmartCube';
+import SmartTimer from '@/components/timer/smart-timer/SmartTimer';
 import TimeDisplay from '@/components/timer/time-display/TimeDisplay';
 import TimerScramble from '@/components/timer/time-display/timer-scramble/TimerScramble';
 import {RootState} from '@/reducers/reducers';
@@ -61,7 +62,7 @@ export default function Timer(props: TimerProps) {
 	const me = useMe();
 
 	// On mobile, manual entry shows a numpad pinned to the bottom in place of the footer
-	const mobileManualEntry = mobileMode && manualEntry && timerType !== 'smart';
+	const mobileManualEntry = mobileMode && manualEntry && !timesOnDevice(timerType);
 	const [mobileNumpadSlot, setMobileNumpadSlot] = useState<HTMLDivElement | null>(null);
 	const showMobileNav = mobileMode && !!me && !focusMode;
 
@@ -114,9 +115,12 @@ export default function Timer(props: TimerProps) {
 	}
 
 	const isSmart = smartCubeSelected(context);
-	let smartCubeVisual: ReactNode = null;
+	const isSmartTimer = smartTimerSelected();
+	let smartDevicePanel: ReactNode = null;
 	if (isSmart) {
-		smartCubeVisual = <SmartCube />;
+		smartDevicePanel = <SmartCube />;
+	} else if (isSmartTimer) {
+		smartDevicePanel = <SmartTimer />;
 	}
 
 	if (loading) {
@@ -140,7 +144,7 @@ export default function Timer(props: TimerProps) {
 		'-mt-[10vh]': context.focusMode && !mobileMode,
 	});
 	const mainTimeClass = classNames({
-		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': isSmart,
+		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': isSmart || isSmartTimer,
 	});
 
 	const timeBar = (
@@ -149,7 +153,7 @@ export default function Timer(props: TimerProps) {
 				<TimerScramble />
 				<div className={mainTimeClass}>
 					<TimeDisplay />
-					{smartCubeVisual}
+					{smartDevicePanel}
 				</div>
 			</div>
 		</div>

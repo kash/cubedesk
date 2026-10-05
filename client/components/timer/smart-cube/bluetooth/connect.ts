@@ -12,6 +12,7 @@ import {GAN_CIC_LIST} from '@/util/gan/cube';
 import {MOYU_CIC_LIST, MOYU32_NAME_PREFIX, MOYU32_SERVICE} from '@/util/moyu/cube';
 import {MHC_NAME_PREFIX, MHC_SERVICE} from '@/util/moyu/mhc';
 import {isQiyiCube, QIYI_CIC_LIST, QIYI_NAME_PREFIXES, QIYI_SERVICE} from '@/util/qiyi/cube';
+import {findPermittedDevice, waitForAdvertisement} from '@/util/smart-cube/connection';
 import {toastError} from '@/util/toast';
 
 const LAST_DEVICE_KEY = 'smart_cube_last_device_id';
@@ -106,26 +107,6 @@ function createCube(device: BluetoothDevice, callbacks: SmartCubeCallbacks) {
 	return null;
 }
 
-/** Resolves true once the device advertises, meaning it's awake and in range, or false if aborted */
-function waitForAdvertisement(device: BluetoothDevice, signal: AbortSignal) {
-	return new Promise<boolean>((resolve) => {
-		const watchController = new AbortController();
-		const finish = (advertised: boolean) => {
-			device.removeEventListener('advertisementreceived', onAdvertisement);
-			signal.removeEventListener('abort', onAbort);
-			watchController.abort();
-			resolve(advertised);
-		};
-		const onAdvertisement = () => finish(true);
-		const onAbort = () => finish(false);
-
-		if (signal.aborted) return resolve(false);
-		signal.addEventListener('abort', onAbort);
-		device.addEventListener('advertisementreceived', onAdvertisement);
-		device.watchAdvertisements({signal: watchController.signal}).catch(() => finish(false));
-	});
-}
-
 function readLastDeviceId() {
 	try {
 		return localStorage.getItem(LAST_DEVICE_KEY);
@@ -189,28 +170,12 @@ export default class Connect extends SmartCube {
 	 */
 	autoReconnect = async (onWaiting: () => void) => {
 		const generation = this.generation;
-		const device = await this.findLastDevice();
+		const device = await findPermittedDevice(readLastDeviceId());
 		// Skip if the user started connecting or left while looking up the device
 		if (!device || generation !== this.generation || !this.callbacks.isActive()) return;
 
 		onWaiting();
 		await this.reconnect(device);
-	};
-
-	/**
-	 * The last connected cube, if the browser still has permission for it. Permissions only survive a
-	 * reload with Chrome's new Web Bluetooth permissions backend flag, which also enables getDevices().
-	 */
-	private findLastDevice = async () => {
-		const id = readLastDeviceId();
-		if (!id || typeof navigator.bluetooth?.getDevices !== 'function') return null;
-
-		try {
-			const devices = await navigator.bluetooth.getDevices();
-			return devices.find((device) => device.id === id) ?? null;
-		} catch {
-			return null;
-		}
 	};
 
 	/**

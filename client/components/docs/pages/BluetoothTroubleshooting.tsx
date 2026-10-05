@@ -13,7 +13,7 @@ import React from 'react';
 export default function BluetoothTroubleshooting() {
 	return (
 		<>
-			<DocTitle lead="CubeDesk connects to smart cubes and the GAN Smart Timer straight from your browser using Web Bluetooth. If your cube won't show up, won't connect, or its state looks wrong, work through the sections below.">
+			<DocTitle lead="CubeDesk connects to smart cubes and smart timers straight from your browser using Web Bluetooth. If your cube won't show up, won't connect, or its state looks wrong, work through the sections below.">
 				Troubleshooting Bluetooth smart cubes and timers
 			</DocTitle>
 
@@ -49,7 +49,7 @@ export default function BluetoothTroubleshooting() {
 				</li>
 				<li>
 					Set <strong>Timer input type</strong> to <strong>Smart Cube</strong>, or to{' '}
-					<strong>GAN Smart Timer</strong> if you&apos;re using the timer.
+					<strong>Smart Timer</strong> if you&apos;re using a Bluetooth timer.
 				</li>
 				<li>
 					Switch the cube type to <strong>3x3</strong> or <strong>2x2</strong>. Smart Cube
@@ -229,17 +229,26 @@ export default function BluetoothTroubleshooting() {
 				<li>Close other tabs or apps that might be connected to the cube.</li>
 			</DocList>
 
-			<DocHeading id="gan-smart-timer">GAN Smart Timer</DocHeading>
+			<DocHeading id="smart-timers">Smart timers</DocHeading>
 			<DocParagraph>
-				Set <strong>Timer input type</strong> to <strong>GAN Smart Timer</strong>, turn the
-				timer on, then click <strong>Connect to Timer</strong> below the time. The icon
-				turns green when it&apos;s connected. Times come straight from the timer, so what
-				you see on the display is what gets saved.
+				Set <strong>Timer input type</strong> to <strong>Smart Timer</strong>, turn the timer
+				on, then click <strong>Connect</strong> under the timer picture and choose your timer
+				from the list. CubeDesk works out which brand it is on its own. Times come straight
+				from the timer, so what you see on its display is what gets saved.
 			</DocParagraph>
 			<DocParagraph>
-				The GAN Smart Timer doesn&apos;t reconnect automatically. If the icon turns red,
-				click it to connect again. If you have inspection turned on, resetting the timer
-				starts inspection.
+				The pads in the timer picture light up while your hands are on the timer, and turn
+				green once lifting them will start it. If you have inspection turned on,
+				pressing reset on the GAN Smart Timer starts inspection. Pressing reset during a solve
+				cancels it without saving.
+			</DocParagraph>
+			<DocParagraph>
+				If the timer turns off or drops out, CubeDesk reconnects when it&apos;s back, and
+				you&apos;ll see <strong>&quot;Turn on your timer to reconnect&quot;</strong> while
+				it waits. Waiting for the timer and reconnecting after a reload need the browser
+				setting described in{' '}
+				<DocLink to="#gan-mac-address">GAN and MoYu cubes ask for a MAC address</DocLink>.
+				Without it, CubeDesk tries once more a few seconds after the timer drops out.
 			</DocParagraph>
 
 			<DocCallout>
