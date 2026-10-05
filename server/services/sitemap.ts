@@ -156,7 +156,7 @@ function getDefaultSiteMapUrls() {
 			continue;
 		}
 
-		if (route.admin || route.restricted || route.path.includes(':')) {
+		if (route.admin || route.restricted || route.noIndex || route.path.includes(':')) {
 			continue;
 		}
 

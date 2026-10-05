@@ -151,6 +151,10 @@ function appUseRouteForPage(routePath, route: PageContext) {
 			});
 		}
 
+		if (route.noIndex || route.restricted || route.admin) {
+			res.setHeader('X-Robots-Tag', 'noindex');
+		}
+
 		if (!res.headersSent) {
 			res.status(code).send(html);
 		}
