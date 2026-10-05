@@ -1,9 +1,9 @@
-import {DOC_SECTIONS, DocPage, getDocPage, getNextDocPage} from '@/components/docs/doc-pages';
+import {DOC_SECTIONS, DocPage, getDocPage} from '@/components/docs/doc-pages';
 import Header from '@/components/layout/Header';
 import {cn} from '@/util/cn';
 import {useTheme} from '@/util/hooks/useTheme';
 import {resourceUri} from '@/util/storage';
-import {ArrowLeft, ArrowRight, List, X} from 'phosphor-react';
+import {ArrowLeft, List, X} from 'phosphor-react';
 import React, {ReactNode, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -84,7 +84,6 @@ function DocsNav(props: {path: string}) {
 export default function DocsLayout(props: Props) {
 	const {path, children} = props;
 	const page = getDocPage(path);
-	const nextPage = getNextDocPage(path);
 	const [menuOpen, setMenuOpen] = useState(false);
 	const backgroundColor = useTheme('background_color');
 	const logoColor = backgroundColor.isDark ? 'white' : 'black';
@@ -184,37 +183,12 @@ export default function DocsLayout(props: Props) {
 			) : null}
 
 			<div className="mx-auto flex w-full max-w-6xl gap-12 px-4 sm:px-6">
-				<aside className="sticky top-14 hidden max-h-[calc(100vh-3.5rem)] w-56 shrink-0 self-start overflow-y-auto py-12 lg:block">
+				<aside className="sticky top-14 hidden max-h-[calc(100vh-3.5rem)] w-64 shrink-0 self-start overflow-y-auto py-12 lg:block">
 					<DocsNav path={page.path} />
 				</aside>
 
 				<main className="w-full max-w-2xl min-w-0 pt-10 pb-16 sm:pt-12">
-					<article className="relative z-10 flex flex-col gap-6">{children}</article>
-
-					{nextPage ? (
-						<Link
-							to={nextPage.path}
-							className={cn(
-								'border-text/10 hover:border-text/25 group mt-16 flex items-center justify-between gap-4 rounded-lg border px-5 py-4 transition-colors',
-								FOCUS_RING,
-							)}
-						>
-							<span className="flex flex-col gap-1">
-								<span className="text-text/40 font-mono text-[11px] tracking-[0.2em] uppercase">
-									Next
-								</span>
-								<span className="text-text font-mono text-sm">
-									{nextPage.navTitle}
-								</span>
-							</span>
-							<ArrowRight
-								aria-hidden="true"
-								size={16}
-								weight="bold"
-								className="text-text/40 group-hover:text-text shrink-0 transition-colors"
-							/>
-						</Link>
-					) : null}
+					<article className="relative z-10 flex flex-col gap-4">{children}</article>
 				</main>
 			</div>
 		</div>

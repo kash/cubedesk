@@ -3,13 +3,16 @@ import {Info, Warning} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
 
+// The global reset gives inline elements like a, strong and li their own font and weight, so text blocks set them
+const INLINE_STYLES = '[&_*]:font-mono [&_strong]:text-text [&_strong]:font-semibold';
+
 const LINK_CLASS =
-	'hover:text-text text-inherit underline decoration-text/30 underline-offset-4 transition-colors';
+	'hover:text-text font-mono text-inherit underline decoration-text/30 underline-offset-4 transition-colors';
 
 export function DocTitle(props: {children: ReactNode; lead?: ReactNode}) {
 	return (
 		<header className="mb-2 flex flex-col gap-4">
-			<h1 className="text-text m-0 font-mono text-2xl leading-tight font-semibold tracking-tight">
+			<h1 className="text-text m-0 font-sans text-3xl leading-tight font-medium tracking-tight">
 				{props.children}
 			</h1>
 			{props.lead ? <DocParagraph>{props.lead}</DocParagraph> : null}
@@ -21,7 +24,7 @@ export function DocHeading(props: {id: string; children: ReactNode}) {
 	return (
 		<h2
 			id={props.id}
-			className="text-text m-0 mt-6 scroll-mt-20 font-mono text-base leading-7 font-semibold"
+			className="text-text m-0 mt-8 scroll-mt-20 font-sans text-lg leading-7 font-semibold tracking-tight"
 		>
 			{props.children}
 		</h2>
@@ -30,14 +33,18 @@ export function DocHeading(props: {id: string; children: ReactNode}) {
 
 export function DocSubheading(props: {children: ReactNode}) {
 	return (
-		<h3 className="text-text m-0 mt-2 font-mono text-sm leading-7 font-semibold">
+		<h3 className="text-text m-0 mt-2 font-sans text-base leading-6 font-semibold tracking-tight">
 			{props.children}
 		</h3>
 	);
 }
 
 export function DocParagraph(props: {children: ReactNode}) {
-	return <p className="text-text/80 m-0 font-mono text-sm leading-7">{props.children}</p>;
+	return (
+		<p className={cn('text-text/80 m-0 font-mono text-sm leading-6.5', INLINE_STYLES)}>
+			{props.children}
+		</p>
+	);
 }
 
 export function DocList(props: {ordered?: boolean; children: ReactNode}) {
@@ -46,7 +53,8 @@ export function DocList(props: {ordered?: boolean; children: ReactNode}) {
 	return (
 		<List
 			className={cn(
-				'text-text/80 marker:text-text/40 m-0 flex flex-col gap-2 pl-6 font-mono text-sm leading-7',
+				'text-text/80 marker:text-text/40 m-0 flex flex-col gap-1.5 pl-6 font-mono text-sm leading-6.5',
+				INLINE_STYLES,
 				{
 					'list-decimal': props.ordered,
 					'list-disc': !props.ordered,
@@ -110,7 +118,9 @@ export function DocCallout(props: {variant?: 'info' | 'warning'; children: React
 					'text-text/60': !warning,
 				})}
 			/>
-			<div className="text-text/80 font-mono text-sm leading-7">{props.children}</div>
+			<div className={cn('text-text/80 font-mono text-sm leading-6.5', INLINE_STYLES)}>
+				{props.children}
+			</div>
 		</aside>
 	);
 }

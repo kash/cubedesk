@@ -2,6 +2,7 @@ import About from '@/components/docs/pages/About';
 import BluetoothTroubleshooting from '@/components/docs/pages/BluetoothTroubleshooting';
 import ConnectWcaAccount from '@/components/docs/pages/ConnectWcaAccount';
 import MigrateFromCsTimer from '@/components/docs/pages/MigrateFromCsTimer';
+import SupportedDevices from '@/components/docs/pages/SupportedDevices';
 import {ComponentType} from 'react';
 
 export interface DocPage {
@@ -47,6 +48,14 @@ export const DOC_SECTIONS: DocSection[] = [
 					},
 				},
 			},
+			{
+				path: '/supported-devices',
+				navTitle: 'Supported devices',
+				title: 'Supported Smart Cubes and Timers (GAN, MoYu, QiYi, GoCube) | CubeDesk',
+				description:
+					'Every smart cube and timer that works with CubeDesk: GAN, MoYu, QiYi, GoCube, and Giiker Bluetooth cubes, plus the GAN Smart Timer and StackMat timers.',
+				component: SupportedDevices,
+			},
 		],
 	},
 	{
@@ -84,9 +93,4 @@ export const DOC_PAGES: DocPage[] = DOC_SECTIONS.flatMap((section) => section.pa
 
 export function getDocPage(path: string): DocPage {
 	return DOC_PAGES.find((page) => page.path === path) ?? DOC_PAGES[0];
-}
-
-export function getNextDocPage(path: string): DocPage | undefined {
-	const index = DOC_PAGES.findIndex((page) => page.path === path);
-	return DOC_PAGES[index + 1];
 }

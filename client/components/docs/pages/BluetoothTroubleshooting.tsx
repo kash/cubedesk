@@ -18,32 +18,10 @@ export default function BluetoothTroubleshooting() {
 			</DocTitle>
 
 			<DocHeading id="supported-devices">Supported devices</DocHeading>
-			<DocList>
-				<li>
-					<strong>GAN smart cubes:</strong> GAN356 i (original), GAN Mini ui FreePlay,
-					GAN12 ui FreePlay, GAN12 ui Maglev, GAN14 ui FreePlay, GAN356 i Carry, GAN356 i
-					Carry S, GAN356 i Carry 2, GAN356 i 3, Monster Go 3Ai, and the GAN 251 ui (2x2).
-				</li>
-				<li>
-					<strong>MoYu smart cubes:</strong> WeiLong V10 AI, WeiLong V11 AI, MoYu AI 2023
-					(WeiLong WRM V10 AI), and the original MoYu AI.
-				</li>
-				<li>
-					<strong>QiYi smart cubes:</strong> QiYi AI and X-Man Tornado V4 AI.
-				</li>
-				<li>
-					<strong>GoCube</strong> and <strong>Rubik&apos;s Connected</strong>
-				</li>
-				<li>
-					<strong>Giiker</strong> and <strong>Xiaomi Mi Smart Magic Cube</strong>
-				</li>
-				<li>
-					<strong>GAN Smart Timer</strong>
-				</li>
-			</DocList>
 			<DocParagraph>
-				If you pick a cube that isn&apos;t on this list, CubeDesk shows &quot;This smart
-				cube isn&apos;t supported yet.&quot;
+				See <DocLink to="/supported-devices">Supported devices</DocLink> for every smart
+				cube and timer CubeDesk works with. If you pick a cube that isn&apos;t supported,
+				CubeDesk shows &quot;This smart cube isn&apos;t supported yet.&quot;
 			</DocParagraph>
 
 			<DocHeading id="supported-browsers">
