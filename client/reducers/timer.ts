@@ -6,6 +6,7 @@ const smartState = {
 	smartCanStart: false,
 	smartTurns: [],
 	smartDeviceId: '',
+	smartCubePuzzle: null,
 	smartCurrentState: 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB',
 	smartSolvedState: 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB',
 	smartCubeNeedsSolve: false,

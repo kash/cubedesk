@@ -22,7 +22,7 @@ export default function BluetoothTroubleshooting() {
 				<li>
 					<strong>GAN smart cubes:</strong> GAN356 i (original), GAN Mini ui FreePlay,
 					GAN12 ui FreePlay, GAN12 ui Maglev, GAN14 ui FreePlay, GAN356 i Carry, GAN356 i
-					Carry S, GAN356 i Carry 2, GAN356 i 3, and Monster Go 3Ai.
+					Carry S, GAN356 i Carry 2, GAN356 i 3, Monster Go 3Ai, and the GAN 251 ui (2x2).
 				</li>
 				<li>
 					<strong>MoYu smart cubes:</strong> WeiLong V10 AI, WeiLong V11 AI, MoYu AI 2023
@@ -43,7 +43,7 @@ export default function BluetoothTroubleshooting() {
 			</DocList>
 			<DocParagraph>
 				If you pick a cube that isn&apos;t on this list, CubeDesk shows &quot;This smart
-				cube isn&apos;t supported yet.&quot; 2x2 smart cubes aren&apos;t supported yet.
+				cube isn&apos;t supported yet.&quot;
 			</DocParagraph>
 
 			<DocHeading id="supported-browsers">
@@ -74,14 +74,20 @@ export default function BluetoothTroubleshooting() {
 					<strong>GAN Smart Timer</strong> if you&apos;re using the timer.
 				</li>
 				<li>
-					Switch the cube type to <strong>3x3</strong>. Smart Cube mode only works with
-					3x3.
+					Switch the cube type to <strong>3x3</strong> or <strong>2x2</strong>. Smart Cube
+					mode only works with those two. When a cube connects, CubeDesk switches to its
+					cube type for you.
 				</li>
 				<li>
 					Click <strong>Connect</strong> under the 3D cube and choose your cube from the
 					browser&apos;s device list.
 				</li>
 			</DocList>
+			<DocParagraph>
+				2x2 smart cubes track their state relative to one fixed corner, so scramble and
+				solve them holding white on top and green in front. A turn of the left face shows up
+				as a turn of the right face, which is expected.
+			</DocParagraph>
 			<DocParagraph>
 				If you&apos;d rather start and stop the timer with the space bar and only use the
 				cube to record turns, turn on <strong>Use space bar with smart cubes</strong> in

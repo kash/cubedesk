@@ -18,6 +18,7 @@ export default function StatsInfo(props: Props) {
 	const smartTurnCount = solve.smart_turn_count ?? 0;
 	const smartInspectionTime = solve.inspection_time;
 	const tps = Math.floor((smartTurnCount / time) * 10) / 10;
+	const hasSteps = !!solve.solve_method_steps?.length;
 
 	function getStatCard(icon: ReactNode, title: string, val: number | string) {
 		return (
@@ -46,18 +47,23 @@ export default function StatsInfo(props: Props) {
 					smartTurnCount,
 				)}
 			</div>
-			<Separator className="my-6" />
-			<div className="relative box-border w-full p-0">
-				<StepPie solve={solve} />
-			</div>
-			<Separator className="my-6" />
-			<div className="relative box-border w-full p-0">
-				<ExecutionTime solve={solve} />
-			</div>
-			<Separator className="my-6" />
-			<div className="relative box-border w-full p-0">
-				<RecognitionChart solve={solve} />
-			</div>
+			{/* Puzzles without step detection, like 2x2, only get the overall stats */}
+			{hasSteps ? (
+				<>
+					<Separator className="my-6" />
+					<div className="relative box-border w-full p-0">
+						<StepPie solve={solve} />
+					</div>
+					<Separator className="my-6" />
+					<div className="relative box-border w-full p-0">
+						<ExecutionTime solve={solve} />
+					</div>
+					<Separator className="my-6" />
+					<div className="relative box-border w-full p-0">
+						<RecognitionChart solve={solve} />
+					</div>
+				</>
+			) : null}
 			{getOllAndPllFromSolve(solve) ? (
 				<>
 					<Separator className="my-6" />

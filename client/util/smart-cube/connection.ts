@@ -57,7 +57,7 @@ export type SmartCubeProtocol = {
 	commandCharacteristic: string;
 	stateCharacteristic: string;
 	createEncrypter: (device: BluetoothDevice, mac: string) => MessageEncrypter;
-	createDriver: (mac: string) => SmartCubeProtocolDriver;
+	createDriver: (device: BluetoothDevice, mac: string) => SmartCubeProtocolDriver;
 };
 
 /**
@@ -212,7 +212,7 @@ export async function connectSmartCube(
 				await service.getCharacteristic(protocol.commandCharacteristic),
 				await service.getCharacteristic(protocol.stateCharacteristic),
 				protocol.createEncrypter(device, mac),
-				protocol.createDriver(mac),
+				protocol.createDriver(device, mac),
 			);
 			await conn.start();
 			return conn;

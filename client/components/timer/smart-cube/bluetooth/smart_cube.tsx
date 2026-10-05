@@ -3,6 +3,7 @@ import {getStore} from '@/components/store';
 // @ts-nocheck
 import {setTimerParams} from '@/components/timer/helpers/params';
 import {SmartCubeOrientation} from '@/util/smart-cube/protocol';
+import {SmartPuzzle} from '@/util/smart-cube/puzzle';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 
@@ -15,7 +16,7 @@ export interface SmartCubeCallbacks {
 	confirmSolved: (device: PendingSmartDevice) => Promise<boolean>;
 	requestMacAddress: (reason: MacAddressRequestReason) => Promise<MacAddressResponse>;
 	/** Cube reported its actual state on connect, as a Kociemba facelets string */
-	onInitialState: (facelets: string) => void;
+	onInitialState: (facelets: string, puzzle: SmartPuzzle) => void;
 	/** Cube's gyroscope reported a new orientation, only sent by cubes that have one */
 	onOrientation: (orientation: SmartCubeOrientation) => void;
 	onDisconnected: () => void;
@@ -26,6 +27,9 @@ export interface SmartCubeCallbacks {
 export class SmartCubeConnectionError extends Error {}
 
 export default class SmartCube {
+	/** Which puzzle the cube is, set by cubes that come in more than one size */
+	protected puzzle: SmartPuzzle = '333';
+
 	constructor(protected callbacks: SmartCubeCallbacks) {}
 
 	alertConnecting = () => {
@@ -85,6 +89,7 @@ export default class SmartCube {
 			smartCubeConnecting: false,
 			smartCubeConnected: true,
 			smartDeviceId: dev.id,
+			smartCubePuzzle: this.puzzle,
 		});
 	};
 
@@ -95,7 +100,7 @@ export default class SmartCube {
 	resetToSolved = async (): Promise<boolean> => false;
 
 	alertInitialState = (facelets: string) => {
-		if (this.callbacks.isActive()) this.callbacks.onInitialState(facelets);
+		if (this.callbacks.isActive()) this.callbacks.onInitialState(facelets, this.puzzle);
 	};
 
 	alertOrientation = (orientation: SmartCubeOrientation) => {

@@ -1,4 +1,4 @@
-import {smartCubeSelected} from '@/components/timer/helpers/util';
+import {smartCubeMismatched, smartCubeSelected} from '@/components/timer/helpers/util';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import GanTimer from '@/components/timer/time-display/GanTimer';
 import Manual from '@/components/timer/time-display/Manual';
@@ -6,6 +6,7 @@ import StackMat from '@/components/timer/time-display/stackmat/StackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
 import {useTimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
+import {getCubeTypeName} from '@/util/cubes/util';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getTimeString} from '@/util/time';
@@ -130,7 +131,13 @@ export default function TimeDisplay() {
 	} else if (ganTimerOn) {
 		bottomInfo = <GanTimer />;
 	} else if (smartCubeSelected(context)) {
-		if (smartCubeNeedsSolve) {
+		if (context.smartCubePuzzle && smartCubeMismatched(context)) {
+			bottomInfo = (
+				<StartInstructions>
+					Switch to <span>{getCubeTypeName(context.smartCubePuzzle)}</span> to start
+				</StartInstructions>
+			);
+		} else if (smartCubeNeedsSolve) {
 			bottomInfo = (
 				<StartInstructions>
 					Solve <span>smart cube</span> to start
