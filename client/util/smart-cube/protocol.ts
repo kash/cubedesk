@@ -1,4 +1,4 @@
-// Shared protocol types and helpers for encrypted smart cubes (GAN, MoYu)
+// Shared protocol types and helpers for encrypted smart cubes (GAN, MoYu, QiYi)
 
 /** REQUEST_RESET makes the cube treat its current state as solved, to fix drift in its move tracking */
 export type SmartCubeCommand = 'REQUEST_FACELETS' | 'REQUEST_BATTERY' | 'REQUEST_RESET';
