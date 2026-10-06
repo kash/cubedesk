@@ -22,7 +22,7 @@ export default function PublicTrainer(props: Props) {
 		description,
 		key,
 		user_id: userId,
-		cube_type: cubeType,
+		event_type: eventType,
 		solution,
 		name,
 		user,
@@ -78,7 +78,7 @@ export default function PublicTrainer(props: Props) {
 		<div className="border-button bg-module relative mb-[15px] box-border w-full gap-2.5 rounded border-2 p-[15px]">
 			<div className="grid w-full grid-cols-[130px_1fr]">
 				<div className="flex items-start justify-center">
-					<AlgoVisual zoom={0.8} colors={colors ?? undefined} cubeType={cubeType} />
+					<AlgoVisual zoom={0.8} colors={colors ?? undefined} eventType={eventType} />
 				</div>
 				<div>
 					<div className="border-button mb-2.5 border-b-2 pb-2.5">

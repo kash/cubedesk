@@ -1,4 +1,4 @@
-// Puzzles smart cubes can be. Ids match cube types, so a connected cube maps straight onto the session's cube type.
+// Puzzles smart cubes can be. Ids match event types, so a connected cube maps straight onto the session's event type.
 //
 // Every puzzle's state is a 54 character Kociemba facelets string. 2x2 cubes only track corners, so their edges and
 // centers always read as solved. Their firmware reports moves relative to a fixed DBL corner (a physical L arrives as
@@ -32,6 +32,6 @@ export const SMART_PUZZLES: Record<SmartPuzzle, SmartPuzzleInfo> = {
 	},
 };
 
-export function isSmartCubeType(cubeType: string | undefined): cubeType is SmartPuzzle {
-	return !!cubeType && Object.keys(SMART_PUZZLES).includes(cubeType);
+export function isSmartCubeEvent(eventType: string | undefined): eventType is SmartPuzzle {
+	return !!eventType && Object.keys(SMART_PUZZLES).includes(eventType);
 }

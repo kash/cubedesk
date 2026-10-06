@@ -65,6 +65,13 @@ function getUpdatedSolves(solves: Solve[], oldNewSessionMap: Record<string, stri
 		delete (solve as Partial<Solve>).from_timer;
 		delete (solve as Partial<Solve>).created_at;
 
+		// Exports from before cube_type was renamed to event_type
+		const legacySolve = solve as Solve & {cube_type?: string};
+		if (legacySolve.cube_type !== undefined) {
+			solve.event_type ??= legacySolve.cube_type;
+			delete legacySolve.cube_type;
+		}
+
 		if (trainerName) {
 			delete (solve as Partial<Solve>).session_id;
 		} else {

@@ -4,7 +4,7 @@ import {FullMatch, FullMatchParticipant} from '@/types/match';
 
 export interface MatchTypeParams {
 	eventName: GameType;
-	defaultCubeType: string;
+	defaultEventType: string;
 	defaultMinPlayers: number;
 	defaultMaxPlayers: number;
 }

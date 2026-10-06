@@ -4,7 +4,7 @@ import type {PublicUserAccount} from '@/types/user';
 export interface TopSolve {
 	id: string;
 	time: number;
-	cube_type: string;
+	event_type: string;
 	created_at: Date;
 	solve?: Solve;
 	user?: PublicUserAccount;
@@ -13,7 +13,7 @@ export interface TopSolve {
 export interface TopAverage {
 	id: string;
 	time: number;
-	cube_type: string;
+	event_type: string;
 	created_at: Date;
 	solve_1: Solve;
 	solve_2: Solve;

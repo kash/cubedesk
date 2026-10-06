@@ -23,7 +23,7 @@ export interface MatchSessionInput {
 	min_players: number;
 	max_players: number;
 	match_type: GameType;
-	cube_type?: string;
+	event_type?: string;
 	head_to_head_target_win_count?: number;
 }
 
@@ -84,7 +84,7 @@ export interface MatchLobby {
 	id: string;
 	user_id: string;
 	client_id: string;
-	cube_type: string;
+	event_type: string;
 	player_count: number;
 	elo: number;
 	created_at: Date;
@@ -95,7 +95,7 @@ export interface GameOptions {
 	game_session_id?: string | null;
 	match_session_id?: string | null;
 	game_type?: GameType;
-	cube_type: string;
+	event_type: string;
 	elimination_starting_time_seconds: number;
 	elimination_percent_change_rate: number;
 	head_to_head_target_win_count: number;
@@ -103,7 +103,7 @@ export interface GameOptions {
 }
 
 export interface GameOptionsInput {
-	cube_type: string;
+	event_type: string;
 	game_type: GameType;
 	elimination_starting_time_seconds?: number;
 	elimination_percent_change_rate?: number;

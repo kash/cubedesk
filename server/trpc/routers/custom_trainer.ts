@@ -10,7 +10,7 @@ import {z} from 'zod';
 const customTrainerInputSchema = z.object({
 	solution: z.string(),
 	colors: z.string().nullish(),
-	cube_type: z.string(),
+	event_type: z.string(),
 	group_name: z.string().nullish(),
 	scrambles: z.string().nullish(),
 	alt_solutions: z.string().nullish(),

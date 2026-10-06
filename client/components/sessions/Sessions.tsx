@@ -1,4 +1,4 @@
-import CubePicker from '@/components/common/CubePicker';
+import EventPicker from '@/components/common/EventPicker';
 import './sessions.css';
 import PageTitle from '@/components/common/PageTitle';
 import History from '@/components/modules/history/History';
@@ -10,11 +10,11 @@ import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
-import {fetchSessionById, fetchSessions, getCubeTypesFromSession} from '@/db/sessions/query';
+import {fetchSessionById, fetchSessions, getEventTypesFromSession} from '@/db/sessions/query';
 import {reorderSessions, updateSessionDb} from '@/db/sessions/update';
-import {fetchLastCubeTypeForSession} from '@/db/solves/query';
+import {fetchLastEventTypeForSession} from '@/db/solves/query';
 import {getTotalSolveCount} from '@/db/solves/stats/count';
-import {CubeType} from '@/util/cubes/cube_types';
+import {EventType} from '@/util/cubes/event_types';
 import {useSessionDb} from '@/util/hooks/useSessionDb';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
@@ -105,7 +105,7 @@ export default function Sessions() {
 	const [selectedSessionId, setSelectedSessionId] = useState<string>(currentSessionId);
 	const [cubeSelection, setCubeSelection] = useState<{
 		sessionId: string;
-		cubeType: string;
+		eventType: string;
 	} | null>(null);
 
 	const allSessions = fetchSessions();
@@ -117,8 +117,8 @@ export default function Sessions() {
 		setCubeSelection(null);
 	}
 
-	function handleCubeChange(ct: CubeType) {
-		if (session) setCubeSelection({sessionId: session.id, cubeType: ct.id});
+	function handleCubeChange(ct: EventType) {
+		if (session) setCubeSelection({sessionId: session.id, eventType: ct.id});
 	}
 
 	function setSessionName(e) {
@@ -167,16 +167,16 @@ export default function Sessions() {
 		reorderSessions(sessionIds);
 	}
 
-	const sessionCubeTypes = session ? getCubeTypesFromSession(session) : [];
+	const sessionEventTypes = session ? getEventTypesFromSession(session) : [];
 	const currentCube = String(
-		(cubeSelection?.sessionId === session?.id ? cubeSelection?.cubeType : null) ||
-			(session ? fetchLastCubeTypeForSession(session.id) : null) ||
+		(cubeSelection?.sessionId === session?.id ? cubeSelection?.eventType : null) ||
+			(session ? fetchLastEventTypeForSession(session.id) : null) ||
 			'333',
 	);
 
 	const fetchFilter = {
 		session_id: session?.id,
-		cube_type: currentCube,
+		event_type: currentCube,
 	};
 
 	const body = session ? (
@@ -196,11 +196,11 @@ export default function Sessions() {
 						maxLength={200}
 					/>
 				</div>
-				<CubePicker
+				<EventPicker
 					handlePrefix="Stats for "
 					excludeSelected
 					value={currentCube}
-					cubeTypes={sessionCubeTypes}
+					eventTypes={sessionEventTypes}
 					onChange={handleCubeChange}
 					pickerProps={{noMargin: true}}
 				/>

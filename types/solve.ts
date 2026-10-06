@@ -6,7 +6,7 @@ export interface SolveInput {
 	id?: string | null;
 	time?: number | null;
 	raw_time?: number | null;
-	cube_type?: string | null;
+	event_type?: string | null;
 	scramble?: string | null;
 	game_session_id?: string | null;
 	session_id?: string | null;
@@ -29,13 +29,13 @@ export interface SolveInput {
 	inspection_time?: number | null;
 }
 
-// Nullability mirrors the Prisma schema, except cube_type/scramble/time, which
+// Nullability mirrors the Prisma schema, except event_type/scramble/time, which
 // every solve-creation path provides even though the columns allow null.
 export interface Solve {
 	id: string;
 	time: number;
 	raw_time: number | null;
-	cube_type: string;
+	event_type: string;
 	scramble: string;
 	game_session_id: string | null;
 	from_timer: boolean;

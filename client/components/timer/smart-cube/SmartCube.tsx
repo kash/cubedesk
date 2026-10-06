@@ -19,7 +19,7 @@ import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
-import {setCubeType} from '@/db/settings/update';
+import {setEventType} from '@/db/settings/update';
 import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
 import {useSettings} from '@/util/hooks/useSettings';
@@ -113,7 +113,7 @@ export default function SmartCube() {
 		smartCubeConnected,
 		smartCubeNeedsSolve,
 		smartCubePuzzle,
-		cubeType,
+		eventType,
 		timeStartedAt,
 	} = context;
 	const puzzle = SMART_PUZZLES[smartCubePuzzle ?? '333'];
@@ -169,7 +169,7 @@ export default function SmartCube() {
 	// Time the connected cube's puzzle, and redraw the visual at its size
 	useEffect(() => {
 		if (!smartCubePuzzle) return;
-		if (smartCubePuzzle !== cubeType) setCubeType(smartCubePuzzle);
+		if (smartCubePuzzle !== eventType) setEventType(smartCubePuzzle);
 		initVisualCube(cubejs.current.asString());
 	}, [smartCubePuzzle]);
 

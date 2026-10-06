@@ -39,7 +39,7 @@ export type MatchLobbySumAggregateOutputType = {
 export type MatchLobbyMinAggregateOutputType = {
   id: string | null
   user_id: string | null
-  cube_type: string | null
+  event_type: string | null
   game_type: $Enums.GameType | null
   player_count: number | null
   elo: number | null
@@ -50,7 +50,7 @@ export type MatchLobbyMinAggregateOutputType = {
 export type MatchLobbyMaxAggregateOutputType = {
   id: string | null
   user_id: string | null
-  cube_type: string | null
+  event_type: string | null
   game_type: $Enums.GameType | null
   player_count: number | null
   elo: number | null
@@ -61,7 +61,7 @@ export type MatchLobbyMaxAggregateOutputType = {
 export type MatchLobbyCountAggregateOutputType = {
   id: number
   user_id: number
-  cube_type: number
+  event_type: number
   game_type: number
   player_count: number
   elo: number
@@ -84,7 +84,7 @@ export type MatchLobbySumAggregateInputType = {
 export type MatchLobbyMinAggregateInputType = {
   id?: true
   user_id?: true
-  cube_type?: true
+  event_type?: true
   game_type?: true
   player_count?: true
   elo?: true
@@ -95,7 +95,7 @@ export type MatchLobbyMinAggregateInputType = {
 export type MatchLobbyMaxAggregateInputType = {
   id?: true
   user_id?: true
-  cube_type?: true
+  event_type?: true
   game_type?: true
   player_count?: true
   elo?: true
@@ -106,7 +106,7 @@ export type MatchLobbyMaxAggregateInputType = {
 export type MatchLobbyCountAggregateInputType = {
   id?: true
   user_id?: true
-  cube_type?: true
+  event_type?: true
   game_type?: true
   player_count?: true
   elo?: true
@@ -204,7 +204,7 @@ export type MatchLobbyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type MatchLobbyGroupByOutputType = {
   id: string
   user_id: string
-  cube_type: string
+  event_type: string
   game_type: $Enums.GameType
   player_count: number
   elo: number
@@ -238,7 +238,7 @@ export type MatchLobbyWhereInput = {
   NOT?: Prisma.MatchLobbyWhereInput | Prisma.MatchLobbyWhereInput[]
   id?: Prisma.StringFilter<"MatchLobby"> | string
   user_id?: Prisma.StringFilter<"MatchLobby"> | string
-  cube_type?: Prisma.StringFilter<"MatchLobby"> | string
+  event_type?: Prisma.StringFilter<"MatchLobby"> | string
   game_type?: Prisma.EnumGameTypeFilter<"MatchLobby"> | $Enums.GameType
   player_count?: Prisma.IntFilter<"MatchLobby"> | number
   elo?: Prisma.IntFilter<"MatchLobby"> | number
@@ -250,7 +250,7 @@ export type MatchLobbyWhereInput = {
 export type MatchLobbyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
   player_count?: Prisma.SortOrder
   elo?: Prisma.SortOrder
@@ -266,7 +266,7 @@ export type MatchLobbyWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MatchLobbyWhereInput[]
   NOT?: Prisma.MatchLobbyWhereInput | Prisma.MatchLobbyWhereInput[]
   user_id?: Prisma.StringFilter<"MatchLobby"> | string
-  cube_type?: Prisma.StringFilter<"MatchLobby"> | string
+  event_type?: Prisma.StringFilter<"MatchLobby"> | string
   game_type?: Prisma.EnumGameTypeFilter<"MatchLobby"> | $Enums.GameType
   player_count?: Prisma.IntFilter<"MatchLobby"> | number
   elo?: Prisma.IntFilter<"MatchLobby"> | number
@@ -278,7 +278,7 @@ export type MatchLobbyWhereUniqueInput = Prisma.AtLeast<{
 export type MatchLobbyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
   player_count?: Prisma.SortOrder
   elo?: Prisma.SortOrder
@@ -297,7 +297,7 @@ export type MatchLobbyScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MatchLobbyScalarWhereWithAggregatesInput | Prisma.MatchLobbyScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"MatchLobby"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"MatchLobby"> | string
-  cube_type?: Prisma.StringWithAggregatesFilter<"MatchLobby"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"MatchLobby"> | string
   game_type?: Prisma.EnumGameTypeWithAggregatesFilter<"MatchLobby"> | $Enums.GameType
   player_count?: Prisma.IntWithAggregatesFilter<"MatchLobby"> | number
   elo?: Prisma.IntWithAggregatesFilter<"MatchLobby"> | number
@@ -307,7 +307,7 @@ export type MatchLobbyScalarWhereWithAggregatesInput = {
 
 export type MatchLobbyCreateInput = {
   id?: string
-  cube_type: string
+  event_type: string
   game_type: $Enums.GameType
   player_count: number
   elo: number
@@ -319,7 +319,7 @@ export type MatchLobbyCreateInput = {
 export type MatchLobbyUncheckedCreateInput = {
   id?: string
   user_id: string
-  cube_type: string
+  event_type: string
   game_type: $Enums.GameType
   player_count: number
   elo: number
@@ -329,7 +329,7 @@ export type MatchLobbyUncheckedCreateInput = {
 
 export type MatchLobbyUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
   player_count?: Prisma.IntFieldUpdateOperationsInput | number
   elo?: Prisma.IntFieldUpdateOperationsInput | number
@@ -341,7 +341,7 @@ export type MatchLobbyUpdateInput = {
 export type MatchLobbyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
   player_count?: Prisma.IntFieldUpdateOperationsInput | number
   elo?: Prisma.IntFieldUpdateOperationsInput | number
@@ -352,7 +352,7 @@ export type MatchLobbyUncheckedUpdateInput = {
 export type MatchLobbyCreateManyInput = {
   id?: string
   user_id: string
-  cube_type: string
+  event_type: string
   game_type: $Enums.GameType
   player_count: number
   elo: number
@@ -362,7 +362,7 @@ export type MatchLobbyCreateManyInput = {
 
 export type MatchLobbyUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
   player_count?: Prisma.IntFieldUpdateOperationsInput | number
   elo?: Prisma.IntFieldUpdateOperationsInput | number
@@ -373,7 +373,7 @@ export type MatchLobbyUpdateManyMutationInput = {
 export type MatchLobbyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
   player_count?: Prisma.IntFieldUpdateOperationsInput | number
   elo?: Prisma.IntFieldUpdateOperationsInput | number
@@ -400,7 +400,7 @@ export type MatchLobbyOrderByRelevanceInput = {
 export type MatchLobbyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
   player_count?: Prisma.SortOrder
   elo?: Prisma.SortOrder
@@ -416,7 +416,7 @@ export type MatchLobbyAvgOrderByAggregateInput = {
 export type MatchLobbyMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
   player_count?: Prisma.SortOrder
   elo?: Prisma.SortOrder
@@ -427,7 +427,7 @@ export type MatchLobbyMaxOrderByAggregateInput = {
 export type MatchLobbyMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
   player_count?: Prisma.SortOrder
   elo?: Prisma.SortOrder
@@ -488,7 +488,7 @@ export type EnumGameTypeFieldUpdateOperationsInput = {
 
 export type MatchLobbyCreateWithoutUserInput = {
   id?: string
-  cube_type: string
+  event_type: string
   game_type: $Enums.GameType
   player_count: number
   elo: number
@@ -498,7 +498,7 @@ export type MatchLobbyCreateWithoutUserInput = {
 
 export type MatchLobbyUncheckedCreateWithoutUserInput = {
   id?: string
-  cube_type: string
+  event_type: string
   game_type: $Enums.GameType
   player_count: number
   elo: number
@@ -538,7 +538,7 @@ export type MatchLobbyScalarWhereInput = {
   NOT?: Prisma.MatchLobbyScalarWhereInput | Prisma.MatchLobbyScalarWhereInput[]
   id?: Prisma.StringFilter<"MatchLobby"> | string
   user_id?: Prisma.StringFilter<"MatchLobby"> | string
-  cube_type?: Prisma.StringFilter<"MatchLobby"> | string
+  event_type?: Prisma.StringFilter<"MatchLobby"> | string
   game_type?: Prisma.EnumGameTypeFilter<"MatchLobby"> | $Enums.GameType
   player_count?: Prisma.IntFilter<"MatchLobby"> | number
   elo?: Prisma.IntFilter<"MatchLobby"> | number
@@ -548,7 +548,7 @@ export type MatchLobbyScalarWhereInput = {
 
 export type MatchLobbyCreateManyUserInput = {
   id?: string
-  cube_type: string
+  event_type: string
   game_type: $Enums.GameType
   player_count: number
   elo: number
@@ -558,7 +558,7 @@ export type MatchLobbyCreateManyUserInput = {
 
 export type MatchLobbyUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
   player_count?: Prisma.IntFieldUpdateOperationsInput | number
   elo?: Prisma.IntFieldUpdateOperationsInput | number
@@ -568,7 +568,7 @@ export type MatchLobbyUpdateWithoutUserInput = {
 
 export type MatchLobbyUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
   player_count?: Prisma.IntFieldUpdateOperationsInput | number
   elo?: Prisma.IntFieldUpdateOperationsInput | number
@@ -578,7 +578,7 @@ export type MatchLobbyUncheckedUpdateWithoutUserInput = {
 
 export type MatchLobbyUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
   player_count?: Prisma.IntFieldUpdateOperationsInput | number
   elo?: Prisma.IntFieldUpdateOperationsInput | number
@@ -591,7 +591,7 @@ export type MatchLobbyUncheckedUpdateManyWithoutUserInput = {
 export type MatchLobbySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   user_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   game_type?: boolean
   player_count?: boolean
   elo?: boolean
@@ -603,7 +603,7 @@ export type MatchLobbySelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type MatchLobbySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   user_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   game_type?: boolean
   player_count?: boolean
   elo?: boolean
@@ -615,7 +615,7 @@ export type MatchLobbySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type MatchLobbySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   user_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   game_type?: boolean
   player_count?: boolean
   elo?: boolean
@@ -627,7 +627,7 @@ export type MatchLobbySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type MatchLobbySelectScalar = {
   id?: boolean
   user_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   game_type?: boolean
   player_count?: boolean
   elo?: boolean
@@ -635,7 +635,7 @@ export type MatchLobbySelectScalar = {
   client_id?: boolean
 }
 
-export type MatchLobbyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "cube_type" | "game_type" | "player_count" | "elo" | "created_at" | "client_id", ExtArgs["result"]["matchLobby"]>
+export type MatchLobbyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "event_type" | "game_type" | "player_count" | "elo" | "created_at" | "client_id", ExtArgs["result"]["matchLobby"]>
 export type MatchLobbyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
 }
@@ -654,7 +654,7 @@ export type $MatchLobbyPayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     user_id: string
-    cube_type: string
+    event_type: string
     game_type: $Enums.GameType
     player_count: number
     elo: number
@@ -1086,7 +1086,7 @@ export interface Prisma__MatchLobbyClient<T, Null = never, ExtArgs extends runti
 export interface MatchLobbyFieldRefs {
   readonly id: Prisma.FieldRef<"MatchLobby", 'String'>
   readonly user_id: Prisma.FieldRef<"MatchLobby", 'String'>
-  readonly cube_type: Prisma.FieldRef<"MatchLobby", 'String'>
+  readonly event_type: Prisma.FieldRef<"MatchLobby", 'String'>
   readonly game_type: Prisma.FieldRef<"MatchLobby", 'GameType'>
   readonly player_count: Prisma.FieldRef<"MatchLobby", 'Int'>
   readonly elo: Prisma.FieldRef<"MatchLobby", 'Int'>

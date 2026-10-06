@@ -1,6 +1,6 @@
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import {UserAccountSolvesSummary, UserAccountSummary} from '@/types/admin';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {getTimeString} from '@/util/time';
 import {CaretDown, Timer} from 'phosphor-react';
 import React from 'react';
@@ -23,10 +23,10 @@ function SolveTable({title, rows}: {title: string; rows: UserAccountSolvesSummar
 					</TableHeader>
 					<TableBody>
 						{rows.map((row) => (
-							<TableRow key={row.cube_type ?? 'unknown'}>
+							<TableRow key={row.event_type ?? 'unknown'}>
 								<TableCell className="font-medium">
-									{getCubeTypeInfoById(row.cube_type ?? '')?.name ??
-										row.cube_type ??
+									{getEventTypeInfoById(row.event_type ?? '')?.name ??
+										row.event_type ??
 										'Unknown'}
 								</TableCell>
 								<TableCell className="text-right tabular-nums">

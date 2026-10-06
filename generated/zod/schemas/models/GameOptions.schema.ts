@@ -6,7 +6,7 @@ export const GameOptionsSchema = z.object({
   game_session_id: z.string().nullable(),
   match_session_id: z.string().nullable(),
   game_type: GameTypeSchema,
-  cube_type: z.string().default("333"),
+  event_type: z.string().default("333"),
   elimination_starting_time_seconds: z.number().int().default(30),
   elimination_percent_change_rate: z.number().int().default(5),
   head_to_head_target_win_count: z.number().int().default(5),

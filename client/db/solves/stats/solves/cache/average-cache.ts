@@ -8,7 +8,7 @@ export function checkForAveragePBUpdate(solve: Solve, isNew: boolean) {
 	const cached = fetchAllSolveCaches({
 		type: 'avg_pb',
 		filterOptions: {
-			cube_type: solve.cube_type,
+			event_type: solve.event_type,
 		},
 	});
 
@@ -46,7 +46,7 @@ export function checkForAverageWorstUpdate(solve: Solve, isNew: boolean) {
 	const cached = fetchAllSolveCaches({
 		type: 'avg_worst',
 		filterOptions: {
-			cube_type: solve.cube_type,
+			event_type: solve.event_type,
 		},
 	});
 

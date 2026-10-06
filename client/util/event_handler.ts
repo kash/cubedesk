@@ -17,9 +17,9 @@ export interface ClientEvent {
 	settingsDbUpdatedEvent: SettingValue;
 	trainerDbUpdatedEvent: Partial<TrainerAlgorithmExtended> | null;
 	trainerDbDeletedEvent: Partial<TrainerAlgorithmExtended> | null;
-	singlePbEvent: string; // Cube type
-	avgPbEvent: string; // Cube type
-	singleAndAvgPbEvent: string; // Cube type
+	singlePbEvent: string; // Event type
+	avgPbEvent: string; // Event type
+	singleAndAvgPbEvent: string; // Event type
 }
 
 export function addEventListener<T extends keyof ClientEvent>(

@@ -1,8 +1,8 @@
-import CubePicker from '@/components/common/CubePicker';
+import EventPicker from '@/components/common/EventPicker';
 import HorizontalNav from '@/components/common/HorizontalNav';
 import {MatchPopupPage, useMatchPopupContext} from '@/components/play/match/match-popup/MatchPopup';
 import {Button} from '@/components/ui/button';
-import {CubeType} from '@/util/cubes/cube_types';
+import {EventType} from '@/util/cubes/event_types';
 import {ArrowRight} from 'phosphor-react';
 import React from 'react';
 
@@ -15,8 +15,8 @@ export default function CustomMatchOptions() {
 		context.setMinPlayers(count);
 	}
 
-	function selectCubeType(ct: CubeType) {
-		context.setCubeType(ct.id);
+	function selectEventType(ct: EventType) {
+		context.setEventType(ct.id);
 	}
 
 	function createMatch() {
@@ -27,13 +27,13 @@ export default function CustomMatchOptions() {
 		<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,auto))] gap-5">
 			<div className="border-tmo-module/10 box-border flex flex-col items-start rounded border-[3px] p-[15px]">
 				<div className="mb-1">
-					<h3>Cube Type</h3>
+					<h3>Event Type</h3>
 				</div>
-				<CubePicker
-					excludeCustomCubeTypes
-					excludeOtherCubeType
-					value={context.cubeType}
-					onChange={selectCubeType}
+				<EventPicker
+					excludeCustomEventTypes
+					excludeOtherEventType
+					value={context.eventType}
+					onChange={selectEventType}
 					pickerProps={{
 						openLeft: true,
 						triggerProps: {

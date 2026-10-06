@@ -1,6 +1,6 @@
 import {setTimerParam} from '@/components/timer/helpers/params';
 import {ITimerContext} from '@/components/timer/Timer';
-import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
+import {getEventTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
 import {Scrambow} from 'scrambow';
 
 // One scramble per scramble type, generated ahead of time. Scrambow's first scramble builds lookup tables that take
@@ -130,8 +130,8 @@ function getBlindWideMove() {
 }
 
 export function resetScramble(context: ITimerContext) {
-	const {cubeType, scrambleLocked, customScrambleFunc} = context;
-	const ct = getCubeTypeInfoById(cubeType ?? '');
+	const {eventType, scrambleLocked, customScrambleFunc} = context;
+	const ct = getEventTypeInfoById(eventType ?? '');
 
 	let newScramble;
 	if (customScrambleFunc) {
@@ -139,7 +139,7 @@ export function resetScramble(context: ITimerContext) {
 	} else if (scrambleLocked) {
 		return;
 	} else {
-		newScramble = getNewScramble(ct?.scramble ?? cubeType ?? '333');
+		newScramble = getNewScramble(ct?.scramble ?? eventType ?? '333');
 	}
 
 	setTimerParam('scramble', newScramble);

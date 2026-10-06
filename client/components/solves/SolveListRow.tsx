@@ -2,7 +2,7 @@ import Emblem from '@/components/common/Emblem';
 import {Badge} from '@/components/ui/badge';
 import Scramble from '@/components/modules/scramble/ScrambleVisual';
 import {Solve} from '@/types/solve';
-import {getCubeTypeName} from '@/util/cubes/util';
+import {getEventTypeName} from '@/util/cubes/util';
 import {getDateFromNow} from '@/util/dates';
 import {getTimeString} from '@/util/time';
 import classNames from 'classnames';
@@ -25,7 +25,7 @@ export default function SolveListRow(props: Props) {
 	const plusTwo = solve.plus_two;
 	const scramble = solve.scramble;
 	const smart = solve.is_smart_cube;
-	const cubeType = getCubeTypeName(solve.cube_type) || 'None';
+	const eventType = getEventTypeName(solve.event_type) || 'None';
 	const createdAt = getDateFromNow(solve.started_at ?? 0);
 
 	let plusTwoEmblem: React.ReactNode = null;
@@ -74,7 +74,7 @@ export default function SolveListRow(props: Props) {
 				<span className="text-text table text-xs opacity-80">{createdAt}</span>
 			</div>
 			<div className="flex w-full flex-col items-center justify-center gap-1">
-				<Emblem small className="mb-0" text={cubeType} />
+				<Emblem small className="mb-0" text={eventType} />
 				{(dnf || plusTwo || smart) && (
 					<div className="flex flex-wrap justify-center gap-1">
 						{dnfEmblem}
@@ -89,7 +89,7 @@ export default function SolveListRow(props: Props) {
 						frontFace
 						width="44px"
 						scramble={scramble}
-						cubeType={solve.cube_type}
+						eventType={solve.event_type}
 					/>
 				</div>
 			</div>

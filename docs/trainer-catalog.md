@@ -39,7 +39,7 @@ to roll back an individual algorithm edit; correct it in the admin editor or CSV
 
 - UTF-8 CSV, optionally with a BOM; 5 MiB maximum and 10,000 records maximum.
 - Quoted commas, escaped quotes, multiline fields, LF, and CRLF are supported.
-- Required headers: `id`, `name`, `cube_type`, `algo_type`. Header order is free.
+- Required headers: `id`, `name`, `event_type`, `algo_type`. Header order is free.
 - Optional headers: `active`, `solution`, `scrambles`, `group_name`, `img_link`,
   `colors`, `rotate`. The exported `pro_only` and `algo_type_id` columns are ignored.
 - Omitted optional fields default to empty strings, `active=true`, and `rotate=0`.

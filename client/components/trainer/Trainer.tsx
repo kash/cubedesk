@@ -17,15 +17,15 @@ import {Dialog, DialogClose, DialogContent, DialogTitle} from '@/components/ui/d
 import {Skeleton} from '@/components/ui/skeleton';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {
-	fetchTrainerAlgorithmCubeTypes,
+	fetchTrainerAlgorithmEventTypes,
 	fetchTrainerAlgorithmById,
 	fetchTrainerAlgorithms,
 	fetchTrainerAlgorithmTypes,
 	FilterTrainerOptions,
 } from '@/db/trainer/query';
 import {Solve} from '@/types/solve';
-import {CubeType} from '@/util/cubes/cube_types';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {EventType} from '@/util/cubes/event_types';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
 import {useTrainerDb} from '@/util/hooks/useTrainerDb';
 import Chance from 'chance';
@@ -38,7 +38,7 @@ import {useRouteMatch} from 'react-router-dom';
 import {v4 as uuid} from 'uuid';
 
 export interface ITrainerContext {
-	cubeType?: CubeType;
+	eventType?: EventType;
 	algoType: string;
 	filter: FilterTrainerOptions;
 	openTrainer: (
@@ -59,7 +59,7 @@ export function useTrainerContext(): ITrainerContext {
 }
 
 export const CUSTOM_TRAINER_ALGO_TYPE = 'Custom';
-const DEFAULT_ALGO_CUBE_TYPE = '333';
+const DEFAULT_ALGO_EVENT_TYPE = '333';
 const DEFAULT_ALGO_TYPE = 'OLL';
 
 export default function Trainer() {
@@ -74,13 +74,13 @@ export default function Trainer() {
 	const match = useRouteMatch();
 	const matchParams: any = match.params;
 
-	const urlCubeType = matchParams.cubeType || DEFAULT_ALGO_CUBE_TYPE;
+	const urlEventType = matchParams.eventType || DEFAULT_ALGO_EVENT_TYPE;
 	const urlAlgoType = matchParams.algoType || DEFAULT_ALGO_TYPE;
 
 	const [loaded, setLoaded] = useState(false);
 	const [loadError, setLoadError] = useState('');
 	const [loadAttempt, setLoadAttempt] = useState(0);
-	const [cubeType, setCubeType] = useState(urlCubeType);
+	const [eventType, setEventType] = useState(urlEventType);
 	const [algoType, setAlgoType] = useState(urlAlgoType);
 	const [favsOnly, toggleFavsOnly] = useToggle(false);
 
@@ -103,7 +103,7 @@ export default function Trainer() {
 	}, [loadAttempt]);
 
 	const filter: FilterTrainerOptions = {
-		cube_type: cubeType,
+		event_type: eventType,
 		algo_type: algoType,
 	};
 
@@ -121,7 +121,7 @@ export default function Trainer() {
 
 		const sessionId = uuid();
 		let solvesFilter: Partial<Solve> = {
-			cube_type: cubeType,
+			event_type: eventType,
 			training_session_id: sessionId,
 		};
 
@@ -131,7 +131,7 @@ export default function Trainer() {
 
 		if (trainingSessionType === 'single') {
 			solvesFilter = {
-				cube_type: cubeType,
+				event_type: eventType,
 				trainer_name: algo?.id,
 			};
 		} else if (trainingSessionType === 'favorites') {
@@ -169,7 +169,7 @@ export default function Trainer() {
 				ignorePbEvents: true,
 				inDialog: true,
 				headerOptions: {
-					hideCubeType: true,
+					hideEventType: true,
 					hideNewSession: true,
 					hideSessionSelector: true,
 					hideTimerType: true,
@@ -204,7 +204,7 @@ export default function Trainer() {
 					},
 				],
 				scrambleLocked: true,
-				cubeType: cubeType,
+				eventType: eventType,
 				solvesFilter: solvesFilter,
 				solvesSaveOverride: solvesOverride,
 				customScrambleFunc: (context) => getCustomScramble(context.sessionSolveCount),
@@ -213,18 +213,18 @@ export default function Trainer() {
 		});
 	}
 
-	const cubeTypes = useMemo(fetchTrainerAlgorithmCubeTypes, [loaded, updateCount]);
+	const eventTypes = useMemo(fetchTrainerAlgorithmEventTypes, [loaded, updateCount]);
 	const algoTypes = useMemo(
 		() =>
 			fetchTrainerAlgorithmTypes({
-				cube_type: cubeType,
+				event_type: eventType,
 			}),
-		[loaded, cubeType, updateCount],
+		[loaded, eventType, updateCount],
 	);
 
 	const algos = useMemo(
 		() => fetchTrainerAlgorithms(filter).sort(compareTrainerAlgorithms),
-		[cubeType, algoType, filter, loaded, updateCount],
+		[eventType, algoType, filter, loaded, updateCount],
 	);
 
 	const favCount = algos.reduce((acc, alg) => {
@@ -264,7 +264,7 @@ export default function Trainer() {
 
 	const context: ITrainerContext = {
 		openTrainer,
-		cubeType: getCubeTypeInfoById(cubeType),
+		eventType: getEventTypeInfoById(eventType),
 		algoType,
 		filter,
 	};
@@ -273,11 +273,11 @@ export default function Trainer() {
 		setAddCustomDialog({});
 	}
 
-	function selectCubeType(ct: string) {
-		setCubeType(ct);
+	function selectEventType(ct: string) {
+		setEventType(ct);
 
 		const newAlgoTypes = fetchTrainerAlgorithmTypes({
-			cube_type: ct,
+			event_type: ct,
 		});
 
 		let oldAlgValid = false;
@@ -298,7 +298,7 @@ export default function Trainer() {
 	function selectAlgoType(at: string) {
 		setAlgoType(at);
 
-		history.replaceState({}, '', window.location.origin + `/trainer/${cubeType}/${at}`);
+		history.replaceState({}, '', window.location.origin + `/trainer/${eventType}/${at}`);
 	}
 
 	let body: ReactNode;
@@ -322,12 +322,12 @@ export default function Trainer() {
 						<div className="flex flex-row items-start justify-between">
 							<div className="flex flex-row gap-2.5">
 								<SelectField
-									label="Trainer cube type"
-									value={cubeType}
-									onValueChange={selectCubeType}
-									options={cubeTypes.map((cube) => ({
+									label="Trainer event type"
+									value={eventType}
+									onValueChange={selectEventType}
+									options={eventTypes.map((cube) => ({
 										value: cube.value,
-										text: getCubeTypeInfoById(cube.value)?.name || cube.value,
+										text: getEventTypeInfoById(cube.value)?.name || cube.value,
 									}))}
 								/>
 								<SelectField

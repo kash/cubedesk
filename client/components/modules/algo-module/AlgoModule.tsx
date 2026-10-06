@@ -6,7 +6,7 @@ import {Button} from '@/components/ui/button';
 import {TrainerAlgorithmExtended} from '@/db/trainer/init';
 import {fetchTrainerAlgorithmById} from '@/db/trainer/query';
 import {useTrainerDb} from '@/util/hooks/useTrainerDb';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
 import React from 'react';
 
@@ -21,7 +21,7 @@ export default function AlgoModule(props: Props) {
 	const [showSolution, toggleShowSolution] = useToggle(false);
 
 	const algo = cleanTrainerAlgorithm(algoExt);
-	const cubeType = getCubeTypeInfoById(algoExt.cube_type);
+	const eventType = getEventTypeInfoById(algoExt.event_type);
 
 	return (
 		<>
@@ -31,7 +31,7 @@ export default function AlgoModule(props: Props) {
 						<div className="box-border pr-2.5">
 							<div className="mb-[15px] flex flex-row items-start gap-2.5 opacity-50">
 								<Badge variant="unfilled">
-									{cubeType?.name ?? algoExt.cube_type}
+									{eventType?.name ?? algoExt.event_type}
 								</Badge>
 								<Badge variant="unfilled">{algoExt.algo_type}</Badge>
 							</div>
@@ -42,7 +42,7 @@ export default function AlgoModule(props: Props) {
 							<AlgoVisual
 								colors={algo.colors ?? undefined}
 								rotate={algo.rotate ?? undefined}
-								cubeType={algo.cube_type}
+								eventType={algo.event_type}
 							/>
 						</div>
 					</div>

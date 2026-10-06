@@ -40,7 +40,7 @@ export type TrainerAlgorithmMinAggregateOutputType = {
   active: boolean | null
   solution: string | null
   scrambles: string | null
-  cube_type: string | null
+  event_type: string | null
   algo_type: string | null
   group_name: string | null
   img_link: string | null
@@ -56,7 +56,7 @@ export type TrainerAlgorithmMaxAggregateOutputType = {
   active: boolean | null
   solution: string | null
   scrambles: string | null
-  cube_type: string | null
+  event_type: string | null
   algo_type: string | null
   group_name: string | null
   img_link: string | null
@@ -72,7 +72,7 @@ export type TrainerAlgorithmCountAggregateOutputType = {
   active: number
   solution: number
   scrambles: number
-  cube_type: number
+  event_type: number
   algo_type: number
   group_name: number
   img_link: number
@@ -98,7 +98,7 @@ export type TrainerAlgorithmMinAggregateInputType = {
   active?: true
   solution?: true
   scrambles?: true
-  cube_type?: true
+  event_type?: true
   algo_type?: true
   group_name?: true
   img_link?: true
@@ -114,7 +114,7 @@ export type TrainerAlgorithmMaxAggregateInputType = {
   active?: true
   solution?: true
   scrambles?: true
-  cube_type?: true
+  event_type?: true
   algo_type?: true
   group_name?: true
   img_link?: true
@@ -130,7 +130,7 @@ export type TrainerAlgorithmCountAggregateInputType = {
   active?: true
   solution?: true
   scrambles?: true
-  cube_type?: true
+  event_type?: true
   algo_type?: true
   group_name?: true
   img_link?: true
@@ -233,7 +233,7 @@ export type TrainerAlgorithmGroupByOutputType = {
   active: boolean
   solution: string
   scrambles: string
-  cube_type: string
+  event_type: string
   algo_type: string
   group_name: string
   img_link: string
@@ -272,7 +272,7 @@ export type TrainerAlgorithmWhereInput = {
   active?: Prisma.BoolFilter<"TrainerAlgorithm"> | boolean
   solution?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   scrambles?: Prisma.StringFilter<"TrainerAlgorithm"> | string
-  cube_type?: Prisma.StringFilter<"TrainerAlgorithm"> | string
+  event_type?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   algo_type?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   group_name?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   img_link?: Prisma.StringFilter<"TrainerAlgorithm"> | string
@@ -288,7 +288,7 @@ export type TrainerAlgorithmOrderByWithRelationInput = {
   active?: Prisma.SortOrder
   solution?: Prisma.SortOrder
   scrambles?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   algo_type?: Prisma.SortOrder
   group_name?: Prisma.SortOrder
   img_link?: Prisma.SortOrder
@@ -308,7 +308,7 @@ export type TrainerAlgorithmWhereUniqueInput = Prisma.AtLeast<{
   active?: Prisma.BoolFilter<"TrainerAlgorithm"> | boolean
   solution?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   scrambles?: Prisma.StringFilter<"TrainerAlgorithm"> | string
-  cube_type?: Prisma.StringFilter<"TrainerAlgorithm"> | string
+  event_type?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   algo_type?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   group_name?: Prisma.StringFilter<"TrainerAlgorithm"> | string
   img_link?: Prisma.StringFilter<"TrainerAlgorithm"> | string
@@ -324,7 +324,7 @@ export type TrainerAlgorithmOrderByWithAggregationInput = {
   active?: Prisma.SortOrder
   solution?: Prisma.SortOrder
   scrambles?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   algo_type?: Prisma.SortOrder
   group_name?: Prisma.SortOrder
   img_link?: Prisma.SortOrder
@@ -348,7 +348,7 @@ export type TrainerAlgorithmScalarWhereWithAggregatesInput = {
   active?: Prisma.BoolWithAggregatesFilter<"TrainerAlgorithm"> | boolean
   solution?: Prisma.StringWithAggregatesFilter<"TrainerAlgorithm"> | string
   scrambles?: Prisma.StringWithAggregatesFilter<"TrainerAlgorithm"> | string
-  cube_type?: Prisma.StringWithAggregatesFilter<"TrainerAlgorithm"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"TrainerAlgorithm"> | string
   algo_type?: Prisma.StringWithAggregatesFilter<"TrainerAlgorithm"> | string
   group_name?: Prisma.StringWithAggregatesFilter<"TrainerAlgorithm"> | string
   img_link?: Prisma.StringWithAggregatesFilter<"TrainerAlgorithm"> | string
@@ -364,7 +364,7 @@ export type TrainerAlgorithmCreateInput = {
   active?: boolean
   solution?: string
   scrambles?: string
-  cube_type: string
+  event_type: string
   algo_type: string
   group_name?: string
   img_link?: string
@@ -380,7 +380,7 @@ export type TrainerAlgorithmUncheckedCreateInput = {
   active?: boolean
   solution?: string
   scrambles?: string
-  cube_type: string
+  event_type: string
   algo_type: string
   group_name?: string
   img_link?: string
@@ -396,7 +396,7 @@ export type TrainerAlgorithmUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   solution?: Prisma.StringFieldUpdateOperationsInput | string
   scrambles?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   algo_type?: Prisma.StringFieldUpdateOperationsInput | string
   group_name?: Prisma.StringFieldUpdateOperationsInput | string
   img_link?: Prisma.StringFieldUpdateOperationsInput | string
@@ -412,7 +412,7 @@ export type TrainerAlgorithmUncheckedUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   solution?: Prisma.StringFieldUpdateOperationsInput | string
   scrambles?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   algo_type?: Prisma.StringFieldUpdateOperationsInput | string
   group_name?: Prisma.StringFieldUpdateOperationsInput | string
   img_link?: Prisma.StringFieldUpdateOperationsInput | string
@@ -428,7 +428,7 @@ export type TrainerAlgorithmCreateManyInput = {
   active?: boolean
   solution?: string
   scrambles?: string
-  cube_type: string
+  event_type: string
   algo_type: string
   group_name?: string
   img_link?: string
@@ -444,7 +444,7 @@ export type TrainerAlgorithmUpdateManyMutationInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   solution?: Prisma.StringFieldUpdateOperationsInput | string
   scrambles?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   algo_type?: Prisma.StringFieldUpdateOperationsInput | string
   group_name?: Prisma.StringFieldUpdateOperationsInput | string
   img_link?: Prisma.StringFieldUpdateOperationsInput | string
@@ -460,7 +460,7 @@ export type TrainerAlgorithmUncheckedUpdateManyInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   solution?: Prisma.StringFieldUpdateOperationsInput | string
   scrambles?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   algo_type?: Prisma.StringFieldUpdateOperationsInput | string
   group_name?: Prisma.StringFieldUpdateOperationsInput | string
   img_link?: Prisma.StringFieldUpdateOperationsInput | string
@@ -482,7 +482,7 @@ export type TrainerAlgorithmCountOrderByAggregateInput = {
   active?: Prisma.SortOrder
   solution?: Prisma.SortOrder
   scrambles?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   algo_type?: Prisma.SortOrder
   group_name?: Prisma.SortOrder
   img_link?: Prisma.SortOrder
@@ -502,7 +502,7 @@ export type TrainerAlgorithmMaxOrderByAggregateInput = {
   active?: Prisma.SortOrder
   solution?: Prisma.SortOrder
   scrambles?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   algo_type?: Prisma.SortOrder
   group_name?: Prisma.SortOrder
   img_link?: Prisma.SortOrder
@@ -518,7 +518,7 @@ export type TrainerAlgorithmMinOrderByAggregateInput = {
   active?: Prisma.SortOrder
   solution?: Prisma.SortOrder
   scrambles?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   algo_type?: Prisma.SortOrder
   group_name?: Prisma.SortOrder
   img_link?: Prisma.SortOrder
@@ -540,7 +540,7 @@ export type TrainerAlgorithmSelect<ExtArgs extends runtime.Types.Extensions.Inte
   active?: boolean
   solution?: boolean
   scrambles?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   algo_type?: boolean
   group_name?: boolean
   img_link?: boolean
@@ -556,7 +556,7 @@ export type TrainerAlgorithmSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   active?: boolean
   solution?: boolean
   scrambles?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   algo_type?: boolean
   group_name?: boolean
   img_link?: boolean
@@ -572,7 +572,7 @@ export type TrainerAlgorithmSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   active?: boolean
   solution?: boolean
   scrambles?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   algo_type?: boolean
   group_name?: boolean
   img_link?: boolean
@@ -588,7 +588,7 @@ export type TrainerAlgorithmSelectScalar = {
   active?: boolean
   solution?: boolean
   scrambles?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   algo_type?: boolean
   group_name?: boolean
   img_link?: boolean
@@ -598,7 +598,7 @@ export type TrainerAlgorithmSelectScalar = {
   updated_at?: boolean
 }
 
-export type TrainerAlgorithmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "active" | "solution" | "scrambles" | "cube_type" | "algo_type" | "group_name" | "img_link" | "colors" | "rotate" | "created_at" | "updated_at", ExtArgs["result"]["trainerAlgorithm"]>
+export type TrainerAlgorithmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "active" | "solution" | "scrambles" | "event_type" | "algo_type" | "group_name" | "img_link" | "colors" | "rotate" | "created_at" | "updated_at", ExtArgs["result"]["trainerAlgorithm"]>
 
 export type $TrainerAlgorithmPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TrainerAlgorithm"
@@ -609,7 +609,7 @@ export type $TrainerAlgorithmPayload<ExtArgs extends runtime.Types.Extensions.In
     active: boolean
     solution: string
     scrambles: string
-    cube_type: string
+    event_type: string
     algo_type: string
     group_name: string
     img_link: string
@@ -1045,7 +1045,7 @@ export interface TrainerAlgorithmFieldRefs {
   readonly active: Prisma.FieldRef<"TrainerAlgorithm", 'Boolean'>
   readonly solution: Prisma.FieldRef<"TrainerAlgorithm", 'String'>
   readonly scrambles: Prisma.FieldRef<"TrainerAlgorithm", 'String'>
-  readonly cube_type: Prisma.FieldRef<"TrainerAlgorithm", 'String'>
+  readonly event_type: Prisma.FieldRef<"TrainerAlgorithm", 'String'>
   readonly algo_type: Prisma.FieldRef<"TrainerAlgorithm", 'String'>
   readonly group_name: Prisma.FieldRef<"TrainerAlgorithm", 'String'>
   readonly img_link: Prisma.FieldRef<"TrainerAlgorithm", 'String'>

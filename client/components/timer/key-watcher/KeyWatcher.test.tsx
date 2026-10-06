@@ -39,7 +39,7 @@ jest.mock('@/components/timer/helpers/timers', () => ({
 }));
 jest.mock('@/components/timer/helpers/util', () => ({smartCubeSelected: () => false}));
 jest.mock('@/db/settings/query', () => ({getSettings: () => ({freeze_time: 0})}));
-jest.mock('@/util/cubes/util', () => ({getCubeTypeInfoById: () => ({id: '333'})}));
+jest.mock('@/util/cubes/util', () => ({getEventTypeInfoById: () => ({id: '333'})}));
 jest.mock('@/util/hooks/useListener', () => ({
 	useDocumentListener: jest.fn(),
 	useWindowListener: (name, handler) => {
@@ -74,7 +74,7 @@ beforeEach(() => {
 	mockDialogBlocked = false;
 	mockPopupOpen = false;
 	mockFocusedTarget = null;
-	mockContext = {cubeType: '333', startEnabled: true};
+	mockContext = {eventType: '333', startEnabled: true};
 });
 afterEach(() => {
 	jest.restoreAllMocks();

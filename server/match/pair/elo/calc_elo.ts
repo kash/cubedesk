@@ -1,4 +1,4 @@
-import {UserEloForCubeType} from '@/server/models/elo_rating';
+import {UserEloForEventType} from '@/server/models/elo_rating';
 import EloRank from 'elo-rank';
 
 export enum EloConst {
@@ -18,9 +18,9 @@ interface EloWinLoseChange {
 }
 
 export interface EloUpdatePayload {
-	winner: UserEloForCubeType;
-	loser: UserEloForCubeType;
-	cubeType: string;
+	winner: UserEloForEventType;
+	loser: UserEloForEventType;
+	eventType: string;
 	winnerEloChange: number;
 	loserEloChange: number;
 	winnerNewElo: number;
@@ -28,9 +28,9 @@ export interface EloUpdatePayload {
 }
 
 export function calculateNewElo(
-	cubeType: string,
-	winner: UserEloForCubeType,
-	loser: UserEloForCubeType
+	eventType: string,
+	winner: UserEloForEventType,
+	loser: UserEloForEventType
 ): EloUpdatePayload {
 	const winnerEloInfo = getEloGainLoss(winner.elo, winner.games, loser.elo);
 	const loserEloInfo = getEloGainLoss(loser.elo, loser.games, winner.elo);
@@ -42,7 +42,7 @@ export function calculateNewElo(
 	return {
 		winner,
 		loser,
-		cubeType,
+		eventType,
 		winnerNewElo,
 		loserNewElo,
 		winnerEloChange: winnerEloInfo.win,

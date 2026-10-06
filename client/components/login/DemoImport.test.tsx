@@ -36,7 +36,7 @@ jest.mock('@/components/ui/dialog', () => ({
 	),
 }));
 jest.mock('@/util/cubes/util', () => ({
-	getCubeTypeName: (id) => ({'333': '3x3', '222': '2x2'})[id],
+	getEventTypeName: (id) => ({'333': '3x3', '222': '2x2'})[id],
 }));
 jest.mock('@/util/trpc', () => ({
 	trpc: {
@@ -50,7 +50,7 @@ const solve = {
 	id: '8f16a418-475a-4a30-a95a-5a283eea2242',
 	raw_time: 12.5,
 	time: 14.5,
-	cube_type: '333',
+	event_type: '333',
 	scramble: 'R U',
 	started_at: 1000,
 	ended_at: 13500,
@@ -74,7 +74,7 @@ beforeEach(() => {
 it('shows a compact mixed-puzzle summary and no destination picker for signup', () => {
 	const html = renderToStaticMarkup(
 		<DemoSolveImportDialog
-			pending={{mode: 'signup', redirect: '/', solves: [solve, {...solve, cube_type: '222'}]}}
+			pending={{mode: 'signup', redirect: '/', solves: [solve, {...solve, event_type: '222'}]}}
 			onComplete={() => {}}
 		/>,
 	);

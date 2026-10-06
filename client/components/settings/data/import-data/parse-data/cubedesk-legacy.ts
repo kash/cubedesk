@@ -64,11 +64,11 @@ export function parseCubeDeskLegacyData(txt: string, context: IImportDataContext
 }
 
 function getSessionSolves(newSession: SessionInput, sessionMap: LegacySession) {
-	const cubeTypes = Object.keys(sessionMap.solves);
+	const eventTypes = Object.keys(sessionMap.solves);
 
 	const output: Solve[] = [];
 
-	for (const ct of cubeTypes) {
+	for (const ct of eventTypes) {
 		const solves = sessionMap.solves[ct];
 		for (const solve of solves) {
 			const newSolve = convertSolveArrayToObject(solve);
@@ -85,7 +85,7 @@ function getSessionSolves(newSession: SessionInput, sessionMap: LegacySession) {
 const solveArrayIndexMapping: (keyof Solve)[] = [
 	'time',
 	'raw_time',
-	'cube_type',
+	'event_type',
 	'scramble',
 	'session_id',
 	'started_at',

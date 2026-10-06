@@ -1,16 +1,16 @@
 import {ITimerContext} from '@/components/timer/Timer';
 import {getSetting} from '@/db/settings/query';
-import {isSmartCubeType} from '@/util/smart-cube/puzzle';
+import {isSmartCubeEvent} from '@/util/smart-cube/puzzle';
 
 export function smartCubeSelected(context: ITimerContext) {
 	const timerType = getSetting('timer_type');
-	const {cubeType} = context;
+	const {eventType} = context;
 
-	return timerType === 'smart' && isSmartCubeType(cubeType);
+	return timerType === 'smart' && isSmartCubeEvent(eventType);
 }
 
-/** The connected smart cube is a different puzzle than the selected cube type, so its solves can't be timed */
+/** The connected smart cube is a different puzzle than the selected event type, so its solves can't be timed */
 export function smartCubeMismatched(context: ITimerContext) {
-	const {smartCubePuzzle, cubeType} = context;
-	return !!smartCubePuzzle && smartCubePuzzle !== cubeType;
+	const {smartCubePuzzle, eventType} = context;
+	return !!smartCubePuzzle && smartCubePuzzle !== eventType;
 }

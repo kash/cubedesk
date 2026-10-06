@@ -12,13 +12,13 @@ export default function HeadToHead() {
 			loaded
 			multiplayer
 			multiplayerOnly
-			defaultCubeType="333"
+			defaultEventType="333"
 			getSolveRowInfo={getHeadToHeadSolveRowInfo}
 			getPlayerStatusInfo={getHeadToHeadPlayerStatusInfo}
 			gameType={GameType.HEAD_TO_HEAD}
 			visual1={<TargetTimes reverse />}
 			visual2={<MatchModule />}
-			visual3={(context) => <ScrambleVisual scramble={context.scramble} cubeType={context.cubeType} />}
+			visual3={(context) => <ScrambleVisual scramble={context.scramble} eventType={context.eventType} />}
 		/>
 	);
 }

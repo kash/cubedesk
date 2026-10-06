@@ -3,7 +3,7 @@ import {adminTrainerRouter} from '@/server/trpc/routers/admin_trainer';
 import {authRouter} from '@/server/trpc/routers/auth';
 import {badgeRouter} from '@/server/trpc/routers/badge';
 import {bulkActionsRouter} from '@/server/trpc/routers/bulk_actions';
-import {customCubeTypeRouter} from '@/server/trpc/routers/custom_cube_type';
+import {customEventTypeRouter} from '@/server/trpc/routers/custom_event_type';
 import {customTrainerRouter} from '@/server/trpc/routers/custom_trainer';
 import {demoSolveRouter} from '@/server/trpc/routers/demo_solve';
 import {forgotPasswordRouter} from '@/server/trpc/routers/forgot_password';
@@ -42,7 +42,7 @@ export const appRouter = router({
 	trainer: trainerRouter,
 	friendship: friendshipRouter,
 	leaderboards: leaderboardsRouter,
-	customCubeType: customCubeTypeRouter,
+	customEventType: customEventTypeRouter,
 	bulkActions: bulkActionsRouter,
 	game: gameRouter,
 	integration: integrationRouter,

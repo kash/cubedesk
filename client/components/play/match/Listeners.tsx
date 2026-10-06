@@ -9,7 +9,7 @@ import {listenForMatchUpdates} from '@/components/play/match/events/update';
 import {listenForMatchWarnings} from '@/components/play/match/events/warnings';
 import {useMatchContext} from '@/components/play/match/Match';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import {getHashCode} from '@/util/strings/util';
 import {toastError} from '@/util/toast';
@@ -23,7 +23,7 @@ export default function Listeners(props: Props) {
 	const me = useMe();
 	const gameContext = useContext(GameContext);
 	const matchContext = useMatchContext();
-	const {solveIndex, matchLoaded, setScramble, match, cubeType} = matchContext;
+	const {solveIndex, matchLoaded, setScramble, match, eventType} = matchContext;
 
 	useEffect(() => {
 		setScramble(getScramble());
@@ -36,8 +36,8 @@ export default function Listeners(props: Props) {
 			seed = getHashCode(match.id) + solveIndex;
 		}
 
-		const ct = getCubeTypeInfoById(cubeType);
-		return getNewScramble(ct?.scramble ?? cubeType, seed);
+		const ct = getEventTypeInfoById(eventType);
+		return getNewScramble(ct?.scramble ?? eventType, seed);
 	}
 
 	handleOpenMatchLink();

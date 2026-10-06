@@ -1,7 +1,7 @@
 import {FetchOptions, RecordQuery} from '@/db/memory/query';
 import {getSolveDb} from '@/db/solves/init';
 import {Solve} from '@/types/solve';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 
 export type FilterSolvesOptions = RecordQuery<Solve>;
 export type SolveFetchOptions = FetchOptions<Solve>;
@@ -14,8 +14,8 @@ export function fetchSolve(solve: string | Pick<Solve, 'id'>): Solve | null {
 	return getSolveDb().get(typeof solve === 'string' ? solve : solve.id);
 }
 
-export function fetchLastCubeTypeForSession(sessionId: string): string | null {
-	return fetchLastSolve({session_id: sessionId})?.cube_type ?? null;
+export function fetchLastEventTypeForSession(sessionId: string): string | null {
+	return fetchLastSolve({session_id: sessionId})?.event_type ?? null;
 }
 
 // Same as fetchSolves but returns the first in array (if any)
@@ -29,14 +29,14 @@ export function fetchSingleSolve(options: FilterSolvesOptions = {}, fetchOptions
 	return solves[0];
 }
 
-export function fetchAllCubeTypesSolved(defaultsOnly: boolean = false) {
-	type CubeTypeCount = {
-		cube_type: string;
+export function fetchAllEventTypesSolved(defaultsOnly: boolean = false) {
+	type EventTypeCount = {
+		event_type: string;
 		count: number;
 	};
 
 	const typeListMap: Record<string, number> = {};
-	const list: CubeTypeCount[] = [];
+	const list: EventTypeCount[] = [];
 	const solves = fetchSolves({
 		dnf: false,
 		from_timer: true,
@@ -44,19 +44,19 @@ export function fetchAllCubeTypesSolved(defaultsOnly: boolean = false) {
 	});
 
 	for (const solve of solves) {
-		const cubeType = solve.cube_type;
-		const ct = getCubeTypeInfoById(cubeType);
+		const eventType = solve.event_type;
+		const ct = getEventTypeInfoById(eventType);
 		if (!ct || (defaultsOnly && !ct.default)) {
 			continue;
 		}
 
-		if (cubeType in typeListMap) {
-			const index = typeListMap[cubeType];
+		if (eventType in typeListMap) {
+			const index = typeListMap[eventType];
 			list[index].count++;
 		} else {
-			typeListMap[cubeType] = list.length;
+			typeListMap[eventType] = list.length;
 			list.push({
-				cube_type: cubeType,
+				event_type: eventType,
 				count: 1,
 			});
 		}

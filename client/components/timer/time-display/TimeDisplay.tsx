@@ -6,7 +6,7 @@ import StackMat from '@/components/timer/time-display/stackmat/StackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
 import {useTimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
-import {getCubeTypeName} from '@/util/cubes/util';
+import {getEventTypeName} from '@/util/cubes/util';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getTimeString} from '@/util/time';
@@ -134,7 +134,7 @@ export default function TimeDisplay() {
 		if (context.smartCubePuzzle && smartCubeMismatched(context)) {
 			bottomInfo = (
 				<StartInstructions>
-					Switch to <span>{getCubeTypeName(context.smartCubePuzzle)}</span> to start
+					Switch to <span>{getEventTypeName(context.smartCubePuzzle)}</span> to start
 				</StartInstructions>
 			);
 		} else if (smartCubeNeedsSolve) {

@@ -67,7 +67,7 @@ suite('import transactions in PostgreSQL', () => {
 			source: 'cstimer',
 			sessions: [{id: sessionId, name: 'Imported'}],
 			solves: [
-				{time, cube_type: '333', session_id: sessionId, started_at: 1000, ended_at: 13000},
+				{time, event_type: '333', session_id: sessionId, started_at: 1000, ended_at: 13000},
 			],
 		};
 	}

@@ -1,8 +1,8 @@
 import {Combobox} from '@/components/ui/combobox';
 import {useSessionDb} from '@/util/hooks/useSessionDb';
 import {fetchSessionById, fetchSessions} from '@/db/sessions/query';
-import {setCubeType, setCurrentSession} from '@/db/settings/update';
-import {fetchLastCubeTypeForSession} from '@/db/solves/query';
+import {setCurrentSession, setEventType} from '@/db/settings/update';
+import {fetchLastEventTypeForSession} from '@/db/solves/query';
 import {Session} from '@/types/session';
 import {useSettings} from '@/util/hooks/useSettings';
 import {CaretDown} from 'phosphor-react';
@@ -37,8 +37,8 @@ export default function SessionPicker(props: Props) {
 
 		setCurrentSession(session.id);
 
-		const lastCubeType = fetchLastCubeTypeForSession(session.id);
-		setCubeType(lastCubeType || '333');
+		const lastEventType = fetchLastEventTypeForSession(session.id);
+		setEventType(lastEventType || '333');
 	}
 
 	let sessionName = 'Select Session';

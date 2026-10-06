@@ -33,7 +33,7 @@ interface MatchProps {
 	minPlayers: number;
 	maxPlayers: number;
 	updateSolves: (solves: Solve[]) => void;
-	cubeType: string;
+	eventType: string;
 	solveIndex: number;
 	onSolve: (solve: Solve, match?: MatchSchema) => void;
 	timerParams: TimerProps;

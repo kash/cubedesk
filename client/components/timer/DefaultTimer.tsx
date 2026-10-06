@@ -6,7 +6,7 @@ import React from 'react';
 
 export default function DefaultTimer() {
 	const me = useMe();
-	const cubeType = useSettings('cube_type');
+	const eventType = useSettings('event_type');
 	const sessionId = useSettings('session_id');
 
 	useSolveDb();
@@ -14,7 +14,7 @@ export default function DefaultTimer() {
 	const timerSolveData = {
 		session_id: me ? sessionId : 'demo',
 		from_timer: true,
-		cube_type: cubeType,
+		event_type: eventType,
 	};
 
 	return <Timer demoMode={!me} solvesFilter={timerSolveData} />;

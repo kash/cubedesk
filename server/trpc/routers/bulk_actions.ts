@@ -1,9 +1,9 @@
-import {getCustomCubeTypesByUserId} from '@/server/models/custom_cube_type';
+import {getCustomEventTypesByUserId} from '@/server/models/custom_event_type';
 import {getSessionById} from '@/server/models/session';
 import {bulkDeleteSolves, bulkDnfSolves, bulkOkSolves, bulkPlusTwoSolves, bulkUpdateSolves} from '@/server/models/solve';
 import {bumpOfflineHash} from '@/server/models/user_account';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
-import {getDefaultCubeTypes} from '@/util/cubes/util';
+import {getDefaultEventTypes} from '@/util/cubes/util';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 
@@ -53,23 +53,23 @@ export const bulkActionsRouter = router({
 
 	okSolves: bulkProcedure.input(solveIdsInput).mutation(({ctx, input}) => bulkOkSolves(ctx.user.id, input.solveIds)),
 
-	updateCubeType: bulkProcedure
+	updateEventType: bulkProcedure
 		.input(
 			solveIdsInput.extend({
-				cubeType: z.string(),
+				eventType: z.string(),
 			})
 		)
 		.mutation(async ({ctx, input}) => {
-			const defaultCubeTypes = getDefaultCubeTypes();
-			const customCubeTypes = await getCustomCubeTypesByUserId(ctx.user.id);
+			const defaultEventTypes = getDefaultEventTypes();
+			const customEventTypes = await getCustomEventTypesByUserId(ctx.user.id);
 
-			const validCubeType = [...defaultCubeTypes, ...customCubeTypes].some((ct) => ct.id === input.cubeType);
-			if (!validCubeType) {
-				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid cube type'});
+			const validEventType = [...defaultEventTypes, ...customEventTypes].some((ct) => ct.id === input.eventType);
+			if (!validEventType) {
+				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid event type'});
 			}
 
 			const updated = await bulkUpdateSolves(ctx.user.id, input.solveIds, {
-				cube_type: input.cubeType,
+				event_type: input.eventType,
 			});
 			return updated.count;
 		}),

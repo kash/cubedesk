@@ -23,6 +23,13 @@ export async function fetchTrainerAlgorithms(): Promise<TrainerAlgorithm[]> {
 			'The legacy trainer catalog is invalid. An administrator needs to import the CSV.',
 		);
 	return parsed
-		.map((record) => trainerAlgorithmSchema.parse(record))
+		.map((record) => trainerAlgorithmSchema.parse(withEventType(record)))
 		.filter((record) => record.active);
+}
+
+// The legacy catalog was written before cube_type was renamed to event_type
+function withEventType(record: unknown) {
+	if (!record || typeof record !== 'object' || !('cube_type' in record)) return record;
+	const {cube_type, ...rest} = record as Record<string, unknown>;
+	return {event_type: cube_type, ...rest};
 }

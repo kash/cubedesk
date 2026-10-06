@@ -32,7 +32,7 @@ it.each([false, true])('toggles favorite=%s after reloading saved overrides', (f
 	const algo = resetTrainerDb().insert({
 		id: 'case-id',
 		name: 'Original case',
-		cube_type: '333',
+		event_type: '333',
 		algo_type: 'OLL',
 		favorite,
 		overrides: savedOverride,

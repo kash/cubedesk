@@ -1,4 +1,4 @@
-import CubePicker from '@/components/common/CubePicker';
+import EventPicker from '@/components/common/EventPicker';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import SelectField from '@/components/common/inputs/SelectField';
 import {LogoBrandmark, LogoLockup} from '@/components/common/Logo';
@@ -17,12 +17,12 @@ import {
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
 import {AllSettings} from '@/db/settings/query';
-import {setCubeType, setSetting} from '@/db/settings/update';
+import {setEventType, setSetting} from '@/db/settings/update';
 import {toggleSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
-import {isSmartCubeType} from '@/util/smart-cube/puzzle';
+import {isSmartCubeEvent} from '@/util/smart-cube/puzzle';
 import {useTheme} from '@/util/hooks/useTheme';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
 import screenfull from '@/util/vendor/screenfull';
@@ -51,7 +51,7 @@ export default function HeaderControl() {
 	const backgroundColor = useTheme('background_color');
 	const moduleColor = useTheme('module_color');
 	const context = useTimerContext();
-	const {focusMode, cubeType} = context;
+	const {focusMode, eventType} = context;
 	const headerOptions = context.headerOptions || {};
 
 	const mobileMode = useGeneral('mobile_mode');
@@ -75,8 +75,8 @@ export default function HeaderControl() {
 		setCreateNewSessionDialog({});
 	}
 
-	function changeCubeType(cubeTypeId: string) {
-		setCubeType(cubeTypeId);
+	function changeEventType(eventTypeId: string) {
+		setEventType(eventTypeId);
 	}
 
 	function selectTimerType(timerType: AllSettings['timer_type']) {
@@ -90,17 +90,17 @@ export default function HeaderControl() {
 	const handlers = {
 		TOGGLE_INSPECTION_MODE: () => toggleSetting('inspection'),
 		TOGGLE_FOCUS_MODE: () => toggleSetting('focus_mode'),
-		CHANGE_CUBE_222: () => changeCubeType('222'),
-		CHANGE_CUBE_333: () => changeCubeType('333'),
-		CHANGE_CUBE_444: () => changeCubeType('444'),
-		CHANGE_CUBE_555: () => changeCubeType('555'),
-		CHANGE_CUBE_666: () => changeCubeType('666'),
-		CHANGE_CUBE_777: () => changeCubeType('777'),
-		CHANGE_CUBE_PYRAM: () => changeCubeType('pyram'),
-		CHANGE_CUBE_MINX: () => changeCubeType('minx'),
-		CHANGE_CUBE_CLOCK: () => changeCubeType('clock'),
-		CHANGE_CUBE_SKEWB: () => changeCubeType('skewb'),
-		CHANGE_CUBE_OTHER: () => changeCubeType('other'),
+		CHANGE_CUBE_222: () => changeEventType('222'),
+		CHANGE_CUBE_333: () => changeEventType('333'),
+		CHANGE_CUBE_444: () => changeEventType('444'),
+		CHANGE_CUBE_555: () => changeEventType('555'),
+		CHANGE_CUBE_666: () => changeEventType('666'),
+		CHANGE_CUBE_777: () => changeEventType('777'),
+		CHANGE_CUBE_PYRAM: () => changeEventType('pyram'),
+		CHANGE_CUBE_MINX: () => changeEventType('minx'),
+		CHANGE_CUBE_CLOCK: () => changeEventType('clock'),
+		CHANGE_CUBE_SKEWB: () => changeEventType('skewb'),
+		CHANGE_CUBE_OTHER: () => changeEventType('other'),
 	};
 
 	let manualDisabled = false;
@@ -108,11 +108,11 @@ export default function HeaderControl() {
 		manualDisabled = true;
 	}
 
-	const cubePicker = !focusMode && !headerOptions.hideCubeType && (
-		<CubePicker
+	const cubePicker = !focusMode && !headerOptions.hideEventType && (
+		<EventPicker
 			pickerProps={{openLeft: true, noMargin: true, searchable: !mobileMode}}
-			value={cubeType ?? ''}
-			onChange={(ct) => changeCubeType(ct.id)}
+			value={eventType ?? ''}
+			onChange={(ct) => changeEventType(ct.id)}
 		/>
 	);
 
@@ -168,7 +168,7 @@ export default function HeaderControl() {
 				options={[
 					{value: 'keyboard', text: 'Keyboard'},
 					{value: 'stackmat', text: 'StackMat'},
-					{value: 'smart', text: 'Smart Cube', disabled: !isSmartCubeType(cubeType)},
+					{value: 'smart', text: 'Smart Cube', disabled: !isSmartCubeEvent(eventType)},
 					{value: 'gantimer', text: 'GAN Smart Timer'},
 				]}
 			/>

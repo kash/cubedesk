@@ -1,5 +1,5 @@
-import CubePicker from '@/components/common/CubePicker';
 import Empty from '@/components/common/Empty';
+import EventPicker from '@/components/common/EventPicker';
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import {ActionMenuOption} from '@/components/common/inputs/ActionMenu';
 import Loading from '@/components/common/Loading';
@@ -13,7 +13,7 @@ import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {fetchSolveCount, fetchSolves, FilterSolvesOptions, SolveFetchOptions} from '@/db/solves/query';
 import {Solve} from '@/types/solve';
-import {CubeType} from '@/util/cubes/cube_types';
+import {EventType} from '@/util/cubes/event_types';
 import {useMe} from '@/util/hooks/useMe';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {numberWithCommas} from '@/util/strings/util';
@@ -34,7 +34,7 @@ export default function SolvesList() {
 
 	const me = useMe();
 
-	const [cubeType, setCubeType] = useState('333');
+	const [eventType, setEventType] = useState('333');
 	const [page, setPage] = useState(0);
 	const [moreResults, setMoreResults] = useState(true);
 	const [totalResults, setTotalResults] = useState(0);
@@ -54,7 +54,7 @@ export default function SolvesList() {
 		setTotalResults(() => results);
 		setMoreResults(() => moreResults);
 		setSolves(() => list);
-	}, [updateCount, cubeType, jsonStr(filters), page, sortBy, sortInverse, cubeType]);
+	}, [updateCount, eventType, jsonStr(filters), page, sortBy, sortInverse, eventType]);
 
 	function fetchSolvesWithFilter(removeLimit: boolean = false) {
 		const finalFilter = getFinalFilter();
@@ -76,7 +76,7 @@ export default function SolvesList() {
 		return {
 			...filters,
 			from_timer: true,
-			cube_type: cubeType,
+			event_type: eventType,
 		};
 	}
 
@@ -107,10 +107,10 @@ export default function SolvesList() {
 		setFilters(filt);
 	}
 
-	function changeCubeType(cubeType: CubeType) {
+	function changeEventType(eventType: EventType) {
 		setPage(0);
-		setCubeType(cubeType.id);
-		filters.cube_type = cubeType.id;
+		setEventType(eventType.id);
+		filters.event_type = eventType.id;
 	}
 
 	function changeSortBy(value: keyof Solve) {
@@ -181,12 +181,12 @@ export default function SolvesList() {
 
 					<div className="container mx-auto flex max-w-2xl flex-col gap-2">
 						<div className="container mb-2 flex flex-row flex-wrap items-center gap-2">
-							<CubePicker
+							<EventPicker
 								pickerProps={{
 									openLeft: true,
 								}}
-								value={cubeType}
-								onChange={changeCubeType}
+								value={eventType}
+								onChange={changeEventType}
 							/>
 							<ActionMenu
 								openLeft

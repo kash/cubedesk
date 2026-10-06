@@ -4,8 +4,8 @@ import ActionMenu from '@/components/common/inputs/ActionMenu';
 import {Button} from '@/components/ui/button';
 import {fetchSessionById} from '@/db/sessions/query';
 import {createSessionDb, deleteSessionDb, mergeSessionsDb} from '@/db/sessions/update';
-import {setCubeType, setCurrentSession} from '@/db/settings/update';
-import {fetchLastCubeTypeForSession} from '@/db/solves/query';
+import {setCurrentSession, setEventType} from '@/db/settings/update';
+import {fetchLastEventTypeForSession} from '@/db/solves/query';
 import {Session as SessionSchema} from '@/types/session';
 import {cn} from '@/util/cn';
 import {getDateFromNow} from '@/util/dates';
@@ -56,11 +56,11 @@ export default function Session(props: Props) {
 	const sessionIsSelected = selectedSessionId === session.id;
 	const isCurrentSession = session.id === currentSessionId;
 
-	const lastCubeType = fetchLastCubeTypeForSession(session.id) || '333';
+	const lastEventType = fetchLastEventTypeForSession(session.id) || '333';
 
 	function makeCurrent() {
 		setCurrentSession(session.id);
-		setCubeType(lastCubeType);
+		setEventType(lastEventType);
 	}
 
 	async function mergeSessions() {
@@ -96,7 +96,7 @@ export default function Session(props: Props) {
 				});
 
 				setCurrentSession(newId);
-				setCubeType('333');
+				setEventType('333');
 
 				updatedSessionId = newId;
 			}

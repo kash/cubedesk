@@ -5,7 +5,7 @@ import {z} from 'zod';
 const demoSolveInputSchema = z.object({
 	demo_session_id: z.string(),
 	raw_time: z.number().nullish(),
-	cube_type: z.string().nullish(),
+	event_type: z.string().nullish(),
 	scramble: z.string().nullish(),
 	started_at: z.number().int().nullish(),
 	ended_at: z.number().int().nullish(),

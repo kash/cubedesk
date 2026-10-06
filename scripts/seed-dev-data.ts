@@ -72,7 +72,7 @@ export function buildSeedData(userId: string, now = new Date()) {
 					id: id(`solve:${event.type}:${day}:${index}`),
 					user_id: userId,
 					session_id: sessionId,
-					cube_type: event.type,
+					event_type: event.type,
 					raw_time: rawTime,
 					time: rawTime + (plusTwo ? 2 : 0),
 					dnf,
