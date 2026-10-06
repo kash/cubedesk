@@ -24,6 +24,7 @@ import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
 import {useSettings} from '@/util/hooks/useSettings';
 import {SMART_PUZZLES, SmartPuzzle} from '@/util/smart-cube/puzzle';
+import {SmartTurn} from '@/util/smart_scramble';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {DotsThree} from 'phosphor-react';
@@ -45,6 +46,8 @@ export default function SmartCube() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const cube = useRef<RubiksCube | null>(null);
 	const cubejs = useRef(new Cube());
+	// Applied to cubejs and the visual, so a render only applies the turns that came after it
+	const lastAppliedTurn = useRef<SmartTurn | null>(null);
 	const [pendingDevice, setPendingDevice] = useState<PendingSmartDevice | null>(null);
 	const confirmationRef = useRef<((confirmed: boolean) => void) | null>(null);
 	const [macAddressRequest, setMacAddressRequest] = useState<MacAddressRequestReason | null>(
@@ -138,11 +141,17 @@ export default function SmartCube() {
 	}, []);
 
 	useEffect(() => {
-		if (!smartCubeConnecting && smartTurns.length) {
-			const turn = smartTurns[smartTurns.length - 1].turn;
-			cubejs.current.move(turn);
-
-			addTurn(turn);
+		// Turns that arrive together, like both faces of a slice move, render once, so apply every turn since the last one
+		const newTurns: SmartTurn[] = smartCubeConnecting
+			? []
+			: smartTurns.slice(smartTurns.indexOf(lastAppliedTurn.current) + 1);
+		if (newTurns.length) {
+			lastAppliedTurn.current = newTurns[newTurns.length - 1];
+			checkForStartAfterTurn();
+			for (const {turn} of newTurns) {
+				cubejs.current.move(turn);
+				execTurn(turn);
+			}
 		}
 
 		const isSolved = cubeIsSolved();
@@ -230,11 +239,6 @@ export default function SmartCube() {
 			});
 			resetMoves();
 		}
-	}
-
-	function addTurn(turn: string) {
-		checkForStartAfterTurn();
-		execTurn(turn);
 	}
 
 	function resetMoves(markSolved: boolean = false) {
