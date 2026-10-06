@@ -142,11 +142,6 @@ jobs:
                   fi
                   echo "::add-mask::$DATABASE_URL"
                   export DATABASE_URL
-                  # Node doesn't trust the CA RDS signs with, which the Dockerfile adds for the app the same way
-                  curl --fail --silent --show-error --location --output "$RUNNER_TEMP/rds-us-west-2.pem" \
-                    https://truststore.pki.rds.amazonaws.com/us-west-2/us-west-2-bundle.pem
-                  echo "733b52e4b589586377e3e00f7c4625b61e14cbf0b5e08cace28b4f8aecc27c66  $RUNNER_TEMP/rds-us-west-2.pem" | sha256sum --check --quiet
-                  NODE_EXTRA_CA_CERTS="$RUNNER_TEMP/rds-us-west-2.pem" pnpm exec ts-node scripts/resolve-event-type-backfill.ts
                   pnpm exec prisma migrate deploy
 
             - name: Deploy to ECS
