@@ -58,7 +58,7 @@ beforeEach(() => {
 	};
 	mockContext = {
 		...mockTimerState,
-		cubeType: '333',
+		eventType: '333',
 		solvesFilter: {},
 		scrambleLocked: true,
 		customScrambleFunc: ({sessionSolveCount}) => caseScrambles[sessionSolveCount],

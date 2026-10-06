@@ -49,7 +49,7 @@ export type SolveMinAggregateOutputType = {
   user_id: string | null
   time: number | null
   raw_time: number | null
-  cube_type: string | null
+  event_type: string | null
   scramble: string | null
   session_id: string | null
   started_at: bigint | null
@@ -78,7 +78,7 @@ export type SolveMaxAggregateOutputType = {
   user_id: string | null
   time: number | null
   raw_time: number | null
-  cube_type: string | null
+  event_type: string | null
   scramble: string | null
   session_id: string | null
   started_at: bigint | null
@@ -107,7 +107,7 @@ export type SolveCountAggregateOutputType = {
   user_id: number
   time: number
   raw_time: number
-  cube_type: number
+  event_type: number
   scramble: number
   session_id: number
   started_at: number
@@ -156,7 +156,7 @@ export type SolveMinAggregateInputType = {
   user_id?: true
   time?: true
   raw_time?: true
-  cube_type?: true
+  event_type?: true
   scramble?: true
   session_id?: true
   started_at?: true
@@ -185,7 +185,7 @@ export type SolveMaxAggregateInputType = {
   user_id?: true
   time?: true
   raw_time?: true
-  cube_type?: true
+  event_type?: true
   scramble?: true
   session_id?: true
   started_at?: true
@@ -214,7 +214,7 @@ export type SolveCountAggregateInputType = {
   user_id?: true
   time?: true
   raw_time?: true
-  cube_type?: true
+  event_type?: true
   scramble?: true
   session_id?: true
   started_at?: true
@@ -330,7 +330,7 @@ export type SolveGroupByOutputType = {
   user_id: string
   time: number
   raw_time: number | null
-  cube_type: string | null
+  event_type: string | null
   scramble: string | null
   session_id: string | null
   started_at: bigint | null
@@ -382,7 +382,7 @@ export type SolveWhereInput = {
   user_id?: Prisma.StringFilter<"Solve"> | string
   time?: Prisma.FloatFilter<"Solve"> | number
   raw_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
-  cube_type?: Prisma.StringNullableFilter<"Solve"> | string | null
+  event_type?: Prisma.StringNullableFilter<"Solve"> | string | null
   scramble?: Prisma.StringNullableFilter<"Solve"> | string | null
   session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
   started_at?: Prisma.BigIntNullableFilter<"Solve"> | bigint | number | null
@@ -424,7 +424,7 @@ export type SolveOrderByWithRelationInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   raw_time?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  event_type?: Prisma.SortOrderInput | Prisma.SortOrder
   scramble?: Prisma.SortOrderInput | Prisma.SortOrder
   session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   started_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -471,7 +471,7 @@ export type SolveWhereUniqueInput = Prisma.AtLeast<{
   user_id?: Prisma.StringFilter<"Solve"> | string
   time?: Prisma.FloatFilter<"Solve"> | number
   raw_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
-  cube_type?: Prisma.StringNullableFilter<"Solve"> | string | null
+  event_type?: Prisma.StringNullableFilter<"Solve"> | string | null
   scramble?: Prisma.StringNullableFilter<"Solve"> | string | null
   session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
   started_at?: Prisma.BigIntNullableFilter<"Solve"> | bigint | number | null
@@ -512,7 +512,7 @@ export type SolveOrderByWithAggregationInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   raw_time?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  event_type?: Prisma.SortOrderInput | Prisma.SortOrder
   scramble?: Prisma.SortOrderInput | Prisma.SortOrder
   session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   started_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -549,7 +549,7 @@ export type SolveScalarWhereWithAggregatesInput = {
   user_id?: Prisma.StringWithAggregatesFilter<"Solve"> | string
   time?: Prisma.FloatWithAggregatesFilter<"Solve"> | number
   raw_time?: Prisma.FloatNullableWithAggregatesFilter<"Solve"> | number | null
-  cube_type?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
+  event_type?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
   scramble?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
   session_id?: Prisma.StringNullableWithAggregatesFilter<"Solve"> | string | null
   started_at?: Prisma.BigIntNullableWithAggregatesFilter<"Solve"> | bigint | number | null
@@ -577,7 +577,7 @@ export type SolveCreateInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -614,7 +614,7 @@ export type SolveUncheckedCreateInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -649,7 +649,7 @@ export type SolveUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -686,7 +686,7 @@ export type SolveUncheckedUpdateInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -722,7 +722,7 @@ export type SolveCreateManyInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -750,7 +750,7 @@ export type SolveUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -774,7 +774,7 @@ export type SolveUncheckedUpdateManyInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -819,7 +819,7 @@ export type SolveCountOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   raw_time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   scramble?: Prisma.SortOrder
   session_id?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
@@ -857,7 +857,7 @@ export type SolveMaxOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   raw_time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   scramble?: Prisma.SortOrder
   session_id?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
@@ -886,7 +886,7 @@ export type SolveMinOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   raw_time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   scramble?: Prisma.SortOrder
   session_id?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
@@ -1294,7 +1294,7 @@ export type SolveCreateWithoutUserInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -1329,7 +1329,7 @@ export type SolveUncheckedCreateWithoutUserInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -1394,7 +1394,7 @@ export type SolveScalarWhereInput = {
   user_id?: Prisma.StringFilter<"Solve"> | string
   time?: Prisma.FloatFilter<"Solve"> | number
   raw_time?: Prisma.FloatNullableFilter<"Solve"> | number | null
-  cube_type?: Prisma.StringNullableFilter<"Solve"> | string | null
+  event_type?: Prisma.StringNullableFilter<"Solve"> | string | null
   scramble?: Prisma.StringNullableFilter<"Solve"> | string | null
   session_id?: Prisma.StringNullableFilter<"Solve"> | string | null
   started_at?: Prisma.BigIntNullableFilter<"Solve"> | bigint | number | null
@@ -1422,7 +1422,7 @@ export type SolveCreateWithoutMatchInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -1458,7 +1458,7 @@ export type SolveUncheckedCreateWithoutMatchInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -1518,7 +1518,7 @@ export type SolveCreateWithoutMatch_participantInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -1554,7 +1554,7 @@ export type SolveUncheckedCreateWithoutMatch_participantInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -1614,7 +1614,7 @@ export type SolveCreateWithoutSmart_deviceInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -1650,7 +1650,7 @@ export type SolveUncheckedCreateWithoutSmart_deviceInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -1710,7 +1710,7 @@ export type SolveCreateWithoutSolve_viewsInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -1746,7 +1746,7 @@ export type SolveUncheckedCreateWithoutSolve_viewsInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -1796,7 +1796,7 @@ export type SolveUpdateWithoutSolve_viewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -1832,7 +1832,7 @@ export type SolveUncheckedUpdateWithoutSolve_viewsInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -1866,7 +1866,7 @@ export type SolveCreateWithoutGame_sessionInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -1902,7 +1902,7 @@ export type SolveUncheckedCreateWithoutGame_sessionInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -1962,7 +1962,7 @@ export type SolveCreateWithoutTop_solveInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -1998,7 +1998,7 @@ export type SolveUncheckedCreateWithoutTop_solveInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -2048,7 +2048,7 @@ export type SolveUpdateWithoutTop_solveInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2084,7 +2084,7 @@ export type SolveUncheckedUpdateWithoutTop_solveInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2118,7 +2118,7 @@ export type SolveCreateWithoutTop_average_1Input = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -2154,7 +2154,7 @@ export type SolveUncheckedCreateWithoutTop_average_1Input = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -2193,7 +2193,7 @@ export type SolveCreateWithoutTop_average_2Input = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -2229,7 +2229,7 @@ export type SolveUncheckedCreateWithoutTop_average_2Input = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -2268,7 +2268,7 @@ export type SolveCreateWithoutTop_average_3Input = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -2304,7 +2304,7 @@ export type SolveUncheckedCreateWithoutTop_average_3Input = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -2343,7 +2343,7 @@ export type SolveCreateWithoutTop_average_4Input = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -2379,7 +2379,7 @@ export type SolveUncheckedCreateWithoutTop_average_4Input = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -2418,7 +2418,7 @@ export type SolveCreateWithoutTop_average_5Input = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -2454,7 +2454,7 @@ export type SolveUncheckedCreateWithoutTop_average_5Input = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -2504,7 +2504,7 @@ export type SolveUpdateWithoutTop_average_1Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2540,7 +2540,7 @@ export type SolveUncheckedUpdateWithoutTop_average_1Input = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2585,7 +2585,7 @@ export type SolveUpdateWithoutTop_average_2Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2621,7 +2621,7 @@ export type SolveUncheckedUpdateWithoutTop_average_2Input = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2666,7 +2666,7 @@ export type SolveUpdateWithoutTop_average_3Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2702,7 +2702,7 @@ export type SolveUncheckedUpdateWithoutTop_average_3Input = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2747,7 +2747,7 @@ export type SolveUpdateWithoutTop_average_4Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2783,7 +2783,7 @@ export type SolveUncheckedUpdateWithoutTop_average_4Input = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2828,7 +2828,7 @@ export type SolveUpdateWithoutTop_average_5Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2864,7 +2864,7 @@ export type SolveUncheckedUpdateWithoutTop_average_5Input = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -2898,7 +2898,7 @@ export type SolveCreateWithoutSessionInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -2934,7 +2934,7 @@ export type SolveUncheckedCreateWithoutSessionInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -2994,7 +2994,7 @@ export type SolveCreateManyUserInput = {
   id?: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -3022,7 +3022,7 @@ export type SolveUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3057,7 +3057,7 @@ export type SolveUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3092,7 +3092,7 @@ export type SolveUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3121,7 +3121,7 @@ export type SolveCreateManyMatchInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -3148,7 +3148,7 @@ export type SolveUpdateWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3184,7 +3184,7 @@ export type SolveUncheckedUpdateWithoutMatchInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3219,7 +3219,7 @@ export type SolveUncheckedUpdateManyWithoutMatchInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3247,7 +3247,7 @@ export type SolveCreateManyMatch_participantInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -3274,7 +3274,7 @@ export type SolveUpdateWithoutMatch_participantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3310,7 +3310,7 @@ export type SolveUncheckedUpdateWithoutMatch_participantInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3345,7 +3345,7 @@ export type SolveUncheckedUpdateManyWithoutMatch_participantInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3373,7 +3373,7 @@ export type SolveCreateManySmart_deviceInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -3400,7 +3400,7 @@ export type SolveUpdateWithoutSmart_deviceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3436,7 +3436,7 @@ export type SolveUncheckedUpdateWithoutSmart_deviceInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3471,7 +3471,7 @@ export type SolveUncheckedUpdateManyWithoutSmart_deviceInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3499,7 +3499,7 @@ export type SolveCreateManyGame_sessionInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   session_id?: string | null
   started_at?: bigint | number | null
@@ -3526,7 +3526,7 @@ export type SolveUpdateWithoutGame_sessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3562,7 +3562,7 @@ export type SolveUncheckedUpdateWithoutGame_sessionInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3597,7 +3597,7 @@ export type SolveUncheckedUpdateManyWithoutGame_sessionInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3625,7 +3625,7 @@ export type SolveCreateManySessionInput = {
   user_id: string
   time: number
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -3652,7 +3652,7 @@ export type SolveUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3688,7 +3688,7 @@ export type SolveUncheckedUpdateWithoutSessionInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3723,7 +3723,7 @@ export type SolveUncheckedUpdateManyWithoutSessionInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -3836,7 +3836,7 @@ export type SolveSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   user_id?: boolean
   time?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   session_id?: boolean
   started_at?: boolean
@@ -3879,7 +3879,7 @@ export type SolveSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   user_id?: boolean
   time?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   session_id?: boolean
   started_at?: boolean
@@ -3914,7 +3914,7 @@ export type SolveSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   user_id?: boolean
   time?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   session_id?: boolean
   started_at?: boolean
@@ -3949,7 +3949,7 @@ export type SolveSelectScalar = {
   user_id?: boolean
   time?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   session_id?: boolean
   started_at?: boolean
@@ -3973,7 +3973,7 @@ export type SolveSelectScalar = {
   training_session_id?: boolean
 }
 
-export type SolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "raw_time" | "cube_type" | "scramble" | "session_id" | "started_at" | "ended_at" | "dnf" | "plus_two" | "notes" | "trainer_name" | "created_at" | "bulk" | "inspection_time" | "is_smart_cube" | "smart_turns" | "smart_turn_count" | "smart_device_id" | "match_id" | "match_participant_id" | "share_code" | "from_timer" | "game_session_id" | "training_session_id", ExtArgs["result"]["solve"]>
+export type SolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "raw_time" | "event_type" | "scramble" | "session_id" | "started_at" | "ended_at" | "dnf" | "plus_two" | "notes" | "trainer_name" | "created_at" | "bulk" | "inspection_time" | "is_smart_cube" | "smart_turns" | "smart_turn_count" | "smart_device_id" | "match_id" | "match_participant_id" | "share_code" | "from_timer" | "game_session_id" | "training_session_id", ExtArgs["result"]["solve"]>
 export type SolveInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   game_session?: boolean | Prisma.Solve$game_sessionArgs<ExtArgs>
   match?: boolean | Prisma.Solve$matchArgs<ExtArgs>
@@ -4029,7 +4029,7 @@ export type $SolvePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     user_id: string
     time: number
     raw_time: number | null
-    cube_type: string | null
+    event_type: string | null
     scramble: string | null
     session_id: string | null
     started_at: bigint | null
@@ -4491,7 +4491,7 @@ export interface SolveFieldRefs {
   readonly user_id: Prisma.FieldRef<"Solve", 'String'>
   readonly time: Prisma.FieldRef<"Solve", 'Float'>
   readonly raw_time: Prisma.FieldRef<"Solve", 'Float'>
-  readonly cube_type: Prisma.FieldRef<"Solve", 'String'>
+  readonly event_type: Prisma.FieldRef<"Solve", 'String'>
   readonly scramble: Prisma.FieldRef<"Solve", 'String'>
   readonly session_id: Prisma.FieldRef<"Solve", 'String'>
   readonly started_at: Prisma.FieldRef<"Solve", 'BigInt'>

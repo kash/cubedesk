@@ -18,15 +18,15 @@ export enum ImportDataType {
 export interface ImportableData {
 	solves: SolveInput[];
 	sessions: SessionInput[];
-	sessionIdCubeTypeMap?: Record<string, string>;
+	sessionIdEventTypeMap?: Record<string, string>;
 }
 
 export interface IImportDataContext {
 	// State
 	file: File;
 	setFile: reactState<File>;
-	cubeType: string;
-	setCubeType: reactState<string>;
+	eventType: string;
+	setEventType: reactState<string>;
 	importableData: ImportableData;
 	setImportableData: reactState<ImportableData>;
 	importLocked: boolean;
@@ -58,7 +58,7 @@ export default function ImportData(props: Props) {
 
 	const [file, setFile] = useState<File>(null as any);
 	const [importableData, setImportableData] = useState<ImportableData>(null as any);
-	const [cubeType, setCubeType] = useState<string>('');
+	const [eventType, setEventType] = useState<string>('');
 	const [importing, setImporting] = useState<boolean>(false);
 	const [importLocked, setImportLocked] = useState(false);
 
@@ -85,14 +85,14 @@ export default function ImportData(props: Props) {
 	const context: IImportDataContext = {
 		file,
 		setFile,
-		cubeType,
+		eventType,
 		importableData,
 		setImportableData,
 		importLocked,
 		setImportLocked,
 		importing,
 		setImporting,
-		setCubeType,
+		setEventType,
 		importType,
 		timerImportData,
 	};

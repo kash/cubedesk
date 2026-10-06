@@ -14,7 +14,7 @@ export default function GameTimer() {
 	const me = useMe();
 
 	const {
-		cubeType,
+		eventType,
 		gameType,
 		visual1,
 		visual2,
@@ -66,11 +66,11 @@ export default function GameTimer() {
 			game_session_id: context.sessionId || undefined,
 		},
 		onSolve: timerOnSolve,
-		cubeType,
+		eventType,
 		headerOptions: {
 			hideSessionSelector: true,
 			hideNewSession: true,
-			hideCubeType: true,
+			hideEventType: true,
 		},
 		timerCustomFooterModules: [
 			{
@@ -105,7 +105,7 @@ export default function GameTimer() {
 				updateSolves={updateSolves}
 				linkCode={linkCode || ''}
 				matchType={gameType}
-				cubeType={cubeType}
+				eventType={eventType}
 				minPlayers={2}
 				maxPlayers={2}
 			/>

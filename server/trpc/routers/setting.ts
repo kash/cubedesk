@@ -20,7 +20,7 @@ const settingInputSchema = z
 		require_period_in_manual_time_entry: z.boolean(),
 		use_space_with_smart_cube: z.boolean(),
 		timer_decimal_points: z.number().int(),
-		cube_type: z.string(),
+		event_type: z.string(),
 		session_id: z.string(),
 		beta_tester: z.boolean(),
 	})

@@ -36,7 +36,7 @@ export interface EloLog {
 	player_new_game_count: number;
 	opponent_id: string | null;
 	opponent_new_game_count: number | null;
-	cube_type: string;
+	event_type: string;
 	match_id: string | null;
 	elo_change: number;
 	player_new_elo_rating: number;

@@ -10,7 +10,7 @@ export function getSettingsByUserId(userId: string) {
 			user_id: userId,
 		},
 		include: {
-			custom_cube_types: true,
+			custom_event_types: true,
 		},
 	});
 }
@@ -53,8 +53,8 @@ export function updateSettings(userId: string, data: Prisma.SettingUpdateInput) 
 }
 
 // Mirrors the @default(...) attributes on the Setting model in schema.prisma.
-// Reset must be an update, never delete-and-recreate: CustomCubeType cascades
-// off Setting.user_id, so deleting the row wipes the user's custom cube types.
+// Reset must be an update, never delete-and-recreate: CustomEventType cascades
+// off Setting.user_id, so deleting the row wipes the user's custom event types.
 // session_id is intentionally left alone (active-session state, not a preference).
 const defaultSettings = {
 	focus_mode: false,
@@ -70,7 +70,7 @@ const defaultSettings = {
 	zero_out_time_after_solve: false,
 	confirm_delete_solve: false,
 	require_period_in_manual_time_entry: false,
-	cube_type: '333',
+	event_type: '333',
 	timer_decimal_points: 2,
 	beta_tester: false,
 	use_space_with_smart_cube: false,
@@ -85,7 +85,7 @@ export function resetSetting(userId: string) {
 		},
 		data: defaultSettings,
 		include: {
-			custom_cube_types: true,
+			custom_event_types: true,
 		},
 	});
 }

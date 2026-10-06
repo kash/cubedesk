@@ -25,7 +25,7 @@ suite('admin metrics PostgreSQL integration', () => {
 		});
 		await db.$executeRawUnsafe(`CREATE TABLE solve (
 			id text PRIMARY KEY, user_id text NOT NULL, created_at timestamp(3) NOT NULL,
-			bulk boolean NOT NULL DEFAULT false, cube_type text, match_id text,
+			bulk boolean NOT NULL DEFAULT false, event_type text, match_id text,
 			trainer_name text, from_timer boolean NOT NULL DEFAULT true
 		)`);
 		await db.$executeRawUnsafe(`CREATE TABLE import_attempt (
@@ -132,9 +132,9 @@ suite('admin metrics PostgreSQL integration', () => {
 			});
 		}
 		const breakdown = await db.$queryRaw<
-			{cubeType: string | null; category: string; solves: bigint}[]
+			{eventType: string | null; category: string; solves: bigint}[]
 		>`
-			SELECT cube_type AS "cubeType", CASE WHEN match_id IS NOT NULL THEN '1v1'
+			SELECT event_type AS "eventType", CASE WHEN match_id IS NOT NULL THEN '1v1'
 			WHEN NULLIF(trainer_name, '') IS NOT NULL THEN 'trainer'
 			WHEN from_timer THEN 'timer' ELSE 'other' END AS category, count(*) AS solves
 			FROM solve WHERE NOT bulk AND created_at >= timestamp '2026-06-10'

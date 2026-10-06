@@ -428,7 +428,7 @@ export const ModelName = {
   TrainerFavorite: 'TrainerFavorite',
   AlgorithmOverride: 'AlgorithmOverride',
   Setting: 'Setting',
-  CustomCubeType: 'CustomCubeType',
+  CustomEventType: 'CustomEventType',
   ImportAttempt: 'ImportAttempt'
 } as const
 
@@ -445,7 +445,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerAlgorithm" | "trainerCatalogState" | "trainerFavorite" | "algorithmOverride" | "setting" | "customCubeType" | "importAttempt"
+    modelProps: "userAccount" | "userFeatureState" | "integration" | "notification" | "actionLog" | "metricLog" | "notificationPreference" | "friendshipRequest" | "friendship" | "eloRating" | "eloLog" | "adView" | "profile" | "image" | "profileView" | "forgotPassword" | "solve" | "demoSolve" | "emailLog" | "matchSession" | "match" | "matchLobby" | "matchParticipant" | "chatMessage" | "smartDevice" | "badgeType" | "badge" | "timerBackground" | "report" | "banLog" | "solveView" | "gameSession" | "gameOptions" | "topSolve" | "topAverage" | "session" | "customTrainer" | "customTrainerLike" | "customTrainerDownload" | "trainerAlgorithm" | "trainerCatalogState" | "trainerFavorite" | "algorithmOverride" | "setting" | "customEventType" | "importAttempt"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3705,77 +3705,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    CustomCubeType: {
-      payload: Prisma.$CustomCubeTypePayload<ExtArgs>
-      fields: Prisma.CustomCubeTypeFieldRefs
+    CustomEventType: {
+      payload: Prisma.$CustomEventTypePayload<ExtArgs>
+      fields: Prisma.CustomEventTypeFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.CustomCubeTypeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload> | null
+          args: Prisma.CustomEventTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.CustomCubeTypeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>
+          args: Prisma.CustomEventTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>
         }
         findFirst: {
-          args: Prisma.CustomCubeTypeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload> | null
+          args: Prisma.CustomEventTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.CustomCubeTypeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>
+          args: Prisma.CustomEventTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>
         }
         findMany: {
-          args: Prisma.CustomCubeTypeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>[]
+          args: Prisma.CustomEventTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>[]
         }
         create: {
-          args: Prisma.CustomCubeTypeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>
+          args: Prisma.CustomEventTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>
         }
         createMany: {
-          args: Prisma.CustomCubeTypeCreateManyArgs<ExtArgs>
+          args: Prisma.CustomEventTypeCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.CustomCubeTypeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>[]
+          args: Prisma.CustomEventTypeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>[]
         }
         delete: {
-          args: Prisma.CustomCubeTypeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>
+          args: Prisma.CustomEventTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>
         }
         update: {
-          args: Prisma.CustomCubeTypeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>
+          args: Prisma.CustomEventTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>
         }
         deleteMany: {
-          args: Prisma.CustomCubeTypeDeleteManyArgs<ExtArgs>
+          args: Prisma.CustomEventTypeDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.CustomCubeTypeUpdateManyArgs<ExtArgs>
+          args: Prisma.CustomEventTypeUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.CustomCubeTypeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>[]
+          args: Prisma.CustomEventTypeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>[]
         }
         upsert: {
-          args: Prisma.CustomCubeTypeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomCubeTypePayload>
+          args: Prisma.CustomEventTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomEventTypePayload>
         }
         aggregate: {
-          args: Prisma.CustomCubeTypeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomCubeType>
+          args: Prisma.CustomEventTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomEventType>
         }
         groupBy: {
-          args: Prisma.CustomCubeTypeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CustomCubeTypeGroupByOutputType>[]
+          args: Prisma.CustomEventTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomEventTypeGroupByOutputType>[]
         }
         count: {
-          args: Prisma.CustomCubeTypeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CustomCubeTypeCountAggregateOutputType> | number
+          args: Prisma.CustomEventTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomEventTypeCountAggregateOutputType> | number
         }
       }
     }
@@ -4036,7 +4036,7 @@ export type EloRatingScalarFieldEnum = (typeof EloRatingScalarFieldEnum)[keyof t
 export const EloLogScalarFieldEnum = {
   id: 'id',
   opponent_id: 'opponent_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   elo_change: 'elo_change',
   updated_at: 'updated_at',
   created_at: 'created_at',
@@ -4129,7 +4129,7 @@ export const SolveScalarFieldEnum = {
   user_id: 'user_id',
   time: 'time',
   raw_time: 'raw_time',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   scramble: 'scramble',
   session_id: 'session_id',
   started_at: 'started_at',
@@ -4161,7 +4161,7 @@ export const DemoSolveScalarFieldEnum = {
   demo_session_id: 'demo_session_id',
   ip_address: 'ip_address',
   raw_time: 'raw_time',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   scramble: 'scramble',
   started_at: 'started_at',
   ended_at: 'ended_at',
@@ -4217,7 +4217,7 @@ export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof Ma
 export const MatchLobbyScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   game_type: 'game_type',
   player_count: 'player_count',
   elo: 'elo',
@@ -4361,7 +4361,7 @@ export const GameOptionsScalarFieldEnum = {
   game_session_id: 'game_session_id',
   match_session_id: 'match_session_id',
   game_type: 'game_type',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   elimination_starting_time_seconds: 'elimination_starting_time_seconds',
   elimination_percent_change_rate: 'elimination_percent_change_rate',
   head_to_head_target_win_count: 'head_to_head_target_win_count',
@@ -4377,7 +4377,7 @@ export const TopSolveScalarFieldEnum = {
   user_id: 'user_id',
   time: 'time',
   solve_id: 'solve_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   created_at: 'created_at'
 } as const
 
@@ -4388,7 +4388,7 @@ export const TopAverageScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   time: 'time',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   solve_1_id: 'solve_1_id',
   solve_2_id: 'solve_2_id',
   solve_3_id: 'solve_3_id',
@@ -4414,7 +4414,7 @@ export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeo
 export const CustomTrainerScalarFieldEnum = {
   id: 'id',
   colors: 'colors',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   key: 'key',
   user_id: 'user_id',
   created_at: 'created_at',
@@ -4464,7 +4464,7 @@ export const TrainerAlgorithmScalarFieldEnum = {
   active: 'active',
   solution: 'solution',
   scrambles: 'scrambles',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   algo_type: 'algo_type',
   group_name: 'group_name',
   img_link: 'img_link',
@@ -4527,7 +4527,7 @@ export const SettingScalarFieldEnum = {
   confirm_delete_solve: 'confirm_delete_solve',
   require_period_in_manual_time_entry: 'require_period_in_manual_time_entry',
   created_at: 'created_at',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   session_id: 'session_id',
   timer_decimal_points: 'timer_decimal_points',
   beta_tester: 'beta_tester',
@@ -4539,7 +4539,7 @@ export const SettingScalarFieldEnum = {
 export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
 
 
-export const CustomCubeTypeScalarFieldEnum = {
+export const CustomEventTypeScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   name: 'name',
@@ -4548,7 +4548,7 @@ export const CustomCubeTypeScalarFieldEnum = {
   private: 'private'
 } as const
 
-export type CustomCubeTypeScalarFieldEnum = (typeof CustomCubeTypeScalarFieldEnum)[keyof typeof CustomCubeTypeScalarFieldEnum]
+export type CustomEventTypeScalarFieldEnum = (typeof CustomEventTypeScalarFieldEnum)[keyof typeof CustomEventTypeScalarFieldEnum]
 
 
 export const ImportAttemptScalarFieldEnum = {
@@ -4701,7 +4701,7 @@ export type EloRatingOrderByRelevanceFieldEnum = (typeof EloRatingOrderByRelevan
 export const EloLogOrderByRelevanceFieldEnum = {
   id: 'id',
   opponent_id: 'opponent_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   match_id: 'match_id',
   player_id: 'player_id'
 } as const
@@ -4773,7 +4773,7 @@ export type ForgotPasswordOrderByRelevanceFieldEnum = (typeof ForgotPasswordOrde
 export const SolveOrderByRelevanceFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   scramble: 'scramble',
   session_id: 'session_id',
   notes: 'notes',
@@ -4794,7 +4794,7 @@ export const DemoSolveOrderByRelevanceFieldEnum = {
   id: 'id',
   demo_session_id: 'demo_session_id',
   ip_address: 'ip_address',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   scramble: 'scramble'
 } as const
 
@@ -4836,7 +4836,7 @@ export type MatchOrderByRelevanceFieldEnum = (typeof MatchOrderByRelevanceFieldE
 export const MatchLobbyOrderByRelevanceFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   client_id: 'client_id'
 } as const
 
@@ -4948,7 +4948,7 @@ export const GameOptionsOrderByRelevanceFieldEnum = {
   id: 'id',
   game_session_id: 'game_session_id',
   match_session_id: 'match_session_id',
-  cube_type: 'cube_type'
+  event_type: 'event_type'
 } as const
 
 export type GameOptionsOrderByRelevanceFieldEnum = (typeof GameOptionsOrderByRelevanceFieldEnum)[keyof typeof GameOptionsOrderByRelevanceFieldEnum]
@@ -4958,7 +4958,7 @@ export const TopSolveOrderByRelevanceFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   solve_id: 'solve_id',
-  cube_type: 'cube_type'
+  event_type: 'event_type'
 } as const
 
 export type TopSolveOrderByRelevanceFieldEnum = (typeof TopSolveOrderByRelevanceFieldEnum)[keyof typeof TopSolveOrderByRelevanceFieldEnum]
@@ -4967,7 +4967,7 @@ export type TopSolveOrderByRelevanceFieldEnum = (typeof TopSolveOrderByRelevance
 export const TopAverageOrderByRelevanceFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   solve_1_id: 'solve_1_id',
   solve_2_id: 'solve_2_id',
   solve_3_id: 'solve_3_id',
@@ -4990,7 +4990,7 @@ export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFi
 export const CustomTrainerOrderByRelevanceFieldEnum = {
   id: 'id',
   colors: 'colors',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   key: 'key',
   user_id: 'user_id',
   name: 'name',
@@ -5032,7 +5032,7 @@ export const TrainerAlgorithmOrderByRelevanceFieldEnum = {
   name: 'name',
   solution: 'solution',
   scrambles: 'scrambles',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   algo_type: 'algo_type',
   group_name: 'group_name',
   img_link: 'img_link',
@@ -5073,7 +5073,7 @@ export type AlgorithmOverrideOrderByRelevanceFieldEnum = (typeof AlgorithmOverri
 export const SettingOrderByRelevanceFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  cube_type: 'cube_type',
+  event_type: 'event_type',
   session_id: 'session_id',
   stats_module_json: 'stats_module_json'
 } as const
@@ -5081,14 +5081,14 @@ export const SettingOrderByRelevanceFieldEnum = {
 export type SettingOrderByRelevanceFieldEnum = (typeof SettingOrderByRelevanceFieldEnum)[keyof typeof SettingOrderByRelevanceFieldEnum]
 
 
-export const CustomCubeTypeOrderByRelevanceFieldEnum = {
+export const CustomEventTypeOrderByRelevanceFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   name: 'name',
   scramble: 'scramble'
 } as const
 
-export type CustomCubeTypeOrderByRelevanceFieldEnum = (typeof CustomCubeTypeOrderByRelevanceFieldEnum)[keyof typeof CustomCubeTypeOrderByRelevanceFieldEnum]
+export type CustomEventTypeOrderByRelevanceFieldEnum = (typeof CustomEventTypeOrderByRelevanceFieldEnum)[keyof typeof CustomEventTypeOrderByRelevanceFieldEnum]
 
 
 export const ImportAttemptOrderByRelevanceFieldEnum = {
@@ -5393,7 +5393,7 @@ export type GlobalOmitConfig = {
   trainerFavorite?: Prisma.TrainerFavoriteOmit
   algorithmOverride?: Prisma.AlgorithmOverrideOmit
   setting?: Prisma.SettingOmit
-  customCubeType?: Prisma.CustomCubeTypeOmit
+  customEventType?: Prisma.CustomEventTypeOmit
   importAttempt?: Prisma.ImportAttemptOmit
 }
 

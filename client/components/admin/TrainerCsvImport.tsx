@@ -87,7 +87,7 @@ export default function TrainerCsvImport({
 				changes before importing. Legacy Pro columns are ignored.
 			</p>
 			<p className="text-text/60 text-sm">
-				Required columns: id, name, cube_type, algo_type. Optional columns default to empty
+				Required columns: id, name, event_type, algo_type. Optional columns default to empty
 				text, published status, and zero rotation when omitted. Blank fields clear existing
 				values.
 			</p>

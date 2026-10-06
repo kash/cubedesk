@@ -45,7 +45,7 @@ export type GameOptionsMinAggregateOutputType = {
   game_session_id: string | null
   match_session_id: string | null
   game_type: $Enums.GameType | null
-  cube_type: string | null
+  event_type: string | null
   elimination_starting_time_seconds: number | null
   elimination_percent_change_rate: number | null
   head_to_head_target_win_count: number | null
@@ -58,7 +58,7 @@ export type GameOptionsMaxAggregateOutputType = {
   game_session_id: string | null
   match_session_id: string | null
   game_type: $Enums.GameType | null
-  cube_type: string | null
+  event_type: string | null
   elimination_starting_time_seconds: number | null
   elimination_percent_change_rate: number | null
   head_to_head_target_win_count: number | null
@@ -71,7 +71,7 @@ export type GameOptionsCountAggregateOutputType = {
   game_session_id: number
   match_session_id: number
   game_type: number
-  cube_type: number
+  event_type: number
   elimination_starting_time_seconds: number
   elimination_percent_change_rate: number
   head_to_head_target_win_count: number
@@ -100,7 +100,7 @@ export type GameOptionsMinAggregateInputType = {
   game_session_id?: true
   match_session_id?: true
   game_type?: true
-  cube_type?: true
+  event_type?: true
   elimination_starting_time_seconds?: true
   elimination_percent_change_rate?: true
   head_to_head_target_win_count?: true
@@ -113,7 +113,7 @@ export type GameOptionsMaxAggregateInputType = {
   game_session_id?: true
   match_session_id?: true
   game_type?: true
-  cube_type?: true
+  event_type?: true
   elimination_starting_time_seconds?: true
   elimination_percent_change_rate?: true
   head_to_head_target_win_count?: true
@@ -126,7 +126,7 @@ export type GameOptionsCountAggregateInputType = {
   game_session_id?: true
   match_session_id?: true
   game_type?: true
-  cube_type?: true
+  event_type?: true
   elimination_starting_time_seconds?: true
   elimination_percent_change_rate?: true
   head_to_head_target_win_count?: true
@@ -226,7 +226,7 @@ export type GameOptionsGroupByOutputType = {
   game_session_id: string | null
   match_session_id: string | null
   game_type: $Enums.GameType
-  cube_type: string
+  event_type: string
   elimination_starting_time_seconds: number
   elimination_percent_change_rate: number
   head_to_head_target_win_count: number
@@ -262,7 +262,7 @@ export type GameOptionsWhereInput = {
   game_session_id?: Prisma.StringNullableFilter<"GameOptions"> | string | null
   match_session_id?: Prisma.StringNullableFilter<"GameOptions"> | string | null
   game_type?: Prisma.EnumGameTypeFilter<"GameOptions"> | $Enums.GameType
-  cube_type?: Prisma.StringFilter<"GameOptions"> | string
+  event_type?: Prisma.StringFilter<"GameOptions"> | string
   elimination_starting_time_seconds?: Prisma.IntFilter<"GameOptions"> | number
   elimination_percent_change_rate?: Prisma.IntFilter<"GameOptions"> | number
   head_to_head_target_win_count?: Prisma.IntFilter<"GameOptions"> | number
@@ -277,7 +277,7 @@ export type GameOptionsOrderByWithRelationInput = {
   game_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   match_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   game_type?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elimination_starting_time_seconds?: Prisma.SortOrder
   elimination_percent_change_rate?: Prisma.SortOrder
   head_to_head_target_win_count?: Prisma.SortOrder
@@ -296,7 +296,7 @@ export type GameOptionsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.GameOptionsWhereInput[]
   NOT?: Prisma.GameOptionsWhereInput | Prisma.GameOptionsWhereInput[]
   game_type?: Prisma.EnumGameTypeFilter<"GameOptions"> | $Enums.GameType
-  cube_type?: Prisma.StringFilter<"GameOptions"> | string
+  event_type?: Prisma.StringFilter<"GameOptions"> | string
   elimination_starting_time_seconds?: Prisma.IntFilter<"GameOptions"> | number
   elimination_percent_change_rate?: Prisma.IntFilter<"GameOptions"> | number
   head_to_head_target_win_count?: Prisma.IntFilter<"GameOptions"> | number
@@ -311,7 +311,7 @@ export type GameOptionsOrderByWithAggregationInput = {
   game_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   match_session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   game_type?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elimination_starting_time_seconds?: Prisma.SortOrder
   elimination_percent_change_rate?: Prisma.SortOrder
   head_to_head_target_win_count?: Prisma.SortOrder
@@ -332,7 +332,7 @@ export type GameOptionsScalarWhereWithAggregatesInput = {
   game_session_id?: Prisma.StringNullableWithAggregatesFilter<"GameOptions"> | string | null
   match_session_id?: Prisma.StringNullableWithAggregatesFilter<"GameOptions"> | string | null
   game_type?: Prisma.EnumGameTypeWithAggregatesFilter<"GameOptions"> | $Enums.GameType
-  cube_type?: Prisma.StringWithAggregatesFilter<"GameOptions"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"GameOptions"> | string
   elimination_starting_time_seconds?: Prisma.IntWithAggregatesFilter<"GameOptions"> | number
   elimination_percent_change_rate?: Prisma.IntWithAggregatesFilter<"GameOptions"> | number
   head_to_head_target_win_count?: Prisma.IntWithAggregatesFilter<"GameOptions"> | number
@@ -343,7 +343,7 @@ export type GameOptionsScalarWhereWithAggregatesInput = {
 export type GameOptionsCreateInput = {
   id?: string
   game_type: $Enums.GameType
-  cube_type?: string
+  event_type?: string
   elimination_starting_time_seconds?: number
   elimination_percent_change_rate?: number
   head_to_head_target_win_count?: number
@@ -358,7 +358,7 @@ export type GameOptionsUncheckedCreateInput = {
   game_session_id?: string | null
   match_session_id?: string | null
   game_type: $Enums.GameType
-  cube_type?: string
+  event_type?: string
   elimination_starting_time_seconds?: number
   elimination_percent_change_rate?: number
   head_to_head_target_win_count?: number
@@ -369,7 +369,7 @@ export type GameOptionsUncheckedCreateInput = {
 export type GameOptionsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -384,7 +384,7 @@ export type GameOptionsUncheckedUpdateInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   match_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -397,7 +397,7 @@ export type GameOptionsCreateManyInput = {
   game_session_id?: string | null
   match_session_id?: string | null
   game_type: $Enums.GameType
-  cube_type?: string
+  event_type?: string
   elimination_starting_time_seconds?: number
   elimination_percent_change_rate?: number
   head_to_head_target_win_count?: number
@@ -408,7 +408,7 @@ export type GameOptionsCreateManyInput = {
 export type GameOptionsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -421,7 +421,7 @@ export type GameOptionsUncheckedUpdateManyInput = {
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   match_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -445,7 +445,7 @@ export type GameOptionsCountOrderByAggregateInput = {
   game_session_id?: Prisma.SortOrder
   match_session_id?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elimination_starting_time_seconds?: Prisma.SortOrder
   elimination_percent_change_rate?: Prisma.SortOrder
   head_to_head_target_win_count?: Prisma.SortOrder
@@ -465,7 +465,7 @@ export type GameOptionsMaxOrderByAggregateInput = {
   game_session_id?: Prisma.SortOrder
   match_session_id?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elimination_starting_time_seconds?: Prisma.SortOrder
   elimination_percent_change_rate?: Prisma.SortOrder
   head_to_head_target_win_count?: Prisma.SortOrder
@@ -478,7 +478,7 @@ export type GameOptionsMinOrderByAggregateInput = {
   game_session_id?: Prisma.SortOrder
   match_session_id?: Prisma.SortOrder
   game_type?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elimination_starting_time_seconds?: Prisma.SortOrder
   elimination_percent_change_rate?: Prisma.SortOrder
   head_to_head_target_win_count?: Prisma.SortOrder
@@ -560,7 +560,7 @@ export type GameOptionsUncheckedUpdateOneWithoutGame_sessionNestedInput = {
 export type GameOptionsCreateWithoutMatch_sessionInput = {
   id?: string
   game_type: $Enums.GameType
-  cube_type?: string
+  event_type?: string
   elimination_starting_time_seconds?: number
   elimination_percent_change_rate?: number
   head_to_head_target_win_count?: number
@@ -573,7 +573,7 @@ export type GameOptionsUncheckedCreateWithoutMatch_sessionInput = {
   id?: string
   game_session_id?: string | null
   game_type: $Enums.GameType
-  cube_type?: string
+  event_type?: string
   elimination_starting_time_seconds?: number
   elimination_percent_change_rate?: number
   head_to_head_target_win_count?: number
@@ -600,7 +600,7 @@ export type GameOptionsUpdateToOneWithWhereWithoutMatch_sessionInput = {
 export type GameOptionsUpdateWithoutMatch_sessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -613,7 +613,7 @@ export type GameOptionsUncheckedUpdateWithoutMatch_sessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   game_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -624,7 +624,7 @@ export type GameOptionsUncheckedUpdateWithoutMatch_sessionInput = {
 export type GameOptionsCreateWithoutGame_sessionInput = {
   id?: string
   game_type: $Enums.GameType
-  cube_type?: string
+  event_type?: string
   elimination_starting_time_seconds?: number
   elimination_percent_change_rate?: number
   head_to_head_target_win_count?: number
@@ -637,7 +637,7 @@ export type GameOptionsUncheckedCreateWithoutGame_sessionInput = {
   id?: string
   match_session_id?: string | null
   game_type: $Enums.GameType
-  cube_type?: string
+  event_type?: string
   elimination_starting_time_seconds?: number
   elimination_percent_change_rate?: number
   head_to_head_target_win_count?: number
@@ -664,7 +664,7 @@ export type GameOptionsUpdateToOneWithWhereWithoutGame_sessionInput = {
 export type GameOptionsUpdateWithoutGame_sessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -677,7 +677,7 @@ export type GameOptionsUncheckedUpdateWithoutGame_sessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   match_session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game_type?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elimination_starting_time_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   elimination_percent_change_rate?: Prisma.IntFieldUpdateOperationsInput | number
   head_to_head_target_win_count?: Prisma.IntFieldUpdateOperationsInput | number
@@ -692,7 +692,7 @@ export type GameOptionsSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   game_session_id?: boolean
   match_session_id?: boolean
   game_type?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elimination_starting_time_seconds?: boolean
   elimination_percent_change_rate?: boolean
   head_to_head_target_win_count?: boolean
@@ -707,7 +707,7 @@ export type GameOptionsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   game_session_id?: boolean
   match_session_id?: boolean
   game_type?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elimination_starting_time_seconds?: boolean
   elimination_percent_change_rate?: boolean
   head_to_head_target_win_count?: boolean
@@ -722,7 +722,7 @@ export type GameOptionsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   game_session_id?: boolean
   match_session_id?: boolean
   game_type?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elimination_starting_time_seconds?: boolean
   elimination_percent_change_rate?: boolean
   head_to_head_target_win_count?: boolean
@@ -737,7 +737,7 @@ export type GameOptionsSelectScalar = {
   game_session_id?: boolean
   match_session_id?: boolean
   game_type?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elimination_starting_time_seconds?: boolean
   elimination_percent_change_rate?: boolean
   head_to_head_target_win_count?: boolean
@@ -745,7 +745,7 @@ export type GameOptionsSelectScalar = {
   created_at?: boolean
 }
 
-export type GameOptionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "game_session_id" | "match_session_id" | "game_type" | "cube_type" | "elimination_starting_time_seconds" | "elimination_percent_change_rate" | "head_to_head_target_win_count" | "gauntlet_time_multiplier" | "created_at", ExtArgs["result"]["gameOptions"]>
+export type GameOptionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "game_session_id" | "match_session_id" | "game_type" | "event_type" | "elimination_starting_time_seconds" | "elimination_percent_change_rate" | "head_to_head_target_win_count" | "gauntlet_time_multiplier" | "created_at", ExtArgs["result"]["gameOptions"]>
 export type GameOptionsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   game_session?: boolean | Prisma.GameOptions$game_sessionArgs<ExtArgs>
   match_session?: boolean | Prisma.GameOptions$match_sessionArgs<ExtArgs>
@@ -770,7 +770,7 @@ export type $GameOptionsPayload<ExtArgs extends runtime.Types.Extensions.Interna
     game_session_id: string | null
     match_session_id: string | null
     game_type: $Enums.GameType
-    cube_type: string
+    event_type: string
     elimination_starting_time_seconds: number
     elimination_percent_change_rate: number
     head_to_head_target_win_count: number
@@ -1205,7 +1205,7 @@ export interface GameOptionsFieldRefs {
   readonly game_session_id: Prisma.FieldRef<"GameOptions", 'String'>
   readonly match_session_id: Prisma.FieldRef<"GameOptions", 'String'>
   readonly game_type: Prisma.FieldRef<"GameOptions", 'GameType'>
-  readonly cube_type: Prisma.FieldRef<"GameOptions", 'String'>
+  readonly event_type: Prisma.FieldRef<"GameOptions", 'String'>
   readonly elimination_starting_time_seconds: Prisma.FieldRef<"GameOptions", 'Int'>
   readonly elimination_percent_change_rate: Prisma.FieldRef<"GameOptions", 'Int'>
   readonly head_to_head_target_win_count: Prisma.FieldRef<"GameOptions", 'Int'>

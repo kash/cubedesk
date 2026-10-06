@@ -5,7 +5,7 @@ export const SolveSchema = z.object({
   user_id: z.string(),
   time: z.number(),
   raw_time: z.number().nullable(),
-  cube_type: z.string().nullable(),
+  event_type: z.string().nullable(),
   scramble: z.string().nullable(),
   session_id: z.string().nullable(),
   started_at: z.bigint().nullable(),

@@ -3,7 +3,7 @@ import {getAverage} from '@/db/solves/stats/solves/average/get-average';
 import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '@/db/solves/stats/solves/caching';
 import {Solve} from '@/types/solve';
 
-// Not providing a count will result in getting the average for all solves for this cube type
+// Not providing a count will result in getting the average for all solves for this event type
 export function getCurrentAverage(filterOptions: FilterSolvesOptions, count: number = -1) {
 	const cacheKey: SolveCacheKey = {
 		type: 'avg_current',

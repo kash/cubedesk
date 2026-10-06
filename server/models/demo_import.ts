@@ -12,7 +12,7 @@ export const demoImportInput = z
 				z.object({
 					id: z.uuid(),
 					raw_time: z.number().nonnegative(),
-					cube_type: z.string().min(1),
+					event_type: z.string().min(1),
 					scramble: z.string(),
 					started_at: timestamp,
 					ended_at: timestamp,

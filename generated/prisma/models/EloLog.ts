@@ -45,7 +45,7 @@ export type EloLogSumAggregateOutputType = {
 export type EloLogMinAggregateOutputType = {
   id: string | null
   opponent_id: string | null
-  cube_type: string | null
+  event_type: string | null
   elo_change: number | null
   updated_at: Date | null
   created_at: Date | null
@@ -61,7 +61,7 @@ export type EloLogMinAggregateOutputType = {
 export type EloLogMaxAggregateOutputType = {
   id: string | null
   opponent_id: string | null
-  cube_type: string | null
+  event_type: string | null
   elo_change: number | null
   updated_at: Date | null
   created_at: Date | null
@@ -77,7 +77,7 @@ export type EloLogMaxAggregateOutputType = {
 export type EloLogCountAggregateOutputType = {
   id: number
   opponent_id: number
-  cube_type: number
+  event_type: number
   elo_change: number
   updated_at: number
   created_at: number
@@ -111,7 +111,7 @@ export type EloLogSumAggregateInputType = {
 export type EloLogMinAggregateInputType = {
   id?: true
   opponent_id?: true
-  cube_type?: true
+  event_type?: true
   elo_change?: true
   updated_at?: true
   created_at?: true
@@ -127,7 +127,7 @@ export type EloLogMinAggregateInputType = {
 export type EloLogMaxAggregateInputType = {
   id?: true
   opponent_id?: true
-  cube_type?: true
+  event_type?: true
   elo_change?: true
   updated_at?: true
   created_at?: true
@@ -143,7 +143,7 @@ export type EloLogMaxAggregateInputType = {
 export type EloLogCountAggregateInputType = {
   id?: true
   opponent_id?: true
-  cube_type?: true
+  event_type?: true
   elo_change?: true
   updated_at?: true
   created_at?: true
@@ -246,7 +246,7 @@ export type EloLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type EloLogGroupByOutputType = {
   id: string
   opponent_id: string | null
-  cube_type: string
+  event_type: string
   elo_change: number
   updated_at: Date
   created_at: Date
@@ -285,7 +285,7 @@ export type EloLogWhereInput = {
   NOT?: Prisma.EloLogWhereInput | Prisma.EloLogWhereInput[]
   id?: Prisma.StringFilter<"EloLog"> | string
   opponent_id?: Prisma.StringNullableFilter<"EloLog"> | string | null
-  cube_type?: Prisma.StringFilter<"EloLog"> | string
+  event_type?: Prisma.StringFilter<"EloLog"> | string
   elo_change?: Prisma.IntFilter<"EloLog"> | number
   updated_at?: Prisma.DateTimeFilter<"EloLog"> | Date | string
   created_at?: Prisma.DateTimeFilter<"EloLog"> | Date | string
@@ -304,7 +304,7 @@ export type EloLogWhereInput = {
 export type EloLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   opponent_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elo_change?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -327,7 +327,7 @@ export type EloLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EloLogWhereInput[]
   NOT?: Prisma.EloLogWhereInput | Prisma.EloLogWhereInput[]
   opponent_id?: Prisma.StringNullableFilter<"EloLog"> | string | null
-  cube_type?: Prisma.StringFilter<"EloLog"> | string
+  event_type?: Prisma.StringFilter<"EloLog"> | string
   elo_change?: Prisma.IntFilter<"EloLog"> | number
   updated_at?: Prisma.DateTimeFilter<"EloLog"> | Date | string
   created_at?: Prisma.DateTimeFilter<"EloLog"> | Date | string
@@ -346,7 +346,7 @@ export type EloLogWhereUniqueInput = Prisma.AtLeast<{
 export type EloLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   opponent_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elo_change?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -370,7 +370,7 @@ export type EloLogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.EloLogScalarWhereWithAggregatesInput | Prisma.EloLogScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"EloLog"> | string
   opponent_id?: Prisma.StringNullableWithAggregatesFilter<"EloLog"> | string | null
-  cube_type?: Prisma.StringWithAggregatesFilter<"EloLog"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"EloLog"> | string
   elo_change?: Prisma.IntWithAggregatesFilter<"EloLog"> | number
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"EloLog"> | Date | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"EloLog"> | Date | string
@@ -385,7 +385,7 @@ export type EloLogScalarWhereWithAggregatesInput = {
 
 export type EloLogCreateInput = {
   id?: string
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -402,7 +402,7 @@ export type EloLogCreateInput = {
 export type EloLogUncheckedCreateInput = {
   id?: string
   opponent_id?: string | null
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -417,7 +417,7 @@ export type EloLogUncheckedCreateInput = {
 
 export type EloLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -434,7 +434,7 @@ export type EloLogUpdateInput = {
 export type EloLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -450,7 +450,7 @@ export type EloLogUncheckedUpdateInput = {
 export type EloLogCreateManyInput = {
   id?: string
   opponent_id?: string | null
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -465,7 +465,7 @@ export type EloLogCreateManyInput = {
 
 export type EloLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -479,7 +479,7 @@ export type EloLogUpdateManyMutationInput = {
 export type EloLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -511,7 +511,7 @@ export type EloLogOrderByRelevanceInput = {
 export type EloLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   opponent_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elo_change?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -535,7 +535,7 @@ export type EloLogAvgOrderByAggregateInput = {
 export type EloLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   opponent_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elo_change?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -551,7 +551,7 @@ export type EloLogMaxOrderByAggregateInput = {
 export type EloLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   opponent_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   elo_change?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -708,7 +708,7 @@ export type EloLogUncheckedUpdateManyWithoutMatchNestedInput = {
 
 export type EloLogCreateWithoutOpponentInput = {
   id?: string
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -723,7 +723,7 @@ export type EloLogCreateWithoutOpponentInput = {
 
 export type EloLogUncheckedCreateWithoutOpponentInput = {
   id?: string
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -748,7 +748,7 @@ export type EloLogCreateManyOpponentInputEnvelope = {
 
 export type EloLogCreateWithoutPlayerInput = {
   id?: string
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -764,7 +764,7 @@ export type EloLogCreateWithoutPlayerInput = {
 export type EloLogUncheckedCreateWithoutPlayerInput = {
   id?: string
   opponent_id?: string | null
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -808,7 +808,7 @@ export type EloLogScalarWhereInput = {
   NOT?: Prisma.EloLogScalarWhereInput | Prisma.EloLogScalarWhereInput[]
   id?: Prisma.StringFilter<"EloLog"> | string
   opponent_id?: Prisma.StringNullableFilter<"EloLog"> | string | null
-  cube_type?: Prisma.StringFilter<"EloLog"> | string
+  event_type?: Prisma.StringFilter<"EloLog"> | string
   elo_change?: Prisma.IntFilter<"EloLog"> | number
   updated_at?: Prisma.DateTimeFilter<"EloLog"> | Date | string
   created_at?: Prisma.DateTimeFilter<"EloLog"> | Date | string
@@ -839,7 +839,7 @@ export type EloLogUpdateManyWithWhereWithoutPlayerInput = {
 
 export type EloLogCreateWithoutMatchInput = {
   id?: string
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -855,7 +855,7 @@ export type EloLogCreateWithoutMatchInput = {
 export type EloLogUncheckedCreateWithoutMatchInput = {
   id?: string
   opponent_id?: string | null
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -895,7 +895,7 @@ export type EloLogUpdateManyWithWhereWithoutMatchInput = {
 
 export type EloLogCreateManyOpponentInput = {
   id?: string
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -911,7 +911,7 @@ export type EloLogCreateManyOpponentInput = {
 export type EloLogCreateManyPlayerInput = {
   id?: string
   opponent_id?: string | null
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -925,7 +925,7 @@ export type EloLogCreateManyPlayerInput = {
 
 export type EloLogUpdateWithoutOpponentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -940,7 +940,7 @@ export type EloLogUpdateWithoutOpponentInput = {
 
 export type EloLogUncheckedUpdateWithoutOpponentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -955,7 +955,7 @@ export type EloLogUncheckedUpdateWithoutOpponentInput = {
 
 export type EloLogUncheckedUpdateManyWithoutOpponentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -970,7 +970,7 @@ export type EloLogUncheckedUpdateManyWithoutOpponentInput = {
 
 export type EloLogUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -986,7 +986,7 @@ export type EloLogUpdateWithoutPlayerInput = {
 export type EloLogUncheckedUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1001,7 +1001,7 @@ export type EloLogUncheckedUpdateWithoutPlayerInput = {
 export type EloLogUncheckedUpdateManyWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1016,7 +1016,7 @@ export type EloLogUncheckedUpdateManyWithoutPlayerInput = {
 export type EloLogCreateManyMatchInput = {
   id?: string
   opponent_id?: string | null
-  cube_type: string
+  event_type: string
   elo_change?: number
   updated_at?: Date | string
   created_at?: Date | string
@@ -1030,7 +1030,7 @@ export type EloLogCreateManyMatchInput = {
 
 export type EloLogUpdateWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1046,7 +1046,7 @@ export type EloLogUpdateWithoutMatchInput = {
 export type EloLogUncheckedUpdateWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1061,7 +1061,7 @@ export type EloLogUncheckedUpdateWithoutMatchInput = {
 export type EloLogUncheckedUpdateManyWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   elo_change?: Prisma.IntFieldUpdateOperationsInput | number
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1078,7 +1078,7 @@ export type EloLogUncheckedUpdateManyWithoutMatchInput = {
 export type EloLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   opponent_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elo_change?: boolean
   updated_at?: boolean
   created_at?: boolean
@@ -1097,7 +1097,7 @@ export type EloLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type EloLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   opponent_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elo_change?: boolean
   updated_at?: boolean
   created_at?: boolean
@@ -1116,7 +1116,7 @@ export type EloLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type EloLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   opponent_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elo_change?: boolean
   updated_at?: boolean
   created_at?: boolean
@@ -1135,7 +1135,7 @@ export type EloLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type EloLogSelectScalar = {
   id?: boolean
   opponent_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   elo_change?: boolean
   updated_at?: boolean
   created_at?: boolean
@@ -1148,7 +1148,7 @@ export type EloLogSelectScalar = {
   refunded_at?: boolean
 }
 
-export type EloLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "opponent_id" | "cube_type" | "elo_change" | "updated_at" | "created_at" | "match_id" | "player_id" | "opponent_new_elo_rating" | "opponent_new_game_count" | "player_new_elo_rating" | "player_new_game_count" | "refunded_at", ExtArgs["result"]["eloLog"]>
+export type EloLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "opponent_id" | "event_type" | "elo_change" | "updated_at" | "created_at" | "match_id" | "player_id" | "opponent_new_elo_rating" | "opponent_new_game_count" | "player_new_elo_rating" | "player_new_game_count" | "refunded_at", ExtArgs["result"]["eloLog"]>
 export type EloLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   match?: boolean | Prisma.EloLog$matchArgs<ExtArgs>
   opponent?: boolean | Prisma.EloLog$opponentArgs<ExtArgs>
@@ -1175,7 +1175,7 @@ export type $EloLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     opponent_id: string | null
-    cube_type: string
+    event_type: string
     elo_change: number
     updated_at: Date
     created_at: Date
@@ -1614,7 +1614,7 @@ export interface Prisma__EloLogClient<T, Null = never, ExtArgs extends runtime.T
 export interface EloLogFieldRefs {
   readonly id: Prisma.FieldRef<"EloLog", 'String'>
   readonly opponent_id: Prisma.FieldRef<"EloLog", 'String'>
-  readonly cube_type: Prisma.FieldRef<"EloLog", 'String'>
+  readonly event_type: Prisma.FieldRef<"EloLog", 'String'>
   readonly elo_change: Prisma.FieldRef<"EloLog", 'Int'>
   readonly updated_at: Prisma.FieldRef<"EloLog", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"EloLog", 'DateTime'>

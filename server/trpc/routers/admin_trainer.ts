@@ -21,7 +21,7 @@ export const adminTrainerRouter = router({
 		.input(
 			z.object({
 				query: z.string().max(250).default(''),
-				cubeType: z.string().default(''),
+				eventType: z.string().default(''),
 				algoType: z.string().default(''),
 				status: z.enum(['all', 'published', 'unpublished']).default('all'),
 				page: z.number().int().min(0).default(0),
@@ -37,7 +37,7 @@ export const adminTrainerRouter = router({
 							],
 						}
 					: {}),
-				...(input.cubeType ? {cube_type: input.cubeType} : {}),
+				...(input.eventType ? {event_type: input.eventType} : {}),
 				...(input.algoType ? {algo_type: input.algoType} : {}),
 				...(input.status !== 'all' ? {active: input.status === 'published'} : {}),
 			};
@@ -58,8 +58,8 @@ export const adminTrainerRouter = router({
 						tx.trainerAlgorithm.count(),
 						tx.trainerAlgorithm.count({where: {active: true}}),
 						tx.trainerAlgorithm.findMany({
-							select: {cube_type: true, algo_type: true},
-							distinct: ['cube_type', 'algo_type'],
+							select: {event_type: true, algo_type: true},
+							distinct: ['event_type', 'algo_type'],
 						}),
 					]);
 					return {

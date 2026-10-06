@@ -1,57 +1,57 @@
 import {getSettings} from '@/db/settings/query';
 import {CUBE_SCRAMBLES, ScrambleType} from '@/util/cubes/cube_scrambles';
-import {CUBE_TYPES, CubeType} from '@/util/cubes/cube_types';
+import {EVENT_TYPES, EventType} from '@/util/cubes/event_types';
 
 export function getScrambleTypeById(scrambleId: string): ScrambleType | undefined {
 	return CUBE_SCRAMBLES[scrambleId];
 }
 
-// Converts CUBE_TYPES to array
-export function getDefaultCubeTypes(): CubeType[] {
-	return Object.keys(CUBE_TYPES).map((cubeType) => CUBE_TYPES[cubeType]);
+// Converts EVENT_TYPES to array
+export function getDefaultEventTypes(): EventType[] {
+	return Object.keys(EVENT_TYPES).map((eventType) => EVENT_TYPES[eventType]);
 }
 
-// Combines default cube types and customer cube types as a map
-function getAllCubeTypesAsMap(): Record<string, CubeType> {
+// Combines default event types and customer event types as a map
+function getAllEventTypesAsMap(): Record<string, EventType> {
 	return {
-		...getCustomCubeTypeAsMap(),
-		...CUBE_TYPES,
+		...getCustomEventTypeAsMap(),
+		...EVENT_TYPES,
 	};
 }
 
-// Combines default cube types and custom cube types
-export function getAllCubeTypes(): CubeType[] {
-	return getCustomCubeTypes().concat(getDefaultCubeTypes());
+// Combines default event types and custom event types
+export function getAllEventTypes(): EventType[] {
+	return getCustomEventTypes().concat(getDefaultEventTypes());
 }
 
-export function getDefaultCubeTypeNames(): string[] {
-	return Object.keys(CUBE_TYPES);
+export function getDefaultEventTypeNames(): string[] {
+	return Object.keys(EVENT_TYPES);
 }
 
-// Combines default cube types names and custom cube types names
-export function getAllCubeTypeNames(): string[] {
-	return Object.keys(getCustomCubeTypeAsMap()).concat(Object.keys(CUBE_TYPES));
+// Combines default event types names and custom event types names
+export function getAllEventTypeNames(): string[] {
+	return Object.keys(getCustomEventTypeAsMap()).concat(Object.keys(EVENT_TYPES));
 }
 
 export function getAllScrambleTypeNames(): string[] {
 	return Object.keys(CUBE_SCRAMBLES);
 }
 
-export function getCubeTypeInfoById(id: string): CubeType | undefined {
+export function getEventTypeInfoById(id: string): EventType | undefined {
 	if (!id) {
 		return undefined;
 	}
 
-	const all = getAllCubeTypesAsMap();
+	const all = getAllEventTypesAsMap();
 	return all[id];
 }
 
-function getCubeTypeInfoByName(name: string): CubeType | undefined {
+function getEventTypeInfoByName(name: string): EventType | undefined {
 	if (!name) {
 		return undefined;
 	}
 
-	for (const ct of getAllCubeTypes()) {
+	for (const ct of getAllEventTypes()) {
 		if (ct.name === name) {
 			return ct;
 		}
@@ -60,22 +60,22 @@ function getCubeTypeInfoByName(name: string): CubeType | undefined {
 	return undefined;
 }
 
-export function getCubeTypeInfo(idOrName: string): CubeType | undefined {
-	return getCubeTypeInfoById(idOrName) || getCubeTypeInfoByName(idOrName);
+export function getEventTypeInfo(idOrName: string): EventType | undefined {
+	return getEventTypeInfoById(idOrName) || getEventTypeInfoByName(idOrName);
 }
 
-export function getCubeTypeName(id: string): string | undefined {
-	return getCubeTypeInfoById(id)?.name;
+export function getEventTypeName(id: string): string | undefined {
+	return getEventTypeInfoById(id)?.name;
 }
 
-function getCustomCubeTypes(): CubeType[] {
-	const customCubeTypes = getSettings()?.custom_cube_types;
+function getCustomEventTypes(): EventType[] {
+	const customEventTypes = getSettings()?.custom_event_types;
 
-	if (!customCubeTypes) {
+	if (!customEventTypes) {
 		return [];
 	}
 
-	return customCubeTypes.map((ct) => ({
+	return customEventTypes.map((ct) => ({
 		id: ct.id,
 		name: ct.name,
 		scramble: ct.scramble,
@@ -83,10 +83,10 @@ function getCustomCubeTypes(): CubeType[] {
 	}));
 }
 
-function getCustomCubeTypeAsMap(): Record<string, CubeType> {
-	const list = getCustomCubeTypes();
+function getCustomEventTypeAsMap(): Record<string, EventType> {
+	const list = getCustomEventTypes();
 	// Convert list to map with name as key
-	const output: Record<string, CubeType> = {};
+	const output: Record<string, EventType> = {};
 
 	for (const ct of list) {
 		output[ct.id] = ct;

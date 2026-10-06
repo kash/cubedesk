@@ -52,9 +52,9 @@ export default function BluetoothTroubleshooting() {
 					<strong>GAN Smart Timer</strong> if you&apos;re using the timer.
 				</li>
 				<li>
-					Switch the cube type to <strong>3x3</strong> or <strong>2x2</strong>. Smart Cube
+					Switch the event type to <strong>3x3</strong> or <strong>2x2</strong>. Smart Cube
 					mode only works with those two. When a cube connects, CubeDesk switches to its
-					cube type for you.
+					event type for you.
 				</li>
 				<li>
 					Click <strong>Connect</strong> under the 3D cube and choose your cube from the

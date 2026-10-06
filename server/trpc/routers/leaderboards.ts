@@ -57,7 +57,7 @@ const notBannedWhere = {
 };
 
 const leaderboardsInputSchema = z.object({
-	cubeType: z.string(),
+	eventType: z.string(),
 	page: z.number().int().min(0),
 });
 
@@ -65,7 +65,7 @@ export const leaderboardsRouter = router({
 	topSolves: protectedProcedure.input(leaderboardsInputSchema).query(async ({ctx, input}) => {
 		const topSolves = await ctx.prisma.topSolve.findMany({
 			where: {
-				cube_type: input.cubeType,
+				event_type: input.eventType,
 				...notBannedWhere,
 			},
 			orderBy: {
@@ -85,7 +85,7 @@ export const leaderboardsRouter = router({
 	topAverages: protectedProcedure.input(leaderboardsInputSchema).query(async ({ctx, input}) => {
 		const topAverages = await ctx.prisma.topAverage.findMany({
 			where: {
-				cube_type: input.cubeType,
+				event_type: input.eventType,
 				...notBannedWhere,
 			},
 			orderBy: {
@@ -120,7 +120,7 @@ export const leaderboardsRouter = router({
 				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid solve'});
 			}
 
-			await deleteTopSolve(solve.cube_type, user);
+			await deleteTopSolve(solve.event_type, user);
 			return submitTopSolve(user, solve);
 		}),
 
@@ -142,7 +142,7 @@ export const leaderboardsRouter = router({
 				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid solve IDs'});
 			}
 
-			await deleteTopAverage(validSolves[0].cube_type, user);
+			await deleteTopAverage(validSolves[0].event_type, user);
 			return submitTopAverage(user, validSolves);
 		}),
 

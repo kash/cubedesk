@@ -1,4 +1,4 @@
-import type {CustomCubeType} from '@/generated/prisma/client';
+import type {CustomEventType} from '@/generated/prisma/client';
 import {TimerModuleType} from '@/components/timer/@types/enums';
 import {getSettingsDb} from '@/db/settings/init';
 import {APP_THEME_PRESETS} from '@/util/themes/theme_consts';
@@ -24,9 +24,9 @@ export interface AllSettings {
 	use_space_with_smart_cube: boolean;
 	require_period_in_manual_time_entry: boolean;
 	beta_tester: boolean;
-	cube_type: string;
+	event_type: string;
 	session_id: string;
-	custom_cube_types: CustomCubeType[];
+	custom_event_types: CustomEventType[];
 	locked_scramble: string | null;
 
 	// Local
@@ -74,10 +74,10 @@ const defaultSettings: AllSettings = {
 	use_space_with_smart_cube: false,
 	require_period_in_manual_time_entry: false,
 	beta_tester: false,
-	cube_type: '333',
+	event_type: '333',
 	session_id: '',
 	locked_scramble: null,
-	custom_cube_types: [],
+	custom_event_types: [],
 
 	timer_type: 'keyboard',
 	timer_module_count: 3,

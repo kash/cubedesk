@@ -15,7 +15,7 @@ interface Props {
 	onComplete?: () => void;
 }
 
-export default function NewCubeType(props: Props) {
+export default function NewEventType(props: Props) {
 	const fieldId = React.useId();
 
 	const [name, setName] = useInput('');
@@ -27,12 +27,12 @@ export default function NewCubeType(props: Props) {
 		setScrambleType(st.id);
 	}
 
-	async function createCubeType() {
+	async function createEventType() {
 		setLoading(true);
 		setError('');
 
 		try {
-			await trpc.customCubeType.create.mutate({
+			await trpc.customEventType.create.mutate({
 				name,
 				scramble: scrambleType,
 			});
@@ -49,21 +49,21 @@ export default function NewCubeType(props: Props) {
 
 	return (
 		<div>
-			<DialogHeader title="Add cube type" />
+			<DialogHeader title="Add event type" />
 			<Field className="mb-5">
-				<FieldLabel htmlFor={`${fieldId}-1`}>{'Cube Type Name'}</FieldLabel>
+				<FieldLabel htmlFor={`${fieldId}-1`}>{'Event Type Name'}</FieldLabel>
 				<Input value={name} onChange={setName} id={`${fieldId}-1`} />
 			</Field>
 			<ScramblePicker value={scrambleType} onChange={onChangeScrambleType} />
 			<div className="mt-5 flex flex-col items-start">
 				<Button
 					variant="default"
-					onClick={createCubeType}
+					onClick={createEventType}
 					size="lg"
 					disabled={disabled || loading}
 					aria-busy={loading}
 				>
-					{'Create Cube Type'}
+					{'Create Event Type'}
 					{loading ? <Spinner aria-hidden="true" /> : null}
 				</Button>
 				<ButtonError text={error} />

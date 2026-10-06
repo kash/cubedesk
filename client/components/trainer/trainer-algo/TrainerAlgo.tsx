@@ -76,7 +76,7 @@ export default function TrainerAlgo(props: Props) {
 								colors={algoExt.colors ?? ''}
 								threeD={algoExt.three_d}
 								rotate={algo.rotate ?? undefined}
-								cubeType={algoExt.cube_type}
+								eventType={algoExt.event_type}
 							/>
 						</div>
 						<div className="flex min-w-0 flex-1 flex-col items-start gap-2">

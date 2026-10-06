@@ -2,7 +2,7 @@ import Checkbox from '@/components/common/Checkbox';
 import CopyText from '@/components/common/CopyText';
 import {Button} from '@/components/ui/button';
 import {Solve} from '@/types/solve';
-import {getCubeTypeName} from '@/util/cubes/util';
+import {getEventTypeName} from '@/util/cubes/util';
 import {getTimeString} from '@/util/time';
 import dayjs from 'dayjs';
 import fileDownload from 'js-file-download';
@@ -22,7 +22,7 @@ export default function SolvesText(props: Props) {
 	const [includeScramble, setIncludeScramble] = useState(true);
 	const [wrapText, setWrapText] = useState(false);
 	const [includeDate, setIncludeDate] = useState(false);
-	const [includeCubeType, setIncludeCubeType] = useState(false);
+	const [includeEventType, setIncludeEventType] = useState(false);
 	const [includeNotes, setIncludeNotes] = useState(false);
 
 	function getSolveRows(csv?: boolean) {
@@ -36,7 +36,7 @@ export default function SolvesText(props: Props) {
 			}
 
 			const solve = solves[index];
-			const cubeType = getCubeTypeName(solve.cube_type);
+			const eventType = getEventTypeName(solve.event_type);
 			let time = getTimeString(solve);
 			if (!solve.dnf && solve.plus_two) {
 				time += '+';
@@ -53,7 +53,7 @@ export default function SolvesText(props: Props) {
 
 			const add: string[] = [];
 			if (includeScramble) add.push(solve.scramble);
-			if (includeCubeType) add.push(cubeType ?? solve.cube_type);
+			if (includeEventType) add.push(eventType ?? solve.event_type);
 			if (includeDate) add.push(new Date(solve.ended_at ?? 0).toLocaleString());
 			if (includeNotes) add.push(solve.notes ?? '');
 
@@ -76,7 +76,7 @@ export default function SolvesText(props: Props) {
 		if (includeScramble) keys.push('Scramble');
 		if (includeDate) keys.push('Date');
 		if (includeNotes) keys.push('Notes');
-		if (includeCubeType) keys.push('Cube Type');
+		if (includeEventType) keys.push('Event Type');
 
 		let fileName = description.replace(/-/g, '');
 		fileName = fileName.replace(/[^a-zA-Z\d\s]/g, '');
@@ -137,9 +137,9 @@ export default function SolvesText(props: Props) {
 					</div>
 					<div className="w-1/2">
 						<Checkbox
-							text="Include cube type"
-							onCheckedChange={() => setIncludeCubeType(!includeCubeType)}
-							checked={includeCubeType}
+							text="Include event type"
+							onCheckedChange={() => setIncludeEventType(!includeEventType)}
+							checked={includeEventType}
 						/>
 					</div>
 					<div className="w-1/2">

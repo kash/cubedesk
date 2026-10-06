@@ -12,8 +12,8 @@ export function setCurrentSession(id: string) {
 	return setSetting('session_id', id);
 }
 
-export function setCubeType(cubeType: string) {
-	return setSetting('cube_type', cubeType);
+export function setEventType(eventType: string) {
+	return setSetting('event_type', eventType);
 }
 
 export async function refreshSettings() {

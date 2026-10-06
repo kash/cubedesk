@@ -1,12 +1,12 @@
-import CubePicker from '@/components/common/CubePicker';
+import EventPicker from '@/components/common/EventPicker';
 import {Button} from '@/components/ui/button';
 import {DialogHeader} from '@/components/ui/dialog';
 import {Field, FieldLabel} from '@/components/ui/field';
 import {Input} from '@/components/ui/input';
 import {Spinner} from '@/components/ui/spinner';
 import {createSessionDb} from '@/db/sessions/update';
-import {setCubeType, setCurrentSession} from '@/db/settings/update';
-import {CubeType} from '@/util/cubes/cube_types';
+import {setCurrentSession, setEventType} from '@/db/settings/update';
+import {EventType} from '@/util/cubes/event_types';
 import {useInput} from '@/util/hooks/useInput';
 import {toastError} from '@/util/toast';
 import React, {useState} from 'react';
@@ -21,11 +21,11 @@ export default function CreateNewSession(props: Props) {
 	const {onComplete} = props;
 
 	const [loading, setLoading] = useState(false);
-	const [sessionCubeType, setSessionCubeType] = useState('333');
+	const [sessionEventType, setSessionEventType] = useState('333');
 	const [name, setName] = useInput('');
 
-	function onCubeTypeChange(ct: CubeType) {
-		setSessionCubeType(ct.id);
+	function onEventTypeChange(ct: EventType) {
+		setSessionEventType(ct.id);
 	}
 
 	async function createSession() {
@@ -38,7 +38,7 @@ export default function CreateNewSession(props: Props) {
 		try {
 			const session = await createSessionDb({name});
 			setCurrentSession(session.id);
-			setCubeType(sessionCubeType);
+			setEventType(sessionEventType);
 
 			onComplete?.(session);
 		} catch (e) {
@@ -47,13 +47,13 @@ export default function CreateNewSession(props: Props) {
 		}
 	}
 
-	const disabled = !name.trim() || loading || !sessionCubeType;
+	const disabled = !name.trim() || loading || !sessionEventType;
 
 	return (
 		<div className="flex flex-col items-start">
 			<DialogHeader
 				title="Create new session"
-				description="In CubeDesk, sessions can have multiple cube types. You can split up sessions however you'd like: by cube type, by day, etc."
+				description="In CubeDesk, sessions can have multiple event types. You can split up sessions however you'd like: by event type, by day, etc."
 			/>
 			<div className="w-full">
 				<Field className="mb-5">
@@ -67,14 +67,14 @@ export default function CreateNewSession(props: Props) {
 					/>
 				</Field>
 			</div>
-			<CubePicker
+			<EventPicker
 				pickerProps={{
-					legend: 'Cube Type',
+					legend: 'Event Type',
 					info: 'You can change this later',
 					openLeft: true,
 				}}
-				onChange={onCubeTypeChange}
-				value={sessionCubeType}
+				onChange={onEventTypeChange}
+				value={sessionEventType}
 			/>
 			<div className="mt-5">
 				<Button

@@ -37,7 +37,7 @@ export type CustomTrainerWithUser = Prisma.CustomTrainerGetPayload<{
 export type CustomTrainerInput = {
 	solution: string;
 	colors?: string | null;
-	cube_type: string;
+	event_type: string;
 	group_name?: string | null;
 	scrambles?: string | null;
 	alt_solutions?: string | null;
@@ -63,7 +63,7 @@ export type AlgorithmOverrideInput = {
 export type TrainerAlgorithmRecord = {
 	id: string;
 	name: string;
-	cube_type: string;
+	event_type: string;
 	algo_type: string;
 	colors?: string | null;
 	group_name?: string | null;

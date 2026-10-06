@@ -38,7 +38,7 @@ export default function TimerModule(props: Props) {
 	const {index, moduleType, customOptions} = props;
 
 	const context = useTimerContext();
-	const {scramble, cubeType, solvesFilter} = context;
+	const {scramble, eventType, solvesFilter} = context;
 	const mobileMode = useGeneral('mobile_mode');
 
 	const timerModules = useSettings('timer_modules');
@@ -90,7 +90,7 @@ export default function TimerModule(props: Props) {
 			),
 		},
 		[TimerModuleType.SCRAMBLE]: {
-			module: <Scramble cubeType={cubeType} scramble={scramble} />,
+			module: <Scramble eventType={eventType} scramble={scramble} />,
 		},
 		[TimerModuleType.SOLVE_GRAPH]: {
 			module: <TimeChart filterOptions={solvesFilter} />,

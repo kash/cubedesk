@@ -129,12 +129,12 @@ export default function DataSettings() {
 				<SettingRow
 					loggedInOnly
 					title="Reset settings"
-					description="Reset everything in the settings to default values (except for custom cube types)"
+					description="Reset everything in the settings to default values (except for custom event types)"
 				>
 					<ConfirmDialog
 						{...{
 							description:
-								'Be careful here. You are about to reset your settings to the default values. Custom cube types will not be affected.',
+								'Be careful here. You are about to reset your settings to the default values. Custom event types will not be affected.',
 							title: 'Reset settings',
 							buttonText: 'Reset settings',
 							triggerAction: resetSettings,

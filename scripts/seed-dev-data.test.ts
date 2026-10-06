@@ -36,7 +36,7 @@ it('generates consistent, repeatable solve history scoped to the selected user',
 	expect(data.solves.length).toBeGreaterThan(3000);
 	expect(data.solves.map((s) => s.id)).toEqual(rerun.solves.map((s) => s.id));
 	expect(new Set(data.solves.map((s) => s.id)).size).toBe(data.solves.length);
-	expect(new Set(data.solves.map((s) => s.cube_type)).size).toBe(4);
+	expect(new Set(data.solves.map((s) => s.event_type)).size).toBe(4);
 	expect(data.solves.some((s) => s.dnf)).toBe(true);
 	expect(data.solves.some((s) => s.plus_two)).toBe(true);
 	for (const solve of data.solves) {

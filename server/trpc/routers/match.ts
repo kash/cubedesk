@@ -3,7 +3,7 @@ import {createMatch, getMatchById, getMatchByLinkCode, getMatchBySpectateCode} f
 import {createMatchSession} from '@/server/models/match_session';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
 import {GameType} from '@/shared/match/consts';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 
@@ -38,16 +38,16 @@ export const matchRouter = router({
 				min_players: z.number().int(),
 				max_players: z.number().int(),
 				match_type: z.enum(GameType),
-				cube_type: z.string(),
+				event_type: z.string(),
 				head_to_head_target_win_count: z.number().int().optional(),
 			})
 		)
 		.mutation(async ({ctx, input}) => {
 			const {user} = ctx;
 
-			const cubeType = getCubeTypeInfoById(input.cube_type);
-			if (!cubeType) {
-				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid cube type'});
+			const eventType = getEventTypeInfoById(input.event_type);
+			if (!eventType) {
+				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid event type'});
 			}
 
 			const h2hTargetWin = input.head_to_head_target_win_count;
@@ -63,7 +63,7 @@ export const matchRouter = router({
 			await createGameOptions({
 				match_session_id: sesh.id,
 				game_type: input.match_type,
-				cube_type: input.cube_type || '333',
+				event_type: input.event_type || '333',
 				head_to_head_target_win_count: h2hTargetWin || 5,
 			});
 

@@ -1,7 +1,7 @@
 import CustomVisual from '@/components/trainer/CustomVisual';
 import {Button} from '@/components/ui/button';
 import {cn} from '@/util/cn';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -9,7 +9,7 @@ const DEFAULT_COLOR = '#3F464F';
 const COLORS = ['#FF9826', '#43FF43', '#FF4343', '#246BFD', '#FFFF49', '#FFFFFF', '#3F464F'];
 
 interface Props {
-	cubeType: string;
+	eventType: string;
 	// Null when the trainer being edited has no stored colors
 	initColors: string | null;
 	threeD: boolean;
@@ -17,9 +17,9 @@ interface Props {
 }
 
 export default function CubeBuilder(props: Props) {
-	const {cubeType, initColors, threeD, onUpdate} = props;
+	const {eventType, initColors, threeD, onUpdate} = props;
 	// Non-NxN puzzles have no size; the builder then renders no cubelets
-	const cubeSize = getCubeTypeInfoById(cubeType)?.size ?? 0;
+	const cubeSize = getEventTypeInfoById(eventType)?.size ?? 0;
 
 	const [colors, setColors] = useState(getDefaultColorList());
 	const [selectedColor, setSelectedColor] = useState(COLORS[0]);
@@ -30,7 +30,7 @@ export default function CubeBuilder(props: Props) {
 
 	useEffect(() => {
 		updateColorsFromInit();
-	}, [cubeType, threeD]);
+	}, [eventType, threeD]);
 
 	function updateColorsFromInit() {
 		let newCols = getDefaultColorList();
@@ -95,7 +95,7 @@ export default function CubeBuilder(props: Props) {
 				<CustomVisual
 					cubeletSize={40}
 					colors={colors}
-					cubeType={cubeType}
+					eventType={eventType}
 					onSelect={clickCubelet}
 					threeD={threeD}
 				/>

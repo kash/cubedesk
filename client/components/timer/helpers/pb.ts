@@ -4,7 +4,7 @@ import {getSetting} from '@/db/settings/query';
 import {FilterSolvesOptions} from '@/db/solves/query';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useEventListener} from '@/util/event_handler';
 import confetti from 'canvas-confetti';
 
@@ -17,7 +17,7 @@ export function listenForPbEvents(context: ITimerContext) {
 	// find in the cache
 	if (!ignorePbEvents) {
 		const pbFilter: FilterSolvesOptions = {
-			cube_type: context.cubeType,
+			event_type: context.eventType,
 		};
 
 		getSinglePB(pbFilter);
@@ -40,30 +40,30 @@ export function listenForPbEvents(context: ITimerContext) {
 		'singlePbEvent',
 		(ct) => {
 			if (ignorePbEvents) return;
-			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType?.name ?? ct} Single PB!`);
+			const eventType = getEventTypeInfoById(ct);
+			pbEventCallback(`New ${eventType?.name ?? ct} Single PB!`);
 		},
-		[context.cubeType, ignorePbEvents],
+		[context.eventType, ignorePbEvents],
 	);
 
 	useEventListener(
 		'avgPbEvent',
 		(ct) => {
 			if (ignorePbEvents) return;
-			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType?.name ?? ct} Average of 5 PB!`);
+			const eventType = getEventTypeInfoById(ct);
+			pbEventCallback(`New ${eventType?.name ?? ct} Average of 5 PB!`);
 		},
-		[context.cubeType, ignorePbEvents],
+		[context.eventType, ignorePbEvents],
 	);
 
 	useEventListener(
 		'singleAndAvgPbEvent',
 		(ct) => {
 			if (ignorePbEvents) return;
-			const cubeType = getCubeTypeInfoById(ct);
-			pbEventCallback(`New ${cubeType?.name ?? ct} Single and Average of 5 PB!`);
+			const eventType = getEventTypeInfoById(ct);
+			pbEventCallback(`New ${eventType?.name ?? ct} Single and Average of 5 PB!`);
 		},
-		[context.cubeType, ignorePbEvents],
+		[context.eventType, ignorePbEvents],
 	);
 }
 

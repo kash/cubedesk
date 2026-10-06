@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const CustomCubeTypeSchema = z.object({
+export const CustomEventTypeSchema = z.object({
   id: z.string(),
   user_id: z.string(),
   name: z.string(),
@@ -9,4 +9,4 @@ export const CustomCubeTypeSchema = z.object({
   private: z.boolean(),
 });
 
-export type CustomCubeType = z.infer<typeof CustomCubeTypeSchema>;
+export type CustomEventType = z.infer<typeof CustomEventTypeSchema>;

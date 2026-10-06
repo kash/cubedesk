@@ -25,7 +25,7 @@ const miniSolveSelect = {
 	id: true,
 	time: true,
 	raw_time: true,
-	cube_type: true,
+	event_type: true,
 	session_id: true,
 	trainer_name: true,
 	bulk: true,
@@ -44,7 +44,7 @@ export const solveInputSchema = z.object({
 	id: z.string().nullish(),
 	time: z.number().nullish(),
 	raw_time: z.number().nullish(),
-	cube_type: z.string().nullish(),
+	event_type: z.string().nullish(),
 	scramble: z.string().nullish(),
 	game_session_id: z.string().nullish(),
 	session_id: z.string().nullish(),
@@ -208,7 +208,7 @@ export const solveRouter = router({
 				solve.top_average_4?.length ||
 				solve.top_average_5?.length
 			) {
-				await deleteTopAverage(solve.cube_type, ctx.user);
+				await deleteTopAverage(solve.event_type, ctx.user);
 			}
 
 			if (solve.solve_views) {

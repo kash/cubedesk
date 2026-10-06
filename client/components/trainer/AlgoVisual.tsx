@@ -1,4 +1,4 @@
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useSettings} from '@/util/hooks/useSettings';
 import classNames from 'classnames';
 import CSS from 'csstype';
@@ -9,7 +9,7 @@ interface Props {
 	icon?: string;
 	rotate?: number;
 	zoom?: number;
-	cubeType?: string;
+	eventType?: string;
 	colors?: string;
 	imageLink?: string;
 }
@@ -19,8 +19,8 @@ export default function AlgoVisual(props: Props) {
 
 	const primaryColor = useSettings('primary_color');
 
-	const cubeType = getCubeTypeInfoById(props.cubeType ?? '');
-	const cubeSize = cubeType?.size ?? 0;
+	const eventType = getEventTypeInfoById(props.eventType ?? '');
+	const cubeSize = eventType?.size ?? 0;
 
 	// TODO FUTURE imageLinks
 	const cubeColors: string[] = useMemo(() => {

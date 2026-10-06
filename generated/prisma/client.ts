@@ -260,10 +260,10 @@ export type AlgorithmOverride = Prisma.AlgorithmOverrideModel
  */
 export type Setting = Prisma.SettingModel
 /**
- * Model CustomCubeType
+ * Model CustomEventType
  * 
  */
-export type CustomCubeType = Prisma.CustomCubeTypeModel
+export type CustomEventType = Prisma.CustomEventTypeModel
 /**
  * Model ImportAttempt
  * 

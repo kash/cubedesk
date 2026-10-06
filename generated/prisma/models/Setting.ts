@@ -55,7 +55,7 @@ export type SettingMinAggregateOutputType = {
   confirm_delete_solve: boolean | null
   require_period_in_manual_time_entry: boolean | null
   created_at: Date | null
-  cube_type: string | null
+  event_type: string | null
   session_id: string | null
   timer_decimal_points: number | null
   beta_tester: boolean | null
@@ -81,7 +81,7 @@ export type SettingMaxAggregateOutputType = {
   confirm_delete_solve: boolean | null
   require_period_in_manual_time_entry: boolean | null
   created_at: Date | null
-  cube_type: string | null
+  event_type: string | null
   session_id: string | null
   timer_decimal_points: number | null
   beta_tester: boolean | null
@@ -107,7 +107,7 @@ export type SettingCountAggregateOutputType = {
   confirm_delete_solve: number
   require_period_in_manual_time_entry: number
   created_at: number
-  cube_type: number
+  event_type: number
   session_id: number
   timer_decimal_points: number
   beta_tester: number
@@ -147,7 +147,7 @@ export type SettingMinAggregateInputType = {
   confirm_delete_solve?: true
   require_period_in_manual_time_entry?: true
   created_at?: true
-  cube_type?: true
+  event_type?: true
   session_id?: true
   timer_decimal_points?: true
   beta_tester?: true
@@ -173,7 +173,7 @@ export type SettingMaxAggregateInputType = {
   confirm_delete_solve?: true
   require_period_in_manual_time_entry?: true
   created_at?: true
-  cube_type?: true
+  event_type?: true
   session_id?: true
   timer_decimal_points?: true
   beta_tester?: true
@@ -199,7 +199,7 @@ export type SettingCountAggregateInputType = {
   confirm_delete_solve?: true
   require_period_in_manual_time_entry?: true
   created_at?: true
-  cube_type?: true
+  event_type?: true
   session_id?: true
   timer_decimal_points?: true
   beta_tester?: true
@@ -312,7 +312,7 @@ export type SettingGroupByOutputType = {
   confirm_delete_solve: boolean
   require_period_in_manual_time_entry: boolean
   created_at: Date
-  cube_type: string
+  event_type: string
   session_id: string | null
   timer_decimal_points: number
   beta_tester: boolean
@@ -361,14 +361,14 @@ export type SettingWhereInput = {
   confirm_delete_solve?: Prisma.BoolFilter<"Setting"> | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFilter<"Setting"> | boolean
   created_at?: Prisma.DateTimeFilter<"Setting"> | Date | string
-  cube_type?: Prisma.StringFilter<"Setting"> | string
+  event_type?: Prisma.StringFilter<"Setting"> | string
   session_id?: Prisma.StringNullableFilter<"Setting"> | string | null
   timer_decimal_points?: Prisma.IntFilter<"Setting"> | number
   beta_tester?: Prisma.BoolFilter<"Setting"> | boolean
   use_space_with_smart_cube?: Prisma.BoolFilter<"Setting"> | boolean
   inspection_auto_start?: Prisma.BoolFilter<"Setting"> | boolean
   stats_module_json?: Prisma.StringNullableFilter<"Setting"> | string | null
-  custom_cube_types?: Prisma.CustomCubeTypeListRelationFilter
+  custom_event_types?: Prisma.CustomEventTypeListRelationFilter
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
 }
 
@@ -389,14 +389,14 @@ export type SettingOrderByWithRelationInput = {
   confirm_delete_solve?: Prisma.SortOrder
   require_period_in_manual_time_entry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   timer_decimal_points?: Prisma.SortOrder
   beta_tester?: Prisma.SortOrder
   use_space_with_smart_cube?: Prisma.SortOrder
   inspection_auto_start?: Prisma.SortOrder
   stats_module_json?: Prisma.SortOrderInput | Prisma.SortOrder
-  custom_cube_types?: Prisma.CustomCubeTypeOrderByRelationAggregateInput
+  custom_event_types?: Prisma.CustomEventTypeOrderByRelationAggregateInput
   user?: Prisma.UserAccountOrderByWithRelationInput
   _relevance?: Prisma.SettingOrderByRelevanceInput
 }
@@ -421,14 +421,14 @@ export type SettingWhereUniqueInput = Prisma.AtLeast<{
   confirm_delete_solve?: Prisma.BoolFilter<"Setting"> | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFilter<"Setting"> | boolean
   created_at?: Prisma.DateTimeFilter<"Setting"> | Date | string
-  cube_type?: Prisma.StringFilter<"Setting"> | string
+  event_type?: Prisma.StringFilter<"Setting"> | string
   session_id?: Prisma.StringNullableFilter<"Setting"> | string | null
   timer_decimal_points?: Prisma.IntFilter<"Setting"> | number
   beta_tester?: Prisma.BoolFilter<"Setting"> | boolean
   use_space_with_smart_cube?: Prisma.BoolFilter<"Setting"> | boolean
   inspection_auto_start?: Prisma.BoolFilter<"Setting"> | boolean
   stats_module_json?: Prisma.StringNullableFilter<"Setting"> | string | null
-  custom_cube_types?: Prisma.CustomCubeTypeListRelationFilter
+  custom_event_types?: Prisma.CustomEventTypeListRelationFilter
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
 }, "id" | "user_id">
 
@@ -449,7 +449,7 @@ export type SettingOrderByWithAggregationInput = {
   confirm_delete_solve?: Prisma.SortOrder
   require_period_in_manual_time_entry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   session_id?: Prisma.SortOrderInput | Prisma.SortOrder
   timer_decimal_points?: Prisma.SortOrder
   beta_tester?: Prisma.SortOrder
@@ -483,7 +483,7 @@ export type SettingScalarWhereWithAggregatesInput = {
   confirm_delete_solve?: Prisma.BoolWithAggregatesFilter<"Setting"> | boolean
   require_period_in_manual_time_entry?: Prisma.BoolWithAggregatesFilter<"Setting"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Setting"> | Date | string
-  cube_type?: Prisma.StringWithAggregatesFilter<"Setting"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"Setting"> | string
   session_id?: Prisma.StringNullableWithAggregatesFilter<"Setting"> | string | null
   timer_decimal_points?: Prisma.IntWithAggregatesFilter<"Setting"> | number
   beta_tester?: Prisma.BoolWithAggregatesFilter<"Setting"> | boolean
@@ -508,14 +508,14 @@ export type SettingCreateInput = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: Date | string
-  cube_type?: string
+  event_type?: string
   session_id?: string | null
   timer_decimal_points?: number
   beta_tester?: boolean
   use_space_with_smart_cube?: boolean
   inspection_auto_start?: boolean
   stats_module_json?: string | null
-  custom_cube_types?: Prisma.CustomCubeTypeCreateNestedManyWithoutSettingInput
+  custom_event_types?: Prisma.CustomEventTypeCreateNestedManyWithoutSettingInput
   user: Prisma.UserAccountCreateNestedOneWithoutSettingsInput
 }
 
@@ -536,14 +536,14 @@ export type SettingUncheckedCreateInput = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: Date | string
-  cube_type?: string
+  event_type?: string
   session_id?: string | null
   timer_decimal_points?: number
   beta_tester?: boolean
   use_space_with_smart_cube?: boolean
   inspection_auto_start?: boolean
   stats_module_json?: string | null
-  custom_cube_types?: Prisma.CustomCubeTypeUncheckedCreateNestedManyWithoutSettingInput
+  custom_event_types?: Prisma.CustomEventTypeUncheckedCreateNestedManyWithoutSettingInput
 }
 
 export type SettingUpdateInput = {
@@ -562,14 +562,14 @@ export type SettingUpdateInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
   use_space_with_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_auto_start?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stats_module_json?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_cube_types?: Prisma.CustomCubeTypeUpdateManyWithoutSettingNestedInput
+  custom_event_types?: Prisma.CustomEventTypeUpdateManyWithoutSettingNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSettingsNestedInput
 }
 
@@ -590,14 +590,14 @@ export type SettingUncheckedUpdateInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
   use_space_with_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_auto_start?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stats_module_json?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_cube_types?: Prisma.CustomCubeTypeUncheckedUpdateManyWithoutSettingNestedInput
+  custom_event_types?: Prisma.CustomEventTypeUncheckedUpdateManyWithoutSettingNestedInput
 }
 
 export type SettingCreateManyInput = {
@@ -617,7 +617,7 @@ export type SettingCreateManyInput = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: Date | string
-  cube_type?: string
+  event_type?: string
   session_id?: string | null
   timer_decimal_points?: number
   beta_tester?: boolean
@@ -642,7 +642,7 @@ export type SettingUpdateManyMutationInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -668,7 +668,7 @@ export type SettingUncheckedUpdateManyInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -705,7 +705,7 @@ export type SettingCountOrderByAggregateInput = {
   confirm_delete_solve?: Prisma.SortOrder
   require_period_in_manual_time_entry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   session_id?: Prisma.SortOrder
   timer_decimal_points?: Prisma.SortOrder
   beta_tester?: Prisma.SortOrder
@@ -737,7 +737,7 @@ export type SettingMaxOrderByAggregateInput = {
   confirm_delete_solve?: Prisma.SortOrder
   require_period_in_manual_time_entry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   session_id?: Prisma.SortOrder
   timer_decimal_points?: Prisma.SortOrder
   beta_tester?: Prisma.SortOrder
@@ -763,7 +763,7 @@ export type SettingMinOrderByAggregateInput = {
   confirm_delete_solve?: Prisma.SortOrder
   require_period_in_manual_time_entry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   session_id?: Prisma.SortOrder
   timer_decimal_points?: Prisma.SortOrder
   beta_tester?: Prisma.SortOrder
@@ -815,18 +815,18 @@ export type SettingUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SettingUpdateToOneWithWhereWithoutUserInput, Prisma.SettingUpdateWithoutUserInput>, Prisma.SettingUncheckedUpdateWithoutUserInput>
 }
 
-export type SettingCreateNestedOneWithoutCustom_cube_typesInput = {
-  create?: Prisma.XOR<Prisma.SettingCreateWithoutCustom_cube_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_cube_typesInput>
-  connectOrCreate?: Prisma.SettingCreateOrConnectWithoutCustom_cube_typesInput
+export type SettingCreateNestedOneWithoutCustom_event_typesInput = {
+  create?: Prisma.XOR<Prisma.SettingCreateWithoutCustom_event_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_event_typesInput>
+  connectOrCreate?: Prisma.SettingCreateOrConnectWithoutCustom_event_typesInput
   connect?: Prisma.SettingWhereUniqueInput
 }
 
-export type SettingUpdateOneRequiredWithoutCustom_cube_typesNestedInput = {
-  create?: Prisma.XOR<Prisma.SettingCreateWithoutCustom_cube_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_cube_typesInput>
-  connectOrCreate?: Prisma.SettingCreateOrConnectWithoutCustom_cube_typesInput
-  upsert?: Prisma.SettingUpsertWithoutCustom_cube_typesInput
+export type SettingUpdateOneRequiredWithoutCustom_event_typesNestedInput = {
+  create?: Prisma.XOR<Prisma.SettingCreateWithoutCustom_event_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_event_typesInput>
+  connectOrCreate?: Prisma.SettingCreateOrConnectWithoutCustom_event_typesInput
+  upsert?: Prisma.SettingUpsertWithoutCustom_event_typesInput
   connect?: Prisma.SettingWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SettingUpdateToOneWithWhereWithoutCustom_cube_typesInput, Prisma.SettingUpdateWithoutCustom_cube_typesInput>, Prisma.SettingUncheckedUpdateWithoutCustom_cube_typesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SettingUpdateToOneWithWhereWithoutCustom_event_typesInput, Prisma.SettingUpdateWithoutCustom_event_typesInput>, Prisma.SettingUncheckedUpdateWithoutCustom_event_typesInput>
 }
 
 export type SettingCreateWithoutUserInput = {
@@ -845,14 +845,14 @@ export type SettingCreateWithoutUserInput = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: Date | string
-  cube_type?: string
+  event_type?: string
   session_id?: string | null
   timer_decimal_points?: number
   beta_tester?: boolean
   use_space_with_smart_cube?: boolean
   inspection_auto_start?: boolean
   stats_module_json?: string | null
-  custom_cube_types?: Prisma.CustomCubeTypeCreateNestedManyWithoutSettingInput
+  custom_event_types?: Prisma.CustomEventTypeCreateNestedManyWithoutSettingInput
 }
 
 export type SettingUncheckedCreateWithoutUserInput = {
@@ -871,14 +871,14 @@ export type SettingUncheckedCreateWithoutUserInput = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: Date | string
-  cube_type?: string
+  event_type?: string
   session_id?: string | null
   timer_decimal_points?: number
   beta_tester?: boolean
   use_space_with_smart_cube?: boolean
   inspection_auto_start?: boolean
   stats_module_json?: string | null
-  custom_cube_types?: Prisma.CustomCubeTypeUncheckedCreateNestedManyWithoutSettingInput
+  custom_event_types?: Prisma.CustomEventTypeUncheckedCreateNestedManyWithoutSettingInput
 }
 
 export type SettingCreateOrConnectWithoutUserInput = {
@@ -913,14 +913,14 @@ export type SettingUpdateWithoutUserInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
   use_space_with_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_auto_start?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stats_module_json?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_cube_types?: Prisma.CustomCubeTypeUpdateManyWithoutSettingNestedInput
+  custom_event_types?: Prisma.CustomEventTypeUpdateManyWithoutSettingNestedInput
 }
 
 export type SettingUncheckedUpdateWithoutUserInput = {
@@ -939,17 +939,17 @@ export type SettingUncheckedUpdateWithoutUserInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
   use_space_with_smart_cube?: Prisma.BoolFieldUpdateOperationsInput | boolean
   inspection_auto_start?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stats_module_json?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  custom_cube_types?: Prisma.CustomCubeTypeUncheckedUpdateManyWithoutSettingNestedInput
+  custom_event_types?: Prisma.CustomEventTypeUncheckedUpdateManyWithoutSettingNestedInput
 }
 
-export type SettingCreateWithoutCustom_cube_typesInput = {
+export type SettingCreateWithoutCustom_event_typesInput = {
   id?: string
   focus_mode?: boolean
   freeze_time?: number
@@ -965,7 +965,7 @@ export type SettingCreateWithoutCustom_cube_typesInput = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: Date | string
-  cube_type?: string
+  event_type?: string
   session_id?: string | null
   timer_decimal_points?: number
   beta_tester?: boolean
@@ -975,7 +975,7 @@ export type SettingCreateWithoutCustom_cube_typesInput = {
   user: Prisma.UserAccountCreateNestedOneWithoutSettingsInput
 }
 
-export type SettingUncheckedCreateWithoutCustom_cube_typesInput = {
+export type SettingUncheckedCreateWithoutCustom_event_typesInput = {
   id?: string
   user_id: string
   focus_mode?: boolean
@@ -992,7 +992,7 @@ export type SettingUncheckedCreateWithoutCustom_cube_typesInput = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: Date | string
-  cube_type?: string
+  event_type?: string
   session_id?: string | null
   timer_decimal_points?: number
   beta_tester?: boolean
@@ -1001,23 +1001,23 @@ export type SettingUncheckedCreateWithoutCustom_cube_typesInput = {
   stats_module_json?: string | null
 }
 
-export type SettingCreateOrConnectWithoutCustom_cube_typesInput = {
+export type SettingCreateOrConnectWithoutCustom_event_typesInput = {
   where: Prisma.SettingWhereUniqueInput
-  create: Prisma.XOR<Prisma.SettingCreateWithoutCustom_cube_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_cube_typesInput>
+  create: Prisma.XOR<Prisma.SettingCreateWithoutCustom_event_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_event_typesInput>
 }
 
-export type SettingUpsertWithoutCustom_cube_typesInput = {
-  update: Prisma.XOR<Prisma.SettingUpdateWithoutCustom_cube_typesInput, Prisma.SettingUncheckedUpdateWithoutCustom_cube_typesInput>
-  create: Prisma.XOR<Prisma.SettingCreateWithoutCustom_cube_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_cube_typesInput>
+export type SettingUpsertWithoutCustom_event_typesInput = {
+  update: Prisma.XOR<Prisma.SettingUpdateWithoutCustom_event_typesInput, Prisma.SettingUncheckedUpdateWithoutCustom_event_typesInput>
+  create: Prisma.XOR<Prisma.SettingCreateWithoutCustom_event_typesInput, Prisma.SettingUncheckedCreateWithoutCustom_event_typesInput>
   where?: Prisma.SettingWhereInput
 }
 
-export type SettingUpdateToOneWithWhereWithoutCustom_cube_typesInput = {
+export type SettingUpdateToOneWithWhereWithoutCustom_event_typesInput = {
   where?: Prisma.SettingWhereInput
-  data: Prisma.XOR<Prisma.SettingUpdateWithoutCustom_cube_typesInput, Prisma.SettingUncheckedUpdateWithoutCustom_cube_typesInput>
+  data: Prisma.XOR<Prisma.SettingUpdateWithoutCustom_event_typesInput, Prisma.SettingUncheckedUpdateWithoutCustom_event_typesInput>
 }
 
-export type SettingUpdateWithoutCustom_cube_typesInput = {
+export type SettingUpdateWithoutCustom_event_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   focus_mode?: Prisma.BoolFieldUpdateOperationsInput | boolean
   freeze_time?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1033,7 +1033,7 @@ export type SettingUpdateWithoutCustom_cube_typesInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1043,7 +1043,7 @@ export type SettingUpdateWithoutCustom_cube_typesInput = {
   user?: Prisma.UserAccountUpdateOneRequiredWithoutSettingsNestedInput
 }
 
-export type SettingUncheckedUpdateWithoutCustom_cube_typesInput = {
+export type SettingUncheckedUpdateWithoutCustom_event_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   focus_mode?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1060,7 +1060,7 @@ export type SettingUncheckedUpdateWithoutCustom_cube_typesInput = {
   confirm_delete_solve?: Prisma.BoolFieldUpdateOperationsInput | boolean
   require_period_in_manual_time_entry?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   session_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timer_decimal_points?: Prisma.IntFieldUpdateOperationsInput | number
   beta_tester?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1075,11 +1075,11 @@ export type SettingUncheckedUpdateWithoutCustom_cube_typesInput = {
  */
 
 export type SettingCountOutputType = {
-  custom_cube_types: number
+  custom_event_types: number
 }
 
 export type SettingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  custom_cube_types?: boolean | SettingCountOutputTypeCountCustom_cube_typesArgs
+  custom_event_types?: boolean | SettingCountOutputTypeCountCustom_event_typesArgs
 }
 
 /**
@@ -1095,8 +1095,8 @@ export type SettingCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * SettingCountOutputType without action
  */
-export type SettingCountOutputTypeCountCustom_cube_typesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CustomCubeTypeWhereInput
+export type SettingCountOutputTypeCountCustom_event_typesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CustomEventTypeWhereInput
 }
 
 
@@ -1117,14 +1117,14 @@ export type SettingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   session_id?: boolean
   timer_decimal_points?: boolean
   beta_tester?: boolean
   use_space_with_smart_cube?: boolean
   inspection_auto_start?: boolean
   stats_module_json?: boolean
-  custom_cube_types?: boolean | Prisma.Setting$custom_cube_typesArgs<ExtArgs>
+  custom_event_types?: boolean | Prisma.Setting$custom_event_typesArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SettingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["setting"]>
@@ -1146,7 +1146,7 @@ export type SettingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   session_id?: boolean
   timer_decimal_points?: boolean
   beta_tester?: boolean
@@ -1173,7 +1173,7 @@ export type SettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   session_id?: boolean
   timer_decimal_points?: boolean
   beta_tester?: boolean
@@ -1200,7 +1200,7 @@ export type SettingSelectScalar = {
   confirm_delete_solve?: boolean
   require_period_in_manual_time_entry?: boolean
   created_at?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   session_id?: boolean
   timer_decimal_points?: boolean
   beta_tester?: boolean
@@ -1209,9 +1209,9 @@ export type SettingSelectScalar = {
   stats_module_json?: boolean
 }
 
-export type SettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "focus_mode" | "freeze_time" | "inspection" | "manual_entry" | "inspection_delay" | "inverse_time_list" | "hide_time_when_solving" | "nav_collapsed" | "pb_confetti" | "play_inspection_sound" | "zero_out_time_after_solve" | "confirm_delete_solve" | "require_period_in_manual_time_entry" | "created_at" | "cube_type" | "session_id" | "timer_decimal_points" | "beta_tester" | "use_space_with_smart_cube" | "inspection_auto_start" | "stats_module_json", ExtArgs["result"]["setting"]>
+export type SettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "focus_mode" | "freeze_time" | "inspection" | "manual_entry" | "inspection_delay" | "inverse_time_list" | "hide_time_when_solving" | "nav_collapsed" | "pb_confetti" | "play_inspection_sound" | "zero_out_time_after_solve" | "confirm_delete_solve" | "require_period_in_manual_time_entry" | "created_at" | "event_type" | "session_id" | "timer_decimal_points" | "beta_tester" | "use_space_with_smart_cube" | "inspection_auto_start" | "stats_module_json", ExtArgs["result"]["setting"]>
 export type SettingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  custom_cube_types?: boolean | Prisma.Setting$custom_cube_typesArgs<ExtArgs>
+  custom_event_types?: boolean | Prisma.Setting$custom_event_typesArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SettingCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1225,7 +1225,7 @@ export type SettingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $SettingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Setting"
   objects: {
-    custom_cube_types: Prisma.$CustomCubeTypePayload<ExtArgs>[]
+    custom_event_types: Prisma.$CustomEventTypePayload<ExtArgs>[]
     user: Prisma.$UserAccountPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1245,7 +1245,7 @@ export type $SettingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     confirm_delete_solve: boolean
     require_period_in_manual_time_entry: boolean
     created_at: Date
-    cube_type: string
+    event_type: string
     session_id: string | null
     timer_decimal_points: number
     beta_tester: boolean
@@ -1646,7 +1646,7 @@ readonly fields: SettingFieldRefs;
  */
 export interface Prisma__SettingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  custom_cube_types<T extends Prisma.Setting$custom_cube_typesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Setting$custom_cube_typesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomCubeTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  custom_event_types<T extends Prisma.Setting$custom_event_typesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Setting$custom_event_typesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomEventTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__UserAccountClient<runtime.Types.Result.GetResult<Prisma.$UserAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1693,7 +1693,7 @@ export interface SettingFieldRefs {
   readonly confirm_delete_solve: Prisma.FieldRef<"Setting", 'Boolean'>
   readonly require_period_in_manual_time_entry: Prisma.FieldRef<"Setting", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Setting", 'DateTime'>
-  readonly cube_type: Prisma.FieldRef<"Setting", 'String'>
+  readonly event_type: Prisma.FieldRef<"Setting", 'String'>
   readonly session_id: Prisma.FieldRef<"Setting", 'String'>
   readonly timer_decimal_points: Prisma.FieldRef<"Setting", 'Int'>
   readonly beta_tester: Prisma.FieldRef<"Setting", 'Boolean'>
@@ -2101,27 +2101,27 @@ export type SettingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Setting.custom_cube_types
+ * Setting.custom_event_types
  */
-export type Setting$custom_cube_typesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Setting$custom_event_typesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the CustomCubeType
+   * Select specific fields to fetch from the CustomEventType
    */
-  select?: Prisma.CustomCubeTypeSelect<ExtArgs> | null
+  select?: Prisma.CustomEventTypeSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the CustomCubeType
+   * Omit specific fields from the CustomEventType
    */
-  omit?: Prisma.CustomCubeTypeOmit<ExtArgs> | null
+  omit?: Prisma.CustomEventTypeOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CustomCubeTypeInclude<ExtArgs> | null
-  where?: Prisma.CustomCubeTypeWhereInput
-  orderBy?: Prisma.CustomCubeTypeOrderByWithRelationInput | Prisma.CustomCubeTypeOrderByWithRelationInput[]
-  cursor?: Prisma.CustomCubeTypeWhereUniqueInput
+  include?: Prisma.CustomEventTypeInclude<ExtArgs> | null
+  where?: Prisma.CustomEventTypeWhereInput
+  orderBy?: Prisma.CustomEventTypeOrderByWithRelationInput | Prisma.CustomEventTypeOrderByWithRelationInput[]
+  cursor?: Prisma.CustomEventTypeWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CustomCubeTypeScalarFieldEnum | Prisma.CustomCubeTypeScalarFieldEnum[]
+  distinct?: Prisma.CustomEventTypeScalarFieldEnum | Prisma.CustomEventTypeScalarFieldEnum[]
 }
 
 /**
