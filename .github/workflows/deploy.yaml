@@ -142,6 +142,7 @@ jobs:
                   fi
                   echo "::add-mask::$DATABASE_URL"
                   export DATABASE_URL
+                  pnpm exec ts-node scripts/resolve-event-type-backfill.ts
                   pnpm exec prisma migrate deploy
 
             - name: Deploy to ECS
