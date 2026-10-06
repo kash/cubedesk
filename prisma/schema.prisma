@@ -229,7 +229,6 @@ model EloLog {
   id                      String       @id @default(uuid())
   opponent_id             String?
   event_type              String
-  cube_type               String?      @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   elo_change              Int          @default(0)
   updated_at              DateTime     @updatedAt
   created_at              DateTime     @default(now())
@@ -345,7 +344,6 @@ model Solve {
   time                 Float
   raw_time             Float?
   event_type           String?
-  cube_type            String?           @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   scramble             String?
   session_id           String?
   started_at           BigInt?
@@ -399,7 +397,6 @@ model DemoSolve {
   ip_address      String?
   raw_time        Float?
   event_type      String?
-  cube_type       String?  @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   scramble        String?
   started_at      BigInt?
   ended_at        BigInt?
@@ -471,7 +468,6 @@ model MatchLobby {
   id           String      @id @default(uuid())
   user_id      String
   event_type   String
-  cube_type    String?     @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   game_type    GameType
   player_count Int
   elo          Int
@@ -644,7 +640,6 @@ model GameOptions {
   match_session_id                  String?       @unique
   game_type                         GameType
   event_type                        String        @default("333")
-  cube_type                         String?       @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   elimination_starting_time_seconds Int           @default(30)
   elimination_percent_change_rate   Int           @default(5)
   head_to_head_target_win_count     Int           @default(5)
@@ -664,7 +659,6 @@ model TopSolve {
   time       Float
   solve_id   String
   event_type String
-  cube_type  String?     @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   created_at DateTime    @default(now())
   solve      Solve       @relation(fields: [solve_id], references: [id], onDelete: Cascade)
   user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -680,7 +674,6 @@ model TopAverage {
   user_id    String
   time       Float
   event_type String
-  cube_type  String?     @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   solve_1_id String
   solve_2_id String
   solve_3_id String
@@ -716,7 +709,6 @@ model CustomTrainer {
   id            String                  @id @default(uuid())
   colors        String?
   event_type    String
-  cube_type     String?                 @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   key           String
   user_id       String
   created_at    DateTime                @default(now())
@@ -785,7 +777,6 @@ model TrainerAlgorithm {
   solution   String   @default("")
   scrambles  String   @default("")
   event_type String
-  cube_type  String?  @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   algo_type  String
   group_name String   @default("")
   img_link   String   @default("")
@@ -850,7 +841,6 @@ model Setting {
   require_period_in_manual_time_entry Boolean           @default(false)
   created_at                          DateTime          @default(now())
   event_type                          String            @default("333")
-  cube_type                           String?           @ignore // Deprecated for event_type and synced to it by a trigger. Dropped in phase 2.
   session_id                          String?
   timer_decimal_points                Int               @default(2)
   beta_tester                         Boolean           @default(false)
