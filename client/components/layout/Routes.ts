@@ -122,12 +122,6 @@ export const routes: (PageContext | RedirectPath)[] = [
 	noIndex(route('/settings/appearance', App, Settings, Appearance, false)),
 	noIndex(route('/settings/data', App, Settings, DataSettings, false)),
 
-	// Landing Pages
-	// route('/how-to-solve', null, Landing, HTSLanding, false, false, false, false, true),
-	// route('/how-to-solve/:stepId', null, Landing, HTSLearn, false, false, false, false, true),
-	route('/terms', null, Landing, Terms, false, true),
-	route('/privacy', null, Landing, Privacy, false, true),
-
 	// Public
 	route('/solve/:shareCode', null, App, SolvePage, false, false, false, false, false, [prefetchSolveData]),
 	route('/user/:username', null, App, Profile, false, false, false, false, false, [prefetchProfileData]),

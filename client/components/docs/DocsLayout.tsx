@@ -1,4 +1,5 @@
-import {DOC_SECTIONS, DocPage, getDocPage} from '@/components/docs/doc-pages';
+import {DOC_SECTIONS, DocPage, getDocPage, LEGAL_PAGES} from '@/components/docs/doc-pages';
+import {LEGAL_CONTACT_EMAIL} from '@/components/docs/legal';
 import Header from '@/components/layout/Header';
 import {cn} from '@/util/cn';
 import {useTheme} from '@/util/hooks/useTheme';
@@ -117,7 +118,7 @@ export default function DocsLayout(props: Props) {
 	}, [menuOpen]);
 
 	return (
-		<div className="bg-background text-text relative min-h-screen overflow-x-clip">
+		<div className="bg-background text-text relative flex min-h-screen flex-col overflow-x-clip">
 			<Header path={page.path} title={page.title} description={page.description}>
 				<link rel="canonical" href={`${process.env.BASE_URI}${page.path}`} />
 				<script type="application/ld+json">
@@ -182,7 +183,7 @@ export default function DocsLayout(props: Props) {
 				</div>
 			) : null}
 
-			<div className="mx-auto flex w-full max-w-6xl gap-12 px-4 sm:px-6">
+			<div className="mx-auto flex w-full max-w-6xl flex-1 gap-12 px-4 sm:px-6">
 				<aside className="sticky top-14 hidden max-h-[calc(100vh-3.5rem)] w-64 shrink-0 self-start overflow-y-auto py-12 lg:block">
 					<DocsNav path={page.path} />
 				</aside>
@@ -191,6 +192,39 @@ export default function DocsLayout(props: Props) {
 					<article className="relative z-10 flex flex-col gap-4">{children}</article>
 				</main>
 			</div>
+
+			<DocsFooter />
 		</div>
+	);
+}
+
+function DocsFooter() {
+	const linkClass = cn(
+		'text-text/50 hover:text-text/90 rounded-sm transition-colors',
+		FOCUS_RING,
+	);
+
+	return (
+		<footer className="border-text/10 border-t">
+			<div className="text-text/40 mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-6 text-xs leading-6 sm:flex-row [&_*]:font-mono sm:items-center sm:justify-between sm:px-6">
+				<p className="m-0">© {new Date().getFullYear()} CubeDesk</p>
+				<nav aria-label="Legal">
+					<ul className="m-0 flex list-none flex-wrap gap-x-6 gap-y-1 p-0">
+						{LEGAL_PAGES.map((page) => (
+							<li key={page.path}>
+								<Link to={page.path} className={linkClass}>
+									{page.navTitle}
+								</Link>
+							</li>
+						))}
+						<li>
+							<a href={`mailto:${LEGAL_CONTACT_EMAIL}`} className={linkClass}>
+								Contact
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</footer>
 	);
 }
