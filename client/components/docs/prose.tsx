@@ -75,7 +75,7 @@ export function DocCode(props: {children: ReactNode}) {
 }
 
 export function DocLink(props: {to: string; children: ReactNode}) {
-	if (props.to.startsWith('#')) {
+	if (props.to.startsWith('#') || props.to.startsWith('mailto:')) {
 		return (
 			<a href={props.to} className={LINK_CLASS}>
 				{props.children}
