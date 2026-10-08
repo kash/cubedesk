@@ -1,6 +1,6 @@
 import {Prisma} from '@/generated/prisma/client';
 import {getPrisma} from '@/server/database';
-import {getEloRatingColumnNameFromCubeType} from '@/server/models/elo_rating';
+import {getEloRatingColumnNameFromEventType} from '@/server/models/elo_rating';
 import {getUserById} from '@/server/models/user_account';
 import EloRefundNotification from '@/server/resources/notification_types/elo_refund';
 import {logger} from '@/server/services/logger';
@@ -25,8 +25,8 @@ export async function refundElo(cheaterUserId: string) {
 	const validEloLogs: EloLog[] = [];
 
 	for (const log of eloLogs) {
-		const cubeType = log.cube_type;
-		const eloRatingColumn = getEloRatingColumnNameFromCubeType(cubeType);
+		const eventType = log.event_type;
+		const eloRatingColumn = getEloRatingColumnNameFromEventType(eventType);
 
 		if (log.elo_change > 0 || log.refunded_at) {
 			continue;

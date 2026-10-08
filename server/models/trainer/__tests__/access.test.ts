@@ -16,7 +16,7 @@ test.each([null, {id: 'ordinary-user', admin: false}])(
 		).rejects.toMatchObject({code});
 		await expect(
 			caller.save({
-				algorithm: {id: 'a', name: 'A', cube_type: '333', algo_type: 'OLL'},
+				algorithm: {id: 'a', name: 'A', event_type: '333', algo_type: 'OLL'},
 				revision: 0,
 				creating: true,
 			}),

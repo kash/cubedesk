@@ -1,25 +1,25 @@
 import {calculateNewElo, EloConst} from '@/server/match/pair/elo/calc_elo';
-import {UserEloForCubeType} from '@/server/models/elo_rating';
+import {UserEloForEventType} from '@/server/models/elo_rating';
 import {generateId} from '@/shared/code';
 
-const DEFAULT_CUBE_TYPE = '333';
+const DEFAULT_EVENT_TYPE = '333';
 
 describe('calculate ELO after a match', () => {
 	test('update payload basic checks', () => {
-		const winner = getEloForCubeType();
-		const loser = getEloForCubeType();
-		const updatePayload = calculateNewElo(DEFAULT_CUBE_TYPE, winner, loser);
+		const winner = getEloForEventType();
+		const loser = getEloForEventType();
+		const updatePayload = calculateNewElo(DEFAULT_EVENT_TYPE, winner, loser);
 
-		expect(updatePayload.cubeType).toBe(DEFAULT_CUBE_TYPE);
+		expect(updatePayload.eventType).toBe(DEFAULT_EVENT_TYPE);
 		expect(updatePayload.winner).toMatchObject(winner);
 		expect(updatePayload.loser).toMatchObject(loser);
 	});
 
 	test('both players brand new', () => {
-		const winner = getEloForCubeType(0);
-		const loser = getEloForCubeType(0);
+		const winner = getEloForEventType(0);
+		const loser = getEloForEventType(0);
 
-		const updatePayload = calculateNewElo(DEFAULT_CUBE_TYPE, winner, loser);
+		const updatePayload = calculateNewElo(DEFAULT_EVENT_TYPE, winner, loser);
 
 		expect(updatePayload.winnerNewElo).toBe(1045);
 		expect(updatePayload.winnerEloChange).toBe(45);
@@ -28,10 +28,10 @@ describe('calculate ELO after a match', () => {
 	});
 
 	test('both players lower bound', () => {
-		const winner = getEloForCubeType(10);
-		const loser = getEloForCubeType(25);
+		const winner = getEloForEventType(10);
+		const loser = getEloForEventType(25);
 
-		const updatePayload = calculateNewElo(DEFAULT_CUBE_TYPE, winner, loser);
+		const updatePayload = calculateNewElo(DEFAULT_EVENT_TYPE, winner, loser);
 
 		expect(updatePayload.winnerNewElo).toBe(1045);
 		expect(updatePayload.winnerEloChange).toBe(45);
@@ -40,10 +40,10 @@ describe('calculate ELO after a match', () => {
 	});
 
 	test('both players in between game bounds', () => {
-		const winner = getEloForCubeType(30);
-		const loser = getEloForCubeType(40);
+		const winner = getEloForEventType(30);
+		const loser = getEloForEventType(40);
 
-		const updatePayload = calculateNewElo(DEFAULT_CUBE_TYPE, winner, loser);
+		const updatePayload = calculateNewElo(DEFAULT_EVENT_TYPE, winner, loser);
 
 		expect(updatePayload.winnerNewElo).toBe(1012);
 		expect(updatePayload.winnerEloChange).toBe(12);
@@ -52,10 +52,10 @@ describe('calculate ELO after a match', () => {
 	});
 
 	test('both players in beyond game bounds', () => {
-		const winner = getEloForCubeType(45);
-		const loser = getEloForCubeType(50);
+		const winner = getEloForEventType(45);
+		const loser = getEloForEventType(50);
 
-		const updatePayload = calculateNewElo(DEFAULT_CUBE_TYPE, winner, loser);
+		const updatePayload = calculateNewElo(DEFAULT_EVENT_TYPE, winner, loser);
 
 		expect(updatePayload.winnerNewElo).toBe(1005);
 		expect(updatePayload.winnerEloChange).toBe(5);
@@ -63,10 +63,10 @@ describe('calculate ELO after a match', () => {
 		expect(updatePayload.loserEloChange).toBe(-5);
 	});
 
-	function getEloForCubeType(
+	function getEloForEventType(
 		games: number = EloConst.ELO_UPPER_GAME_COUNT_BOUND,
 		elo: number = EloConst.ELO_STARTING_VALUE
-	): UserEloForCubeType {
+	): UserEloForEventType {
 		return {
 			userId: generateId(),
 			games,

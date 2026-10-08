@@ -8,7 +8,7 @@ const input: ImportInput = {
 	attemptId: 'attempt',
 	source: 'cstimer',
 	sessions: [{id: 'session', name: 'Imported'}],
-	solves: [{time: 12, cube_type: '333', session_id: 'session'}],
+	solves: [{time: 12, event_type: '333', session_id: 'session'}],
 };
 
 function setup() {

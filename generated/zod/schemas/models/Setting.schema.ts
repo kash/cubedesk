@@ -17,7 +17,7 @@ export const SettingSchema = z.object({
   confirm_delete_solve: z.boolean(),
   require_period_in_manual_time_entry: z.boolean(),
   created_at: z.date(),
-  cube_type: z.string().default("333"),
+  event_type: z.string().default("333"),
   session_id: z.string().nullable(),
   timer_decimal_points: z.number().int().default(2),
   beta_tester: z.boolean(),

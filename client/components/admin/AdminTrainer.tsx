@@ -17,7 +17,7 @@ type Result = Awaited<ReturnType<typeof trpc.adminTrainer.list.query>>;
 
 export default function AdminTrainer() {
 	const [query, setQuery] = useState('');
-	const [cubeType, setCubeType] = useState('');
+	const [eventType, setEventType] = useState('');
 	const [algoType, setAlgoType] = useState('');
 	const [status, setStatus] = useState<'all' | 'published' | 'unpublished'>('all');
 	const [page, setPage] = useState(0);
@@ -37,7 +37,7 @@ export default function AdminTrainer() {
 		setError('');
 		const timeout = setTimeout(() => {
 			trpc.adminTrainer.list
-				.query({query, cubeType, algoType, status, page})
+				.query({query, eventType, algoType, status, page})
 				.then((result) => {
 					if (!cancelled) setData(result);
 				})
@@ -52,7 +52,7 @@ export default function AdminTrainer() {
 			cancelled = true;
 			clearTimeout(timeout);
 		};
-	}, [query, cubeType, algoType, status, page, version]);
+	}, [query, eventType, algoType, status, page, version]);
 	function refresh() {
 		setVersion((current) => current + 1);
 	}
@@ -96,16 +96,16 @@ export default function AdminTrainer() {
 					}}
 				/>
 				<NativeSelect
-					aria-label="Cube type filter"
-					value={cubeType}
+					aria-label="Event type filter"
+					value={eventType}
 					onChange={(event) => {
-						setCubeType(event.target.value);
+						setEventType(event.target.value);
 						setAlgoType('');
 						setPage(0);
 					}}
 				>
 					<option value="">All cubes</option>
-					{[...new Set(data?.sets.map((set) => set.cube_type))].sort().map((cube) => (
+					{[...new Set(data?.sets.map((set) => set.event_type))].sort().map((cube) => (
 						<option key={cube} value={cube}>
 							{cube}
 						</option>
@@ -123,7 +123,7 @@ export default function AdminTrainer() {
 					{[
 						...new Set(
 							data?.sets
-								.filter((set) => !cubeType || set.cube_type === cubeType)
+								.filter((set) => !eventType || set.event_type === eventType)
 								.map((set) => set.algo_type),
 						),
 					]
@@ -183,7 +183,7 @@ export default function AdminTrainer() {
 											</TableCell>
 											<TableCell>{algorithm.name}</TableCell>
 											<TableCell>
-												{algorithm.cube_type} / {algorithm.algo_type}
+												{algorithm.event_type} / {algorithm.algo_type}
 											</TableCell>
 											<TableCell>
 												{algorithm.active ? 'Published' : 'Unpublished'}

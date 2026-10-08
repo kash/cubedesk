@@ -9,11 +9,11 @@ jest.mock('@/server/services/redis', () => ({
 jest.mock('@/server/services/logger', () => ({logger: {error: jest.fn(), info: jest.fn()}}));
 jest.mock('@/server/models/admin_metrics', () => ({buildAdminMetrics: jest.fn()}));
 
-it('rejects a version 1 snapshot and uses the version 2 cache namespace', async () => {
+it('rejects a version 2 snapshot and uses the version 3 cache namespace', async () => {
 	const get = jest
 		.fn()
 		.mockResolvedValue(
-			JSON.stringify({version: 1, cutoff: new Date().toISOString(), days: []}),
+			JSON.stringify({version: 2, cutoff: new Date().toISOString(), days: []}),
 		);
 	(getRedisPubClient as jest.Mock).mockReturnValue({
 		status: 'ready',
@@ -21,11 +21,11 @@ it('rejects a version 1 snapshot and uses the version 2 cache namespace', async 
 		exists: jest.fn().mockResolvedValue(1),
 	});
 	expect(await getAdminMetrics()).toEqual({status: 'unavailable'});
-	expect(get).toHaveBeenCalledWith('{cd:admin:metrics#v2}');
+	expect(get).toHaveBeenCalledWith('{cd:admin:metrics#v3}');
 });
 
-it('returns a current version 2 snapshot', async () => {
-	const snapshot = {version: 2, cutoff: new Date().toISOString(), days: []};
+it('returns a current version 3 snapshot', async () => {
+	const snapshot = {version: 3, cutoff: new Date().toISOString(), days: []};
 	(getRedisPubClient as jest.Mock).mockReturnValue({
 		status: 'ready',
 		get: jest.fn().mockResolvedValue(JSON.stringify(snapshot)),

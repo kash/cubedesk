@@ -4,10 +4,10 @@ import {fetchRecords, fetchUniqueValuesByField} from '@/db/util';
 
 export type FilterTrainerOptions = RecordQuery<TrainerAlgorithmExtended>;
 
-export function fetchTrainerAlgorithmCubeTypes() {
+export function fetchTrainerAlgorithmEventTypes() {
 	const db = getTrainerDb();
 	if (!db) return [];
-	return fetchUniqueValuesByField(db, {}, 'cube_type');
+	return fetchUniqueValuesByField(db, {}, 'event_type');
 }
 
 export function fetchTrainerAlgorithmTypes(options: FilterTrainerOptions = {}) {

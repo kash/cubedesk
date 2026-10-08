@@ -3,22 +3,24 @@ import HorizontalNav, {HorizontalNavTab} from '@/components/common/HorizontalNav
 import PageTitle from '@/components/common/PageTitle';
 import AllStats from '@/components/stats/all/AllStats';
 import CubeStats from '@/components/stats/cube-stats/CubeStats';
-import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
+import {fetchAllEventTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
 import {Stats as StatsSchema} from '@/types/stats';
-import {CubeType} from '@/util/cubes/cube_types';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {EventType} from '@/util/cubes/event_types';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {trpc} from '@/util/trpc';
 import React, {createContext, useContext, useEffect, useMemo, useState} from 'react';
 
-const CUBE_TYPE_QUERY_PARAM = 'cubeType';
+const EVENT_TYPE_QUERY_PARAM = 'eventType';
+// Links shared before the rename use cubeType
+const LEGACY_EVENT_TYPE_QUERY_PARAM = 'cubeType';
 const ALL_TAB_ID = 'all';
 
 export interface IStatsContext {
 	all: boolean;
-	// Undefined on the "all" tab, where no specific cube type is selected
-	cubeType?: CubeType;
+	// Undefined on the "all" tab, where no specific event type is selected
+	eventType?: EventType;
 	stats: StatsSchema;
 	filterOptions: FilterSolvesOptions;
 }
@@ -51,12 +53,12 @@ export default function Stats() {
 	}, [loggedIn]);
 
 	const urlParams = new URLSearchParams(window.location.search);
-	const tabId = urlParams.get(CUBE_TYPE_QUERY_PARAM) || ALL_TAB_ID;
+	const tabId = urlParams.get(EVENT_TYPE_QUERY_PARAM) || urlParams.get(LEGACY_EVENT_TYPE_QUERY_PARAM) || ALL_TAB_ID;
 
 	const solveUpdate = useSolveDb();
 
-	const cubeTypes = useMemo(() => {
-		return fetchAllCubeTypesSolved();
+	const eventTypes = useMemo(() => {
+		return fetchAllEventTypesSolved();
 		// The local solve database is mutable; its revision invalidates this query.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [solveUpdate]);
@@ -66,19 +68,19 @@ export default function Stats() {
 		from_timer: true,
 	};
 	if (!all) {
-		filterOptions.cube_type = tabId;
+		filterOptions.event_type = tabId;
 	}
 
-	const cubeTypeTabs = cubeTypes.reduce<HorizontalNavTab[]>((acc, ct) => {
-		const cubeType = getCubeTypeInfoById(ct.cube_type);
-		if (!cubeType) {
+	const eventTypeTabs = eventTypes.reduce<HorizontalNavTab[]>((acc, ct) => {
+		const eventType = getEventTypeInfoById(ct.event_type);
+		if (!eventType) {
 			return acc;
 		}
 
 		acc.push({
-			id: cubeType.id,
-			value: cubeType.name,
-			link: `/stats?${CUBE_TYPE_QUERY_PARAM}=${cubeType.id}`,
+			id: eventType.id,
+			value: eventType.name,
+			link: `/stats?${EVENT_TYPE_QUERY_PARAM}=${eventType.id}`,
 		});
 
 		return acc;
@@ -90,7 +92,7 @@ export default function Stats() {
 			value: 'All events',
 			link: '/stats',
 		},
-		...cubeTypeTabs,
+		...eventTypeTabs,
 	];
 
 	let body = <AllStats />;
@@ -100,7 +102,7 @@ export default function Stats() {
 
 	const context: IStatsContext = {
 		all,
-		cubeType: getCubeTypeInfoById(tabId),
+		eventType: getEventTypeInfoById(tabId),
 		filterOptions,
 		stats: stats || ({} as StatsSchema),
 	};

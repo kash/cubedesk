@@ -129,7 +129,7 @@ export const routes: (PageContext | RedirectPath)[] = [
 
 	// Trainers
 	route('/trainer/public-trainers', null, App, PublicCustomTrainers, false),
-	route('/trainer/:cubeType/:algoType', null, App, Trainer, false),
+	route('/trainer/:eventType/:algoType', null, App, Trainer, false),
 
 	// Account
 	route('/account/personal-info', App, Account, PersonalInfo),
@@ -162,7 +162,7 @@ export const routes: (PageContext | RedirectPath)[] = [
 
 	// Redirects
 	routeRedirect('/trainer', '/trainer/333/OLL'),
-	routeRedirect('/trainer/:cubeType/:algoType', '/trainer/333/OLL'),
+	routeRedirect('/trainer/:eventType/:algoType', '/trainer/333/OLL'),
 	routeRedirect('/trainer-3_oll', '/trainer/333/OLL'),
 	routeRedirect('/m/elimination/:linkCode', '/play/elimination/:linkCode'),
 	routeRedirect('/m/head-to-head/:linkCode', '/play/head-to-head/:linkCode'),

@@ -17,7 +17,7 @@ export function saveSolve(
 	plusTwo = false,
 	overrides: Partial<Solve> = {}
 ) {
-	const {onSolve, addTwoToSolve, cubeType, dnfTime, demoMode} = context;
+	const {onSolve, addTwoToSolve, eventType, dnfTime, demoMode} = context;
 
 	plusTwo = plusTwo || (addTwoToSolve && !dnfTime);
 	dnf = dnf || dnfTime;
@@ -37,7 +37,7 @@ export function saveSolve(
 		ended_at: new Date(endedAt).getTime(),
 		time: finalTime,
 		raw_time: Math.max(time, 0),
-		cube_type: cubeType ?? '333',
+		event_type: eventType ?? '333',
 		id: uuid(),
 		dnf: dnf || false,
 		plus_two: !!plusTwo,

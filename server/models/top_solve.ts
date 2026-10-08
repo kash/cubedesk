@@ -9,11 +9,11 @@ export async function deleteAllPublishedSolves(user) {
 	return Promise.all([deleteAllTopSolves(user), deleteAllTopAverages(user)]);
 }
 
-export function deleteTopSolve(cubeType, user) {
+export function deleteTopSolve(eventType, user) {
 	return getPrisma().topSolve.deleteMany({
 		where: {
 			user_id: user.id,
-			cube_type: cubeType,
+			event_type: eventType,
 		},
 	});
 }
@@ -42,11 +42,11 @@ export function deleteTopSolveById(id) {
 	});
 }
 
-export function deleteTopAverage(cubeType, user) {
+export function deleteTopAverage(eventType, user) {
 	return getPrisma().topAverage.deleteMany({
 		where: {
 			user_id: user.id,
-			cube_type: cubeType,
+			event_type: eventType,
 		},
 	});
 }
@@ -66,18 +66,18 @@ export function submitTopSolve(user, solve) {
 			user_id: user.id,
 			time: solve.time,
 			solve_id: solve.id,
-			cube_type: solve.cube_type,
+			event_type: solve.event_type,
 		},
 	});
 }
 
-export function submitTopAverage(user: {id: string}, solves: Array<Pick<Solve, 'id' | 'time' | 'cube_type'>>) {
+export function submitTopAverage(user: {id: string}, solves: Array<Pick<Solve, 'id' | 'time' | 'event_type'>>) {
 	const avg = getAverage(solves);
 
 	const data = {
 		user_id: user.id,
 		time: avg,
-		cube_type: solves[0].cube_type,
+		event_type: solves[0].event_type,
 	};
 
 	for (let i = 0; i < solves.length; i += 1) {

@@ -1,17 +1,17 @@
-import {fetchAllCubeTypesSolved} from '@/db/solves/query';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {fetchAllEventTypesSolved} from '@/db/solves/query';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import React, {useMemo} from 'react';
 import {PieChart} from 'react-minimal-pie-chart';
 
 const colors = ['#abd1c6', '#f9bc60', '#e16162', '#ff8ba7', '#90b4ce', '#b8c1ec', '#8c7851'];
 
 export default function CubeDistro() {
-	const cubeTypes = useMemo(() => {
-		return fetchAllCubeTypesSolved();
+	const eventTypes = useMemo(() => {
+		return fetchAllEventTypesSolved();
 	}, []);
 
-	const data = cubeTypes.map((ct, i) => ({
-		title: getCubeTypeInfoById(ct.cube_type)?.name ?? ct.cube_type,
+	const data = eventTypes.map((ct, i) => ({
+		title: getEventTypeInfoById(ct.event_type)?.name ?? ct.event_type,
 		value: ct.count,
 		color: colors[i],
 	}));

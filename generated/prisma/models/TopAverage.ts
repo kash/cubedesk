@@ -38,7 +38,7 @@ export type TopAverageMinAggregateOutputType = {
   id: string | null
   user_id: string | null
   time: number | null
-  cube_type: string | null
+  event_type: string | null
   solve_1_id: string | null
   solve_2_id: string | null
   solve_3_id: string | null
@@ -51,7 +51,7 @@ export type TopAverageMaxAggregateOutputType = {
   id: string | null
   user_id: string | null
   time: number | null
-  cube_type: string | null
+  event_type: string | null
   solve_1_id: string | null
   solve_2_id: string | null
   solve_3_id: string | null
@@ -64,7 +64,7 @@ export type TopAverageCountAggregateOutputType = {
   id: number
   user_id: number
   time: number
-  cube_type: number
+  event_type: number
   solve_1_id: number
   solve_2_id: number
   solve_3_id: number
@@ -87,7 +87,7 @@ export type TopAverageMinAggregateInputType = {
   id?: true
   user_id?: true
   time?: true
-  cube_type?: true
+  event_type?: true
   solve_1_id?: true
   solve_2_id?: true
   solve_3_id?: true
@@ -100,7 +100,7 @@ export type TopAverageMaxAggregateInputType = {
   id?: true
   user_id?: true
   time?: true
-  cube_type?: true
+  event_type?: true
   solve_1_id?: true
   solve_2_id?: true
   solve_3_id?: true
@@ -113,7 +113,7 @@ export type TopAverageCountAggregateInputType = {
   id?: true
   user_id?: true
   time?: true
-  cube_type?: true
+  event_type?: true
   solve_1_id?: true
   solve_2_id?: true
   solve_3_id?: true
@@ -213,7 +213,7 @@ export type TopAverageGroupByOutputType = {
   id: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -249,7 +249,7 @@ export type TopAverageWhereInput = {
   id?: Prisma.StringFilter<"TopAverage"> | string
   user_id?: Prisma.StringFilter<"TopAverage"> | string
   time?: Prisma.FloatFilter<"TopAverage"> | number
-  cube_type?: Prisma.StringFilter<"TopAverage"> | string
+  event_type?: Prisma.StringFilter<"TopAverage"> | string
   solve_1_id?: Prisma.StringFilter<"TopAverage"> | string
   solve_2_id?: Prisma.StringFilter<"TopAverage"> | string
   solve_3_id?: Prisma.StringFilter<"TopAverage"> | string
@@ -268,7 +268,7 @@ export type TopAverageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   solve_1_id?: Prisma.SortOrder
   solve_2_id?: Prisma.SortOrder
   solve_3_id?: Prisma.SortOrder
@@ -291,7 +291,7 @@ export type TopAverageWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TopAverageWhereInput | Prisma.TopAverageWhereInput[]
   user_id?: Prisma.StringFilter<"TopAverage"> | string
   time?: Prisma.FloatFilter<"TopAverage"> | number
-  cube_type?: Prisma.StringFilter<"TopAverage"> | string
+  event_type?: Prisma.StringFilter<"TopAverage"> | string
   solve_1_id?: Prisma.StringFilter<"TopAverage"> | string
   solve_2_id?: Prisma.StringFilter<"TopAverage"> | string
   solve_3_id?: Prisma.StringFilter<"TopAverage"> | string
@@ -310,7 +310,7 @@ export type TopAverageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   solve_1_id?: Prisma.SortOrder
   solve_2_id?: Prisma.SortOrder
   solve_3_id?: Prisma.SortOrder
@@ -331,7 +331,7 @@ export type TopAverageScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"TopAverage"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"TopAverage"> | string
   time?: Prisma.FloatWithAggregatesFilter<"TopAverage"> | number
-  cube_type?: Prisma.StringWithAggregatesFilter<"TopAverage"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"TopAverage"> | string
   solve_1_id?: Prisma.StringWithAggregatesFilter<"TopAverage"> | string
   solve_2_id?: Prisma.StringWithAggregatesFilter<"TopAverage"> | string
   solve_3_id?: Prisma.StringWithAggregatesFilter<"TopAverage"> | string
@@ -343,7 +343,7 @@ export type TopAverageScalarWhereWithAggregatesInput = {
 export type TopAverageCreateInput = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve_1: Prisma.SolveCreateNestedOneWithoutTop_average_1Input
   solve_2: Prisma.SolveCreateNestedOneWithoutTop_average_2Input
@@ -357,7 +357,7 @@ export type TopAverageUncheckedCreateInput = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -369,7 +369,7 @@ export type TopAverageUncheckedCreateInput = {
 export type TopAverageUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve_1?: Prisma.SolveUpdateOneRequiredWithoutTop_average_1NestedInput
   solve_2?: Prisma.SolveUpdateOneRequiredWithoutTop_average_2NestedInput
@@ -383,7 +383,7 @@ export type TopAverageUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -396,7 +396,7 @@ export type TopAverageCreateManyInput = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -408,7 +408,7 @@ export type TopAverageCreateManyInput = {
 export type TopAverageUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -416,7 +416,7 @@ export type TopAverageUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -445,7 +445,7 @@ export type TopAverageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   solve_1_id?: Prisma.SortOrder
   solve_2_id?: Prisma.SortOrder
   solve_3_id?: Prisma.SortOrder
@@ -462,7 +462,7 @@ export type TopAverageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   solve_1_id?: Prisma.SortOrder
   solve_2_id?: Prisma.SortOrder
   solve_3_id?: Prisma.SortOrder
@@ -475,7 +475,7 @@ export type TopAverageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   solve_1_id?: Prisma.SortOrder
   solve_2_id?: Prisma.SortOrder
   solve_3_id?: Prisma.SortOrder
@@ -743,7 +743,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_5NestedInput = {
 export type TopAverageCreateWithoutUserInput = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve_1: Prisma.SolveCreateNestedOneWithoutTop_average_1Input
   solve_2: Prisma.SolveCreateNestedOneWithoutTop_average_2Input
@@ -755,7 +755,7 @@ export type TopAverageCreateWithoutUserInput = {
 export type TopAverageUncheckedCreateWithoutUserInput = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -797,7 +797,7 @@ export type TopAverageScalarWhereInput = {
   id?: Prisma.StringFilter<"TopAverage"> | string
   user_id?: Prisma.StringFilter<"TopAverage"> | string
   time?: Prisma.FloatFilter<"TopAverage"> | number
-  cube_type?: Prisma.StringFilter<"TopAverage"> | string
+  event_type?: Prisma.StringFilter<"TopAverage"> | string
   solve_1_id?: Prisma.StringFilter<"TopAverage"> | string
   solve_2_id?: Prisma.StringFilter<"TopAverage"> | string
   solve_3_id?: Prisma.StringFilter<"TopAverage"> | string
@@ -809,7 +809,7 @@ export type TopAverageScalarWhereInput = {
 export type TopAverageCreateWithoutSolve_1Input = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve_2: Prisma.SolveCreateNestedOneWithoutTop_average_2Input
   solve_3: Prisma.SolveCreateNestedOneWithoutTop_average_3Input
@@ -822,7 +822,7 @@ export type TopAverageUncheckedCreateWithoutSolve_1Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_2_id: string
   solve_3_id: string
   solve_4_id: string
@@ -843,7 +843,7 @@ export type TopAverageCreateManySolve_1InputEnvelope = {
 export type TopAverageCreateWithoutSolve_2Input = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve_1: Prisma.SolveCreateNestedOneWithoutTop_average_1Input
   solve_3: Prisma.SolveCreateNestedOneWithoutTop_average_3Input
@@ -856,7 +856,7 @@ export type TopAverageUncheckedCreateWithoutSolve_2Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_3_id: string
   solve_4_id: string
@@ -877,7 +877,7 @@ export type TopAverageCreateManySolve_2InputEnvelope = {
 export type TopAverageCreateWithoutSolve_3Input = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve_1: Prisma.SolveCreateNestedOneWithoutTop_average_1Input
   solve_2: Prisma.SolveCreateNestedOneWithoutTop_average_2Input
@@ -890,7 +890,7 @@ export type TopAverageUncheckedCreateWithoutSolve_3Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_4_id: string
@@ -911,7 +911,7 @@ export type TopAverageCreateManySolve_3InputEnvelope = {
 export type TopAverageCreateWithoutSolve_4Input = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve_1: Prisma.SolveCreateNestedOneWithoutTop_average_1Input
   solve_2: Prisma.SolveCreateNestedOneWithoutTop_average_2Input
@@ -924,7 +924,7 @@ export type TopAverageUncheckedCreateWithoutSolve_4Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -945,7 +945,7 @@ export type TopAverageCreateManySolve_4InputEnvelope = {
 export type TopAverageCreateWithoutSolve_5Input = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve_1: Prisma.SolveCreateNestedOneWithoutTop_average_1Input
   solve_2: Prisma.SolveCreateNestedOneWithoutTop_average_2Input
@@ -958,7 +958,7 @@ export type TopAverageUncheckedCreateWithoutSolve_5Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -1059,7 +1059,7 @@ export type TopAverageUpdateManyWithWhereWithoutSolve_5Input = {
 export type TopAverageCreateManyUserInput = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -1071,7 +1071,7 @@ export type TopAverageCreateManyUserInput = {
 export type TopAverageUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve_1?: Prisma.SolveUpdateOneRequiredWithoutTop_average_1NestedInput
   solve_2?: Prisma.SolveUpdateOneRequiredWithoutTop_average_2NestedInput
@@ -1083,7 +1083,7 @@ export type TopAverageUpdateWithoutUserInput = {
 export type TopAverageUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1095,7 +1095,7 @@ export type TopAverageUncheckedUpdateWithoutUserInput = {
 export type TopAverageUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1108,7 +1108,7 @@ export type TopAverageCreateManySolve_1Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_2_id: string
   solve_3_id: string
   solve_4_id: string
@@ -1120,7 +1120,7 @@ export type TopAverageCreateManySolve_2Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_3_id: string
   solve_4_id: string
@@ -1132,7 +1132,7 @@ export type TopAverageCreateManySolve_3Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_4_id: string
@@ -1144,7 +1144,7 @@ export type TopAverageCreateManySolve_4Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -1156,7 +1156,7 @@ export type TopAverageCreateManySolve_5Input = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   solve_1_id: string
   solve_2_id: string
   solve_3_id: string
@@ -1167,7 +1167,7 @@ export type TopAverageCreateManySolve_5Input = {
 export type TopAverageUpdateWithoutSolve_1Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve_2?: Prisma.SolveUpdateOneRequiredWithoutTop_average_2NestedInput
   solve_3?: Prisma.SolveUpdateOneRequiredWithoutTop_average_3NestedInput
@@ -1180,7 +1180,7 @@ export type TopAverageUncheckedUpdateWithoutSolve_1Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_4_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1192,7 +1192,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_1Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_4_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1203,7 +1203,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_1Input = {
 export type TopAverageUpdateWithoutSolve_2Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve_1?: Prisma.SolveUpdateOneRequiredWithoutTop_average_1NestedInput
   solve_3?: Prisma.SolveUpdateOneRequiredWithoutTop_average_3NestedInput
@@ -1216,7 +1216,7 @@ export type TopAverageUncheckedUpdateWithoutSolve_2Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_4_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1228,7 +1228,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_2Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_4_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1239,7 +1239,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_2Input = {
 export type TopAverageUpdateWithoutSolve_3Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve_1?: Prisma.SolveUpdateOneRequiredWithoutTop_average_1NestedInput
   solve_2?: Prisma.SolveUpdateOneRequiredWithoutTop_average_2NestedInput
@@ -1252,7 +1252,7 @@ export type TopAverageUncheckedUpdateWithoutSolve_3Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_4_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1264,7 +1264,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_3Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_4_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1275,7 +1275,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_3Input = {
 export type TopAverageUpdateWithoutSolve_4Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve_1?: Prisma.SolveUpdateOneRequiredWithoutTop_average_1NestedInput
   solve_2?: Prisma.SolveUpdateOneRequiredWithoutTop_average_2NestedInput
@@ -1288,7 +1288,7 @@ export type TopAverageUncheckedUpdateWithoutSolve_4Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1300,7 +1300,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_4Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1311,7 +1311,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_4Input = {
 export type TopAverageUpdateWithoutSolve_5Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve_1?: Prisma.SolveUpdateOneRequiredWithoutTop_average_1NestedInput
   solve_2?: Prisma.SolveUpdateOneRequiredWithoutTop_average_2NestedInput
@@ -1324,7 +1324,7 @@ export type TopAverageUncheckedUpdateWithoutSolve_5Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1336,7 +1336,7 @@ export type TopAverageUncheckedUpdateManyWithoutSolve_5Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   solve_1_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_2_id?: Prisma.StringFieldUpdateOperationsInput | string
   solve_3_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1350,7 +1350,7 @@ export type TopAverageSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   user_id?: boolean
   time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   solve_1_id?: boolean
   solve_2_id?: boolean
   solve_3_id?: boolean
@@ -1369,7 +1369,7 @@ export type TopAverageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   user_id?: boolean
   time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   solve_1_id?: boolean
   solve_2_id?: boolean
   solve_3_id?: boolean
@@ -1388,7 +1388,7 @@ export type TopAverageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   user_id?: boolean
   time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   solve_1_id?: boolean
   solve_2_id?: boolean
   solve_3_id?: boolean
@@ -1407,7 +1407,7 @@ export type TopAverageSelectScalar = {
   id?: boolean
   user_id?: boolean
   time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   solve_1_id?: boolean
   solve_2_id?: boolean
   solve_3_id?: boolean
@@ -1416,7 +1416,7 @@ export type TopAverageSelectScalar = {
   created_at?: boolean
 }
 
-export type TopAverageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "cube_type" | "solve_1_id" | "solve_2_id" | "solve_3_id" | "solve_4_id" | "solve_5_id" | "created_at", ExtArgs["result"]["topAverage"]>
+export type TopAverageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "event_type" | "solve_1_id" | "solve_2_id" | "solve_3_id" | "solve_4_id" | "solve_5_id" | "created_at", ExtArgs["result"]["topAverage"]>
 export type TopAverageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   solve_1?: boolean | Prisma.SolveDefaultArgs<ExtArgs>
   solve_2?: boolean | Prisma.SolveDefaultArgs<ExtArgs>
@@ -1456,7 +1456,7 @@ export type $TopAveragePayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     user_id: string
     time: number
-    cube_type: string
+    event_type: string
     solve_1_id: string
     solve_2_id: string
     solve_3_id: string
@@ -1895,7 +1895,7 @@ export interface TopAverageFieldRefs {
   readonly id: Prisma.FieldRef<"TopAverage", 'String'>
   readonly user_id: Prisma.FieldRef<"TopAverage", 'String'>
   readonly time: Prisma.FieldRef<"TopAverage", 'Float'>
-  readonly cube_type: Prisma.FieldRef<"TopAverage", 'String'>
+  readonly event_type: Prisma.FieldRef<"TopAverage", 'String'>
   readonly solve_1_id: Prisma.FieldRef<"TopAverage", 'String'>
   readonly solve_2_id: Prisma.FieldRef<"TopAverage", 'String'>
   readonly solve_3_id: Prisma.FieldRef<"TopAverage", 'String'>

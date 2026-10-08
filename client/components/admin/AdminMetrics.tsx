@@ -230,9 +230,9 @@ export default function AdminMetrics() {
 								<TableBody>
 									{snapshot.breakdown.map((row) => (
 										<TableRow
-											key={JSON.stringify([row.cubeType, row.category])}
+											key={JSON.stringify([row.eventType, row.category])}
 										>
-											<TableCell>{row.cubeType || 'Unknown'}</TableCell>
+											<TableCell>{row.eventType || 'Unknown'}</TableCell>
 											<TableCell>{CATEGORY_NAMES[row.category]}</TableCell>
 											<TableCell className="text-right tabular-nums">
 												{row.solves.toLocaleString()}

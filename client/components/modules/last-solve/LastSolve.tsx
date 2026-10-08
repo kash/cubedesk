@@ -7,7 +7,7 @@ import {Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {fetchLastSolve, fetchSolve, FilterSolvesOptions} from '@/db/solves/query';
 import {cn} from '@/util/cn';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
 import {Info} from 'phosphor-react';
@@ -34,11 +34,11 @@ function LastSolve(props: Props) {
 
 	const dnf = lastSolve.dnf;
 	const plusTwo = lastSolve.plus_two;
-	const cubeType = lastSolve.cube_type;
+	const eventType = lastSolve.event_type;
 	const scramble = lastSolve.scramble;
 
 	const time = getTimeString(lastSolve.time);
-	const cubeTypeName = getCubeTypeInfoById(cubeType)?.name ?? cubeType;
+	const eventTypeName = getEventTypeInfoById(eventType)?.name ?? eventType;
 
 	// Captured after the null check above so the callbacks don't re-narrow lastSolve
 	const solveId = lastSolve.id;
@@ -91,7 +91,7 @@ function LastSolve(props: Props) {
 							</h5>
 							<h4 className={timeClasses.join(' ')}>{time}</h4>
 							<h6 className="text-text text-base font-medium opacity-70">
-								{cubeTypeName}
+								{eventTypeName}
 							</h6>
 						</div>
 						<div>
@@ -99,7 +99,7 @@ function LastSolve(props: Props) {
 								frontFace
 								width="70px"
 								scramble={scramble}
-								cubeType={cubeType}
+								eventType={eventType}
 							/>
 						</div>
 					</div>

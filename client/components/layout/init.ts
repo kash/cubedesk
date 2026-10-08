@@ -80,7 +80,7 @@ export async function initAppData(
 		console.error(e);
 	}
 
-	// Settings (e.g. custom cube types) are now loaded, so recompute any stats read before then
+	// Settings (e.g. custom event types) are now loaded, so recompute any stats read before then
 	clearAllSolveStatCache();
 
 	callback();

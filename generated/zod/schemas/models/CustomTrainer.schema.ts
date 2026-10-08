@@ -3,7 +3,7 @@ import * as z from 'zod';
 export const CustomTrainerSchema = z.object({
   id: z.string(),
   colors: z.string().nullable(),
-  cube_type: z.string(),
+  event_type: z.string(),
   key: z.string(),
   user_id: z.string(),
   created_at: z.date(),

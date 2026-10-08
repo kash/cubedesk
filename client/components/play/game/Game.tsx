@@ -11,7 +11,7 @@ import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
 import {Solve} from '@/types/solve';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
 import {useRouteMatch} from 'react-router-dom';
@@ -50,7 +50,7 @@ export type PlayerStatusFn = (
 
 interface GameProps {
 	gameType: GameType;
-	defaultCubeType: string;
+	defaultEventType: string;
 	loaded: boolean;
 	getMetaId?: (timeIndex: number) => string;
 	getScramble?: (timeIndex: number) => string;
@@ -77,8 +77,8 @@ export interface IGameContext extends GameProps {
 	setSessionId: reactState<string | null>;
 	matchOpen: boolean;
 	setMatchOpen: reactState<boolean>;
-	cubeType: string;
-	setCubeType: reactState<string>;
+	eventType: string;
+	setEventType: reactState<string>;
 
 	// More
 	toggleTimer: () => void;
@@ -108,7 +108,7 @@ export default function Game(props: GameProps) {
 		linkCode?: string;
 	}
 
-	const {getScramble, multiplayerOnly, defaultCubeType, gameType, loaded} = props;
+	const {getScramble, multiplayerOnly, defaultEventType, gameType, loaded} = props;
 	const {color, name, description, icon} = getGameMetaData(gameType);
 
 	if (!loaded) {
@@ -117,7 +117,7 @@ export default function Game(props: GameProps) {
 
 	const me = useMe();
 
-	const [cubeType, setCubeType] = useState(defaultCubeType);
+	const [eventType, setEventType] = useState(defaultEventType);
 	const [showTimer, setShowTimer] = useState(false);
 	const [timeIndex, setTimeIndex] = useState(0);
 	const [scramble, setScramble] = useState('');
@@ -133,8 +133,8 @@ export default function Game(props: GameProps) {
 
 		getExistingMatch(me.id, linkCode, true).then((existingMatch) => {
 			if (existingMatch) {
-				setCubeType(
-					existingMatch?.match_session?.game_options?.cube_type || defaultCubeType,
+				setEventType(
+					existingMatch?.match_session?.game_options?.event_type || defaultEventType,
 				);
 				setMatchOpen(true);
 			}
@@ -150,8 +150,8 @@ export default function Game(props: GameProps) {
 		if (getScramble) {
 			scramble = getScramble(timeIndex);
 		} else {
-			const ct = getCubeTypeInfoById(cubeType);
-			scramble = getNewScramble(ct?.scramble ?? cubeType);
+			const ct = getEventTypeInfoById(eventType);
+			scramble = getNewScramble(ct?.scramble ?? eventType);
 		}
 
 		setScramble(scramble);
@@ -185,8 +185,8 @@ export default function Game(props: GameProps) {
 
 	const contextValue: IGameContext = {
 		...props,
-		cubeType,
-		setCubeType,
+		eventType,
+		setEventType,
 		showTimer,
 		setShowTimer,
 		timeIndex,

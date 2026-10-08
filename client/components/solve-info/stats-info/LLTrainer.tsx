@@ -28,12 +28,12 @@ export default function LLTrainer(props: Props) {
 		<div className="flex flex-row items-start">
 			<div className="w-1/2">
 				<h3 className="mb-5 mt-0 text-[1.1rem] font-semibold text-text">OLL</h3>
-				<AlgoVisual colors={ollAlgo.colors ?? undefined} rotate={ollAlgo.rotate ?? undefined} cubeType={ollAlgo.cube_type} />
+				<AlgoVisual colors={ollAlgo.colors ?? undefined} rotate={ollAlgo.rotate ?? undefined} eventType={ollAlgo.event_type} />
 				<p className="my-[7px] text-text">{ollAlgo.name}</p>
 			</div>
 			<div className="w-1/2">
 				<h3 className="mb-5 mt-0 text-[1.1rem] font-semibold text-text">PLL</h3>
-				<AlgoVisual colors={pllAlgo.colors ?? undefined} rotate={pllAlgo.rotate ?? undefined} cubeType={pllAlgo.cube_type} />
+				<AlgoVisual colors={pllAlgo.colors ?? undefined} rotate={pllAlgo.rotate ?? undefined} eventType={pllAlgo.event_type} />
 				<p className="my-[7px] text-text">{pllAlgo.name}</p>
 			</div>
 		</div>

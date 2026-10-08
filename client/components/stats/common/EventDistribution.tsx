@@ -1,5 +1,5 @@
-import {fetchAllCubeTypesSolved} from '@/db/solves/query';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {fetchAllEventTypesSolved} from '@/db/solves/query';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {Cube} from 'phosphor-react';
 import React, {useMemo} from 'react';
@@ -11,9 +11,9 @@ export default function EventDistribution() {
 	const solveUpdate = useSolveDb();
 	// The local solve database is mutable; its revision invalidates this query.
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const cubeTypes = useMemo(() => fetchAllCubeTypesSolved(), [solveUpdate]);
-	const data = cubeTypes.map((ct, index) => ({
-		title: getCubeTypeInfoById(ct.cube_type)?.name ?? ct.cube_type,
+	const eventTypes = useMemo(() => fetchAllEventTypesSolved(), [solveUpdate]);
+	const data = eventTypes.map((ct, index) => ({
+		title: getEventTypeInfoById(ct.event_type)?.name ?? ct.event_type,
 		value: ct.count,
 		color: COLORS[index % COLORS.length],
 	}));

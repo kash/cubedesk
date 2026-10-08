@@ -18,7 +18,7 @@ export enum MatchPopupPage {
 interface Props {
 	joinLobby?: boolean;
 	matchType: GameType;
-	cubeType: string;
+	eventType: string;
 	minPlayers: number;
 	maxPlayers: number;
 }
@@ -29,7 +29,7 @@ export interface IMatchPopupContext extends Props {
 
 	setMinPlayers: reactState<number>;
 	setMaxPlayers: reactState<number>;
-	setCubeType: reactState<string>;
+	setEventType: reactState<string>;
 }
 
 const MatchPopupContext = createContext<IMatchPopupContext | null>(null);
@@ -48,7 +48,7 @@ export default function MatchPopup(props: Props) {
 	const [page, setPage] = useState<MatchPopupPage>(props.joinLobby ? MatchPopupPage.LOBBY : MatchPopupPage.HOME);
 	const [minPlayers, setMinPlayers] = useState<number>(props.minPlayers);
 	const [maxPlayers, setMaxPlayers] = useState<number>(props.maxPlayers);
-	const [cubeType, setCubeType] = useState<string>(props.cubeType);
+	const [eventType, setEventType] = useState<string>(props.eventType);
 
 	useEffect(() => {
 		socketClient().on('matchUpdated', (data) => {
@@ -64,8 +64,8 @@ export default function MatchPopup(props: Props) {
 		setMinPlayers,
 		maxPlayers,
 		setMaxPlayers,
-		cubeType,
-		setCubeType,
+		eventType,
+		setEventType,
 	};
 
 	let body: ReactNode = null;

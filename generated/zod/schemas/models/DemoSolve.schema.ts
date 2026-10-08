@@ -5,7 +5,7 @@ export const DemoSolveSchema = z.object({
   demo_session_id: z.string(),
   ip_address: z.string().nullable(),
   raw_time: z.number().nullable(),
-  cube_type: z.string().nullable(),
+  event_type: z.string().nullable(),
   scramble: z.string().nullable(),
   started_at: z.bigint().nullable(),
   ended_at: z.bigint().nullable(),

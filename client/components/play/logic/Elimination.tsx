@@ -11,13 +11,13 @@ export default function Elimination() {
 		<Game
 			loaded
 			multiplayer
-			defaultCubeType="333"
+			defaultEventType="333"
 			getSolveRowInfo={getEliminationSolveRowInfo}
 			getPlayerStatusInfo={getEliminationPlayerStatus}
 			gameType={GameType.ELIMINATION}
 			visual1={<TargetTimes reverse />}
 			visual2={<TargetStatus />}
-			visual3={(context) => <ScrambleVisual scramble={context.scramble} cubeType={context.cubeType} />}
+			visual3={(context) => <ScrambleVisual scramble={context.scramble} eventType={context.eventType} />}
 		/>
 	);
 }

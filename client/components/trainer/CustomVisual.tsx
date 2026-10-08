@@ -1,6 +1,6 @@
 import {Button} from '@/components/ui/button';
 import {cn} from '@/util/cn';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import classNames from 'classnames';
 import CSS from 'csstype';
 import React, {ReactNode} from 'react';
@@ -12,7 +12,7 @@ const THREE_D_SIDE_MULTIPLIER = 0.78;
 interface Props {
 	cubeletSize: number;
 	colors: string | string[];
-	cubeType: string;
+	eventType: string;
 	rotate?: number;
 	threeD?: boolean;
 	onSelect?: (index: number) => void;
@@ -23,8 +23,8 @@ export default function CustomVisual(props: Props) {
 	const colors = typeof props.colors === 'string' ? props.colors.split(',') : props.colors;
 	const edgeSize = cubeletSize / 2;
 
-	const cubeType = getCubeTypeInfoById(props.cubeType);
-	const cubeSize = cubeType?.size ?? 0;
+	const eventType = getEventTypeInfoById(props.eventType);
+	const cubeSize = eventType?.size ?? 0;
 
 	function get2DCubelets() {
 		const cubelets: ReactNode[] = [];

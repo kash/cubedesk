@@ -3,7 +3,7 @@ import {SessionInput} from '@/types/session';
 import {SolveInput} from '@/types/solve';
 import {v4 as uuid} from 'uuid';
 
-const CSTIMER_CUBEDESK_CUBETYPE_MAP = {
+const CSTIMER_CUBEDESK_EVENT_TYPE_MAP = {
 	'333': '333',
 	'333wca': '333',
 	'222': '222',
@@ -70,7 +70,7 @@ interface CsTimerSession {
 	key: string;
 	name: string;
 	rank: number;
-	cubeType: string;
+	eventType: string;
 }
 
 interface CsTimerProperties {
@@ -90,15 +90,15 @@ export function parseCsTimerData(txt: string, context: IImportDataContext): Impo
 	const solves = getAllSolves(csTimerData, properties.sessionData);
 	const sessions = getSessionInputFromCsTimerSessionData(properties.sessionData);
 
-	const sessionIdCubeTypeMap = {};
+	const sessionIdEventTypeMap = {};
 	for (const session of properties.sessionData) {
-		sessionIdCubeTypeMap[session.id] = session.cubeType;
+		sessionIdEventTypeMap[session.id] = session.eventType;
 	}
 
 	return {
 		solves,
 		sessions,
-		sessionIdCubeTypeMap,
+		sessionIdEventTypeMap,
 	};
 }
 
@@ -153,11 +153,11 @@ function getSessionData(sesData: string | object) {
 	for (const sessionId of sessionKeys) {
 		const ses = sessionData[sessionId];
 
-		let cubeType = '333';
+		let eventType = '333';
 		const srcType = ses?.opt?.scrType;
 
-		if (srcType && CSTIMER_CUBEDESK_CUBETYPE_MAP[srcType]) {
-			cubeType = CSTIMER_CUBEDESK_CUBETYPE_MAP[srcType];
+		if (srcType && CSTIMER_CUBEDESK_EVENT_TYPE_MAP[srcType]) {
+			eventType = CSTIMER_CUBEDESK_EVENT_TYPE_MAP[srcType];
 		}
 
 		sessionInput.push({
@@ -165,7 +165,7 @@ function getSessionData(sesData: string | object) {
 			key: String(sessionId),
 			name: String(ses.name),
 			rank: ses.rank,
-			cubeType,
+			eventType,
 		});
 	}
 
@@ -224,7 +224,7 @@ function getSolveInputFromCsTimerSolve(csSolve: CsTimerSolve, session: CsTimerSe
 		plus_two: plusTwo,
 		dnf,
 		scramble,
-		cube_type: session.cubeType,
+		event_type: session.eventType,
 		session_id: session.id,
 		notes,
 		started_at: startTime,

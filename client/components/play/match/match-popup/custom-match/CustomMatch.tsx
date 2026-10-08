@@ -6,7 +6,7 @@ import {getGameMetaData} from '@/components/play/Play';
 import {Button} from '@/components/ui/button';
 import {GameType} from '@/shared/match/consts';
 import {Match} from '@/types/match';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import {ArrowRight, Eye} from 'phosphor-react';
@@ -20,7 +20,7 @@ export function getMatchLinkBase(gameType: GameType) {
 }
 
 export default function CustomMatch() {
-	const {minPlayers, maxPlayers, cubeType, matchType} = useMatchPopupContext();
+	const {minPlayers, maxPlayers, eventType, matchType} = useMatchPopupContext();
 
 	const [showChallengeLink, setShowChallengeLink] = useState(false);
 	const [creatingLink, setCreatingLink] = useState(false);
@@ -46,7 +46,7 @@ export default function CustomMatch() {
 			const newMatch = await trpc.match.createWithNewSession.mutate({
 				min_players: minPlayers,
 				max_players: maxPlayers,
-				cube_type: cubeType,
+				event_type: eventType,
 				match_type: matchType,
 			});
 
@@ -86,13 +86,13 @@ export default function CustomMatch() {
 		const matchLink = getMatchURL(match);
 		const spectateLink = getSpectateURL(match);
 
-		const ct = getCubeTypeInfoById(cubeType);
+		const ct = getEventTypeInfoById(eventType);
 
 		body = (
 			<div className="flex w-full flex-col items-start">
 				<div className="mx-auto mt-10 mb-[60px] flex flex-col items-center">
 					<div className="mb-[5px] flex w-full flex-row flex-wrap gap-1">
-						<Badge>{ct?.name ?? cubeType}</Badge>
+						<Badge>{ct?.name ?? eventType}</Badge>
 						<Badge>{`${minPlayers} Players`}</Badge>
 					</div>
 					<div className="bg-button mb-[5px] box-border rounded-[5px] px-[13px] py-[9px]">

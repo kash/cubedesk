@@ -15,7 +15,7 @@ import {updateSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
 import {api} from '@/util/api';
 import {cn} from '@/util/cn';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {getFullFormattedDate} from '@/util/dates';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
@@ -148,7 +148,7 @@ export default function SolveInfo(props: Props) {
 
 	const plusTwo = effSolve.plus_two;
 	const dnf = effSolve.dnf;
-	const cubeType = solve.cube_type;
+	const eventType = solve.event_type;
 	const endedAt = new Date(Number(solve.ended_at));
 	const isSmartCube = solve.is_smart_cube;
 	const smartDevice = solve.smart_device;
@@ -265,7 +265,7 @@ export default function SolveInfo(props: Props) {
 		);
 	}
 
-	const cubeTypeInfo = getCubeTypeInfoById(cubeType);
+	const eventTypeInfo = getEventTypeInfoById(eventType);
 
 	return (
 		<>
@@ -297,7 +297,7 @@ export default function SolveInfo(props: Props) {
 							) : null}
 
 							<Badge variant="secondary" size="button">
-								{cubeTypeInfo?.name ?? cubeType}
+								{eventTypeInfo?.name ?? eventType}
 								<Cube weight="bold" />
 							</Badge>
 							{plusTwoButton}

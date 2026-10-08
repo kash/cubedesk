@@ -14,7 +14,7 @@ export interface AdminMetricsDay {
 }
 
 export interface AdminMetricsSnapshot {
-	version: 2;
+	version: 3;
 	cutoff: string;
 	completedAt: string;
 	totals: {
@@ -25,7 +25,7 @@ export interface AdminMetricsSnapshot {
 	};
 	activeUsers: {daily: number; weekly: number; monthly: number};
 	days: AdminMetricsDay[];
-	breakdown: {cubeType: string | null; category: SolveCategory; solves: number}[];
+	breakdown: {eventType: string | null; category: SolveCategory; solves: number}[];
 }
 
 export type AdminMetricsResponse =

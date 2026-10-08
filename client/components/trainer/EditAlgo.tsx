@@ -80,7 +80,7 @@ export default function EditAlgo(props: Props) {
 				<AlgoVisual
 					rotate={parseInt(rotate)}
 					colors={algoExt.colors ?? undefined}
-					cubeType={algoExt.cube_type}
+					eventType={algoExt.event_type}
 				/>
 			</div>
 			<Field className="mb-6">

@@ -7,7 +7,7 @@ export default class Elimination implements MatchTypeLogic {
 	params() {
 		return {
 			eventName: GameType.ELIMINATION,
-			defaultCubeType: '333',
+			defaultEventType: '333',
 			defaultMinPlayers: 2,
 			defaultMaxPlayers: 2,
 		};

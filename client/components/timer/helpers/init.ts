@@ -3,15 +3,15 @@ import {fetchSessionById} from '@/db/sessions/query';
 import {createSessionDb} from '@/db/sessions/update';
 import {getSetting} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {Dispatch} from 'redux';
 
 // Creates session if none exist already
 export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext) {
 	const {inDialog, demoMode} = context;
 	const sessionId = getSetting('session_id');
-	const cubeType = getSetting('cube_type');
-	const ct = getCubeTypeInfoById(cubeType);
+	const eventType = getSetting('event_type');
+	const ct = getEventTypeInfoById(eventType);
 
 	if (demoMode) {
 		if (!fetchSessionById('demo')) {
@@ -30,9 +30,9 @@ export async function initTimer(dispatch: Dispatch<any>, context: ITimerContext)
 			setSetting('session_id', session.id);
 		}
 
-		// If, for some reason, the cube type is not valid, set it to 3x3
+		// If, for some reason, the event type is not valid, set it to 3x3
 		if (!ct) {
-			setSetting('cube_type', '333');
+			setSetting('event_type', '333');
 		}
 	}
 }

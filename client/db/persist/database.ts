@@ -6,7 +6,7 @@ import Dexie, {type EntityTable} from 'dexie';
  * Bumping this makes every client discard its local copy and refetch from the server. The local DB is only a cache of
  * server data, so schema changes should bump this rather than write data-migrating upgrade functions.
  */
-export const DATA_VERSION = 1;
+export const DATA_VERSION = 2;
 
 export interface SyncMeta {
 	key: 'sync';
@@ -39,12 +39,16 @@ export class CubedeskDb extends Dexie {
 	constructor() {
 		super('cubedesk');
 
-		// Secondary indexes are unused for now, but allow loading solves lazily by session and cube type later
+		// Secondary indexes are unused for now, but allow loading solves lazily by session and event type later
 		this.version(1).stores({
 			solves: 'id, session_id, [session_id+started_at], [cube_type+started_at]',
 			sessions: 'id',
 			meta: 'key',
 			pendingOps: 'id, tabId',
+		});
+		// cube_type was renamed to event_type. Solves stored before then are discarded by the DATA_VERSION bump.
+		this.version(2).stores({
+			solves: 'id, session_id, [session_id+started_at], [event_type+started_at]',
 		});
 
 		// A newer version of the app was opened in another tab. Let it upgrade, and stop persisting from this one.

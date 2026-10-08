@@ -2,7 +2,7 @@ import {getPrisma} from '@/server/database';
 import {getPlayerPairsByGameType} from '@/server/match/pair/elo/elo_matching';
 import {pairPlayersInRoom} from '@/server/match/pair/start_match';
 import {getClientById} from '@/server/match/util';
-import {getUserEloRatingByCubeType} from '@/server/models/elo_rating';
+import {getUserEloRatingByEventType} from '@/server/models/elo_rating';
 import {acquireRedisLock, createRedisKey, RedisNamespace} from '@/server/services/redis';
 import {GameType} from '@/shared/match/consts';
 import {GameOptionsInput} from '@/types/match';
@@ -19,8 +19,8 @@ export async function joinLobby(
 	playerCount: number,
 	gameOptions: GameOptionsInput
 ) {
-	const cubeType = gameOptions?.cube_type || '333';
-	const {elo} = await getUserEloRatingByCubeType(user.id, cubeType);
+	const eventType = gameOptions?.event_type || '333';
+	const {elo} = await getUserEloRatingByEventType(user.id, eventType);
 	const gameType = gameOptions.game_type;
 
 	const deleteTx = getPrisma().matchLobby.deleteMany({
@@ -33,7 +33,7 @@ export async function joinLobby(
 		data: {
 			user_id: user.id,
 			client_id: client.id,
-			cube_type: cubeType,
+			event_type: eventType,
 			game_type: gameType,
 			player_count: playerCount,
 			elo,
@@ -112,7 +112,7 @@ async function matchPlayersByGameType(gameType: GameType) {
 
 		playerPairs.push(
 			pairPlayersInRoom(gameType, [client1, client2], {
-				cube_type: '333',
+				event_type: '333',
 				game_type: GameType.HEAD_TO_HEAD,
 			})
 		);

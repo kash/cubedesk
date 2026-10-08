@@ -58,7 +58,7 @@ export function adminMetricsRangeQueries(start: Date, end: Date) {
 		// or DISTINCT sorts over 90 days of raw solves. Imports need only one group.
 		solves: Prisma.sql`SELECT bulk,
 			CASE WHEN NOT bulk THEN user_id END AS "userId",
-			CASE WHEN NOT bulk THEN cube_type END AS "cubeType",
+			CASE WHEN NOT bulk THEN event_type END AS "eventType",
 			CASE WHEN bulk THEN NULL
 				WHEN match_id IS NOT NULL THEN '1v1'
 				WHEN NULLIF(trainer_name, '') IS NOT NULL THEN 'trainer'
@@ -89,7 +89,7 @@ function isQueryTimeout(error: unknown): boolean {
 type SolveGroup = {
 	bulk: boolean;
 	userId: string | null;
-	cubeType: string | null;
+	eventType: string | null;
 	category: SolveCategory | null;
 	solves: bigint;
 };
@@ -219,8 +219,8 @@ export async function buildAdminMetrics(
 					if (from >= month) monthlyUsers.add(row.userId);
 				}
 				const category = row.category!;
-				const key = JSON.stringify([row.cubeType, category]);
-				const group = breakdown.get(key) ?? {cubeType: row.cubeType, category, solves: 0};
+				const key = JSON.stringify([row.eventType, category]);
+				const group = breakdown.get(key) ?? {eventType: row.eventType, category, solves: 0};
 				group.solves = count(group.solves + count(row.solves));
 				breakdown.set(key, group);
 			}
@@ -257,7 +257,7 @@ export async function buildAdminMetrics(
 	}
 	assertActive();
 	return {
-		version: 2,
+		version: 3,
 		cutoff: cutoff.toISOString(),
 		completedAt: new Date().toISOString(),
 		totals: {
@@ -275,13 +275,13 @@ export async function buildAdminMetrics(
 		breakdown: [...breakdown.values()].sort(
 			(a, b) =>
 				b.solves - a.solves ||
-				(a.cubeType === b.cubeType
+				(a.eventType === b.eventType
 					? 0
-					: a.cubeType === null
+					: a.eventType === null
 						? 1
-						: b.cubeType === null
+						: b.eventType === null
 							? -1
-							: a.cubeType.localeCompare(b.cubeType)) ||
+							: a.eventType.localeCompare(b.eventType)) ||
 				a.category.localeCompare(b.category),
 		),
 	};

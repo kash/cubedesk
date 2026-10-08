@@ -1,5 +1,5 @@
 import {EloRating} from '@/types/elo';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {Lightning} from 'phosphor-react';
 import React from 'react';
 
@@ -10,17 +10,17 @@ interface Props {
 export default function ProfileElo(props: Props) {
 	const {eloRating} = props;
 
-	const cubeTypes = ['222', '333', '444'];
+	const eventTypes = ['222', '333', '444'];
 	const eloBlocks: React.ReactNode[] = [];
 
-	for (const ct of cubeTypes) {
+	for (const ct of eventTypes) {
 		if (!eloRating[`games_${ct}_count`]) {
 			continue;
 		}
 
 		const gameCount = eloRating[`games_${ct}_count`];
 		const eloNum = eloRating[`elo_${ct}_rating`];
-		const ctInfo = getCubeTypeInfoById(ct);
+		const ctInfo = getEventTypeInfoById(ct);
 		eloBlocks.push(
 			<div
 				key={ct}

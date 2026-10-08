@@ -2,7 +2,7 @@ import {setSsrValue} from '@/actions/ssr';
 import Header from '@/components/layout/Header';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import {Solve} from '@/types/solve';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useSsr} from '@/util/hooks/useSsr';
 import {getTimeString} from '@/util/time';
 import {trpc} from '@/util/trpc';
@@ -33,17 +33,17 @@ export default function SolvePage() {
 		return null;
 	}
 
-	const ct = getCubeTypeInfoById(solve.cube_type);
+	const ct = getEventTypeInfoById(solve.event_type);
 	const time = getTimeString(solve.time);
-	const cubeType = ct?.name ?? solve.cube_type;
+	const eventType = ct?.name ?? solve.event_type;
 	const user = solve.user?.username;
 
 	return (
 		<div className="box-border flex min-h-screen w-full items-start justify-center bg-background py-[100px]">
 			<Header
 				path={`/solve/${shareCode}`}
-				title={`${getTimeString(solve.time)} Solve for ${cubeType} by ${user} | CubeDesk`}
-				description={`View the details of this ${time} ${cubeType} solve by ${user}. CubeDesk is the most advanced speedcubing timer, analytics, and trainer application.`}
+				title={`${getTimeString(solve.time)} Solve for ${eventType} by ${user} | CubeDesk`}
+				description={`View the details of this ${time} ${eventType} solve by ${user}. CubeDesk is the most advanced speedcubing timer, analytics, and trainer application.`}
 			/>
 			<div className="box-border w-full max-w-[600px] rounded-md bg-module px-5 py-[25px]">
 				<SolveInfo disabled solve={solve} solveId={solve.id} />

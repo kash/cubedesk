@@ -6,7 +6,7 @@ import {SolveStat} from '@/db/solves/stats/solves/caching';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
 import {getWorstTime} from '@/db/solves/stats/solves/single/single-worst';
 import {StatsModuleBlock} from '@/types/stats-module';
-import {getCubeTypeInfo} from '@/util/cubes/util';
+import {getEventTypeInfo} from '@/util/cubes/util';
 import {trpc} from '@/util/trpc';
 
 export const STATS_GRID_SIZE = 4;
@@ -27,11 +27,11 @@ export function getStatsBlockDescription(statsOptions: StatsModuleBlock, filterO
 		description.push('session');
 	}
 
-	if (solvesFilter?.cube_type) {
-		const cubeType = solvesFilter.cube_type as string;
+	if (solvesFilter?.event_type) {
+		const eventType = solvesFilter.event_type as string;
 
-		const ct = getCubeTypeInfo(cubeType);
-		description.push(ct?.name ?? cubeType);
+		const ct = getEventTypeInfo(eventType);
+		description.push(ct?.name ?? eventType);
 	}
 
 	if (statsOptions.statType === 'average') {

@@ -4,7 +4,7 @@ import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
 import {getSolveDb} from '@/db/solves/init';
 import {Solve} from '@/types/solve';
-import {getCubeTypeName} from '@/util/cubes/util';
+import {getEventTypeName} from '@/util/cubes/util';
 import {trpc} from '@/util/trpc';
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
 
@@ -54,11 +54,11 @@ export function DemoSolveImportDialog({
 }) {
 	const counts = new Map<string, number>();
 	for (const solve of pending.solves)
-		counts.set(solve.cube_type, (counts.get(solve.cube_type) ?? 0) + 1);
-	const puzzleName = (id: string) => getCubeTypeName(id) || id;
+		counts.set(solve.event_type, (counts.get(solve.event_type) ?? 0) + 1);
+	const puzzleName = (id: string) => getEventTypeName(id) || id;
 	const [name, setName] = useState(() =>
 		counts.size === 1
-			? `Demo ${puzzleName(pending.solves[0].cube_type)} Session`
+			? `Demo ${puzzleName(pending.solves[0].event_type)} Session`
 			: 'Demo Session',
 	);
 	const [destination, setDestination] = useState('new');
@@ -96,7 +96,7 @@ export function DemoSolveImportDialog({
 			solves: pending.solves.map((solve) => ({
 				id: solve.id,
 				raw_time: solve.raw_time ?? 0,
-				cube_type: solve.cube_type,
+				event_type: solve.event_type,
 				scramble: solve.scramble,
 				started_at: solve.started_at,
 				ended_at: solve.ended_at,

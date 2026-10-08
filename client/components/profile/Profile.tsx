@@ -54,26 +54,26 @@ async function getProfileData(username: string): Promise<IProfileData> {
 	const pbs = {};
 
 	for (const topSolve of topSolves) {
-		if (!topSolve?.solve?.cube_type) {
+		if (!topSolve?.solve?.event_type) {
 			continue;
 		}
 
 		const solve = topSolve.solve;
-		const cubeType = solve.cube_type as string;
-		if (!pbs[cubeType]) {
-			pbs[cubeType] = {};
+		const eventType = solve.event_type as string;
+		if (!pbs[eventType]) {
+			pbs[eventType] = {};
 		}
-		pbs[cubeType].single = topSolve;
+		pbs[eventType].single = topSolve;
 	}
 
 	for (const topAverage of topAverages) {
-		if (!topAverage?.cube_type) {
+		if (!topAverage?.event_type) {
 			continue;
 		}
 
-		const cubeType = topAverage.cube_type as string;
-		pbs[cubeType] ??= {};
-		pbs[cubeType].average = topAverage;
+		const eventType = topAverage.event_type as string;
+		pbs[eventType] ??= {};
+		pbs[eventType].average = topAverage;
 	}
 
 	return {
@@ -188,11 +188,11 @@ export default function Profile() {
 
 	const myProfile = user.id === me?.id;
 	const pbCards: React.ReactNode[] = [];
-	for (const [cubeType, pb] of Object.entries(pbs)) {
+	for (const [eventType, pb] of Object.entries(pbs)) {
 		if (pb.single?.solve) {
 			pbCards.push(
 				<PbCard
-					key={`${cubeType}-single`}
+					key={`${eventType}-single`}
 					solves={[pb.single.solve]}
 					topRecord={pb.single}
 					user={user}
@@ -205,7 +205,7 @@ export default function Profile() {
 			if (solves.every(Boolean)) {
 				pbCards.push(
 					<PbCard
-						key={`${cubeType}-average`}
+						key={`${eventType}-average`}
 						solves={solves}
 						topRecord={avg}
 						user={user}

@@ -5,7 +5,7 @@ export function checkForSinglePB(solve: Solve) {
 	const cached = fetchAllSolveCaches({
 		type: 'single_pb',
 		filterOptions: {
-			cube_type: solve.cube_type,
+			event_type: solve.event_type,
 		},
 	});
 
@@ -36,7 +36,7 @@ export function checkForSingleWorstUpdate(solve: Solve) {
 	const cached = fetchAllSolveCaches({
 		type: 'single_worst',
 		filterOptions: {
-			cube_type: solve.cube_type,
+			event_type: solve.event_type,
 		},
 	});
 

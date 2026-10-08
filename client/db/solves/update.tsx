@@ -42,7 +42,7 @@ async function createDemoSolve(solve: Solve) {
 	try {
 		await trpc.demoSolve.create.mutate({
 			raw_time: solve.raw_time,
-			cube_type: solve.cube_type,
+			event_type: solve.event_type,
 			scramble: solve.scramble,
 			started_at: solve.started_at,
 			ended_at: solve.ended_at,

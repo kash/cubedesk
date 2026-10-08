@@ -1,4 +1,4 @@
-import CubePicker from '@/components/common/CubePicker';
+import EventPicker from '@/components/common/EventPicker';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {ImportDataContext, ImportDataType} from '@/components/settings/data/import-data/ImportData';
 import ImportSection from '@/components/settings/data/import-data/ImportSection';
@@ -115,31 +115,31 @@ export default function ReviewImport() {
 		});
 	}
 
-	function updateSessionCubeType(sessionId: string, cubeType: string) {
+	function updateSessionEventType(sessionId: string, eventType: string) {
 		const newSessionId = {
-			...data.sessionIdCubeTypeMap,
-			[sessionId]: cubeType,
+			...data.sessionIdEventTypeMap,
+			[sessionId]: eventType,
 		};
 
 		const solves = [...data.solves];
 		for (const solve of solves) {
 			if (solve.session_id === sessionId) {
-				solve.cube_type = cubeType;
+				solve.event_type = eventType;
 			}
 		}
 
 		context.setImportableData({
 			...data,
-			sessionIdCubeTypeMap: newSessionId,
+			sessionIdEventTypeMap: newSessionId,
 			solves,
 		});
 	}
 
 	let sessionMapper: ReactNode[] = [];
-	if (data.sessionIdCubeTypeMap) {
+	if (data.sessionIdEventTypeMap) {
 		sessionMapper = data.sessions.map((session) => {
 			const sessionId = session.id as string;
-			const cubeType = data.sessionIdCubeTypeMap?.[sessionId];
+			const eventType = data.sessionIdEventTypeMap?.[sessionId];
 			return (
 				<div className="flex flex-row items-center justify-between" key={sessionId}>
 					<div className="flex w-1/3 flex-row">
@@ -151,9 +151,9 @@ export default function ReviewImport() {
 						/>
 					</div>
 					<div className="flex w-1/3 flex-row justify-end">
-						<CubePicker
-							onChange={(ct) => updateSessionCubeType(sessionId, ct.id)}
-							value={cubeType || ''}
+						<EventPicker
+							onChange={(ct) => updateSessionEventType(sessionId, ct.id)}
+							value={eventType || ''}
 						/>
 					</div>
 					<div className="flex w-1/3 flex-row justify-end">
@@ -181,7 +181,7 @@ export default function ReviewImport() {
 					<InputLegend text="Session Name" />
 				</div>
 				<div className="flex w-1/3 flex-row justify-end">
-					<InputLegend text="Cube Type" />
+					<InputLegend text="Event Type" />
 				</div>
 				<div className="flex w-1/3 flex-row justify-end">
 					<InputLegend text="Remove" />

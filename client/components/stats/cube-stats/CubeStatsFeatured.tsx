@@ -72,7 +72,7 @@ export default function CubeStatsFeatured() {
 									width="52px"
 									frontFace
 									scramble={pbSolve.scramble}
-									cubeType={pbSolve.cube_type}
+									eventType={pbSolve.event_type}
 								/>
 							</div>
 						</div>

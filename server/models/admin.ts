@@ -77,7 +77,7 @@ async function getUserForAdminSolvesSummary(
 	where: Prisma.SolveWhereInput = {}
 ): Promise<UserAccountSolvesSummary[]> {
 	const sum = await getPrisma().solve.groupBy({
-		by: ['cube_type'],
+		by: ['event_type'],
 		_avg: {
 			time: true,
 		},
@@ -106,7 +106,7 @@ async function getUserForAdminSolvesSummary(
 		average: row._avg.time,
 		min_time: row._min.time,
 		max_time: row._max.time,
-		cube_type: row.cube_type,
+		event_type: row.event_type,
 	}));
 }
 

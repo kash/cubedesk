@@ -39,7 +39,7 @@ export type TopSolveMinAggregateOutputType = {
   user_id: string | null
   time: number | null
   solve_id: string | null
-  cube_type: string | null
+  event_type: string | null
   created_at: Date | null
 }
 
@@ -48,7 +48,7 @@ export type TopSolveMaxAggregateOutputType = {
   user_id: string | null
   time: number | null
   solve_id: string | null
-  cube_type: string | null
+  event_type: string | null
   created_at: Date | null
 }
 
@@ -57,7 +57,7 @@ export type TopSolveCountAggregateOutputType = {
   user_id: number
   time: number
   solve_id: number
-  cube_type: number
+  event_type: number
   created_at: number
   _all: number
 }
@@ -76,7 +76,7 @@ export type TopSolveMinAggregateInputType = {
   user_id?: true
   time?: true
   solve_id?: true
-  cube_type?: true
+  event_type?: true
   created_at?: true
 }
 
@@ -85,7 +85,7 @@ export type TopSolveMaxAggregateInputType = {
   user_id?: true
   time?: true
   solve_id?: true
-  cube_type?: true
+  event_type?: true
   created_at?: true
 }
 
@@ -94,7 +94,7 @@ export type TopSolveCountAggregateInputType = {
   user_id?: true
   time?: true
   solve_id?: true
-  cube_type?: true
+  event_type?: true
   created_at?: true
   _all?: true
 }
@@ -190,7 +190,7 @@ export type TopSolveGroupByOutputType = {
   user_id: string
   time: number
   solve_id: string
-  cube_type: string
+  event_type: string
   created_at: Date
   _count: TopSolveCountAggregateOutputType | null
   _avg: TopSolveAvgAggregateOutputType | null
@@ -222,7 +222,7 @@ export type TopSolveWhereInput = {
   user_id?: Prisma.StringFilter<"TopSolve"> | string
   time?: Prisma.FloatFilter<"TopSolve"> | number
   solve_id?: Prisma.StringFilter<"TopSolve"> | string
-  cube_type?: Prisma.StringFilter<"TopSolve"> | string
+  event_type?: Prisma.StringFilter<"TopSolve"> | string
   created_at?: Prisma.DateTimeFilter<"TopSolve"> | Date | string
   solve?: Prisma.XOR<Prisma.SolveScalarRelationFilter, Prisma.SolveWhereInput>
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
@@ -233,7 +233,7 @@ export type TopSolveOrderByWithRelationInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   solve_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   solve?: Prisma.SolveOrderByWithRelationInput
   user?: Prisma.UserAccountOrderByWithRelationInput
@@ -248,7 +248,7 @@ export type TopSolveWhereUniqueInput = Prisma.AtLeast<{
   user_id?: Prisma.StringFilter<"TopSolve"> | string
   time?: Prisma.FloatFilter<"TopSolve"> | number
   solve_id?: Prisma.StringFilter<"TopSolve"> | string
-  cube_type?: Prisma.StringFilter<"TopSolve"> | string
+  event_type?: Prisma.StringFilter<"TopSolve"> | string
   created_at?: Prisma.DateTimeFilter<"TopSolve"> | Date | string
   solve?: Prisma.XOR<Prisma.SolveScalarRelationFilter, Prisma.SolveWhereInput>
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
@@ -259,7 +259,7 @@ export type TopSolveOrderByWithAggregationInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   solve_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   _count?: Prisma.TopSolveCountOrderByAggregateInput
   _avg?: Prisma.TopSolveAvgOrderByAggregateInput
@@ -276,14 +276,14 @@ export type TopSolveScalarWhereWithAggregatesInput = {
   user_id?: Prisma.StringWithAggregatesFilter<"TopSolve"> | string
   time?: Prisma.FloatWithAggregatesFilter<"TopSolve"> | number
   solve_id?: Prisma.StringWithAggregatesFilter<"TopSolve"> | string
-  cube_type?: Prisma.StringWithAggregatesFilter<"TopSolve"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"TopSolve"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"TopSolve"> | Date | string
 }
 
 export type TopSolveCreateInput = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve: Prisma.SolveCreateNestedOneWithoutTop_solveInput
   user: Prisma.UserAccountCreateNestedOneWithoutTop_solvesInput
@@ -294,14 +294,14 @@ export type TopSolveUncheckedCreateInput = {
   user_id: string
   time: number
   solve_id: string
-  cube_type: string
+  event_type: string
   created_at?: Date | string
 }
 
 export type TopSolveUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve?: Prisma.SolveUpdateOneRequiredWithoutTop_solveNestedInput
   user?: Prisma.UserAccountUpdateOneRequiredWithoutTop_solvesNestedInput
@@ -312,7 +312,7 @@ export type TopSolveUncheckedUpdateInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   solve_id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -321,14 +321,14 @@ export type TopSolveCreateManyInput = {
   user_id: string
   time: number
   solve_id: string
-  cube_type: string
+  event_type: string
   created_at?: Date | string
 }
 
 export type TopSolveUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -337,7 +337,7 @@ export type TopSolveUncheckedUpdateManyInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   solve_id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -362,7 +362,7 @@ export type TopSolveCountOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   solve_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
@@ -375,7 +375,7 @@ export type TopSolveMaxOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   solve_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
@@ -384,7 +384,7 @@ export type TopSolveMinOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   time?: Prisma.SortOrder
   solve_id?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
@@ -479,7 +479,7 @@ export type TopSolveUncheckedUpdateManyWithoutSolveNestedInput = {
 export type TopSolveCreateWithoutUserInput = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   solve: Prisma.SolveCreateNestedOneWithoutTop_solveInput
 }
@@ -488,7 +488,7 @@ export type TopSolveUncheckedCreateWithoutUserInput = {
   id?: string
   time: number
   solve_id: string
-  cube_type: string
+  event_type: string
   created_at?: Date | string
 }
 
@@ -526,14 +526,14 @@ export type TopSolveScalarWhereInput = {
   user_id?: Prisma.StringFilter<"TopSolve"> | string
   time?: Prisma.FloatFilter<"TopSolve"> | number
   solve_id?: Prisma.StringFilter<"TopSolve"> | string
-  cube_type?: Prisma.StringFilter<"TopSolve"> | string
+  event_type?: Prisma.StringFilter<"TopSolve"> | string
   created_at?: Prisma.DateTimeFilter<"TopSolve"> | Date | string
 }
 
 export type TopSolveCreateWithoutSolveInput = {
   id?: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
   user: Prisma.UserAccountCreateNestedOneWithoutTop_solvesInput
 }
@@ -542,7 +542,7 @@ export type TopSolveUncheckedCreateWithoutSolveInput = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
 }
 
@@ -576,14 +576,14 @@ export type TopSolveCreateManyUserInput = {
   id?: string
   time: number
   solve_id: string
-  cube_type: string
+  event_type: string
   created_at?: Date | string
 }
 
 export type TopSolveUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   solve?: Prisma.SolveUpdateOneRequiredWithoutTop_solveNestedInput
 }
@@ -592,7 +592,7 @@ export type TopSolveUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   solve_id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -600,7 +600,7 @@ export type TopSolveUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
   solve_id?: Prisma.StringFieldUpdateOperationsInput | string
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -608,14 +608,14 @@ export type TopSolveCreateManySolveInput = {
   id?: string
   user_id: string
   time: number
-  cube_type: string
+  event_type: string
   created_at?: Date | string
 }
 
 export type TopSolveUpdateWithoutSolveInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserAccountUpdateOneRequiredWithoutTop_solvesNestedInput
 }
@@ -624,7 +624,7 @@ export type TopSolveUncheckedUpdateWithoutSolveInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -632,7 +632,7 @@ export type TopSolveUncheckedUpdateManyWithoutSolveInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.FloatFieldUpdateOperationsInput | number
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -643,7 +643,7 @@ export type TopSolveSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   user_id?: boolean
   time?: boolean
   solve_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   created_at?: boolean
   solve?: boolean | Prisma.SolveDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
@@ -654,7 +654,7 @@ export type TopSolveSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   user_id?: boolean
   time?: boolean
   solve_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   created_at?: boolean
   solve?: boolean | Prisma.SolveDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
@@ -665,7 +665,7 @@ export type TopSolveSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   user_id?: boolean
   time?: boolean
   solve_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   created_at?: boolean
   solve?: boolean | Prisma.SolveDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
@@ -676,11 +676,11 @@ export type TopSolveSelectScalar = {
   user_id?: boolean
   time?: boolean
   solve_id?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   created_at?: boolean
 }
 
-export type TopSolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "solve_id" | "cube_type" | "created_at", ExtArgs["result"]["topSolve"]>
+export type TopSolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "time" | "solve_id" | "event_type" | "created_at", ExtArgs["result"]["topSolve"]>
 export type TopSolveInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   solve?: boolean | Prisma.SolveDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserAccountDefaultArgs<ExtArgs>
@@ -705,7 +705,7 @@ export type $TopSolvePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     user_id: string
     time: number
     solve_id: string
-    cube_type: string
+    event_type: string
     created_at: Date
   }, ExtArgs["result"]["topSolve"]>
   composites: {}
@@ -1136,7 +1136,7 @@ export interface TopSolveFieldRefs {
   readonly user_id: Prisma.FieldRef<"TopSolve", 'String'>
   readonly time: Prisma.FieldRef<"TopSolve", 'Float'>
   readonly solve_id: Prisma.FieldRef<"TopSolve", 'String'>
-  readonly cube_type: Prisma.FieldRef<"TopSolve", 'String'>
+  readonly event_type: Prisma.FieldRef<"TopSolve", 'String'>
   readonly created_at: Prisma.FieldRef<"TopSolve", 'DateTime'>
 }
     

@@ -228,7 +228,7 @@ model EloRating {
 model EloLog {
   id                      String       @id @default(uuid())
   opponent_id             String?
-  cube_type               String
+  event_type              String
   elo_change              Int          @default(0)
   updated_at              DateTime     @updatedAt
   created_at              DateTime     @default(now())
@@ -343,7 +343,7 @@ model Solve {
   user_id              String
   time                 Float
   raw_time             Float?
-  cube_type            String?
+  event_type           String?
   scramble             String?
   session_id           String?
   started_at           BigInt?
@@ -396,7 +396,7 @@ model DemoSolve {
   demo_session_id String
   ip_address      String?
   raw_time        Float?
-  cube_type       String?
+  event_type      String?
   scramble        String?
   started_at      BigInt?
   ended_at        BigInt?
@@ -467,7 +467,7 @@ model Match {
 model MatchLobby {
   id           String      @id @default(uuid())
   user_id      String
-  cube_type    String
+  event_type   String
   game_type    GameType
   player_count Int
   elo          Int
@@ -639,7 +639,7 @@ model GameOptions {
   game_session_id                   String?       @unique
   match_session_id                  String?       @unique
   game_type                         GameType
-  cube_type                         String        @default("333")
+  event_type                        String        @default("333")
   elimination_starting_time_seconds Int           @default(30)
   elimination_percent_change_rate   Int           @default(5)
   head_to_head_target_win_count     Int           @default(5)
@@ -658,7 +658,7 @@ model TopSolve {
   user_id    String
   time       Float
   solve_id   String
-  cube_type  String
+  event_type String
   created_at DateTime    @default(now())
   solve      Solve       @relation(fields: [solve_id], references: [id], onDelete: Cascade)
   user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -673,7 +673,7 @@ model TopAverage {
   id         String      @id @default(uuid())
   user_id    String
   time       Float
-  cube_type  String
+  event_type String
   solve_1_id String
   solve_2_id String
   solve_3_id String
@@ -708,7 +708,7 @@ model Session {
 model CustomTrainer {
   id            String                  @id @default(uuid())
   colors        String?
-  cube_type     String
+  event_type    String
   key           String
   user_id       String
   created_at    DateTime                @default(now())
@@ -776,7 +776,7 @@ model TrainerAlgorithm {
   active     Boolean  @default(true)
   solution   String   @default("")
   scrambles  String   @default("")
-  cube_type  String
+  event_type String
   algo_type  String
   group_name String   @default("")
   img_link   String   @default("")
@@ -785,7 +785,7 @@ model TrainerAlgorithm {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@index([active, cube_type, algo_type])
+  @@index([active, event_type, algo_type])
   @@map("trainer_algorithm")
 }
 
@@ -824,47 +824,47 @@ model AlgorithmOverride {
 }
 
 model Setting {
-  id                                  String           @id @default(uuid())
-  user_id                             String           @unique
-  focus_mode                          Boolean          @default(false)
-  freeze_time                         Float            @default(0.2)
-  inspection                          Boolean          @default(false)
-  manual_entry                        Boolean          @default(false)
-  inspection_delay                    Int              @default(15)
-  inverse_time_list                   Boolean          @default(false)
-  hide_time_when_solving              Boolean          @default(false)
-  nav_collapsed                       Boolean          @default(false)
-  pb_confetti                         Boolean          @default(true)
-  play_inspection_sound               Boolean          @default(false)
-  zero_out_time_after_solve           Boolean          @default(false)
-  confirm_delete_solve                Boolean          @default(false)
-  require_period_in_manual_time_entry Boolean          @default(false)
-  created_at                          DateTime         @default(now())
-  cube_type                           String           @default("333")
+  id                                  String            @id @default(uuid())
+  user_id                             String            @unique
+  focus_mode                          Boolean           @default(false)
+  freeze_time                         Float             @default(0.2)
+  inspection                          Boolean           @default(false)
+  manual_entry                        Boolean           @default(false)
+  inspection_delay                    Int               @default(15)
+  inverse_time_list                   Boolean           @default(false)
+  hide_time_when_solving              Boolean           @default(false)
+  nav_collapsed                       Boolean           @default(false)
+  pb_confetti                         Boolean           @default(true)
+  play_inspection_sound               Boolean           @default(false)
+  zero_out_time_after_solve           Boolean           @default(false)
+  confirm_delete_solve                Boolean           @default(false)
+  require_period_in_manual_time_entry Boolean           @default(false)
+  created_at                          DateTime          @default(now())
+  event_type                          String            @default("333")
   session_id                          String?
-  timer_decimal_points                Int              @default(2)
-  beta_tester                         Boolean          @default(false)
-  use_space_with_smart_cube           Boolean          @default(false)
-  inspection_auto_start               Boolean          @default(false)
+  timer_decimal_points                Int               @default(2)
+  beta_tester                         Boolean           @default(false)
+  use_space_with_smart_cube           Boolean           @default(false)
+  inspection_auto_start               Boolean           @default(false)
   stats_module_json                   String?
-  custom_cube_types                   CustomCubeType[] @relation("custom_cube_type_setting")
-  user                                UserAccount      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  custom_event_types                  CustomEventType[] @relation("custom_event_type_setting")
+  user                                UserAccount       @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
   @@map("setting")
 }
 
-model CustomCubeType {
+model CustomEventType {
   id         String   @id @default(uuid())
   user_id    String
   name       String
   created_at DateTime @default(now())
   scramble   String
   private    Boolean  @default(false)
-  setting    Setting  @relation("custom_cube_type_setting", fields: [user_id], references: [user_id], onDelete: Cascade)
+  setting    Setting  @relation("custom_event_type_setting", fields: [user_id], references: [user_id], onDelete: Cascade)
 
   @@index([user_id])
-  @@map("custom_cube_type")
+  @@map("custom_event_type")
 }
 
 enum GameType {

@@ -13,11 +13,11 @@ export function checkForPB(solve: Solve, isNew: boolean) {
 		return;
 	}
 
-	const cubeType = solve.cube_type;
+	const eventType = solve.event_type;
 
-	// We only want PBs that are for this cube type
+	// We only want PBs that are for this event type
 	const pbFilter = jsonStr({
-		cube_type: cubeType,
+		event_type: eventType,
 		from_timer: true,
 	});
 
@@ -25,10 +25,10 @@ export function checkForPB(solve: Solve, isNew: boolean) {
 	const isSinglePb = updatedSinglePbs.some((pb) => jsonStr(pb.filterOptions) === pbFilter);
 
 	if (isSinglePb && isAvgPb) {
-		emitEvent('singleAndAvgPbEvent', cubeType);
+		emitEvent('singleAndAvgPbEvent', eventType);
 	} else if (isSinglePb) {
-		emitEvent('singlePbEvent', cubeType);
+		emitEvent('singlePbEvent', eventType);
 	} else if (isAvgPb) {
-		emitEvent('avgPbEvent', cubeType);
+		emitEvent('avgPbEvent', eventType);
 	}
 }

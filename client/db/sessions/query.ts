@@ -28,7 +28,7 @@ export function fetchSessions(options: FetchSessionOptions = {}) {
 		});
 }
 
-export function getCubeTypesFromSession(session: Session) {
+export function getEventTypesFromSession(session: Session) {
 	if (!session) {
 		return [];
 	}
@@ -39,7 +39,7 @@ export function getCubeTypesFromSession(session: Session) {
 	});
 
 	for (const solve of solves) {
-		types.add(solve.cube_type);
+		types.add(solve.event_type);
 	}
 
 	return Array.from(types);

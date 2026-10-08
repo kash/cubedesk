@@ -34,7 +34,7 @@ test('reads legacy Redis before initialization without writing or refreshing', a
 		]),
 	);
 	expect(await fetchTrainerAlgorithms()).toEqual([
-		expect.objectContaining({id: '333_oll_1', active: true}),
+		expect.objectContaining({id: '333_oll_1', event_type: '333', active: true}),
 	]);
 	expect(findMany).not.toHaveBeenCalled();
 });
