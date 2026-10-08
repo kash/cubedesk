@@ -70,7 +70,7 @@ Handy fixed URLs:
 - `/play/head-to-head/seed-h2h-alice`: an ended match. Also `seed-h2h-bob`, `seed-h2h-mallory`, and `/play/elimination/seed-elim-friends`.
 - `/user/alice`: a profile with bio, ELO and PBs.
 
-The built-in trainer catalog (`/trainer/333/OLL` etc.) is loaded from `scripts/trainer-catalog.csv` when that file exists and the catalog is empty. The import uses the same path as an admin CSV upload (see `docs/trainer-catalog.md`). Without the file the trainer shows "No algorithms available", and you can test the import at `/admin/trainer`.
+The trainer gets a 15-case sample of the built-in catalog (`scripts/seed-dev-trainer.ts`): 3x3 OLL and PLL, and 2x2 CLL and OLL, with real solutions and colors. Agent has favorites, an override and trainer history on the PLLs. The sample is only added while the catalog is empty, so CSV imports and edits at `/admin/trainer` (see `docs/trainer-catalog.md`) survive reseeding.
 
 To add solves to an account you created yourself: `pnpm seed:dev --username <name>`. To start over: `pnpm exec prisma migrate reset --force && pnpm seed:dev`.
 

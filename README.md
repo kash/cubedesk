@@ -25,8 +25,7 @@ how to test each feature.
 
 `pnpm seed:dev` seeds demo accounts (all with the password `cubedesk`, e.g.
 `agent@cubedesk.test`, an admin), friends, notifications, 1v1 history, leaderboards,
-reports, custom trainers and, when `scripts/trainer-catalog.csv` exists, the trainer
-catalog. To add sample history to an account you signed up locally instead, run:
+reports, custom trainers and a 15-case sample of the trainer catalog. To add sample history to an account you signed up locally instead, run:
 
 ```sh
 pnpm seed:dev --username YOUR_LOCAL_USERNAME

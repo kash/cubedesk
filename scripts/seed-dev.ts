@@ -2,7 +2,7 @@ import 'dotenv/config';
 import {buildSeedData, validateSeedEnvironment} from './seed-dev-data';
 
 const USAGE = `Usage:
-  pnpm seed:dev                          Seed demo accounts, community data and the trainer catalog
+  pnpm seed:dev                          Seed demo accounts, community data and a sample trainer catalog
   pnpm seed:dev --username YOUR_USERNAME Add sample solve history to an account you signed up locally`;
 
 async function main() {

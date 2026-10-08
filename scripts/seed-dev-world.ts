@@ -1,16 +1,13 @@
-import {importCatalog, previewCatalogImport} from '@/server/models/trainer/catalog';
-import {parseTrainerCsv} from '@/server/models/trainer/csv';
+import {CATALOG_ID} from '@/server/models/trainer/catalog';
 import bcrypt from 'bcryptjs';
-import {existsSync, readFileSync} from 'node:fs';
-import path from 'node:path';
 import {Scrambow} from 'scrambow';
 import {v5 as uuid} from 'uuid';
 import type {Prisma, PrismaClient} from '../generated/prisma/client';
 import {buildSeedData} from './seed-dev-data';
+import {SEED_TRAINER_ALGORITHMS} from './seed-dev-trainer';
 
 // Every seeded account logs in with <username>@cubedesk.test and this password
 export const SEED_PASSWORD = 'cubedesk';
-export const TRAINER_CATALOG_CSV = path.join(__dirname, 'trainer-catalog.csv');
 
 const DAY = 24 * 60 * 60 * 1000;
 const id = (key: string) => uuid(`cubedesk:dev-world:v1:${key}`, uuid.URL);
@@ -215,7 +212,7 @@ function eloOf(username: string) {
 	return SEED_USERS.find((user) => user.username === username)?.elo ?? 1000;
 }
 
-export async function buildWorldSeed(now: Date, catalogIds: string[]) {
+export async function buildWorldSeed(now: Date) {
 	const daysAgo = (days: number, minutes = 0) =>
 		new Date(now.getTime() - days * DAY - minutes * 60000);
 	const password = await bcrypt.hash(SEED_PASSWORD, 10);
@@ -644,23 +641,31 @@ export async function buildWorldSeed(now: Date, catalogIds: string[]) {
 		);
 	}
 
-	// Trainer history and favorites need the built-in catalog
-	const trainerFavorites: Prisma.TrainerFavoriteCreateManyInput[] = catalogIds
+	// Trainer history, favorites and an override on the seeded PLLs
+	const pllIds = SEED_TRAINER_ALGORITHMS.filter((algorithm) => algorithm.algo_type === 'PLL').map(
+		(algorithm) => algorithm.id,
+	);
+	const trainerFavorites: Prisma.TrainerFavoriteCreateManyInput[] = pllIds
 		.slice(0, 3)
 		.map((cubeKey) => ({
 			id: id(`trainer-favorite:agent:${cubeKey}`),
 			user_id: agent,
 			cube_key: cubeKey,
 		}));
-	const algorithmOverrides: Prisma.AlgorithmOverrideCreateManyInput[] = catalogIds
-		.slice(0, 1)
-		.map((cubeKey) => ({
-			id: id(`algorithm-override:agent:${cubeKey}`),
+	// The edit dialog always saves every field, so the override does too
+	const uPerm = SEED_TRAINER_ALGORITHMS.find((algorithm) => algorithm.id === '333_pll_1')!;
+	const algorithmOverrides: Prisma.AlgorithmOverrideCreateManyInput[] = [
+		{
+			id: id(`algorithm-override:agent:${uPerm.id}`),
 			user_id: agent,
-			cube_key: cubeKey,
-			name: 'My favorite case',
-		}));
-	for (const [n, cubeKey] of catalogIds.slice(0, 3).entries()) {
+			cube_key: uPerm.id,
+			name: 'Ua (my alg)',
+			solution: "R U' R U R U R U' R' U' R2",
+			rotate: 0,
+			scrambles: uPerm.scrambles,
+		},
+	];
+	for (const [n, cubeKey] of pllIds.slice(0, 3).entries()) {
 		for (let rep = 0; rep < 4; rep++) {
 			solves.push(
 				solveRow(
@@ -901,34 +906,6 @@ export async function buildWorldSeed(now: Date, catalogIds: string[]) {
 	};
 }
 
-// Fills an empty catalog from scripts/trainer-catalog.csv through the same path as an admin CSV upload.
-// An initialized catalog is left alone so edits made at /admin/trainer survive reseeding.
-async function seedTrainerCatalog(prisma: PrismaClient) {
-	if (!existsSync(TRAINER_CATALOG_CSV)) {
-		console.warn(
-			`No ${path.basename(TRAINER_CATALOG_CSV)}; the built-in trainer catalog was not seeded.`,
-		);
-		return [];
-	}
-	const csv = readFileSync(TRAINER_CATALOG_CSV, 'utf8');
-	const state = await prisma.trainerCatalogState.findUnique({where: {id: 'default'}});
-	if (!state?.initialized_at) {
-		const preview = await previewCatalogImport(prisma, csv);
-		if (preview.errors.length) {
-			throw new Error(
-				`Invalid trainer catalog CSV: ${preview.errors.map((e) => `row ${e.row}: ${e.message}`).join('; ')}`,
-			);
-		}
-		const result = await importCatalog(prisma, csv, preview.fingerprint);
-		console.log(`Imported ${result.total} trainer algorithms.`);
-	}
-	return parseTrainerCsv(csv)
-		.algorithms.filter(
-			(algorithm) => algorithm.event_type === '333' && algorithm.algo_type === 'PLL',
-		)
-		.map((algorithm) => algorithm.id);
-}
-
 export async function seedWorld(prisma: PrismaClient, now = new Date()) {
 	const conflicts = await prisma.userAccount.findMany({
 		where: {
@@ -947,8 +924,7 @@ export async function seedWorld(prisma: PrismaClient, now = new Date()) {
 		);
 	}
 
-	const catalogIds = await seedTrainerCatalog(prisma);
-	const data = await buildWorldSeed(now, catalogIds);
+	const data = await buildWorldSeed(now);
 	const counts = await prisma.$transaction(
 		async (tx) => {
 			const opts = {skipDuplicates: true};
@@ -992,6 +968,18 @@ export async function seedWorld(prisma: PrismaClient, now = new Date()) {
 			);
 			await tx.customTrainerLike.createMany({data: data.customTrainerLikes, ...opts});
 			await tx.customTrainerDownload.createMany({data: data.customTrainerDownloads, ...opts});
+			// A sample catalog only while it's empty, so imports and edits at /admin/trainer survive reseeding
+			const catalog = await tx.trainerCatalogState.findUnique({where: {id: CATALOG_ID}});
+			if (!catalog?.initialized_at) {
+				await insert('trainer algorithms', () =>
+					tx.trainerAlgorithm.createMany({data: SEED_TRAINER_ALGORITHMS, ...opts}),
+				);
+				await tx.trainerCatalogState.upsert({
+					where: {id: CATALOG_ID},
+					create: {id: CATALOG_ID, initialized_at: now, revision: 1},
+					update: {initialized_at: now, revision: {increment: 1}},
+				});
+			}
 			await tx.trainerFavorite.createMany({data: data.trainerFavorites, ...opts});
 			await tx.algorithmOverride.createMany({data: data.algorithmOverrides, ...opts});
 			await tx.badgeType.createMany({data: data.badgeTypes, ...opts});

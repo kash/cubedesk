@@ -11,8 +11,8 @@ is available to all signed-in users; no paid restriction applies.
    the application. For local schema development, use `pnpm prisma`.
 2. Open **Admin → Trainer → Upload CSV**. The upload opens a dialog.
 3. Select your catalog CSV (see the format below), preview the changes, then
-   confirm the import. For local development, `pnpm seed:dev` imports
-   `scripts/trainer-catalog.csv` into an empty catalog through the same code path.
+   confirm the import. A production catalog export is not bundled with the repository;
+   for local development, `pnpm seed:dev` fills an empty catalog with a 15-case sample.
 4. Verify that the record and published counts match your CSV and that the catalog
    page shows **PostgreSQL**. Missing solutions and scrambles are warnings, not
    errors; published cases retain their enabled training controls.
