@@ -20,8 +20,8 @@ If you'd like to contribute to CubeDesk, firstly, _thank you_; secondly, please 
 
 On a fresh Linux machine or cloud VM, `bash scripts/dev-setup.sh` installs Node, pnpm,
 Postgres and Redis, creates `.env` from `.default.env`, applies migrations, and seeds
-dummy data. Then run `pnpm dev`. `AGENTS.md` covers the details, the seeded accounts and
-how to test each feature.
+dummy data. Then run `pnpm dev`. `.agents/skills/dev-environment/SKILL.md` covers the
+details, the seeded accounts and how to test each feature.
 
 `pnpm seed:dev` seeds demo accounts (all with the password `cubedesk`, e.g.
 `agent@cubedesk.test`, an admin), friends, notifications, 1v1 history, leaderboards,
