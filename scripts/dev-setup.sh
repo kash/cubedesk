@@ -152,7 +152,7 @@ start() {
 	pnpm exec prisma migrate deploy
 	log "Seeding dummy data"
 	pnpm seed:dev
-	log "Ready. Run 'pnpm dev' and open http://localhost:3000 (see AGENTS.md for accounts)."
+	log "Ready. Run 'pnpm dev' and open http://localhost:3000 (test accounts: .agents/skills/dev-environment/SKILL.md)."
 }
 
 case "$PHASE" in
