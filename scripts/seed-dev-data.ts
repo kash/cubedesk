@@ -1,6 +1,6 @@
-import type {Prisma} from '../generated/prisma/client';
 import {Scrambow} from 'scrambow';
 import {v5 as uuid} from 'uuid';
+import type {Prisma} from '../generated/prisma/client';
 
 export function validateSeedEnvironment(env: NodeJS.ProcessEnv): string {
 	if (env.NODE_ENV !== 'development') {
@@ -74,7 +74,8 @@ export function buildSeedData(userId: string, now = new Date()) {
 					session_id: sessionId,
 					event_type: event.type,
 					raw_time: rawTime,
-					time: rawTime + (plusTwo ? 2 : 0),
+					// The app stores DNFs as -1 so averages treat them as DNF
+					time: dnf ? -1 : rawTime + (plusTwo ? 2 : 0),
 					dnf,
 					plus_two: plusTwo,
 					scramble: scrambles[index % scrambles.length],

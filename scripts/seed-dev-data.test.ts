@@ -42,7 +42,7 @@ it('generates consistent, repeatable solve history scoped to the selected user',
 	for (const solve of data.solves) {
 		expect(solve.user_id).toBe('local-user');
 		expect(data.sessions.some((session) => session.id === solve.session_id)).toBe(true);
-		expect(solve.time).toBe(solve.raw_time! + (solve.plus_two ? 2 : 0));
+		expect(solve.time).toBe(solve.dnf ? -1 : solve.raw_time! + (solve.plus_two ? 2 : 0));
 		expect(Number(solve.ended_at) - Number(solve.started_at)).toBe(
 			Math.round(solve.raw_time! * 1000),
 		);
