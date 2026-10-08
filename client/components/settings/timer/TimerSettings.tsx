@@ -15,7 +15,7 @@ export const TIMER_INPUT_TYPE_NAMES = {
 	keyboard: 'Keyboard',
 	stackmat: 'StackMat',
 	smart: 'Smart Cube',
-	gantimer: 'GAN Smart Timer',
+	smarttimer: 'Smart Timer',
 };
 
 export default function TimerSettings() {
@@ -96,7 +96,7 @@ export default function TimerSettings() {
 				</SettingRow>
 				<SettingRow
 					title="Timer input type"
-					description="Select between using your keyboard (space bar), a StackMat, or a Smart Cube to start the timer."
+					description="Select between using your keyboard (space bar), a StackMat, a smart cube, or a Bluetooth smart timer to start the timer."
 				>
 					<SelectField
 						label="Timer input type"

@@ -89,7 +89,7 @@ export function startInspection() {
 	} = getSettings();
 
 	const stackMatOn = timerType === 'stackmat';
-	const ganTimerOn = timerType === 'gantimer';
+	const smartTimerOn = timerType === 'smarttimer';
 
 	setTimerParams({
 		inInspection: true,
@@ -101,7 +101,7 @@ export function startInspection() {
 	setTimer(
 		INSPECTION_TIMEOUT,
 		setTimeout(() => {
-			if (inspectionAutoStart && !ganTimerOn && !stackMatOn) {
+			if (inspectionAutoStart && !smartTimerOn && !stackMatOn) {
 				startTimer();
 			}
 			setTimerParams({

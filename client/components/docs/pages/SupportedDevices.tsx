@@ -74,9 +74,9 @@ const SMART_CUBES: DeviceFamily[] = [
 const TIMERS: DeviceFamily[] = [
 	{
 		brand: 'GAN',
-		name: 'GAN Smart Timer',
+		name: 'GAN smart timers',
 		connection: 'bluetooth',
-		models: [{name: 'GAN Smart Timer'}],
+		models: [{name: 'GAN Smart Timer'}, {name: 'GAN Halo Smart Timer'}],
 	},
 	{
 		brand: 'Speed Stacks',
@@ -89,6 +89,13 @@ const TIMERS: DeviceFamily[] = [
 		name: 'MoYu AI Timer',
 		connection: 'bluetooth',
 		models: [{name: 'MoYu AI Timer'}],
+		comingSoon: true,
+	},
+	{
+		brand: 'QiYi',
+		name: 'QiYi Smart Timer',
+		connection: 'bluetooth',
+		models: [{name: 'QiYi Smart Timer'}],
 		comingSoon: true,
 	},
 ];
@@ -208,8 +215,10 @@ export default function SupportedDevices() {
 			<DeviceGrid families={TIMERS} />
 
 			<DocParagraph>
-				Smart cubes and Bluetooth timers need a browser that supports Web Bluetooth. If your
-				device won&apos;t show up or connect, see{' '}
+				Smart cubes and Bluetooth timers need a browser that supports Web Bluetooth. To use
+				a Bluetooth timer, set <strong>Timer input type</strong> to{' '}
+				<strong>Smart Timer</strong>, and CubeDesk works out which brand it is when it
+				connects. If your device won&apos;t show up or connect, see{' '}
 				<DocLink to="/guides/bluetooth-troubleshooting">Troubleshooting Bluetooth</DocLink>.
 			</DocParagraph>
 		</>

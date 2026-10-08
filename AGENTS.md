@@ -3,4 +3,4 @@
 - Once you're done with a task, make sure you didn't introduce any new TypeScript errors. Go back and fix them if you introduced any new TypeScript errors after making changes.
 - Branch names should start with the initials of the person making the changes (kg for kash, who is the author).
     - Prefer git add -A rather than referencing each file individually
-- 
+- Whenever support for a new connected device (smart cube, smart timer, etc.) is added, update the supported devices docs page (client/components/docs/pages/SupportedDevices.tsx) to list it, and drop its "coming soon" flag if it had one.

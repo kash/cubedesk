@@ -1,6 +1,10 @@
-import {smartCubeMismatched, smartCubeSelected} from '@/components/timer/helpers/util';
+import {
+	smartCubeMismatched,
+	smartCubeSelected,
+	smartTimerSelected,
+	timesOnDevice,
+} from '@/components/timer/helpers/util';
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
-import GanTimer from '@/components/timer/time-display/GanTimer';
 import Manual from '@/components/timer/time-display/Manual';
 import StackMat from '@/components/timer/time-display/stackmat/StackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
@@ -42,7 +46,6 @@ export default function TimeDisplay() {
 	const timerFontFamily = useSettings('timer_font_family');
 	const timerType = useSettings('timer_type');
 	const stackMatOn = timerType === 'stackmat';
-	const ganTimerOn = timerType === 'gantimer';
 	const zeroOutTimeAfterSolve = useSettings('zero_out_time_after_solve');
 
 	const mobileMode = useGeneral('mobile_mode');
@@ -98,7 +101,7 @@ export default function TimeDisplay() {
 		}, 10);
 	}
 
-	if (manualEntry && timerType !== 'smart') {
+	if (manualEntry && !timesOnDevice(timerType)) {
 		return <Manual />;
 	}
 
@@ -128,8 +131,6 @@ export default function TimeDisplay() {
 
 	if (stackMatOn) {
 		bottomInfo = <StackMat />;
-	} else if (ganTimerOn) {
-		bottomInfo = <GanTimer />;
 	} else if (smartCubeSelected(context)) {
 		if (context.smartCubePuzzle && smartCubeMismatched(context)) {
 			bottomInfo = (
@@ -158,6 +159,9 @@ export default function TimeDisplay() {
 		}
 	}
 
+	// The smart timer visual is centered on the time, so what's under the time can't count toward its height
+	const hangBottomInfo = smartTimerSelected();
+
 	let body: ReactNode = (
 		<>
 			<h1
@@ -166,7 +170,13 @@ export default function TimeDisplay() {
 					fontFamily: timerFontFamily + ', monospace',
 				}}
 				className={classNames(
-					"text-text m-0 mb-2.5 font-['Roboto_Mono',monospace] font-medium [text-shadow:0_1px_7px_rgba(0,0,0,0.2)]",
+					"text-text m-0 font-['Roboto_Mono',monospace] font-medium [text-shadow:0_1px_7px_rgba(0,0,0,0.2)]",
+					{
+						'mb-2.5': !hangBottomInfo,
+						// Trims the box to the digits so its center is theirs, for whichever font and size. The padding gives
+						// back the height the trim takes away
+						'py-[0.4em] [text-box:trim-both_cap_alphabetic]': hangBottomInfo,
+					},
 					mobileMode && 'select-none',
 					inInspection && 'text-text/60',
 					canStart && '!text-success',
@@ -176,7 +186,12 @@ export default function TimeDisplay() {
 			>
 				{timeStr}
 			</h1>
-			<div className={classNames(context.timeStartedAt && 'pointer-events-none opacity-10')}>
+			<div
+				className={classNames({
+					'pointer-events-none opacity-10': context.timeStartedAt,
+					'h-0 w-full *:mt-2.5': hangBottomInfo,
+				})}
+			>
 				{bottomInfo}
 			</div>
 			{subTimerActions}
@@ -191,7 +206,7 @@ export default function TimeDisplay() {
 		<div
 			className={classNames(
 				'relative z-[1] flex w-full flex-col items-center justify-center p-0',
-				smartCubeSelected(context) && 'w-1/2',
+				(smartCubeSelected(context) || smartTimerSelected()) && 'w-1/2',
 				mobileMode && 'select-none',
 				context.focusMode && !mobileMode && 'h-screen !pt-0',
 			)}
