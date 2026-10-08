@@ -2,7 +2,7 @@
 
 CubeDesk is a speedcubing timer, stats, trainer and 1v1 app. One Node 24 process (`server/app.ts`, Express) serves tRPC at `/trpc`, Socket.io for live 1v1, and the React 19 client through Vite middleware. Data lives in Postgres (Prisma 7) and Redis.
 
-To set up the environment, run the app, use the seeded test accounts, or test a change in the browser or API, use the `dev-environment` skill (`.agents/skills/dev-environment/SKILL.md`). On a fresh machine, start with `bash scripts/dev-setup.sh`.
+Before running the app, the DB integration tests or anything that needs Postgres or Redis, run `bash scripts/dev-setup.sh`. It installs everything on a fresh machine, starts the services, migrates and seeds test data, and is a quick no-op when everything is already up. For running the app, the seeded test accounts, and testing changes in the browser or API, use the `dev-environment` skill (`.agents/skills/dev-environment/SKILL.md`).
 
 ## Rules
 
