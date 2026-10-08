@@ -9,7 +9,7 @@ import {getAverage} from '@/db/solves/stats/solves/average/get-average';
 import {Solve} from '@/types/solve';
 import {TopAverage, TopSolve} from '@/types/top-solve';
 import {PublicUserAccount} from '@/types/user';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError} from '@/util/toast';
@@ -41,7 +41,7 @@ export default function PbCard(props: Props) {
 	const [deleted, setDeleted] = useState(false);
 	const [deleting, setDeleting] = useState(false);
 
-	const cubeType = useMemo(() => getCubeTypeInfoById(firstSolve.cube_type), []);
+	const eventType = useMemo(() => getEventTypeInfoById(firstSolve.event_type), []);
 	const time = useMemo(() => {
 		if (single) {
 			return firstSolve.time;
@@ -100,7 +100,7 @@ export default function PbCard(props: Props) {
 					onClick={deletePb}
 					size="icon-sm"
 					className="text-text/35 hover:bg-error/10 hover:text-error opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 aria-busy:opacity-100 [@media(hover:none)]:opacity-100"
-					aria-label={`Remove ${cubeType?.name} ${single ? 'single' : 'average'}`}
+					aria-label={`Remove ${eventType?.name} ${single ? 'single' : 'average'}`}
 					disabled={deleting}
 					aria-busy={deleting}
 				>
@@ -110,7 +110,7 @@ export default function PbCard(props: Props) {
 		);
 	}
 
-	if (!cubeType) {
+	if (!eventType) {
 		return null;
 	}
 
@@ -123,7 +123,7 @@ export default function PbCard(props: Props) {
 					onClick={openSolve}
 				>
 					<div className="mb-5 flex items-center gap-2 pr-7">
-						<span className="text-sm font-semibold">{cubeType.name}</span>
+						<span className="text-sm font-semibold">{eventType.name}</span>
 						<span className="bg-tmo-module/5 text-text/50 rounded-md px-1.5 py-0.5 text-[10px] font-medium">
 							{single ? 'Single' : 'Average of 5'}
 						</span>
@@ -137,7 +137,7 @@ export default function PbCard(props: Props) {
 								frontFace
 								compact
 								scramble={scramble}
-								cubeType={cubeType.id}
+								eventType={eventType.id}
 							/>
 						</div>
 					</div>

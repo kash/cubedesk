@@ -75,11 +75,14 @@ export function parseTrainerCsv(text: string) {
 	} catch (error) {
 		return {algorithms, errors: [{row: 1, message: (error as Error).message}], warnings};
 	}
-	const headers = (records.shift() ?? []).map((header) => header.trim());
+	// cube_type is the column's name in exports from before it was renamed to event_type
+	const headers = (records.shift() ?? [])
+		.map((header) => header.trim())
+		.map((header) => (header === 'cube_type' ? 'event_type' : header));
 	if (!records.length) errors.push({row: 1, message: 'CSV must contain at least one algorithm'});
 	if (new Set(headers).size !== headers.length)
 		errors.push({row: 1, message: 'Duplicate column headers'});
-	for (const required of ['id', 'name', 'cube_type', 'algo_type']) {
+	for (const required of ['id', 'name', 'event_type', 'algo_type']) {
 		if (!headers.includes(required))
 			errors.push({row: 1, message: `Missing column: ${required}`});
 	}

@@ -32,7 +32,7 @@ export const adminUserSelect = {
 } satisfies Prisma.UserAccountSelect;
 
 export interface UserAccountSolvesSummary {
-	cube_type: string | null;
+	event_type: string | null;
 	count: number;
 	average: number | null;
 	min_time: number | null;

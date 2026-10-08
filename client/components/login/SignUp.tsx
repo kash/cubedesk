@@ -100,6 +100,17 @@ export default function SignUp() {
 					</Button>
 					<ButtonError text={error} />
 				</div>
+				<p className="text-text/60 m-0 text-[0.8rem] leading-5">
+					By signing up, you agree to our{' '}
+					<a className="underline" href="/terms" target="_blank" rel="noopener">
+						Terms of Service
+					</a>{' '}
+					and{' '}
+					<a className="underline" href="/privacy" target="_blank" rel="noopener">
+						Privacy Policy
+					</a>
+					.
+				</p>
 			</form>
 			<p className="text-text mt-[25px] mb-0 text-[0.9rem]">
 				Already have an account?{' '}

@@ -1,7 +1,7 @@
 import {getPrisma} from '@/server/database';
 import {calculateNewElo, EloUpdatePayload} from '@/server/match/pair/elo/calc_elo';
 import {createEloLog} from '@/server/models/elo_log';
-import {getUserEloRatingByCubeType, incrementGameCountForCubeType, updateEloRating} from '@/server/models/elo_rating';
+import {getUserEloRatingByEventType, incrementGameCountForEventType, updateEloRating} from '@/server/models/elo_rating';
 import {updateMatch} from '@/server/models/match';
 import {FullMatch, Match} from '@/types/match';
 
@@ -21,36 +21,36 @@ export async function updateMatchWithWinner(match: FullMatch, winnerId: string) 
 
 	if (match.match_session.rated && parts.length === 2) {
 		const loserId = parts[0].user_id === winnerId ? parts[1].user_id : parts[0].user_id;
-		const cubeType = match.match_session.game_options.cube_type;
+		const eventType = match.match_session.game_options.event_type;
 
-		const [winner, loser] = await prepPlayersEloUpdate(winnerId, loserId, cubeType);
-		const updatePayload = calculateNewElo(cubeType, winner, loser);
+		const [winner, loser] = await prepPlayersEloUpdate(winnerId, loserId, eventType);
+		const updatePayload = calculateNewElo(eventType, winner, loser);
 		await updatePlayerRatings(match, updatePayload);
 	}
 
 	return match;
 }
 
-async function prepPlayersEloUpdate(winnerId: string, loserId: string, cubeType: string) {
+async function prepPlayersEloUpdate(winnerId: string, loserId: string, eventType: string) {
 	await Promise.all([
-		incrementGameCountForCubeType(winnerId, cubeType),
-		incrementGameCountForCubeType(loserId, cubeType),
+		incrementGameCountForEventType(winnerId, eventType),
+		incrementGameCountForEventType(loserId, eventType),
 	]);
 
-	return Promise.all([getUserEloRatingByCubeType(winnerId, cubeType), getUserEloRatingByCubeType(loserId, cubeType)]);
+	return Promise.all([getUserEloRatingByEventType(winnerId, eventType), getUserEloRatingByEventType(loserId, eventType)]);
 }
 
 async function updatePlayerRatings(match: Match, updatePayload: EloUpdatePayload) {
-	const {winner, loser, cubeType, winnerNewElo, winnerEloChange, loserEloChange, loserNewElo} = updatePayload;
+	const {winner, loser, eventType, winnerNewElo, winnerEloChange, loserEloChange, loserNewElo} = updatePayload;
 
 	return getPrisma().$transaction([
-		updateEloRating(winner.userId, cubeType, winnerNewElo),
-		updateEloRating(loser.userId, cubeType, loserNewElo),
+		updateEloRating(winner.userId, eventType, winnerNewElo),
+		updateEloRating(loser.userId, eventType, loserNewElo),
 		createEloLog({
 			player_id: winner.userId,
 			opponent_id: loser.userId,
 			elo_change: winnerEloChange,
-			cube_type: cubeType,
+			event_type: eventType,
 			match_id: match.id,
 			player_new_game_count: winner.games,
 			player_new_elo_rating: winnerNewElo,
@@ -61,7 +61,7 @@ async function updatePlayerRatings(match: Match, updatePayload: EloUpdatePayload
 			player_id: loser.userId,
 			opponent_id: winner.userId,
 			elo_change: loserEloChange,
-			cube_type: cubeType,
+			event_type: eventType,
 			match_id: match.id,
 			player_new_game_count: loser.games,
 			player_new_elo_rating: loserNewElo,

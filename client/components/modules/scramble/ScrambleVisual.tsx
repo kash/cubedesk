@@ -1,6 +1,6 @@
 import Empty from '@/components/common/Empty';
 import Face from '@/components/modules/scramble/Face';
-import {getCubeTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
+import {getEventTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
 import {layoutScramble} from '@/util/vendor/scramble_layout';
 import React, {useMemo} from 'react';
 
@@ -15,7 +15,7 @@ export const COLOR_MAP = {
 };
 
 interface Props {
-	cubeType?: string;
+	eventType?: string;
 	scramble?: string;
 	width?: string;
 	frontFace?: boolean;
@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function ScrambleVisual(props: Props) {
-	const {cubeType, scramble, frontFace, compact} = props;
+	const {eventType, scramble, frontFace, compact} = props;
 
 	const width = props.width || '100%';
 
@@ -31,11 +31,11 @@ export default function ScrambleVisual(props: Props) {
 		return ['222', '333', '333bl', '444', '555', '666', '777'].indexOf(scrambleType) > -1;
 	}
 
-	const ct = getCubeTypeInfoById(cubeType ?? '');
+	const ct = getEventTypeInfoById(eventType ?? '');
 	const cubeScramble = getScrambleTypeById(ct?.scramble ?? '');
 
 	const visual = useMemo(() => {
-		if (!cubeType || !scramble || !cubeScramble) {
+		if (!eventType || !scramble || !cubeScramble) {
 			return;
 		}
 
@@ -44,7 +44,7 @@ export default function ScrambleVisual(props: Props) {
 		}
 
 		return layoutScramble(scramble, cubeScramble.size);
-	}, [cubeType, scramble]);
+	}, [eventType, scramble]);
 
 	const cubeSize = cubeScramble?.size;
 

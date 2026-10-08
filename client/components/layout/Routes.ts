@@ -47,6 +47,7 @@ interface PageOptions {
 	admin: boolean;
 	hideTopNav: boolean;
 	noPadding: boolean;
+	noIndex: boolean;
 	prefetchData?: ((store: Store<any>, req: Request) => Promise<any>)[];
 }
 
@@ -84,8 +85,14 @@ function route(
 		admin,
 		hideTopNav,
 		noPadding,
+		noIndex: false,
 		prefetchData,
 	};
+}
+
+// Personal or utility pages that shouldn't show up in search results
+function noIndex(page: PageContext): PageContext {
+	return {...page, noIndex: true};
 }
 
 function routeRedirect(path: string, redirect: string): RedirectPath {
@@ -104,31 +111,25 @@ export const routes: (PageContext | RedirectPath)[] = [
 	),
 	route('/signup', null, App, LoginWrapper, false, true, false, true),
 	route('/login', null, App, LoginWrapper, false, true, false, true),
-	route('/forgot', null, App, LoginWrapper, false, true, false, true),
-	route('/sessions', null, App, Sessions, false),
-	route('/solves', null, App, Solves, false),
-	route('/stats', null, App, Stats, false),
-	route('/force-log-out', null, App, ForceSignOut, false, true, false, true),
+	noIndex(route('/forgot', null, App, LoginWrapper, false, true, false, true)),
+	noIndex(route('/sessions', null, App, Sessions, false)),
+	noIndex(route('/solves', null, App, Solves, false)),
+	noIndex(route('/stats', null, App, Stats, false)),
+	noIndex(route('/force-log-out', null, App, ForceSignOut, false, true, false, true)),
 
 	// Settings
-	route('/settings/timer', App, Settings, TimerSettings, false),
-	route('/settings/appearance', App, Settings, Appearance, false),
-	route('/settings/data', App, Settings, DataSettings, false),
-
-	// Landing Pages
-	// route('/how-to-solve', null, Landing, HTSLanding, false, false, false, false, true),
-	// route('/how-to-solve/:stepId', null, Landing, HTSLearn, false, false, false, false, true),
-	route('/terms', null, Landing, Terms, false, true),
-	route('/privacy', null, Landing, Privacy, false, true),
+	noIndex(route('/settings/timer', App, Settings, TimerSettings, false)),
+	noIndex(route('/settings/appearance', App, Settings, Appearance, false)),
+	noIndex(route('/settings/data', App, Settings, DataSettings, false)),
 
 	// Public
 	route('/solve/:shareCode', null, App, SolvePage, false, false, false, false, false, [prefetchSolveData]),
 	route('/user/:username', null, App, Profile, false, false, false, false, false, [prefetchProfileData]),
-	route('/unsub-emails', null, App, UnsubEmails, false, true, false, true, false),
+	noIndex(route('/unsub-emails', null, App, UnsubEmails, false, true, false, true, false)),
 
 	// Trainers
 	route('/trainer/public-trainers', null, App, PublicCustomTrainers, false),
-	route('/trainer/:cubeType/:algoType', null, App, Trainer, false),
+	route('/trainer/:eventType/:algoType', null, App, Trainer, false),
 
 	// Account
 	route('/account/personal-info', App, Account, PersonalInfo),
@@ -161,7 +162,7 @@ export const routes: (PageContext | RedirectPath)[] = [
 
 	// Redirects
 	routeRedirect('/trainer', '/trainer/333/OLL'),
-	routeRedirect('/trainer/:cubeType/:algoType', '/trainer/333/OLL'),
+	routeRedirect('/trainer/:eventType/:algoType', '/trainer/333/OLL'),
 	routeRedirect('/trainer-3_oll', '/trainer/333/OLL'),
 	routeRedirect('/m/elimination/:linkCode', '/play/elimination/:linkCode'),
 	routeRedirect('/m/head-to-head/:linkCode', '/play/head-to-head/:linkCode'),

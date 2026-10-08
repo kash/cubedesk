@@ -37,7 +37,7 @@ export type CustomTrainerSumAggregateOutputType = {
 export type CustomTrainerMinAggregateOutputType = {
   id: string | null
   colors: string | null
-  cube_type: string | null
+  event_type: string | null
   key: string | null
   user_id: string | null
   created_at: Date | null
@@ -58,7 +58,7 @@ export type CustomTrainerMinAggregateOutputType = {
 export type CustomTrainerMaxAggregateOutputType = {
   id: string | null
   colors: string | null
-  cube_type: string | null
+  event_type: string | null
   key: string | null
   user_id: string | null
   created_at: Date | null
@@ -79,7 +79,7 @@ export type CustomTrainerMaxAggregateOutputType = {
 export type CustomTrainerCountAggregateOutputType = {
   id: number
   colors: number
-  cube_type: number
+  event_type: number
   key: number
   user_id: number
   created_at: number
@@ -110,7 +110,7 @@ export type CustomTrainerSumAggregateInputType = {
 export type CustomTrainerMinAggregateInputType = {
   id?: true
   colors?: true
-  cube_type?: true
+  event_type?: true
   key?: true
   user_id?: true
   created_at?: true
@@ -131,7 +131,7 @@ export type CustomTrainerMinAggregateInputType = {
 export type CustomTrainerMaxAggregateInputType = {
   id?: true
   colors?: true
-  cube_type?: true
+  event_type?: true
   key?: true
   user_id?: true
   created_at?: true
@@ -152,7 +152,7 @@ export type CustomTrainerMaxAggregateInputType = {
 export type CustomTrainerCountAggregateInputType = {
   id?: true
   colors?: true
-  cube_type?: true
+  event_type?: true
   key?: true
   user_id?: true
   created_at?: true
@@ -260,7 +260,7 @@ export type CustomTrainerGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type CustomTrainerGroupByOutputType = {
   id: string
   colors: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at: Date
@@ -304,7 +304,7 @@ export type CustomTrainerWhereInput = {
   NOT?: Prisma.CustomTrainerWhereInput | Prisma.CustomTrainerWhereInput[]
   id?: Prisma.StringFilter<"CustomTrainer"> | string
   colors?: Prisma.StringNullableFilter<"CustomTrainer"> | string | null
-  cube_type?: Prisma.StringFilter<"CustomTrainer"> | string
+  event_type?: Prisma.StringFilter<"CustomTrainer"> | string
   key?: Prisma.StringFilter<"CustomTrainer"> | string
   user_id?: Prisma.StringFilter<"CustomTrainer"> | string
   created_at?: Prisma.DateTimeFilter<"CustomTrainer"> | Date | string
@@ -331,7 +331,7 @@ export type CustomTrainerWhereInput = {
 export type CustomTrainerOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   colors?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   key?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -362,7 +362,7 @@ export type CustomTrainerWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CustomTrainerWhereInput[]
   NOT?: Prisma.CustomTrainerWhereInput | Prisma.CustomTrainerWhereInput[]
   colors?: Prisma.StringNullableFilter<"CustomTrainer"> | string | null
-  cube_type?: Prisma.StringFilter<"CustomTrainer"> | string
+  event_type?: Prisma.StringFilter<"CustomTrainer"> | string
   key?: Prisma.StringFilter<"CustomTrainer"> | string
   user_id?: Prisma.StringFilter<"CustomTrainer"> | string
   created_at?: Prisma.DateTimeFilter<"CustomTrainer"> | Date | string
@@ -389,7 +389,7 @@ export type CustomTrainerWhereUniqueInput = Prisma.AtLeast<{
 export type CustomTrainerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   colors?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   key?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -418,7 +418,7 @@ export type CustomTrainerScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CustomTrainerScalarWhereWithAggregatesInput | Prisma.CustomTrainerScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CustomTrainer"> | string
   colors?: Prisma.StringNullableWithAggregatesFilter<"CustomTrainer"> | string | null
-  cube_type?: Prisma.StringWithAggregatesFilter<"CustomTrainer"> | string
+  event_type?: Prisma.StringWithAggregatesFilter<"CustomTrainer"> | string
   key?: Prisma.StringWithAggregatesFilter<"CustomTrainer"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"CustomTrainer"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"CustomTrainer"> | Date | string
@@ -439,7 +439,7 @@ export type CustomTrainerScalarWhereWithAggregatesInput = {
 export type CustomTrainerCreateInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -464,7 +464,7 @@ export type CustomTrainerCreateInput = {
 export type CustomTrainerUncheckedCreateInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -489,7 +489,7 @@ export type CustomTrainerUncheckedCreateInput = {
 export type CustomTrainerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -514,7 +514,7 @@ export type CustomTrainerUpdateInput = {
 export type CustomTrainerUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -539,7 +539,7 @@ export type CustomTrainerUncheckedUpdateInput = {
 export type CustomTrainerCreateManyInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -560,7 +560,7 @@ export type CustomTrainerCreateManyInput = {
 export type CustomTrainerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -579,7 +579,7 @@ export type CustomTrainerUpdateManyMutationInput = {
 export type CustomTrainerUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -621,7 +621,7 @@ export type CustomTrainerOrderByRelevanceInput = {
 export type CustomTrainerCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   colors?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   key?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -646,7 +646,7 @@ export type CustomTrainerAvgOrderByAggregateInput = {
 export type CustomTrainerMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   colors?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   key?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -667,7 +667,7 @@ export type CustomTrainerMaxOrderByAggregateInput = {
 export type CustomTrainerMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   colors?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   key?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -841,7 +841,7 @@ export type CustomTrainerUpdateOneRequiredWithoutDownloadsNestedInput = {
 export type CustomTrainerCreateWithoutUserInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -865,7 +865,7 @@ export type CustomTrainerCreateWithoutUserInput = {
 export type CustomTrainerUncheckedCreateWithoutUserInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -918,7 +918,7 @@ export type CustomTrainerScalarWhereInput = {
   NOT?: Prisma.CustomTrainerScalarWhereInput | Prisma.CustomTrainerScalarWhereInput[]
   id?: Prisma.StringFilter<"CustomTrainer"> | string
   colors?: Prisma.StringNullableFilter<"CustomTrainer"> | string | null
-  cube_type?: Prisma.StringFilter<"CustomTrainer"> | string
+  event_type?: Prisma.StringFilter<"CustomTrainer"> | string
   key?: Prisma.StringFilter<"CustomTrainer"> | string
   user_id?: Prisma.StringFilter<"CustomTrainer"> | string
   created_at?: Prisma.DateTimeFilter<"CustomTrainer"> | Date | string
@@ -939,7 +939,7 @@ export type CustomTrainerScalarWhereInput = {
 export type CustomTrainerCreateWithoutCopiesInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -963,7 +963,7 @@ export type CustomTrainerCreateWithoutCopiesInput = {
 export type CustomTrainerUncheckedCreateWithoutCopiesInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -992,7 +992,7 @@ export type CustomTrainerCreateOrConnectWithoutCopiesInput = {
 export type CustomTrainerCreateWithoutCopy_ofInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -1016,7 +1016,7 @@ export type CustomTrainerCreateWithoutCopy_ofInput = {
 export type CustomTrainerUncheckedCreateWithoutCopy_ofInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -1061,7 +1061,7 @@ export type CustomTrainerUpdateToOneWithWhereWithoutCopiesInput = {
 export type CustomTrainerUpdateWithoutCopiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1085,7 +1085,7 @@ export type CustomTrainerUpdateWithoutCopiesInput = {
 export type CustomTrainerUncheckedUpdateWithoutCopiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1125,7 +1125,7 @@ export type CustomTrainerUpdateManyWithWhereWithoutCopy_ofInput = {
 export type CustomTrainerCreateWithoutLikesInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -1149,7 +1149,7 @@ export type CustomTrainerCreateWithoutLikesInput = {
 export type CustomTrainerUncheckedCreateWithoutLikesInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -1189,7 +1189,7 @@ export type CustomTrainerUpdateToOneWithWhereWithoutLikesInput = {
 export type CustomTrainerUpdateWithoutLikesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1213,7 +1213,7 @@ export type CustomTrainerUpdateWithoutLikesInput = {
 export type CustomTrainerUncheckedUpdateWithoutLikesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1237,7 +1237,7 @@ export type CustomTrainerUncheckedUpdateWithoutLikesInput = {
 export type CustomTrainerCreateWithoutDownload_ofInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -1261,7 +1261,7 @@ export type CustomTrainerCreateWithoutDownload_ofInput = {
 export type CustomTrainerUncheckedCreateWithoutDownload_ofInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -1290,7 +1290,7 @@ export type CustomTrainerCreateOrConnectWithoutDownload_ofInput = {
 export type CustomTrainerCreateWithoutDownloadsInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -1314,7 +1314,7 @@ export type CustomTrainerCreateWithoutDownloadsInput = {
 export type CustomTrainerUncheckedCreateWithoutDownloadsInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -1354,7 +1354,7 @@ export type CustomTrainerUpdateToOneWithWhereWithoutDownload_ofInput = {
 export type CustomTrainerUpdateWithoutDownload_ofInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1378,7 +1378,7 @@ export type CustomTrainerUpdateWithoutDownload_ofInput = {
 export type CustomTrainerUncheckedUpdateWithoutDownload_ofInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1413,7 +1413,7 @@ export type CustomTrainerUpdateToOneWithWhereWithoutDownloadsInput = {
 export type CustomTrainerUpdateWithoutDownloadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1437,7 +1437,7 @@ export type CustomTrainerUpdateWithoutDownloadsInput = {
 export type CustomTrainerUncheckedUpdateWithoutDownloadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1461,7 +1461,7 @@ export type CustomTrainerUncheckedUpdateWithoutDownloadsInput = {
 export type CustomTrainerCreateManyUserInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   created_at?: Date | string
   name: string
@@ -1481,7 +1481,7 @@ export type CustomTrainerCreateManyUserInput = {
 export type CustomTrainerUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1505,7 +1505,7 @@ export type CustomTrainerUpdateWithoutUserInput = {
 export type CustomTrainerUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1529,7 +1529,7 @@ export type CustomTrainerUncheckedUpdateWithoutUserInput = {
 export type CustomTrainerUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1549,7 +1549,7 @@ export type CustomTrainerUncheckedUpdateManyWithoutUserInput = {
 export type CustomTrainerCreateManyCopy_ofInput = {
   id?: string
   colors?: string | null
-  cube_type: string
+  event_type: string
   key: string
   user_id: string
   created_at?: Date | string
@@ -1569,7 +1569,7 @@ export type CustomTrainerCreateManyCopy_ofInput = {
 export type CustomTrainerUpdateWithoutCopy_ofInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1593,7 +1593,7 @@ export type CustomTrainerUpdateWithoutCopy_ofInput = {
 export type CustomTrainerUncheckedUpdateWithoutCopy_ofInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1617,7 +1617,7 @@ export type CustomTrainerUncheckedUpdateWithoutCopy_ofInput = {
 export type CustomTrainerUncheckedUpdateManyWithoutCopy_ofInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cube_type?: Prisma.StringFieldUpdateOperationsInput | string
+  event_type?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1695,7 +1695,7 @@ export type CustomTrainerCountOutputTypeCountLikesArgs<ExtArgs extends runtime.T
 export type CustomTrainerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   colors?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   key?: boolean
   user_id?: boolean
   created_at?: boolean
@@ -1723,7 +1723,7 @@ export type CustomTrainerSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type CustomTrainerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   colors?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   key?: boolean
   user_id?: boolean
   created_at?: boolean
@@ -1746,7 +1746,7 @@ export type CustomTrainerSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type CustomTrainerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   colors?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   key?: boolean
   user_id?: boolean
   created_at?: boolean
@@ -1769,7 +1769,7 @@ export type CustomTrainerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type CustomTrainerSelectScalar = {
   id?: boolean
   colors?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   key?: boolean
   user_id?: boolean
   created_at?: boolean
@@ -1787,7 +1787,7 @@ export type CustomTrainerSelectScalar = {
   algo_type?: boolean
 }
 
-export type CustomTrainerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "colors" | "cube_type" | "key" | "user_id" | "created_at" | "name" | "like_count" | "private" | "copy_of_id" | "description" | "downloaded" | "group_name" | "scrambles" | "solution" | "alt_solutions" | "three_d" | "algo_type", ExtArgs["result"]["customTrainer"]>
+export type CustomTrainerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "colors" | "event_type" | "key" | "user_id" | "created_at" | "name" | "like_count" | "private" | "copy_of_id" | "description" | "downloaded" | "group_name" | "scrambles" | "solution" | "alt_solutions" | "three_d" | "algo_type", ExtArgs["result"]["customTrainer"]>
 export type CustomTrainerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   copy_of?: boolean | Prisma.CustomTrainer$copy_ofArgs<ExtArgs>
   copies?: boolean | Prisma.CustomTrainer$copiesArgs<ExtArgs>
@@ -1819,7 +1819,7 @@ export type $CustomTrainerPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     colors: string | null
-    cube_type: string
+    event_type: string
     key: string
     user_id: string
     created_at: Date
@@ -2266,7 +2266,7 @@ export interface Prisma__CustomTrainerClient<T, Null = never, ExtArgs extends ru
 export interface CustomTrainerFieldRefs {
   readonly id: Prisma.FieldRef<"CustomTrainer", 'String'>
   readonly colors: Prisma.FieldRef<"CustomTrainer", 'String'>
-  readonly cube_type: Prisma.FieldRef<"CustomTrainer", 'String'>
+  readonly event_type: Prisma.FieldRef<"CustomTrainer", 'String'>
   readonly key: Prisma.FieldRef<"CustomTrainer", 'String'>
   readonly user_id: Prisma.FieldRef<"CustomTrainer", 'String'>
   readonly created_at: Prisma.FieldRef<"CustomTrainer", 'DateTime'>

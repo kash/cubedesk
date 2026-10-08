@@ -19,7 +19,7 @@ import {useTimerContext} from '@/components/timer/Timer';
 import {useDialogBlocked} from '@/components/ui/dialog';
 import {isPopupOpen} from '@/components/ui/popup';
 import {getSettings} from '@/db/settings/query';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useDocumentListener, useWindowListener} from '@/util/hooks/useListener';
 import {useSettings} from '@/util/hooks/useSettings';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
@@ -35,7 +35,7 @@ export default function KeyWatcher(props: Props) {
 	const capturedSpace = useRef(false);
 	const context = useTimerContext();
 	const {
-		cubeType,
+		eventType,
 		disabled,
 		timerDisabled,
 		editScramble,
@@ -134,9 +134,9 @@ export default function KeyWatcher(props: Props) {
 			return;
 		}
 
-		const validCubeType = getCubeTypeInfoById(cubeType ?? '');
+		const validEventType = getEventTypeInfoById(eventType ?? '');
 
-		if (!validCubeType) {
+		if (!validEventType) {
 			return;
 		}
 

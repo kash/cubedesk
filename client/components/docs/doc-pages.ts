@@ -2,7 +2,9 @@ import About from '@/components/docs/pages/About';
 import BluetoothTroubleshooting from '@/components/docs/pages/BluetoothTroubleshooting';
 import ConnectWcaAccount from '@/components/docs/pages/ConnectWcaAccount';
 import MigrateFromCsTimer from '@/components/docs/pages/MigrateFromCsTimer';
+import Privacy from '@/components/docs/pages/Privacy';
 import SupportedDevices from '@/components/docs/pages/SupportedDevices';
+import Terms from '@/components/docs/pages/Terms';
 import {ComponentType} from 'react';
 
 export interface DocPage {
@@ -89,7 +91,42 @@ export const DOC_SECTIONS: DocSection[] = [
 	},
 ];
 
-export const DOC_PAGES: DocPage[] = DOC_SECTIONS.flatMap((section) => section.pages);
+// Linked from the docs footer instead of the sidebar
+export const LEGAL_PAGES: DocPage[] = [
+	{
+		path: '/terms',
+		navTitle: 'Terms',
+		title: 'Terms of Service | CubeDesk',
+		description:
+			"The rules for using CubeDesk, the free online Rubik's Cube timer, including who can sign up, community rules, and your content.",
+		component: Terms,
+		structuredData: {
+			'@context': 'https://schema.org',
+			'@type': 'WebPage',
+			name: 'CubeDesk Terms of Service',
+			url: `${process.env.BASE_URI}/terms`,
+		},
+	},
+	{
+		path: '/privacy',
+		navTitle: 'Privacy',
+		title: 'Privacy Policy | CubeDesk',
+		description:
+			'What information CubeDesk collects, how it is used and shared, what is public, and how to export or delete your data.',
+		component: Privacy,
+		structuredData: {
+			'@context': 'https://schema.org',
+			'@type': 'WebPage',
+			name: 'CubeDesk Privacy Policy',
+			url: `${process.env.BASE_URI}/privacy`,
+		},
+	},
+];
+
+export const DOC_PAGES: DocPage[] = [
+	...DOC_SECTIONS.flatMap((section) => section.pages),
+	...LEGAL_PAGES,
+];
 
 export function getDocPage(path: string): DocPage {
 	return DOC_PAGES.find((page) => page.path === path) ?? DOC_PAGES[0];

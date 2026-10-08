@@ -540,19 +540,19 @@ export function getSolveSteps(turns: RecordedSmartTurn[]) {
 }
 
 // Step detection is CFOP, so other smart cube puzzles only get their full solution
-function hasSolveSteps(cubeType: string | null | undefined) {
-	return cubeType === '333';
+function hasSolveSteps(eventType: string | null | undefined) {
+	return eventType === '333';
 }
 
 // Steps are derived on read rather than stored, since they're fully determined by the recorded turns
 export function getSolveMethodSteps(solve: {
 	id: string;
 	created_at: Date;
-	cube_type: string | null;
+	event_type: string | null;
 	is_smart_cube: boolean;
 	smart_turns: string | null;
 }): SolveMethodStep[] {
-	if (!solve.is_smart_cube || !solve.smart_turns || !hasSolveSteps(solve.cube_type)) return [];
+	if (!solve.is_smart_cube || !solve.smart_turns || !hasSolveSteps(solve.event_type)) return [];
 
 	let steps: Record<string, SolveStepData | null>;
 	try {
@@ -590,13 +590,13 @@ export function getSolveMethodSteps(solve: {
 // Re-encodes turns compactly (older clients still send JSON) and flags the solve as a regular one if its turns or
 // 3x3 steps can't be reconstructed, so solve pages never show a broken smart solve
 export function prepareSmartSolve<
-	T extends {cube_type?: string | null; is_smart_cube?: boolean | null; smart_turns?: string | null},
+	T extends {event_type?: string | null; is_smart_cube?: boolean | null; smart_turns?: string | null},
 >(solve: T): T {
 	if (!solve.is_smart_cube) return solve;
 
 	try {
 		const turns = decodeSmartTurns(solve.smart_turns ?? '');
-		if (hasSolveSteps(solve.cube_type)) getSolveSteps(turns);
+		if (hasSolveSteps(solve.event_type)) getSolveSteps(turns);
 		return {...solve, smart_turns: encodeSmartTurns(turns)};
 	} catch (e) {
 		logger.warn('Failed to reconstruct smart cube solve steps', {error: e});

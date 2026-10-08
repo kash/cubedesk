@@ -15,7 +15,7 @@ function testCreateMatchLobbyRow(options?: Partial<MatchLobby>) {
 	const ml: MatchLobby = {
 		id: generateId(),
 		user_id: generateId(),
-		cube_type: '333',
+		event_type: '333',
 		client_id: generateId(),
 		player_count: 2,
 		elo: 1000,

@@ -1,7 +1,7 @@
 import SelectField from '@/components/common/inputs/SelectField';
 import SettingRow from '@/components/settings/common/SettingRow';
 import SettingSection from '@/components/settings/common/SettingSection';
-import CubeTypes from '@/components/settings/cube-types/CubeTypes';
+import EventTypes from '@/components/settings/event-types/EventTypes';
 import MicAccess from '@/components/settings/mic-access/MicAccess';
 import StackMatPicker from '@/components/settings/stackmat-picker/StackMatPicker';
 import {Button} from '@/components/ui/button';
@@ -19,7 +19,7 @@ export const TIMER_INPUT_TYPE_NAMES = {
 };
 
 export default function TimerSettings() {
-	const [cubeTypesDialog, setCubeTypesDialog] = React.useState<{
+	const [eventTypesDialog, setEventTypesDialog] = React.useState<{
 		props: Record<string, never>;
 		title: React.ReactNode;
 		description: React.ReactNode;
@@ -37,10 +37,10 @@ export default function TimerSettings() {
 		setSetting(name, value);
 	}
 
-	function toggleCubeTypes() {
-		setCubeTypesDialog({
+	function toggleEventTypes() {
+		setEventTypesDialog({
 			props: {},
-			title: 'Manage Cube Types',
+			title: 'Manage Event Types',
 			description:
 				"You can use custom scramble types for special events that aren't listed by default. For example 8x8 or Examinx.",
 		});
@@ -117,11 +117,11 @@ export default function TimerSettings() {
 				/>
 				<SettingRow
 					loggedInOnly
-					title="Cube Types"
-					description="Add custom cube types with or without scrambles"
+					title="Event Types"
+					description="Add custom event types with or without scrambles"
 				>
-					<Button variant="secondary" onClick={toggleCubeTypes}>
-						{'Manage Cube Types'}
+					<Button variant="secondary" onClick={toggleEventTypes}>
+						{'Manage Event Types'}
 					</Button>
 				</SettingRow>
 				<SettingRow
@@ -201,20 +201,20 @@ export default function TimerSettings() {
 				/>
 			</>
 			<Dialog
-				open={cubeTypesDialog !== null}
+				open={eventTypesDialog !== null}
 				onOpenChange={(open) => {
 					if (!open) {
-						setCubeTypesDialog(null);
+						setEventTypesDialog(null);
 					}
 				}}
 			>
-				{cubeTypesDialog && (
+				{eventTypesDialog && (
 					<DialogContent>
 						<DialogHeader
-							title={cubeTypesDialog.title}
-							description={cubeTypesDialog.description}
+							title={eventTypesDialog.title}
+							description={eventTypesDialog.description}
 						/>
-						<CubeTypes {...cubeTypesDialog.props} />
+						<EventTypes {...eventTypesDialog.props} />
 					</DialogContent>
 				)}
 			</Dialog>

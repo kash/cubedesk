@@ -5,7 +5,7 @@ export const TopSolveSchema = z.object({
   user_id: z.string(),
   time: z.number(),
   solve_id: z.string(),
-  cube_type: z.string(),
+  event_type: z.string(),
   created_at: z.date(),
 });
 

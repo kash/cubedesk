@@ -7,8 +7,8 @@ import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartS
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {MOBILE_SCRAMBLE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
-import {setCubeType, setSetting} from '@/db/settings/update';
-import {getCubeTypeName} from '@/util/cubes/util';
+import {setEventType, setSetting} from '@/db/settings/update';
+import {getEventTypeName} from '@/util/cubes/util';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import classNames from 'classnames';
@@ -23,7 +23,7 @@ export default function TimerScramble() {
 	const savedSessionId = useSettings('session_id');
 	const sessionId = context.demoMode ? 'demo' : savedSessionId;
 	const initialScramble = useRef(context.demoMode ? context.scramble : '');
-	const cubeType = context.cubeType;
+	const eventType = context.eventType;
 	let timerScrambleSize = useSettings('timer_scramble_size');
 
 	const focusMode = context.focusMode;
@@ -44,7 +44,7 @@ export default function TimerScramble() {
 	const lockedScramble = useSettings('locked_scramble');
 
 	useEffect(() => {
-		const keepInitialScramble = !!initialScramble.current && cubeType === '333';
+		const keepInitialScramble = !!initialScramble.current && eventType === '333';
 		initialScramble.current = '';
 		if (lockedScramble && !timeStartedAt) {
 			setTimerParam('scramble', lockedScramble);
@@ -52,7 +52,7 @@ export default function TimerScramble() {
 		} else if (!keepInitialScramble) {
 			resetScramble(context);
 		}
-	}, [cubeType, sessionId]);
+	}, [eventType, sessionId]);
 
 	useEffect(() => {
 		// Fast Refresh can reset the parent timer after the initialization effect.
@@ -127,14 +127,14 @@ export default function TimerScramble() {
 
 	// Is smart cube
 	if (isSmart && !timeStartedAt && smartCubePuzzle && smartCubeMismatched(context)) {
-		const puzzleName = getCubeTypeName(smartCubePuzzle);
+		const puzzleName = getEventTypeName(smartCubePuzzle);
 		scrambleBody = (
 			<span className="text-text/60 [font-family:inherit] [line-height:inherit]">
 				Your smart cube is a {puzzleName}.{' '}
 				<Button
 					variant="link"
 					className="h-auto p-0 [font-size:inherit]"
-					onClick={() => setCubeType(smartCubePuzzle)}
+					onClick={() => setEventType(smartCubePuzzle)}
 				>
 					Switch to {puzzleName}
 				</Button>

@@ -40,6 +40,8 @@ suite('trainer catalog PostgreSQL integration', () => {
 			.filter((part) => part.trim())) {
 			await db.$executeRawUnsafe(statement);
 		}
+		// The add_event_type migration also touches tables this schema doesn't have, so only its effect here is applied
+		await db.$executeRawUnsafe('ALTER TABLE "trainer_algorithm" RENAME COLUMN "cube_type" TO "event_type"');
 	}, 30000);
 	afterAll(async () => {
 		await db?.$disconnect();
@@ -72,7 +74,7 @@ suite('trainer catalog PostgreSQL integration', () => {
 	}, 120000);
 
 	test('rejects stale previews and merges without removing absent rows', async () => {
-		const upload = 'id,name,cube_type,algo_type\nnew_case,New,333,OLL';
+		const upload = 'id,name,event_type,algo_type\nnew_case,New,333,OLL';
 		const stale = await previewCatalogImport(db, upload);
 		const state = await db.trainerCatalogState.findUniqueOrThrow({where: {id: CATALOG_ID}});
 		const algorithm = await db.trainerAlgorithm.findFirstOrThrow();
@@ -95,7 +97,7 @@ suite('trainer catalog PostgreSQL integration', () => {
 	test('database failure rolls back every row and catalog revision', async () => {
 		const before = await db.trainerCatalogState.findUnique({where: {id: CATALOG_ID}});
 		const upload =
-			'id,name,cube_type,algo_type\nrollback_ok,Okay,333,OLL\nrollback_fail,Fail,333,OLL';
+			'id,name,event_type,algo_type\nrollback_ok,Okay,333,OLL\nrollback_fail,Fail,333,OLL';
 		await db.$executeRawUnsafe(
 			`ALTER TABLE "${schema}".trainer_algorithm ADD CONSTRAINT test_reject CHECK (id <> 'rollback_fail')`,
 		);
@@ -107,7 +109,7 @@ suite('trainer catalog PostgreSQL integration', () => {
 
 	test('invalid uploads cannot change the catalog', async () => {
 		const before = await db.trainerAlgorithm.count();
-		const bad = 'id,name,cube_type,algo_type\nbad,Bad,nope,OLL';
+		const bad = 'id,name,event_type,algo_type\nbad,Bad,nope,OLL';
 		const preview = await previewCatalogImport(db, bad);
 		await expect(importCatalog(db, bad, preview.fingerprint)).rejects.toMatchObject({
 			code: 'BAD_REQUEST',

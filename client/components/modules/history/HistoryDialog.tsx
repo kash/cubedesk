@@ -4,7 +4,7 @@ import History from '@/components/modules/history/History';
 import SolvesText from '@/components/modules/solves-text/SolvesText';
 import {Button} from '@/components/ui/button';
 import {Solve} from '@/types/solve';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
 import {getTimeString} from '@/util/time';
 import {AlignLeft} from 'phosphor-react';
@@ -28,15 +28,15 @@ export default function HistoryDialog(props: Props) {
 		return props.solves.sort((a, b) => (b.started_at ?? 0) - (a.started_at ?? 0));
 	}, [props.solves]);
 
-	const cubeTypes = useMemo(() => {
+	const eventTypes = useMemo(() => {
 		const types = new Set<string>();
 		for (const solve of solves) {
-			types.add(solve.cube_type);
+			types.add(solve.event_type);
 		}
 
 		const output: string[] = [];
 		for (const type of types) {
-			const cubeName = getCubeTypeInfoById(type)?.name ?? type;
+			const cubeName = getEventTypeInfoById(type)?.name ?? type;
 			output.push(cubeName);
 		}
 
@@ -92,7 +92,7 @@ export default function HistoryDialog(props: Props) {
 					{new Date(lastSolve.started_at ?? 0).toLocaleDateString()}
 				</p>
 				<div>
-					{cubeTypes.map((ct) => (
+					{eventTypes.map((ct) => (
 						<Emblem key={ct} text={ct} />
 					))}
 				</div>

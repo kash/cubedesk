@@ -1,4 +1,4 @@
-import {CUBE_TYPES} from '@/util/cubes/cube_types';
+import {EVENT_TYPES} from '@/util/cubes/event_types';
 import {z} from 'zod';
 
 export const MAX_CSV_BYTES = 5 * 1024 * 1024;
@@ -15,7 +15,7 @@ export const trainerAlgorithmSchema = z.object({
 	active: z.boolean().default(true),
 	solution: z.string().max(10000).default(''),
 	scrambles: z.string().max(100000).default(''),
-	cube_type: z.string().refine((value) => Object.hasOwn(CUBE_TYPES, value), 'Unknown cube type'),
+	event_type: z.string().refine((value) => Object.hasOwn(EVENT_TYPES, value), 'Unknown event type'),
 	algo_type: z
 		.string()
 		.trim()

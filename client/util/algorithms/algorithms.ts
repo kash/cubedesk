@@ -21,7 +21,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#3F464F,#3F464F,#3F464F,#000000,#3F464F,#000000,#3F464F,#3F464F,#000000,#3F464F,#000000,#3F464F',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'oll',
 		},
 		'222_oll_1': {
@@ -45,7 +45,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#3F464F,#3F464F,#3F464F,#000000,#3F464F,#000000,#3F464F,#000000,#3F464F,#000000,#3F464F,#3F464F',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'oll',
 		},
 		'222_oll_5': {
@@ -69,7 +69,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#3F464F,#000000,#3F464F,#000000,#3F464F,#3F464F,#3F464F,#3F464F,#3F464F,#000000,#000000,#3F464F',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'oll',
 		},
 		'222_oll_3': {
@@ -93,7 +93,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#000000,#000000,#3F464F,#3F464F,#3F464F,#3F464F,#3F464F,#3F464F,#3F464F,#3F464F,#000000,#000000',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'oll',
 		},
 		'222_oll_6': {
@@ -117,7 +117,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#000000,#3F464F,#3F464F,#3F464F,#000000,#3F464F,#3F464F,#3F464F,#000000,#3F464F,#000000,#3F464F',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'oll',
 		},
 		'222_oll_4': {
@@ -141,7 +141,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#000000,#3F464F,#3F464F,#3F464F,#3F464F,#000000,#3F464F,#000000,#3F464F,#3F464F,#3F464F,#000000',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'oll',
 		},
 		'222_oll_2': {
@@ -165,7 +165,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#3F464F,#3F464F,#000000,#3F464F,#3F464F,#000000,#3F464F,#3F464F,#3F464F,#3F464F,#000000,#000000',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'oll',
 		},
 	},
@@ -191,7 +191,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#246BFD,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_33': {
@@ -215,7 +215,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_32': {
@@ -239,7 +239,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#FF4343,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_23': {
@@ -263,7 +263,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_2': {
@@ -287,7 +287,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#43FF43,#FF8A06,#246BFD,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_24': {
@@ -311,7 +311,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_41': {
@@ -335,7 +335,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#246BFD,#FFFF49,#FFFF49,#246BFD,#FF4343,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_42': {
@@ -359,7 +359,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF4343,#FF8A06,#FFFF49,#246BFD,#FF8A06,#FF4343,#246BFD,#FFFF49,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_39': {
@@ -383,7 +383,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF8A06,#FFFF49,#FF8A06,#43FF43,#FF4343,#FFFF49,#FF4343,#FFFF49,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_20': {
@@ -407,7 +407,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_26': {
@@ -431,7 +431,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#246BFD,#246BFD,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_3': {
@@ -455,7 +455,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF4343,#43FF43,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_14': {
@@ -479,7 +479,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#246BFD,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_10': {
@@ -503,7 +503,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FF4343,#FFFF49,#43FF43,#FFFF49,#246BFD,#FF4343,#246BFD,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_1': {
@@ -527,7 +527,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#246BFD,#FF4343,#246BFD,#FFFF49,#FF4343,#FFFF49,#FF8A06,#43FF43,#43FF43,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_4': {
@@ -551,7 +551,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#FF4343,#FF8A06,#43FF43,#246BFD,#FF8A06,#FFFF49,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_7': {
@@ -575,7 +575,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#43FF43,#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF8A06,#FF4343,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_34': {
@@ -599,7 +599,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343,#FFFF49,#FF4343,#FFFF49,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_36': {
@@ -623,7 +623,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_9': {
@@ -647,7 +647,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FF8A06,#FF4343,#246BFD,#FF8A06,#FFFF49,#FFFF49,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_30': {
@@ -671,7 +671,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_15': {
@@ -695,7 +695,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FF8A06,#FFFF49,#FFFF49,#43FF43,#FF4343,#43FF43,#FFFF49,#246BFD,#FF4343,#246BFD,#FF8A06,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_6': {
@@ -719,7 +719,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF8A06,#246BFD,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_17': {
@@ -743,7 +743,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#246BFD,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FF8A06,#FFFF49,#43FF43,#FF4343,#246BFD,#FF4343,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_12': {
@@ -767,7 +767,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FF8A06,#43FF43',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_25': {
@@ -791,7 +791,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#246BFD,#FFFF49,#FF4343,#FFFF49,#FF8A06,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_11': {
@@ -815,7 +815,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF4343,#43FF43,#FF4343,#43FF43,#FFFF49,#FFFF49,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_27': {
@@ -839,7 +839,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_19': {
@@ -863,7 +863,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF8A06,#FF4343,#FFFF49,#246BFD,#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_18': {
@@ -887,7 +887,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#246BFD,#FF4343,#246BFD,#FF8A06,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_40': {
@@ -911,7 +911,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_28': {
@@ -935,7 +935,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FF4343,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_21': {
@@ -959,7 +959,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_22': {
@@ -983,7 +983,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_13': {
@@ -1007,7 +1007,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#43FF43,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_29': {
@@ -1031,7 +1031,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FF4343,#43FF43',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_31': {
@@ -1055,7 +1055,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#43FF43',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_8': {
@@ -1079,7 +1079,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#246BFD,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#43FF43,#FF4343,#43FF43,#FFFF49,#FFFF49,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_16': {
@@ -1103,7 +1103,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FF4343,#FFFF49,#FFFF49,#246BFD,#FF4343,#43FF43,#FFFF49,#246BFD,#FF8A06,#43FF43,#FF8A06,#FFFF49',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_37': {
@@ -1127,7 +1127,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF4343,#43FF43,#FFFF49,#FF8A06,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#246BFD',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_38': {
@@ -1151,7 +1151,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#43FF43,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 		'222_cll_35': {
@@ -1175,7 +1175,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#246BFD,#FF4343,#FFFF49,#FF4343,#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06',
-			cubeType: '222',
+			eventType: '222',
 			algoType: 'cll',
 		},
 	},
@@ -2800,7 +2800,7 @@ export default {
 			name: 'U-Perm (b)',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_15': {
@@ -2825,7 +2825,7 @@ export default {
 			name: 'J-Perm (a)',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FF4343,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_5': {
@@ -2850,7 +2850,7 @@ export default {
 			name: 'A-Perm (a)',
 			favorite: false,
 			colors: '#FF4343,#43FF43,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_7': {
@@ -2875,7 +2875,7 @@ export default {
 			name: 'E-Perm',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_6': {
@@ -2900,7 +2900,7 @@ export default {
 			name: 'A-Perm (b)',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_13': {
@@ -2925,7 +2925,7 @@ export default {
 			name: 'R-Perm (a)',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_9': {
@@ -2950,7 +2950,7 @@ export default {
 			name: 'G-Perm (a)',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_11': {
@@ -2975,7 +2975,7 @@ export default {
 			name: 'G-Perm (c)',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_10': {
@@ -3000,7 +3000,7 @@ export default {
 			name: 'G-Perm (b)',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_1': {
@@ -3025,7 +3025,7 @@ export default {
 			name: 'U-Perm (a)',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_4': {
@@ -3050,7 +3050,7 @@ export default {
 			name: 'Z-Perm',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_3': {
@@ -3075,7 +3075,7 @@ export default {
 			name: 'H-Perm',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_20': {
@@ -3100,7 +3100,7 @@ export default {
 			name: 'V-Perm',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF4343,#246BFD,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_8': {
@@ -3125,7 +3125,7 @@ export default {
 			name: 'F-Perm',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF4343,#246BFD,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#43FF43,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_12': {
@@ -3150,7 +3150,7 @@ export default {
 			name: 'G-Perm (d)',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_17': {
@@ -3175,7 +3175,7 @@ export default {
 			name: 'N-Perm (a)',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FF8A06,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_19': {
@@ -3200,7 +3200,7 @@ export default {
 			name: 'T-Perm',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_14': {
@@ -3225,7 +3225,7 @@ export default {
 			name: 'R-Perm (b)',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#246BFD,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_16': {
@@ -3250,7 +3250,7 @@ export default {
 			name: 'J-Perm (b)',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FF8A06,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_18': {
@@ -3275,7 +3275,7 @@ export default {
 			name: 'N-Perm (b)',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FF4343,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 		'333_pll_21': {
@@ -3300,7 +3300,7 @@ export default {
 			name: 'Y-Perm',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'pll',
 		},
 	},
@@ -3327,7 +3327,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#246BFD,#FF4343,#5D6671,#FF4343,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_35': {
@@ -3351,7 +3351,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#246BFD,#FFFF49,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FF4343,#5D6671,#246BFD,#FFFF49,#FFFF49,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_14': {
@@ -3375,7 +3375,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#43FF43,#5D6671,#246BFD,#FFFF49,#FF4343,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_8': {
@@ -3399,7 +3399,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#246BFD,#246BFD,#FF4343,#5D6671,#FFFF49,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FF4343,#5D6671,#FFFF49,#FF8A06,#FFFF49,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_26': {
@@ -3423,7 +3423,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#43FF43,#FF8A06,#246BFD,#5D6671,#FFFF49,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#246BFD,#FFFF49,#FF8A06,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_10': {
@@ -3447,7 +3447,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF4343,#246BFD,#FFFF49,#5D6671,#FFFF49,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF8A06,#5D6671,#FF4343,#FFFF49,#43FF43,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_18': {
@@ -3471,7 +3471,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_32': {
@@ -3495,7 +3495,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF4343,#FF4343,#FFFF49,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF8A06,#5D6671,#246BFD,#FF8A06,#43FF43,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_39': {
@@ -3519,7 +3519,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FF8A06,#5D6671,#FF8A06,#43FF43,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_29': {
@@ -3543,7 +3543,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FF8A06,#FF8A06,#FFFF49,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#43FF43,#5D6671,#FF4343,#246BFD,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_38': {
@@ -3567,7 +3567,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#5D6671,#FF4343,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FF8A06,#5D6671,#FF4343,#246BFD,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_5': {
@@ -3591,7 +3591,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FF4343,#FFFF49,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FF4343,#5D6671,#43FF43,#FFFF49,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_25': {
@@ -3615,7 +3615,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#FF8A06,#246BFD,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#246BFD,#FFFF49,#43FF43,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_12': {
@@ -3639,7 +3639,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF8A06,#FFFF49,#43FF43,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF4343,#5D6671,#FF4343,#FFFF49,#246BFD,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_21': {
@@ -3663,7 +3663,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FF8A06,#FFFF49,#246BFD,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_31': {
@@ -3687,7 +3687,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF4343,#FF8A06,#246BFD,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FF8A06,#43FF43,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_15': {
@@ -3711,7 +3711,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FFFF49,#43FF43,#FF4343,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_2': {
@@ -3735,7 +3735,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#43FF43,#FFFF49,#FF8A06,#5D6671,#FF8A06,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#43FF43,#FF4343,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_17': {
@@ -3759,7 +3759,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#5D6671,#FF4343,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FF4343,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_3': {
@@ -3783,7 +3783,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF8A06,#FF4343,#FFFF49,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#FFFF49,#5D6671,#FFFF49,#43FF43,#246BFD,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_37': {
@@ -3807,7 +3807,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FFFF49,#FF8A06,#FFFF49,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#FF4343,#FFFF49,#FFFF49,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_13': {
@@ -3831,7 +3831,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#5D6671,#246BFD,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#43FF43,#5D6671,#43FF43,#FF4343,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_40': {
@@ -3855,7 +3855,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF4343,#FFFF49,#43FF43,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#246BFD,#FF8A06,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_7': {
@@ -3879,7 +3879,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF8A06,#FF4343,#FFFF49,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FF4343,#5D6671,#FFFF49,#FF8A06,#FFFF49,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_22': {
@@ -3903,7 +3903,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF4343,#FFFF49,#FF8A06,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_9': {
@@ -3927,7 +3927,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#246BFD,#FFFF49,#FF8A06,#5D6671,#FF4343,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FFFF49,#FF8A06,#43FF43,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_6': {
@@ -3951,7 +3951,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#43FF43,#246BFD,#FF4343,#5D6671,#FFFF49,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF8A06,#5D6671,#246BFD,#FF8A06,#43FF43,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_20': {
@@ -3975,7 +3975,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FF8A06,#FFFF49,#246BFD,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#246BFD,#5D6671,#FFFF49,#43FF43,#FF8A06,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_11': {
@@ -3999,7 +3999,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF4343,#FFFF49,#FF8A06,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#FF8A06,#43FF43,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_27': {
@@ -4023,7 +4023,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#FF4343,#43FF43,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#FFFF49,#5D6671,#246BFD,#FFFF49,#246BFD,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_4': {
@@ -4047,7 +4047,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FF8A06,#43FF43,#FFFF49,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FFFF49,#246BFD,#FF4343,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_19': {
@@ -4071,7 +4071,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#5D6671,#246BFD,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FFFF49,#246BFD,#43FF43,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_23': {
@@ -4095,7 +4095,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#246BFD,#246BFD,#FFFF49,#5D6671,#FF4343,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#43FF43,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_36': {
@@ -4119,7 +4119,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#43FF43,#FFFF49,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_28': {
@@ -4143,7 +4143,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#246BFD,#43FF43,#FFFF49,#5D6671,#FF4343,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF8A06,#5D6671,#246BFD,#FF8A06,#43FF43,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_41': {
@@ -4167,7 +4167,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#43FF43,#FFFF49,#FF4343,#5D6671,#FF8A06,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FF8A06,#5D6671,#FF4343,#246BFD,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_1': {
@@ -4191,7 +4191,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#246BFD,#FF4343,#43FF43,#5D6671,#FF4343,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FF8A06,#5D6671,#43FF43,#FFFF49,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_24': {
@@ -4215,7 +4215,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#43FF43,#FF8A06,#246BFD,#5D6671,#FFFF49,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#43FF43,#FFFF49,#FF4343,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_42': {
@@ -4239,7 +4239,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FF8A06,#FFFF49,#FF4343,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_34': {
@@ -4263,7 +4263,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#246BFD,#FFFF49,#5D6671,#FF4343,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#43FF43,#FFFF49,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_33': {
@@ -4287,7 +4287,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#FF8A06,#FFFF49,#FFFF49,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 		'333_cll_30': {
@@ -4311,7 +4311,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#43FF43,#FF4343,#FFFF49,#5D6671,#FF8A06,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#43FF43,#5D6671,#246BFD,#FF8A06,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cll',
 		},
 	},
@@ -4337,7 +4337,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_7': {
@@ -4361,7 +4361,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_5': {
@@ -4385,7 +4385,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_6': {
@@ -4409,7 +4409,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_10': {
@@ -4431,7 +4431,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#43FF43,#FF4343,#FFFF49,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_11': {
@@ -4455,7 +4455,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FFFF49,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_14': {
@@ -4476,7 +4476,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_8': {
@@ -4500,7 +4500,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_4': {
@@ -4524,7 +4524,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_2': {
@@ -4548,7 +4548,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_3': {
@@ -4572,7 +4572,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_9': {
@@ -4596,7 +4596,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_15': {
@@ -4617,7 +4617,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_12': {
@@ -4641,7 +4641,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#FFFF49,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 		'333_ell_13': {
@@ -4663,7 +4663,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FF4343,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#43FF43,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'ell',
 		},
 	},
@@ -4682,7 +4682,7 @@ export default {
 			name: '114',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FFFF49,#43FF43,#FF4343,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_129': {
@@ -4695,7 +4695,7 @@ export default {
 			name: '129',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#FF4343,#43FF43,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FF8A06,#43FF43,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_122': {
@@ -4715,7 +4715,7 @@ export default {
 			name: '122',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#43FF43,#FF4343,#43FF43,#5D6671,#FF8A06,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#FF8A06,#FFFF49,#FFFF49,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_111': {
@@ -4733,7 +4733,7 @@ export default {
 			name: '111',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#43FF43,#FFFF49,#246BFD,#5D6671,#FFFF49,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#246BFD,#FF8A06,#FF8A06,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_105': {
@@ -4757,7 +4757,7 @@ export default {
 			name: '105',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#246BFD,#FF8A06,#FFFF49,#5D6671,#FFFF49,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_125': {
@@ -4770,7 +4770,7 @@ export default {
 			name: '125',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#246BFD,#FF4343,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FF8A06,#43FF43,#43FF43,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_131': {
@@ -4789,7 +4789,7 @@ export default {
 			name: '131',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FF4343,#FFFF49,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#43FF43,#5D6671,#FFFF49,#FF8A06,#FF4343,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_128': {
@@ -4812,7 +4812,7 @@ export default {
 			name: '128',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#246BFD,#FF4343,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#43FF43,#FF4343,#FF8A06,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_121': {
@@ -4825,7 +4825,7 @@ export default {
 			name: '121',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FFFF49,#FF8A06,#5D6671,#FF4343,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF8A06,#5D6671,#FF4343,#246BFD,#43FF43,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_124': {
@@ -4838,7 +4838,7 @@ export default {
 			name: '124',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#FFFF49,#246BFD,#5D6671,#FF4343,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#43FF43,#5D6671,#FFFF49,#246BFD,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_135': {
@@ -4851,7 +4851,7 @@ export default {
 			name: '135',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#5D6671,#246BFD,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FFFF49,#246BFD,#43FF43,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_115': {
@@ -4870,7 +4870,7 @@ export default {
 			name: '115',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#43FF43,#FF4343,#FFFF49,#5D6671,#FF8A06,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FF8A06,#FFFF49,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_142': {
@@ -4883,7 +4883,7 @@ export default {
 			name: '142',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#FF8A06,#246BFD,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FF4343,#5D6671,#FFFF49,#FF4343,#FFFF49,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_110': {
@@ -4901,7 +4901,7 @@ export default {
 			name: '110',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#FF8A06,#FFFF49,#FFFF49,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_106': {
@@ -4914,7 +4914,7 @@ export default {
 			name: '106',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FF4343,#FFFF49,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FF4343,#5D6671,#43FF43,#FFFF49,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_127': {
@@ -4927,7 +4927,7 @@ export default {
 			name: '127',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF4343,#FF8A06,#246BFD,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FF8A06,#43FF43,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_123': {
@@ -4944,7 +4944,7 @@ export default {
 			name: '123',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#43FF43,#FFFF49,#FF4343,#5D6671,#FF8A06,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF4343,#5D6671,#FF8A06,#FFFF49,#246BFD,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_120': {
@@ -4961,7 +4961,7 @@ export default {
 			name: '120',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#43FF43,#FFFF49,#FF4343,#5D6671,#FF8A06,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FF8A06,#5D6671,#FF4343,#246BFD,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_141': {
@@ -4974,7 +4974,7 @@ export default {
 			name: '141',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#246BFD,#FFFF49,#43FF43,#5D6671,#FF4343,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#246BFD,#5D6671,#FF4343,#FFFF49,#FF8A06,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_102': {
@@ -4993,7 +4993,7 @@ export default {
 			name: '102',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF4343,#FFFF49,#FF8A06,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#FF8A06,#43FF43,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_107': {
@@ -5017,7 +5017,7 @@ export default {
 			name: '107',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FFFF49,#FF8A06,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FF4343,#5D6671,#FFFF49,#FF4343,#FFFF49,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_103': {
@@ -5030,7 +5030,7 @@ export default {
 			name: '103',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#246BFD,#FFFF49,#FF4343,#5D6671,#FF4343,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#43FF43,#5D6671,#246BFD,#FF8A06,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_100': {
@@ -5053,7 +5053,7 @@ export default {
 			name: '100',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#246BFD,#FF4343,#5D6671,#43FF43,#FF8A06,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#43FF43,#5D6671,#FF8A06,#FFFF49,#FF4343,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_116': {
@@ -5066,7 +5066,7 @@ export default {
 			name: '116',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#246BFD,#FF4343,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_108': {
@@ -5079,7 +5079,7 @@ export default {
 			name: '108',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FF4343,#FFFF49,#FF4343,#5D6671,#FFFF49,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FF8A06,#5D6671,#43FF43,#FFFF49,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_126': {
@@ -5092,7 +5092,7 @@ export default {
 			name: '126',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#43FF43,#FF8A06,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#43FF43,#FF4343,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_113': {
@@ -5110,7 +5110,7 @@ export default {
 			name: '113',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF4343,#FFFF49,#FF8A06,#5D6671,#FFFF49,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#43FF43,#FF4343,#FF8A06,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_109': {
@@ -5123,7 +5123,7 @@ export default {
 			name: '109',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#FF8A06,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#43FF43,#FFFF49,#FFFF49,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_140': {
@@ -5146,7 +5146,7 @@ export default {
 			name: '140',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF8A06,#FFFF49,#43FF43,#5D6671,#246BFD,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF4343,#5D6671,#FF4343,#FFFF49,#246BFD,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_119': {
@@ -5166,7 +5166,7 @@ export default {
 			name: '119',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF4343,#FF8A06,#246BFD,#5D6671,#FFFF49,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#43FF43,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_138': {
@@ -5187,7 +5187,7 @@ export default {
 			name: '138',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF4343,#246BFD,#FFFF49,#5D6671,#FFFF49,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#43FF43,#5D6671,#43FF43,#FFFF49,#FF4343,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_130': {
@@ -5206,7 +5206,7 @@ export default {
 			name: '130',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#FF4343,#43FF43,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF4343,#5D6671,#246BFD,#FF8A06,#246BFD,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_118': {
@@ -5228,7 +5228,7 @@ export default {
 			name: '118',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#246BFD,#FFFF49,#FF8A06,#5D6671,#FF4343,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#FFFF49,#5D6671,#FFFF49,#FF8A06,#43FF43,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_139': {
@@ -5241,7 +5241,7 @@ export default {
 			name: '139',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF4343,#FFFF49,#43FF43,#5D6671,#43FF43,#FFFF49,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#246BFD,#5D6671,#246BFD,#FFFF49,#FF8A06,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_134': {
@@ -5254,7 +5254,7 @@ export default {
 			name: '134',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#5D6671,#FF4343,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FF4343,#5D6671,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_133': {
@@ -5267,7 +5267,7 @@ export default {
 			name: '133',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FF8A06,#FFFF49,#246BFD,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#FFFF49,#5D6671,#43FF43,#FF4343,#246BFD,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_112': {
@@ -5287,7 +5287,7 @@ export default {
 			name: '112',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#43FF43,#FFFF49,#43FF43,#5D6671,#FFFF49,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#246BFD,#FFFF49,#5D6671,#246BFD,#FF8A06,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_132': {
@@ -5306,7 +5306,7 @@ export default {
 			name: '132',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF4343,#FFFF49,#43FF43,#5D6671,#FFFF49,#246BFD,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#FFFF49,#5D6671,#43FF43,#FF4343,#246BFD,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_136': {
@@ -5325,7 +5325,7 @@ export default {
 			name: '136',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#FF8A06,#246BFD,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF4343,#246BFD,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_117': {
@@ -5338,7 +5338,7 @@ export default {
 			name: '117',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FF8A06,#FFFF49,#FF4343,#5D6671,#FFFF49,#43FF43,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FFFF49,#FF4343,#5D6671,#FFFF49,#246BFD,#246BFD,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_137': {
@@ -5362,7 +5362,7 @@ export default {
 			name: '137',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#43FF43,#FFFF49,#5D6671,#246BFD,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#FF8A06,#FFFF49,#5D6671,#FF8A06,#43FF43,#246BFD,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 		'333_cmll_104': {
@@ -5386,7 +5386,7 @@ export default {
 			name: '104',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#43FF43,#FF4343,#FFFF49,#5D6671,#FFFF49,#FF4343,#5D6671,#5D6671,#5D6671,#5D6671,#5D6671,#43FF43,#FFFF49,#5D6671,#FFFF49,#246BFD,#FF8A06,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'cmll',
 		},
 	},
@@ -5412,7 +5412,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF4343,#43FF43,#FFFF49,#246BFD,#FF4343,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#43FF43,#FFFF49,#246BFD,#FF8A06,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_28': {
@@ -5436,7 +5436,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_14': {
@@ -5460,7 +5460,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_23': {
@@ -5484,7 +5484,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_22': {
@@ -5508,7 +5508,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#246BFD,#FFFF49,#246BFD,#FF8A06,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_6': {
@@ -5532,7 +5532,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_40': {
@@ -5556,7 +5556,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_16': {
@@ -5580,7 +5580,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_13': {
@@ -5604,7 +5604,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_39': {
@@ -5628,7 +5628,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_12': {
@@ -5652,7 +5652,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_26': {
@@ -5676,7 +5676,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_33': {
@@ -5700,7 +5700,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_37': {
@@ -5724,7 +5724,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_15': {
@@ -5748,7 +5748,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_17': {
@@ -5772,7 +5772,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_8': {
@@ -5796,7 +5796,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_27': {
@@ -5820,7 +5820,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_11': {
@@ -5844,7 +5844,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_1': {
@@ -5868,7 +5868,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_2': {
@@ -5892,7 +5892,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_24': {
@@ -5916,7 +5916,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_4': {
@@ -5940,7 +5940,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_18': {
@@ -5964,7 +5964,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_10': {
@@ -5988,7 +5988,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_41': {
@@ -6012,7 +6012,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#246BFD,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_3': {
@@ -6036,7 +6036,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#43FF43,#5D6671,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_9': {
@@ -6060,7 +6060,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_30': {
@@ -6084,7 +6084,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_19': {
@@ -6108,7 +6108,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#246BFD,#FFFF49,#246BFD,#FF8A06,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_34': {
@@ -6132,7 +6132,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_7': {
@@ -6156,7 +6156,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_25': {
@@ -6180,7 +6180,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_42': {
@@ -6204,7 +6204,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#FF4343,#5D6671,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#246BFD,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#5D6671,#FF8A06',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_31': {
@@ -6228,7 +6228,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_35': {
@@ -6252,7 +6252,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#FF8A06,#5D6671,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_29': {
@@ -6276,7 +6276,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_36': {
@@ -6300,7 +6300,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_5': {
@@ -6324,7 +6324,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_21': {
@@ -6348,7 +6348,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#FFFF49,#43FF43,#FF8A06,#FFFF49,#246BFD,#FF4343,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#43FF43,#FF4343,#FFFF49,#246BFD,#FF8A06,#FFFF49,#5D6671,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_38': {
@@ -6372,7 +6372,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#246BFD,#5D6671,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#5D6671,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 		'333_coll_32': {
@@ -6396,7 +6396,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#FFFF49,#5D6671,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#5D6671,#FFFF49,#FFFF49,#FFFF49,#5D6671,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#5D6671,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'coll',
 		},
 	},
@@ -6416,7 +6416,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_48': {
@@ -6429,7 +6429,7 @@ export default {
 			name: '48',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_31': {
@@ -6442,7 +6442,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_50': {
@@ -6455,7 +6455,7 @@ export default {
 			name: '50',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_18': {
@@ -6472,7 +6472,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_8': {
@@ -6490,7 +6490,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_9': {
@@ -6507,7 +6507,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_22': {
@@ -6520,7 +6520,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_2': {
@@ -6537,7 +6537,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_13': {
@@ -6556,7 +6556,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_51': {
@@ -6569,7 +6569,7 @@ export default {
 			name: '51',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_26': {
@@ -6582,7 +6582,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_29': {
@@ -6599,7 +6599,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_69': {
@@ -6612,7 +6612,7 @@ export default {
 			name: '69',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_53': {
@@ -6625,7 +6625,7 @@ export default {
 			name: '53',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_34': {
@@ -6644,7 +6644,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_70': {
@@ -6661,7 +6661,7 @@ export default {
 			name: '70',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_72': {
@@ -6674,7 +6674,7 @@ export default {
 			name: '72',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_56': {
@@ -6687,7 +6687,7 @@ export default {
 			name: '56',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_60': {
@@ -6700,7 +6700,7 @@ export default {
 			name: '60',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_66': {
@@ -6713,7 +6713,7 @@ export default {
 			name: '66',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_58': {
@@ -6726,7 +6726,7 @@ export default {
 			name: '58',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_12': {
@@ -6744,7 +6744,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_32': {
@@ -6768,7 +6768,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_19': {
@@ -6781,7 +6781,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_33': {
@@ -6798,7 +6798,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_3': {
@@ -6811,7 +6811,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_63': {
@@ -6833,7 +6833,7 @@ export default {
 			name: '63',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_7': {
@@ -6850,7 +6850,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_45': {
@@ -6863,7 +6863,7 @@ export default {
 			name: '45',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_17': {
@@ -6876,7 +6876,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_16': {
@@ -6893,7 +6893,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_40': {
@@ -6910,7 +6910,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_65': {
@@ -6929,7 +6929,7 @@ export default {
 			name: '65',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_23': {
@@ -6947,7 +6947,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_14': {
@@ -6964,7 +6964,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_15': {
@@ -6983,7 +6983,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_6': {
@@ -7001,7 +7001,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_1': {
@@ -7025,7 +7025,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_11': {
@@ -7043,7 +7043,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_4': {
@@ -7056,7 +7056,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_36': {
@@ -7074,7 +7074,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_20': {
@@ -7093,7 +7093,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_38': {
@@ -7106,7 +7106,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_41': {
@@ -7123,7 +7123,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_35': {
@@ -7142,7 +7142,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_47': {
@@ -7159,7 +7159,7 @@ export default {
 			name: '47',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_39': {
@@ -7176,7 +7176,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_42': {
@@ -7193,7 +7193,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_24': {
@@ -7211,7 +7211,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_28': {
@@ -7231,7 +7231,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_21': {
@@ -7249,7 +7249,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_64': {
@@ -7262,7 +7262,7 @@ export default {
 			name: '64',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_46': {
@@ -7280,7 +7280,7 @@ export default {
 			name: '46',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_57': {
@@ -7293,7 +7293,7 @@ export default {
 			name: '57',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_71': {
@@ -7306,7 +7306,7 @@ export default {
 			name: '71',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_10': {
@@ -7319,7 +7319,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_59': {
@@ -7332,7 +7332,7 @@ export default {
 			name: '59',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_52': {
@@ -7345,7 +7345,7 @@ export default {
 			name: '52',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_61': {
@@ -7358,7 +7358,7 @@ export default {
 			name: '61',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_62': {
@@ -7377,7 +7377,7 @@ export default {
 			name: '62',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_5': {
@@ -7395,7 +7395,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_54': {
@@ -7412,7 +7412,7 @@ export default {
 			name: '54',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_67': {
@@ -7425,7 +7425,7 @@ export default {
 			name: '67',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_37': {
@@ -7438,7 +7438,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_49': {
@@ -7456,7 +7456,7 @@ export default {
 			name: '49',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_55': {
@@ -7473,7 +7473,7 @@ export default {
 			name: '55',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_43': {
@@ -7486,7 +7486,7 @@ export default {
 			name: '43',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_44': {
@@ -7503,7 +7503,7 @@ export default {
 			name: '44',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_30': {
@@ -7522,7 +7522,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_68': {
@@ -7535,7 +7535,7 @@ export default {
 			name: '68',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 		'333_zbll-t_25': {
@@ -7548,7 +7548,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-t',
 		},
 	},
@@ -7568,7 +7568,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_45': {
@@ -7581,7 +7581,7 @@ export default {
 			name: '45',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_68': {
@@ -7594,7 +7594,7 @@ export default {
 			name: '68',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_55': {
@@ -7607,7 +7607,7 @@ export default {
 			name: '55',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_10': {
@@ -7620,7 +7620,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_34': {
@@ -7633,7 +7633,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_7': {
@@ -7650,7 +7650,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_13': {
@@ -7663,7 +7663,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_22': {
@@ -7681,7 +7681,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_56': {
@@ -7694,7 +7694,7 @@ export default {
 			name: '56',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_39': {
@@ -7711,7 +7711,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_51': {
@@ -7724,7 +7724,7 @@ export default {
 			name: '51',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_19': {
@@ -7737,7 +7737,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_61': {
@@ -7750,7 +7750,7 @@ export default {
 			name: '61',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_38': {
@@ -7771,7 +7771,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_35': {
@@ -7784,7 +7784,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_17': {
@@ -7797,7 +7797,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_9': {
@@ -7810,7 +7810,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_64': {
@@ -7823,7 +7823,7 @@ export default {
 			name: '64',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_54': {
@@ -7836,7 +7836,7 @@ export default {
 			name: '54',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_63': {
@@ -7849,7 +7849,7 @@ export default {
 			name: '63',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_65': {
@@ -7862,7 +7862,7 @@ export default {
 			name: '65',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_60': {
@@ -7879,7 +7879,7 @@ export default {
 			name: '60',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_28': {
@@ -7899,7 +7899,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_25': {
@@ -7912,7 +7912,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_48': {
@@ -7925,7 +7925,7 @@ export default {
 			name: '48',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_12': {
@@ -7938,7 +7938,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_41': {
@@ -7951,7 +7951,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_5': {
@@ -7969,7 +7969,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_4': {
@@ -7982,7 +7982,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_62': {
@@ -7995,7 +7995,7 @@ export default {
 			name: '62',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_16': {
@@ -8008,7 +8008,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_52': {
@@ -8021,7 +8021,7 @@ export default {
 			name: '52',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_47': {
@@ -8034,7 +8034,7 @@ export default {
 			name: '47',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_31': {
@@ -8047,7 +8047,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_50': {
@@ -8060,7 +8060,7 @@ export default {
 			name: '50',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_43': {
@@ -8073,7 +8073,7 @@ export default {
 			name: '43',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_37': {
@@ -8093,7 +8093,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_27': {
@@ -8106,7 +8106,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_14': {
@@ -8125,7 +8125,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_30': {
@@ -8138,7 +8138,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_8': {
@@ -8161,7 +8161,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_3': {
@@ -8179,7 +8179,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_26': {
@@ -8197,7 +8197,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_20': {
@@ -8210,7 +8210,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_6': {
@@ -8223,7 +8223,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_29': {
@@ -8236,7 +8236,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_21': {
@@ -8249,7 +8249,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_44': {
@@ -8266,7 +8266,7 @@ export default {
 			name: '44',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_33': {
@@ -8279,7 +8279,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_1': {
@@ -8303,7 +8303,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_11': {
@@ -8316,7 +8316,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_24': {
@@ -8338,7 +8338,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_46': {
@@ -8351,7 +8351,7 @@ export default {
 			name: '46',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_18': {
@@ -8364,7 +8364,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_32': {
@@ -8381,7 +8381,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_53': {
@@ -8394,7 +8394,7 @@ export default {
 			name: '53',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_15': {
@@ -8407,7 +8407,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_42': {
@@ -8420,7 +8420,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_36': {
@@ -8433,7 +8433,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_23': {
@@ -8453,7 +8453,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_57': {
@@ -8466,7 +8466,7 @@ export default {
 			name: '57',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_49': {
@@ -8479,7 +8479,7 @@ export default {
 			name: '49',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_67': {
@@ -8492,7 +8492,7 @@ export default {
 			name: '67',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_2': {
@@ -8510,7 +8510,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#246BFD,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_66': {
@@ -8523,7 +8523,7 @@ export default {
 			name: '66',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_59': {
@@ -8536,7 +8536,7 @@ export default {
 			name: '59',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_71': {
@@ -8549,7 +8549,7 @@ export default {
 			name: '71',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_58': {
@@ -8562,7 +8562,7 @@ export default {
 			name: '58',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_70': {
@@ -8575,7 +8575,7 @@ export default {
 			name: '70',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_69': {
@@ -8588,7 +8588,7 @@ export default {
 			name: '69',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 		'333_zbll-u_72': {
@@ -8601,7 +8601,7 @@ export default {
 			name: '72',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-u',
 		},
 	},
@@ -8616,7 +8616,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_49': {
@@ -8629,7 +8629,7 @@ export default {
 			name: '49',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_35': {
@@ -8642,7 +8642,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_4': {
@@ -8655,7 +8655,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_21': {
@@ -8668,7 +8668,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_27': {
@@ -8681,7 +8681,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_53': {
@@ -8694,7 +8694,7 @@ export default {
 			name: '53',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_70': {
@@ -8707,7 +8707,7 @@ export default {
 			name: '70',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_52': {
@@ -8720,7 +8720,7 @@ export default {
 			name: '52',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_22': {
@@ -8739,7 +8739,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_71': {
@@ -8752,7 +8752,7 @@ export default {
 			name: '71',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_63': {
@@ -8765,7 +8765,7 @@ export default {
 			name: '63',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_72': {
@@ -8782,7 +8782,7 @@ export default {
 			name: '72',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_12': {
@@ -8799,7 +8799,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_54': {
@@ -8812,7 +8812,7 @@ export default {
 			name: '54',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_48': {
@@ -8836,7 +8836,7 @@ export default {
 			name: '48',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_23': {
@@ -8849,7 +8849,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_11': {
@@ -8867,7 +8867,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_19': {
@@ -8880,7 +8880,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_14': {
@@ -8893,7 +8893,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_31': {
@@ -8906,7 +8906,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_13': {
@@ -8919,7 +8919,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_7': {
@@ -8932,7 +8932,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_30': {
@@ -8945,7 +8945,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#FF4343,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_24': {
@@ -8958,7 +8958,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_29': {
@@ -8971,7 +8971,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_45': {
@@ -8984,7 +8984,7 @@ export default {
 			name: '45',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_59': {
@@ -8997,7 +8997,7 @@ export default {
 			name: '59',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_68': {
@@ -9010,7 +9010,7 @@ export default {
 			name: '68',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_28': {
@@ -9023,7 +9023,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_40': {
@@ -9036,7 +9036,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_55': {
@@ -9049,7 +9049,7 @@ export default {
 			name: '55',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_32': {
@@ -9062,7 +9062,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_69': {
@@ -9075,7 +9075,7 @@ export default {
 			name: '69',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_64': {
@@ -9092,7 +9092,7 @@ export default {
 			name: '64',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_39': {
@@ -9105,7 +9105,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_15': {
@@ -9118,7 +9118,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FF4343,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_2': {
@@ -9135,7 +9135,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_43': {
@@ -9148,7 +9148,7 @@ export default {
 			name: '43',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_1': {
@@ -9165,7 +9165,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_5': {
@@ -9183,7 +9183,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_8': {
@@ -9196,7 +9196,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_3': {
@@ -9209,7 +9209,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_20': {
@@ -9227,7 +9227,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_16': {
@@ -9240,7 +9240,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FF4343,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_26': {
@@ -9253,7 +9253,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_17': {
@@ -9274,7 +9274,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#FF4343,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_41': {
@@ -9291,7 +9291,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_6': {
@@ -9304,7 +9304,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_50': {
@@ -9326,7 +9326,7 @@ export default {
 			name: '50',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_36': {
@@ -9339,7 +9339,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#FF4343,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_10': {
@@ -9352,7 +9352,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_37': {
@@ -9365,7 +9365,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_60': {
@@ -9382,7 +9382,7 @@ export default {
 			name: '60',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_18': {
@@ -9395,7 +9395,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_58': {
@@ -9408,7 +9408,7 @@ export default {
 			name: '58',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_51': {
@@ -9426,7 +9426,7 @@ export default {
 			name: '51',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_46': {
@@ -9439,7 +9439,7 @@ export default {
 			name: '46',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_38': {
@@ -9452,7 +9452,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_44': {
@@ -9465,7 +9465,7 @@ export default {
 			name: '44',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_42': {
@@ -9484,7 +9484,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_56': {
@@ -9497,7 +9497,7 @@ export default {
 			name: '56',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_62': {
@@ -9510,7 +9510,7 @@ export default {
 			name: '62',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_66': {
@@ -9523,7 +9523,7 @@ export default {
 			name: '66',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_67': {
@@ -9536,7 +9536,7 @@ export default {
 			name: '67',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_47': {
@@ -9549,7 +9549,7 @@ export default {
 			name: '47',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_61': {
@@ -9567,7 +9567,7 @@ export default {
 			name: '61',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_34': {
@@ -9580,7 +9580,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_33': {
@@ -9593,7 +9593,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_57': {
@@ -9610,7 +9610,7 @@ export default {
 			name: '57',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_65': {
@@ -9629,7 +9629,7 @@ export default {
 			name: '65',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 		'333_zbll-l_25': {
@@ -9642,7 +9642,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#FF4343,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-l',
 		},
 	},
@@ -9657,7 +9657,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_17': {
@@ -9674,7 +9674,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_30': {
@@ -9687,7 +9687,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_20': {
@@ -9700,7 +9700,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_8': {
@@ -9717,7 +9717,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_32': {
@@ -9730,7 +9730,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_40': {
@@ -9743,7 +9743,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_15': {
@@ -9761,7 +9761,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_21': {
@@ -9774,7 +9774,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_27': {
@@ -9787,7 +9787,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_24': {
@@ -9800,7 +9800,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_11': {
@@ -9820,7 +9820,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_22': {
@@ -9833,7 +9833,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_38': {
@@ -9846,7 +9846,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_23': {
@@ -9865,7 +9865,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_6': {
@@ -9878,7 +9878,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_14': {
@@ -9891,7 +9891,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_1': {
@@ -9904,7 +9904,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_25': {
@@ -9917,7 +9917,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_4': {
@@ -9938,7 +9938,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_39': {
@@ -9951,7 +9951,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_5': {
@@ -9964,7 +9964,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_18': {
@@ -9981,7 +9981,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_3': {
@@ -9994,7 +9994,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_7': {
@@ -10007,7 +10007,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF4343,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_33': {
@@ -10020,7 +10020,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_31': {
@@ -10038,7 +10038,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_28': {
@@ -10051,7 +10051,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_36': {
@@ -10064,7 +10064,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_13': {
@@ -10083,7 +10083,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_19': {
@@ -10096,7 +10096,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FF8A06,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_35': {
@@ -10109,7 +10109,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_16': {
@@ -10127,7 +10127,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_37': {
@@ -10140,7 +10140,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_10': {
@@ -10157,7 +10157,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_9': {
@@ -10174,7 +10174,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_12': {
@@ -10193,7 +10193,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_29': {
@@ -10206,7 +10206,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_26': {
@@ -10219,7 +10219,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FF8A06,#43FF43',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 		'333_zbll-h_34': {
@@ -10232,7 +10232,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#43FF43,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-h',
 		},
 	},
@@ -10252,7 +10252,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_44': {
@@ -10269,7 +10269,7 @@ export default {
 			name: '44',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_18': {
@@ -10282,7 +10282,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_29': {
@@ -10299,7 +10299,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_9': {
@@ -10312,7 +10312,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_8': {
@@ -10325,7 +10325,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_49': {
@@ -10342,7 +10342,7 @@ export default {
 			name: '49',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_34': {
@@ -10355,7 +10355,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_17': {
@@ -10375,7 +10375,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_70': {
@@ -10388,7 +10388,7 @@ export default {
 			name: '70',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_35': {
@@ -10407,7 +10407,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_31': {
@@ -10420,7 +10420,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_56': {
@@ -10433,7 +10433,7 @@ export default {
 			name: '56',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_38': {
@@ -10450,7 +10450,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_33': {
@@ -10463,7 +10463,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_15': {
@@ -10483,7 +10483,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_53': {
@@ -10500,7 +10500,7 @@ export default {
 			name: '53',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_59': {
@@ -10513,7 +10513,7 @@ export default {
 			name: '59',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_6': {
@@ -10526,7 +10526,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_4': {
@@ -10544,7 +10544,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_20': {
@@ -10557,7 +10557,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_26': {
@@ -10570,7 +10570,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_54': {
@@ -10583,7 +10583,7 @@ export default {
 			name: '54',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_60': {
@@ -10596,7 +10596,7 @@ export default {
 			name: '60',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_13': {
@@ -10613,7 +10613,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_50': {
@@ -10626,7 +10626,7 @@ export default {
 			name: '50',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_24': {
@@ -10645,7 +10645,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_16': {
@@ -10658,7 +10658,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_11': {
@@ -10671,7 +10671,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_1': {
@@ -10688,7 +10688,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_48': {
@@ -10705,7 +10705,7 @@ export default {
 			name: '48',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_19': {
@@ -10722,7 +10722,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_5': {
@@ -10735,7 +10735,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_52': {
@@ -10752,7 +10752,7 @@ export default {
 			name: '52',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_23': {
@@ -10769,7 +10769,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_2': {
@@ -10782,7 +10782,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_32': {
@@ -10800,7 +10800,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_12': {
@@ -10813,7 +10813,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_37': {
@@ -10830,7 +10830,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_22': {
@@ -10847,7 +10847,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_3': {
@@ -10860,7 +10860,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_27': {
@@ -10877,7 +10877,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_51': {
@@ -10890,7 +10890,7 @@ export default {
 			name: '51',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_45': {
@@ -10903,7 +10903,7 @@ export default {
 			name: '45',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_43': {
@@ -10916,7 +10916,7 @@ export default {
 			name: '43',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_42': {
@@ -10934,7 +10934,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_10': {
@@ -10958,7 +10958,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_21': {
@@ -10975,7 +10975,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_55': {
@@ -10993,7 +10993,7 @@ export default {
 			name: '55',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_66': {
@@ -11006,7 +11006,7 @@ export default {
 			name: '66',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_28': {
@@ -11019,7 +11019,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_68': {
@@ -11036,7 +11036,7 @@ export default {
 			name: '68',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_69': {
@@ -11049,7 +11049,7 @@ export default {
 			name: '69',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_36': {
@@ -11067,7 +11067,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_71': {
@@ -11085,7 +11085,7 @@ export default {
 			name: '71',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_64': {
@@ -11098,7 +11098,7 @@ export default {
 			name: '64',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_25': {
@@ -11111,7 +11111,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_61': {
@@ -11124,7 +11124,7 @@ export default {
 			name: '61',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_30': {
@@ -11137,7 +11137,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_46': {
@@ -11150,7 +11150,7 @@ export default {
 			name: '46',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_67': {
@@ -11163,7 +11163,7 @@ export default {
 			name: '67',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_65': {
@@ -11176,7 +11176,7 @@ export default {
 			name: '65',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_58': {
@@ -11194,7 +11194,7 @@ export default {
 			name: '58',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_41': {
@@ -11207,7 +11207,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_40': {
@@ -11220,7 +11220,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_47': {
@@ -11233,7 +11233,7 @@ export default {
 			name: '47',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#246BFD,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_62': {
@@ -11246,7 +11246,7 @@ export default {
 			name: '62',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_39': {
@@ -11264,7 +11264,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#246BFD,#43FF43,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_57': {
@@ -11277,7 +11277,7 @@ export default {
 			name: '57',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF8A06,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_63': {
@@ -11295,7 +11295,7 @@ export default {
 			name: '63',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_14': {
@@ -11308,7 +11308,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#246BFD,#FF4343,#FF4343,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 		'333_zbll-pi_72': {
@@ -11325,7 +11325,7 @@ export default {
 			name: '72',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FF4343,#246BFD,#FF8A06,#43FF43,#FFFF49',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-pi',
 		},
 	},
@@ -11344,7 +11344,7 @@ export default {
 			name: '59',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_1': {
@@ -11364,7 +11364,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_9': {
@@ -11381,7 +11381,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_17': {
@@ -11394,7 +11394,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_20': {
@@ -11413,7 +11413,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_19': {
@@ -11426,7 +11426,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_55': {
@@ -11439,7 +11439,7 @@ export default {
 			name: '55',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_13': {
@@ -11452,7 +11452,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_29': {
@@ -11465,7 +11465,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_54': {
@@ -11478,7 +11478,7 @@ export default {
 			name: '54',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_37': {
@@ -11491,7 +11491,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_40': {
@@ -11504,7 +11504,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_42': {
@@ -11517,7 +11517,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_27': {
@@ -11530,7 +11530,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_65': {
@@ -11543,7 +11543,7 @@ export default {
 			name: '65',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_51': {
@@ -11556,7 +11556,7 @@ export default {
 			name: '51',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_43': {
@@ -11569,7 +11569,7 @@ export default {
 			name: '43',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_6': {
@@ -11582,7 +11582,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_61': {
@@ -11595,7 +11595,7 @@ export default {
 			name: '61',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_64': {
@@ -11608,7 +11608,7 @@ export default {
 			name: '64',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_47': {
@@ -11621,7 +11621,7 @@ export default {
 			name: '47',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_60': {
@@ -11634,7 +11634,7 @@ export default {
 			name: '60',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_48': {
@@ -11647,7 +11647,7 @@ export default {
 			name: '48',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_3': {
@@ -11660,7 +11660,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_39': {
@@ -11673,7 +11673,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_57': {
@@ -11686,7 +11686,7 @@ export default {
 			name: '57',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_26': {
@@ -11699,7 +11699,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_35': {
@@ -11712,7 +11712,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_41': {
@@ -11725,7 +11725,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_70': {
@@ -11738,7 +11738,7 @@ export default {
 			name: '70',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_53': {
@@ -11751,7 +11751,7 @@ export default {
 			name: '53',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_36': {
@@ -11764,7 +11764,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_12': {
@@ -11777,7 +11777,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_4': {
@@ -11790,7 +11790,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_8': {
@@ -11803,7 +11803,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_16': {
@@ -11816,7 +11816,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_21': {
@@ -11829,7 +11829,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_14': {
@@ -11842,7 +11842,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_30': {
@@ -11855,7 +11855,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_24': {
@@ -11868,7 +11868,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_11': {
@@ -11881,7 +11881,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_23': {
@@ -11894,7 +11894,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_22': {
@@ -11907,7 +11907,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_38': {
@@ -11920,7 +11920,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_15': {
@@ -11933,7 +11933,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_33': {
@@ -11946,7 +11946,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_2': {
@@ -11959,7 +11959,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_71': {
@@ -11972,7 +11972,7 @@ export default {
 			name: '71',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_45': {
@@ -11985,7 +11985,7 @@ export default {
 			name: '45',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_18': {
@@ -11998,7 +11998,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF8A06,#FF4343,#43FF43,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_58': {
@@ -12011,7 +12011,7 @@ export default {
 			name: '58',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_5': {
@@ -12024,7 +12024,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_7': {
@@ -12041,7 +12041,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_25': {
@@ -12054,7 +12054,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_67': {
@@ -12067,7 +12067,7 @@ export default {
 			name: '67',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_49': {
@@ -12080,7 +12080,7 @@ export default {
 			name: '49',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_63': {
@@ -12093,7 +12093,7 @@ export default {
 			name: '63',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_52': {
@@ -12106,7 +12106,7 @@ export default {
 			name: '52',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_68': {
@@ -12119,7 +12119,7 @@ export default {
 			name: '68',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_56': {
@@ -12132,7 +12132,7 @@ export default {
 			name: '56',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_44': {
@@ -12145,7 +12145,7 @@ export default {
 			name: '44',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_28': {
@@ -12168,7 +12168,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#FFFF49,#43FF43,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_32': {
@@ -12181,7 +12181,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_66': {
@@ -12194,7 +12194,7 @@ export default {
 			name: '66',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF4343,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_46': {
@@ -12207,7 +12207,7 @@ export default {
 			name: '46',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD,#FFFF49,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_34': {
@@ -12220,7 +12220,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#FFFF49,#246BFD,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_62': {
@@ -12233,7 +12233,7 @@ export default {
 			name: '62',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_50': {
@@ -12246,7 +12246,7 @@ export default {
 			name: '50',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#43FF43,#FF4343,#43FF43,#FFFF49,#FF8A06,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#246BFD,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_31': {
@@ -12259,7 +12259,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF8A06,#43FF43,#FF8A06,#FFFF49,#246BFD,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FF4343,#FF4343,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_72': {
@@ -12276,7 +12276,7 @@ export default {
 			name: '72',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_10': {
@@ -12293,7 +12293,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FFFF49,#FF4343,#FF4343,#43FF43,#FF8A06,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FFFF49,#246BFD,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FF8A06,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 		'333_zbll-s_69': {
@@ -12306,7 +12306,7 @@ export default {
 			name: '69',
 			favorite: false,
 			colors: '#FFFF49,#FF8A06,#FF4343,#FF8A06,#246BFD,#FFFF49,#43FF43,#FFFF49,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FFFF49,#FFFF49,#FF4343,#43FF43,#43FF43,#246BFD',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-s',
 		},
 	},
@@ -12321,7 +12321,7 @@ export default {
 			name: '63',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_24': {
@@ -12334,7 +12334,7 @@ export default {
 			name: '24',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_38': {
@@ -12347,7 +12347,7 @@ export default {
 			name: '38',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_59': {
@@ -12360,7 +12360,7 @@ export default {
 			name: '59',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_56': {
@@ -12373,7 +12373,7 @@ export default {
 			name: '56',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_28': {
@@ -12386,7 +12386,7 @@ export default {
 			name: '28',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_71': {
@@ -12399,7 +12399,7 @@ export default {
 			name: '71',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_66': {
@@ -12412,7 +12412,7 @@ export default {
 			name: '66',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_65': {
@@ -12425,7 +12425,7 @@ export default {
 			name: '65',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_20': {
@@ -12438,7 +12438,7 @@ export default {
 			name: '20',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_12': {
@@ -12451,7 +12451,7 @@ export default {
 			name: '12',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_62': {
@@ -12464,7 +12464,7 @@ export default {
 			name: '62',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_7': {
@@ -12477,7 +12477,7 @@ export default {
 			name: '7',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_11': {
@@ -12490,7 +12490,7 @@ export default {
 			name: '11',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_64': {
@@ -12503,7 +12503,7 @@ export default {
 			name: '64',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_31': {
@@ -12516,7 +12516,7 @@ export default {
 			name: '31',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_21': {
@@ -12529,7 +12529,7 @@ export default {
 			name: '21',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_50': {
@@ -12542,7 +12542,7 @@ export default {
 			name: '50',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_25': {
@@ -12555,7 +12555,7 @@ export default {
 			name: '25',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_34': {
@@ -12568,7 +12568,7 @@ export default {
 			name: '34',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_52': {
@@ -12581,7 +12581,7 @@ export default {
 			name: '52',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_39': {
@@ -12594,7 +12594,7 @@ export default {
 			name: '39',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_42': {
@@ -12607,7 +12607,7 @@ export default {
 			name: '42',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_41': {
@@ -12620,7 +12620,7 @@ export default {
 			name: '41',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_8': {
@@ -12633,7 +12633,7 @@ export default {
 			name: '8',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_6': {
@@ -12646,7 +12646,7 @@ export default {
 			name: '6',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_15': {
@@ -12659,7 +12659,7 @@ export default {
 			name: '15',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_16': {
@@ -12672,7 +12672,7 @@ export default {
 			name: '16',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_4': {
@@ -12690,7 +12690,7 @@ export default {
 			name: '4',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_10': {
@@ -12707,7 +12707,7 @@ export default {
 			name: '10',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_33': {
@@ -12720,7 +12720,7 @@ export default {
 			name: '33',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_13': {
@@ -12733,7 +12733,7 @@ export default {
 			name: '13',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_36': {
@@ -12750,7 +12750,7 @@ export default {
 			name: '36',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_1': {
@@ -12769,7 +12769,7 @@ export default {
 			name: '1',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_19': {
@@ -12782,7 +12782,7 @@ export default {
 			name: '19',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_9': {
@@ -12795,7 +12795,7 @@ export default {
 			name: '9',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_35': {
@@ -12808,7 +12808,7 @@ export default {
 			name: '35',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_14': {
@@ -12821,7 +12821,7 @@ export default {
 			name: '14',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_27': {
@@ -12839,7 +12839,7 @@ export default {
 			name: '27',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_18': {
@@ -12852,7 +12852,7 @@ export default {
 			name: '18',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_2': {
@@ -12870,7 +12870,7 @@ export default {
 			name: '2',
 			favorite: false,
 			colors: '#FF8A06,#43FF43,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_30': {
@@ -12883,7 +12883,7 @@ export default {
 			name: '30',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_17': {
@@ -12896,7 +12896,7 @@ export default {
 			name: '17',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_44': {
@@ -12909,7 +12909,7 @@ export default {
 			name: '44',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_22': {
@@ -12922,7 +12922,7 @@ export default {
 			name: '22',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_43': {
@@ -12935,7 +12935,7 @@ export default {
 			name: '43',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_32': {
@@ -12948,7 +12948,7 @@ export default {
 			name: '32',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_48': {
@@ -12961,7 +12961,7 @@ export default {
 			name: '48',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_54': {
@@ -12974,7 +12974,7 @@ export default {
 			name: '54',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_45': {
@@ -12987,7 +12987,7 @@ export default {
 			name: '45',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_23': {
@@ -13000,7 +13000,7 @@ export default {
 			name: '23',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#FF4343,#43FF43,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_29': {
@@ -13013,7 +13013,7 @@ export default {
 			name: '29',
 			favorite: false,
 			colors: '#FF8A06,#FF8A06,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_37': {
@@ -13032,7 +13032,7 @@ export default {
 			name: '37',
 			favorite: false,
 			colors: '#246BFD,#FF8A06,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_53': {
@@ -13045,7 +13045,7 @@ export default {
 			name: '53',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_49': {
@@ -13058,7 +13058,7 @@ export default {
 			name: '49',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_5': {
@@ -13071,7 +13071,7 @@ export default {
 			name: '5',
 			favorite: false,
 			colors: '#FF8A06,#FF4343,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#246BFD,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_60': {
@@ -13084,7 +13084,7 @@ export default {
 			name: '60',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_58': {
@@ -13097,7 +13097,7 @@ export default {
 			name: '58',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_57': {
@@ -13110,7 +13110,7 @@ export default {
 			name: '57',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_72': {
@@ -13123,7 +13123,7 @@ export default {
 			name: '72',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_26': {
@@ -13144,7 +13144,7 @@ export default {
 			name: '26',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_51': {
@@ -13157,7 +13157,7 @@ export default {
 			name: '51',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_40': {
@@ -13170,7 +13170,7 @@ export default {
 			name: '40',
 			favorite: false,
 			colors: '#246BFD,#43FF43,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#FF4343,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_55': {
@@ -13183,7 +13183,7 @@ export default {
 			name: '55',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_46': {
@@ -13196,7 +13196,7 @@ export default {
 			name: '46',
 			favorite: false,
 			colors: '#246BFD,#246BFD,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_68': {
@@ -13209,7 +13209,7 @@ export default {
 			name: '68',
 			favorite: false,
 			colors: '#43FF43,#43FF43,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_61': {
@@ -13222,7 +13222,7 @@ export default {
 			name: '61',
 			favorite: false,
 			colors: '#43FF43,#FF8A06,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#246BFD,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_3': {
@@ -13235,7 +13235,7 @@ export default {
 			name: '3',
 			favorite: false,
 			colors: '#FF8A06,#246BFD,#FFFF49,#FFFF49,#43FF43,#FFFF49,#FF4343,#43FF43,#FF8A06,#FFFF49,#FFFF49,#FFFF49,#43FF43,#FF8A06,#FFFF49,#FFFF49,#246BFD,#FFFF49,#246BFD,#FF4343,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_47': {
@@ -13248,7 +13248,7 @@ export default {
 			name: '47',
 			favorite: false,
 			colors: '#246BFD,#FF4343,#FFFF49,#FFFF49,#FF8A06,#FFFF49,#43FF43,#FF8A06,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#FF4343,#FFFF49,#FFFF49,#246BFD,#FFFF49,#43FF43,#246BFD,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_67': {
@@ -13261,7 +13261,7 @@ export default {
 			name: '67',
 			favorite: false,
 			colors: '#43FF43,#FF4343,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#246BFD,#FFFF49,#FFFF49,#FFFF49,#43FF43,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_69': {
@@ -13274,7 +13274,7 @@ export default {
 			name: '69',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#43FF43,#FFFF49,#FFFF49,#FFFF49,#FF4343,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#FF8A06,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 		'333_zbll-as_70': {
@@ -13287,7 +13287,7 @@ export default {
 			name: '70',
 			favorite: false,
 			colors: '#43FF43,#246BFD,#FFFF49,#FFFF49,#FF4343,#FFFF49,#FF8A06,#246BFD,#FF4343,#FFFF49,#FFFF49,#FFFF49,#FF8A06,#43FF43,#FFFF49,#FFFF49,#246BFD,#FFFF49,#FF8A06,#43FF43,#FF4343',
-			cubeType: '333',
+			eventType: '333',
 			algoType: 'zbll-as',
 		},
 	},

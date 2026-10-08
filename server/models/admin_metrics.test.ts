@@ -76,18 +76,18 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 				{
 					bulk: false,
 					userId: 'same-user',
-					cubeType: '333',
+					eventType: '333',
 					category: 'timer',
 					solves: BigInt(2),
 				},
 				{
 					bulk: false,
 					userId: 'same-user',
-					cubeType: '222',
+					eventType: '222',
 					category: 'trainer',
 					solves: BigInt(1),
 				},
-				{bulk: true, userId: null, cubeType: null, category: null, solves: BigInt(5)},
+				{bulk: true, userId: null, eventType: null, category: null, solves: BigInt(5)},
 			];
 		}
 		if (sql.text.includes('demo_session_id')) {
@@ -116,8 +116,8 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 1, weekly: 1, monthly: 1});
 	expect(snapshot.breakdown).toEqual([
-		{cubeType: '333', category: 'timer', solves: 4},
-		{cubeType: '222', category: 'trainer', solves: 2},
+		{eventType: '333', category: 'timer', solves: 4},
+		{eventType: '222', category: 'trainer', solves: 2},
 	]);
 });
 
@@ -171,7 +171,7 @@ it('counts import operations separately from imported solves, grouped by start d
 		return empty(sql);
 	});
 	const snapshot = await buildAdminMetrics(cutoff, db);
-	expect(snapshot.version).toBe(2);
+	expect(snapshot.version).toBe(3);
 	expect(snapshot.days.find((day) => day.date === '2026-09-06')).toMatchObject({
 		imports: 0,
 		importsSucceeded: 2,

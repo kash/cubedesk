@@ -7,7 +7,7 @@ import {randomUUID} from 'node:crypto';
 export const METRICS_REFRESH_MS = 6 * 60 * 60 * 1000;
 // The braces are a cluster hash tag: Redis hashes only the part inside them, so the lock and retry
 // keys share the snapshot's slot and can be used together in one script
-const SNAPSHOT_KEY = `{${createRedisKey(RedisNamespace.ADMIN_METRICS, 'v2').key}}`;
+const SNAPSHOT_KEY = `{${createRedisKey(RedisNamespace.ADMIN_METRICS, 'v3').key}}`;
 const LOCK_KEY = `${SNAPSHOT_KEY}:lock`;
 const RETRY_KEY = `${SNAPSHOT_KEY}:retry`;
 const LEASE_MS = 60_000;
@@ -38,7 +38,7 @@ async function readSnapshot(): Promise<AdminMetricsSnapshot | null> {
 	try {
 		const snapshot = JSON.parse(value) as AdminMetricsSnapshot;
 		if (
-			snapshot.version !== 2 ||
+			snapshot.version !== 3 ||
 			!Number.isFinite(Date.parse(snapshot.cutoff)) ||
 			!Array.isArray(snapshot.days)
 		)

@@ -12,7 +12,7 @@ import {
 	CatalogAlgorithm,
 	trainerAlgorithmSchema,
 } from '@/shared/trainer/catalog';
-import {CUBE_TYPES} from '@/util/cubes/cube_types';
+import {EVENT_TYPES} from '@/util/cubes/event_types';
 import {trpc} from '@/util/trpc';
 import React, {useState} from 'react';
 
@@ -34,7 +34,7 @@ export default function TrainerAlgorithmEditor({
 			active: true,
 			solution: '',
 			scrambles: '',
-			cube_type: '333',
+			event_type: '333',
 			algo_type: 'OLL',
 			group_name: '',
 			img_link: '',
@@ -100,15 +100,15 @@ export default function TrainerAlgorithmEditor({
 						</Label>
 					))}
 					<Label className="flex-col items-stretch gap-2 leading-5">
-						<span>Cube type</span>
+						<span>Event type</span>
 						<NativeSelect
-							value={algorithm.cube_type}
+							value={algorithm.event_type}
 							onChange={(event) => {
-								update('cube_type', event.target.value);
+								update('event_type', event.target.value);
 								setPainting(false);
 							}}
 						>
-							{Object.values(CUBE_TYPES).map((cube) => (
+							{Object.values(EVENT_TYPES).map((cube) => (
 								<option key={cube.id} value={cube.id}>
 									{cube.name}
 								</option>
@@ -162,13 +162,13 @@ export default function TrainerAlgorithmEditor({
 				</Label>
 				<div className="border-text/15 flex justify-center rounded border p-5">
 					<AlgoVisual
-						cubeType={algorithm.cube_type}
+						eventType={algorithm.event_type}
 						colors={algorithm.colors}
 						rotate={algorithm.rotate}
 						imageLink={algorithm.img_link || undefined}
 					/>
 				</div>
-				{Object.values(CUBE_TYPES).find((cube) => cube.id === algorithm.cube_type)
+				{Object.values(EVENT_TYPES).find((cube) => cube.id === algorithm.event_type)
 					?.size && (
 					<Button
 						type="button"
@@ -180,7 +180,7 @@ export default function TrainerAlgorithmEditor({
 				)}
 				{painting && (
 					<CubeBuilder
-						cubeType={algorithm.cube_type}
+						eventType={algorithm.event_type}
 						initColors={algorithm.colors}
 						threeD={false}
 						onUpdate={(colors) => update('colors', colors)}

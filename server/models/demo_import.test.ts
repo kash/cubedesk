@@ -8,7 +8,7 @@ jest.mock('@/server/services/logger', () => ({logger: {warn: jest.fn()}}));
 const solve = {
 	id: '8f16a418-475a-4a30-a95a-5a283eea2242',
 	raw_time: 12.5,
-	cube_type: '333',
+	event_type: '333',
 	scramble: "R U R'",
 	started_at: 1000,
 	ended_at: 13500,
@@ -85,7 +85,7 @@ it('imports mixed puzzle types into one existing owned session, with DNF taking 
 	data.solves.push({
 		...solve,
 		id: '58968353-932e-4940-9e7c-d8f4a90df19e',
-		cube_type: '222',
+		event_type: '222',
 		dnf: true,
 	});
 	await importDemoSolves(db, 'user', data);

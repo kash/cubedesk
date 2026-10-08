@@ -44,7 +44,7 @@ export default function AddCustom(props: Props) {
 	const [error, setError] = useState('');
 	const [description, setDescription] = useInput('');
 	const [privateChecked, togglePrivateChecked] = useToggle(false);
-	const [cubeType, setCubeType] = useState('333');
+	const [eventType, setEventType] = useState('333');
 	const [threeD, toggleThreeD] = useToggle(false);
 
 	const [data, setData] = useState<CustomTrainerWithUser | null>(null);
@@ -83,9 +83,9 @@ export default function AddCustom(props: Props) {
 		setDescription(trainer.description);
 
 		setColors({
-			[getColorKey(trainer.cube_type, trainer.three_d)]: trainer.colors,
+			[getColorKey(trainer.event_type, trainer.three_d)]: trainer.colors,
 		});
-		setCubeType(trainer.cube_type);
+		setEventType(trainer.event_type);
 		togglePrivateChecked(trainer.private);
 		toggleThreeD(trainer.three_d);
 		setLoading(false);
@@ -126,9 +126,9 @@ export default function AddCustom(props: Props) {
 			description,
 			scrambles: getScrambles(),
 			three_d: threeD,
-			colors: colors[getColorKey(cubeType, threeD)],
+			colors: colors[getColorKey(eventType, threeD)],
 			alt_solutions: altSolutions,
-			cube_type: cubeType,
+			event_type: eventType,
 			private: privateChecked,
 		};
 
@@ -148,12 +148,12 @@ export default function AddCustom(props: Props) {
 
 	function updateColors(col: string) {
 		const newColors = {...colors};
-		newColors[getColorKey(cubeType, threeD)] = col;
+		newColors[getColorKey(eventType, threeD)] = col;
 		setColors(newColors);
 	}
 
-	function selectCubeType(ct: string) {
-		setCubeType(ct);
+	function selectEventType(ct: string) {
+		setEventType(ct);
 	}
 
 	function onPrivateChange(checked: boolean) {
@@ -227,8 +227,8 @@ export default function AddCustom(props: Props) {
 				<HorizontalLine />
 				<div className="flex flex-col">
 					<HorizontalNav
-						onChange={selectCubeType}
-						tabId={cubeType}
+						onChange={selectEventType}
+						tabId={eventType}
 						tabs={[
 							{id: '333', value: '3x3'},
 							{id: '222', value: '2x2'},
@@ -237,8 +237,8 @@ export default function AddCustom(props: Props) {
 					<Checkbox checked={threeD} text="3D" onCheckedChange={onThreeDChange} />
 				</div>
 				<CubeBuilder
-					cubeType={cubeType}
-					initColors={colors[getColorKey(cubeType, threeD)]}
+					eventType={eventType}
+					initColors={colors[getColorKey(eventType, threeD)]}
 					threeD={threeD}
 					onUpdate={updateColors}
 				/>

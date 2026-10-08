@@ -4,7 +4,7 @@ import EventTypeSelector from '@/components/solves/bulk-actions/actions/EventTyp
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {Solve} from '@/types/solve';
-import {CubeType} from '@/util/cubes/cube_types';
+import {EventType} from '@/util/cubes/event_types';
 import {toastSuccess} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import React, {useMemo} from 'react';
@@ -29,7 +29,7 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 		return solves.map((solve) => solve.id);
 	}, [solves, solves?.length]);
 
-	function onSelectCubeType(cubeType: CubeType) {
+	function onSelectEventType(eventType: EventType) {
 		setConfirmDialog({
 			buttonText: `Change event type`,
 			title: 'Bulk change event type',
@@ -37,14 +37,14 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 				'You are about to set the event type of the selected solves. This is irreversible. Be careful.',
 			infoBoxes: [
 				{label: 'Solves', value: solves.length.toLocaleString()},
-				{label: 'New Event Type', value: cubeType.name},
+				{label: 'New Event Type', value: eventType.name},
 			],
 			triggerAction: run,
 		});
 
 		async function run() {
-			const updateCount = await trpc.bulkActions.updateCubeType.mutate({
-				cubeType: cubeType.id,
+			const updateCount = await trpc.bulkActions.updateEventType.mutate({
+				eventType: eventType.id,
 				solveIds,
 			});
 
@@ -52,13 +52,13 @@ export default function BulkChangeEventSolvesButton(props: Props) {
 
 			const solvesUpdated = `${updateCount} solve${updateCount === 1 ? '' : 's'}`;
 			toastSuccess(
-				`Successfully changed the event type of ${solvesUpdated} to ${cubeType.name}.`,
+				`Successfully changed the event type of ${solvesUpdated} to ${eventType.name}.`,
 			);
 		}
 	}
 
 	function onClick() {
-		setEventTypeSelectorDialog({props: {solves: solves}, onComplete: onSelectCubeType});
+		setEventTypeSelectorDialog({props: {solves: solves}, onComplete: onSelectEventType});
 	}
 
 	return (

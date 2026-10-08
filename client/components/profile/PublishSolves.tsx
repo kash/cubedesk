@@ -3,10 +3,10 @@ import {Button} from '@/components/ui/button';
 import {DialogClose} from '@/components/ui/dialog';
 import {Spinner} from '@/components/ui/spinner';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
-import {fetchAllCubeTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
+import {fetchAllEventTypesSolved, FilterSolvesOptions} from '@/db/solves/query';
 import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
-import {getCubeTypeInfoById} from '@/util/cubes/util';
+import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useMe} from '@/util/hooks/useMe';
 import {getTimeString} from '@/util/time';
 import {toastError, toastSuccess} from '@/util/toast';
@@ -21,7 +21,7 @@ interface Props {
 export default function PublishSolves(props: Props) {
 	const {onComplete} = props;
 
-	const cubeTypes = fetchAllCubeTypesSolved(true);
+	const eventTypes = fetchAllEventTypesSolved(true);
 
 	const me = useMe();
 	const [publishing, setPublishing] = useState(false);
@@ -30,7 +30,7 @@ export default function PublishSolves(props: Props) {
 	function getFilter(ct: string): FilterSolvesOptions {
 		return {
 			from_timer: true,
-			cube_type: ct,
+			event_type: ct,
 		};
 	}
 
@@ -45,9 +45,9 @@ export default function PublishSolves(props: Props) {
 		let errorCount = 0;
 		let successCount = 0;
 
-		for (const type of cubeTypes) {
-			const pb = getSinglePB(getFilter(type.cube_type));
-			const ao5Pb = getAveragePB(getFilter(type.cube_type), 5);
+		for (const type of eventTypes) {
+			const pb = getSinglePB(getFilter(type.event_type));
+			const ao5Pb = getAveragePB(getFilter(type.event_type), 5);
 
 			try {
 				if (pb?.solve && pb.time > 0) {
@@ -85,24 +85,24 @@ export default function PublishSolves(props: Props) {
 	}
 
 	const rows: React.ReactNode[] = [];
-	for (const type of cubeTypes) {
-		const pb = getSinglePB(getFilter(type.cube_type));
-		const ao5pb = getAveragePB(getFilter(type.cube_type), 5);
+	for (const type of eventTypes) {
+		const pb = getSinglePB(getFilter(type.event_type));
+		const ao5pb = getAveragePB(getFilter(type.event_type), 5);
 
 		if (!pb && !ao5pb) {
 			continue;
 		}
 
-		const ct = getCubeTypeInfoById(type.cube_type);
+		const ct = getEventTypeInfoById(type.event_type);
 
 		rows.push(
-			<TableRow key={type.cube_type}>
+			<TableRow key={type.event_type}>
 				<TableCell className="py-4 pl-4">
 					<div className="flex items-center gap-2.5">
 						<span className="bg-tmo-module/5 text-text/50 flex size-8 items-center justify-center rounded-lg">
 							<Cube size={18} />
 						</span>
-						<span className="text-sm font-medium">{ct?.name ?? type.cube_type}</span>
+						<span className="text-sm font-medium">{ct?.name ?? type.event_type}</span>
 					</div>
 				</TableCell>
 				<TableCell className="text-right text-base font-semibold tabular-nums">

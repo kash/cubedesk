@@ -42,7 +42,7 @@ export default function Timer(props: TimerProps) {
 	const [loading, setLoading] = useState(!props.demoMode);
 	const timerStore = useSelector((state: RootState) => state.timer) as TimerStore;
 	const mobileMode = useGeneral('mobile_mode');
-	const cubeType = useSettings('cube_type');
+	const eventType = useSettings('event_type');
 	const hideMobileTimerFooter = useSettings('hide_mobile_timer_footer');
 	const timerType = useSettings('timer_type');
 	const focusMode = useSettings('focus_mode');
@@ -68,7 +68,7 @@ export default function Timer(props: TimerProps) {
 
 	// All default values from the settings should go here
 	const context: ITimerContext = {
-		cubeType,
+		eventType,
 		focusMode,
 		...timerStore,
 		...props,

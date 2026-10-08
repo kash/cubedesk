@@ -3,7 +3,7 @@ import * as z from 'zod';
 export const EloLogSchema = z.object({
   id: z.string(),
   opponent_id: z.string().nullable(),
-  cube_type: z.string(),
+  event_type: z.string(),
   elo_change: z.number().int(),
   updated_at: z.date(),
   created_at: z.date(),

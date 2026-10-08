@@ -20,11 +20,12 @@ import {RubiksCube} from '@/components/timer/smart-cube/visual/core/RubiksCube';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
-import {setCubeType} from '@/db/settings/update';
+import {setEventType} from '@/db/settings/update';
 import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
 import {useSettings} from '@/util/hooks/useSettings';
 import {SMART_PUZZLES, SmartPuzzle} from '@/util/smart-cube/puzzle';
+import {SmartTurn} from '@/util/smart_scramble';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {DotsThree} from 'phosphor-react';
@@ -46,6 +47,8 @@ export default function SmartCube() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const cube = useRef<RubiksCube | null>(null);
 	const cubejs = useRef(new Cube());
+	// Applied to cubejs and the visual, so a render only applies the turns that came after it
+	const lastAppliedTurn = useRef<SmartTurn | null>(null);
 	const [pendingDevice, setPendingDevice] = useState<PendingSmartDevice | null>(null);
 	const confirmationRef = useRef<((confirmed: boolean) => void) | null>(null);
 	const [macAddressRequest, setMacAddressRequest] = useState<MacAddressRequestReason | null>(
@@ -111,7 +114,7 @@ export default function SmartCube() {
 		smartCubeConnected,
 		smartCubeNeedsSolve,
 		smartCubePuzzle,
-		cubeType,
+		eventType,
 		timeStartedAt,
 	} = context;
 	const puzzle = SMART_PUZZLES[smartCubePuzzle ?? '333'];
@@ -139,11 +142,17 @@ export default function SmartCube() {
 	}, []);
 
 	useEffect(() => {
-		if (!smartCubeConnecting && smartTurns.length) {
-			const turn = smartTurns[smartTurns.length - 1].turn;
-			cubejs.current.move(turn);
-
-			addTurn(turn);
+		// Turns that arrive together, like both faces of a slice move, render once, so apply every turn since the last one
+		const newTurns: SmartTurn[] = smartCubeConnecting
+			? []
+			: smartTurns.slice(smartTurns.indexOf(lastAppliedTurn.current) + 1);
+		if (newTurns.length) {
+			lastAppliedTurn.current = newTurns[newTurns.length - 1];
+			checkForStartAfterTurn();
+			for (const {turn} of newTurns) {
+				cubejs.current.move(turn);
+				execTurn(turn);
+			}
 		}
 
 		const isSolved = cubeIsSolved();
@@ -161,7 +170,7 @@ export default function SmartCube() {
 	// Time the connected cube's puzzle, and redraw the visual at its size
 	useEffect(() => {
 		if (!smartCubePuzzle) return;
-		if (smartCubePuzzle !== cubeType) setCubeType(smartCubePuzzle);
+		if (smartCubePuzzle !== eventType) setEventType(smartCubePuzzle);
 		initVisualCube(cubejs.current.asString());
 	}, [smartCubePuzzle]);
 
@@ -231,11 +240,6 @@ export default function SmartCube() {
 			});
 			resetMoves();
 		}
-	}
-
-	function addTurn(turn: string) {
-		checkForStartAfterTurn();
-		execTurn(turn);
 	}
 
 	function resetMoves(markSolved: boolean = false) {

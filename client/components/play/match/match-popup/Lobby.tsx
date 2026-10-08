@@ -15,7 +15,7 @@ export default function Lobby(props: Props) {
 
 	useEffect(() => {
 		socketClient().emit('playerJoinedLobby', {
-			cube_type: '333',
+			event_type: '333',
 			game_type: GameType.HEAD_TO_HEAD,
 		});
 

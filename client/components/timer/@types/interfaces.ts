@@ -12,7 +12,7 @@ interface TimerHeaderOptions {
 	hideInspection?: boolean;
 	hideManualEntry?: boolean;
 	hideNewSession?: boolean;
-	hideCubeType?: boolean;
+	hideEventType?: boolean;
 	hideTimerType?: boolean;
 	hideSessionSelector?: boolean;
 	customHeadersLeft?: ReactNode;
@@ -42,7 +42,7 @@ export interface TimerProps {
 	hideScramble?: boolean;
 	hideTime?: boolean;
 	inDialog?: boolean;
-	cubeType?: string;
+	eventType?: string;
 	timerLayout?: TimerLayoutPosition;
 
 	customScrambleFunc?: (context: ITimerContext) => string;

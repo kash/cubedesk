@@ -6,7 +6,7 @@ export const TrainerAlgorithmSchema = z.object({
   active: z.boolean().default(true),
   solution: z.string(),
   scrambles: z.string(),
-  cube_type: z.string(),
+  event_type: z.string(),
   algo_type: z.string(),
   group_name: z.string(),
   img_link: z.string(),

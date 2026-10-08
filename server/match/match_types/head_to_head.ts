@@ -7,7 +7,7 @@ export default class HeadToHead implements MatchTypeLogic {
 	params() {
 		return {
 			eventName: GameType.HEAD_TO_HEAD,
-			defaultCubeType: '333',
+			defaultEventType: '333',
 			defaultMinPlayers: 2,
 			defaultMaxPlayers: 2,
 		};

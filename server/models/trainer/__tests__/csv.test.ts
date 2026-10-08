@@ -3,7 +3,7 @@ import {parseCsv, parseTrainerCsv} from '@/server/models/trainer/csv';
 import {catalogChanges} from '@/server/models/trainer/catalog';
 import {MAX_CSV_BYTES, MAX_CSV_RECORDS} from '@/shared/trainer/catalog';
 
-const header = 'id,name,cube_type,algo_type';
+const header = 'id,name,event_type,algo_type';
 
 test('imports a bulk legacy-format catalog without paid restrictions or dropping incomplete algorithms', () => {
 	const result = parseTrainerCsv(catalogCsv);
@@ -28,7 +28,7 @@ test('imports a bulk legacy-format catalog without paid restrictions or dropping
 
 test('supports reordered headers, BOM, CRLF, quoted commas, escaped quotes and embedded newlines', () => {
 	const result = parseTrainerCsv(
-		'\uFEFFname,id,algo_type,cube_type,scrambles,rotate,active\r\n"A, ""B""",abc,OLL,333,"R U\r\nU R",0.0,checked\r\n',
+		'\uFEFFname,id,algo_type,event_type,scrambles,rotate,active\r\n"A, ""B""",abc,OLL,333,"R U\r\nU R",0.0,checked\r\n',
 	);
 	expect(result.errors).toEqual([]);
 	expect(result.algorithms[0]).toMatchObject({
@@ -37,6 +37,16 @@ test('supports reordered headers, BOM, CRLF, quoted commas, escaped quotes and e
 		scrambles: 'R U\r\nU R',
 		rotate: 0,
 		active: true,
+	});
+});
+
+test('reads the cube_type column from catalogs exported before it was renamed to event_type', () => {
+	const result = parseTrainerCsv('id,name,cube_type,algo_type\na,A,222,OLL');
+	expect(result.errors).toEqual([]);
+	expect(result.algorithms[0]).toMatchObject({id: 'a', event_type: '222'});
+	expect(parseTrainerCsv('id,name,cube_type,event_type,algo_type\na,A,222,222,OLL').errors).toContainEqual({
+		row: 1,
+		message: 'Duplicate column headers',
 	});
 });
 

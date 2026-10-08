@@ -27,7 +27,7 @@ export default function GameChallenger() {
 	function openMatch(joinLobby: boolean) {
 		setMatchPopupDialog({
 			props: {
-				cubeType: '333',
+				eventType: '333',
 				joinLobby: joinLobby,
 				minPlayers: minPlayers,
 				maxPlayers: maxPlayers,

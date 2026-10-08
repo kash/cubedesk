@@ -43,7 +43,7 @@ export type DemoSolveMinAggregateOutputType = {
   demo_session_id: string | null
   ip_address: string | null
   raw_time: number | null
-  cube_type: string | null
+  event_type: string | null
   scramble: string | null
   started_at: bigint | null
   ended_at: bigint | null
@@ -56,7 +56,7 @@ export type DemoSolveMaxAggregateOutputType = {
   demo_session_id: string | null
   ip_address: string | null
   raw_time: number | null
-  cube_type: string | null
+  event_type: string | null
   scramble: string | null
   started_at: bigint | null
   ended_at: bigint | null
@@ -69,7 +69,7 @@ export type DemoSolveCountAggregateOutputType = {
   demo_session_id: number
   ip_address: number
   raw_time: number
-  cube_type: number
+  event_type: number
   scramble: number
   started_at: number
   ended_at: number
@@ -96,7 +96,7 @@ export type DemoSolveMinAggregateInputType = {
   demo_session_id?: true
   ip_address?: true
   raw_time?: true
-  cube_type?: true
+  event_type?: true
   scramble?: true
   started_at?: true
   ended_at?: true
@@ -109,7 +109,7 @@ export type DemoSolveMaxAggregateInputType = {
   demo_session_id?: true
   ip_address?: true
   raw_time?: true
-  cube_type?: true
+  event_type?: true
   scramble?: true
   started_at?: true
   ended_at?: true
@@ -122,7 +122,7 @@ export type DemoSolveCountAggregateInputType = {
   demo_session_id?: true
   ip_address?: true
   raw_time?: true
-  cube_type?: true
+  event_type?: true
   scramble?: true
   started_at?: true
   ended_at?: true
@@ -222,7 +222,7 @@ export type DemoSolveGroupByOutputType = {
   demo_session_id: string
   ip_address: string | null
   raw_time: number | null
-  cube_type: string | null
+  event_type: string | null
   scramble: string | null
   started_at: bigint | null
   ended_at: bigint | null
@@ -258,7 +258,7 @@ export type DemoSolveWhereInput = {
   demo_session_id?: Prisma.StringFilter<"DemoSolve"> | string
   ip_address?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
   raw_time?: Prisma.FloatNullableFilter<"DemoSolve"> | number | null
-  cube_type?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
+  event_type?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
   scramble?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
   started_at?: Prisma.BigIntNullableFilter<"DemoSolve"> | bigint | number | null
   ended_at?: Prisma.BigIntNullableFilter<"DemoSolve"> | bigint | number | null
@@ -271,7 +271,7 @@ export type DemoSolveOrderByWithRelationInput = {
   demo_session_id?: Prisma.SortOrder
   ip_address?: Prisma.SortOrderInput | Prisma.SortOrder
   raw_time?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  event_type?: Prisma.SortOrderInput | Prisma.SortOrder
   scramble?: Prisma.SortOrderInput | Prisma.SortOrder
   started_at?: Prisma.SortOrderInput | Prisma.SortOrder
   ended_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -288,7 +288,7 @@ export type DemoSolveWhereUniqueInput = Prisma.AtLeast<{
   demo_session_id?: Prisma.StringFilter<"DemoSolve"> | string
   ip_address?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
   raw_time?: Prisma.FloatNullableFilter<"DemoSolve"> | number | null
-  cube_type?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
+  event_type?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
   scramble?: Prisma.StringNullableFilter<"DemoSolve"> | string | null
   started_at?: Prisma.BigIntNullableFilter<"DemoSolve"> | bigint | number | null
   ended_at?: Prisma.BigIntNullableFilter<"DemoSolve"> | bigint | number | null
@@ -301,7 +301,7 @@ export type DemoSolveOrderByWithAggregationInput = {
   demo_session_id?: Prisma.SortOrder
   ip_address?: Prisma.SortOrderInput | Prisma.SortOrder
   raw_time?: Prisma.SortOrderInput | Prisma.SortOrder
-  cube_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  event_type?: Prisma.SortOrderInput | Prisma.SortOrder
   scramble?: Prisma.SortOrderInput | Prisma.SortOrder
   started_at?: Prisma.SortOrderInput | Prisma.SortOrder
   ended_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -322,7 +322,7 @@ export type DemoSolveScalarWhereWithAggregatesInput = {
   demo_session_id?: Prisma.StringWithAggregatesFilter<"DemoSolve"> | string
   ip_address?: Prisma.StringNullableWithAggregatesFilter<"DemoSolve"> | string | null
   raw_time?: Prisma.FloatNullableWithAggregatesFilter<"DemoSolve"> | number | null
-  cube_type?: Prisma.StringNullableWithAggregatesFilter<"DemoSolve"> | string | null
+  event_type?: Prisma.StringNullableWithAggregatesFilter<"DemoSolve"> | string | null
   scramble?: Prisma.StringNullableWithAggregatesFilter<"DemoSolve"> | string | null
   started_at?: Prisma.BigIntNullableWithAggregatesFilter<"DemoSolve"> | bigint | number | null
   ended_at?: Prisma.BigIntNullableWithAggregatesFilter<"DemoSolve"> | bigint | number | null
@@ -335,7 +335,7 @@ export type DemoSolveCreateInput = {
   demo_session_id: string
   ip_address?: string | null
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -348,7 +348,7 @@ export type DemoSolveUncheckedCreateInput = {
   demo_session_id: string
   ip_address?: string | null
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -361,7 +361,7 @@ export type DemoSolveUpdateInput = {
   demo_session_id?: Prisma.StringFieldUpdateOperationsInput | string
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -374,7 +374,7 @@ export type DemoSolveUncheckedUpdateInput = {
   demo_session_id?: Prisma.StringFieldUpdateOperationsInput | string
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -387,7 +387,7 @@ export type DemoSolveCreateManyInput = {
   demo_session_id: string
   ip_address?: string | null
   raw_time?: number | null
-  cube_type?: string | null
+  event_type?: string | null
   scramble?: string | null
   started_at?: bigint | number | null
   ended_at?: bigint | number | null
@@ -400,7 +400,7 @@ export type DemoSolveUpdateManyMutationInput = {
   demo_session_id?: Prisma.StringFieldUpdateOperationsInput | string
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -413,7 +413,7 @@ export type DemoSolveUncheckedUpdateManyInput = {
   demo_session_id?: Prisma.StringFieldUpdateOperationsInput | string
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   raw_time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  cube_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  event_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scramble?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   ended_at?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -432,7 +432,7 @@ export type DemoSolveCountOrderByAggregateInput = {
   demo_session_id?: Prisma.SortOrder
   ip_address?: Prisma.SortOrder
   raw_time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   scramble?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
   ended_at?: Prisma.SortOrder
@@ -451,7 +451,7 @@ export type DemoSolveMaxOrderByAggregateInput = {
   demo_session_id?: Prisma.SortOrder
   ip_address?: Prisma.SortOrder
   raw_time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   scramble?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
   ended_at?: Prisma.SortOrder
@@ -464,7 +464,7 @@ export type DemoSolveMinOrderByAggregateInput = {
   demo_session_id?: Prisma.SortOrder
   ip_address?: Prisma.SortOrder
   raw_time?: Prisma.SortOrder
-  cube_type?: Prisma.SortOrder
+  event_type?: Prisma.SortOrder
   scramble?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
   ended_at?: Prisma.SortOrder
@@ -485,7 +485,7 @@ export type DemoSolveSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   demo_session_id?: boolean
   ip_address?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   started_at?: boolean
   ended_at?: boolean
@@ -498,7 +498,7 @@ export type DemoSolveSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   demo_session_id?: boolean
   ip_address?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   started_at?: boolean
   ended_at?: boolean
@@ -511,7 +511,7 @@ export type DemoSolveSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   demo_session_id?: boolean
   ip_address?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   started_at?: boolean
   ended_at?: boolean
@@ -524,7 +524,7 @@ export type DemoSolveSelectScalar = {
   demo_session_id?: boolean
   ip_address?: boolean
   raw_time?: boolean
-  cube_type?: boolean
+  event_type?: boolean
   scramble?: boolean
   started_at?: boolean
   ended_at?: boolean
@@ -532,7 +532,7 @@ export type DemoSolveSelectScalar = {
   created_at?: boolean
 }
 
-export type DemoSolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "demo_session_id" | "ip_address" | "raw_time" | "cube_type" | "scramble" | "started_at" | "ended_at" | "updated_at" | "created_at", ExtArgs["result"]["demoSolve"]>
+export type DemoSolveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "demo_session_id" | "ip_address" | "raw_time" | "event_type" | "scramble" | "started_at" | "ended_at" | "updated_at" | "created_at", ExtArgs["result"]["demoSolve"]>
 
 export type $DemoSolvePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DemoSolve"
@@ -542,7 +542,7 @@ export type $DemoSolvePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     demo_session_id: string
     ip_address: string | null
     raw_time: number | null
-    cube_type: string | null
+    event_type: string | null
     scramble: string | null
     started_at: bigint | null
     ended_at: bigint | null
@@ -975,7 +975,7 @@ export interface DemoSolveFieldRefs {
   readonly demo_session_id: Prisma.FieldRef<"DemoSolve", 'String'>
   readonly ip_address: Prisma.FieldRef<"DemoSolve", 'String'>
   readonly raw_time: Prisma.FieldRef<"DemoSolve", 'Float'>
-  readonly cube_type: Prisma.FieldRef<"DemoSolve", 'String'>
+  readonly event_type: Prisma.FieldRef<"DemoSolve", 'String'>
   readonly scramble: Prisma.FieldRef<"DemoSolve", 'String'>
   readonly started_at: Prisma.FieldRef<"DemoSolve", 'BigInt'>
   readonly ended_at: Prisma.FieldRef<"DemoSolve", 'BigInt'>

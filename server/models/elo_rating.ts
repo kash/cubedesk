@@ -5,7 +5,7 @@ import {getUserByIdWithProfile} from '@/server/models/user_account';
 const ELO_COLUMN_PREFIX = 'elo_';
 const GAMES_COLUMN_PREFIX = 'games_';
 
-export interface UserEloForCubeType {
+export interface UserEloForEventType {
 	userId: string;
 	elo: number;
 	games: number;
@@ -29,10 +29,10 @@ async function createEloRating(userId: string) {
 	});
 }
 
-export async function getUserEloRatingByCubeType(userId: string, cubeType: string): Promise<UserEloForCubeType> {
+export async function getUserEloRatingByEventType(userId: string, eventType: string): Promise<UserEloForEventType> {
 	const rating = await getUserEloRating(userId);
-	const elo: number = rating[getEloRatingColumnNameFromCubeType(cubeType)];
-	const games: number = rating[getGameCountColumnNameFromCubeType(cubeType)];
+	const elo: number = rating[getEloRatingColumnNameFromEventType(eventType)];
+	const games: number = rating[getGameCountColumnNameFromEventType(eventType)];
 
 	return {
 		userId,
@@ -55,16 +55,16 @@ async function getUserEloRating(userId: string) {
 	return rating;
 }
 
-export function getEloRatingColumnNameFromCubeType(cubeType: string) {
-	return `${ELO_COLUMN_PREFIX}${cubeType}_rating`;
+export function getEloRatingColumnNameFromEventType(eventType: string) {
+	return `${ELO_COLUMN_PREFIX}${eventType}_rating`;
 }
 
-function getGameCountColumnNameFromCubeType(cubeType: string) {
-	return `${GAMES_COLUMN_PREFIX}${cubeType}_count`;
+function getGameCountColumnNameFromEventType(eventType: string) {
+	return `${GAMES_COLUMN_PREFIX}${eventType}_count`;
 }
 
 // no need anymore
-async function getRealGameCountForCubeType(userId: string, cubeType: string) {
+async function getRealGameCountForEventType(userId: string, eventType: string) {
 	return getPrisma().matchParticipant.count({
 		where: {
 			user_id: userId,
@@ -72,7 +72,7 @@ async function getRealGameCountForCubeType(userId: string, cubeType: string) {
 			match: {
 				match_session: {
 					game_options: {
-						cube_type: cubeType,
+						event_type: eventType,
 					},
 				},
 				ended_at: {
@@ -83,9 +83,9 @@ async function getRealGameCountForCubeType(userId: string, cubeType: string) {
 	});
 }
 
-export async function incrementGameCountForCubeType(userId: string, cubeType: string) {
+export async function incrementGameCountForEventType(userId: string, eventType: string) {
 	const currentElo = await getUserEloRating(userId);
-	const column = getGameCountColumnNameFromCubeType(cubeType);
+	const column = getGameCountColumnNameFromEventType(eventType);
 	const currentCount = currentElo[column];
 
 	const newVal = currentCount + 1;
@@ -100,8 +100,8 @@ export async function incrementGameCountForCubeType(userId: string, cubeType: st
 	});
 }
 
-export function updateEloRating(userId: string, cubeType: string, value: number) {
-	const column = getEloRatingColumnNameFromCubeType(cubeType);
+export function updateEloRating(userId: string, eventType: string, value: number) {
+	const column = getEloRatingColumnNameFromEventType(eventType);
 
 	return getPrisma().eloRating.update({
 		where: {

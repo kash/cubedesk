@@ -13,11 +13,11 @@ interface Props {
 export default function ScrambleInfo(props: Props) {
 	const {solve, editMode, handleChange} = props;
 	const scramble = solve.scramble;
-	const cubeType = solve.cube_type;
+	const eventType = solve.event_type;
 
 	const scrambleBody = (
 		<div className="mb-[15px] w-full max-w-[260px]">
-			<ScrambleVisual cubeType={cubeType} scramble={scramble} />
+			<ScrambleVisual eventType={eventType} scramble={scramble} />
 		</div>
 	);
 
