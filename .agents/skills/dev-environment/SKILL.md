@@ -15,7 +15,7 @@ bash scripts/dev-setup.sh install  # Node 24, pnpm, Postgres/Redis packages, .en
 bash scripts/dev-setup.sh start    # start Postgres + Redis, apply migrations, seed dummy data
 ```
 
-It's idempotent, so rerun `start` whenever Postgres or Redis isn't running (after a VM resume, or when you see connection errors). Services already listening on 5432/6379 are reused. Otherwise it installs them with apt and runs them natively, or falls back to `docker compose` (`DEV_SETUP_SERVICES=docker|native` forces one). Cursor runs it through `.cursor/environment.json`; on other platforms use `bash scripts/dev-setup.sh` as the setup command.
+It's idempotent, so rerun `start` whenever Postgres or Redis isn't running (after a VM resume, or when you see connection errors). Services already listening on 5432/6379 are reused. Otherwise it installs them with apt and runs them natively, or falls back to `docker compose` (`DEV_SETUP_SERVICES=docker|native` forces one).
 
 What it needs and why:
 
@@ -59,7 +59,7 @@ Handy fixed URLs:
 - `/solve/seedsmart0` (also `seedsmart1`, `seedsmart2`): a smart-cube solve with CFOP step breakdown.
 - `/play/head-to-head/seed-h2h-alice`: an ended match. Also `seed-h2h-bob`, `seed-h2h-mallory`, and `/play/elimination/seed-elim-friends`.
 - `/user/alice`: a profile with bio, ELO and PBs.
-- `/trainer/333/OLL`, `/trainer/333/PLL`, `/trainer/222/CLL`, `/trainer/222/OLL`: a 15-case sample of the built-in catalog (`scripts/seed-dev-trainer.ts`). It's only added while the catalog is empty, so CSV imports and edits at `/admin/trainer` (see `docs/trainer-catalog.md`) survive reseeding.
+- `/trainer/333/OLL`, `/trainer/333/PLL`, `/trainer/222/CLL`, `/trainer/222/OLL`: a 15-case sample of the built-in catalog (`scripts/seed-dev-trainer.ts`). It's only added while the catalog is empty, so CSV imports and edits at `/admin/trainer` survive reseeding.
 
 To add solves to an account you created yourself: `pnpm seed:dev --username <name>`. To start over: `pnpm exec prisma migrate reset --force && pnpm seed:dev`.
 

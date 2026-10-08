@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Sets up a working CubeDesk dev environment from scratch: Node, pnpm, Postgres, Redis, .env,
-# migrations and seed data. Built for cloud agents on fresh Linux VMs (Cursor, Codex, Claude Code,
-# ...), and safe to rerun anywhere.
+# migrations and seed data. Built for fresh Linux machines and cloud agent VMs, and safe to rerun
+# anywhere.
 #
 #   scripts/dev-setup.sh install   Node, pnpm, system packages and node_modules (no services needed)
 #   scripts/dev-setup.sh start     Start Postgres and Redis, apply migrations, seed dummy data
