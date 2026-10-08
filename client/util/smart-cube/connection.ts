@@ -51,6 +51,41 @@ export async function connectGatt(device: BluetoothDevice) {
 	}
 }
 
+/** Resolves true once the device advertises, meaning it's awake and in range, or false if aborted */
+export function waitForAdvertisement(device: BluetoothDevice, signal: AbortSignal) {
+	return new Promise<boolean>((resolve) => {
+		const watchController = new AbortController();
+		const finish = (advertised: boolean) => {
+			device.removeEventListener('advertisementreceived', onAdvertisement);
+			signal.removeEventListener('abort', onAbort);
+			watchController.abort();
+			resolve(advertised);
+		};
+		const onAdvertisement = () => finish(true);
+		const onAbort = () => finish(false);
+
+		if (signal.aborted) return resolve(false);
+		signal.addEventListener('abort', onAbort);
+		device.addEventListener('advertisementreceived', onAdvertisement);
+		device.watchAdvertisements({signal: watchController.signal}).catch(() => finish(false));
+	});
+}
+
+/**
+ * A device the browser still has permission for, so it can be reconnected without the device picker. Permissions
+ * only survive a reload with Chrome's new Web Bluetooth permissions backend flag, which also enables getDevices().
+ */
+export async function findPermittedDevice(id: string | null) {
+	if (!id || typeof navigator.bluetooth?.getDevices !== 'function') return null;
+
+	try {
+		const devices = await navigator.bluetooth.getDevices();
+		return devices.find((device) => device.id === id) ?? null;
+	} catch {
+		return null;
+	}
+}
+
 /** mac is the cube's MAC address in AA:BB:CC:DD:EE:FF format */
 export type SmartCubeProtocol = {
 	service: string;

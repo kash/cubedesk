@@ -30,7 +30,7 @@ export interface AllSettings {
 	locked_scramble: string | null;
 
 	// Local
-	timer_type: 'keyboard' | 'smart' | 'stackmat' | 'gantimer';
+	timer_type: 'keyboard' | 'smart' | 'stackmat' | 'smarttimer';
 	timer_layout: TimerLayoutPosition;
 	timer_module_count: number;
 	stackmat_id: string;

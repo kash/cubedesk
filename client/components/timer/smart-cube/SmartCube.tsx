@@ -1,5 +1,6 @@
 import ActionMenu from '@/components/common/inputs/ActionMenu';
 import BluetoothErrorMessage from '@/components/timer/common/BluetoothErrorMessage';
+import SmartDevicePanel from '@/components/timer/common/SmartDevicePanel';
 import {endTimer, startTimer} from '@/components/timer/helpers/events';
 import {setTimerParams} from '@/components/timer/helpers/params';
 import {smartCubeMismatched} from '@/components/timer/helpers/util';
@@ -423,29 +424,28 @@ export default function SmartCube() {
 
 	return (
 		<>
-			<div className="mt-[15px] flex w-1/2 flex-col items-center">
-				{/* Controls go beside the cube, or below it when there isn't room. The action button stays centered under the cube */}
-				<div className="grid grid-cols-[auto] items-center justify-items-center gap-x-3 gap-y-2 sm:grid-cols-[auto_auto]">
-					<div className="mb-[5px]">
-						<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
-							<canvas
-								width="200px"
-								height="200px"
-								ref={canvasRef}
-								className={cn('transition-[filter,opacity] duration-300', {
-									'opacity-50 grayscale': !smartCubeConnected,
-								})}
-							/>
-						</div>
+			<SmartDevicePanel
+				visual={
+					<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
+						<canvas
+							width="200px"
+							height="200px"
+							ref={canvasRef}
+							className={cn('transition-[filter,opacity] duration-300', {
+								'opacity-50 grayscale': !smartCubeConnected,
+							})}
+						/>
 					</div>
-					<div className="flex flex-row items-center gap-2.5 sm:flex-col">
+				}
+				controls={
+					<>
 						{battery}
 						{bluetoothStatus}
 						{dropdown}
-					</div>
-					{actionButton && <div className="sm:col-start-1">{actionButton}</div>}
-				</div>
-			</div>
+					</>
+				}
+				action={actionButton}
+			/>
 			<Dialog
 				open={bluetoothErrorMessageDialog !== null}
 				onOpenChange={(open) => {

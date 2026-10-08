@@ -6,7 +6,7 @@ import AuthDialog from '@/components/login/AuthDialog';
 import CreateNewSession from '@/components/sessions/CreateNewSession';
 import SessionSwitcher from '@/components/sessions/SessionPicker';
 import StackMatPicker from '@/components/settings/stackmat-picker/StackMatPicker';
-import {smartCubeSelected} from '@/components/timer/helpers/util';
+import {smartCubeSelected, smartTimerSelected} from '@/components/timer/helpers/util';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent} from '@/components/ui/dialog';
@@ -104,7 +104,7 @@ export default function HeaderControl() {
 	};
 
 	let manualDisabled = false;
-	if (smartCubeSelected(context)) {
+	if (smartCubeSelected(context) || smartTimerSelected()) {
 		manualDisabled = true;
 	}
 
@@ -169,7 +169,7 @@ export default function HeaderControl() {
 					{value: 'keyboard', text: 'Keyboard'},
 					{value: 'stackmat', text: 'StackMat'},
 					{value: 'smart', text: 'Smart Cube', disabled: !isSmartCubeEvent(eventType)},
-					{value: 'gantimer', text: 'GAN Smart Timer'},
+					{value: 'smarttimer', text: 'Smart Timer'},
 				]}
 			/>
 			{timerType === 'stackmat' && (

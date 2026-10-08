@@ -12,7 +12,7 @@ export function getAllLocalSettings(userId: string): AllSettings {
 	if (settingsVal && typeof settingsVal === 'object') {
 		const userSettings = settingsVal[userId];
 		if (userSettings && Object.keys(userSettings).length) {
-			output = migrateDefaultDarkTheme(userSettings);
+			output = migrateLocalSettings(userSettings);
 			if (output !== userSettings) {
 				settingsVal[userId] = output;
 				setLocalStorageObject('settings', settingsVal);
@@ -22,7 +22,7 @@ export function getAllLocalSettings(userId: string): AllSettings {
 			setLocalStorageObject('settings', settingsVal);
 		}
 	} else {
-		output = migrateDefaultDarkTheme(findLegacyLocalSettings());
+		output = migrateLocalSettings(findLegacyLocalSettings());
 
 		setLocalStorageObject('settings', {
 			[userId]: output,
@@ -43,6 +43,19 @@ export function setLocalSettingValue<T extends keyof AllSettings>(key: T, value:
 	allSettingsVal[userId] = localSettings;
 
 	setLocalStorageObject('settings', allSettingsVal);
+}
+
+/** Returns the same object when nothing changed, so callers know whether to save */
+function migrateLocalSettings(settings: AllSettings): AllSettings {
+	const output = migrateDefaultDarkTheme(settings);
+
+	// The GAN Smart Timer option became Smart Timer when it started supporting other brands
+	const timerType: string = output.timer_type;
+	if (timerType === 'gantimer') {
+		return {...output, timer_type: 'smarttimer'};
+	}
+
+	return output;
 }
 
 function clearDemoUserSettings() {

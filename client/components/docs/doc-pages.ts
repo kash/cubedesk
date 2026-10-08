@@ -55,7 +55,7 @@ export const DOC_SECTIONS: DocSection[] = [
 				navTitle: 'Supported devices',
 				title: 'Supported Smart Cubes and Timers (GAN, MoYu, QiYi, GoCube) | CubeDesk',
 				description:
-					'Every smart cube and timer that works with CubeDesk: GAN, MoYu, QiYi, GoCube, and Giiker Bluetooth cubes, plus the GAN Smart Timer and StackMat timers.',
+					'Every smart cube and timer that works with CubeDesk: GAN, MoYu, QiYi, GoCube, and Giiker Bluetooth cubes, plus GAN smart timers and StackMat timers.',
 				component: SupportedDevices,
 			},
 		],
@@ -68,7 +68,7 @@ export const DOC_SECTIONS: DocSection[] = [
 				navTitle: 'Troubleshooting Bluetooth',
 				title: 'Smart Cube Bluetooth Troubleshooting (GAN, MoYu, GoCube, Giiker) | CubeDesk',
 				description:
-					"Fix smart cube and GAN Smart Timer connection problems on CubeDesk. Supported browsers, GAN and MoYu MAC address setup, auto-reconnect, and how to recalibrate a cube that's out of sync.",
+					"Fix smart cube and smart timer connection problems on CubeDesk. Supported browsers, GAN and MoYu MAC address setup, auto-reconnect, and how to recalibrate a cube that's out of sync.",
 				component: BluetoothTroubleshooting,
 			},
 			{
