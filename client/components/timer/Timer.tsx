@@ -213,9 +213,9 @@ export default function Timer(props: TimerProps) {
 									: context.focusMode
 										? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)]'
 										: timerLayout === 'left'
-											? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[1fr] !px-0 !pb-2.5 !pl-2.5'
+											? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[minmax(0,1fr)] !px-0 !pb-2.5 !pl-2.5'
 											: timerLayout === 'right'
-												? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[1fr] !px-2.5 !pb-2.5'
+												? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[minmax(0,1fr)] !px-2.5 !pb-2.5'
 												: hideMobileTimerFooter && mobileMode
 													? 'grid-rows-[1fr_50px]'
 													: 'grid-rows-[1fr_300px]',
