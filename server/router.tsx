@@ -1,5 +1,5 @@
 import type {Request} from 'express';
-import {PageContext, routes} from '@/components/layout/Routes';
+import {loadPage, PageContext, routes} from '@/components/layout/Routes';
 import {mapSingleRoute} from '@/components/map-route';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
 import reducers from '@/reducers/reducers';
@@ -45,14 +45,18 @@ function safeStringify(object) {
 		.replace(/\u2029/g, '\\u2029');
 }
 
-function renderFullPage(html, headTags, preloadedState) {
+// Stands in for the React markup while the page is minified. Minifying the markup itself collapses
+// whitespace-only text nodes, so it no longer matches the client render and hydration fails.
+const APP_HTML_PLACEHOLDER = '<!--app-html-->';
+
+async function renderFullPage(html, headTags, preloadedState) {
 	let cleanState = JSON.stringify(preloadedState).replace(/</g, '\\u003c');
 	cleanState = safeStringify(cleanState);
 
 	const deploymentId = process.env.DEPLOYMENT_ID || 'app';
 
 	const payload: HtmlPagePayload = {
-		html,
+		html: APP_HTML_PLACEHOLDER,
 		headTags,
 		cleanState,
 		distBase: process.env.DIST_BASE_URI || '',
@@ -61,24 +65,32 @@ function renderFullPage(html, headTags, preloadedState) {
 		cssFileName: `${deploymentId}.min.css`,
 	};
 
-	return htmlTemplate(payload);
+	const page = await minify(htmlTemplate(payload), {
+		collapseWhitespace: true,
+		minifyJS: true,
+		minifyCSS: true,
+	});
+	return page.replace(APP_HTML_PLACEHOLDER, () => html);
 }
 
 const isDev = (process.env.ENV || 'development') === 'development';
 
-async function createComponents(req, store) {
+async function createComponents(req, store, route: PageContext) {
 	const demoHome = req.path === '/' && !store.getState().account.me;
-	// Keep the development shell for other routes; the public demo renders on the
-	// server in every environment so its timer is visible before JavaScript loads.
-	if (isDev && !demoHome) {
+	// Keep the development shell for other routes; the public demo and pages that render before the
+	// app loads (e.g. profiles) render on the server in every environment so they're visible before
+	// JavaScript loads.
+	if (isDev && !demoHome && !route.renderBeforeAppLoad) {
 		const preloaded = store.getState();
-		const fullHtml = renderFullPage('', '', preloaded);
-		return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
+		return renderFullPage('', '', preloaded);
 	}
 
 	if (demoHome) {
 		store.dispatch({type: 'SET_TIMER_PARAM', payload: {params: {scramble: getNewScramble('333')}}});
 	}
+
+	// Pages are split into chunks; load this one's so it renders instead of suspending
+	await loadPage(route);
 
 	const staticRouter = (
 		<StaticRouter location={req.url} context={{}}>
@@ -101,9 +113,7 @@ async function createComponents(req, store) {
 	const {headTags, bodyMarkup} = extractHeadTags(markup);
 	const preloaded = store.getState();
 
-	// Get html and minify it
-	const fullHtml = renderFullPage(bodyMarkup, headTags, preloaded);
-	return minify(fullHtml, {collapseWhitespace: true, minifyJS: true, minifyCSS: true});
+	return renderFullPage(bodyMarkup, headTags, preloaded);
 }
 
 function appUseRouteForPage(routePath, route: PageContext) {
@@ -138,7 +148,7 @@ function appUseRouteForPage(routePath, route: PageContext) {
 		// Initiates the whole store
 		let html: string;
 		try {
-			html = await createComponents(req, store);
+			html = await createComponents(req, store, route);
 		} catch (error) {
 			next(error);
 			return;
