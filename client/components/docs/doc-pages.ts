@@ -1,11 +1,15 @@
-import About from '@/components/docs/pages/About';
-import BluetoothTroubleshooting from '@/components/docs/pages/BluetoothTroubleshooting';
-import ConnectWcaAccount from '@/components/docs/pages/ConnectWcaAccount';
-import MigrateFromCsTimer from '@/components/docs/pages/MigrateFromCsTimer';
-import Privacy from '@/components/docs/pages/Privacy';
-import SupportedDevices from '@/components/docs/pages/SupportedDevices';
-import Terms from '@/components/docs/pages/Terms';
+import {lazyPage} from '@/components/layout/lazy-page';
 import {ComponentType} from 'react';
+
+const About = lazyPage(() => import('@/components/docs/pages/About'));
+const BluetoothTroubleshooting = lazyPage(
+	() => import('@/components/docs/pages/BluetoothTroubleshooting'),
+);
+const ConnectWcaAccount = lazyPage(() => import('@/components/docs/pages/ConnectWcaAccount'));
+const MigrateFromCsTimer = lazyPage(() => import('@/components/docs/pages/MigrateFromCsTimer'));
+const Privacy = lazyPage(() => import('@/components/docs/pages/Privacy'));
+const SupportedDevices = lazyPage(() => import('@/components/docs/pages/SupportedDevices'));
+const Terms = lazyPage(() => import('@/components/docs/pages/Terms'));
 
 export interface DocPage {
 	path: string;

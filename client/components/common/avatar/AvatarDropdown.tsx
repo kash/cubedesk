@@ -1,4 +1,3 @@
-import UserView from '@/components/admin/manage-user/ManageUser';
 import {copyText} from '@/components/common/CopyText';
 import ActionMenu, {ActionMenuProps} from '@/components/common/inputs/ActionMenu';
 import EditProfile from '@/components/profile/EditProfile';
@@ -8,7 +7,10 @@ import {PublicUserAccount, UserAccount, UserAccountForAdmin} from '@/types/user'
 import {useMe} from '@/util/hooks/useMe';
 import {toastSuccess} from '@/util/toast';
 import {CaretDown, Copy, Flag, GearSix, Pen, User} from 'phosphor-react';
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
+
+// Admin-only, so it's loaded when an admin opens it instead of with every profile
+const UserView = lazy(() => import('@/components/admin/manage-user/ManageUser'));
 
 interface Props {
 	mini?: boolean;
@@ -111,7 +113,9 @@ export default function AvatarDropdown(props: Props) {
 				{userViewDialog && (
 					<DialogContent width={userViewDialog.width}>
 						<DialogTitle className="sr-only">Manage user</DialogTitle>
-						<UserView {...userViewDialog.props} />
+						<Suspense fallback={null}>
+							<UserView {...userViewDialog.props} />
+						</Suspense>
 					</DialogContent>
 				)}
 			</Dialog>

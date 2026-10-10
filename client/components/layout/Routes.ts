@@ -1,45 +1,54 @@
 import type {Request} from 'express';
-import Account from '@/components/account/Account';
-import DangerZone from '@/components/account/DangerZone';
-import LinkedAccounts from '@/components/account/linked-accounts/LinkedAccounts';
-import NotificationPreferences from '@/components/account/NotificationPreferences';
-import Password from '@/components/account/Password';
-import PersonalInfo from '@/components/account/PersonalInfo';
-import Admin from '@/components/admin/Admin';
-import AdminMetrics from '@/components/admin/AdminMetrics';
-import AdminTrainer from '@/components/admin/AdminTrainer';
-import AdminUsers from '@/components/admin/AdminUsers';
-import Reports from '@/components/admin/reports/Reports';
-import Community from '@/components/community/Community';
-import EloBoard from '@/components/community/EloBoard';
-import Friends from '@/components/community/Friends';
 import {DOC_PAGES} from '@/components/docs/doc-pages';
-import DocsLayout from '@/components/docs/DocsLayout';
-import Landing from '@/components/landing/Landing';
-import Privacy from '@/components/landing/legal/Privacy';
-import Terms from '@/components/landing/legal/Terms';
 import App from '@/components/layout/App';
-import ForceSignOut from '@/components/login/ForceSignOut';
-import LoginWrapper from '@/components/login/LoginWrapper';
-import OAuthService from '@/components/oauth/OAuthService';
-import Elimination from '@/components/play/logic/Elimination';
-import HeadToHead from '@/components/play/logic/HeadToHead';
-import Play from '@/components/play/Play';
-import PlayWrapper from '@/components/play/PlayWrapper';
-import Profile, {prefetchProfileData} from '@/components/profile/Profile';
-import Sessions from '@/components/sessions/Sessions';
-import Appearance from '@/components/settings/appearance/Appearance';
-import DataSettings from '@/components/settings/data/import-data/DataSettings';
-import Settings from '@/components/settings/Settings';
-import TimerSettings from '@/components/settings/timer/TimerSettings';
-import SolvePage, {prefetchSolveData} from '@/components/solve-page/SolvePage';
-import Solves from '@/components/solves/SolvesList';
-import Stats from '@/components/stats/Stats';
-import DefaultTimer from '@/components/timer/DefaultTimer';
-import PublicCustomTrainers from '@/components/trainer/public-custom-trainers/PublicCustomTrainers';
-import Trainer from '@/components/trainer/Trainer';
-import UnsubEmails from '@/components/unsub/UnsubEmails';
+import {isLazyPage, lazyPage} from '@/components/layout/lazy-page';
+import {prefetchProfileData} from '@/components/profile/profile-data';
+import {prefetchSolveData} from '@/components/solve-page/solve-data';
+import {matchPath} from 'react-router-dom';
 import {Store} from 'redux';
+
+// Every page is split into its own chunk so a visit only downloads the code for the page it shows
+const Account = lazyPage(() => import('@/components/account/Account'));
+const DangerZone = lazyPage(() => import('@/components/account/DangerZone'));
+const LinkedAccounts = lazyPage(
+	() => import('@/components/account/linked-accounts/LinkedAccounts'),
+);
+const NotificationPreferences = lazyPage(
+	() => import('@/components/account/NotificationPreferences'),
+);
+const Password = lazyPage(() => import('@/components/account/Password'));
+const PersonalInfo = lazyPage(() => import('@/components/account/PersonalInfo'));
+const Admin = lazyPage(() => import('@/components/admin/Admin'));
+const AdminMetrics = lazyPage(() => import('@/components/admin/AdminMetrics'));
+const AdminTrainer = lazyPage(() => import('@/components/admin/AdminTrainer'));
+const AdminUsers = lazyPage(() => import('@/components/admin/AdminUsers'));
+const Reports = lazyPage(() => import('@/components/admin/reports/Reports'));
+const Community = lazyPage(() => import('@/components/community/Community'));
+const EloBoard = lazyPage(() => import('@/components/community/EloBoard'));
+const Friends = lazyPage(() => import('@/components/community/Friends'));
+const DocsLayout = lazyPage(() => import('@/components/docs/DocsLayout'));
+const ForceSignOut = lazyPage(() => import('@/components/login/ForceSignOut'));
+const LoginWrapper = lazyPage(() => import('@/components/login/LoginWrapper'));
+const OAuthService = lazyPage(() => import('@/components/oauth/OAuthService'));
+const Elimination = lazyPage(() => import('@/components/play/logic/Elimination'));
+const HeadToHead = lazyPage(() => import('@/components/play/logic/HeadToHead'));
+const Play = lazyPage(() => import('@/components/play/Play'));
+const PlayWrapper = lazyPage(() => import('@/components/play/PlayWrapper'));
+const Profile = lazyPage(() => import('@/components/profile/Profile'));
+const Sessions = lazyPage(() => import('@/components/sessions/Sessions'));
+const Appearance = lazyPage(() => import('@/components/settings/appearance/Appearance'));
+const DataSettings = lazyPage(() => import('@/components/settings/data/import-data/DataSettings'));
+const Settings = lazyPage(() => import('@/components/settings/Settings'));
+const TimerSettings = lazyPage(() => import('@/components/settings/timer/TimerSettings'));
+const SolvePage = lazyPage(() => import('@/components/solve-page/SolvePage'));
+const Solves = lazyPage(() => import('@/components/solves/SolvesList'));
+const Stats = lazyPage(() => import('@/components/stats/Stats'));
+const DefaultTimer = lazyPage(() => import('@/components/timer/DefaultTimer'));
+const PublicCustomTrainers = lazyPage(
+	() => import('@/components/trainer/public-custom-trainers/PublicCustomTrainers'),
+);
+const Trainer = lazyPage(() => import('@/components/trainer/Trainer'));
+const UnsubEmails = lazyPage(() => import('@/components/unsub/UnsubEmails'));
 
 interface PageOptions {
 	restricted: boolean;
@@ -48,6 +57,8 @@ interface PageOptions {
 	hideTopNav: boolean;
 	noPadding: boolean;
 	noIndex: boolean;
+	// Render the page right away, on the server and before the app's local data (solves, settings) loads
+	renderBeforeAppLoad: boolean;
 	prefetchData?: ((store: Store<any>, req: Request) => Promise<any>)[];
 }
 
@@ -73,7 +84,7 @@ function route(
 	admin = false,
 	hideTopNav = false,
 	noPadding = false,
-	prefetchData: ((store: Store<any>, req: Request) => Promise<any>)[] = []
+	prefetchData: ((store: Store<any>, req: Request) => Promise<any>)[] = [],
 ): PageContext {
 	return {
 		path,
@@ -86,6 +97,7 @@ function route(
 		hideTopNav,
 		noPadding,
 		noIndex: false,
+		renderBeforeAppLoad: false,
 		prefetchData,
 	};
 }
@@ -93,6 +105,11 @@ function route(
 // Personal or utility pages that shouldn't show up in search results
 function noIndex(page: PageContext): PageContext {
 	return {...page, noIndex: true};
+}
+
+// Public pages that don't need the app's local data. They're fully server-rendered and show up immediately
+function renderBeforeAppLoad(page: PageContext): PageContext {
+	return {...page, renderBeforeAppLoad: true};
 }
 
 function routeRedirect(path: string, redirect: string): RedirectPath {
@@ -123,8 +140,14 @@ export const routes: (PageContext | RedirectPath)[] = [
 	noIndex(route('/settings/data', App, Settings, DataSettings, false)),
 
 	// Public
-	route('/solve/:shareCode', null, App, SolvePage, false, false, false, false, false, [prefetchSolveData]),
-	route('/user/:username', null, App, Profile, false, false, false, false, false, [prefetchProfileData]),
+	route('/solve/:shareCode', null, App, SolvePage, false, false, false, false, false, [
+		prefetchSolveData,
+	]),
+	renderBeforeAppLoad(
+		route('/user/:username', null, App, Profile, false, false, false, false, false, [
+			prefetchProfileData,
+		]),
+	),
 	noIndex(route('/unsub-emails', null, App, UnsubEmails, false, true, false, true, false)),
 
 	// Trainers
@@ -175,3 +198,16 @@ export const routes: (PageContext | RedirectPath)[] = [
 	routeRedirect('/community', '/community/leaderboards'),
 	routeRedirect('/admin', '/admin/reports'),
 ];
+
+export function findPage(pathname: string): PageContext | undefined {
+	return routes.find(
+		(page): page is PageContext =>
+			!('redirect' in page) && Boolean(matchPath(pathname, {path: page.path, exact: true})),
+	);
+}
+
+// Loads the code for every component of a page, so it renders without suspending
+export async function loadPage(page: PageContext) {
+	const components = [page.grandparent, page.parent, page.child].filter(isLazyPage);
+	await Promise.all(components.map((component) => component.load()));
+}

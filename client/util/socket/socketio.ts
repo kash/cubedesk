@@ -3,7 +3,8 @@ import {ClientToServerEvents, ServerToClientEvents} from '@/shared/match/socketi
 import {toastError} from '@/util/toast';
 import {io, Socket} from 'socket.io-client';
 
-let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
+// Connected on first use instead of on page load, so visitors who never use live features don't connect
+let socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
 let initiated = false;
 let rooms = [];
 
@@ -16,9 +17,9 @@ export function initSocketIO() {
 		forceNew: true,
 	});
 
-	socketClient().on('myRoomsUpdated', updateRooms);
-	socketClient().on('connect', onReconnect);
-	socketClient().on('disconnect', onDisconnect);
+	socket.on('myRoomsUpdated', updateRooms);
+	socket.on('connect', onReconnect);
+	socket.on('disconnect', onDisconnect);
 }
 
 function onDisconnect() {
@@ -48,9 +49,10 @@ function onReconnect() {
 }
 
 export function isSocketConnected() {
-	return socket.connected;
+	return Boolean(socket?.connected);
 }
 
 export function socketClient() {
-	return socket;
+	initSocketIO();
+	return socket!;
 }

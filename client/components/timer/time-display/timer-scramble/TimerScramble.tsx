@@ -1,14 +1,14 @@
 import CopyText from '@/components/common/CopyText';
 import {getStore} from '@/components/store';
 import {setTimerParam} from '@/components/timer/helpers/params';
-import {resetScramble} from '@/components/timer/helpers/scramble';
+import {prepareScramble, resetScramble} from '@/components/timer/helpers/scramble';
 import {smartCubeMismatched, smartCubeSelected} from '@/components/timer/helpers/util';
 import SmartScramble from '@/components/timer/time-display/timer-scramble/SmartScramble';
 import {useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {MOBILE_SCRAMBLE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
 import {setEventType, setSetting} from '@/db/settings/update';
-import {getEventTypeName} from '@/util/cubes/util';
+import {getEventTypeInfoById, getEventTypeName} from '@/util/cubes/util';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import classNames from 'classnames';
@@ -49,7 +49,10 @@ export default function TimerScramble() {
 		if (lockedScramble && !timeStartedAt) {
 			setTimerParam('scramble', lockedScramble);
 			setTimerParam('scrambleLocked', true);
-		} else if (!keepInitialScramble) {
+		} else if (keepInitialScramble) {
+			// The server rendered this scramble, so get the next one ready before the solve ends
+			prepareScramble(getEventTypeInfoById(eventType)?.scramble ?? eventType);
+		} else {
 			resetScramble(context);
 		}
 	}, [eventType, sessionId]);
@@ -106,7 +109,7 @@ export default function TimerScramble() {
 				aria-hidden="true"
 				className={`${scrambleFieldClasses} invisible [overflow-wrap:break-word] whitespace-pre-wrap`}
 			>
-				{`${scramble || (hideScramble ? '' : 'scramble')} `}
+				{scramble || (hideScramble ? '' : 'scramble')}
 			</div>
 			<textarea
 				onChange={handleScrambleChange}
