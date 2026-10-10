@@ -6,3 +6,8 @@ declare module '*.png' {
 interface Window {
 	[key: string]: any;
 }
+
+declare module '*?worker&url' {
+	const src: string;
+	export default src;
+}
