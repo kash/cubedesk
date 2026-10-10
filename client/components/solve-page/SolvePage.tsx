@@ -1,29 +1,11 @@
-import {setSsrValue} from '@/actions/ssr';
 import Header from '@/components/layout/Header';
 import SolveInfo from '@/components/solve-info/SolveInfo';
 import {Solve} from '@/types/solve';
 import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useSsr} from '@/util/hooks/useSsr';
 import {getTimeString} from '@/util/time';
-import {trpc} from '@/util/trpc';
-import {Request} from 'express';
 import React from 'react';
 import {useRouteMatch} from 'react-router-dom';
-import {Store} from 'redux';
-
-async function fetchSolveData(shareCode: string) {
-	// Raw client (not hooks): this also runs server-side for SSR prefetch
-	const solve = await trpc.solve.getByShareCode.query({shareCode});
-
-	return solve as unknown as Solve;
-}
-
-export async function prefetchSolveData(store: Store<any>, req: Request) {
-	const shareCode = String(req.params.shareCode);
-	const solve = await fetchSolveData(shareCode);
-
-	return store.dispatch(setSsrValue(shareCode, solve));
-}
 
 export default function SolvePage() {
 	const match = useRouteMatch<{shareCode: string}>();

@@ -1,4 +1,3 @@
-import {DemoImportProvider} from '@/components/login/DemoImport';
 import {setGeneral} from '@/actions/general';
 import Banned from '@/components/layout/Banned';
 import Header from '@/components/layout/Header';
@@ -7,6 +6,8 @@ import LoadingCover from '@/components/layout/LoadingCover';
 import {updateThemeColors} from '@/components/layout/themes';
 import TopNav from '@/components/layout/TopNav';
 import Wrapper from '@/components/layout/wrapper/Wrapper';
+import {DemoImportProvider} from '@/components/login/DemoImport';
+import {UserAccount} from '@/types/user';
 import {useDemoSolveWarning} from '@/util/hooks/useDemoSolveWarning';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
@@ -14,6 +15,7 @@ import {initPageTitleBlink} from '@/util/page_title_blink';
 import {initSocketIO} from '@/util/socket/socketio';
 import React, {ReactNode, useEffect, useLayoutEffect} from 'react';
 import {useDispatch} from 'react-redux';
+import {Dispatch} from 'redux';
 
 interface Props {
 	path?: string;
@@ -22,6 +24,29 @@ interface Props {
 	children?: ReactNode;
 	hideTopNav?: boolean;
 	restricted?: boolean;
+	renderBeforeAppLoad?: boolean;
+}
+
+// App is remounted on every route change, so make sure the app data only starts loading once
+let appDataStarted = false;
+
+function startAppData(me: UserAccount, dispatch: Dispatch<any>, callback: () => void) {
+	if (appDataStarted) {
+		return;
+	}
+	appDataStarted = true;
+
+	initSocketIO();
+	initAppData(me, dispatch, callback);
+}
+
+// Runs work once the browser is idle, so it doesn't delay taps on a page that's already showing
+function whenIdle(callback: () => void) {
+	if ('requestIdleCallback' in window) {
+		window.requestIdleCallback(callback, {timeout: 2000});
+	} else {
+		setTimeout(callback, 200);
+	}
 }
 
 export default function App(props: Props = {}) {
@@ -33,7 +58,7 @@ export default function App(props: Props = {}) {
 }
 
 function AppContent(props: Props) {
-	const {path, standalone, children, hideTopNav, restricted} = props;
+	const {path, standalone, children, hideTopNav, restricted, renderBeforeAppLoad} = props;
 
 	const dispatch = useDispatch();
 	const appLoaded = useGeneral('app_loaded');
@@ -59,8 +84,12 @@ function AppContent(props: Props) {
 			return;
 		}
 
-		initSocketIO();
-		initAppData(me, dispatch, appInitiated);
+		// The page is already showing and doesn't need the local data, so load it once the page is interactive
+		if (renderBeforeAppLoad) {
+			whenIdle(() => startAppData(me, dispatch, appInitiated));
+		} else {
+			startAppData(me, dispatch, appInitiated);
+		}
 	}, []);
 
 	if (typeof window !== 'undefined') {
@@ -103,8 +132,8 @@ function AppContent(props: Props) {
 						: undefined
 				}
 			/>
-			{me ? <LoadingCover fadeOut={appLoaded} /> : null}
-			{appLoaded || (!me && path === '/') ? (
+			{me && !renderBeforeAppLoad ? <LoadingCover fadeOut={appLoaded} /> : null}
+			{appLoaded || renderBeforeAppLoad || (!me && path === '/') ? (
 				<Wrapper {...wrapperProps}>{children}</Wrapper>
 			) : null}
 		</>
