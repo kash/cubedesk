@@ -1,4 +1,5 @@
 import type {Request} from 'express';
+import {setGeneral} from '@/actions/general';
 import {loadPage, PageContext, routes} from '@/components/layout/Routes';
 import {mapSingleRoute} from '@/components/map-route';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
@@ -116,9 +117,22 @@ async function createComponents(req, store, route: PageContext) {
 	return renderFullPage(bodyMarkup, headTags, preloaded);
 }
 
+function isPhoneRequest(req: Request) {
+	const mobileHint = req.get('Sec-CH-UA-Mobile');
+	if (mobileHint) {
+		return mobileHint === '?1';
+	}
+
+	return /Mobi|iPhone|iPod/i.test(req.get('User-Agent') || '');
+}
+
 function appUseRouteForPage(routePath, route: PageContext) {
 	global.app.all(routePath, async (req, res, next) => {
 		const store = createStore(reducers, {}, applyMiddleware(promise, thunk));
+		if (isPhoneRequest(req)) {
+			store.dispatch(setGeneral('mobile_mode', true));
+			store.dispatch(setGeneral('force_nav_collapsed', true));
+		}
 		const promises: ((store: Store<any>, req: Request) => Promise<any>)[] = route.prefetchData || [];
 		const me = await initUserAccount(store, req);
 
