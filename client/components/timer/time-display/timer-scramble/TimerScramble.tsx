@@ -106,7 +106,7 @@ export default function TimerScramble() {
 				aria-hidden="true"
 				className={`${scrambleFieldClasses} invisible [overflow-wrap:break-word] whitespace-pre-wrap`}
 			>
-				{`${scramble || (hideScramble ? '' : 'scramble')} `}
+				{scramble || (hideScramble ? '' : 'scramble')}
 			</div>
 			<textarea
 				onChange={handleScrambleChange}
