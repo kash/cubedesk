@@ -16,6 +16,8 @@ Before running the app, the DB integration tests or anything that needs Postgres
 - Fix TypeScript errors at their root (correct the types or declarations) instead of casting to `any` or adding `@ts-ignore`.
 - Don't add new unit tests unless asked. Do run the existing ones.
 - Commit messages are short and plain, without `Co-Authored-By` or other trailers.
+- Don't add comments to code. Existing comments can stay; just don't write new ones.
+- Keep PR descriptions short and to the point. A long explanation is fine when the change is big enough to need one.
 
 ## Checks
 
