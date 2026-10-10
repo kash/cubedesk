@@ -1,5 +1,5 @@
 import ErrorBoundary from '@/components/common/ErrorBoundary';
-import {routes} from '@/components/layout/Routes';
+import {findPage, loadPage, routes} from '@/components/layout/Routes';
 import 'seedrandom';
 import {setStore} from '@/components/store';
 import reducers from '@/reducers/reducers';
@@ -55,10 +55,20 @@ const tree = (
 	</TRPCProvider>
 );
 
-// Hydrate server-rendered pages, including the demo homepage in development.
-if (!appNode.hasChildNodes()) {
-	createRoot(appNode).render(tree);
-} else {
-	hydrateRoot(appNode, tree);
+async function start() {
+	// Load the current page's chunk first so the first render matches the server markup
+	const page = findPage(window.location.pathname);
+	if (page) {
+		await loadPage(page).catch((error) => console.error('Could not load page', error));
+	}
+
+	// Hydrate server-rendered pages, including the demo homepage in development.
+	if (!appNode.hasChildNodes()) {
+		createRoot(appNode).render(tree);
+	} else {
+		hydrateRoot(appNode, tree);
+	}
 }
+
+start();
  

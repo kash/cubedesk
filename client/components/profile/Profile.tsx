@@ -1,5 +1,4 @@
 import {getMe} from '@/actions/account';
-import {setSsrValue} from '@/actions/ssr';
 import AvatarDropdown from '@/components/common/avatar/AvatarDropdown';
 import LoadingIcon from '@/components/common/LoadingIcon';
 import UploadCover from '@/components/common/UploadCover';
@@ -8,87 +7,26 @@ import About from '@/components/profile/About';
 import FriendshipRequest from '@/components/profile/FriendshipRequest';
 import PbCard from '@/components/profile/PbCard';
 import PFP from '@/components/profile/PFP';
+import {getProfileData, IProfileData} from '@/components/profile/profile-data';
 import ProfileElo from '@/components/profile/ProfileElo';
 import PublishSolves from '@/components/profile/PublishSolves';
+import {useWcaProfile} from '@/components/profile/useWcaProfile';
 import WCA from '@/components/profile/WCA';
 import WcaProfileCard from '@/components/profile/WcaProfileCard';
-import {useWcaProfile} from '@/components/profile/useWcaProfile';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {Image} from '@/types/image';
-import {Profile as ProfileSchema} from '@/types/profile';
-import {TopAverage, TopSolve} from '@/types/top-solve';
-import {PublicUserAccount} from '@/types/user';
 import {api} from '@/util/api';
+import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {useSsr} from '@/util/hooks/useSsr';
 import {getStorageURL} from '@/util/storage';
-import {trpc} from '@/util/trpc';
 import {fileToBase64} from '@/util/upload';
 import classNames from 'classnames';
 import {CalendarBlank, CircleWavyCheck, Plus, Trophy} from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
-
-interface IProfileData {
-	user: PublicUserAccount;
-	profile: ProfileSchema;
-	pfpImage?: Image;
-	headerImage?: Image;
-	pbs: {
-		[key: string]: {
-			single?: TopSolve;
-			average?: TopAverage;
-		};
-	};
-}
-
-async function getProfileData(username: string): Promise<IProfileData> {
-	// Raw client (not hooks): this also runs server-side for SSR prefetch
-	const profileData = (await trpc.profile.get.query({username})) as unknown as ProfileSchema;
-
-	const topSolves = profileData.top_solves || [];
-	const topAverages = profileData.top_averages || [];
-
-	const pbs = {};
-
-	for (const topSolve of topSolves) {
-		if (!topSolve?.solve?.event_type) {
-			continue;
-		}
-
-		const solve = topSolve.solve;
-		const eventType = solve.event_type as string;
-		if (!pbs[eventType]) {
-			pbs[eventType] = {};
-		}
-		pbs[eventType].single = topSolve;
-	}
-
-	for (const topAverage of topAverages) {
-		if (!topAverage?.event_type) {
-			continue;
-		}
-
-		const eventType = topAverage.event_type as string;
-		pbs[eventType] ??= {};
-		pbs[eventType].average = topAverage;
-	}
-
-	return {
-		user: profileData.user as PublicUserAccount,
-		profile: profileData,
-		pfpImage: profileData.pfp_image || undefined,
-		headerImage: profileData.header_image || undefined,
-		pbs,
-	};
-}
-
-export async function prefetchProfileData(store, req) {
-	const profileData = await getProfileData(req.params.username);
-	return store.dispatch(setSsrValue(profileData.user.username as string, profileData));
-}
 
 export default function Profile() {
 	const [publishSolvesDialog, setPublishSolvesDialog] = React.useState<{
@@ -104,6 +42,8 @@ export default function Profile() {
 	const matchUsername = match?.params?.username;
 
 	const me = useMe();
+	// Publishing reads the local solves, which load after the profile shows
+	const appLoaded = useGeneral('app_loaded');
 	const [ssrProfile, setSsrProfile] = useSsr<IProfileData>(matchUsername);
 	const [loading, setLoading] = useState(!ssrProfile);
 	const [profileData, setProfileData] = useState<IProfileData | null>(ssrProfile);
@@ -299,7 +239,11 @@ export default function Profile() {
 										</p>
 									</div>
 									{myProfile ? (
-										<Button onClick={openPublishSolves} size="sm">
+										<Button
+											onClick={openPublishSolves}
+											size="sm"
+											disabled={!appLoaded}
+										>
 											<Plus weight="bold" />
 											Publish PBs
 										</Button>
