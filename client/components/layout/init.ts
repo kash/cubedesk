@@ -73,9 +73,7 @@ export async function initAppData(
 	});
 
 	try {
-		console.time('loadedFromDatabase');
 		await Promise.all(promises);
-		console.timeEnd('loadedFromDatabase');
 	} catch (e) {
 		console.error(e);
 	}
@@ -87,7 +85,6 @@ export async function initAppData(
 }
 
 async function initSolvesAndSessions(me: UserAccount) {
-	console.time('loadedFromOffline');
 	const local = await loadLocalSnapshot(me, LOCAL_DATA_TIMEOUT_MS);
 	if (!local) {
 		await refetchSolvesAndSessions(me);
@@ -96,7 +93,6 @@ async function initSolvesAndSessions(me: UserAccount) {
 
 	initSolveDb(local.solves);
 	initSessionDb(local.sessions);
-	console.timeEnd('loadedFromOffline');
 }
 
 /**
