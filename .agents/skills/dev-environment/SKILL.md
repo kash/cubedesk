@@ -15,7 +15,9 @@ bash scripts/dev-setup.sh install  # Node 24, pnpm, Postgres/Redis packages, .en
 bash scripts/dev-setup.sh start    # start Postgres + Redis, apply migrations, seed dummy data
 ```
 
-It's idempotent, so rerun `start` whenever Postgres or Redis isn't running (after a VM resume, or when you see connection errors). Services already listening on 5432/6379 are reused. Otherwise it installs them with apt and runs them natively, or falls back to `docker compose` (`DEV_SETUP_SERVICES=docker|native` forces one).
+It's idempotent. If `node_modules` exists and `curl -sf localhost:3000/health` succeeds, `bash scripts/dev-setup.sh` exits immediately. Rerun `start` when Postgres or Redis isn't running (after a VM resume, or when you see connection errors). Services already listening on 5432/6379 are reused. Otherwise it installs them with apt and runs them natively, or falls back to `docker compose` (`DEV_SETUP_SERVICES=docker|native` forces one).
+
+On a cloud agent, verify a UI or API change with one script against `http://localhost:3000`, logged in as `agent@cubedesk.test` / `cubedesk`. Do not drive the app through a computer-use browser agent, and do not record a walkthrough video, unless the user asked for a demo. Do not chase pre-existing hover behavior: headless Chrome has `hover: none`. Skip `pnpm test` for the whole repo unless the change touches those tests or the user asked.
 
 What it needs and why:
 
