@@ -70,6 +70,7 @@
 	border: 1px solid transparent;
 	border-radius: 10px;
 	padding: 12px 6px;
+	cursor: pointer;
 }
 .sessions-item:hover {
 	background: rgb(var(--text-color), 0.035);

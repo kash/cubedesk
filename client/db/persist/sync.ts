@@ -1,7 +1,12 @@
 import {postReplaced} from '@/db/persist/broadcast';
 import {CubedeskDb, DATA_VERSION, disablePersistence, getDatabase} from '@/db/persist/database';
 import {getLiveTabIds} from '@/db/persist/locks';
-import {clearLocalDataStaleMark, enqueueWrite, flushWrites, isLocalDataMarkedStale} from '@/db/persist/writes';
+import {
+	clearLocalDataStaleMark,
+	enqueueWrite,
+	flushWrites,
+	isLocalDataMarkedStale,
+} from '@/db/persist/writes';
 import {getSessionDb, initSessionDb} from '@/db/sessions/init';
 import {getSolveDb, initSolveDb} from '@/db/solves/init';
 import {clearAllSolveStatCache} from '@/db/solves/stats/solves/caching';
@@ -25,7 +30,10 @@ interface LocalSnapshot {
  * The local copy is current when it was synced at the server's current offline hash, nothing marked it stale since,
  * and no change is still waiting on its hash update.
  */
-export async function loadLocalSnapshot(user: SyncUser, timeoutMs: number): Promise<LocalSnapshot | null> {
+export async function loadLocalSnapshot(
+	user: SyncUser,
+	timeoutMs: number,
+): Promise<LocalSnapshot | null> {
 	const db = getDatabase();
 	if (!db || isLocalDataMarkedStale()) {
 		return null;
@@ -69,7 +77,10 @@ async function readValidSnapshot(db: CubedeskDb, user: SyncUser): Promise<LocalS
  * The new local copy is marked as synced at `user.offline_hash`, which must have been read before this fetch. Pass
  * `forceNewHash` when that hash may be outdated (e.g. after a server-side bulk change), so a new one is set first.
  */
-export async function refetchSolvesAndSessions(user: SyncUser, options: {forceNewHash?: boolean} = {}) {
+export async function refetchSolvesAndSessions(
+	user: SyncUser,
+	options: {forceNewHash?: boolean} = {},
+) {
 	let hash = user.offline_hash ?? null;
 	let persist = !!getDatabase();
 	let orphanOpIds: string[] = [];
@@ -94,7 +105,10 @@ export async function refetchSolvesAndSessions(user: SyncUser, options: {forceNe
 	let solves: Solve[];
 	let sessions: Session[];
 	try {
-		const [listedSolves, listedSessions] = await Promise.all([trpc.solve.list.query(), trpc.session.list.query()]);
+		const [listedSolves, listedSessions] = await Promise.all([
+			trpc.solve.list.query(),
+			trpc.session.list.query(),
+		]);
 		// The list is a lean subset of solve fields, which the local store has always held as Solve
 		solves = listedSolves as unknown as Solve[];
 		sessions = listedSessions;
@@ -102,7 +116,9 @@ export async function refetchSolvesAndSessions(user: SyncUser, options: {forceNe
 		console.error('Could not fetch solves and sessions', error);
 		initSolveDb([]);
 		initSessionDb([]);
-		enqueueWrite('invalidate', (db) => db.meta.update('sync', {valid: false}).then(() => undefined));
+		enqueueWrite('invalidate', (db) =>
+			db.meta.update('sync', {valid: false}).then(() => undefined),
+		);
 		return;
 	}
 
@@ -112,7 +128,9 @@ export async function refetchSolvesAndSessions(user: SyncUser, options: {forceNe
 	if (persist) {
 		writeSnapshot(user.id, hash, orphanOpIds);
 	} else {
-		enqueueWrite('invalidate', (db) => db.meta.update('sync', {valid: false}).then(() => undefined));
+		enqueueWrite('invalidate', (db) =>
+			db.meta.update('sync', {valid: false}).then(() => undefined),
+		);
 	}
 }
 
@@ -183,9 +201,18 @@ export async function clearLocalData() {
 	const db = getDatabase();
 	if (db) {
 		try {
-			await db.transaction('rw', [db.meta, db.pendingOps, db.solves, db.sessions], async () => {
-				await Promise.all([db.meta.clear(), db.pendingOps.clear(), db.solves.clear(), db.sessions.clear()]);
-			});
+			await db.transaction(
+				'rw',
+				[db.meta, db.pendingOps, db.solves, db.sessions],
+				async () => {
+					await Promise.all([
+						db.meta.clear(),
+						db.pendingOps.clear(),
+						db.solves.clear(),
+						db.sessions.clear(),
+					]);
+				},
+			);
 		} catch (error) {
 			console.error('Could not clear local data', error);
 		}

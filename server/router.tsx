@@ -1,7 +1,7 @@
 import type {Request} from 'express';
 import {setGeneral} from '@/actions/general';
 import {loadPage, PageContext, routes} from '@/components/layout/Routes';
-import {mapSingleRoute} from '@/components/map-route';
+import {PageRoutes} from '@/components/map-route';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
 import reducers from '@/reducers/reducers';
 import {ErrorCode} from '@/server/constants/errors';
@@ -10,16 +10,14 @@ import {initUserAccount} from '@/server/models/store';
 import {logger} from '@/server/services/logger';
 import {TRPCProvider} from '@/util/api';
 import {minify} from 'html-minifier-terser';
-import React, {ReactNode} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/server';
 import {HelmetProvider} from 'react-helmet-async';
 import {Provider} from 'react-redux';
-import {StaticRouter, Switch} from 'react-router-dom';
+import {StaticRouter} from 'react-router-dom';
 import {applyMiddleware, createStore, Store} from 'redux';
 import promise from 'redux-promise-middleware';
 import {thunk} from 'redux-thunk';
-
-const mappedRoutes: ReactNode[] = [];
 
 // React 19 hoists <title>/<meta>/<link> tags to the start of the renderToString
 // output instead of populating the react-helmet-async context, so we lift that
@@ -87,7 +85,10 @@ async function createComponents(req, store, route: PageContext) {
 	}
 
 	if (demoHome) {
-		store.dispatch({type: 'SET_TIMER_PARAM', payload: {params: {scramble: getNewScramble('333')}}});
+		store.dispatch({
+			type: 'SET_TIMER_PARAM',
+			payload: {params: {scramble: getNewScramble('333')}},
+		});
 	}
 
 	// Pages are split into chunks; load this one's so it renders instead of suspending
@@ -98,12 +99,7 @@ async function createComponents(req, store, route: PageContext) {
 			<HelmetProvider>
 				<TRPCProvider>
 					<Provider store={store}>
-						<Switch>
-							{routes.map((route: {[key: string]: any}) => {
-								route.exact = true;
-								return mapSingleRoute(route);
-							})}
-						</Switch>
+						<PageRoutes />
 					</Provider>
 				</TRPCProvider>
 			</HelmetProvider>
@@ -133,7 +129,8 @@ function appUseRouteForPage(routePath, route: PageContext) {
 			store.dispatch(setGeneral('mobile_mode', true));
 			store.dispatch(setGeneral('force_nav_collapsed', true));
 		}
-		const promises: ((store: Store<any>, req: Request) => Promise<any>)[] = route.prefetchData || [];
+		const promises: ((store: Store<any>, req: Request) => Promise<any>)[] =
+			route.prefetchData || [];
 		const me = await initUserAccount(store, req);
 
 		// Redirect to /login if page is restricted and user is not logged in
@@ -187,8 +184,6 @@ function appUseRouteForPage(routePath, route: PageContext) {
 
 export function mapPathToPage() {
 	for (const route of routes) {
-		mappedRoutes.push(mapSingleRoute(route));
-
 		const routePath = route.path.replace(/\s/g, '');
 		if ('redirect' in route && route.redirect) {
 			redirectPage(routePath, route);

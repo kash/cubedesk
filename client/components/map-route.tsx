@@ -1,34 +1,48 @@
+import {PageContext, routes} from '@/components/layout/Routes';
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {
+	generatePath,
+	matchPath,
+	Redirect,
+	Route,
+	RouteComponentProps,
+	useLocation,
+} from 'react-router-dom';
 
-export function mapSingleRoute(route) {
-	route.exact = true;
+function renderPage(page: PageContext, routeProps: RouteComponentProps) {
+	const {grandparent: GrandParent, parent: Parent, child: Child} = page;
+	const passProps = {...routeProps, ...page};
+
+	if (GrandParent) {
+		return (
+			<GrandParent {...passProps}>
+				<Parent key={page.path} {...passProps}>
+					{Child ? <Child {...passProps} /> : null}
+				</Parent>
+			</GrandParent>
+		);
+	}
 
 	return (
-		<Route
-			key={route.path}
-			{...route}
-			render={(props) => {
-				const Child = route.child;
-				const Parent = route.parent;
-
-				const passProps = {
-					...props,
-					...route,
-				};
-
-				if (route.grandparent) {
-					const GrandParent = route.grandparent;
-
-					return (
-						<GrandParent {...passProps}>
-							<Parent {...passProps}>{Child ? <Child {...passProps} /> : null}</Parent>
-						</GrandParent>
-					);
-				}
-
-				return <Parent {...passProps}>{Child ? <Child {...passProps} /> : null}</Parent>;
-			}}
-		/>
+		<Parent {...passProps}>{Child ? <Child key={page.path} {...passProps} /> : null}</Parent>
 	);
+}
+
+export function PageRoutes() {
+	const location = useLocation();
+
+	for (const route of routes) {
+		const match = matchPath(location.pathname, {path: route.path, exact: true});
+		if (!match) {
+			continue;
+		}
+
+		if ('redirect' in route) {
+			return <Redirect to={generatePath(route.redirect, match.params)} />;
+		}
+
+		return <Route path={route.path} exact render={(props) => renderPage(route, props)} />;
+	}
+
+	return null;
 }

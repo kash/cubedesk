@@ -107,7 +107,7 @@ export const solveRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.query(async ({input}) => {
 			const solve = await getSolve(input.id);
@@ -135,7 +135,7 @@ export const solveRouter = router({
 		.input(
 			z.object({
 				shareCode: z.string(),
-			})
+			}),
 		)
 		.query(async ({ctx, input}) => {
 			const solve = await getSolveByShareCode(input.shareCode);
@@ -159,7 +159,7 @@ export const solveRouter = router({
 			z.object({
 				id: z.string(),
 				input: solveInputSchema,
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const solve = await getBasicSolve(input.id);
@@ -186,7 +186,7 @@ export const solveRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const solve = await getSolve(input.id);
@@ -219,5 +219,4 @@ export const solveRouter = router({
 
 			return serializeSolveTimestamps(deleted);
 		}),
-
 });

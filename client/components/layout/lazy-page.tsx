@@ -1,4 +1,4 @@
-import React, {ComponentType, Suspense} from 'react';
+import React, {ComponentType, Suspense, useState} from 'react';
 
 type AnyComponent = ComponentType<any>;
 
@@ -35,8 +35,10 @@ export function lazyPage(loader: () => Promise<{default: AnyComponent}>): LazyPa
 	const Suspending = React.lazy(() => load().then((component) => ({default: component})));
 
 	function Page(props: any) {
-		if (Loaded) {
-			return <Loaded {...props} />;
+		const [LoadedOnMount] = useState(() => Loaded);
+
+		if (LoadedOnMount) {
+			return <LoadedOnMount {...props} />;
 		}
 
 		return (

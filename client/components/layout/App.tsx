@@ -27,7 +27,6 @@ interface Props {
 	renderBeforeAppLoad?: boolean;
 }
 
-// App is remounted on every route change, so make sure the app data only starts loading once
 let appDataStarted = false;
 
 function startAppData(me: UserAccount, dispatch: Dispatch<any>, callback: () => void) {

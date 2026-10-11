@@ -159,7 +159,7 @@ export default function Profile() {
 		<>
 			<div
 				className={classNames({
-					'bg-background box-border min-h-screen pt-[100px] pb-[150px]': !me,
+					'bg-background box-border min-h-screen pb-[150px]': !me,
 				})}
 			>
 				<Header

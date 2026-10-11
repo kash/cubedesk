@@ -21,14 +21,14 @@ export default function SolvePage() {
 	const user = solve.user?.username;
 
 	return (
-		<div className="box-border flex min-h-screen w-full items-start justify-center bg-background py-[100px]">
+		<div className="bg-background box-border flex min-h-screen w-full items-start justify-center pb-[100px] lg:pt-16">
 			<Header
 				path={`/solve/${shareCode}`}
 				title={`${getTimeString(solve.time)} Solve for ${eventType} by ${user} | CubeDesk`}
 				description={`View the details of this ${time} ${eventType} solve by ${user}. CubeDesk is the most advanced speedcubing timer, analytics, and trainer application.`}
 			/>
-			<div className="box-border w-full max-w-[600px] rounded-md bg-module px-5 py-[25px]">
-				<SolveInfo disabled solve={solve} solveId={solve.id} />
+			<div className="bg-module box-border w-full max-w-[600px] rounded-md px-5 py-[25px] lg:max-w-[900px] lg:px-10">
+				<SolveInfo disabled fullPage solve={solve} solveId={solve.id} />
 			</div>
 		</div>
 	);

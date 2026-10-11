@@ -1,5 +1,5 @@
 import ErrorBoundary from '@/components/common/ErrorBoundary';
-import {findPage, loadPage, routes} from '@/components/layout/Routes';
+import {findPage, loadPage} from '@/components/layout/Routes';
 import 'seedrandom';
 import {setStore} from '@/components/store';
 import reducers from '@/reducers/reducers';
@@ -11,7 +11,7 @@ import React from 'react';
 import {createRoot, hydrateRoot} from 'react-dom/client';
 import {HelmetProvider} from 'react-helmet-async';
 import {Provider} from 'react-redux';
-import {BrowserRouter, Switch} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {applyMiddleware, createStore} from 'redux';
 import promise from 'redux-promise-middleware';
 import '@/styles/index.css';
@@ -25,8 +25,7 @@ setStore(store);
 
 delete window.__STORE__;
 
-
-import {mapSingleRoute} from '@/components/map-route';
+import {PageRoutes} from '@/components/map-route';
 
 if (process.env.ENV !== 'development') {
 	Sentry.init({
@@ -35,7 +34,11 @@ if (process.env.ENV !== 'development') {
 		environment: process.env.ENV,
 		integrations: [new Integrations.BrowserTracing()],
 		tracesSampleRate: 0.1,
-		denyUrls: [/^chrome-extension:\/\//, /^moz-extension:\/\//, /^safari(-web)?-extension:\/\//],
+		denyUrls: [
+			/^chrome-extension:\/\//,
+			/^moz-extension:\/\//,
+			/^safari(-web)?-extension:\/\//,
+		],
 	});
 }
 
@@ -47,7 +50,7 @@ const tree = (
 			<Provider store={store as any}>
 				<BrowserRouter>
 					<ErrorBoundary>
-						<Switch>{routes.map((route) => mapSingleRoute(route))}</Switch>
+						<PageRoutes />
 					</ErrorBoundary>
 				</BrowserRouter>
 			</Provider>
@@ -71,4 +74,3 @@ async function start() {
 }
 
 start();
- 
