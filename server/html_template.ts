@@ -39,7 +39,7 @@ export default (payload: HtmlPagePayload) => {
 			</script>
 			<script type="module" src="/@vite/client"></script>
 			<script type="module" src="/client/components/App.tsx"></script>`
-		: `<script type="module" src="${assetUri(jsFileName)}"></script>`;
+		: `<script type="module" data-cfasync="false" src="${assetUri(jsFileName)}"></script>`;
 
 	return `
 		<!DOCTYPE html>
@@ -56,10 +56,10 @@ export default (payload: HtmlPagePayload) => {
 						color: rgb(${DEFAULT_THEME_COLORS.text_color});
 					}
 				</style>
-				<script type="text/javascript">
+				<script type="text/javascript" data-cfasync="false">
 					window.__STORE__ = ${cleanState};
 				</script>
-				<script type="text/javascript">
+				<script type="text/javascript" data-cfasync="false">
 					${getBlockingThemeInitScript()}
 				</script>
 				<link rel="preconnect" href="https://fonts.gstatic.com">

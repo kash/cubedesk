@@ -18,6 +18,7 @@ Before running the app, the DB integration tests, or anything that needs Postgre
 - Commit messages are short and plain, without `Co-Authored-By` or other trailers.
 - Don't add comments to code. Existing comments can stay; just don't write new ones.
 - Keep PR descriptions short and to the point. A long explanation is fine when the change is big enough to need one.
+- Never credit an AI agent or tool (Claude, Cursor, Codex, Copilot or any other) anywhere: no `Co-Authored-By` lines, "Generated with" footers, emoji badges or mentions in commits, PR titles or descriptions, code or docs.
 
 ## Checks
 

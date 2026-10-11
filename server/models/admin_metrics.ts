@@ -26,16 +26,6 @@ export function adminMetricsQueries(cutoff: Date) {
 			count(*) FILTER (WHERE status = 'pending' OR completed_at >= ${cutoff}) AS pending
 			FROM import_attempt WHERE started_at >= ${start} AND started_at < ${cutoff}
 			GROUP BY 1 ORDER BY 1`,
-		// The old created_at predicate required visiting the heap for every solve:
-		// neither existing index covers both created_at and bulk. Count using the
-		// narrow bulk index, then subtract the small indexed range past the cutoff.
-		// Both counts share one statement snapshot, including concurrent inserts.
-		solveTotals: Prisma.sql`SELECT totals.registered - excluded.registered AS registered,
-			totals.imported - excluded.imported AS imported
-			FROM (SELECT count(*) FILTER (WHERE NOT bulk) AS registered,
-				count(*) FILTER (WHERE bulk) AS imported FROM solve) totals
-			CROSS JOIN (SELECT count(*) FILTER (WHERE NOT bulk) AS registered,
-				count(*) FILTER (WHERE bulk) AS imported FROM solve WHERE created_at >= ${cutoff}) excluded`,
 		demoTotal: Prisma.sql`SELECT count(*) AS count FROM demo_solve WHERE created_at < ${cutoff}`,
 		accountTotal: Prisma.sql`SELECT count(*) AS count FROM user_account WHERE created_at < ${cutoff}`,
 		signupDays: Prisma.sql`SELECT created_at::date::text AS date, count(*) AS count
@@ -96,11 +86,16 @@ type SolveGroup = {
 
 type Totals = {registered: bigint; imported: bigint; count: bigint};
 
+function noTotals(): Totals {
+	return {registered: BigInt(0), imported: BigInt(0), count: BigInt(0)};
+}
+
 /** Rebuildable solely from existing records. No cache access or database writes. */
 export async function buildAdminMetrics(
 	cutoff = new Date(),
 	db = getPrisma(),
 	assertActive: () => void = () => {},
+	previous: AdminMetricsSnapshot | null = null,
 ): Promise<AdminMetricsSnapshot> {
 	const queries = adminMetricsQueries(cutoff);
 	async function query<T>(name: string, sql: Prisma.Sql): Promise<T[]> {
@@ -147,40 +142,61 @@ export async function buildAdminMetrics(
 		yield rows;
 	}
 
-	async function total(name: 'solveTotals' | 'demoTotal' | 'accountTotal'): Promise<Totals> {
-		try {
-			const [result] = await query<Totals>(name, queries[name]);
-			return result;
-		} catch (error) {
-			if (!isQueryTimeout(error)) throw error;
-		}
-		// Exact lifetime counts still require O(N) index entries. If even that
-		// exceeds the deadline, walk date ranges rather than retrying the same
-		// unbounded count forever. MIN uses the existing date indexes on solves.
-		const table = {solveTotals: 'solve', demoTotal: 'demo_solve', accountTotal: 'user_account'}[
-			name
-		];
+	async function firstCreatedAt(name: string, table: string): Promise<Date | null> {
 		const [{first}] = await query<{first: Date | null}>(
 			`${name} first date`,
 			Prisma.sql`SELECT min(created_at) AS first FROM ${Prisma.raw(table)} WHERE created_at < ${cutoff}`,
 		);
-		const result: Totals = {registered: BigInt(0), imported: BigInt(0), count: BigInt(0)};
-		if (first) {
-			for (let from = first.getTime(); from < cutoff.getTime(); from += 7 * DAY_MS) {
-				const end = new Date(Math.min(from + 7 * DAY_MS, cutoff.getTime()));
-				for await (const rows of rangeQuery<Totals>(name, new Date(from), end)) {
-					for (const row of rows) {
-						result.registered += row.registered ?? BigInt(0);
-						result.imported += row.imported ?? BigInt(0);
-						result.count += row.count ?? BigInt(0);
-					}
+		return first;
+	}
+
+	// Walk weekly date ranges rather than retrying the same unbounded count forever.
+	async function sumRanges(
+		name: 'solveTotals' | 'demoTotal' | 'accountTotal',
+		first: Date,
+	): Promise<Totals> {
+		const result = noTotals();
+		for (let from = first.getTime(); from < cutoff.getTime(); from += 7 * DAY_MS) {
+			const end = new Date(Math.min(from + 7 * DAY_MS, cutoff.getTime()));
+			for await (const rows of rangeQuery<Totals>(name, new Date(from), end)) {
+				for (const row of rows) {
+					result.registered += row.registered ?? BigInt(0);
+					result.imported += row.imported ?? BigInt(0);
+					result.count += row.count ?? BigInt(0);
 				}
 			}
 		}
 		return result;
 	}
 
-	const solves = await total('solveTotals');
+	async function total(name: 'demoTotal' | 'accountTotal'): Promise<Totals> {
+		try {
+			const [result] = await query<Totals>(name, queries[name]);
+			return result;
+		} catch (error) {
+			if (!isQueryTimeout(error)) throw error;
+		}
+		const first = await firstCreatedAt(
+			name,
+			name === 'demoTotal' ? 'demo_solve' : 'user_account',
+		);
+		return first ? sumRanges(name, first) : noTotals();
+	}
+
+	async function solveTotals(): Promise<Totals> {
+		if (previous && Date.parse(previous.cutoff) <= cutoff.getTime()) {
+			const added = await sumRanges('solveTotals', new Date(previous.cutoff));
+			return {
+				registered: BigInt(previous.totals.registeredSolves) + added.registered,
+				imported: BigInt(previous.totals.importedSolves) + added.imported,
+				count: BigInt(0),
+			};
+		}
+		const first = await firstCreatedAt('solveTotals', 'user_account');
+		return first ? sumRanges('solveTotals', first) : noTotals();
+	}
+
+	const solves = await solveTotals();
 	const demo = await total('demoTotal');
 	const accounts = await total('accountTotal');
 	const {start, week, month} = metricsWindow(cutoff);

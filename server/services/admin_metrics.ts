@@ -97,7 +97,7 @@ async function refresh() {
 		const assertActive = () => {
 			if (lost) throw new Error('Metrics refresh lost its Redis lock');
 		};
-		const result = await buildAdminMetrics(new Date(), undefined, assertActive);
+		const result = await buildAdminMetrics(new Date(), undefined, assertActive, latest);
 		assertActive();
 		// Ownership check and publication are atomic, including after a process pause or Redis reconnect.
 		const published = await redisCommand((redis) =>
