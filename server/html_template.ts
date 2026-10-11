@@ -63,8 +63,8 @@ export default (payload: HtmlPagePayload) => {
 					${getBlockingThemeInitScript()}
 				</script>
 				<link rel="preconnect" href="https://fonts.gstatic.com">
-				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans&family=JetBrains+Mono&family=Kiwi+Maru&family=Montserrat&family=Poppins&family=Roboto+Mono&family=Space+Mono&display=swap">
-				<link rel="preload stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,900&display=swap">
+				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans&family=JetBrains+Mono&family=Kiwi+Maru&family=Montserrat&family=Poppins&family=Roboto+Mono&family=Space+Mono&display=swap">
+				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,900&display=swap">
 				${cssLink}
 				<link rel="icon" href="${brandingBase}/favicon.ico" type="image/x-icon">
 				<link rel="icon" href="${brandingBase}/favicon-32x32.png" type="image/png" sizes="32x32">
