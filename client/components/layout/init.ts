@@ -16,7 +16,6 @@ import {clearAllSolveStatCache} from '@/db/solves/stats/solves/caching';
 import {generateId} from '@/shared/code';
 import {AppBootstrap} from '@/types/bootstrap';
 import {UserAccount} from '@/types/user';
-import {LoadTrace, startLoadTrace} from '@/util/load-trace';
 import {trpc} from '@/util/trpc';
 import {Dispatch} from 'redux';
 
@@ -59,16 +58,13 @@ export async function initAppData(
 	holdTabLock();
 	listenForOtherTabChanges();
 
-	const trace = startLoadTrace(me);
-
 	// Embedded in the page by the server when available, so these usually need no requests
 	const bootstrap = getAppBootstrap();
-	trace.set('bootstrap_embedded', !!bootstrap);
 
 	const promises: Promise<unknown>[] = [
-		trace.step('stats module', () => initStatsModule(dispatch, bootstrap)),
-		trace.step('settings', () => initSettings(me.id, bootstrap)),
-		trace.step('solves and sessions', () => initSolvesAndSessions(me, trace)),
+		initStatsModule(dispatch, bootstrap),
+		initSettings(me.id, bootstrap),
+		initSolvesAndSessions(me),
 	];
 
 	// Not needed to show the app, so loaded in the background. Trainer data loads when something first needs it.
@@ -88,28 +84,18 @@ export async function initAppData(
 	clearAllSolveStatCache();
 
 	callback();
-	trace.finish();
 }
 
-async function initSolvesAndSessions(me: UserAccount, trace: LoadTrace) {
+async function initSolvesAndSessions(me: UserAccount) {
 	console.time('loadedFromOffline');
-	const local = await trace.step('read local copy', () =>
-		loadLocalSnapshot(me, LOCAL_DATA_TIMEOUT_MS),
-	);
-	if (!local.snapshot) {
-		trace.set('solves.source', 'server');
-		trace.set('solves.local_miss_reason', local.missReason);
-		await refetchSolvesAndSessions(me, {trace});
+	const local = await loadLocalSnapshot(me, LOCAL_DATA_TIMEOUT_MS);
+	if (!local) {
+		await refetchSolvesAndSessions(me);
 		return;
 	}
 
-	const {solves, sessions} = local.snapshot;
-	trace.set('solves.source', 'local');
-	trace.set('solves.count', solves.length);
-	await trace.step('fill memory', () => {
-		initSolveDb(solves);
-		initSessionDb(sessions);
-	});
+	initSolveDb(local.solves);
+	initSessionDb(local.sessions);
 	console.timeEnd('loadedFromOffline');
 }
 

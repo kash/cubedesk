@@ -2,6 +2,7 @@ import {setGeneral} from '@/actions/general';
 import Nav from '@/components/layout/nav/Nav';
 import {NAV_LINKS} from '@/components/layout/nav/nav-links';
 import {updateThemeColors} from '@/components/layout/themes';
+import TopNav from '@/components/layout/TopNav';
 import DemoRestricted from '@/components/layout/wrapper/DemoRestricted';
 import {Toaster} from '@/components/ui/sonner';
 import {useGeneral} from '@/util/hooks/useGeneral';
@@ -67,6 +68,8 @@ export default function Wrapper(props: Props) {
 		nav = null;
 	}
 
+	const showTopNav = !me && !hideTopNav && match.path !== '/';
+
 	function isPageAuthBlocked() {
 		if (me) {
 			return false;
@@ -108,6 +111,9 @@ export default function Wrapper(props: Props) {
 	if (mobileMode && nav && !focusMode) {
 		bodyClasses.push('pt-[55px]');
 	}
+	if (showTopNav) {
+		bodyClasses.push('pt-[70px]');
+	}
 
 	const contentClasses = ['relative', 'w-full'];
 	if (!noPadding) {
@@ -117,6 +123,7 @@ export default function Wrapper(props: Props) {
 	return (
 		<div className="cd">
 			<Toaster />
+			{showTopNav ? <TopNav /> : null}
 			<div className={bodyClasses.join(' ')}>
 				{nav}
 				<div className={contentClasses.join(' ')}>{body}</div>
