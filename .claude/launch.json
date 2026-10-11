@@ -1,0 +1,12 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "cubedesk",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["run", "dev"],
+			"env": {"PORT": "3100", "BASE_URI": "http://localhost:3100"},
+			"port": 3100
+		}
+	]
+}

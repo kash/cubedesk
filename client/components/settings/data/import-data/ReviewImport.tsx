@@ -1,3 +1,4 @@
+import Checkbox from '@/components/common/Checkbox';
 import EventPicker from '@/components/common/EventPicker';
 import InputLegend from '@/components/common/inputs/input/InputLegend';
 import {ImportDataContext, ImportDataType} from '@/components/settings/data/import-data/ImportData';
@@ -12,7 +13,7 @@ import {toastError} from '@/util/toast';
 import {trpc} from '@/util/trpc';
 import {TRPCClientError} from '@trpc/client';
 import {X} from 'phosphor-react';
-import React, {ReactNode, useContext, useRef} from 'react';
+import React, {ReactNode, useContext, useRef, useState} from 'react';
 import {v4 as uuid} from 'uuid';
 
 export default function ReviewImport() {
@@ -20,11 +21,18 @@ export default function ReviewImport() {
 	const attempt = useRef<string | null>(null);
 	const submitted = useRef<Parameters<typeof trpc.imports.run.mutate>[0] | null>(null);
 	const running = useRef(false);
+	const [importEmptySessions, setImportEmptySessions] = useState(false);
 
 	const data = context.importableData;
 	if (!data) {
 		return null;
 	}
+
+	const sessionIdsWithSolves = new Set(data.solves.map((solve) => solve.session_id));
+	const hasEmptySessions = data.sessions.some((session) => !sessionIdsWithSolves.has(session.id));
+	const sessionsToImport = importEmptySessions
+		? data.sessions
+		: data.sessions.filter((session) => sessionIdsWithSolves.has(session.id));
 
 	async function importData() {
 		if (running.current) return;
@@ -40,7 +48,7 @@ export default function ReviewImport() {
 						attemptId: attempt.current,
 						source:
 							context.importType === ImportDataType.CS_TIMER ? 'cstimer' : 'cubedesk',
-						sessions: data.sessions,
+						sessions: sessionsToImport,
 						solves: data.solves,
 					}),
 				);
@@ -137,7 +145,7 @@ export default function ReviewImport() {
 
 	let sessionMapper: ReactNode[] = [];
 	if (data.sessionIdEventTypeMap) {
-		sessionMapper = data.sessions.map((session) => {
+		sessionMapper = sessionsToImport.map((session) => {
 			const sessionId = session.id as string;
 			const eventType = data.sessionIdEventTypeMap?.[sessionId];
 			return (
@@ -207,16 +215,27 @@ export default function ReviewImport() {
 					<h4 className="text-text mb-2.5 text-[1.1rem] font-bold">
 						Sessions:{' '}
 						<span className="text-secondary">
-							{data.sessions.length.toLocaleString()}
+							{sessionsToImport.length.toLocaleString()}
 						</span>
 					</h4>
-					<div inert={context.importLocked}>{sessionMapper}</div>
+					<div inert={context.importLocked}>
+						{sessionMapper}
+						{hasEmptySessions ? (
+							<Checkbox
+								text="Import empty sessions"
+								checked={importEmptySessions}
+								onCheckedChange={setImportEmptySessions}
+							/>
+						) : null}
+					</div>
 				</div>
 				<Button
 					variant="default"
 					onClick={importData}
 					size="lg"
-					disabled={context.importing}
+					disabled={
+						context.importing || (!sessionsToImport.length && !data.solves.length)
+					}
 					aria-busy={context.importing}
 				>
 					{context.importing

@@ -19,7 +19,11 @@ export const importInputSchema = z
 					match_id: true,
 					match_participant_id: true,
 				})
-				.extend({time: z.number().nonnegative()}),
+				.extend({time: z.number()})
+				.refine((solve) => solve.time >= 0 || (solve.dnf === true && solve.time === -1), {
+					path: ['time'],
+					message: 'Time must be non-negative unless the solve is a DNF',
+				}),
 		),
 	})
 	.refine((input) => input.sessions.length > 0 || input.solves.length > 0, 'No data to import');

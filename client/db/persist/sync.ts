@@ -1,13 +1,25 @@
 import {postReplaced} from '@/db/persist/broadcast';
-import {CubedeskDb, DATA_VERSION, disablePersistence, getDatabase} from '@/db/persist/database';
+import {
+	CubedeskDb,
+	DATA_VERSION,
+	disablePersistence,
+	getDatabase,
+	SyncMeta,
+} from '@/db/persist/database';
 import {getLiveTabIds} from '@/db/persist/locks';
-import {clearLocalDataStaleMark, enqueueWrite, flushWrites, isLocalDataMarkedStale} from '@/db/persist/writes';
+import {
+	clearLocalDataStaleMark,
+	enqueueWrite,
+	flushWrites,
+	isLocalDataMarkedStale,
+} from '@/db/persist/writes';
 import {getSessionDb, initSessionDb} from '@/db/sessions/init';
 import {getSolveDb, initSolveDb} from '@/db/solves/init';
 import {clearAllSolveStatCache} from '@/db/solves/stats/solves/caching';
 import {Session} from '@/types/session';
 import {Solve} from '@/types/solve';
 import {UserAccount} from '@/types/user';
+import {LoadTrace, noLoadTrace} from '@/util/load-trace';
 import {trpc} from '@/util/trpc';
 import {v4 as uuid} from 'uuid';
 
@@ -18,17 +30,25 @@ interface LocalSnapshot {
 	sessions: Session[];
 }
 
+type LocalSnapshotResult = {snapshot: LocalSnapshot} | {snapshot: null; missReason: string};
+
 /**
- * Reads the local copy of the user's solves and sessions, if it is known to match the server. Returns null when it
- * can't be trusted (or read in time), in which case data must be fetched from the server.
+ * Reads the local copy of the user's solves and sessions, if it is known to match the server. Returns no snapshot,
+ * and why, when it can't be trusted (or read in time), in which case data must be fetched from the server.
  *
  * The local copy is current when it was synced at the server's current offline hash, nothing marked it stale since,
  * and no change is still waiting on its hash update.
  */
-export async function loadLocalSnapshot(user: SyncUser, timeoutMs: number): Promise<LocalSnapshot | null> {
+export async function loadLocalSnapshot(
+	user: SyncUser,
+	timeoutMs: number,
+): Promise<LocalSnapshotResult> {
 	const db = getDatabase();
-	if (!db || isLocalDataMarkedStale()) {
-		return null;
+	if (!db) {
+		return miss('no local database');
+	}
+	if (isLocalDataMarkedStale()) {
+		return miss('marked stale');
 	}
 
 	const read = readValidSnapshot(db, user).catch((error) => {
@@ -37,30 +57,49 @@ export async function loadLocalSnapshot(user: SyncUser, timeoutMs: number): Prom
 			// e.g. private browsing modes that block IndexedDB
 			disablePersistence('open failed');
 		}
-		return null;
+		return miss('read failed');
 	});
 
 	// A late result is ignored: by then the caller has fetched from the server instead
-	return Promise.race([read, delay(timeoutMs).then(() => null)]);
+	return Promise.race([read, delay(timeoutMs).then(() => miss('timed out'))]);
 }
 
-async function readValidSnapshot(db: CubedeskDb, user: SyncUser): Promise<LocalSnapshot | null> {
+async function readValidSnapshot(db: CubedeskDb, user: SyncUser): Promise<LocalSnapshotResult> {
 	return db.transaction('r', [db.meta, db.pendingOps, db.solves, db.sessions], async () => {
-		const meta = await db.meta.get('sync');
-		const valid =
-			!!meta &&
-			meta.valid &&
-			meta.userId === user.id &&
-			meta.dataVersion === DATA_VERSION &&
-			meta.hash === (user.offline_hash ?? null);
-
-		if (!valid || (await db.pendingOps.count())) {
-			return null;
+		const invalidReason = getInvalidReason(await db.meta.get('sync'), user);
+		if (invalidReason) {
+			return miss(invalidReason);
+		}
+		if (await db.pendingOps.count()) {
+			return miss('pending changes');
 		}
 
 		const [solves, sessions] = await Promise.all([db.solves.toArray(), db.sessions.toArray()]);
-		return {solves, sessions};
+		return {snapshot: {solves, sessions}};
 	});
+}
+
+function getInvalidReason(meta: SyncMeta | undefined, user: SyncUser): string | null {
+	if (!meta) {
+		return 'never synced';
+	}
+	if (!meta.valid) {
+		return 'marked invalid';
+	}
+	if (meta.userId !== user.id) {
+		return 'different user';
+	}
+	if (meta.dataVersion !== DATA_VERSION) {
+		return 'old data version';
+	}
+	if (meta.hash !== (user.offline_hash ?? null)) {
+		return 'offline hash changed';
+	}
+	return null;
+}
+
+function miss(missReason: string): LocalSnapshotResult {
+	return {snapshot: null, missReason};
 }
 
 /**
@@ -69,21 +108,28 @@ async function readValidSnapshot(db: CubedeskDb, user: SyncUser): Promise<LocalS
  * The new local copy is marked as synced at `user.offline_hash`, which must have been read before this fetch. Pass
  * `forceNewHash` when that hash may be outdated (e.g. after a server-side bulk change), so a new one is set first.
  */
-export async function refetchSolvesAndSessions(user: SyncUser, options: {forceNewHash?: boolean} = {}) {
+export async function refetchSolvesAndSessions(
+	user: SyncUser,
+	options: {forceNewHash?: boolean; trace?: LoadTrace} = {},
+) {
+	const {trace = noLoadTrace} = options;
 	let hash = user.offline_hash ?? null;
 	let persist = !!getDatabase();
 	let orphanOpIds: string[] = [];
 
 	if (persist) {
 		try {
-			const pending = await findPendingOps();
+			const pending = await trace.step('find pending ops', findPendingOps);
 			orphanOpIds = pending.orphanIds;
 
 			// A change may have reached the server without its hash update (e.g. its tab closed in between), so other
 			// devices may not know about it. Set a new hash before fetching to make them resync too.
 			if (pending.any || options.forceNewHash) {
-				hash = uuid();
-				await trpc.user.updateOfflineHash.mutate({hash});
+				const newHash = uuid();
+				hash = newHash;
+				await trace.step('update offline hash', () =>
+					trpc.user.updateOfflineHash.mutate({hash: newHash}),
+				);
 			}
 		} catch (error) {
 			console.error('Could not prepare local data resync', error);
@@ -94,7 +140,10 @@ export async function refetchSolvesAndSessions(user: SyncUser, options: {forceNe
 	let solves: Solve[];
 	let sessions: Session[];
 	try {
-		const [listedSolves, listedSessions] = await Promise.all([trpc.solve.list.query(), trpc.session.list.query()]);
+		const [listedSolves, listedSessions] = await Promise.all([
+			trace.step('fetch solve.list', () => trpc.solve.list.query()),
+			trace.step('fetch session.list', () => trpc.session.list.query()),
+		]);
 		// The list is a lean subset of solve fields, which the local store has always held as Solve
 		solves = listedSolves as unknown as Solve[];
 		sessions = listedSessions;
@@ -102,17 +151,24 @@ export async function refetchSolvesAndSessions(user: SyncUser, options: {forceNe
 		console.error('Could not fetch solves and sessions', error);
 		initSolveDb([]);
 		initSessionDb([]);
-		enqueueWrite('invalidate', (db) => db.meta.update('sync', {valid: false}).then(() => undefined));
+		enqueueWrite('invalidate', (db) =>
+			db.meta.update('sync', {valid: false}).then(() => undefined),
+		);
 		return;
 	}
 
-	initSolveDb(solves);
-	initSessionDb(sessions);
+	trace.set('solves.count', solves.length);
+	await trace.step('fill memory', () => {
+		initSolveDb(solves);
+		initSessionDb(sessions);
+	});
 
 	if (persist) {
 		writeSnapshot(user.id, hash, orphanOpIds);
 	} else {
-		enqueueWrite('invalidate', (db) => db.meta.update('sync', {valid: false}).then(() => undefined));
+		enqueueWrite('invalidate', (db) =>
+			db.meta.update('sync', {valid: false}).then(() => undefined),
+		);
 	}
 }
 
@@ -183,9 +239,18 @@ export async function clearLocalData() {
 	const db = getDatabase();
 	if (db) {
 		try {
-			await db.transaction('rw', [db.meta, db.pendingOps, db.solves, db.sessions], async () => {
-				await Promise.all([db.meta.clear(), db.pendingOps.clear(), db.solves.clear(), db.sessions.clear()]);
-			});
+			await db.transaction(
+				'rw',
+				[db.meta, db.pendingOps, db.solves, db.sessions],
+				async () => {
+					await Promise.all([
+						db.meta.clear(),
+						db.pendingOps.clear(),
+						db.solves.clear(),
+						db.sessions.clear(),
+					]);
+				},
+			);
 		} catch (error) {
 			console.error('Could not clear local data', error);
 		}
