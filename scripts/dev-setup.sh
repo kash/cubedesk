@@ -24,6 +24,18 @@ log() { printf '\033[1;35m[dev-setup]\033[0m %s\n' "$*"; }
 fail() { printf '\033[1;31m[dev-setup]\033[0m %s\n' "$*" >&2; exit 1; }
 port_open() { (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null; }
 has() { command -v "$1" >/dev/null 2>&1; }
+node_major() { node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0; }
+
+prepend_node24() {
+	local root="${NVM_DIR:-$HOME/.nvm}/versions/node" dir
+	[ -d "$root" ] || return 1
+	dir="$(find "$root" -maxdepth 1 -type d -name "v${NODE_MAJOR}.*" 2>/dev/null | sort -V | tail -1)"
+	[ -n "$dir" ] && [ -x "$dir/bin/node" ] || return 1
+	export PATH="$dir/bin:$PATH"
+	hash -r
+}
+
+prepend_node24 || true
 
 services_mode() {
 	if [ -n "${DEV_SETUP_SERVICES:-}" ]; then echo "$DEV_SETUP_SERVICES"
@@ -36,11 +48,16 @@ services_mode() {
 redis_major() { redis-server --version | sed -n 's/.* v=\([0-9]*\).*/\1/p'; }
 
 ensure_node() {
-	if has node && [ "$(node -p 'process.versions.node.split(".")[0]')" = "$NODE_MAJOR" ]; then return; fi
+	if [ "$(node_major)" = "$NODE_MAJOR" ]; then return; fi
+	if prepend_node24 && [ "$(node_major)" = "$NODE_MAJOR" ]; then
+		log "Using Node $NODE_MAJOR from nvm"
+		return
+	fi
 	local nvm="${NVM_DIR:-$HOME/.nvm}/nvm.sh"
 	if [ -s "$nvm" ]; then
 		log "Installing Node $NODE_MAJOR with nvm"
 		set +u; . "$nvm"; nvm install "$NODE_MAJOR"; nvm alias default "$NODE_MAJOR"; set -u
+		prepend_node24 || true
 		return
 	fi
 	has apt-get || fail "Node $NODE_MAJOR is required. Install it, then rerun this script."
@@ -50,7 +67,9 @@ ensure_node() {
 }
 
 ensure_pnpm() {
-	if has pnpm && [ "$(pnpm --version)" = "$PNPM_VERSION" ]; then return; fi
+	if has pnpm && [ "$(pnpm --version)" = "$PNPM_VERSION" ] && [ "$(node_major)" = "$NODE_MAJOR" ]; then
+		return
+	fi
 	log "Activating pnpm $PNPM_VERSION"
 	if has corepack && { corepack enable pnpm >/dev/null 2>&1 || $SUDO corepack enable pnpm; }; then
 		corepack prepare "pnpm@$PNPM_VERSION" --activate
@@ -134,8 +153,19 @@ install() {
 		log "Creating .env from .default.env"
 		cp .default.env .env
 	fi
-	log "Installing node_modules"
-	pnpm install --frozen-lockfile
+	if [ -f node_modules/.modules.yaml ] && [ ! pnpm-lock.yaml -nt node_modules/.modules.yaml ]; then
+		log "node_modules is up to date"
+	else
+		log "Installing node_modules"
+		pnpm install --frozen-lockfile
+	fi
+}
+
+app_already_up() {
+	[ -d node_modules ] || return 1
+	port_open 5432 || return 1
+	port_open 6379 || return 1
+	curl -sf --max-time 2 http://127.0.0.1:3000/health >/dev/null 2>&1
 }
 
 start() {
@@ -158,6 +188,13 @@ start() {
 case "$PHASE" in
 	install) install ;;
 	start) start ;;
-	all) install; start ;;
+	all)
+		if app_already_up; then
+			log "App is already up on :3000. Skipping setup."
+			exit 0
+		fi
+		install
+		start
+		;;
 	*) fail "Usage: scripts/dev-setup.sh [install|start]" ;;
 esac
