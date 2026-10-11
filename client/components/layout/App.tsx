@@ -3,6 +3,7 @@ import Banned from '@/components/layout/Banned';
 import Header from '@/components/layout/Header';
 import {initAnonymousAppData, initAppData, setBrowserSessionId} from '@/components/layout/init';
 import LoadingCover from '@/components/layout/LoadingCover';
+import {SolveDownloadBanner} from '@/components/layout/SolveDownloadProgress';
 import {updateThemeColors} from '@/components/layout/themes';
 import TopNav from '@/components/layout/TopNav';
 import Wrapper from '@/components/layout/wrapper/Wrapper';
@@ -132,6 +133,7 @@ function AppContent(props: Props) {
 				}
 			/>
 			{me && !renderBeforeAppLoad ? <LoadingCover fadeOut={appLoaded} /> : null}
+			{appLoaded || renderBeforeAppLoad ? <SolveDownloadBanner /> : null}
 			{appLoaded || renderBeforeAppLoad || (!me && path === '/') ? (
 				<Wrapper {...wrapperProps}>{children}</Wrapper>
 			) : null}

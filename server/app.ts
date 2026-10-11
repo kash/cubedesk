@@ -68,6 +68,15 @@ function setupNotFoundHandler() {
 	});
 }
 
+function solveListTotal(data: readonly unknown[]): number | null {
+	const first = data[0];
+	if (!first || typeof first !== 'object' || !('result' in first)) {
+		return null;
+	}
+	const result = (first as {result?: {data?: unknown}}).result;
+	return Array.isArray(result?.data) ? result.data.length : null;
+}
+
 process.once('SIGUSR2', () => {
 	process.kill(process.pid, 'SIGUSR2');
 });
@@ -120,14 +129,23 @@ if (!isDev && sentryDsn) {
 		createExpressMiddleware({
 			router: appRouter,
 			createContext: createTRPCContext,
-			responseMeta({paths, type, errors}) {
+			responseMeta({paths, type, errors, data}) {
+				const headers: Record<string, string> = {};
+
 				// The trainer catalog is the same for everyone and rarely changes. The client requests it on its own
 				// (unbatched) so the URL is stable and the browser can reuse it.
 				if (type === 'query' && !errors.length && paths?.length === 1 && paths[0] === 'trainer.algorithms') {
-					return {headers: {'cache-control': 'private, max-age=3600, stale-while-revalidate=604800'}};
+					headers['cache-control'] = 'private, max-age=3600, stale-while-revalidate=604800';
 				}
 
-				return {};
+				if (type === 'query' && !errors.length && paths?.length === 1 && paths[0] === 'solve.list') {
+					const total = solveListTotal(data);
+					if (total !== null) {
+						headers['x-solve-total'] = String(total);
+					}
+				}
+
+				return {headers};
 			},
 		})
 	);

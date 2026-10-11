@@ -1,6 +1,7 @@
 import {postReplaced} from '@/db/persist/broadcast';
 import {CubedeskDb, DATA_VERSION, disablePersistence, getDatabase} from '@/db/persist/database';
 import {getLiveTabIds} from '@/db/persist/locks';
+import {clearSolveDownloadProgress} from '@/db/persist/solve-download';
 import {
 	clearLocalDataStaleMark,
 	enqueueWrite,
@@ -120,6 +121,8 @@ export async function refetchSolvesAndSessions(
 			db.meta.update('sync', {valid: false}).then(() => undefined),
 		);
 		return;
+	} finally {
+		clearSolveDownloadProgress();
 	}
 
 	initSolveDb(solves);

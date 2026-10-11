@@ -1,4 +1,5 @@
 import type {AppRouter} from '@/server/trpc/router';
+import {fetchWithSolveDownloadProgress} from '@/db/persist/solve-download';
 import {sessionExpiredLink} from '@/util/auth/session_expired';
 import {createTRPCClient, httpBatchLink, httpLink, splitLink} from '@trpc/client';
 
@@ -14,14 +15,15 @@ function getTRPCUrl() {
 
 function getFetch(): FetchType {
 	if (typeof window === 'undefined') {
-		return fetch as FetchType;
+		return fetchWithSolveDownloadProgress(fetch as FetchType);
 	}
 
-	return (url, init) =>
+	return fetchWithSolveDownloadProgress((url, init) =>
 		fetch(url, {
 			...init,
 			credentials: 'same-origin',
-		});
+		}),
+	);
 }
 
 // Sent as requests of their own rather than batched: a batch's response waits for its slowest call, so the full solve

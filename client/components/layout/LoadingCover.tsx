@@ -1,4 +1,4 @@
-import {Spinner} from '@/components/ui/spinner';
+import {SolveDownloadOrSpinner} from '@/components/layout/SolveDownloadProgress';
 import React from 'react';
 
 interface Props {
@@ -33,7 +33,7 @@ export default function LoadingCover(props: Props) {
 		<div className={coverClasses.join(' ')}>
 			{/* Only appears if loading is slow, so fast loads don't flash a spinner */}
 			<div className="animate-in fade-in fill-mode-backwards delay-300 duration-200">
-				<Spinner className="size-6" />
+				<SolveDownloadOrSpinner />
 			</div>
 		</div>
 	);
