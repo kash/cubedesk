@@ -3,6 +3,7 @@ import {
 	getNotificationById,
 	getNotifications,
 	getUnreadNotificationCount,
+	readAllNotifications,
 	readNotification,
 } from '@/server/models/notification';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
@@ -18,7 +19,7 @@ export const notificationRouter = router({
 		.input(
 			z.object({
 				page: z.number().int().min(0).default(0),
-			})
+			}),
 		)
 		.query(({ctx, input}) => getNotifications(ctx.user, input.page * PAGE_SIZE, PAGE_SIZE)),
 
@@ -26,7 +27,7 @@ export const notificationRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const notif = await getNotificationById(input.id);
@@ -38,11 +39,13 @@ export const notificationRouter = router({
 			return readNotification(notif);
 		}),
 
+	markAllAsRead: protectedProcedure.mutation(({ctx}) => readAllNotifications(ctx.user)),
+
 	delete: protectedProcedure
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const notif = await getNotificationById(input.id);

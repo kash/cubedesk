@@ -41,7 +41,9 @@ export function getNotifications(user: UserAccount, offset: number, limit: numbe
 	});
 }
 
-export async function readNotification(notification: NotificationSchema): Promise<NotificationSchema> {
+export async function readNotification(
+	notification: NotificationSchema,
+): Promise<NotificationSchema> {
 	return await getPrisma().notification.update({
 		where: {
 			id: notification.id,
@@ -50,6 +52,20 @@ export async function readNotification(notification: NotificationSchema): Promis
 			read_at: new Date(),
 		},
 	});
+}
+
+export async function readAllNotifications(user: UserAccount): Promise<number> {
+	const result = await getPrisma().notification.updateMany({
+		where: {
+			user_id: user.id,
+			read_at: null,
+		},
+		data: {
+			read_at: new Date(),
+		},
+	});
+
+	return result.count;
 }
 
 export async function deleteNotification(notification: NotificationSchema) {
