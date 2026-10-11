@@ -6,6 +6,7 @@ import {EventEmitter} from 'events';
 import {useEffect, useRef} from 'react';
 
 const ee = new EventEmitter();
+ee.setMaxListeners(0);
 
 export interface ClientEvent {
 	startTimerEvent: {

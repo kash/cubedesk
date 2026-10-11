@@ -44,7 +44,7 @@ app.get('/health', (_req, res) => {
 	res.sendStatus(200);
 });
 
-async function setupViteMiddleware() {
+async function setupViteMiddleware(server: http.Server | https.Server) {
 	if (!isDev) {
 		return;
 	}
@@ -52,7 +52,7 @@ async function setupViteMiddleware() {
 	const {createServer: createViteServer} = await import('vite');
 	const vite = await createViteServer({
 		appType: 'custom',
-		server: {middlewareMode: true},
+		server: {middlewareMode: true, hmr: {server}},
 	});
 
 	app.use(vite.middlewares);
@@ -112,8 +112,21 @@ if (!isDev && sentryDsn) {
 	});
 }
 
+function createServer() {
+	if (isDev && process.env.HTTPS === 'true') {
+		const options = {
+			key: fs.readFileSync('./certs/server.key'),
+			cert: fs.readFileSync('./certs/server.cert')
+		};
+
+		return https.createServer(options, app);
+	}
+
+	return http.createServer(app);
+}
+
 (async () => {
-	let server: any;
+	const server = createServer();
 
 	app.use(
 		'/trpc',
@@ -135,24 +148,11 @@ if (!isDev && sentryDsn) {
 	// Setup code
 	initLLStates();
 
-	await setupViteMiddleware();
+	await setupViteMiddleware(server);
 	mapPathToPage();
 	setupNotFoundHandler();
 
-	if (isDev && process.env.HTTPS === 'true') {
-		const options = {
-			key: fs.readFileSync('./certs/server.key'),
-			cert: fs.readFileSync('./certs/server.cert')
-		};
-
-		server = https.createServer(options, app);
-		server.listen(port, () => console.info(`Listening on port ${port}!`.magenta));
-	} else {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		server = http.Server(app);
-		server.listen(port, () => console.info(`Listening on port ${port}!`.magenta));
-	}
+	server.listen(port, () => console.info(`Listening on port ${port}!`.magenta));
 
 	// Initiate services
 	try {
