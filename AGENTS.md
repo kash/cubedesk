@@ -40,3 +40,13 @@ CI runs none of these (it only builds and deploys on push to `main`), so run the
 - Path aliases: `@/server/*`, `@/shared/*`, `@/client/shared/*`, `@/types/*`, `@/generated/*`, and `@/*` → `client/*`.
 - Styling: Tailwind v4 via `cn()` (`client/util/cn.ts`). Docs pages live in `client/components/docs/pages/` and are registered in `client/components/docs/doc-pages.ts`.
 - Scripts: `scripts/dev-setup.sh` (environment), `scripts/seed-dev*.ts` (seed data).
+
+## Cursor Cloud specific instructions
+
+Cloud Agent shells resolve `node` to `/exec-daemon/node` (Node 22). This app needs Node 24 from nvm. The environment install writes `/etc/profile.d/node24.sh`, so login shells (`bash -lc`) get Node 24. A non-login shell still hits Node 22; prepend Node 24 before `pnpm`, `tsc`, or tests:
+
+```sh
+export PATH="$(ls -d "$HOME/.nvm/versions/node"/v24.*/bin | sort -V | tail -1):$PATH"
+```
+
+Environment start already does that, then runs `bash scripts/dev-setup.sh start` and `pnpm dev` on port 3000. Wait for `curl -sf localhost:3000/health`. No secrets are required. Seeded logins and feature checks are in `.agents/skills/dev-environment/SKILL.md`.
