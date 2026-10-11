@@ -22,8 +22,8 @@ import {toggleSetting} from '@/db/settings/update';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
-import {isSmartCubeEvent} from '@/util/smart-cube/puzzle';
 import {useTheme} from '@/util/hooks/useTheme';
+import {isSmartCubeEvent} from '@/util/smart-cube/puzzle';
 import {HOTKEY_MAP} from '@/util/timer/hotkeys';
 import screenfull from '@/util/vendor/screenfull';
 import classNames from 'classnames';
@@ -295,8 +295,8 @@ export default function HeaderControl() {
 							</div>
 						)}
 						{!focusMode && headerOptions?.customHeadersLeft}
-						{cubePicker}
 						{sessionSwitcher}
+						{cubePicker}
 					</div>
 					{me || mobileMode ? (
 						<div className="flex flex-row items-start justify-center gap-2.5" />

@@ -149,6 +149,7 @@ export default function Session(props: Props) {
 				ref={refCallback}
 				key={session.id}
 				style={style}
+				onClick={(e) => selectSession(e, session.id)}
 				className={cn(
 					'sessions-item',
 					{
@@ -173,7 +174,6 @@ export default function Session(props: Props) {
 					variant="ghost"
 					type="button"
 					className="sessions-select h-auto flex-col items-start justify-start gap-1 p-0 font-normal whitespace-normal hover:bg-transparent"
-					onClick={(e) => selectSession(e, session.id)}
 					aria-pressed={sessionIsSelected}
 				>
 					<span className="sessions-item-name">{session.name || 'Untitled session'}</span>

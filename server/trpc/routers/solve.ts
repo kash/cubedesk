@@ -68,6 +68,7 @@ export const solveInputSchema = z.object({
 
 export const solveRouter = router({
 	list: protectedProcedure.query(async ({ctx}) => {
+		const queryStart = performance.now();
 		const solves = await ctx.prisma.solve.findMany({
 			where: {
 				user_id: ctx.user.id,
@@ -76,7 +77,19 @@ export const solveRouter = router({
 			select: miniSolveSelect,
 		});
 
-		return solves.map(serializeSolveTimestamps);
+		const serializeStart = performance.now();
+		const serialized = solves.map(serializeSolveTimestamps);
+
+		if (ctx.user.admin) {
+			const db = serializeStart - queryStart;
+			const serialize = performance.now() - serializeStart;
+			ctx.res.setHeader(
+				'Server-Timing',
+				`db;dur=${db.toFixed(1)}, serialize;dur=${serialize.toFixed(1)}`,
+			);
+		}
+
+		return serialized;
 	}),
 
 	create: protectedProcedure.input(solveInputSchema).mutation(async ({ctx, input}) => {
@@ -107,7 +120,7 @@ export const solveRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.query(async ({input}) => {
 			const solve = await getSolve(input.id);
@@ -135,7 +148,7 @@ export const solveRouter = router({
 		.input(
 			z.object({
 				shareCode: z.string(),
-			})
+			}),
 		)
 		.query(async ({ctx, input}) => {
 			const solve = await getSolveByShareCode(input.shareCode);
@@ -159,7 +172,7 @@ export const solveRouter = router({
 			z.object({
 				id: z.string(),
 				input: solveInputSchema,
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const solve = await getBasicSolve(input.id);
@@ -186,7 +199,7 @@ export const solveRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const solve = await getSolve(input.id);
@@ -219,5 +232,4 @@ export const solveRouter = router({
 
 			return serializeSolveTimestamps(deleted);
 		}),
-
 });
