@@ -2,7 +2,7 @@
 
 CubeDesk is a speedcubing timer, stats, trainer and 1v1 app. One Node 24 process (`server/app.ts`, Express) serves tRPC at `/trpc`, Socket.io for live 1v1, and the React 19 client through Vite middleware. Data lives in Postgres (Prisma 7) and Redis.
 
-Before running the app, the DB integration tests or anything that needs Postgres or Redis, run `bash scripts/dev-setup.sh`. It installs everything on a fresh machine, starts the services, migrates and seeds test data, and is a quick no-op when everything is already up. For running the app, the seeded test accounts, and testing changes in the browser or API, use the `dev-environment` skill (`.agents/skills/dev-environment/SKILL.md`).
+Before running the app, the DB integration tests, or anything that needs Postgres or Redis, run `bash scripts/dev-setup.sh` only when the app is not already up. If `node_modules` exists and `curl -sf localhost:3000/health` succeeds, skip it. The script exits immediately in that case. If dependencies are installed but Postgres or Redis is down, run `bash scripts/dev-setup.sh start`. For the seeded test accounts and how to hit the API, use the `dev-environment` skill (`.agents/skills/dev-environment/SKILL.md`).
 
 ## Rules
 
@@ -14,7 +14,7 @@ Before running the app, the DB integration tests or anything that needs Postgres
 - Whenever support for a new connected device (smart cube, smart timer, etc.) is added, update the supported devices docs page (client/components/docs/pages/SupportedDevices.tsx) to list it, and drop its "coming soon" flag if it had one.
 - Never hand-edit `prisma/migrations` or change the database schema with SQL; change `prisma/schema.prisma` and run `pnpm prisma`.
 - Fix TypeScript errors at their root (correct the types or declarations) instead of casting to `any` or adding `@ts-ignore`.
-- Don't add new unit tests unless asked. Do run the existing ones.
+- Don't add new unit tests unless asked. Run `pnpm test -- path/to/file.test.ts` for tests that cover code you changed. Skip the full suite for a small UI or API change.
 - Commit messages are short and plain, without `Co-Authored-By` or other trailers.
 - Don't add comments to code. Existing comments can stay; just don't write new ones.
 - Keep PR descriptions short and to the point. A long explanation is fine when the change is big enough to need one.
@@ -27,7 +27,13 @@ npx eslint <files you changed>      # check-only; `pnpm lint` runs eslint --fix 
 pnpm test                           # jest; one file: pnpm test -- path/to/file.test.ts -t "name"
 ```
 
-CI runs none of these (it only builds and deploys on push to `main`), so run them yourself. Formatting follows `.prettierrc` (tabs, single quotes, no bracket spacing, width 100); ESLint enforces sorted imports, exhaustive hook deps and no unused imports.
+CI runs none of these (it only builds and deploys on push to `main`), so run `tsc` and eslint yourself. Run `pnpm test` for the files you changed, not the whole suite, unless the change is wide or the user asked. Formatting follows `.prettierrc` (tabs, single quotes, no bracket spacing, width 100); ESLint enforces sorted imports, exhaustive hook deps and no unused imports.
+
+## Verifying
+
+For a UI or API change, one scripted pass is the whole check. Log in as `agent@cubedesk.test` / `cubedesk` with curl against `/trpc`, or a short Puppeteer script against `http://localhost:3000`, and assert the behavior you changed. Save one screenshot when the change is visual.
+
+Do not open a computer-use browser session, record the screen, or send that recording to a video review unless the user asked for a demo. Do not debug pre-existing behavior you did not change, including hover-only controls and DevTools device mode. Headless Chrome reports `hover: none`, so hover styles will not show there.
 
 ## Codebase map
 

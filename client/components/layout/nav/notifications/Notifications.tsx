@@ -4,7 +4,7 @@ import Notif from '@/components/layout/nav/notifications/Notif';
 import {Button} from '@/components/ui/button';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {api} from '@/util/api';
-import {cn} from '@/util/cn';
+import {useGeneral} from '@/util/hooks/useGeneral';
 import {Bell} from 'phosphor-react';
 import {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
 
@@ -19,9 +19,11 @@ export default function Notifications({right}: Props) {
 	const [open, setOpen] = useState(false);
 	const [notifications, setNotifications] = useState<any[] | null>(null);
 
+	const mobile = useGeneral('mobile_mode');
 	const utils = api.useUtils();
 	const unreadCountQuery = api.notification.unreadCount.useQuery();
 	const unreadCount = unreadCountQuery.data || 0;
+	const markAllAsReadMutation = api.notification.markAllAsRead.useMutation();
 
 	const openRef = useRef(open);
 	const loadingRef = useRef(loading);
@@ -143,6 +145,18 @@ export default function Notifications({right}: Props) {
 		updateNotificationCount();
 	};
 
+	const markAllAsRead = async () => {
+		if (!unreadCount || markAllAsReadMutation.isPending) return;
+
+		await markAllAsReadMutation.mutateAsync();
+		const readAt = new Date();
+		setNotifications((current) =>
+			(current || []).map((notif) => (notif.read_at ? notif : {...notif, read_at: readAt})),
+		);
+		utils.notification.unreadCount.setData(undefined, 0);
+		updateNotificationCount();
+	};
+
 	let body: ReactNode = null;
 	const loadingBody: ReactNode = loading ? (
 		<div>
@@ -162,6 +176,7 @@ export default function Notifications({right}: Props) {
 							deleteNotification={deleteNotification}
 							index={i}
 							notif={notif}
+							mobile={mobile}
 							key={notif.id}
 						/>
 					))}
@@ -206,16 +221,30 @@ export default function Notifications({right}: Props) {
 			<PopoverContent
 				aria-label="Notifications"
 				align={right ? 'end' : 'start'}
-				className={cn('flex flex-col gap-1.5 overflow-y-auto p-1', {
-					'h-[min(500px,var(--radix-popover-content-available-height))] w-[400px]':
-						!!notifications?.length,
-					'w-[280px] max-h-[var(--radix-popover-content-available-height)]':
-						!notifications?.length,
-				})}
-				onScroll={scrollList}
+				collisionPadding={12}
+				className="flex w-[min(400px,calc(100vw-1.5rem))] flex-col overflow-hidden p-0"
 			>
-				{body}
-				{loadingBody}
+				<div className="border-tmo-module/15 flex shrink-0 items-center justify-between gap-2 border-b px-3 py-2">
+					<span className="text-sm font-medium">Notifications</span>
+					{unreadCount ? (
+						<Button
+							variant="ghost"
+							size="xs"
+							className="shrink-0"
+							disabled={markAllAsReadMutation.isPending}
+							onClick={markAllAsRead}
+						>
+							Mark all as read
+						</Button>
+					) : null}
+				</div>
+				<div
+					className="max-h-[min(28rem,calc(var(--radix-popover-content-available-height)-3rem))] overflow-y-auto"
+					onScroll={scrollList}
+				>
+					{body}
+					{loadingBody}
+				</div>
 			</PopoverContent>
 		</Popover>
 	);
