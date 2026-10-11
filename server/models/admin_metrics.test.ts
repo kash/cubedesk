@@ -21,6 +21,7 @@ function database(run: (sql: Prisma.Sql) => unknown) {
 }
 
 function empty(sql: Prisma.Sql) {
+	if (sql.text.includes('min(created_at)')) return [{first: null}];
 	if (sql.text.includes('AS registered')) return [{registered: zero, imported: zero}];
 	if (sql.text.startsWith('SELECT count(*) AS count')) return [{count: zero}];
 	return [];
@@ -121,13 +122,11 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 	]);
 });
 
-it('falls back from a lifetime timeout to exact indexed date ranges', async () => {
+it('counts lifetime solve totals in date ranges from the first account', async () => {
 	const ranges: [Date, Date][] = [];
 	const first = new Date('2026-08-28T00:00:00Z');
 	const {db} = database((sql) => {
-		if (sql.text.includes('CROSS JOIN'))
-			throw new Error('canceling statement due to statement timeout');
-		if (sql.text.includes('min(created_at)')) return [{first}];
+		if (sql.text.includes('min(created_at) AS first FROM user_account')) return [{first}];
 		if (sql.text.includes('AS registered')) {
 			ranges.push(sql.values as [Date, Date]);
 			return [{registered: BigInt(10), imported: BigInt(5)}];
@@ -157,7 +156,7 @@ it('does not split or retry connection failures and reports the failing query', 
 		throw new Error('connection refused');
 	});
 	await expect(buildAdminMetrics(cutoff, db)).rejects.toThrow(
-		'query solveTotals failed: Error: connection refused',
+		'query solveTotals first date failed: Error: connection refused',
 	);
 	expect(query).toHaveBeenCalledTimes(1);
 });
