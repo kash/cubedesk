@@ -28,10 +28,11 @@ interface Props {
 	solveId: string;
 	solve?: Solve;
 	disabled?: boolean;
+	fullPage?: boolean;
 }
 
 export default function SolveInfo(props: Props) {
-	const {solveId, disabled, onComplete} = props;
+	const {solveId, disabled, fullPage, onComplete} = props;
 	const deletion = useSolveDeletion(onComplete);
 	const timerFontFamily = useSettings('timer_font_family');
 
@@ -252,6 +253,65 @@ export default function SolveInfo(props: Props) {
 			value: 'Notes',
 		},
 	];
+
+	if (fullPage) {
+		const sections = [
+			{id: 'scramble', title: 'Scramble', body: <ScrambleInfo {...childBody} fullPage />},
+			...(isSmartCube
+				? [
+						{id: 'solution', title: 'Solution', body: <SolutionInfo {...childBody} />},
+						{id: 'stats', title: 'Stats', body: <StatsInfo {...childBody} />},
+					]
+				: []),
+			...(solve.notes
+				? [{id: 'notes', title: 'Notes', body: <NotesInfo {...childBody} />}]
+				: []),
+		];
+
+		return (
+			<div className="flex flex-col">
+				<div className="border-button flex flex-col items-center gap-6 border-b-2 pb-8 lg:flex-row lg:gap-12">
+					<h2
+						className="text-text m-0 text-[4.3rem] leading-none font-medium lg:text-[6rem]"
+						style={{fontFamily: timerFontFamily + ', monospace'}}
+					>
+						{time}
+					</h2>
+					<div className="flex flex-col items-center gap-3 lg:items-start">
+						{!demoSolve && user && (
+							<Avatar small user={user} hideBadges profile={user.profile} />
+						)}
+						<div className="flex flex-row flex-wrap items-center justify-center gap-2.5">
+							{isSmartCube ? (
+								<Badge size="button" variant="info" title="Smart cube">
+									{smartDevice?.name}
+									<Bluetooth />
+								</Badge>
+							) : null}
+							<Badge variant="secondary" size="button">
+								{getEventTypeInfoById(eventType)?.name ?? eventType}
+								<Cube weight="bold" />
+							</Badge>
+							{plusTwoButton}
+							{dnfButton}
+						</div>
+						<span className="text-text/60 text-sm">
+							{getFullFormattedDate(endedAt)}
+						</span>
+					</div>
+				</div>
+				{sections.map((section) => (
+					<section
+						key={section.id}
+						className="border-button flex flex-col gap-5 border-b-2 py-8 last:border-b-0 last:pb-0"
+					>
+						<h3 className="text-text m-0 text-lg font-semibold">{section.title}</h3>
+						{section.body}
+					</section>
+				))}
+			</div>
+		);
+	}
 
 	let shareLink: ReactNode = null;
 	if (typeof window !== 'undefined' && !demoSolve && solve.share_code) {

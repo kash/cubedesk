@@ -68,7 +68,6 @@ export const solveInputSchema = z.object({
 
 export const solveRouter = router({
 	list: protectedProcedure.query(async ({ctx}) => {
-		const queryStart = performance.now();
 		const solves = await ctx.prisma.solve.findMany({
 			where: {
 				user_id: ctx.user.id,
@@ -77,19 +76,7 @@ export const solveRouter = router({
 			select: miniSolveSelect,
 		});
 
-		const serializeStart = performance.now();
-		const serialized = solves.map(serializeSolveTimestamps);
-
-		if (ctx.user.admin) {
-			const db = serializeStart - queryStart;
-			const serialize = performance.now() - serializeStart;
-			ctx.res.setHeader(
-				'Server-Timing',
-				`db;dur=${db.toFixed(1)}, serialize;dur=${serialize.toFixed(1)}`,
-			);
-		}
-
-		return serialized;
+		return solves.map(serializeSolveTimestamps);
 	}),
 
 	create: protectedProcedure.input(solveInputSchema).mutation(async ({ctx, input}) => {
