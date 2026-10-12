@@ -6,7 +6,7 @@ import Dexie, {type EntityTable} from 'dexie';
  * Bumping this makes every client discard its local copy and refetch from the server. The local DB is only a cache of
  * server data, so schema changes should bump this rather than write data-migrating upgrade functions.
  */
-export const DATA_VERSION = 2;
+export const DATA_VERSION = 3;
 
 export interface SyncMeta {
 	key: 'sync';

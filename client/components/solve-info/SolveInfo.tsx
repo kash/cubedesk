@@ -13,10 +13,12 @@ import {toggleDnfSolveDb, togglePlusTwoSolveDb} from '@/db/solves/operations';
 import {fetchSolve} from '@/db/solves/query';
 import {updateSolveDb} from '@/db/solves/update';
 import {Solve} from '@/types/solve';
+import {PublicUserAccount} from '@/types/user';
 import {api} from '@/util/api';
 import {cn} from '@/util/cn';
 import {getEventTypeInfoById} from '@/util/cubes/util';
 import {getFullFormattedDate} from '@/util/dates';
+import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import {useSolveDb} from '@/util/hooks/useSolveDb';
 import {getTimeString} from '@/util/time';
@@ -35,14 +37,12 @@ export default function SolveInfo(props: Props) {
 	const {solveId, disabled, fullPage, onComplete} = props;
 	const deletion = useSolveDeletion(onComplete);
 	const timerFontFamily = useSettings('timer_font_family');
-
-	const initialSolve = props.solve ?? fetchSolve(solveId) ?? undefined;
-	const demoSolve = initialSolve?.demo_mode;
+	const me = useMe();
 
 	const [page, setPage] = useState('scramble');
-	const [loading, setLoading] = useState(!demoSolve);
-	const [solve, setSolve] = useState<Solve | undefined>(initialSolve);
-	const [loadError, setLoadError] = useState(false);
+	const [remoteSolve, setRemoteSolve] = useState<Solve | null>(null);
+	const [loadErrorId, setLoadErrorId] = useState<string | null>(null);
+	const [loadAttempt, setLoadAttempt] = useState(0);
 	const [editMode, setEditMode] = useState(false);
 	const [dbSolve, setDbSolve] = useState<Solve | null>(() => fetchSolve(solveId));
 
@@ -52,35 +52,44 @@ export default function SolveInfo(props: Props) {
 	useEffect(() => {
 		setDbSolve(fetchSolve(solveId));
 	}, [solveId, solveDbVersion]);
+
+	const baseSolve = dbSolve ?? props.solve ?? null;
+	const demoSolve = !!baseSolve?.demo_mode;
+	const needsRemote =
+		!demoSolve && !fullPage && (!baseSolve || baseSolve.is_smart_cube || !baseSolve.share_code);
+
 	useEffect(() => {
-		if (demoSolve) {
+		if (!needsRemote) {
 			return;
 		}
 
-		updateSolve();
-	}, []);
-
-	const user = solve?.user;
-
-	function updateSolve() {
-		const localSolve = fetchSolve(solveId);
-		if (localSolve?.demo_mode || demoSolve) {
-			setDbSolve(localSolve);
-			setSolve(localSolve ?? initialSolve);
-			setLoading(false);
-			return;
-		}
-
-		setLoadError(false);
-		setLoading(true);
+		let cancelled = false;
 		utils.solve.get
 			.fetch({id: solveId})
 			.then((res) => {
-				setDbSolve(fetchSolve(solveId));
-				setSolve(res as unknown as Solve);
+				if (!cancelled) {
+					setRemoteSolve(res as unknown as Solve);
+				}
 			})
-			.catch(() => setLoadError(true))
-			.finally(() => setLoading(false));
+			.catch(() => {
+				if (!cancelled) {
+					setLoadErrorId(solveId);
+				}
+			});
+
+		return () => {
+			cancelled = true;
+		};
+	}, [solveId, needsRemote, loadAttempt, utils]);
+
+	const loadError = loadErrorId === solveId;
+	const fetchedSolve = remoteSolve?.id === solveId ? remoteSolve : null;
+	const solve = mergeSolves(fetchedSolve ?? props.solve ?? null, dbSolve, me);
+	const user = solve?.user;
+
+	function retryLoad() {
+		setLoadErrorId(null);
+		setLoadAttempt((attempt) => attempt + 1);
 	}
 
 	function togglePlusTwo() {
@@ -116,14 +125,14 @@ export default function SolveInfo(props: Props) {
 	}
 
 	function toggleEditMode() {
-		if (editMode) {
-			updateSolve();
-		}
-
 		setEditMode(!editMode);
 	}
 
-	if (loading) {
+	if (!solve) {
+		if (loadError) {
+			return <LoadError onRetry={retryLoad} />;
+		}
+
 		return (
 			<div className="relative pt-5">
 				<Loading />
@@ -131,30 +140,14 @@ export default function SolveInfo(props: Props) {
 		);
 	}
 
-	if (loadError) {
-		return (
-			<div className="text-text flex flex-col items-center gap-4 py-8">
-				<p>Could not load this solve. Please try again.</p>
-				<Button variant="secondary" onClick={updateSolve}>
-					{'Try again'}
-				</Button>
-			</div>
-		);
-	}
-
-	const effSolve = dbSolve || solve;
-	if (!effSolve || !solve) {
-		return null;
-	}
-
-	const plusTwo = effSolve.plus_two;
-	const dnf = effSolve.dnf;
+	const plusTwo = solve.plus_two;
+	const dnf = solve.dnf;
 	const eventType = solve.event_type;
 	const endedAt = new Date(Number(solve.ended_at));
 	const isSmartCube = solve.is_smart_cube;
 	const smartDevice = solve.smart_device;
 
-	const time = getTimeString(effSolve.time);
+	const time = getTimeString(solve.time);
 
 	const childBody = {
 		editMode,
@@ -162,10 +155,24 @@ export default function SolveInfo(props: Props) {
 		handleChange,
 	};
 
+	const smartDataReady = demoSolve || solve.solve_method_steps !== undefined;
+
+	function smartSection(body: ReactNode) {
+		if (smartDataReady) {
+			return body;
+		}
+
+		if (loadError) {
+			return <LoadError onRetry={retryLoad} />;
+		}
+
+		return <Loading />;
+	}
+
 	const pageMap = {
 		scramble: <ScrambleInfo {...childBody} />,
-		solution: <SolutionInfo {...childBody} />,
-		stats: <StatsInfo {...childBody} />,
+		solution: smartSection(<SolutionInfo {...childBody} />),
+		stats: smartSection(<StatsInfo {...childBody} />),
 		notes: <NotesInfo {...childBody} />,
 	};
 
@@ -259,8 +266,16 @@ export default function SolveInfo(props: Props) {
 			{id: 'scramble', title: 'Scramble', body: <ScrambleInfo {...childBody} fullPage />},
 			...(isSmartCube
 				? [
-						{id: 'solution', title: 'Solution', body: <SolutionInfo {...childBody} />},
-						{id: 'stats', title: 'Stats', body: <StatsInfo {...childBody} />},
+						{
+							id: 'solution',
+							title: 'Solution',
+							body: smartSection(<SolutionInfo {...childBody} />),
+						},
+						{
+							id: 'stats',
+							title: 'Stats',
+							body: smartSection(<StatsInfo {...childBody} />),
+						},
 					]
 				: []),
 			...(solve.notes
@@ -379,5 +394,33 @@ export default function SolveInfo(props: Props) {
 			</div>
 			<DeleteSolveDialog {...deletion.dialogProps} />
 		</>
+	);
+}
+
+function mergeSolves(
+	remote: Solve | null,
+	local: Solve | null,
+	me: PublicUserAccount | null,
+): Solve | null {
+	if (!local) {
+		return remote;
+	}
+
+	return {
+		...remote,
+		...local,
+		share_code: local.share_code ?? remote?.share_code ?? null,
+		user: remote?.user ?? me ?? undefined,
+	};
+}
+
+function LoadError({onRetry}: {onRetry: () => void}) {
+	return (
+		<div className="text-text flex flex-col items-center gap-4 py-8">
+			<p>Could not load this solve. Please try again.</p>
+			<Button variant="secondary" onClick={onRetry}>
+				{'Try again'}
+			</Button>
+		</div>
 	);
 }

@@ -20,7 +20,7 @@ import {generateRandomString} from '@/shared/code';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 
-// Mirrors the old MiniSolveFragment so the list payload stays lean
+// Lean list payload: smart cube data is fetched per solve with solve.get
 const miniSolveSelect = {
 	id: true,
 	time: true,
@@ -38,6 +38,8 @@ const miniSolveSelect = {
 	created_at: true,
 	started_at: true,
 	ended_at: true,
+	notes: true,
+	share_code: true,
 } satisfies Prisma.SolveSelect;
 
 export const solveInputSchema = z.object({
