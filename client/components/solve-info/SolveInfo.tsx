@@ -40,7 +40,7 @@ export default function SolveInfo(props: Props) {
 	const demoSolve = initialSolve?.demo_mode;
 
 	const [page, setPage] = useState('scramble');
-	const [loading, setLoading] = useState(!demoSolve);
+	const [loading, setLoading] = useState(!demoSolve && !initialSolve);
 	const [solve, setSolve] = useState<Solve | undefined>(initialSolve);
 	const [loadError, setLoadError] = useState(false);
 	const [editMode, setEditMode] = useState(false);
@@ -72,14 +72,16 @@ export default function SolveInfo(props: Props) {
 		}
 
 		setLoadError(false);
-		setLoading(true);
+		if (!localSolve && !initialSolve) {
+			setLoading(true);
+		}
 		utils.solve.get
 			.fetch({id: solveId})
 			.then((res) => {
 				setDbSolve(fetchSolve(solveId));
 				setSolve(res as unknown as Solve);
 			})
-			.catch(() => setLoadError(true))
+			.catch(() => setLoadError(!localSolve && !initialSolve))
 			.finally(() => setLoading(false));
 	}
 
