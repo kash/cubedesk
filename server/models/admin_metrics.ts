@@ -103,7 +103,7 @@ export async function buildAdminMetrics(
 	async function query<T>(
 		name: string,
 		sql: Prisma.Sql,
-		options?: {timeoutMs?: number; indexRange?: boolean},
+		options?: {timeoutMs?: number},
 	): Promise<T[]> {
 		assertActive();
 		const timeoutMs = options?.timeoutMs ?? RANGE_TIMEOUT_MS;
@@ -119,7 +119,6 @@ export async function buildAdminMetrics(
 						await tx.$executeRaw`SET LOCAL statement_timeout = '30s'`;
 					}
 					await tx.$executeRaw`SET LOCAL max_parallel_workers_per_gather = 0`;
-					if (options?.indexRange) await tx.$executeRaw`SET LOCAL enable_seqscan = off`;
 					await tx.$executeRaw`SET LOCAL TIME ZONE 'UTC'`;
 					return tx.$queryRaw<T[]>(sql);
 				},
@@ -144,7 +143,6 @@ export async function buildAdminMetrics(
 			rows = await query<T>(
 				`${name} [${start.toISOString()}, ${end.toISOString()})`,
 				adminMetricsRangeQueries(start, end)[name],
-				{indexRange: true},
 			);
 		} catch (error) {
 			// A busy day/import must not make every refresh fail at the same point.
@@ -220,7 +218,7 @@ export async function buildAdminMetrics(
 		} catch (error) {
 			if (!isQueryTimeout(error)) throw error;
 		}
-		const first = await firstCreatedAt('solveTotals', 'user_account');
+		const first = await firstCreatedAt('solveTotals', 'solve');
 		return first ? sumRanges('solveTotals', first) : noTotals();
 	}
 

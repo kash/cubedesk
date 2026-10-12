@@ -61,7 +61,6 @@ it('keeps empty UTC days and runs only one bounded, read-only query at a time', 
 	expect(settings.mock.calls.map(([sql]) => sql[0])).toContain(
 		'SET LOCAL max_parallel_workers_per_gather = 0',
 	);
-	expect(settings.mock.calls.map(([sql]) => sql[0])).toContain('SET LOCAL enable_seqscan = off');
 	expect(settings.mock.calls.map(([sql]) => sql[0])).toContain(
 		"SET LOCAL statement_timeout = '600s'",
 	);
@@ -127,14 +126,14 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 	]);
 });
 
-it('counts lifetime solve totals in date ranges from the first account', async () => {
+it('falls back from a lifetime timeout to exact indexed date ranges', async () => {
 	const ranges: [Date, Date][] = [];
 	const first = new Date('2026-08-28T00:00:00Z');
 	const {db} = database((sql) => {
 		if (sql.text.includes('AS registered') && !sql.text.includes('>=')) {
 			throw new Error('canceling statement due to statement timeout');
 		}
-		if (sql.text.includes('min(created_at) AS first FROM user_account')) return [{first}];
+		if (sql.text.includes('min(created_at) AS first FROM solve')) return [{first}];
 		if (sql.text.includes('AS registered')) {
 			ranges.push(sql.values as [Date, Date]);
 			return [{registered: BigInt(10), imported: BigInt(5)}];
