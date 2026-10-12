@@ -89,9 +89,7 @@ async function refresh() {
 				.then((extended) => {
 					if (extended !== 1) lost = true;
 				})
-				.catch(() => {
-					lost = true;
-				});
+				.catch(() => undefined);
 		}, LEASE_MS / 3);
 		renewal.unref();
 		const assertActive = () => {

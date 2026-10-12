@@ -53,12 +53,16 @@ it('keeps empty UTC days and runs only one bounded, read-only query at a time', 
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 0, weekly: 0, monthly: 0});
 	expect(snapshot.breakdown).toEqual([]);
-	for (const [, options] of transaction.mock.calls) {
-		expect(options).toEqual({timeout: 35000, maxWait: 5000});
-	}
+	const timeouts = transaction.mock.calls.map(([, options]) => options);
+	expect(timeouts).toContainEqual({timeout: 35_000, maxWait: 5_000});
+	expect(timeouts).toContainEqual({timeout: 615_000, maxWait: 5_000});
+	expect(new Set(timeouts.map((options) => options.timeout))).toEqual(new Set([35_000, 615_000]));
 	expect(settings.mock.calls.map(([sql]) => sql[0])).toContain('SET TRANSACTION READ ONLY');
 	expect(settings.mock.calls.map(([sql]) => sql[0])).toContain(
 		'SET LOCAL max_parallel_workers_per_gather = 0',
+	);
+	expect(settings.mock.calls.map(([sql]) => sql[0])).toContain(
+		"SET LOCAL statement_timeout = '600s'",
 	);
 });
 
@@ -122,11 +126,14 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 	]);
 });
 
-it('counts lifetime solve totals in date ranges from the first account', async () => {
+it('falls back from a lifetime timeout to exact indexed date ranges', async () => {
 	const ranges: [Date, Date][] = [];
 	const first = new Date('2026-08-28T00:00:00Z');
 	const {db} = database((sql) => {
-		if (sql.text.includes('min(created_at) AS first FROM user_account')) return [{first}];
+		if (sql.text.includes('AS registered') && !sql.text.includes('>=')) {
+			throw new Error('canceling statement due to statement timeout');
+		}
+		if (sql.text.includes('min(created_at) AS first FROM solve')) return [{first}];
 		if (sql.text.includes('AS registered')) {
 			ranges.push(sql.values as [Date, Date]);
 			return [{registered: BigInt(10), imported: BigInt(5)}];
@@ -156,7 +163,7 @@ it('does not split or retry connection failures and reports the failing query', 
 		throw new Error('connection refused');
 	});
 	await expect(buildAdminMetrics(cutoff, db)).rejects.toThrow(
-		'query solveTotals first date failed: Error: connection refused',
+		'query solveTotals failed: Error: connection refused',
 	);
 	expect(query).toHaveBeenCalledTimes(1);
 });

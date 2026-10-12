@@ -379,8 +379,7 @@ model Solve {
   top_average_5        TopAverage[]      @relation("solve_5")
   top_solve            TopSolve[]
 
-  // Solves are inserted in time order, so a BRIN index serves date ranges at a tiny fraction of a btree's size
-  @@index([created_at], type: Brin, map: "solve_created_at_brin_idx")
+  @@index([created_at])
   // These are empty on almost every solve, so only rows that have one are indexed
   @@index([match_id], map: "solve_match_id_present_idx", where: raw("match_id IS NOT NULL"))
   @@index([game_session_id], map: "solve_game_session_id_present_idx", where: raw("game_session_id IS NOT NULL"))

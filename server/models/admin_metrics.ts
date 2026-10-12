@@ -3,6 +3,8 @@ import {Prisma} from '@/generated/prisma/client';
 import {getPrisma} from '@/server/database';
 
 const DAY_MS = 86_400_000;
+const RANGE_TIMEOUT_MS = 30_000;
+const SOLVE_TOTAL_TIMEOUT_MS = 600_000;
 export const METRICS_HISTORY_DAYS = 90;
 
 export function metricsWindow(cutoff: Date) {
@@ -98,20 +100,32 @@ export async function buildAdminMetrics(
 	previous: AdminMetricsSnapshot | null = null,
 ): Promise<AdminMetricsSnapshot> {
 	const queries = adminMetricsQueries(cutoff);
-	async function query<T>(name: string, sql: Prisma.Sql): Promise<T[]> {
+	async function query<T>(
+		name: string,
+		sql: Prisma.Sql,
+		options?: {timeoutMs?: number},
+	): Promise<T[]> {
 		assertActive();
+		const timeoutMs = options?.timeoutMs ?? RANGE_TIMEOUT_MS;
 		try {
 			// One read-only query at a time, with no parallel workers competing with
 			// application traffic. Settings never escape this pooled transaction.
 			return await db.$transaction(
 				async (tx) => {
 					await tx.$executeRaw`SET TRANSACTION READ ONLY`;
-					await tx.$executeRaw`SET LOCAL statement_timeout = '30s'`;
+					if (timeoutMs === SOLVE_TOTAL_TIMEOUT_MS) {
+						await tx.$executeRaw`SET LOCAL statement_timeout = '600s'`;
+					} else {
+						await tx.$executeRaw`SET LOCAL statement_timeout = '30s'`;
+					}
 					await tx.$executeRaw`SET LOCAL max_parallel_workers_per_gather = 0`;
 					await tx.$executeRaw`SET LOCAL TIME ZONE 'UTC'`;
 					return tx.$queryRaw<T[]>(sql);
 				},
-				{timeout: 35_000, maxWait: 5_000},
+				{
+					timeout: timeoutMs === SOLVE_TOTAL_TIMEOUT_MS ? timeoutMs + 15_000 : 35_000,
+					maxWait: 5_000,
+				},
 			);
 		} catch (error) {
 			throw new Error(`Admin metrics query ${name} failed: ${String(error)}`, {cause: error});
@@ -192,7 +206,19 @@ export async function buildAdminMetrics(
 				count: BigInt(0),
 			};
 		}
-		const first = await firstCreatedAt('solveTotals', 'user_account');
+		try {
+			const [result] = await query<Totals>(
+				'solveTotals',
+				Prisma.sql`SELECT count(*) FILTER (WHERE NOT bulk) AS registered,
+					count(*) FILTER (WHERE bulk) AS imported
+					FROM solve WHERE created_at < ${cutoff}`,
+				{timeoutMs: SOLVE_TOTAL_TIMEOUT_MS},
+			);
+			return result ?? noTotals();
+		} catch (error) {
+			if (!isQueryTimeout(error)) throw error;
+		}
+		const first = await firstCreatedAt('solveTotals', 'solve');
 		return first ? sumRanges('solveTotals', first) : noTotals();
 	}
 
