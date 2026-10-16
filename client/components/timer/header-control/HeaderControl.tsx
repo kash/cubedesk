@@ -251,7 +251,16 @@ export default function HeaderControl() {
 		</div>
 	);
 
-	// On mobile, logged out users get a top bar (logo and auth buttons) that mirrors the logged in mobile nav
+	const aboutLink = (
+		<Link
+			to="/about"
+			className="text-text/60 hover:text-text focus-visible:outline-primary rounded-sm px-2 py-1 font-mono text-xs tracking-[0.2em] uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-4"
+		>
+			About
+		</Link>
+	);
+
+	// On mobile, logged out users get a top bar (logo, about, and auth buttons) that mirrors the logged in mobile nav
 	const mobileLoggedOutBar = mobileMode && !me && !focusMode && (
 		<div
 			className={classNames(
@@ -259,15 +268,18 @@ export default function HeaderControl() {
 				{'pointer-events-none opacity-10': !!context.timeStartedAt},
 			)}
 		>
-			<a
-				className="flex size-11 shrink-0 items-center justify-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
-				href="/"
-				aria-label="CubeDesk home"
-			>
-				<span className="w-6">
-					<LogoBrandmark dark={!moduleColor.isDark} />
-				</span>
-			</a>
+			<div className="flex items-center gap-[7px]">
+				<a
+					className="flex size-11 shrink-0 items-center justify-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
+					href="/"
+					aria-label="CubeDesk home"
+				>
+					<span className="w-6">
+						<LogoBrandmark dark={!moduleColor.isDark} />
+					</span>
+				</a>
+				{aboutLink}
+			</div>
 			{authButtons}
 		</div>
 	);
@@ -301,17 +313,7 @@ export default function HeaderControl() {
 					{me || mobileMode ? (
 						<div className="flex flex-row items-start justify-center gap-2.5" />
 					) : (
-						<div className="flex flex-row items-center justify-center">
-							<Link
-								to="/about"
-								className={classNames(
-									'text-text/60 hover:text-text focus-visible:outline-primary rounded-sm px-2 py-1 font-mono text-xs tracking-[0.2em] uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-4',
-									{hidden: mobileMode},
-								)}
-							>
-								About
-							</Link>
-						</div>
+						<div className="flex flex-row items-center justify-center">{aboutLink}</div>
 					)}
 					<div className="flex flex-row items-start justify-end gap-2.5">
 						{mobileMode && (
