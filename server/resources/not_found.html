@@ -74,8 +74,13 @@
 			}
 
 			.cd__logo {
-				width: 180px;
+				display: block;
 				margin-bottom: 32px;
+			}
+
+			.cd__logo img {
+				display: block;
+				width: 180px;
 			}
 
 			.cd__cube {
@@ -95,19 +100,19 @@
 			}
 
 			.cd__cube span:nth-child(4n + 1) {
-				transform: translateX(-1.6em);
+				transform: translateX(-1em);
 			}
 
 			.cd__cube span:nth-child(4n + 2) {
-				transform: translateX(2.2em);
+				transform: translateX(1.4em);
 			}
 
 			.cd__cube span:nth-child(4n + 3) {
-				transform: translateX(-2.8em);
+				transform: translateX(-1.8em);
 			}
 
 			.cd__cube span:nth-child(4n) {
-				transform: translateX(1.2em);
+				transform: translateX(0.7em);
 			}
 
 			.cd__code {
@@ -161,7 +166,9 @@
 	<body>
 		<main class="cd">
 			<div class="cd__center">
-				<img class="cd__logo" src="https://cdn.cubedesk.io/static/images/branding/cubedesk-lockup-white.svg" alt="CubeDesk" />
+				<a class="cd__logo" href="/">
+					<img src="https://cdn.cubedesk.io/static/images/branding/cubedesk-lockup-white.svg" alt="CubeDesk" />
+				</a>
 				<p class="cd__code">404</p>
 				<h1 class="cd__title">Page not found</h1>
 				<p class="cd__body">This page doesn't exist or has been moved.</p>
