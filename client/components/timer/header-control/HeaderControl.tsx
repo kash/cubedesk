@@ -268,7 +268,7 @@ export default function HeaderControl() {
 				{'pointer-events-none opacity-10': !!context.timeStartedAt},
 			)}
 		>
-			<div className="flex items-center gap-3">
+			<div className="flex items-center gap-[7px]">
 				<a
 					className="flex size-11 shrink-0 items-center justify-center rounded-md focus-visible:ring-2 focus-visible:ring-current"
 					href="/"
