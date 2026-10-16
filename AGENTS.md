@@ -11,6 +11,7 @@ Before running the app, the DB integration tests, or anything that needs Postgre
 - Once you're done with a task, make sure you didn't introduce any new TypeScript errors. Go back and fix them if you introduced any new TypeScript errors after making changes.
 - Branch names should start with the initials of the person making the changes (kg for kash, who is the author).
     - Prefer git add -A rather than referencing each file individually
+- Before creating a PR, fetch `origin/main` and check whether the branch is behind it. If it is, merge `main` into the branch and resolve any conflicts before opening the PR.
 - Whenever support for a new connected device (smart cube, smart timer, etc.) is added, update the supported devices docs page (client/components/docs/pages/SupportedDevices.tsx) to list it, and drop its "coming soon" flag if it had one.
 - Never hand-edit `prisma/migrations` or change the database schema with SQL; change `prisma/schema.prisma` and run `pnpm prisma`.
 - Fix TypeScript errors at their root (correct the types or declarations) instead of casting to `any` or adding `@ts-ignore`.
