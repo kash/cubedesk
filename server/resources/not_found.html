@@ -5,10 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans&family=JetBrains+Mono&family=Kiwi+Maru&family=Montserrat&family=Poppins&family=Roboto+Mono&family=Space+Mono&display=swap"
-			rel="stylesheet"
-		/>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
 		<script async defer data-domain="cubedesk.io" src="https://plausible.io/js/plausible.js"></script>
 		<link rel="icon" href="https://cdn.cubedesk.io/static/images/branding/favicon.ico" type="image/x-icon" />
 		<link rel="apple-touch-icon" href="https://cdn.cubedesk.io/static/images/branding/apple-touch-icon.png" sizes="180x180" />
@@ -24,67 +21,169 @@
 			gtag('config', 'AW-354788011');
 		</script>
 
-		<title>CubeDesk</title>
+		<title>Page not found | CubeDesk</title>
 
 		<style>
-			body,
-			html {
+			@font-face {
+				font-family: 'Gelion';
+				font-weight: 400;
+				src: url('https://cdn.cubedesk.io/fonts/Gelion/Gelion Regular.woff2') format('woff2');
+			}
+
+			@font-face {
+				font-family: 'Gelion';
+				font-weight: 500;
+				src: url('https://cdn.cubedesk.io/fonts/Gelion/Gelion Medium.woff2') format('woff2');
+			}
+
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+			}
+
+			html,
+			body {
 				margin: 0;
 				padding: 0;
-				height: 100vh;
-				width: 100vw;
+				min-height: 100%;
+				background-color: rgb(0, 0, 0);
+				color: rgb(235, 235, 235);
+				font-family: Gelion, 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+				-webkit-font-smoothing: antialiased;
 			}
 
 			.cd {
-				width: 100%;
-				height: 100%;
-				padding: 0;
-				background-color: #1a1d21;
 				display: flex;
-				justify-content: center;
+				min-height: 100vh;
+				padding: 48px 16px;
 				align-items: center;
+				justify-content: center;
 			}
 
 			.cd__center {
 				display: flex;
+				max-width: 420px;
 				flex-direction: column;
 				align-items: center;
-                width: 95%;
-				margin-top: -100px;
+				text-align: center;
 			}
 
-			.cd__center img {
-				width: 250px;
+			.cd__cube {
+				margin: 0 0 40px;
+				font-family: 'Roboto Mono', ui-monospace, monospace;
+				font-size: 3px;
+				line-height: 1.15;
+				opacity: 0.4;
+				user-select: none;
+				pointer-events: none;
 			}
 
-			.cd__center p {
-				color: white;
-				font-family: Roboto, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+			.cd__code {
+				margin: 0;
+				font-family: 'Roboto Mono', ui-monospace, monospace;
+				font-size: 0.85rem;
 				font-weight: 500;
-				opacity: 0.8;
-				font-size: 1.2rem;
-				margin: 20px 0;
+				letter-spacing: 0.2em;
+				color: rgb(170, 170, 170);
 			}
 
-			.cd__center a {
-				color: white;
-				padding: 10px 20px;
-				border-radius: 5px;
-                font-family: Roboto, Arial, 'Helvetica Neue', Helvetica, sans-serif;
-                text-decoration: none;
-				box-sizing: border-box;
-				background-color: #246bfd;
+			.cd__title {
+				margin: 12px 0 8px;
+				font-size: 1.75rem;
+				font-weight: 500;
+			}
+
+			.cd__body {
+				margin: 0 0 28px;
+				font-size: 1rem;
+				line-height: 1.5;
+				color: rgb(170, 170, 170);
+			}
+
+			.cd__button {
+				display: inline-flex;
+				height: 36px;
+				padding: 0 16px;
+				align-items: center;
+				border-radius: 6px;
+				background-color: rgb(33, 33, 33);
+				color: rgb(235, 235, 235);
+				font-size: 0.9rem;
+				font-weight: 500;
+				text-decoration: none;
+				transition: background-color 150ms;
+			}
+
+			.cd__button:hover {
+				background-color: rgb(48, 48, 48);
+			}
+
+			@media (min-width: 640px) {
+				.cd__cube {
+					font-size: 4px;
+				}
 			}
 		</style>
 	</head>
 
 	<body>
-		<div class="cd">
-			<div class="cd__center te">
-				<img src="https://cdn.cubedesk.io/static/images/branding/cubedesk-lockup-white.svg" alt="CubeDesk Logo" />
-				<p>Yikes... The page you're looking for does not exist.</p>
-				<a href="/">Back to CubeDesk</a>
+		<main class="cd">
+			<div class="cd__center">
+				<pre class="cd__cube" aria-hidden="true">                                             :::::::
+                                         :::::::::::::::
+                                     :::::::::::::::::::::::
+                                    :::::::::::::::::::::::
+                             :::::::    :::::::::::::::      :::::::
+                         :::::::::::::::    :::::::      :::::::::::::::
+                     :::::::::::::::::::::::         :::::::::::::::::::::::
+                    :::::::::::::::::::::::         :::::::::::::::::::::::
+             :::::::    :::::::::::::::      :::::::    :::::::::::::::      :::::::
+         :::::::::::::::    :::::::      :::::::::::::::    :::::::      :::::::::::::::
+     :::::::::::::::::::::::         :::::::::::::::::::::::         :::::::::::::::::::::::
+    :::::::::::::::::::::::         :::::::::::::::::::::::         :::::::::::::::::::::::
+ ##     :::::::::::::::      :::::::    :::::::::::::::      :::::::    :::::::::::::::      ++
+ ######     :::::::      :::::::::::::::    :::::::      :::::::::::::::    :::::::      ++++++
+ ##########          :::::::::::::::::::::::         :::::::::::::::::::::::         ++++++++++
+ ##############     :::::::::::::::::::::::         :::::::::::::::::::::::      ++++++++++++++
+ ##############  ##     :::::::::::::::      :::::::    :::::::::::::::      ++  ++++++++++++++
+ ##############  ######     :::::::      :::::::::::::::    :::::::      ++++++  ++++++++++++++
+ ##############  ##########          :::::::::::::::::::::::         ++++++++++  ++++++++++++++
+ ##############  ##############     :::::::::::::::::::::::      ++++++++++++++  ++++++++++++++
+     ##########  ##############  ##     :::::::::::::::      ++  ++++++++++++++  ++++++++++
+ ##      ######  ##############  ######     :::::::      ++++++  ++++++++++++++  ++++++      ++
+ ######      ##  ##############  ##########          ++++++++++  ++++++++++++++  ++      ++++++
+ ##########      ##############  ##############  ++++++++++++++  ++++++++++++++      ++++++++++
+ ##############      ##########  ##############  ++++++++++++++  ++++++++++      ++++++++++++++
+ ##############  ##      ######  ##############  ++++++++++++++  ++++++      ++  ++++++++++++++
+ ##############  ######      ##  ##############  ++++++++++++++  ++      ++++++  ++++++++++++++
+ ##############  ##########      ##############  ++++++++++++++      ++++++++++  ++++++++++++++
+ ##############  ##############      ##########  ++++++++++      ++++++++++++++  ++++++++++++++
+     ##########  ##############  ##      ######  ++++++      ++  ++++++++++++++  ++++++++++
+ ##      ######  ##############  ######      ##  ++      ++++++  ++++++++++++++  ++++++      ++
+ ######      ##  ##############  ##########          ++++++++++  ++++++++++++++  ++      ++++++
+ ##########      ##############  ##############  ++++++++++++++  ++++++++++++++      ++++++++++
+ ##############      ##########  ##############  ++++++++++++++  ++++++++++      ++++++++++++++
+ ##############  ##      ######  ##############  ++++++++++++++  ++++++      ++  ++++++++++++++
+ ##############  ######      ##  ##############  ++++++++++++++  ++      ++++++  ++++++++++++++
+ ##############  ##########      ##############  ++++++++++++++      ++++++++++  ++++++++++++++
+ ##############  ##############      ##########  ++++++++++      ++++++++++++++  ++++++++++++++
+     ##########  ##############  ##      ######  ++++++      ++  ++++++++++++++  ++++++++++
+         ######  ##############  ######      ##  ++      ++++++  ++++++++++++++  ++++++
+             ##  ##############  ##########          ++++++++++  ++++++++++++++  ++
+                 ##############  ##############  ++++++++++++++  ++++++++++++++
+                     ##########  ##############  ++++++++++++++  ++++++++++
+                         ######  ##############  ++++++++++++++  ++++++
+                             ##  ##############  ++++++++++++++  ++
+                                 ##############  ++++++++++++++
+                                     ##########  ++++++++++
+                                         ######  ++++++
+                                             ##  ++</pre>
+				<p class="cd__code">404</p>
+				<h1 class="cd__title">Page not found</h1>
+				<p class="cd__body">This page doesn't exist or has been moved.</p>
+				<a class="cd__button" href="/">Back to CubeDesk</a>
 			</div>
-		</div>
+		</main>
 	</body>
 </html>
