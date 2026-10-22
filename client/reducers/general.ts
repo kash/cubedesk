@@ -4,6 +4,7 @@ const initialState: GeneralAllParams = {
 	app_loaded: false,
 	browser_session_id: null,
 	mobile_mode: false,
+	short_landscape: false,
 	force_nav_collapsed: false,
 };
 

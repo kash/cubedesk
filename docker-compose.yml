@@ -1,7 +1,7 @@
 services:
 
   app-builder:
-    image: node:24
+    image: node:24.22.1
     working_dir: /app
     volumes:
       - ./:/app

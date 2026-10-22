@@ -49,6 +49,7 @@ export default function TimeDisplay() {
 	const zeroOutTimeAfterSolve = useSettings('zero_out_time_after_solve');
 
 	const mobileMode = useGeneral('mobile_mode');
+	const shortLandscape = useGeneral('short_landscape');
 	let timerTimeSize = useSettings('timer_time_size');
 	if (mobileMode) {
 		timerTimeSize *= MOBILE_FONT_SIZE_MULTIPLIER;
@@ -166,7 +167,9 @@ export default function TimeDisplay() {
 		<>
 			<h1
 				style={{
-					fontSize: timerTimeSize + 'px',
+					fontSize: shortLandscape
+						? `min(${timerTimeSize}px, 9.5vw)`
+						: timerTimeSize + 'px',
 					fontFamily: timerFontFamily + ', monospace',
 				}}
 				className={classNames(

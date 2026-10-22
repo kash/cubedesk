@@ -52,7 +52,7 @@ jobs:
             - name: Setup Nodejs
               uses: actions/setup-node@v5
               with:
-                  node-version: "24"
+                  node-version: "24.22.1"
                   package-manager-cache: false
 
             - name: Setup pnpm

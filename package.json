@@ -24,7 +24,7 @@
 		"deploy": "pnpm run build"
 	},
 	"engines": {
-		"node": "24.x"
+		"node": ">=24.22.1 <25"
 	},
 	"jest": {
 		"preset": "ts-jest",

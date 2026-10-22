@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # The server is built on the CI runner and bundled with all of its dependencies, so the image only
 # needs Node and the build output. Runtime config comes from the ECS task definition's env vars.
-FROM node:24-slim
+FROM node:24.22.1-slim
 
 # Baked in because they must match the client bundle built in the same deploy
 ARG DEPLOYMENT_ID

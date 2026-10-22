@@ -132,7 +132,7 @@ export default function Timer(props: TimerProps) {
 	const mainClass = classNames(
 		'relative flex w-full select-none items-center justify-center',
 		mobileMode && 'select-none [-webkit-touch-callout:none] [-webkit-user-select:none]',
-		sideLayout && '!h-[calc(100vh_-_70px)]',
+		sideLayout && 'short:!h-full !h-[calc(100vh_-_70px)]',
 		{
 			// When there's lots of room on mobile, sit a bit above center so the gap under the header isn't so big
 			'items-center-safe pb-[22vh]':
@@ -140,7 +140,7 @@ export default function Timer(props: TimerProps) {
 		},
 	);
 	const mainCenterClass = classNames('flex w-full flex-col items-center', {
-		'-mt-[15vh]': sideLayout,
+		'short:mt-0 -mt-[15vh]': sideLayout,
 		'-mt-[10vh]': context.focusMode && !mobileMode,
 	});
 	const mainTimeClass = classNames({
@@ -213,9 +213,9 @@ export default function Timer(props: TimerProps) {
 									: context.focusMode
 										? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)]'
 										: timerLayout === 'left'
-											? '!grid-cols-[350px_minmax(0,auto)] grid-rows-[minmax(0,1fr)] !px-0 !pb-2.5 !pl-2.5'
+											? 'short:!grid-cols-[min(350px,40%)_minmax(0,1fr)] !grid-cols-[350px_minmax(0,auto)] grid-rows-[minmax(0,1fr)] !px-0 !pb-2.5 !pl-2.5'
 											: timerLayout === 'right'
-												? 'grid-cols-[minmax(0,auto)_350px] grid-rows-[minmax(0,1fr)] !px-2.5 !pb-2.5'
+												? 'short:grid-cols-[minmax(0,1fr)_min(350px,40%)] grid-cols-[minmax(0,auto)_350px] grid-rows-[minmax(0,1fr)] !px-2.5 !pb-2.5'
 												: hideMobileTimerFooter && mobileMode
 													? 'grid-rows-[1fr_50px]'
 													: 'grid-rows-[1fr_300px]',
@@ -223,6 +223,7 @@ export default function Timer(props: TimerProps) {
 							{
 								// Fill the space below the header instead of a fixed viewport height
 								'!h-auto min-h-0 flex-1': mobileMode,
+								'short:h-[calc(100dvh_-_66px)]': sideLayout,
 							},
 						)}
 					>
