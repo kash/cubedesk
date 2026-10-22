@@ -103,7 +103,7 @@ export default function TimerFooter() {
 	return (
 		<div
 			className={cn('relative box-border h-full px-[15px] pt-0 pb-0', {
-				'h-[calc(100vh_-_70px)] min-h-0 px-0 pb-2.5': sideLayout,
+				'short:h-full h-[calc(100vh_-_70px)] min-h-0 px-0 pb-2.5': sideLayout,
 				'pointer-events-none opacity-10': !!context.timeStartedAt,
 			})}
 		>

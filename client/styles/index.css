@@ -3,6 +3,7 @@
 @import 'react-color-palette/lib/css/styles.css';
 @config "../../tailwind.config.js";
 @source "../../client";
+@custom-variant short (@media (max-height: 500px));
 @layer base {
   :root {
     --primary-color: 235, 235, 235;

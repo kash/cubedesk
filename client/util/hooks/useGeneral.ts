@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 
 export interface GeneralAllParams {
 	mobile_mode: boolean;
+	short_landscape: boolean;
 	browser_session_id: string | null;
 	force_nav_collapsed: boolean;
 	app_loaded: boolean;

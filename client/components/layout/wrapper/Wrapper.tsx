@@ -38,9 +38,19 @@ export default function Wrapper(props: Props) {
 	const textColor = useSettings('text_color');
 
 	useEffect(() => {
+		function isShortLandscape() {
+			const orientation = window.screen.orientation?.type;
+			const landscape = orientation
+				? orientation.startsWith('landscape')
+				: window.innerWidth > window.innerHeight;
+			return landscape && window.innerHeight <= 500;
+		}
+
 		function updateLayout() {
+			const shortLandscape = isShortLandscape();
 			dispatch(setGeneral('force_nav_collapsed', window.innerWidth <= 1080));
-			dispatch(setGeneral('mobile_mode', window.innerWidth <= 750));
+			dispatch(setGeneral('short_landscape', shortLandscape));
+			dispatch(setGeneral('mobile_mode', window.innerWidth <= 750 && !shortLandscape));
 		}
 		updateLayout();
 		window.addEventListener('resize', updateLayout);

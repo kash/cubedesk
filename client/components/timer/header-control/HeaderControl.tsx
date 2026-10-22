@@ -292,11 +292,13 @@ export default function HeaderControl() {
 					className={classNames(
 						'top-0 z-30 box-border grid w-full grid-cols-3 justify-between p-5 transition-opacity duration-200 ease-in-out focus-within:z-[10000]',
 						context.timeStartedAt && 'pointer-events-none opacity-10',
-						!me && !mobileMode && '!grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
+						!me &&
+							!mobileMode &&
+							'short:!grid-cols-[auto_minmax(0,1fr)_auto] !grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
 						{
 							// In mobile, the header takes up space so the timer is centered between it and the footer
 							'relative shrink-0': mobileMode,
-							absolute: !mobileMode,
+							'short:p-2.5 absolute': !mobileMode,
 						},
 					)}
 				>

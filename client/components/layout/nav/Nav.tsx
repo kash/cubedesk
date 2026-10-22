@@ -79,6 +79,8 @@ export default function Nav() {
 		'border-r',
 		'border-tmo-module/10',
 		'pt-5',
+		'short:overflow-y-auto',
+		'short:pt-2.5',
 	];
 
 	const headerClasses = [
@@ -95,6 +97,7 @@ export default function Nav() {
 		navClosed ? 'flex-col' : 'flex-row',
 		'items-center',
 		'gap-2.5',
+		'short:gap-1',
 	];
 	const socialClasses = [
 		'mx-auto',
@@ -121,7 +124,7 @@ export default function Nav() {
 								<LogoLockup dark={!moduleColor.isDark} />
 							</div>
 							<div
-								className={cn('mb-5 flex w-6 shrink-0', {
+								className={cn('short:mb-2 mb-5 flex w-6 shrink-0', {
 									hidden: !navClosed,
 								})}
 							>
@@ -132,10 +135,10 @@ export default function Nav() {
 								<AccountDropdown />
 							</div>
 						</div>
-						<div className="mt-4">{navLinks}</div>
+						<div className="short:mt-1 mt-4">{navLinks}</div>
 						<LoginNav collapsed={navClosed} />
 					</div>
-					<div className="flex flex-col items-center pb-[30px]">
+					<div className="short:pb-2.5 flex flex-col items-center pb-[30px]">
 						{me && !navClosed ? <ImportTimesPrompt key={me.id} /> : null}
 						<div className={cn(socialClasses, {hidden: navClosed})}>
 							<SocialIcon

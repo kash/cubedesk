@@ -38,6 +38,7 @@ export default function NavLink(props: Props) {
 		'w-full',
 		'text-text',
 		'h-12',
+		'short:h-10',
 		'text-base',
 		'flex',
 		'flex-row',
