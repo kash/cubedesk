@@ -30,7 +30,7 @@ const SMART_CUBES: DeviceFamily[] = [
 			{name: 'GAN356 i', variants: ['Original', '3']},
 			{name: 'GAN356 i Carry', variants: ['S', '2', 'E']},
 			{name: 'GAN i Carry 4'},
-			{name: 'GAN i4'},
+			{name: 'GAN i4', variants: ['Maglev', 'Leap']},
 			{name: 'GAN Mini ui', variants: ['FreePlay']},
 			{name: 'GAN12 ui', variants: ['FreePlay', 'Maglev', 'SP']},
 			{name: 'GAN14 ui', variants: ['FreePlay']},
