@@ -81,7 +81,7 @@ initLogger();
 
 // Pages and tRPC responses (solve lists of heavy users can be tens of megabytes of repetitive JSON)
 app.use(compression());
-app.use(bodyParser.json({limit: '200mb'}));
+app.use(bodyParser.json({limit: '200mb', inflate: false}));
 app.use(cookieParser());
 
 exposeResourcesForSearchEngines();
