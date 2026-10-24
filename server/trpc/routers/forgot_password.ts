@@ -1,5 +1,6 @@
 import {claimForgotPassword, createForgotPassword, getForgotPassword} from '@/server/models/forgot_password';
 import {getUserByEmail, updateUserAccountPassword} from '@/server/models/user_account';
+import {reportError} from '@/server/services/errors';
 import {sendEmailWithTemplate} from '@/server/services/ses';
 import {publicProcedure, router} from '@/server/trpc/trpc';
 import {getJwtString} from '@/server/util/auth';
@@ -32,7 +33,7 @@ export const forgotPasswordRouter = router({
 			sendEmailWithTemplate(user, 'Reset Your CubeDesk Password', 'forgot_password', {
 				code: fp.code,
 				message: 'Please use the code below to reset your password:',
-			});
+			}).catch((error) => reportError('Could not send forgot password email', error));
 		}
 	}),
 
