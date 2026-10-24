@@ -51,8 +51,39 @@ export function getRedirectLink() {
 	}
 
 	if (redirect.indexOf('/') > -1) {
-		return redirect;
+		return getSafeRedirect(redirect);
 	}
 
-	return decodeURIComponent(redirect) || '/';
+	try {
+		return getSafeRedirect(decodeURIComponent(redirect));
+	} catch {
+		return '/';
+	}
+}
+
+export function getSafeRedirect(value: string | null | undefined) {
+	if (typeof window === 'undefined' || !value) {
+		return '/';
+	}
+
+	if (value.includes('\\') || value.startsWith('//')) {
+		return '/';
+	}
+
+	let url: URL;
+	try {
+		url = new URL(value, window.location.origin);
+	} catch {
+		return '/';
+	}
+
+	if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+		return '/';
+	}
+
+	if (url.origin !== window.location.origin || url.pathname.startsWith('//')) {
+		return '/';
+	}
+
+	return url.pathname + url.search + url.hash;
 }
