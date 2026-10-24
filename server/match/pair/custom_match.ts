@@ -2,11 +2,16 @@ import {getMatchTypeByMatch} from '@/server/match/init';
 import {getMatchPlayersRoomName, userExistsInMatch} from '@/server/match/match';
 import {pairPlayersInRoom} from '@/server/match/pair/start_match';
 import {sendMatchUpdate} from '@/server/match/update/standings';
-import {getClientsInRoom, getDetailedClientInfo, isClientInRoom, joinRoom} from '@/server/match/util';
+import {getClientsInRoom, isClientInRoom, joinRoom} from '@/server/match/util';
 import {FullMatch} from '@/types/match';
+import {PublicUserAccount} from '@/types/user';
 import {Socket} from 'socket.io';
 
-export async function matchPlayersInCustomMatch(client: Socket, match: FullMatch) {
+export async function matchPlayersInCustomMatch(
+	client: Socket,
+	user: PublicUserAccount,
+	match: FullMatch,
+) {
 	const matchRoomName = getMatchPlayersRoomName(match);
 
 	// Making sure that user is not already in match room
@@ -15,8 +20,7 @@ export async function matchPlayersInCustomMatch(client: Socket, match: FullMatch
 	}
 
 	// User probably joined through the lobby
-	const clientToAddToMatch = await getDetailedClientInfo(client);
-	if (userExistsInMatch(match, clientToAddToMatch.user)) {
+	if (userExistsInMatch(match, user)) {
 		joinRoom(client, matchRoomName);
 		await sendMatchUpdate(match);
 		return;

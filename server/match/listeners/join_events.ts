@@ -1,38 +1,53 @@
 import {MatchRoom} from '@/client/shared/match/events';
 import {SocketClient} from '@/server/match/init';
-import {getLobbyRoomName, getMatchSpectatorsRoomName, getRematchRoomName} from '@/server/match/match';
+import {
+	getLobbyRoomName,
+	getMatchSpectatorsRoomName,
+	getRematchRoomName,
+} from '@/server/match/match';
 import {matchPlayersInCustomMatch} from '@/server/match/pair/custom_match';
 import {joinLobby, removeMatchLobbyRecordsByClientId} from '@/server/match/pair/pair_logic';
 import {rematchPlayers} from '@/server/match/pair/rematch';
+import {onProtectedSocketEvent, onSocketEvent, socketIdSchema} from '@/server/match/socket_event';
 import {sendMatchUpdateById} from '@/server/match/update/standings';
-import {getDetailedClientInfo, joinRoom, leaveRoom} from '@/server/match/util';
+import {getClientRooms, joinRoom, leaveRoom} from '@/server/match/util';
 import {getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '@/server/models/match';
+import {GameType} from '@/shared/match/consts';
+import {z} from 'zod';
+
+const gameOptionsSchema = z.object({
+	event_type: z.string(),
+	game_type: z.enum(GameType),
+	elimination_starting_time_seconds: z.number().optional(),
+	elimination_percent_change_rate: z.number().optional(),
+	head_to_head_target_win_count: z.number().optional(),
+	gauntlet_time_multiplier: z.number().optional(),
+});
+
+const idArgs = z.tuple([socketIdSchema]);
 
 export function listenForJoinEvents(client: SocketClient) {
-	// Client joins [match type] lobby
-	client.on('playerJoinedLobby', async (gameOptions) => {
-		const gameType = gameOptions.game_type;
+	onProtectedSocketEvent(
+		client,
+		'playerJoinedLobby',
+		z.tuple([gameOptionsSchema]),
+		async (user, gameOptions) => {
+			joinRoom(client, getLobbyRoomName(gameOptions.game_type, MatchRoom.LOBBY));
 
-		joinRoom(client, getLobbyRoomName(gameType, MatchRoom.LOBBY));
-		const {user} = await getDetailedClientInfo(client);
+			await joinLobby(client, user, 2, gameOptions);
+		},
+	);
 
-		// Change playerCount in the future?
-		await joinLobby(client, user, 2, gameOptions);
-	});
-
-	// Client leave [match type] lobby
-	client.on('playerLeftLobby', async () => {
-		const rooms = client.rooms;
-		rooms.forEach((room) => {
+	onSocketEvent(client, 'playerLeftLobby', z.tuple([]), async () => {
+		for (const room of getClientRooms(client)) {
 			if (room.includes(MatchRoom.LOBBY)) {
 				leaveRoom(client, room);
-				removeMatchLobbyRecordsByClientId(client.id);
+				await removeMatchLobbyRecordsByClientId(client.id);
 			}
-		});
+		}
 	});
 
-	// Client joins spectate
-	client.on('playerJoinedSpectateMode', async (spectateCode) => {
+	onSocketEvent(client, 'playerJoinedSpectateMode', idArgs, async (spectateCode) => {
 		const match = await getMatchBySpectateCode(spectateCode);
 
 		if (!match) {
@@ -43,21 +58,24 @@ export function listenForJoinEvents(client: SocketClient) {
 		joinRoom(client, spectateRoom);
 	});
 
-	// Client joins match
-	client.on('playerJoinedMatchByLinkCode', async (linkCode) => {
-		const match = await getMatchByLinkCode(linkCode);
-		if (!match) {
-			return;
-		}
+	onProtectedSocketEvent(
+		client,
+		'playerJoinedMatchByLinkCode',
+		idArgs,
+		async (user, linkCode) => {
+			const match = await getMatchByLinkCode(linkCode);
+			if (!match) {
+				return;
+			}
 
-		const paired = await matchPlayersInCustomMatch(client, match);
-		if (!paired) {
-			await sendMatchUpdateById(match.id);
-		}
-	});
+			const paired = await matchPlayersInCustomMatch(client, user, match);
+			if (!paired) {
+				await sendMatchUpdateById(match.id);
+			}
+		},
+	);
 
-	// Client clicks rematch button
-	client.on('playerJoinedRematchQueue', async (matchId) => {
+	onProtectedSocketEvent(client, 'playerJoinedRematchQueue', idArgs, async (_user, matchId) => {
 		const match = await getMatchById(matchId);
 
 		if (!match || !match.ended_at) {

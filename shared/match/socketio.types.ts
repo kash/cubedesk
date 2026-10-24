@@ -47,6 +47,7 @@ export interface ClientToServerEvents {
 	playerJoinedMatchByLinkCode: (linkCode: string) => void;
 	playerJoinedSpectateMode: (spectateCode: string) => void;
 	rejoinMyRooms: (rooms: string[]) => void;
+	[SocketConst.REJOIN_ROOMS]: (data: {rooms: string[]}) => void;
 	[SocketConst.WATCH_ROOM_SIZES]: () => void;
 	[SocketConst.STOP_WATCHING_ROOM_SIZES]: () => void;
 }

@@ -1,13 +1,17 @@
 import {MatchConst} from '@/client/shared/match/consts';
 import {SocketClient} from '@/server/match/init';
 import {getMatchIdFromPlayersRoom, getMatchPlayersRoomName} from '@/server/match/match';
+import {
+	onProtectedSocketEvent,
+	runSocketHandler,
+	socketIdSchema,
+} from '@/server/match/socket_event';
 import {abortMatch, resignMatch} from '@/server/match/update/resign';
 import {emitMatchUpdate} from '@/server/match/update/send';
 import {sendMatchUpdate} from '@/server/match/update/standings';
 import {
 	getClientRooms,
 	getClientsInRoom,
-	getDetailedClientInfo,
 	getUserFromClient,
 	leaveAllRooms,
 	userExistsInRoom,
@@ -15,48 +19,45 @@ import {
 import {getMatchById, updateMatch} from '@/server/models/match';
 import {FullMatch} from '@/types/match';
 import {PublicUserAccount} from '@/types/user';
+import {z} from 'zod';
+
+const matchIdArgs = z.tuple([socketIdSchema]);
 
 export function listenForLeaveEvents(client: SocketClient) {
-	// Player resigns match
-	client.on('playerResignedMatch', async (matchId) => {
+	onProtectedSocketEvent(client, 'playerResignedMatch', matchIdArgs, async (user, matchId) => {
 		const match = await getMatchById(matchId);
 		if (!match) {
 			return;
 		}
 
-		const {user} = await getDetailedClientInfo(client);
 		await resignMatch(match, user);
 	});
 
-	// Player abort match
-	client.on('playerAbortedMatch', async (matchId) => {
+	onProtectedSocketEvent(client, 'playerAbortedMatch', matchIdArgs, async (user, matchId) => {
 		const match = await getMatchById(matchId);
 		if (!match) {
 			return;
 		}
 
-		const {user} = await getDetailedClientInfo(client);
 		await abortMatch(match, user);
 	});
 
-	// Player disconnects from match
-	client.on('playerLeftGame', async () => {
-		const rooms = getClientRooms(client);
-		const {user} = await getDetailedClientInfo(client);
-
-		await leaveMatch(user, rooms);
+	onProtectedSocketEvent(client, 'playerLeftGame', matchIdArgs, async (user) => {
+		await leaveMatch(user, getClientRooms(client));
 	});
 
-	client.on('disconnecting', async () => {
+	client.on('disconnecting', () => {
 		const rooms = getClientRooms(client);
 
-		// Anonymous clients (e.g. demo mode) have no user to resolve
-		const user = await getUserFromClient(client);
-		if (!user) {
-			return;
-		}
+		void runSocketHandler(client, 'disconnecting', async () => {
+			// Anonymous clients (e.g. demo mode) have no user to resolve
+			const user = await getUserFromClient(client);
+			if (!user) {
+				return;
+			}
 
-		await leaveMatch(user, rooms);
+			await leaveMatch(user, rooms);
+		});
 	});
 
 	async function leaveMatch(user: PublicUserAccount, rooms: string[]) {
@@ -135,7 +136,10 @@ export function listenForLeaveEvents(client: SocketClient) {
 
 			secondsWaited += 1;
 
-			if (secondsWaited >= MatchConst.SECONDS_TO_RETURN_AFTER_LEAVING && !endMatchGracePeriodTimeout) {
+			if (
+				secondsWaited >= MatchConst.SECONDS_TO_RETURN_AFTER_LEAVING &&
+				!endMatchGracePeriodTimeout
+			) {
 				clearInterval(int);
 
 				// Already waited 30 seconds, time to forfeit

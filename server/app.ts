@@ -3,6 +3,7 @@ import {initSocket} from '@/server/match/init';
 import {exposeResourcesForSearchEngines} from '@/server/middlewares/search_engines';
 import {mapPathToPage} from '@/server/router';
 import {initCronJobs} from '@/server/services/cron';
+import {reportError} from '@/server/services/errors';
 import {initLogger, logger} from '@/server/services/logger';
 import '@sentry/tracing';
 import {initRedisClient} from '@/server/services/redis';
@@ -111,6 +112,10 @@ if (!isDev && sentryDsn) {
 		environment: env
 	});
 }
+
+process.on('unhandledRejection', (reason) => {
+	reportError('Unhandled promise rejection', reason);
+});
 
 function createServer() {
 	if (isDev && process.env.HTTPS === 'true') {
