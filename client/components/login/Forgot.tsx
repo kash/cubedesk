@@ -6,7 +6,7 @@ import {Field, FieldLabel} from '@/components/ui/field';
 import {Input} from '@/components/ui/input';
 import {Spinner} from '@/components/ui/spinner';
 import {api} from '@/util/api';
-import {getRedirectLink} from '@/util/auth/login';
+import {getRedirectLink, getSafeRedirect} from '@/util/auth/login';
 import {validateStrongPassword} from '@/util/auth/password';
 import {cn} from '@/util/cn';
 import {useInput} from '@/util/hooks/useInput';
@@ -89,7 +89,7 @@ export default function Forgot() {
 					code,
 					password: newPassword,
 				});
-				window.location.href = auth?.redirectTo ?? getRedirectLink();
+				window.location.href = getSafeRedirect(auth?.redirectTo ?? getRedirectLink());
 				return;
 			}
 		}
