@@ -4,6 +4,7 @@ import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
 import {getSolveDb} from '@/db/solves/init';
 import {Solve} from '@/types/solve';
+import {getSafeRedirect} from '@/util/auth/login';
 import {getEventTypeName} from '@/util/cubes/util';
 import {trpc} from '@/util/trpc';
 import React, {createContext, useContext, useEffect, useRef, useState} from 'react';
@@ -26,7 +27,7 @@ export function DemoImportProvider({children}: {children: React.ReactNode}) {
 	function complete(completion: Completion) {
 		const solves = getSolveDb().find({demo_mode: true});
 		if (!solves.length) {
-			window.location.href = completion.redirect;
+			window.location.href = getSafeRedirect(completion.redirect);
 			return;
 		}
 		setPending({...completion, solves});
@@ -35,7 +36,7 @@ export function DemoImportProvider({children}: {children: React.ReactNode}) {
 		if (!pending) return;
 		// The unload handler checks the collection synchronously, before React effects run.
 		getSolveDb().removeWhere({demo_mode: true});
-		window.location.href = pending.redirect;
+		window.location.href = getSafeRedirect(pending.redirect);
 	}
 	return (
 		<Context.Provider value={{complete, pending: !!pending}}>
