@@ -7,14 +7,28 @@ import {getMatchById} from '@/server/models/match';
 import {Solve} from '@/types/solve';
 
 export function listenForSolveEvents(client: SocketClient) {
-	// Player starts timer
-	client.on('playerStartedSolve', async (matchId, startedAt) => {
+	async function getPlayerMatch(matchId: string) {
+		if (!matchId) {
+			return null;
+		}
+
 		const {user} = await getDetailedClientInfo(client);
 		const match = await getMatchById(matchId);
-		if (!match) {
+		if (!match?.participants.some((part) => part.user_id === user.id)) {
+			return null;
+		}
+
+		return {user, match};
+	}
+
+	// Player starts timer
+	client.on('playerStartedSolve', async (matchId, startedAt) => {
+		const player = await getPlayerMatch(matchId);
+		if (!player) {
 			return;
 		}
 
+		const {user, match} = player;
 		const matchCacher = new MatchCacher(match.id);
 		await matchCacher.setPlayerSolving(user.id, true);
 
@@ -23,12 +37,12 @@ export function listenForSolveEvents(client: SocketClient) {
 
 	// Player stops timer
 	client.on('playerEndedSolve', async (matchId, endedAtUnix, finalTimeMillis) => {
-		const {user} = await getDetailedClientInfo(client);
-		const match = await getMatchById(matchId);
-		if (!match) {
+		const player = await getPlayerMatch(matchId);
+		if (!player) {
 			return;
 		}
 
+		const {user, match} = player;
 		const matchCacher = new MatchCacher(match.id);
 		await matchCacher.setPlayerSolving(user.id, false);
 
@@ -37,16 +51,12 @@ export function listenForSolveEvents(client: SocketClient) {
 
 	// Player finishes solve
 	client.on('playerSolveSaved', async (matchId, solve) => {
-		if (!matchId) {
+		const player = await getPlayerMatch(matchId);
+		if (!player) {
 			return;
 		}
 
-		const {user} = await getDetailedClientInfo(client);
-		const match = await getMatchById(matchId);
-		if (!match) {
-			return;
-		}
-
+		const {user, match} = player;
 		const matchCacher = new MatchCacher(match.id);
 		await matchCacher.updatePlayerLastSolveAt(user.id, new Date());
 
@@ -66,17 +76,12 @@ export function listenForSolveEvents(client: SocketClient) {
 	});
 
 	async function updateSolve(solve: Solve, matchId: string) {
-		if (!matchId) {
+		const player = await getPlayerMatch(matchId);
+		if (!player) {
 			return;
 		}
 
-		const {user} = await getDetailedClientInfo(client);
-		const match = await getMatchById(matchId);
-
-		if (!match) {
-			return;
-		}
-
+		const {user, match} = player;
 		emitMatchUpdate('opponentSolveUpdated', match, user, solve);
 		await sendMatchUpdate(match);
 	}

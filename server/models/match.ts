@@ -93,6 +93,7 @@ async function cleanMatch(match): Promise<FullMatch | null> {
 	if (match.participants) {
 		for (let i = 0; i < match.participants.length; i += 1) {
 			const part = match.participants[i];
+			part.solves = part.solves.filter((solve) => solve.user_id === part.user_id);
 
 			for (let k = 0; k < part.solves.length; k += 1) {
 				const solve = part.solves[k];

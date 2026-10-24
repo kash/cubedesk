@@ -1,4 +1,4 @@
-import type {Prisma} from '@/generated/prisma/client';
+import type {Prisma, PrismaClient} from '@/generated/prisma/client';
 import type {SolveInput} from '@/types/solve';
 import {getMatchById} from '@/server/models/match';
 import {
@@ -66,6 +66,39 @@ export const solveInputSchema = z.object({
 	inspection_time: z.number().nullish(),
 });
 
+type OwnedSolveRefs = Pick<SolveInput, 'session_id' | 'game_session_id' | 'smart_device_id'>;
+
+async function assertSolveRefsOwned(prisma: PrismaClient, userId: string, refs: OwnedSolveRefs) {
+	const [sessions, gameSessions, smartDevices] = await Promise.all([
+		refs.session_id ? prisma.session.count({where: {id: refs.session_id, user_id: userId}}) : 1,
+		refs.game_session_id
+			? prisma.gameSession.count({where: {id: refs.game_session_id, user_id: userId}})
+			: 1,
+		refs.smart_device_id
+			? prisma.smartDevice.count({where: {id: refs.smart_device_id, user_id: userId}})
+			: 1,
+	]);
+
+	if (!sessions || !gameSessions || !smartDevices) {
+		throw new TRPCError({code: 'NOT_FOUND'});
+	}
+}
+
+async function getOpenMatchParticipantId(matchId: string, userId: string) {
+	const match = await getMatchById(matchId);
+	const participant = match?.participants.find((part) => part.user_id === userId);
+
+	if (!match || !participant) {
+		throw new TRPCError({code: 'NOT_FOUND'});
+	}
+
+	if (match.ended_at) {
+		throw new TRPCError({code: 'BAD_REQUEST', message: 'This match has ended'});
+	}
+
+	return participant.id;
+}
+
 export const solveRouter = router({
 	list: protectedProcedure.query(async ({ctx}) => {
 		const solves = await ctx.prisma.solve.findMany({
@@ -82,15 +115,11 @@ export const solveRouter = router({
 	create: protectedProcedure.input(solveInputSchema).mutation(async ({ctx, input}) => {
 		const {user} = ctx;
 
-		if (input.match_id) {
-			const match = await getMatchById(input.match_id);
-			for (const part of match?.participants ?? []) {
-				if (part.user_id === user.id) {
-					input.match_participant_id = part.id;
-					break;
-				}
-			}
-		}
+		await assertSolveRefsOwned(ctx.prisma, user.id, input);
+
+		input.match_participant_id = input.match_id
+			? await getOpenMatchParticipantId(input.match_id, user.id)
+			: null;
 
 		input.bulk = false;
 		const createdSolve = await createSolve(user, prepareSmartSolve(input) as SolveInput);
@@ -167,11 +196,24 @@ export const solveRouter = router({
 				throw new TRPCError({code: 'NOT_FOUND'});
 			}
 
-			// These two fields can't be updated by the user
+			if (solve.match_id) {
+				await getOpenMatchParticipantId(solve.match_id, ctx.user.id);
+			}
+
+			const {session_id, game_session_id, smart_device_id} = input.input;
+			await assertSolveRefsOwned(ctx.prisma, ctx.user.id, {
+				session_id: session_id !== solve.session_id ? session_id : null,
+				game_session_id: game_session_id !== solve.game_session_id ? game_session_id : null,
+				smart_device_id: smart_device_id !== solve.smart_device_id ? smart_device_id : null,
+			});
+
+			// These fields can't be updated by the user
 			const data = {
 				...input.input,
 				bulk: solve.bulk,
 				from_timer: solve.from_timer,
+				match_id: solve.match_id,
+				match_participant_id: solve.match_participant_id,
 			};
 
 			const updated = await updateSolve(input.id, {
