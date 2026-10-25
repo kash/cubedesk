@@ -289,6 +289,7 @@ export type MatchParticipantOrderByWithRelationInput = {
 
 export type MatchParticipantWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  match_id_user_id?: Prisma.MatchParticipantMatch_idUser_idCompoundUniqueInput
   AND?: Prisma.MatchParticipantWhereInput | Prisma.MatchParticipantWhereInput[]
   OR?: Prisma.MatchParticipantWhereInput[]
   NOT?: Prisma.MatchParticipantWhereInput | Prisma.MatchParticipantWhereInput[]
@@ -305,7 +306,7 @@ export type MatchParticipantWhereUniqueInput = Prisma.AtLeast<{
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
   user?: Prisma.XOR<Prisma.UserAccountScalarRelationFilter, Prisma.UserAccountWhereInput>
   solves?: Prisma.SolveListRelationFilter
-}, "id">
+}, "id" | "match_id_user_id">
 
 export type MatchParticipantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -462,6 +463,11 @@ export type MatchParticipantOrderByRelevanceInput = {
   fields: Prisma.MatchParticipantOrderByRelevanceFieldEnum | Prisma.MatchParticipantOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
   search: string
+}
+
+export type MatchParticipantMatch_idUser_idCompoundUniqueInput = {
+  match_id: string
+  user_id: string
 }
 
 export type MatchParticipantCountOrderByAggregateInput = {

@@ -1,9 +1,17 @@
 import {getMatchPlayersRoomName} from '@/server/match/match';
 import {emitMatchUpdate} from '@/server/match/update/send';
 import {sendMatchUpdateById} from '@/server/match/update/standings';
-import {DetailedClientInfo, getDetailedClientInfo, joinRoom, leaveAllMatchRooms, SocketType} from '@/server/match/util';
+import {
+	DetailedClientInfo,
+	getClientsInRoom,
+	getUserFromClient,
+	joinRoom,
+	leaveAllMatchRooms,
+	leaveRoom,
+	SocketType,
+} from '@/server/match/util';
 import {createGameOptions} from '@/server/models/game_options';
-import {createMatch, updateMatch} from '@/server/models/match';
+import {createMatch, startMatch} from '@/server/models/match';
 import {createMatchParticipant} from '@/server/models/match_participation';
 import {createMatchSession} from '@/server/models/match_session';
 import {logger} from '@/server/services/logger';
@@ -36,9 +44,9 @@ export async function pairPlayersInRoom(
 		// Match already exists. Just need to start it
 		match = existingMatch;
 
-		await updateMatch(match, {
-			started_at: new Date(),
-		});
+		if (!(await startMatch(match))) {
+			return false;
+		}
 	} else if (existingSession) {
 		// There is an existing session, create a new match
 		match = await createMatch(existingSession, true);
@@ -90,17 +98,23 @@ export async function pairPlayersInRoom(
 }
 
 async function addClientsAsParticipantsAndJoinMatchRoom(match: Match, clientsToAddToMatch: DetailedClientInfo[]) {
+	const matchRoomName = getMatchPlayersRoomName(match);
+	const playerIds = new Set(clientsToAddToMatch.map(({user}) => user.id));
+
 	for (const toAdd of clientsToAddToMatch) {
 		const {client, user} = toAdd;
 
 		leaveAllMatchRooms(client);
-
-		const matchRoomName = getMatchPlayersRoomName(match);
-
 		joinRoom(client, matchRoomName);
 
-		// No need to check if user is already in match because it's a new match
 		await createMatchParticipant(user, match);
+	}
+
+	for (const client of await getClientsInRoom(matchRoomName)) {
+		const user = await getUserFromClient(client);
+		if (!user || !playerIds.has(user.id)) {
+			leaveRoom(client, matchRoomName);
+		}
 	}
 }
 
@@ -111,8 +125,8 @@ async function getClientsToAddToMatchFromRoom(
 	clientsInRoom: SocketType[],
 	matchSession?: MatchSession
 ): Promise<null | DetailedClientInfo[]> {
-	const maxPlayers = matchSession?.min_players || 2;
-	const minPlayers = matchSession?.max_players || 2;
+	const minPlayers = matchSession?.min_players || 2;
+	const maxPlayers = matchSession?.max_players || 2;
 
 	if (clientsInRoom.length < minPlayers) {
 		return null;
@@ -124,8 +138,12 @@ async function getClientsToAddToMatchFromRoom(
 			break;
 		}
 
-		const clientDetails = await getDetailedClientInfo(client);
-		clientsToAddToMatch.push(clientDetails);
+		const user = await getUserFromClient(client);
+		if (!user || clientsToAddToMatch.some((added) => added.user.id === user.id)) {
+			continue;
+		}
+
+		clientsToAddToMatch.push({client, user});
 	}
 
 	if (!clientsToAddToMatch.length || clientsToAddToMatch.length < minPlayers) {

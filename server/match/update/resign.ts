@@ -38,7 +38,7 @@ export async function abortMatch(match: FullMatch, user: PublicUserAccount) {
 	const anySolves = match.participants.some((p) => p.solves && p.solves.length);
 
 	if (anySolves) {
-		throw new Error('Cannot abort match with solves');
+		return;
 	}
 
 	const data = {

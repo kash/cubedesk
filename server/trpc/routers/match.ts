@@ -35,8 +35,8 @@ export const matchRouter = router({
 	createWithNewSession: protectedProcedure
 		.input(
 			z.object({
-				min_players: z.number().int(),
-				max_players: z.number().int(),
+				min_players: z.number().int().min(2).max(6),
+				max_players: z.number().int().min(2).max(6),
 				match_type: z.enum(GameType),
 				event_type: z.string(),
 				head_to_head_target_win_count: z.number().int().optional(),
@@ -44,6 +44,13 @@ export const matchRouter = router({
 		)
 		.mutation(async ({ctx, input}) => {
 			const {user} = ctx;
+
+			if (input.min_players > input.max_players) {
+				throw new TRPCError({
+					code: 'BAD_REQUEST',
+					message: 'Minimum players cannot be more than maximum players',
+				});
+			}
 
 			const eventType = getEventTypeInfoById(input.event_type);
 			if (!eventType) {

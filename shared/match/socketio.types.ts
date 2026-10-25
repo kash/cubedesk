@@ -22,7 +22,6 @@ export interface ServerToClientEvents {
 	opponentAbortedMatch: (opponent: PublicUserAccount) => void;
 	matchUpdated: (data: MatchUpdate) => void;
 	matchStarted: (data: MatchUpdate) => void;
-	myRoomsUpdated: (rooms: string[]) => void;
 	lobbyInfoUpdated: (data: UpdateRoomInfo) => void;
 	inactivityBeforeSolveStartsWarning: (opponent: PublicUserAccount, secondsToStart: number) => void;
 	solveTakingTooLongWarning: (opponent: PublicUserAccount, secondsToFinish: number) => void;
@@ -46,8 +45,7 @@ export interface ClientToServerEvents {
 	playerJoinedRematchQueue: (matchId: string) => void;
 	playerJoinedMatchByLinkCode: (linkCode: string) => void;
 	playerJoinedSpectateMode: (spectateCode: string) => void;
-	rejoinMyRooms: (rooms: string[]) => void;
-	[SocketConst.REJOIN_ROOMS]: (data: {rooms: string[]}) => void;
+	rejoinMyRooms: () => void;
 	[SocketConst.WATCH_ROOM_SIZES]: () => void;
 	[SocketConst.STOP_WATCHING_ROOM_SIZES]: () => void;
 }

@@ -1,9 +1,9 @@
+import {getParticipantMatch, MatchPhase} from '@/server/match/authorization';
 import {SocketClient} from '@/server/match/init';
 import {onProtectedSocketEvent, socketIdSchema} from '@/server/match/socket_event';
 import {MatchCacher} from '@/server/match/update/match_cacher';
 import {emitMatchUpdate} from '@/server/match/update/send';
 import {sendMatchUpdate} from '@/server/match/update/standings';
-import {getMatchById} from '@/server/models/match';
 import {Solve} from '@/types/solve';
 import {PublicUserAccount} from '@/types/user';
 import {z} from 'zod';
@@ -42,13 +42,8 @@ const solveSchema = z.object({
 
 const matchSolveArgs = z.tuple([socketIdSchema, solveSchema]);
 
-async function getPlayerMatch(user: PublicUserAccount, matchId: string) {
-	const match = await getMatchById(matchId);
-	if (!match?.participants.some((part) => part.user_id === user.id)) {
-		return null;
-	}
-
-	return match;
+function getPlayerMatch(user: PublicUserAccount, matchId: string) {
+	return getParticipantMatch(user, matchId, [MatchPhase.Active]);
 }
 
 export function listenForSolveEvents(client: SocketClient) {

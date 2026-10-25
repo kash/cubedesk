@@ -1,10 +1,9 @@
 import {MatchConst} from '@/client/shared/match/consts';
+import {getParticipantMatch} from '@/server/match/authorization';
 import {SocketClient} from '@/server/match/init';
-import {userExistsInMatch} from '@/server/match/match';
 import {onProtectedSocketEvent, socketIdSchema} from '@/server/match/socket_event';
 import {emitMatchUpdate} from '@/server/match/update/send';
 import {createChatMessage} from '@/server/models/chat_message';
-import {getMatchById} from '@/server/models/match';
 import {v4 as uuid} from 'uuid';
 import {z} from 'zod';
 
@@ -24,12 +23,8 @@ export function listenForChatEvents(client: SocketClient) {
 		async (user, data) => {
 			const {matchId, message, rawMessage, badWords} = data;
 
-			const match = await getMatchById(matchId);
+			const match = await getParticipantMatch(user, matchId);
 			if (!match) {
-				return;
-			}
-
-			if (!userExistsInMatch(match, user)) {
 				return;
 			}
 

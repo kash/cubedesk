@@ -495,7 +495,7 @@ model MatchParticipant {
   user       UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
   solves     Solve[]
 
-  @@index([match_id])
+  @@unique([match_id, user_id])
   @@index([user_id])
   @@map("match_participant")
 }
