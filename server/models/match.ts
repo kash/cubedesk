@@ -136,6 +136,21 @@ export async function createMatch(matchSession: MatchSession, started?: boolean)
 	});
 }
 
+export async function startMatch(match: Match): Promise<boolean> {
+	const res = await getPrisma().match.updateMany({
+		where: {
+			id: match.id,
+			started_at: null,
+			ended_at: null,
+		},
+		data: {
+			started_at: new Date(),
+		},
+	});
+
+	return res.count > 0;
+}
+
 export async function updateMatch(match, data: Prisma.MatchUncheckedUpdateInput) {
 	if (!match.ended_at && data.ended_at) {
 		const matchCacher = new MatchCacher(match.id);

@@ -1,4 +1,5 @@
 import {MatchRoom} from '@/client/shared/match/events';
+import {getParticipantMatch, MatchPhase} from '@/server/match/authorization';
 import {SocketClient} from '@/server/match/init';
 import {
 	getLobbyRoomName,
@@ -9,9 +10,8 @@ import {matchPlayersInCustomMatch} from '@/server/match/pair/custom_match';
 import {joinLobby, removeMatchLobbyRecordsByClientId} from '@/server/match/pair/pair_logic';
 import {rematchPlayers} from '@/server/match/pair/rematch';
 import {onProtectedSocketEvent, onSocketEvent, socketIdSchema} from '@/server/match/socket_event';
-import {sendMatchUpdateById} from '@/server/match/update/standings';
 import {getClientRooms, joinRoom, leaveRoom} from '@/server/match/util';
-import {getMatchById, getMatchByLinkCode, getMatchBySpectateCode} from '@/server/models/match';
+import {getMatchByLinkCode, getMatchBySpectateCode} from '@/server/models/match';
 import {GameType} from '@/shared/match/consts';
 import {z} from 'zod';
 
@@ -68,23 +68,17 @@ export function listenForJoinEvents(client: SocketClient) {
 				return;
 			}
 
-			const paired = await matchPlayersInCustomMatch(client, user, match);
-			if (!paired) {
-				await sendMatchUpdateById(match.id);
-			}
+			await matchPlayersInCustomMatch(client, user, match);
 		},
 	);
 
-	onProtectedSocketEvent(client, 'playerJoinedRematchQueue', idArgs, async (_user, matchId) => {
-		const match = await getMatchById(matchId);
-
-		if (!match || !match.ended_at) {
+	onProtectedSocketEvent(client, 'playerJoinedRematchQueue', idArgs, async (user, matchId) => {
+		const match = await getParticipantMatch(user, matchId, [MatchPhase.Ended]);
+		if (!match) {
 			return;
 		}
 
-		const rematchRoom = getRematchRoomName(match);
-
-		joinRoom(client, rematchRoom);
+		joinRoom(client, getRematchRoomName(match));
 		await rematchPlayers(match);
 	});
 }

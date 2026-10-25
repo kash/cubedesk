@@ -83,24 +83,14 @@ export async function getClientIdsInRoom(room: string) {
 	return getSocketIO().in(room).allSockets();
 }
 
-export function updateMyRooms(client: SocketType) {
-	const rooms = getClientRooms(client);
-
-	getSocketIO().to(client.id).emit('myRoomsUpdated', rooms);
-	// client.emit(SocketConst.UPDATE_MY_ROOMS, rooms);
-}
-
 export function joinRoom(client: SocketType, room: string) {
 	getSocketIO().in(client.id).socketsJoin(room);
 	client.join(room);
-
-	updateMyRooms(client);
 }
 
 export function leaveRoom(client: SocketType, room: string) {
 	getSocketIO().in(client.id).socketsLeave(room);
 	client.leave(room);
-	updateMyRooms(client);
 }
 
 export async function getUserFromClient(client: SocketType): Promise<PublicUserAccount | null> {

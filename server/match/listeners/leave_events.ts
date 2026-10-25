@@ -1,4 +1,5 @@
 import {MatchConst} from '@/client/shared/match/consts';
+import {getParticipantMatch, MatchPhase} from '@/server/match/authorization';
 import {SocketClient} from '@/server/match/init';
 import {getMatchIdFromPlayersRoom, getMatchPlayersRoomName} from '@/server/match/match';
 import {
@@ -25,7 +26,7 @@ const matchIdArgs = z.tuple([socketIdSchema]);
 
 export function listenForLeaveEvents(client: SocketClient) {
 	onProtectedSocketEvent(client, 'playerResignedMatch', matchIdArgs, async (user, matchId) => {
-		const match = await getMatchById(matchId);
+		const match = await getParticipantMatch(user, matchId, [MatchPhase.Active]);
 		if (!match) {
 			return;
 		}
@@ -34,7 +35,7 @@ export function listenForLeaveEvents(client: SocketClient) {
 	});
 
 	onProtectedSocketEvent(client, 'playerAbortedMatch', matchIdArgs, async (user, matchId) => {
-		const match = await getMatchById(matchId);
+		const match = await getParticipantMatch(user, matchId, [MatchPhase.Active]);
 		if (!match) {
 			return;
 		}
@@ -72,9 +73,8 @@ export function listenForLeaveEvents(client: SocketClient) {
 				continue;
 			}
 
-			const match = await getMatchById(matchId);
-
-			if (!match || !match.started_at || match.ended_at) {
+			const match = await getParticipantMatch(user, matchId, [MatchPhase.Active]);
+			if (!match) {
 				continue;
 			}
 
