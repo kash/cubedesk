@@ -21,7 +21,7 @@ export function validateStrongPassword(pass: string, confirmPassword?: string): 
 	}
 
 	if (!lower1Check) {
-		errMsg.push('Must contain at least one capital letter');
+		errMsg.push('Must contain at least one lowercase letter');
 	}
 
 	if (!cap1Check) {
