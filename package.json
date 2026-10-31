@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "CubeDesk's codebase",
 	"author": "Kash Goudarzi",
-	"license": "CubeDesk, Inc. All Rights Reserved",
+	"license": "GPL-3.0-or-later",
 	"main": "server/app.ts",
 	"packageManager": "pnpm@10.9.0",
 	"scripts": {
