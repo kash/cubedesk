@@ -1,25 +1,45 @@
-import {TimerProps, TimerStore} from '@/components/timer/@types/interfaces';
 import DemoWarning from '@/components/layout/wrapper/DemoWarning';
+import {
+	TimerCustomModuleOptions,
+	TimerProps,
+	TimerStore,
+} from '@/components/timer/@types/interfaces';
 import TimerFooter from '@/components/timer/footer/TimerFooter';
 import HeaderControl from '@/components/timer/header-control/HeaderControl';
 import {initTimer} from '@/components/timer/helpers/init';
-import {smartCubeSelected, smartTimerSelected, timesOnDevice} from '@/components/timer/helpers/util';
 import {listenForPbEvents} from '@/components/timer/helpers/pb';
 import {stopAllTimers} from '@/components/timer/helpers/timers';
+import {
+	smartCubeSelected,
+	smartTimerSelected,
+	timesOnDevice,
+} from '@/components/timer/helpers/util';
 import KeyWatcher from '@/components/timer/key-watcher/KeyWatcher';
-import SmartCube from '@/components/timer/smart-cube/SmartCube';
 import SmartTimer from '@/components/timer/smart-timer/SmartTimer';
 import TimeDisplay from '@/components/timer/time-display/TimeDisplay';
 import TimerScramble from '@/components/timer/time-display/timer-scramble/TimerScramble';
+import {TimerLayoutPosition} from '@/db/settings/query';
 import {RootState} from '@/reducers/reducers';
+import {Solve} from '@/types/solve';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useWindowListener} from '@/util/hooks/useListener';
 import {useMe} from '@/util/hooks/useMe';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getStorageURL} from '@/util/storage';
 import classNames from 'classnames';
-import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {
+	createContext,
+	lazy,
+	ReactNode,
+	Suspense,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+
+const SmartCube = lazy(() => import('@/components/timer/smart-cube/SmartCube'));
 
 export interface ITimerContext extends TimerProps, TimerStore {
 	// Where the mobile manual entry numpad is rendered, below the scramble and time
@@ -36,11 +56,30 @@ export function useTimerContext(): ITimerContext {
 	return ctx;
 }
 
+export interface ITimerFooterContext {
+	timerLayout?: TimerLayoutPosition;
+	timerCustomFooterModules?: TimerCustomModuleOptions[];
+	timerStarted: boolean;
+	scramble?: string;
+	eventType?: string;
+	solvesFilter: Partial<Solve>;
+}
+
+const TimerFooterContext = createContext<ITimerFooterContext | null>(null);
+
+export function useTimerFooterContext(): ITimerFooterContext {
+	const ctx = useContext(TimerFooterContext);
+	if (!ctx) {
+		throw new Error('useTimerFooterContext must be used within TimerFooterContext.Provider');
+	}
+	return ctx;
+}
+
 export default function Timer(props: TimerProps) {
 	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(!props.demoMode);
-	const timerStore = useSelector((state: RootState) => state.timer) as TimerStore;
+	const timerStore = useSelector((state: RootState) => state.timer, shallowEqual) as TimerStore;
 	const mobileMode = useGeneral('mobile_mode');
 	const eventType = useSettings('event_type');
 	const hideMobileTimerFooter = useSettings('hide_mobile_timer_footer');
@@ -66,15 +105,40 @@ export default function Timer(props: TimerProps) {
 	const [mobileNumpadSlot, setMobileNumpadSlot] = useState<HTMLDivElement | null>(null);
 	const showMobileNav = mobileMode && !!me && !focusMode;
 
+	const activeNumpadSlot = mobileManualEntry ? mobileNumpadSlot : null;
+
 	// All default values from the settings should go here
-	const context: ITimerContext = {
-		eventType,
-		focusMode,
-		...timerStore,
-		...props,
-		timerLayout,
-		mobileNumpadSlot: mobileManualEntry ? mobileNumpadSlot : null,
-	};
+	const context = useMemo<ITimerContext>(
+		() => ({
+			eventType,
+			focusMode,
+			...timerStore,
+			...props,
+			timerLayout,
+			mobileNumpadSlot: activeNumpadSlot,
+		}),
+		[eventType, focusMode, timerStore, props, timerLayout, activeNumpadSlot],
+	);
+
+	const timerStarted = !!context.timeStartedAt;
+	const footerContext = useMemo<ITimerFooterContext>(
+		() => ({
+			timerLayout: context.timerLayout,
+			timerCustomFooterModules: context.timerCustomFooterModules,
+			timerStarted,
+			scramble: context.scramble,
+			eventType: context.eventType,
+			solvesFilter: context.solvesFilter,
+		}),
+		[
+			context.timerLayout,
+			context.timerCustomFooterModules,
+			timerStarted,
+			context.scramble,
+			context.eventType,
+			context.solvesFilter,
+		],
+	);
 
 	// Event listeners for single and AVG PBs
 	listenForPbEvents(context);
@@ -118,7 +182,11 @@ export default function Timer(props: TimerProps) {
 	const isSmartTimer = smartTimerSelected();
 	let smartDevicePanel: ReactNode = null;
 	if (isSmart) {
-		smartDevicePanel = <SmartCube />;
+		smartDevicePanel = (
+			<Suspense fallback={null}>
+				<SmartCube />
+			</Suspense>
+		);
 	} else if (isSmartTimer) {
 		smartDevicePanel = <SmartTimer />;
 	}
@@ -128,7 +196,6 @@ export default function Timer(props: TimerProps) {
 	}
 
 	const sideLayout = timerLayout === 'left' || timerLayout === 'right';
-	const timerStarted = !!context.timeStartedAt;
 	const mainClass = classNames(
 		'relative flex w-full select-none items-center justify-center',
 		mobileMode && 'select-none [-webkit-touch-callout:none] [-webkit-user-select:none]',
@@ -201,35 +268,37 @@ export default function Timer(props: TimerProps) {
 			)}
 		>
 			<TimerContext.Provider value={context}>
-				<KeyWatcher>
-					<HeaderControl />
-					<div
-						className={classNames(
-							'z-10 box-border grid h-[calc(100vh_-_55px)] w-full gap-[15px]',
-							context.focusMode && !mobileMode
-								? '!grid-cols-[1fr] !grid-rows-none'
-								: mobileManualEntry
-									? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)_auto]'
-									: context.focusMode
-										? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)]'
-										: timerLayout === 'left'
-											? 'short:!grid-cols-[min(350px,40%)_minmax(0,1fr)] !grid-cols-[350px_minmax(0,auto)] grid-rows-[minmax(0,1fr)] !px-0 !pb-2.5 !pl-2.5'
-											: timerLayout === 'right'
-												? 'short:grid-cols-[minmax(0,1fr)_min(350px,40%)] grid-cols-[minmax(0,auto)_350px] grid-rows-[minmax(0,1fr)] !px-2.5 !pb-2.5'
-												: hideMobileTimerFooter && mobileMode
-													? 'grid-rows-[1fr_50px]'
-													: 'grid-rows-[1fr_300px]',
-							timerStarted && mobileMode && '!grid-cols-[1fr]',
-							{
-								// Fill the space below the header instead of a fixed viewport height
-								'!h-auto min-h-0 flex-1': mobileMode,
-								'short:h-[calc(100dvh_-_66px)]': sideLayout,
-							},
-						)}
-					>
-						{body}
-					</div>
-				</KeyWatcher>
+				<TimerFooterContext.Provider value={footerContext}>
+					<KeyWatcher>
+						<HeaderControl />
+						<div
+							className={classNames(
+								'z-10 box-border grid h-[calc(100vh_-_55px)] w-full gap-[15px]',
+								context.focusMode && !mobileMode
+									? '!grid-cols-[1fr] !grid-rows-none'
+									: mobileManualEntry
+										? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)_auto]'
+										: context.focusMode
+											? '!grid-cols-[1fr] !grid-rows-[minmax(0,1fr)]'
+											: timerLayout === 'left'
+												? 'short:!grid-cols-[min(350px,40%)_minmax(0,1fr)] !grid-cols-[350px_minmax(0,auto)] grid-rows-[minmax(0,1fr)] !px-0 !pb-2.5 !pl-2.5'
+												: timerLayout === 'right'
+													? 'short:grid-cols-[minmax(0,1fr)_min(350px,40%)] grid-cols-[minmax(0,auto)_350px] grid-rows-[minmax(0,1fr)] !px-2.5 !pb-2.5'
+													: hideMobileTimerFooter && mobileMode
+														? 'grid-rows-[1fr_50px]'
+														: 'grid-rows-[1fr_300px]',
+								timerStarted && mobileMode && '!grid-cols-[1fr]',
+								{
+									// Fill the space below the header instead of a fixed viewport height
+									'!h-auto min-h-0 flex-1': mobileMode,
+									'short:h-[calc(100dvh_-_66px)]': sideLayout,
+								},
+							)}
+						>
+							{body}
+						</div>
+					</KeyWatcher>
+				</TimerFooterContext.Provider>
 			</TimerContext.Provider>
 			{background}
 			{(sideLayout || context.focusMode) && (

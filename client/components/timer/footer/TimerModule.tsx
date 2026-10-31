@@ -10,7 +10,7 @@ import TimeDistro from '@/components/modules/time-distro/TimeDistro';
 import {TimerModuleDropdownOptions, TimerModuleType} from '@/components/timer/@types/enums';
 import {FooterModuleData, TimerCustomModuleOptions} from '@/components/timer/@types/interfaces';
 import {resolveModuleVisual} from '@/components/timer/footer/helpers/resolveModuleVisual';
-import {useTimerContext} from '@/components/timer/Timer';
+import {useTimerContext, useTimerFooterContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {setSetting} from '@/db/settings/update';
@@ -27,7 +27,17 @@ interface Props {
 	customOptions?: TimerCustomModuleOptions;
 }
 
-export default function TimerModule(props: Props) {
+function CustomModulePart(props: {
+	customBody: NonNullable<TimerCustomModuleOptions['customBody']>;
+	part: keyof FooterModuleData;
+}) {
+	const context = useTimerContext();
+	return <>{props.customBody(context)[props.part]}</>;
+}
+
+export default React.memo(TimerModule);
+
+function TimerModule(props: Props) {
 	const [customizeStatsDialog, setCustomizeStatsDialog] = React.useState<{
 		props: React.ComponentProps<typeof CustomizeStats>;
 		title: React.ReactNode;
@@ -37,7 +47,7 @@ export default function TimerModule(props: Props) {
 
 	const {index, moduleType, customOptions} = props;
 
-	const context = useTimerContext();
+	const context = useTimerFooterContext();
 	const {scramble, eventType, solvesFilter} = context;
 	const mobileMode = useGeneral('mobile_mode');
 
@@ -124,7 +134,10 @@ export default function TimerModule(props: Props) {
 
 	let visual: FooterModuleData;
 	if (customOptions?.customBody) {
-		visual = customOptions.customBody(context);
+		visual = {
+			module: <CustomModulePart customBody={customOptions.customBody} part="module" />,
+			actions: <CustomModulePart customBody={customOptions.customBody} part="actions" />,
+		};
 	} else {
 		const visualType = customOptions?.moduleType || snakeCase(moduleType ?? '');
 		visual = resolveModuleVisual(moduleMap, visualType, {module: null});
@@ -138,7 +151,7 @@ export default function TimerModule(props: Props) {
 					'top-0 left-1/2 -translate-x-1/2 rounded-b-md border-t-0 opacity-0 shadow-lg group-hover:opacity-100 focus-within:opacity-100 has-[[data-state=open]]:opacity-100':
 						!mobileMode,
 					// In mobile, sit in the row above the footer (next to the hide/show toggle)
-					'border-tmo-module/15 -left-px bottom-[calc(100%+9px)] h-9 overflow-hidden rounded-md opacity-100 shadow-xs':
+					'border-tmo-module/15 bottom-[calc(100%+9px)] -left-px h-9 overflow-hidden rounded-md opacity-100 shadow-xs':
 						mobileMode,
 				},
 			)}
@@ -150,7 +163,9 @@ export default function TimerModule(props: Props) {
 				onValueChange={(value) => selectVisual(value as TimerModuleType)}
 				align="center"
 				triggerProps={{
-					className: cn('h-10 rounded-none border-0 px-4 shadow-none', {'h-9': mobileMode}),
+					className: cn('h-10 rounded-none border-0 px-4 shadow-none', {
+						'h-9': mobileMode,
+					}),
 				}}
 				maxHeight={240}
 				options={moduleDropdownOptions.map((option) => ({

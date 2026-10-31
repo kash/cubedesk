@@ -6,7 +6,6 @@ import {getAveragePB} from '@/db/solves/stats/solves/average/average-pb';
 import {getSinglePB} from '@/db/solves/stats/solves/single/single-pb';
 import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useEventListener} from '@/util/event_handler';
-import confetti from 'canvas-confetti';
 
 let lastConfetti: Date | null = null;
 
@@ -85,16 +84,18 @@ export function triggerConfetti() {
 		return Math.random() * (max - min) + min;
 	}
 
-	confetti({
-		...defaults,
-		origin: {x: randomInRange(0.1, 0.3), y: randomInRange(0.1, 0.3)},
-	});
-	confetti({
-		...defaults,
-		origin: {x: randomInRange(0.3, 0.7), y: randomInRange(0.3, 0.7)},
-	});
-	confetti({
-		...defaults,
-		origin: {x: randomInRange(0.7, 0.9), y: randomInRange(0.7, 0.9)},
+	import('canvas-confetti').then(({default: confetti}) => {
+		confetti({
+			...defaults,
+			origin: {x: randomInRange(0.1, 0.3), y: randomInRange(0.1, 0.3)},
+		});
+		confetti({
+			...defaults,
+			origin: {x: randomInRange(0.3, 0.7), y: randomInRange(0.3, 0.7)},
+		});
+		confetti({
+			...defaults,
+			origin: {x: randomInRange(0.7, 0.9), y: randomInRange(0.7, 0.9)},
+		});
 	});
 }

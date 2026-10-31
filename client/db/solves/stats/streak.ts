@@ -1,5 +1,4 @@
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
-import {mean} from 'lodash';
 
 interface SolveStreak {
 	currentStreak: number;
@@ -19,7 +18,7 @@ export function getSolveStreak(filter: FilterSolvesOptions): SolveStreak {
 		},
 		{
 			sortBy: 'started_at',
-		}
+		},
 	);
 
 	let firstSolveTime;
@@ -56,7 +55,10 @@ export function getSolveStreak(filter: FilterSolvesOptions): SolveStreak {
 		let dayCount = 0;
 		while (solveIndex > -1) {
 			const solve = solves[solveIndex];
-			if ((solve.started_at ?? 0) > start.getTime() && (solve.ended_at ?? 0) < end.getTime()) {
+			if (
+				(solve.started_at ?? 0) > start.getTime() &&
+				(solve.ended_at ?? 0) < end.getTime()
+			) {
 				tempStreakSolves++;
 				dayCount++;
 				solveIndex--;
@@ -115,6 +117,8 @@ export function getSolveStreak(filter: FilterSolvesOptions): SolveStreak {
 		highestStreakSolves,
 		highestStartDate,
 		highestEndDate,
-		avgSolvesPerSession: Math.floor(mean(solvesPerSession)),
+		avgSolvesPerSession: Math.floor(
+			solvesPerSession.reduce((sum, count) => sum + count, 0) / solvesPerSession.length,
+		),
 	};
 }

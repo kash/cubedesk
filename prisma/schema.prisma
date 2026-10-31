@@ -130,7 +130,7 @@ model Notification {
 
   @@index([created_at])
   @@index([triggering_user_id])
-  @@index([user_id])
+  @@index([user_id, created_at])
   @@map("notification")
 }
 
@@ -222,6 +222,7 @@ model EloRating {
   user                UserAccount @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
+  @@index([elo_333_rating(sort: Desc), id])
   @@map("elo_rating")
 }
 
@@ -387,6 +388,8 @@ model Solve {
   @@index([smart_device_id], map: "solve_smart_device_id_present_idx", where: raw("smart_device_id IS NOT NULL"))
   @@index([session_id])
   @@index([user_id])
+  @@index([user_id], map: "solve_user_id_bulk_idx", where: raw("bulk = true"))
+  @@index([user_id], map: "solve_user_id_match_present_idx", where: raw("match_id IS NOT NULL"))
   @@map("solve")
 }
 
@@ -665,6 +668,7 @@ model TopSolve {
   @@index([solve_id])
   @@index([time])
   @@index([user_id])
+  @@index([event_type, time])
   @@map("top_solve")
 }
 
@@ -688,6 +692,12 @@ model TopAverage {
 
   @@index([time])
   @@index([user_id])
+  @@index([event_type, time])
+  @@index([solve_1_id])
+  @@index([solve_2_id])
+  @@index([solve_3_id])
+  @@index([solve_4_id])
+  @@index([solve_5_id])
   @@map("top_average")
 }
 

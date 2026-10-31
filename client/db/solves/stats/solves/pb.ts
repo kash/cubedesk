@@ -21,7 +21,9 @@ export function checkForPB(solve: Solve, isNew: boolean) {
 		from_timer: true,
 	});
 
-	const isAvgPb = updatedAvgPbs.some((pb) => jsonStr(pb.filterOptions) === pbFilter);
+	const isAvgPb = updatedAvgPbs.some(
+		(pb) => pb.averageCount === 5 && jsonStr(pb.filterOptions) === pbFilter,
+	);
 	const isSinglePb = updatedSinglePbs.some((pb) => jsonStr(pb.filterOptions) === pbFilter);
 
 	if (isSinglePb && isAvgPb) {

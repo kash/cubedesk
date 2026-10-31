@@ -1,4 +1,4 @@
-import {getParticipantMatch, MatchPhase} from '@/server/match/authorization';
+import {getParticipantMatchRef, MatchPhase} from '@/server/match/authorization';
 import {SocketClient} from '@/server/match/init';
 import {onProtectedSocketEvent, socketIdSchema} from '@/server/match/socket_event';
 import {PlayerActivity} from '@/server/match/update/player_activity';
@@ -13,7 +13,7 @@ export function listenForHeartbeatEvent(client: SocketClient) {
 		'matchHeartbeat',
 		z.tuple([socketIdSchema]),
 		async (user, matchId) => {
-			const match = await getParticipantMatch(user, matchId, [MatchPhase.Active]);
+			const match = await getParticipantMatchRef(user, matchId, [MatchPhase.Active]);
 			if (!match) {
 				return;
 			}
