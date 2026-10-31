@@ -1,4 +1,4 @@
-import {getUserByEmail, sanitizeUser} from '@/server/models/user_account';
+import {getUserByEmail} from '@/server/models/user_account';
 import {publicProcedure, router} from '@/server/trpc/trpc';
 import {getJwtString} from '@/server/util/auth';
 import {checkPassword} from '@/server/util/password';
@@ -11,7 +11,7 @@ export const authRouter = router({
 			z.object({
 				email: z.string(),
 				password: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const user = await getUserByEmail(input.email);
@@ -36,6 +36,6 @@ export const authRouter = router({
 	logOut: publicProcedure.mutation(({ctx}) => {
 		ctx.res.clearCookie('session');
 
-		return ctx.user ? sanitizeUser(ctx.user) : null;
+		return ctx.user ? {id: ctx.user.id} : null;
 	}),
 });

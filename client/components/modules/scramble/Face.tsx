@@ -1,7 +1,6 @@
 import {COLOR_MAP} from '@/components/modules/scramble/ScrambleVisual';
 import {ScrambleCubelet} from '@/util/vendor/scramble_layout';
 import CSS from 'csstype';
-import {flatten} from 'lodash';
 import React, {ReactNode} from 'react';
 
 interface Props {
@@ -33,11 +32,15 @@ export default function Face(props: Props) {
 		};
 
 		content[cube.y][cube.x] = (
-			<span className="box-border h-full w-full rounded-sm bg-module" key={`${cube.x}-${cube.y}`} style={style} />
+			<span
+				className="bg-module box-border h-full w-full rounded-sm"
+				key={`${cube.x}-${cube.y}`}
+				style={style}
+			/>
 		);
 	}
 
-	const flattenedContent = flatten(content);
+	const flattenedContent = content.flat();
 
 	const style: CSS.Properties = {gridTemplateColumns: `repeat(${size}, 1fr)`};
 	if (width) {

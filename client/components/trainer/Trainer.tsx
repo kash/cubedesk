@@ -28,13 +28,12 @@ import {EventType} from '@/util/cubes/event_types';
 import {getEventTypeInfoById} from '@/util/cubes/util';
 import {useToggle} from '@/util/hooks/useToggle';
 import {useTrainerDb} from '@/util/hooks/useTrainerDb';
-import Chance from 'chance';
 import classNames from 'classnames';
-import _ from 'lodash';
 import {ArrowRight, Plus, Star, X} from 'phosphor-react';
 import React, {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useRouteMatch} from 'react-router-dom';
+import seedrandom from 'seedrandom';
 import {v4 as uuid} from 'uuid';
 
 export interface ITrainerContext {
@@ -144,8 +143,8 @@ export default function Trainer() {
 		if (!algorithmIds.length) return;
 
 		function getCurrentTrainerAlgo(index: number) {
-			const chance = new Chance(sessionId + index);
-			const randomIndex = chance.integer({min: 0, max: algorithmIds.length - 1});
+			const random = seedrandom(sessionId + index);
+			const randomIndex = Math.floor(random() * algorithmIds.length);
 			return fetchTrainerAlgorithmById(algorithmIds[randomIndex])!;
 		}
 
@@ -156,7 +155,7 @@ export default function Trainer() {
 				currentAlgo.scrambles ??
 				''
 			).split('\n');
-			return _.sample(scrambles);
+			return scrambles[Math.floor(Math.random() * scrambles.length)];
 		}
 
 		const solvesOverride: Partial<Solve> = {

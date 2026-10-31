@@ -19,7 +19,10 @@ export function fetchLastEventTypeForSession(sessionId: string): string | null {
 }
 
 // Same as fetchSolves but returns the first in array (if any)
-export function fetchSingleSolve(options: FilterSolvesOptions = {}, fetchOptions?: SolveFetchOptions) {
+export function fetchSingleSolve(
+	options: FilterSolvesOptions = {},
+	fetchOptions?: SolveFetchOptions,
+) {
 	const solves = fetchSolves(options, {...fetchOptions, limit: 1});
 
 	if (!solves.length) {
@@ -29,14 +32,21 @@ export function fetchSingleSolve(options: FilterSolvesOptions = {}, fetchOptions
 	return solves[0];
 }
 
-export function fetchAllEventTypesSolved(defaultsOnly: boolean = false) {
-	type EventTypeCount = {
-		event_type: string;
-		count: number;
-	};
+type EventTypeCount = {
+	event_type: string;
+	count: number;
+};
 
-	const typeListMap: Record<string, number> = {};
-	const list: EventTypeCount[] = [];
+let eventTypeCountsRevision = -1;
+let eventTypeCounts = new Map<string, number>();
+
+function countEventTypesSolved() {
+	const revision = getSolveDb().revision;
+	if (revision === eventTypeCountsRevision) {
+		return eventTypeCounts;
+	}
+
+	const counts = new Map<string, number>();
 	const solves = fetchSolves({
 		dnf: false,
 		from_timer: true,
@@ -44,22 +54,22 @@ export function fetchAllEventTypesSolved(defaultsOnly: boolean = false) {
 	});
 
 	for (const solve of solves) {
-		const eventType = solve.event_type;
+		counts.set(solve.event_type, (counts.get(solve.event_type) ?? 0) + 1);
+	}
+
+	eventTypeCountsRevision = revision;
+	eventTypeCounts = counts;
+	return counts;
+}
+
+export function fetchAllEventTypesSolved(defaultsOnly: boolean = false) {
+	const list: EventTypeCount[] = [];
+	for (const [eventType, count] of countEventTypesSolved()) {
 		const ct = getEventTypeInfoById(eventType);
 		if (!ct || (defaultsOnly && !ct.default)) {
 			continue;
 		}
-
-		if (eventType in typeListMap) {
-			const index = typeListMap[eventType];
-			list[index].count++;
-		} else {
-			typeListMap[eventType] = list.length;
-			list.push({
-				event_type: eventType,
-				count: 1,
-			});
-		}
+		list.push({event_type: eventType, count});
 	}
 
 	list.sort((a, b) => b.count - a.count);
@@ -74,11 +84,16 @@ export function fetchSolveCount(options: FilterSolvesOptions = {}) {
 /**
  * Returns matching solves, newest first unless another sort is given
  */
-export function fetchSolves(options: FilterSolvesOptions = {}, fetchOptions: SolveFetchOptions = {}) {
+export function fetchSolves(
+	options: FilterSolvesOptions = {},
+	fetchOptions: SolveFetchOptions = {},
+) {
 	const {sortBy, sortInverse, offset, limit} = fetchOptions;
 
 	return getSolveDb().find(options, {
-		...(sortBy ? {sortBy, sortInverse: !!sortInverse} : {sortBy: 'started_at', sortInverse: true}),
+		...(sortBy
+			? {sortBy, sortInverse: !!sortInverse}
+			: {sortBy: 'started_at', sortInverse: true}),
 		offset,
 		limit,
 	});

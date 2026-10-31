@@ -8,24 +8,14 @@ import SettingSection from '@/components/settings/common/SettingSection';
 import {Button} from '@/components/ui/button';
 import {AllSettings, getDefaultSetting} from '@/db/settings/query';
 import {setSetting} from '@/db/settings/update';
+import {
+	DEFAULT_TIMER_FONT_FAMILY,
+	loadAllTimerFonts,
+	TIMER_FONT_FAMILIES,
+} from '@/util/fonts/timer_font';
 import {useSettings} from '@/util/hooks/useSettings';
 import {getTimeString} from '@/util/time';
-import React from 'react';
-
-const DEFAULT_FONT_FAMILY = 'Roboto Mono';
-
-const FONT_FAMILIES = [
-	DEFAULT_FONT_FAMILY,
-	'Fira Sans',
-	'Fira Mono',
-	'Kiwi Maru',
-	'JetBrains Mono',
-	'Poppins',
-	'Montserrat',
-	'Space Mono',
-	'Arial',
-	'monospace',
-];
+import React, {useEffect} from 'react';
 
 export default function Appearance() {
 	const timerTimeSize = useSettings('timer_time_size');
@@ -33,6 +23,10 @@ export default function Appearance() {
 	const timerDecimalPoints = useSettings('timer_decimal_points');
 	const timerFontFamily = useSettings('timer_font_family');
 	const timerModuleCount = useSettings('timer_module_count');
+
+	useEffect(() => {
+		loadAllTimerFonts();
+	}, []);
 
 	function updateSetting(name: keyof AllSettings, value: any) {
 		setSetting(name, value);
@@ -76,7 +70,7 @@ export default function Appearance() {
 					value={timerFontFamily}
 					onValueChange={(value) => updateSetting('timer_font_family', value)}
 					contentClassName="min-w-72"
-					options={FONT_FAMILIES.map((font) => ({
+					options={TIMER_FONT_FAMILIES.map((font) => ({
 						value: font,
 						text: font,
 						endContent: (
@@ -89,10 +83,12 @@ export default function Appearance() {
 						),
 					}))}
 				/>
-				{timerFontFamily === DEFAULT_FONT_FAMILY ? null : (
+				{timerFontFamily === DEFAULT_TIMER_FONT_FAMILY ? null : (
 					<Button
 						variant="ghost"
-						onClick={() => updateSetting('timer_font_family', DEFAULT_FONT_FAMILY)}
+						onClick={() =>
+							updateSetting('timer_font_family', DEFAULT_TIMER_FONT_FAMILY)
+						}
 						size="sm"
 					>
 						{'Reset'}

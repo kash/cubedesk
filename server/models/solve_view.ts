@@ -10,11 +10,3 @@ export function createSolveView(viewer: UserAccount | null | undefined, solve: S
 		},
 	});
 }
-
-export function deleteSolveViewsBySolveId(solveId: string) {
-	return getPrisma().solveView.deleteMany({
-		where: {
-			solve_id: solveId,
-		},
-	});
-}

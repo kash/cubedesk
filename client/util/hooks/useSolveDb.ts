@@ -3,7 +3,7 @@ import {useState} from 'react';
 
 export function useSolveDb() {
 	const [changeCounter, setChangeCounter] = useState(0);
-	useEventListener('solveDbUpdatedEvent', () => setChangeCounter(changeCounter + 1));
+	useEventListener('solveDbUpdatedEvent', () => setChangeCounter((count) => count + 1));
 
 	return changeCounter;
 }
