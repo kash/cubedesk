@@ -8,11 +8,11 @@ export function getRematchRoomName(match: Match): string {
 	return `${MatchConst.REMATCH_ROOM_PREFIX}${match.id}`;
 }
 
-export function getMatchSpectatorsRoomName(match: Match): string {
+export function getMatchSpectatorsRoomName(match: Pick<Match, 'id'>): string {
 	return `${MatchConst.SPECTATORS_ROOM_PREFIX}${match.id}`;
 }
 
-export function getMatchPlayersRoomName(match: Match): string {
+export function getMatchPlayersRoomName(match: Pick<Match, 'id'>): string {
 	return `${MatchConst.PLAYERS_ROOM_PREFIX}${match.id}`;
 }
 

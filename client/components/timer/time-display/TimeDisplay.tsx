@@ -20,7 +20,7 @@ import React, {ReactNode, useEffect, useRef, useState} from 'react';
 export default function TimeDisplay() {
 	const context = useTimerContext();
 	const [time, setTime] = useState(0);
-	const timerCounter = useRef<NodeJS.Timeout | null>(null);
+	const timerCounter = useRef<number | null>(null);
 	const timerLocked = useRef<boolean>(false);
 
 	const {
@@ -76,7 +76,7 @@ export default function TimeDisplay() {
 		}
 
 		if (timerCounter.current) {
-			clearTimeout(timerCounter.current);
+			cancelAnimationFrame(timerCounter.current);
 		}
 		timerCounter.current = null;
 		timerLocked.current = false;
@@ -90,16 +90,17 @@ export default function TimeDisplay() {
 		if (timerCounter.current) {
 			return;
 		}
-		timerCounter.current = setInterval(() => {
-			const now = new Date();
+		const tick = () => {
+			timerCounter.current = requestAnimationFrame(tick);
 
 			if (timerLocked.current || (!solving && !finalTime) || !timeStartedAt) {
 				return;
 			}
 
-			const runningTime = (now.getTime() - timeStartedAt.getTime()) / 1000;
+			const runningTime = (Date.now() - timeStartedAt.getTime()) / 1000;
 			setTime(runningTime);
-		}, 10);
+		};
+		timerCounter.current = requestAnimationFrame(tick);
 	}
 
 	if (manualEntry && !timesOnDevice(timerType)) {

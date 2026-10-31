@@ -25,7 +25,7 @@ export default function HistoryDialog(props: Props) {
 	const timeString = time != null ? getTimeString(time) : '';
 
 	const solves = useMemo(() => {
-		return props.solves.sort((a, b) => (b.started_at ?? 0) - (a.started_at ?? 0));
+		return [...props.solves].sort((a, b) => (b.started_at ?? 0) - (a.started_at ?? 0));
 	}, [props.solves]);
 
 	const eventTypes = useMemo(() => {

@@ -19,7 +19,7 @@ export default function AllStatsFeatured() {
 		return fetchAllEventTypesSolved();
 		// The local solve database is mutable; its revision invalidates this query.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [context.filterOptions, solveUpdate]);
+	}, [solveUpdate]);
 
 	let topEventType: EventType | undefined;
 	if (eventTypes.length) {

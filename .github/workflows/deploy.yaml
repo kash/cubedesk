@@ -72,7 +72,6 @@ jobs:
             - name: Generate release identifiers
               id: release
               run: |
-                  echo "deployment_id=$(cat /proc/sys/kernel/random/uuid)" >> "$GITHUB_OUTPUT"
                   echo "name=release-$(date -u +'%Y-%m-%dT%H-%M-%SZ')" >> "$GITHUB_OUTPUT"
 
             - name: Login to Amazon ECR
@@ -90,7 +89,6 @@ jobs:
               env:
                   ENV: ${{ inputs.ENV }}
                   RELEASE_NAME: ${{ steps.release.outputs.name }}
-                  DEPLOYMENT_ID: ${{ steps.release.outputs.deployment_id }}
                   DIST_BASE_URI: ${{ inputs.DIST_BASE_URI }}
                   RESOURCES_BASE_URI: ${{ inputs.RESOURCES_BASE_URI }}
                   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
@@ -102,13 +100,12 @@ jobs:
 
             - name: Upload static assets to S3
               run: |
-                  aws s3 sync dist s3://${{ inputs.S3_BUCKET }}/dist --cache-control max-age=604800
+                  aws s3 sync dist s3://${{ inputs.S3_BUCKET }}/dist --exclude ".vite/*" --cache-control "public, max-age=31536000, immutable"
                   aws s3 sync public s3://${{ inputs.S3_BUCKET }}/static --size-only --cache-control max-age=604800
 
             - name: Build image
               run: |
                   docker build . --platform linux/arm64 --tag ${{ steps.image.outputs.uri }} \
-                    --build-arg DEPLOYMENT_ID=${{ steps.release.outputs.deployment_id }} \
                     --build-arg RELEASE_NAME=${{ steps.release.outputs.name }}
 
             - name: Smoke test image

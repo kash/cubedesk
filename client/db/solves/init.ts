@@ -5,7 +5,7 @@ import {emitEvent} from '@/util/event_handler';
 
 // Synchronous mirror of the user's solves. Persisted to IndexedDB by @/db/persist. Only browser entry points write
 // to it, so it stays empty on the server.
-const solveDb = new MemoryTable<Solve>(['started_at', 'time']);
+const solveDb = new MemoryTable<Solve>(['started_at', 'time'], ['event_type', 'session_id']);
 
 export function getSolveDb(): MemoryTable<Solve> {
 	return solveDb;

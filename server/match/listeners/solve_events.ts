@@ -1,4 +1,8 @@
-import {getParticipantMatch, MatchPhase} from '@/server/match/authorization';
+import {
+	getParticipantMatch,
+	getParticipantMatchRef,
+	MatchPhase,
+} from '@/server/match/authorization';
 import {SocketClient} from '@/server/match/init';
 import {onProtectedSocketEvent, socketIdSchema} from '@/server/match/socket_event';
 import {MatchCacher} from '@/server/match/update/match_cacher';
@@ -52,7 +56,7 @@ export function listenForSolveEvents(client: SocketClient) {
 		'playerStartedSolve',
 		z.tuple([socketIdSchema, z.number()]),
 		async (user, matchId, startedAt) => {
-			const match = await getPlayerMatch(user, matchId);
+			const match = await getParticipantMatchRef(user, matchId, [MatchPhase.Active]);
 			if (!match) {
 				return;
 			}
@@ -69,7 +73,7 @@ export function listenForSolveEvents(client: SocketClient) {
 		'playerEndedSolve',
 		z.tuple([socketIdSchema, z.number(), z.number()]),
 		async (user, matchId, endedAtUnix, finalTimeMillis) => {
-			const match = await getPlayerMatch(user, matchId);
+			const match = await getParticipantMatchRef(user, matchId, [MatchPhase.Active]);
 			if (!match) {
 				return;
 			}

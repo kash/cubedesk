@@ -100,8 +100,8 @@ importers:
         specifier: ^1.0.12
         version: 1.0.12(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@sentry/browser':
-        specifier: ^7.120.4
-        version: 7.120.4
+        specifier: ^11.9.0
+        version: 11.9.0
       '@sentry/node':
         specifier: ^7.120.4
         version: 7.120.4
@@ -162,9 +162,6 @@ importers:
       canvas-confetti:
         specifier: ^1.3.2
         version: 1.9.4
-      chance:
-        specifier: ^1.1.8
-        version: 1.1.13
       change-case:
         specifier: ^4.1.2
         version: 4.1.2
@@ -355,9 +352,6 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.2
         version: 4.3.2(vite@7.3.6(@types/node@24.13.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0))
-      '@types/chance':
-        specifier: ^1.1.3
-        version: 1.1.8
       '@types/compression':
         specifier: ^1.8.1
         version: 1.8.1
@@ -388,6 +382,9 @@ importers:
       '@types/react-router-dom':
         specifier: ^5.3.2
         version: 5.3.3
+      '@types/seedrandom':
+        specifier: ^3.0.8
+        version: 3.0.8
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -2187,21 +2184,17 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@sentry-internal/feedback@7.120.4':
-    resolution: {integrity: sha512-eSwgvTdrh03zYYaI6UVOjI9p4VmKg6+c2+CBQfRZX++6wwnCVsNv7XF7WUIpVGBAkJ0N2oapjQmCzJKGKBRWQg==}
-    engines: {node: '>=12'}
-
-  '@sentry-internal/replay-canvas@7.120.4':
-    resolution: {integrity: sha512-2+W4CgUL1VzrPjArbTid4WhKh7HH21vREVilZdvffQPVwOEpgNTPAb69loQuTlhJVveh9hWTj2nE5UXLbLP+AA==}
-    engines: {node: '>=12'}
-
   '@sentry-internal/tracing@7.120.4':
     resolution: {integrity: sha512-Fz5+4XCg3akeoFK+K7g+d7HqGMjmnLoY2eJlpONJmaeT9pXY7yfUyXKZMmMajdE2LxxKJgQ2YKvSCaGVamTjHw==}
     engines: {node: '>=8'}
 
-  '@sentry/browser@7.120.4':
-    resolution: {integrity: sha512-ymlNtIPG6HAKzM/JXpWVGCzCNufZNADfy+O/olZuVJW5Be1DtOFyRnBvz0LeKbmxJbXb2lX/XMhuen6PXPdoQw==}
-    engines: {node: '>=8'}
+  '@sentry/browser-utils@11.9.0':
+    resolution: {integrity: sha512-HwEa+BYxNJ+9msyzKSL2w5+eQwWRGk13StZoMinRmkq+tK34pmIOeDRq/ARlofyYzffvY6R9Xggh9peLjYn2Rg==}
+    engines: {node: '>=20.19.0 <22.0.0 || >=22.12.0 <23.0.0 || >=23.2.0'}
+
+  '@sentry/browser@11.9.0':
+    resolution: {integrity: sha512-3YQ6DJyeqOV2b02m+kUNLUcFAlzyjCL30+4NZgUQLWlpmZgTO+b01v+HXwY5d7etf8mAKwEjL8BPoVqkVqL2Kg==}
+    engines: {node: '>=20.19.0 <22.0.0 || >=22.12.0 <23.0.0 || >=23.2.0'}
 
   '@sentry/bundler-plugins@10.75.3':
     resolution: {integrity: sha512-WViQ6CqeI2RAZZWEr0Ohz4kfbNRcb/XhLqlG+JmsYPTbipwfOnCUK4jOPiKKWtnl7IisBB7fhL5ZIqNTSvbY4A==}
@@ -2271,13 +2264,25 @@ packages:
     resolution: {integrity: sha512-fO9PLmHdVURcSPUpWCItWAtgKiMwGdJHbovoSEyLplX5sxs2ugvI4CBPTrkkgqhObnZOD0CnWBKDzSVQYBKEyQ==}
     engines: {node: '>=14'}
 
+  '@sentry/conventions@0.27.0':
+    resolution: {integrity: sha512-Mrqd/o7n/z7qWSYfQQA7x4fFTA0IqOG6JNsbBpnC97khPwZk7n6DPtOO7YgaYplSl8R8QLRbBz9Xv2lVhToSAg==}
+    engines: {node: '>=14'}
+
   '@sentry/core@10.75.3':
     resolution: {integrity: sha512-QHgzobetM4UgEVbyqx9WPJzRq0YzyNg2CeeoM1Bf84ivYJXXiiVWxjzc0RHk3c0DHY5/6O6nJqos1xVL55dgZA==}
     engines: {node: '>=18'}
 
+  '@sentry/core@11.9.0':
+    resolution: {integrity: sha512-t0dZyHILt2XVC4Fe9UmAty6YRfOuQv95cvWeNl+HlW4LphjF5/jkALV3cJCUMdhpblYELgIJC4U/S/GoYuI2bA==}
+    engines: {node: '>=20.19.0 <22.0.0 || >=22.12.0 <23.0.0 || >=23.2.0'}
+
   '@sentry/core@7.120.4':
     resolution: {integrity: sha512-TXu3Q5kKiq8db9OXGkWyXUbIxMMuttB5vJ031yolOl5T/B69JRyAoKuojLBjRv1XX583gS1rSSoX8YXX7ATFGA==}
     engines: {node: '>=8'}
+
+  '@sentry/feedback@11.9.0':
+    resolution: {integrity: sha512-Rq3xwo66AuuLgS4/v/ZrNwJo+barxzAtXRZWmMU5T60AGX2apTFQfvo0H4zsVwvxouvw9NBg8RmL7jF9MdNG7g==}
+    engines: {node: '>=20.19.0 <22.0.0 || >=22.12.0 <23.0.0 || >=23.2.0'}
 
   '@sentry/integrations@7.120.4':
     resolution: {integrity: sha512-kkBTLk053XlhDCg7OkBQTIMF4puqFibeRO3E3YiVc4PGLnocXMaVpOSCkMqAc1k1kZ09UgGi8DxfQhnFEjUkpA==}
@@ -2287,9 +2292,13 @@ packages:
     resolution: {integrity: sha512-qq3wZAXXj2SRWhqErnGCSJKUhPSlZ+RGnCZjhfjHpP49KNpcd9YdPTIUsFMgeyjdh6Ew6aVCv23g1hTP0CHpYw==}
     engines: {node: '>=8'}
 
-  '@sentry/replay@7.120.4':
-    resolution: {integrity: sha512-FW8sPenNFfnO/K7sncsSTX4rIVak9j7VUiLIagJrcqZIC7d1dInFNjy8CdVJUlyz3Y3TOgIl3L3+ZpjfyMnaZg==}
-    engines: {node: '>=12'}
+  '@sentry/replay-canvas@11.9.0':
+    resolution: {integrity: sha512-EqSlEg1iJFXKlGrpddZ+ytX7SS5oOgui5kAYqDOfNolmxoQc2dz0KXSEtLpiWjwnnfeJ5El0uAmv/1jPdrd4aw==}
+    engines: {node: '>=20.19.0 <22.0.0 || >=22.12.0 <23.0.0 || >=23.2.0'}
+
+  '@sentry/replay@11.9.0':
+    resolution: {integrity: sha512-fSM8f1skiu6+O1Mzpn3BjtjoESygA+UcZaXyLr7t/1yDNPi7ne2+pJnrXo4oIFV1UbWJHPedo2vOIBNHDLABTg==}
+    engines: {node: '>=20.19.0 <22.0.0 || >=22.12.0 <23.0.0 || >=23.2.0'}
 
   '@sentry/tracing@7.120.4':
     resolution: {integrity: sha512-cAtpLh23qW3hoqZJ6c36EvFki5NhFWUSK71ALHefqDXEocMlfDc9I+IGn3B/ola2D2TDEDamCy3x32vctKqOag==}
@@ -2516,9 +2525,6 @@ packages:
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
 
-  '@types/chance@1.1.8':
-    resolution: {integrity: sha512-isycXjm4a88/zl3n9lfgMcEClR9wUi+m72lkE9MvEbkgZDQrKzolWbonBiUqDNAJFIwO9GKjzmJFq79qtKVTAQ==}
-
   '@types/compression@1.8.1':
     resolution: {integrity: sha512-kCFuWS0ebDbmxs0AXYn6e2r2nrGAb5KwQhknjSPSPgJcGd8+HVSILlUyFhGqML2gk39HcG7D1ydW9/qpYkN00Q==}
 
@@ -2651,6 +2657,9 @@ packages:
 
   '@types/react@19.2.17':
     resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
+
+  '@types/seedrandom@3.0.8':
+    resolution: {integrity: sha512-TY1eezMU2zH2ozQoAFAQFOPpvP15g+ZgSfTZt31AUUH/Rxtnz3H+A/Sv1Snw2/amp//omibc+AEkTaA8KUeOLQ==}
 
   '@types/send@1.2.1':
     resolution: {integrity: sha512-arsCikDvlU99zl1g69TcAB3mzZPpxgw0UQnaHeC1Nwb015xp8bknZv5rIfri9xTOcMuaVgvabfIRA7PSZVuZIQ==}
@@ -3182,9 +3191,6 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
-
-  chance@1.1.13:
-    resolution: {integrity: sha512-V6lQCljcLznE7tUYUM9EOAnnKXbctE6j/rdQkYOHIWbfGQbrzTsAXNW9CdU5XCo4ArXQCj/rb6HgxPlmGJcaUg==}
 
   change-case@4.1.2:
     resolution: {integrity: sha512-bSxY2ws9OtviILG1EiY5K7NNxkqg/JnRnFxLtKQ96JaviiIxi7djMrSd0ECT9AC+lttClmYwKw53BWpOMblo7A==}
@@ -6492,6 +6498,9 @@ packages:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
     engines: {node: '>= 8'}
 
+  web-vitals@6.2.3:
+    resolution: {integrity: sha512-Dmy+vdO1UPMqXiAtZSNayhl4f794Bxfd94W4HIj2HlYtczEQfEOon969memlcpcHrTuOKLa5baFjX7WbgmOq+A==}
+
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
@@ -8583,35 +8592,26 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@sentry-internal/feedback@7.120.4':
-    dependencies:
-      '@sentry/core': 7.120.4
-      '@sentry/types': 7.120.4
-      '@sentry/utils': 7.120.4
-
-  '@sentry-internal/replay-canvas@7.120.4':
-    dependencies:
-      '@sentry/core': 7.120.4
-      '@sentry/replay': 7.120.4
-      '@sentry/types': 7.120.4
-      '@sentry/utils': 7.120.4
-
   '@sentry-internal/tracing@7.120.4':
     dependencies:
       '@sentry/core': 7.120.4
       '@sentry/types': 7.120.4
       '@sentry/utils': 7.120.4
 
-  '@sentry/browser@7.120.4':
+  '@sentry/browser-utils@11.9.0':
     dependencies:
-      '@sentry-internal/feedback': 7.120.4
-      '@sentry-internal/replay-canvas': 7.120.4
-      '@sentry-internal/tracing': 7.120.4
-      '@sentry/core': 7.120.4
-      '@sentry/integrations': 7.120.4
-      '@sentry/replay': 7.120.4
-      '@sentry/types': 7.120.4
-      '@sentry/utils': 7.120.4
+      '@sentry/conventions': 0.27.0
+      '@sentry/core': 11.9.0
+      web-vitals: 6.2.3
+
+  '@sentry/browser@11.9.0':
+    dependencies:
+      '@sentry/browser-utils': 11.9.0
+      '@sentry/conventions': 0.27.0
+      '@sentry/core': 11.9.0
+      '@sentry/feedback': 11.9.0
+      '@sentry/replay': 11.9.0
+      '@sentry/replay-canvas': 11.9.0
 
   '@sentry/bundler-plugins@10.75.3(rollup@4.62.2)':
     dependencies:
@@ -8674,14 +8674,24 @@ snapshots:
 
   '@sentry/conventions@0.16.0': {}
 
+  '@sentry/conventions@0.27.0': {}
+
   '@sentry/core@10.75.3':
     dependencies:
       '@sentry/conventions': 0.16.0
+
+  '@sentry/core@11.9.0':
+    dependencies:
+      '@sentry/conventions': 0.27.0
 
   '@sentry/core@7.120.4':
     dependencies:
       '@sentry/types': 7.120.4
       '@sentry/utils': 7.120.4
+
+  '@sentry/feedback@11.9.0':
+    dependencies:
+      '@sentry/core': 11.9.0
 
   '@sentry/integrations@7.120.4':
     dependencies:
@@ -8698,12 +8708,15 @@ snapshots:
       '@sentry/types': 7.120.4
       '@sentry/utils': 7.120.4
 
-  '@sentry/replay@7.120.4':
+  '@sentry/replay-canvas@11.9.0':
     dependencies:
-      '@sentry-internal/tracing': 7.120.4
-      '@sentry/core': 7.120.4
-      '@sentry/types': 7.120.4
-      '@sentry/utils': 7.120.4
+      '@sentry/core': 11.9.0
+      '@sentry/replay': 11.9.0
+
+  '@sentry/replay@11.9.0':
+    dependencies:
+      '@sentry/browser-utils': 11.9.0
+      '@sentry/core': 11.9.0
 
   '@sentry/tracing@7.120.4':
     dependencies:
@@ -8924,8 +8937,6 @@ snapshots:
       '@types/connect': 3.4.38
       '@types/node': 24.13.2
 
-  '@types/chance@1.1.8': {}
-
   '@types/compression@1.8.1':
     dependencies:
       '@types/express': 5.0.6
@@ -9070,6 +9081,8 @@ snapshots:
   '@types/react@19.2.17':
     dependencies:
       csstype: 3.2.3
+
+  '@types/seedrandom@3.0.8': {}
 
   '@types/send@1.2.1':
     dependencies:
@@ -9740,8 +9753,6 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-
-  chance@1.1.13: {}
 
   change-case@4.1.2:
     dependencies:
@@ -13362,6 +13373,8 @@ snapshots:
       makeerror: 1.0.12
 
   web-streams-polyfill@3.3.3: {}
+
+  web-vitals@6.2.3: {}
 
   webidl-conversions@3.0.1: {}
 

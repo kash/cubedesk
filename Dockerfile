@@ -3,12 +3,10 @@
 # needs Node and the build output. Runtime config comes from the ECS task definition's env vars.
 FROM node:24.22.1-slim
 
-# Baked in because they must match the client bundle built in the same deploy
-ARG DEPLOYMENT_ID
+# Baked in because it must match the client bundle built in the same deploy
 ARG RELEASE_NAME
 
 ENV NODE_ENV=production
-ENV DEPLOYMENT_ID=$DEPLOYMENT_ID
 ENV RELEASE_NAME=$RELEASE_NAME
 
 # RDS signs its certificates with Amazon's own CA, which Node doesn't trust by default.

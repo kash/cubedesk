@@ -1,11 +1,22 @@
 import type {Request} from 'express';
 import {setGeneral} from '@/actions/general';
-import {loadPage, PageContext, routes} from '@/components/layout/Routes';
+import {getPageSources, loadPage, PageContext, routes} from '@/components/layout/Routes';
 import {PageRoutes} from '@/components/map-route';
 import {getNewScramble} from '@/components/timer/helpers/scramble';
 import reducers from '@/reducers/reducers';
+import {
+	getClientEntryAssets,
+	getClientPreloadFiles,
+	hasClientManifest,
+} from '@/server/client_assets';
 import {ErrorCode} from '@/server/constants/errors';
-import htmlTemplate, {HtmlPagePayload} from '@/server/html_template';
+import htmlTemplate, {
+	APP_HTML_PLACEHOLDER,
+	getAssetUri,
+	HEAD_TAGS_PLACEHOLDER,
+	PRELOAD_PLACEHOLDER,
+	STATE_PLACEHOLDER,
+} from '@/server/html_template';
 import {initUserAccount} from '@/server/models/store';
 import {logger} from '@/server/services/logger';
 import {TRPCProvider} from '@/util/api';
@@ -44,35 +55,75 @@ function safeStringify(object) {
 		.replace(/\u2029/g, '\\u2029');
 }
 
-// Stands in for the React markup while the page is minified. Minifying the markup itself collapses
-// whitespace-only text nodes, so it no longer matches the client render and hydration fails.
-const APP_HTML_PLACEHOLDER = '<!--app-html-->';
+const isDev = (process.env.ENV || 'development') === 'development';
+const distBase = process.env.DIST_BASE_URI || '';
 
-async function renderFullPage(html, headTags, preloadedState) {
+const PLACEHOLDER_PATTERN = new RegExp(
+	[STATE_PLACEHOLDER, PRELOAD_PLACEHOLDER, HEAD_TAGS_PLACEHOLDER, APP_HTML_PLACEHOLDER].join('|'),
+	'g',
+);
+
+let pageTemplate: Promise<string> | null = null;
+
+// The React markup, state and head tags are filled in after minifying. Minifying the markup itself collapses
+// whitespace-only text nodes, so it no longer matches the client render and hydration fails.
+function getPageTemplate(): Promise<string> {
+	if (!pageTemplate) {
+		const entry = getClientEntryAssets();
+		const template = minify(
+			htmlTemplate({
+				distBase,
+				resourceBase: process.env.RESOURCES_BASE_URI || '',
+				jsFile: entry?.jsFile || '',
+				cssFiles: entry?.cssFiles || [],
+			}),
+			{
+				collapseWhitespace: true,
+				minifyJS: true,
+				minifyCSS: true,
+			},
+		).catch((error) => {
+			pageTemplate = null;
+			throw error;
+		});
+		pageTemplate = template;
+		return template;
+	}
+
+	return pageTemplate;
+}
+
+const preloadLinksByPage = new Map<PageContext, string>();
+
+function getPreloadLinks(page: PageContext): string {
+	let links = preloadLinksByPage.get(page);
+	if (links === undefined) {
+		const entry = getClientEntryAssets();
+		const files = entry ? [entry.jsFile, ...getClientPreloadFiles(getPageSources(page))] : [];
+		links = files
+			.map((file) => `<link rel="modulepreload" href="${getAssetUri(distBase, file)}">`)
+			.join('');
+		preloadLinksByPage.set(page, links);
+	}
+
+	return links;
+}
+
+async function renderFullPage(page: PageContext, html: string, headTags: string, preloadedState) {
 	let cleanState = JSON.stringify(preloadedState).replace(/</g, '\\u003c');
 	cleanState = safeStringify(cleanState);
 
-	const deploymentId = process.env.DEPLOYMENT_ID || 'app';
-
-	const payload: HtmlPagePayload = {
-		html: APP_HTML_PLACEHOLDER,
-		headTags,
-		cleanState,
-		distBase: process.env.DIST_BASE_URI || '',
-		resourceBase: process.env.RESOURCES_BASE_URI || '',
-		jsFileName: `${deploymentId}.min.js`,
-		cssFileName: `${deploymentId}.min.css`,
+	const fallbackTitle = headTags.includes('<title') ? '' : '<title>CubeDesk</title>';
+	const values: Record<string, string> = {
+		[STATE_PLACEHOLDER]: cleanState,
+		[PRELOAD_PLACEHOLDER]: getPreloadLinks(page),
+		[HEAD_TAGS_PLACEHOLDER]: fallbackTitle + headTags,
+		[APP_HTML_PLACEHOLDER]: html,
 	};
 
-	const page = await minify(htmlTemplate(payload), {
-		collapseWhitespace: true,
-		minifyJS: true,
-		minifyCSS: true,
-	});
-	return page.replace(APP_HTML_PLACEHOLDER, () => html);
+	const template = await getPageTemplate();
+	return template.replace(PLACEHOLDER_PATTERN, (placeholder) => values[placeholder]);
 }
-
-const isDev = (process.env.ENV || 'development') === 'development';
 
 async function createComponents(req, store, route: PageContext) {
 	const demoHome = req.path === '/' && !store.getState().account.me;
@@ -81,7 +132,7 @@ async function createComponents(req, store, route: PageContext) {
 	// JavaScript loads.
 	if (isDev && !demoHome && !route.renderBeforeAppLoad) {
 		const preloaded = store.getState();
-		return renderFullPage('', '', preloaded);
+		return renderFullPage(route, '', '', preloaded);
 	}
 
 	if (demoHome) {
@@ -110,7 +161,7 @@ async function createComponents(req, store, route: PageContext) {
 	const {headTags, bodyMarkup} = extractHeadTags(markup);
 	const preloaded = store.getState();
 
-	return renderFullPage(bodyMarkup, headTags, preloaded);
+	return renderFullPage(route, bodyMarkup, headTags, preloaded);
 }
 
 function isPhoneRequest(req: Request) {
@@ -183,6 +234,12 @@ function appUseRouteForPage(routePath, route: PageContext) {
 }
 
 export function mapPathToPage() {
+	if (!isDev && !hasClientManifest()) {
+		throw new Error(
+			'Client build manifest is missing. Run pnpm build before starting the server.',
+		);
+	}
+
 	for (const route of routes) {
 		const routePath = route.path.replace(/\s/g, '');
 		if ('redirect' in route && route.redirect) {

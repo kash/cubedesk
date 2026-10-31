@@ -8,47 +8,137 @@ import {matchPath} from 'react-router-dom';
 import {Store} from 'redux';
 
 // Every page is split into its own chunk so a visit only downloads the code for the page it shows
-const Account = lazyPage(() => import('@/components/account/Account'));
-const DangerZone = lazyPage(() => import('@/components/account/DangerZone'));
+const Account = lazyPage(
+	() => import('@/components/account/Account'),
+	'client/components/account/Account',
+);
+const DangerZone = lazyPage(
+	() => import('@/components/account/DangerZone'),
+	'client/components/account/DangerZone',
+);
 const LinkedAccounts = lazyPage(
 	() => import('@/components/account/linked-accounts/LinkedAccounts'),
+	'client/components/account/linked-accounts/LinkedAccounts',
 );
 const NotificationPreferences = lazyPage(
 	() => import('@/components/account/NotificationPreferences'),
+	'client/components/account/NotificationPreferences',
 );
-const Password = lazyPage(() => import('@/components/account/Password'));
-const PersonalInfo = lazyPage(() => import('@/components/account/PersonalInfo'));
-const Admin = lazyPage(() => import('@/components/admin/Admin'));
-const AdminMetrics = lazyPage(() => import('@/components/admin/AdminMetrics'));
-const AdminTrainer = lazyPage(() => import('@/components/admin/AdminTrainer'));
-const AdminUsers = lazyPage(() => import('@/components/admin/AdminUsers'));
-const Reports = lazyPage(() => import('@/components/admin/reports/Reports'));
-const Community = lazyPage(() => import('@/components/community/Community'));
-const EloBoard = lazyPage(() => import('@/components/community/EloBoard'));
-const Friends = lazyPage(() => import('@/components/community/Friends'));
-const DocsLayout = lazyPage(() => import('@/components/docs/DocsLayout'));
-const ForceSignOut = lazyPage(() => import('@/components/login/ForceSignOut'));
-const LoginWrapper = lazyPage(() => import('@/components/login/LoginWrapper'));
-const OAuthService = lazyPage(() => import('@/components/oauth/OAuthService'));
-const Elimination = lazyPage(() => import('@/components/play/logic/Elimination'));
-const HeadToHead = lazyPage(() => import('@/components/play/logic/HeadToHead'));
-const Play = lazyPage(() => import('@/components/play/Play'));
-const PlayWrapper = lazyPage(() => import('@/components/play/PlayWrapper'));
-const Profile = lazyPage(() => import('@/components/profile/Profile'));
-const Sessions = lazyPage(() => import('@/components/sessions/Sessions'));
-const Appearance = lazyPage(() => import('@/components/settings/appearance/Appearance'));
-const DataSettings = lazyPage(() => import('@/components/settings/data/import-data/DataSettings'));
-const Settings = lazyPage(() => import('@/components/settings/Settings'));
-const TimerSettings = lazyPage(() => import('@/components/settings/timer/TimerSettings'));
-const SolvePage = lazyPage(() => import('@/components/solve-page/SolvePage'));
-const Solves = lazyPage(() => import('@/components/solves/SolvesList'));
-const Stats = lazyPage(() => import('@/components/stats/Stats'));
-const DefaultTimer = lazyPage(() => import('@/components/timer/DefaultTimer'));
+const Password = lazyPage(
+	() => import('@/components/account/Password'),
+	'client/components/account/Password',
+);
+const PersonalInfo = lazyPage(
+	() => import('@/components/account/PersonalInfo'),
+	'client/components/account/PersonalInfo',
+);
+const Admin = lazyPage(() => import('@/components/admin/Admin'), 'client/components/admin/Admin');
+const AdminMetrics = lazyPage(
+	() => import('@/components/admin/AdminMetrics'),
+	'client/components/admin/AdminMetrics',
+);
+const AdminTrainer = lazyPage(
+	() => import('@/components/admin/AdminTrainer'),
+	'client/components/admin/AdminTrainer',
+);
+const AdminUsers = lazyPage(
+	() => import('@/components/admin/AdminUsers'),
+	'client/components/admin/AdminUsers',
+);
+const Reports = lazyPage(
+	() => import('@/components/admin/reports/Reports'),
+	'client/components/admin/reports/Reports',
+);
+const Community = lazyPage(
+	() => import('@/components/community/Community'),
+	'client/components/community/Community',
+);
+const EloBoard = lazyPage(
+	() => import('@/components/community/EloBoard'),
+	'client/components/community/EloBoard',
+);
+const Friends = lazyPage(
+	() => import('@/components/community/Friends'),
+	'client/components/community/Friends',
+);
+const DocsLayout = lazyPage(
+	() => import('@/components/docs/DocsLayout'),
+	'client/components/docs/DocsLayout',
+);
+const ForceSignOut = lazyPage(
+	() => import('@/components/login/ForceSignOut'),
+	'client/components/login/ForceSignOut',
+);
+const LoginWrapper = lazyPage(
+	() => import('@/components/login/LoginWrapper'),
+	'client/components/login/LoginWrapper',
+);
+const OAuthService = lazyPage(
+	() => import('@/components/oauth/OAuthService'),
+	'client/components/oauth/OAuthService',
+);
+const Elimination = lazyPage(
+	() => import('@/components/play/logic/Elimination'),
+	'client/components/play/logic/Elimination',
+);
+const HeadToHead = lazyPage(
+	() => import('@/components/play/logic/HeadToHead'),
+	'client/components/play/logic/HeadToHead',
+);
+const Play = lazyPage(() => import('@/components/play/Play'), 'client/components/play/Play');
+const PlayWrapper = lazyPage(
+	() => import('@/components/play/PlayWrapper'),
+	'client/components/play/PlayWrapper',
+);
+const Profile = lazyPage(
+	() => import('@/components/profile/Profile'),
+	'client/components/profile/Profile',
+);
+const Sessions = lazyPage(
+	() => import('@/components/sessions/Sessions'),
+	'client/components/sessions/Sessions',
+);
+const Appearance = lazyPage(
+	() => import('@/components/settings/appearance/Appearance'),
+	'client/components/settings/appearance/Appearance',
+);
+const DataSettings = lazyPage(
+	() => import('@/components/settings/data/import-data/DataSettings'),
+	'client/components/settings/data/import-data/DataSettings',
+);
+const Settings = lazyPage(
+	() => import('@/components/settings/Settings'),
+	'client/components/settings/Settings',
+);
+const TimerSettings = lazyPage(
+	() => import('@/components/settings/timer/TimerSettings'),
+	'client/components/settings/timer/TimerSettings',
+);
+const SolvePage = lazyPage(
+	() => import('@/components/solve-page/SolvePage'),
+	'client/components/solve-page/SolvePage',
+);
+const Solves = lazyPage(
+	() => import('@/components/solves/SolvesList'),
+	'client/components/solves/SolvesList',
+);
+const Stats = lazyPage(() => import('@/components/stats/Stats'), 'client/components/stats/Stats');
+const DefaultTimer = lazyPage(
+	() => import('@/components/timer/DefaultTimer'),
+	'client/components/timer/DefaultTimer',
+);
 const PublicCustomTrainers = lazyPage(
 	() => import('@/components/trainer/public-custom-trainers/PublicCustomTrainers'),
+	'client/components/trainer/public-custom-trainers/PublicCustomTrainers',
 );
-const Trainer = lazyPage(() => import('@/components/trainer/Trainer'));
-const UnsubEmails = lazyPage(() => import('@/components/unsub/UnsubEmails'));
+const Trainer = lazyPage(
+	() => import('@/components/trainer/Trainer'),
+	'client/components/trainer/Trainer',
+);
+const UnsubEmails = lazyPage(
+	() => import('@/components/unsub/UnsubEmails'),
+	'client/components/unsub/UnsubEmails',
+);
 
 interface PageOptions {
 	restricted: boolean;
@@ -207,7 +297,14 @@ export function findPage(pathname: string): PageContext | undefined {
 }
 
 // Loads the code for every component of a page, so it renders without suspending
+function getLazyComponents(page: PageContext) {
+	return [page.grandparent, page.parent, page.child].filter(isLazyPage);
+}
+
 export async function loadPage(page: PageContext) {
-	const components = [page.grandparent, page.parent, page.child].filter(isLazyPage);
-	await Promise.all(components.map((component) => component.load()));
+	await Promise.all(getLazyComponents(page).map((component) => component.load()));
+}
+
+export function getPageSources(page: PageContext): string[] {
+	return getLazyComponents(page).map((component) => component.source);
 }

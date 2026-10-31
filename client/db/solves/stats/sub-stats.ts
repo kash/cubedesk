@@ -1,9 +1,9 @@
-import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
+import {fetchSingleSolve, fetchSolveCount, FilterSolvesOptions} from '@/db/solves/query';
 import {Solve} from '@/types/solve';
 
 interface SubStats {
-	firstSolve: Solve;
-	lastSolve: Solve;
+	firstSolve: Solve | null;
+	lastSolve: Solve | null;
 	totalCount: number;
 	dnfCount: number;
 	dnfPercent: number;
@@ -12,39 +12,24 @@ interface SubStats {
 }
 
 export function getSubStats(filter: FilterSolvesOptions): SubStats {
-	const solves = fetchSolves(
-		{
-			...filter,
-		},
-		{
-			sortBy: 'started_at',
-		}
-	);
-
-	const dnfs = fetchSolves({
-		...filter,
-		dnf: true,
-	});
-
-	const plusTwos = fetchSolves({
-		...filter,
-		plus_two: true,
-	});
+	const totalCount = fetchSolveCount(filter);
+	const dnfCount = fetchSolveCount({...filter, dnf: true});
+	const plusTwoCount = fetchSolveCount({...filter, plus_two: true});
 
 	let dnfPercent = 0;
 	let plusTwoPercent = 0;
-	if (solves.length) {
-		dnfPercent = Math.floor((dnfs.length / solves.length) * 100);
-		plusTwoPercent = Math.floor((dnfs.length / solves.length) * 100);
+	if (totalCount) {
+		dnfPercent = Math.floor((dnfCount / totalCount) * 100);
+		plusTwoPercent = Math.floor((plusTwoCount / totalCount) * 100);
 	}
 
 	return {
-		firstSolve: solves[0],
-		lastSolve: solves[solves.length - 1],
-		totalCount: solves.length,
-		dnfCount: dnfs.length,
+		firstSolve: fetchSingleSolve(filter, {sortBy: 'started_at'}),
+		lastSolve: fetchSingleSolve(filter, {sortBy: 'started_at', sortInverse: true}),
+		totalCount,
+		dnfCount,
 		dnfPercent,
-		plusTwoCount: plusTwos.length,
+		plusTwoCount,
 		plusTwoPercent,
 	};
 }
