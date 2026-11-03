@@ -17,6 +17,10 @@ const MigrateFromCsTimer = lazyPage(
 	() => import('@/components/docs/pages/MigrateFromCsTimer'),
 	'client/components/docs/pages/MigrateFromCsTimer',
 );
+const CubeDeskVsCsTimer = lazyPage(
+	() => import('@/components/docs/pages/CubeDeskVsCsTimer'),
+	'client/components/docs/pages/CubeDeskVsCsTimer',
+);
 const Privacy = lazyPage(
 	() => import('@/components/docs/pages/Privacy'),
 	'client/components/docs/pages/Privacy',
@@ -80,6 +84,14 @@ export const DOC_SECTIONS: DocSection[] = [
 				description:
 					'Every smart cube and timer that works with CubeDesk: GAN, MoYu, QiYi, GoCube, and Giiker Bluetooth cubes, plus GAN smart timers and StackMat timers.',
 				component: SupportedDevices,
+			},
+			{
+				path: '/cubedesk-vs-cstimer',
+				navTitle: 'CubeDesk vs csTimer',
+				title: 'CubeDesk vs csTimer: Which Speedcubing Timer Is Right for You?',
+				description:
+					'An honest comparison of CubeDesk and csTimer. Compare design, cloud sync, scramble types, stats, algorithm trainers, online 1v1, and smart cube support.',
+				component: CubeDeskVsCsTimer,
 			},
 		],
 	},
