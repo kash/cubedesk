@@ -66,6 +66,54 @@ export function DocList(props: {ordered?: boolean; children: ReactNode}) {
 	);
 }
 
+export function DocTable(props: {headers: ReactNode[]; rows: ReactNode[][]}) {
+	return (
+		<div className="border-text/15 overflow-x-auto rounded-lg border contain-inline-size">
+			<table
+				className={cn(
+					'text-text/80 w-full border-collapse text-left font-mono text-sm leading-6',
+					INLINE_STYLES,
+				)}
+			>
+				<thead>
+					<tr className="bg-text/5">
+						{props.headers.map((header, index) => (
+							<th
+								key={index}
+								scope="col"
+								className="text-text border-text/15 border-b px-4 py-2.5 align-bottom font-semibold"
+							>
+								{header}
+							</th>
+						))}
+					</tr>
+				</thead>
+				<tbody>
+					{props.rows.map((row, rowIndex) => (
+						<tr key={rowIndex} className="border-text/10 border-b last:border-b-0">
+							{row.map((cell, cellIndex) =>
+								cellIndex === 0 ? (
+									<th
+										key={cellIndex}
+										scope="row"
+										className="text-text min-w-36 px-4 py-2.5 align-top font-semibold"
+									>
+										{cell}
+									</th>
+								) : (
+									<td key={cellIndex} className="min-w-48 px-4 py-2.5 align-top">
+										{cell}
+									</td>
+								),
+							)}
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	);
+}
+
 export function DocCode(props: {children: ReactNode}) {
 	return (
 		<code className="bg-text/10 text-text rounded px-1.5 py-0.5 font-mono text-[0.85em] break-words">
