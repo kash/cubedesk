@@ -150,7 +150,11 @@ export default function TimerScramble() {
 			</span>
 		);
 	} else if (isSmart && !timeStartedAt && scramble) {
-		scrambleBody = <SmartScramble />;
+		scrambleBody = (
+			<div className="flex w-[calc(100%_-_20px)] flex-wrap justify-center gap-x-[0.8rem] p-[9px] text-center">
+				<SmartScramble />
+			</div>
+		);
 	}
 
 	return (
@@ -165,7 +169,6 @@ export default function TimerScramble() {
 			<div
 				className={classNames(
 					"!text-text mb-[5px] flex w-full max-w-[1200px] flex-row items-center justify-center font-['Roboto_Mono',monospace]",
-					isSmart && 'w-auto',
 				)}
 				style={{
 					fontSize: timerScrambleSize + 'px',

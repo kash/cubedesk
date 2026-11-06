@@ -5,7 +5,7 @@ import React, {ReactNode} from 'react';
 
 function turnClassName({green, orange, red}: {green?: boolean; orange?: boolean; red?: boolean}) {
 	return classNames(
-		'mr-[0.8rem] transition-all duration-100 ease-in-out [color:inherit] [font-family:inherit] [line-height:inherit] [text-shadow:0_1px_7px_rgba(0,0,0,0.2)] last:mr-0',
+		'transition-all duration-100 ease-in-out [color:inherit] [font-family:inherit] [line-height:inherit] [text-shadow:0_1px_7px_rgba(0,0,0,0.2)]',
 		green && '!text-success',
 		orange && '!text-warning',
 		red && '!text-error'
