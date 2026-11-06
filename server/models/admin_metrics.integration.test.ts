@@ -109,6 +109,12 @@ suite('admin metrics PostgreSQL integration', () => {
 			count(*) FILTER (WHERE NOT bulk) AS solves, count(*) FILTER (WHERE bulk) AS imports,
 			count(DISTINCT user_id) FILTER (WHERE NOT bulk) AS active FROM solve
 			WHERE created_at >= timestamp '2026-06-10' AND created_at < ${cutoff} GROUP BY 1`;
+		const dailyTrainer = await db.$queryRaw<{date: string; solves: bigint; sessions: bigint}[]>`
+			SELECT to_char(created_at, 'YYYY-MM-DD') AS date, count(*) AS solves,
+			count(DISTINCT NULLIF(training_session_id, '')) AS sessions FROM solve
+			WHERE NOT bulk AND match_id IS NULL
+			AND (NULLIF(trainer_name, '') IS NOT NULL OR NULLIF(training_session_id, '') IS NOT NULL)
+			AND created_at >= timestamp '2026-06-10' AND created_at < ${cutoff} GROUP BY 1`;
 		const dailyDemos = await db.$queryRaw<{date: string; solves: bigint; sessions: bigint}[]>`
 			SELECT to_char(created_at, 'YYYY-MM-DD') AS date, count(*) AS solves,
 			count(DISTINCT NULLIF(demo_session_id, '')) AS sessions FROM demo_solve
@@ -119,7 +125,8 @@ suite('admin metrics PostgreSQL integration', () => {
 		for (const day of snapshot.days) {
 			const solves = dailySolves.find((row) => row.date === day.date);
 			const demos = dailyDemos.find((row) => row.date === day.date);
-			expect(day).toMatchObject({
+			const trainer = dailyTrainer.find((row) => row.date === day.date);
+			expect(day).toEqual({
 				date: day.date,
 				solves: Number(solves?.solves ?? 0),
 				imports: Number(solves?.imports ?? 0),
@@ -130,25 +137,10 @@ suite('admin metrics PostgreSQL integration', () => {
 				demoSolves: Number(demos?.solves ?? 0),
 				demoSessions: Number(demos?.sessions ?? 0),
 				signups: Number(signups.find((row) => row.date === day.date)?.count ?? 0),
+				trainerSolves: Number(trainer?.solves ?? 0),
+				trainerSessions: Number(trainer?.sessions ?? 0),
 			});
 		}
-		const trainer = await db.$queryRaw<
-			{eventType: string | null; solves: bigint; users: bigint}[]
-		>`
-			SELECT event_type AS "eventType", count(*) AS solves, count(DISTINCT user_id) AS users
-			FROM solve WHERE NOT bulk AND match_id IS NULL
-			AND (NULLIF(trainer_name, '') IS NOT NULL OR NULLIF(training_session_id, '') IS NOT NULL)
-			AND created_at >= timestamp '2026-06-10' AND created_at < ${cutoff} GROUP BY 1`;
-		expect(snapshot.trainer.puzzles).toHaveLength(trainer.length);
-		expect(snapshot.trainer.puzzles).toEqual(
-			expect.arrayContaining(
-				trainer.map((row) => ({
-					eventType: row.eventType,
-					solves: Number(row.solves),
-					users: Number(row.users),
-				})),
-			),
-		);
 	}, 30000);
 
 	it('handles midnight cutoffs and reflects deletions and edits on the next refresh', async () => {

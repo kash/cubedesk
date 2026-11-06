@@ -51,13 +51,9 @@ it('keeps empty UTC days and runs only one bounded, read-only query at a time', 
 		demoSessions: 0,
 		signups: 0,
 		trainerSolves: 0,
-		trainerUsers: 0,
 		trainerSessions: 0,
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 0, weekly: 0, monthly: 0});
-	expect(snapshot.trainer.users).toEqual({weekly: 0, monthly: 0});
-	expect(snapshot.trainer.puzzles).toEqual([]);
-	expect(snapshot.trainer.sessionLengths.every((bucket) => bucket.sessions === 0)).toBe(true);
 	const timeouts = transaction.mock.calls.map(([, options]) => options);
 	expect(timeouts).toContainEqual({timeout: 35_000, maxWait: 5_000});
 	expect(timeouts).toContainEqual({timeout: 615_000, maxWait: 5_000});
@@ -86,7 +82,6 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 				{
 					bulk: false,
 					userId: 'same-user',
-					eventType: null,
 					category: 'timer',
 					session: null,
 					solves: BigInt(2),
@@ -94,7 +89,6 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 				{
 					bulk: false,
 					userId: 'same-user',
-					eventType: '222',
 					category: 'trainer',
 					session: 'same-training',
 					solves: BigInt(1),
@@ -102,7 +96,6 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 				{
 					bulk: true,
 					userId: null,
-					eventType: null,
 					category: null,
 					session: null,
 					solves: BigInt(5),
@@ -133,16 +126,9 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 		demoSolves: 6,
 		demoSessions: 1,
 		trainerSolves: 2,
-		trainerUsers: 1,
 		trainerSessions: 1,
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 1, weekly: 1, monthly: 1});
-	expect(snapshot.trainer.users).toEqual({weekly: 1, monthly: 1});
-	expect(snapshot.trainer.puzzles).toEqual([{eventType: '222', solves: 2, users: 1}]);
-	expect(snapshot.trainer.sessionLengths.find((bucket) => bucket.label === '2–4')).toEqual({
-		label: '2–4',
-		sessions: 1,
-	});
 });
 
 it('falls back from a lifetime timeout to exact indexed date ranges', async () => {
