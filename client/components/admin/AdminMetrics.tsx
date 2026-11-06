@@ -108,13 +108,13 @@ export default function AdminMetrics() {
 			)}
 			{snapshot && (
 				<>
-					<div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+					<div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
 						{cards.map(([label, value]) => (
-							<Card key={label} className="gap-2 py-5">
-								<CardHeader>
-									<h3 className="text-text/60 text-sm">{label}</h3>
+							<Card key={label} className="gap-1 py-3 sm:gap-2 sm:py-5">
+								<CardHeader className="px-3 sm:px-6">
+									<h3 className="text-text/60 text-xs sm:text-sm">{label}</h3>
 								</CardHeader>
-								<CardContent className="text-3xl font-semibold tabular-nums">
+								<CardContent className="px-3 text-2xl font-semibold tabular-nums sm:px-6 sm:text-3xl">
 									{value.toLocaleString()}
 								</CardContent>
 							</Card>
