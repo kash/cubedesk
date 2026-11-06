@@ -21,11 +21,14 @@ export default function SmartDevicePanel(props: Props) {
 	const {visual, controls, action, wide} = props;
 	const hangControls = wide && !!action;
 	const mobileMode = useGeneral('mobile_mode');
+	const shortLandscape = useGeneral('short_landscape');
+	const compact = shortLandscape && !mobileMode && !wide;
 
 	return (
 		<div
 			className={cn('flex flex-col items-center', {
 				'mt-[15px] w-1/2': !mobileMode,
+				'mt-0': compact,
 				'sm:mt-0': wide && !mobileMode,
 				'w-full': mobileMode,
 			})}
@@ -38,10 +41,19 @@ export default function SmartDevicePanel(props: Props) {
 					'w-full grid-cols-[1fr_auto_1fr]': mobileMode,
 				})}
 			>
-				<div className={cn({'mb-[5px]': !wide, 'col-start-2': mobileMode})}>{visual}</div>
+				<div
+					className={cn({
+						'mb-[5px]': !wide && !compact,
+						'col-start-2': mobileMode,
+						'row-span-2': compact,
+					})}
+				>
+					{visual}
+				</div>
 				<div
 					className={cn('flex items-center gap-2.5', {
 						'flex-row sm:flex-col': !mobileMode,
+						'self-end': compact,
 						'col-start-3 flex-col justify-self-start': mobileMode,
 						// Taking no height keeps the row as short as the visual. Without a height of their own the
 						// controls would shrink to fit
@@ -63,9 +75,10 @@ export default function SmartDevicePanel(props: Props) {
 				 */}
 				{action && (
 					<div
-						className={cn('flex w-0 justify-center *:shrink-0', {
-							'sm:col-start-1': !mobileMode,
-							'col-start-2': mobileMode,
+						className={cn('flex justify-center *:shrink-0', {
+							'w-0 sm:col-start-1': !mobileMode && !compact,
+							'col-start-2 self-start': compact,
+							'col-start-1 row-start-1 justify-self-end': mobileMode,
 							'sm:h-0 sm:items-start sm:*:mt-2': wide && !mobileMode,
 						})}
 					>
