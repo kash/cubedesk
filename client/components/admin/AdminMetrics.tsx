@@ -1,16 +1,14 @@
 import type {AdminMetricsResponse} from '@/types/admin-metrics';
 import AdminMetricsChart, {type MetricsSeries} from '@/components/admin/AdminMetricsChart';
 import {Button} from '@/components/ui/button';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
+import {Card, CardContent, CardHeader} from '@/components/ui/card';
 import {NativeSelect} from '@/components/ui/native-select';
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import {trpc} from '@/util/trpc';
 import React, {useEffect, useState} from 'react';
 
 const VOLUME: MetricsSeries[] = [
 	{key: 'solves', label: 'Registered solves', color: '#69bfa6'},
 	{key: 'demoSolves', label: 'Demo solves', color: '#83a7f5'},
-	{key: 'imports', label: 'Imported solves', color: '#db9a53'},
 ];
 const IMPORTS: MetricsSeries[] = [
 	{key: 'importsSucceeded', label: 'Successful imports', color: '#69bfa6'},
@@ -21,7 +19,6 @@ const ACTIVITY: MetricsSeries[] = [
 	{key: 'demoSessions', label: 'Active demo sessions', color: '#83a7f5'},
 ];
 const SIGNUPS: MetricsSeries[] = [{key: 'signups', label: 'New accounts', color: '#ad91e3'}];
-const CATEGORY_NAMES = {timer: 'Timer', trainer: 'Trainer', '1v1': '1v1', other: 'Other'};
 
 export default function AdminMetrics() {
 	const [result, setResult] = useState<AdminMetricsResponse | null>(null);
@@ -165,89 +162,6 @@ export default function AdminMetrics() {
 							</p>
 						</div>
 					</div>
-					<details className="border-text/15 rounded-xl border p-4">
-						<summary className="cursor-pointer font-medium">
-							Daily figures · last {range} days
-						</summary>
-						<Table className="mt-4">
-							<TableHeader>
-								<TableRow>
-									{[
-										'Date (UTC)',
-										'Registered solves',
-										'Imported solves',
-										'DAU',
-										'Demo solves',
-										'Demo sessions',
-										'Signups',
-										'Successful imports',
-										'Failed imports',
-										'Pending imports',
-									].map((label) => (
-										<TableHead key={label}>{label}</TableHead>
-									))}
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-								{[...days].reverse().map((day) => (
-									<TableRow key={day.date}>
-										<TableCell className="whitespace-nowrap">
-											{day.date}
-										</TableCell>
-										{[
-											day.solves,
-											day.imports,
-											day.activeUsers,
-											day.demoSolves,
-											day.demoSessions,
-											day.signups,
-											day.importsSucceeded,
-											day.importsFailed,
-											day.importsPending,
-										].map((value, index) => (
-											<TableCell key={index} className="tabular-nums">
-												{value.toLocaleString()}
-											</TableCell>
-										))}
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</details>
-					<Card>
-						<CardHeader>
-							<CardTitle>Solves by puzzle and activity · last 90 days</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<Table>
-								<TableHeader>
-									<TableRow>
-										<TableHead>Puzzle</TableHead>
-										<TableHead>Activity</TableHead>
-										<TableHead className="text-right">Solves</TableHead>
-									</TableRow>
-								</TableHeader>
-								<TableBody>
-									{snapshot.breakdown.map((row) => (
-										<TableRow
-											key={JSON.stringify([row.eventType, row.category])}
-										>
-											<TableCell>{row.eventType || 'Unknown'}</TableCell>
-											<TableCell>{CATEGORY_NAMES[row.category]}</TableCell>
-											<TableCell className="text-right tabular-nums">
-												{row.solves.toLocaleString()}
-											</TableCell>
-										</TableRow>
-									))}
-								</TableBody>
-							</Table>
-							{!snapshot.breakdown.length && (
-								<p className="text-text/60 py-6 text-center">
-									No registered solves in this period.
-								</p>
-							)}
-						</CardContent>
-					</Card>
 				</>
 			)}
 		</div>

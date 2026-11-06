@@ -286,7 +286,7 @@ export const routes: (PageContext | RedirectPath)[] = [
 	routeRedirect('/demo', '/'),
 	routeRedirect('/community/friends', '/community/friends/list'),
 	routeRedirect('/community', '/community/leaderboards'),
-	routeRedirect('/admin', '/admin/reports'),
+	routeRedirect('/admin', '/admin/metrics'),
 ];
 
 export function findPage(pathname: string): PageContext | undefined {
