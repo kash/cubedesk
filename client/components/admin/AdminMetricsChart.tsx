@@ -231,17 +231,19 @@ export default function AdminMetricsChart(props: Props) {
 				<CardTitle>{props.title}</CardTitle>
 			</CardHeader>
 			<CardContent className="px-4 sm:px-6">
-				<div className="text-text/65 mb-3 flex flex-wrap gap-x-4 gap-y-2 text-xs">
-					{props.series.map((item) => (
-						<span key={item.key} className="flex items-center gap-2">
-							<span
-								className="h-0.5 w-3 rounded-full"
-								style={{backgroundColor: item.color}}
-							/>
-							{item.label}
-						</span>
-					))}
-				</div>
+				{props.series.length > 1 && (
+					<div className="text-text/65 mb-3 flex flex-wrap gap-x-4 gap-y-2 text-xs">
+						{props.series.map((item) => (
+							<span key={item.key} className="flex items-center gap-2">
+								<span
+									className="h-0.5 w-3 rounded-full"
+									style={{backgroundColor: item.color}}
+								/>
+								{item.label}
+							</span>
+						))}
+					</div>
+				)}
 				<div className="h-44 w-full sm:h-52">
 					<ParentSize>
 						{({width, height}) => <Plot {...props} width={width} height={height} />}

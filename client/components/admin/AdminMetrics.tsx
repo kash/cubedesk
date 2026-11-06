@@ -6,10 +6,10 @@ import {NativeSelect} from '@/components/ui/native-select';
 import {trpc} from '@/util/trpc';
 import React, {useEffect, useState} from 'react';
 
-const VOLUME: MetricsSeries[] = [
+const REGISTERED_SOLVES: MetricsSeries[] = [
 	{key: 'solves', label: 'Registered solves', color: '#69bfa6'},
-	{key: 'demoSolves', label: 'Demo solves', color: '#83a7f5'},
 ];
+const DEMO_SOLVES: MetricsSeries[] = [{key: 'demoSolves', label: 'Demo solves', color: '#83a7f5'}];
 const IMPORTS: MetricsSeries[] = [
 	{key: 'importsSucceeded', label: 'Successful imports', color: '#69bfa6'},
 	{key: 'importsFailed', label: 'Failed imports', color: '#e78080'},
@@ -22,7 +22,7 @@ const SIGNUPS: MetricsSeries[] = [{key: 'signups', label: 'New accounts', color:
 
 export default function AdminMetrics() {
 	const [result, setResult] = useState<AdminMetricsResponse | null>(null);
-	const [range, setRange] = useState(30);
+	const [range, setRange] = useState(90);
 	const [revision, setRevision] = useState(0);
 	useEffect(() => {
 		let cancelled = false;
@@ -141,10 +141,13 @@ export default function AdminMetrics() {
 						</div>
 					</div>
 					<div className="grid gap-4 lg:grid-cols-2">
-						<AdminMetricsChart title="Solve volume" days={days} series={VOLUME} />
+						<AdminMetricsChart
+							title="Registered solves"
+							days={days}
+							series={REGISTERED_SOLVES}
+						/>
+						<AdminMetricsChart title="Demo solves" days={days} series={DEMO_SOLVES} />
 						<AdminMetricsChart title="Daily activity" days={days} series={ACTIVITY} />
-					</div>
-					<div className="grid gap-4 lg:grid-cols-2">
 						<AdminMetricsChart title="Signups" days={days} series={SIGNUPS} />
 						<div className="space-y-2">
 							<AdminMetricsChart
