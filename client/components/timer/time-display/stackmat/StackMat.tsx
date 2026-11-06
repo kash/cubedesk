@@ -1,65 +1,26 @@
-import {endTimer, startTimer} from '@/components/timer/helpers/events';
+import {StackMatStatus} from '@/components/timer/time-display/stackmat/useStackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
-import {ITimerContext, useTimerContext} from '@/components/timer/Timer';
-import {useSettings} from '@/util/hooks/useSettings';
-import Stackmat from '@/util/vendor/stackmat';
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 
-export default function StackMat() {
-	const stackMatId = useSettings('stackmat_id');
+interface Props {
+	status: StackMatStatus;
+}
 
-	const context = useTimerContext();
-	const localContext = useRef<ITimerContext>(context);
+export default function StackMat({status}: Props) {
+	if (status === 'off') {
+		return (
+			<StartInstructions>
+				Connect and turn on <span>StackMat</span>
+			</StartInstructions>
+		);
+	}
 
-	const timerInitCounter = useRef(0);
-	const [stackMatRetryCount, setStackMatRetryCount] = useState(0);
-	const stackMat = useRef<Stackmat>(null);
-	const stackMatStarted = useRef(false);
-
-	useEffect(() => {
-		localContext.current = context;
-	}, [context]);
-
-	// Initialize StackMat
-	useEffect(() => {
-		if (!stackMatId) {
-			return;
-		}
-
-		navigator.mediaDevices
-			.enumerateDevices()
-			.then(initStackMat)
-			.catch((e) => {
-				console.error(e);
-				stackMat.current = null;
-				if (stackMatRetryCount < 5) {
-					setTimeout(() => {
-						setStackMatRetryCount(stackMatRetryCount + 1);
-					}, 1000);
-				}
-			});
-	}, [stackMatRetryCount]);
-
-	function initStackMat() {
-		if (stackMat.current) {
-			return;
-		}
-
-		stackMat.current = new Stackmat();
-		return stackMat.current.init('', stackMatId, false, (timer) => {
-			if (timerInitCounter.current < 2) {
-				timerInitCounter.current++;
-				return;
-			}
-
-			if (timer.running && !stackMatStarted.current) {
-				stackMatStarted.current = true;
-				startTimer();
-			} else if (!timer.running && stackMatStarted.current) {
-				stackMatStarted.current = false;
-				endTimer(localContext.current, timer.time_milli);
-			}
-		});
+	if (status === 'reset') {
+		return (
+			<StartInstructions>
+				Reset <span>StackMat</span> to start
+			</StartInstructions>
+		);
 	}
 
 	return (

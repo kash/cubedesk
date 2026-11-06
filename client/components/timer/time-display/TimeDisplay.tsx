@@ -7,6 +7,7 @@ import {
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import Manual from '@/components/timer/time-display/Manual';
 import StackMat from '@/components/timer/time-display/stackmat/StackMat';
+import {useStackMat} from '@/components/timer/time-display/stackmat/useStackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
 import {useTimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
@@ -47,6 +48,8 @@ export default function TimeDisplay() {
 	const timerType = useSettings('timer_type');
 	const stackMatOn = timerType === 'stackmat';
 	const zeroOutTimeAfterSolve = useSettings('zero_out_time_after_solve');
+	const stackMatStatus = useStackMat(stackMatOn && !manualEntry && !hideTime);
+	const stackMatIdle = stackMatOn && !timeStartedAt;
 
 	const mobileMode = useGeneral('mobile_mode');
 	const shortLandscape = useGeneral('short_landscape');
@@ -119,6 +122,8 @@ export default function TimeDisplay() {
 		} else {
 			timeStr = String(inspectionTimer - 2);
 		}
+	} else if (stackMatIdle && stackMatStatus === 'off') {
+		timeStr = '--:--';
 	} else {
 		timeStr = getTimeString(time);
 	}
@@ -132,7 +137,7 @@ export default function TimeDisplay() {
 	}
 
 	if (stackMatOn) {
-		bottomInfo = <StackMat />;
+		bottomInfo = <StackMat status={stackMatStatus} />;
 	} else if (smartCubeSelected(context)) {
 		if (context.smartCubePuzzle && smartCubeMismatched(context)) {
 			bottomInfo = (
@@ -180,6 +185,8 @@ export default function TimeDisplay() {
 						// Trims the box to the digits so its center is theirs, for whichever font and size. The padding gives
 						// back the height the trim takes away
 						'py-[0.4em] [text-box:trim-both_cap_alphabetic]': hangBottomInfo,
+						'!text-warning': stackMatIdle && stackMatStatus === 'hands',
+						'!text-success': stackMatIdle && stackMatStatus === 'ready',
 					},
 					mobileMode && 'select-none',
 					inInspection && 'text-text/60',
