@@ -26,7 +26,7 @@ suite('admin metrics PostgreSQL integration', () => {
 		await db.$executeRawUnsafe(`CREATE TABLE solve (
 			id text PRIMARY KEY, user_id text NOT NULL, created_at timestamp(3) NOT NULL,
 			bulk boolean NOT NULL DEFAULT false, event_type text, match_id text,
-			trainer_name text, from_timer boolean NOT NULL DEFAULT true
+			trainer_name text, from_timer boolean NOT NULL DEFAULT true, training_session_id text
 		)`);
 		await db.$executeRawUnsafe(`CREATE TABLE import_attempt (
 			id text PRIMARY KEY, status text NOT NULL, started_at timestamp(3) NOT NULL, completed_at timestamp(3)
@@ -48,7 +48,8 @@ suite('admin metrics PostgreSQL integration', () => {
 				i % 5 = 0, CASE WHEN i % 7 = 0 THEN NULL WHEN i % 3 = 0 THEN '222' ELSE '333' END,
 				CASE WHEN i % 11 = 0 THEN 'match' END,
 				CASE WHEN i % 3 = 0 THEN 'OLL' ELSE '' END,
-				i % 2 = 0
+				i % 2 = 0,
+				CASE WHEN i % 4 = 1 THEN 'training-' || (i % 8)::text END
 			FROM generate_series(1, 300) i CROSS JOIN LATERAL (
 				SELECT (ARRAY[
 					'2020-01-01', '2026-06-09 23:59:59.999', '2026-06-10',
@@ -118,7 +119,7 @@ suite('admin metrics PostgreSQL integration', () => {
 		for (const day of snapshot.days) {
 			const solves = dailySolves.find((row) => row.date === day.date);
 			const demos = dailyDemos.find((row) => row.date === day.date);
-			expect(day).toEqual({
+			expect(day).toMatchObject({
 				date: day.date,
 				solves: Number(solves?.solves ?? 0),
 				imports: Number(solves?.imports ?? 0),
@@ -131,17 +132,22 @@ suite('admin metrics PostgreSQL integration', () => {
 				signups: Number(signups.find((row) => row.date === day.date)?.count ?? 0),
 			});
 		}
-		const breakdown = await db.$queryRaw<
-			{eventType: string | null; category: string; solves: bigint}[]
+		const trainer = await db.$queryRaw<
+			{eventType: string | null; solves: bigint; users: bigint}[]
 		>`
-			SELECT event_type AS "eventType", CASE WHEN match_id IS NOT NULL THEN '1v1'
-			WHEN NULLIF(trainer_name, '') IS NOT NULL THEN 'trainer'
-			WHEN from_timer THEN 'timer' ELSE 'other' END AS category, count(*) AS solves
-			FROM solve WHERE NOT bulk AND created_at >= timestamp '2026-06-10'
-			AND created_at < ${cutoff} GROUP BY 1, 2`;
-		expect(snapshot.breakdown).toHaveLength(breakdown.length);
-		expect(snapshot.breakdown).toEqual(
-			expect.arrayContaining(breakdown.map((row) => ({...row, solves: Number(row.solves)}))),
+			SELECT event_type AS "eventType", count(*) AS solves, count(DISTINCT user_id) AS users
+			FROM solve WHERE NOT bulk AND match_id IS NULL
+			AND (NULLIF(trainer_name, '') IS NOT NULL OR NULLIF(training_session_id, '') IS NOT NULL)
+			AND created_at >= timestamp '2026-06-10' AND created_at < ${cutoff} GROUP BY 1`;
+		expect(snapshot.trainer.puzzles).toHaveLength(trainer.length);
+		expect(snapshot.trainer.puzzles).toEqual(
+			expect.arrayContaining(
+				trainer.map((row) => ({
+					eventType: row.eventType,
+					solves: Number(row.solves),
+					users: Number(row.users),
+				})),
+			),
 		);
 	}, 30000);
 

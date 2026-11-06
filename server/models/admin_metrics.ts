@@ -46,18 +46,22 @@ export function adminMetricsRangeQueries(start: Date, end: Date) {
 		accountTotal: Prisma.sql`SELECT count(*) AS count FROM user_account
 			WHERE created_at >= ${start} AND created_at < ${end}`,
 		// Reduce solves to user/puzzle/activity groups once. The same rows supply
-		// volume, DAU/WAU/MAU and the breakdown, without three overlapping scans
+		// volume, DAU/WAU/MAU and trainer usage, without overlapping scans
 		// or DISTINCT sorts over 90 days of raw solves. Imports need only one group.
-		solves: Prisma.sql`SELECT bulk,
-			CASE WHEN NOT bulk THEN user_id END AS "userId",
-			CASE WHEN NOT bulk THEN event_type END AS "eventType",
-			CASE WHEN bulk THEN NULL
-				WHEN match_id IS NOT NULL THEN '1v1'
-				WHEN NULLIF(trainer_name, '') IS NOT NULL THEN 'trainer'
-				WHEN from_timer THEN 'timer' ELSE 'other' END AS category,
+		solves: Prisma.sql`SELECT bulk, "userId", category,
+			CASE WHEN category = 'trainer' THEN event_type END AS "eventType",
+			CASE WHEN category = 'trainer' THEN session END AS session,
 			count(*) AS solves
-			FROM solve WHERE created_at >= ${start} AND created_at < ${end}
-			GROUP BY 1, 2, 3, 4`,
+			FROM (SELECT bulk, event_type,
+				CASE WHEN NOT bulk THEN user_id END AS "userId",
+				NULLIF(training_session_id, '') AS session,
+				CASE WHEN bulk THEN NULL
+					WHEN match_id IS NOT NULL THEN '1v1'
+					WHEN NULLIF(trainer_name, '') IS NOT NULL
+						OR NULLIF(training_session_id, '') IS NOT NULL THEN 'trainer'
+					WHEN from_timer THEN 'timer' ELSE 'other' END AS category
+				FROM solve WHERE created_at >= ${start} AND created_at < ${end}) AS grouped
+			GROUP BY 1, 2, 3, 4, 5`,
 		demos: Prisma.sql`SELECT NULLIF(demo_session_id, '') AS session, count(*) AS solves
 			FROM demo_solve WHERE created_at >= ${start} AND created_at < ${end}
 			GROUP BY 1`,
@@ -83,8 +87,18 @@ type SolveGroup = {
 	userId: string | null;
 	eventType: string | null;
 	category: SolveCategory | null;
+	session: string | null;
 	solves: bigint;
 };
+
+export const TRAINER_SESSION_BUCKETS = [
+	{label: '1', min: 1},
+	{label: '2–4', min: 2},
+	{label: '5–9', min: 5},
+	{label: '10–24', min: 10},
+	{label: '25–49', min: 25},
+	{label: '50+', min: 50},
+];
 
 type Totals = {registered: bigint; imported: bigint; count: bigint};
 
@@ -228,7 +242,10 @@ export async function buildAdminMetrics(
 	const {start, week, month} = metricsWindow(cutoff);
 	const weeklyUsers = new Set<string>();
 	const monthlyUsers = new Set<string>();
-	const breakdown = new Map<string, AdminMetricsSnapshot['breakdown'][number]>();
+	const weeklyTrainerUsers = new Set<string>();
+	const monthlyTrainerUsers = new Set<string>();
+	const trainerSessions = new Map<string, number>();
+	const trainerPuzzles = new Map<string, {solves: number; users: Set<string>}>();
 	const days: AdminMetricsDay[] = [];
 	for (let i = 0; i < METRICS_HISTORY_DAYS; i++) {
 		const from = new Date(start.getTime() + i * DAY_MS);
@@ -244,10 +261,15 @@ export async function buildAdminMetrics(
 			demoSolves: 0,
 			demoSessions: 0,
 			signups: 0,
+			trainerSolves: 0,
+			trainerUsers: 0,
+			trainerSessions: 0,
 		};
 		// Keep only one day's identities, plus distinct users for the rolling
 		// windows. Dedupe across split batches, puzzles, and activities as well.
 		const dailyUsers = new Set<string>();
+		const dailyTrainerUsers = new Set<string>();
+		const dailyTrainerSessions = new Set<string>();
 		for await (const rows of rangeQuery<SolveGroup>('solves', from, end)) {
 			for (const row of rows) {
 				if (row.bulk) {
@@ -260,14 +282,33 @@ export async function buildAdminMetrics(
 					if (from >= week) weeklyUsers.add(row.userId);
 					if (from >= month) monthlyUsers.add(row.userId);
 				}
-				const category = row.category!;
-				const key = JSON.stringify([row.eventType, category]);
-				const group = breakdown.get(key) ?? {eventType: row.eventType, category, solves: 0};
-				group.solves = count(group.solves + count(row.solves));
-				breakdown.set(key, group);
+				if (row.category !== 'trainer') continue;
+				const solveCount = count(row.solves);
+				day.trainerSolves = count(day.trainerSolves + solveCount);
+				const puzzle = trainerPuzzles.get(row.eventType ?? '') ?? {
+					solves: 0,
+					users: new Set<string>(),
+				};
+				puzzle.solves = count(puzzle.solves + solveCount);
+				trainerPuzzles.set(row.eventType ?? '', puzzle);
+				if (row.userId !== null) {
+					dailyTrainerUsers.add(row.userId);
+					puzzle.users.add(row.userId);
+					if (from >= week) weeklyTrainerUsers.add(row.userId);
+					if (from >= month) monthlyTrainerUsers.add(row.userId);
+				}
+				if (row.session !== null) {
+					dailyTrainerSessions.add(row.session);
+					trainerSessions.set(
+						row.session,
+						count((trainerSessions.get(row.session) ?? 0) + solveCount),
+					);
+				}
 			}
 		}
 		day.activeUsers = dailyUsers.size;
+		day.trainerUsers = dailyTrainerUsers.size;
+		day.trainerSessions = dailyTrainerSessions.size;
 		const demoSessions = new Set<string>();
 		for await (const rows of rangeQuery<{session: string | null; solves: bigint}>(
 			'demos',
@@ -299,7 +340,7 @@ export async function buildAdminMetrics(
 	}
 	assertActive();
 	return {
-		version: 3,
+		version: 4,
 		cutoff: cutoff.toISOString(),
 		completedAt: new Date().toISOString(),
 		totals: {
@@ -314,17 +355,22 @@ export async function buildAdminMetrics(
 			monthly: monthlyUsers.size,
 		},
 		days,
-		breakdown: [...breakdown.values()].sort(
-			(a, b) =>
-				b.solves - a.solves ||
-				(a.eventType === b.eventType
-					? 0
-					: a.eventType === null
-						? 1
-						: b.eventType === null
-							? -1
-							: a.eventType.localeCompare(b.eventType)) ||
-				a.category.localeCompare(b.category),
-		),
+		trainer: {
+			users: {weekly: weeklyTrainerUsers.size, monthly: monthlyTrainerUsers.size},
+			sessionLengths: TRAINER_SESSION_BUCKETS.map((bucket, index) => {
+				const next = TRAINER_SESSION_BUCKETS[index + 1]?.min ?? Infinity;
+				let sessions = 0;
+				for (const length of trainerSessions.values())
+					if (length >= bucket.min && length < next) sessions++;
+				return {label: bucket.label, sessions};
+			}),
+			puzzles: [...trainerPuzzles]
+				.map(([eventType, puzzle]) => ({
+					eventType: eventType || null,
+					solves: puzzle.solves,
+					users: puzzle.users.size,
+				}))
+				.sort((a, b) => b.solves - a.solves || b.users - a.users),
+		},
 	};
 }

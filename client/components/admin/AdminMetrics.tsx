@@ -1,8 +1,9 @@
 import type {AdminMetricsResponse} from '@/types/admin-metrics';
 import AdminMetricsChart, {type MetricsSeries} from '@/components/admin/AdminMetricsChart';
 import {Button} from '@/components/ui/button';
-import {Card, CardContent, CardHeader} from '@/components/ui/card';
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {NativeSelect} from '@/components/ui/native-select';
+import {getEventTypeName} from '@/util/cubes/util';
 import {trpc} from '@/util/trpc';
 import React, {useEffect, useState} from 'react';
 
@@ -19,6 +20,71 @@ const ACTIVITY: MetricsSeries[] = [
 	{key: 'demoSessions', label: 'Active demo sessions', color: '#83a7f5'},
 ];
 const SIGNUPS: MetricsSeries[] = [{key: 'signups', label: 'New accounts', color: '#ad91e3'}];
+const TRAINER_SOLVES: MetricsSeries[] = [
+	{key: 'trainerSolves', label: 'Trainer solves', color: '#e2b65c'},
+];
+const TRAINER_USAGE: MetricsSeries[] = [
+	{key: 'trainerUsers', label: 'Trainer users', color: '#e2b65c'},
+	{key: 'trainerSessions', label: 'Training sessions', color: '#83a7f5'},
+];
+
+function StatCards({cards}: {cards: [string, string | number][]}) {
+	return (
+		<div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
+			{cards.map(([label, value]) => (
+				<Card key={label} className="gap-1 py-3 sm:gap-2 sm:py-5">
+					<CardHeader className="px-3 sm:px-6">
+						<h3 className="text-text/60 text-xs sm:text-sm">{label}</h3>
+					</CardHeader>
+					<CardContent className="px-3 text-2xl font-semibold tabular-nums sm:px-6 sm:text-3xl">
+						{typeof value === 'number' ? value.toLocaleString() : value}
+					</CardContent>
+				</Card>
+			))}
+		</div>
+	);
+}
+
+function BarList(props: {
+	title: string;
+	note: string;
+	empty: string;
+	rows: {label: string; value: number; detail?: string}[];
+}) {
+	const max = Math.max(1, ...props.rows.map((row) => row.value));
+	return (
+		<Card className="min-w-0 gap-3 py-4 sm:gap-4 sm:py-6">
+			<CardHeader className="px-4 sm:px-6">
+				<CardTitle>{props.title}</CardTitle>
+				<p className="text-text/50 text-xs">{props.note}</p>
+			</CardHeader>
+			<CardContent className="space-y-2.5 px-4 sm:px-6">
+				{props.rows.map((row) => (
+					<div key={row.label} className="space-y-1">
+						<div className="flex items-baseline justify-between gap-3 text-sm">
+							<span className="truncate">{row.label}</span>
+							<span className="text-text/60 shrink-0 text-xs tabular-nums">
+								<span className="text-text text-sm font-medium">
+									{row.value.toLocaleString()}
+								</span>
+								{row.detail && ` · ${row.detail}`}
+							</span>
+						</div>
+						<div className="bg-text/10 h-1.5 overflow-hidden rounded-full">
+							<div
+								className="h-full rounded-full bg-[#e2b65c]"
+								style={{width: `${(row.value / max) * 100}%`}}
+							/>
+						</div>
+					</div>
+				))}
+				{!props.rows.length && (
+					<p className="text-text/60 py-6 text-center text-sm">{props.empty}</p>
+				)}
+			</CardContent>
+		</Card>
+	);
+}
 
 export default function AdminMetrics() {
 	const [result, setResult] = useState<AdminMetricsResponse | null>(null);
@@ -49,6 +115,24 @@ export default function AdminMetrics() {
 	const snapshot = result?.status === 'ready' ? result.snapshot : null;
 	const days = snapshot?.days.slice(-range) ?? [];
 	const totals = snapshot?.totals;
+	const trainer = snapshot?.trainer;
+	const monthlyTrainerSolves = snapshot?.days
+		.slice(-30)
+		.reduce((sum, day) => sum + day.trainerSolves, 0);
+	const trainerCards: [string, string | number][] =
+		snapshot && trainer
+			? [
+					['Users · 7 days', trainer.users.weekly],
+					['Users · 30 days', trainer.users.monthly],
+					[
+						'Share of MAU',
+						snapshot.activeUsers.monthly
+							? `${Math.round((trainer.users.monthly / snapshot.activeUsers.monthly) * 100)}%`
+							: '—',
+					],
+					['Solves · 30 days', monthlyTrainerSolves ?? 0],
+				]
+			: [];
 	const cards: [string, number][] =
 		snapshot && totals
 			? [
@@ -108,18 +192,7 @@ export default function AdminMetrics() {
 			)}
 			{snapshot && (
 				<>
-					<div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
-						{cards.map(([label, value]) => (
-							<Card key={label} className="gap-1 py-3 sm:gap-2 sm:py-5">
-								<CardHeader className="px-3 sm:px-6">
-									<h3 className="text-text/60 text-xs sm:text-sm">{label}</h3>
-								</CardHeader>
-								<CardContent className="px-3 text-2xl font-semibold tabular-nums sm:px-6 sm:text-3xl">
-									{value.toLocaleString()}
-								</CardContent>
-							</Card>
-						))}
-					</div>
+					<StatCards cards={cards} />
 					<div className="flex flex-wrap items-center justify-between gap-3">
 						<div>
 							<h3 className="text-base font-semibold whitespace-nowrap">
@@ -165,6 +238,52 @@ export default function AdminMetrics() {
 							</p>
 						</div>
 					</div>
+					{trainer && (
+						<section className="space-y-4 pt-4" aria-labelledby="trainer-metrics">
+							<h3 id="trainer-metrics" className="text-base font-semibold">
+								Trainer
+							</h3>
+							<StatCards cards={trainerCards} />
+							<div className="grid gap-4 lg:grid-cols-2">
+								<AdminMetricsChart
+									title="Trainer solves"
+									days={days}
+									series={TRAINER_SOLVES}
+								/>
+								<AdminMetricsChart
+									title="Trainer usage"
+									days={days}
+									series={TRAINER_USAGE}
+								/>
+								<BarList
+									title="Session length"
+									note="Training sessions by number of solves · last 90 days"
+									empty="No training sessions in this period."
+									rows={
+										trainer.sessionLengths.some((bucket) => bucket.sessions)
+											? trainer.sessionLengths.map((bucket) => ({
+													label: `${bucket.label} ${bucket.label === '1' ? 'solve' : 'solves'}`,
+													value: bucket.sessions,
+												}))
+											: []
+									}
+								/>
+								<BarList
+									title="Trainer by puzzle"
+									note="Solves and users · last 90 days"
+									empty="No trainer solves in this period."
+									rows={trainer.puzzles.map((puzzle) => ({
+										label: puzzle.eventType
+											? (getEventTypeName(puzzle.eventType) ??
+												puzzle.eventType)
+											: 'Unknown',
+										value: puzzle.solves,
+										detail: `${puzzle.users.toLocaleString()} ${puzzle.users === 1 ? 'user' : 'users'}`,
+									}))}
+								/>
+							</div>
+						</section>
+					)}
 				</>
 			)}
 		</div>
