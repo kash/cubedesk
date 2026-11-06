@@ -211,7 +211,9 @@ export default function Timer(props: TimerProps) {
 		'-mt-[10vh]': context.focusMode && !mobileMode,
 	});
 	const mainTimeClass = classNames({
-		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': isSmart || isSmartTimer,
+		'flex w-[95%] max-w-[580px] flex-row items-center justify-between':
+			(isSmart || isSmartTimer) && !mobileMode,
+		'flex w-full flex-col items-center gap-2': (isSmart || isSmartTimer) && mobileMode,
 	});
 
 	const timeBar = (
@@ -290,7 +292,7 @@ export default function Timer(props: TimerProps) {
 								timerStarted && mobileMode && '!grid-cols-[1fr]',
 								{
 									// Fill the space below the header instead of a fixed viewport height
-									'!h-auto min-h-0 flex-1': mobileMode,
+									'!h-auto min-h-0 flex-1 grid-cols-[minmax(0,1fr)]': mobileMode,
 									'short:h-[calc(100dvh_-_66px)]': sideLayout,
 								},
 							)}

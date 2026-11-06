@@ -210,7 +210,7 @@ export default function TimeDisplay() {
 		<div
 			className={classNames(
 				'relative z-[1] flex w-full flex-col items-center justify-center p-0',
-				(smartCubeSelected(context) || smartTimerSelected()) && 'w-1/2',
+				(smartCubeSelected(context) || smartTimerSelected()) && !mobileMode && 'w-1/2',
 				mobileMode && 'select-none',
 				context.focusMode && !mobileMode && 'h-screen !pt-0',
 			)}
