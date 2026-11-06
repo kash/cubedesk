@@ -36,7 +36,7 @@ export default function MobileNav() {
 					handle={<AvatarImage small user={me} profile={me.profile} />}
 					options={[
 						{text: 'Account', link: '/account/personal-info'},
-						{text: 'Admin', link: '/admin/reports', hidden: !me.admin},
+						{text: 'Admin', link: '/admin/metrics', hidden: !me.admin},
 						{text: 'Profile', link: `/user/${me.username}`},
 						{text: 'Log out', onClick: logOut},
 					]}

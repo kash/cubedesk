@@ -13,6 +13,10 @@ const ConnectWcaAccount = lazyPage(
 	() => import('@/components/docs/pages/ConnectWcaAccount'),
 	'client/components/docs/pages/ConnectWcaAccount',
 );
+const CubeDeskVsCsTimer = lazyPage(
+	() => import('@/components/docs/pages/CubeDeskVsCsTimer'),
+	'client/components/docs/pages/CubeDeskVsCsTimer',
+);
 const MigrateFromCsTimer = lazyPage(
 	() => import('@/components/docs/pages/MigrateFromCsTimer'),
 	'client/components/docs/pages/MigrateFromCsTimer',
@@ -80,6 +84,14 @@ export const DOC_SECTIONS: DocSection[] = [
 				description:
 					'Every smart cube and timer that works with CubeDesk: GAN, MoYu, QiYi, GoCube, and Giiker Bluetooth cubes, plus GAN smart timers and StackMat timers.',
 				component: SupportedDevices,
+			},
+			{
+				path: '/cubedesk-vs-cstimer',
+				navTitle: 'CubeDesk vs csTimer',
+				title: "CubeDesk vs csTimer: Which Rubik's Cube Timer Should You Use?",
+				description:
+					'An honest comparison of CubeDesk and csTimer, two free speedcubing timers. Compare design, cloud sync, stats, algorithm trainers, 1v1 racing, smart cube support, puzzles, and offline use.',
+				component: CubeDeskVsCsTimer,
 			},
 		],
 	},
