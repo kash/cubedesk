@@ -163,13 +163,14 @@ export default function TimeDisplay() {
 
 	// The smart timer visual is centered on the time, so what's under the time can't count toward its height
 	const hangBottomInfo = smartTimerSelected();
+	const besideSmartDevice = smartCubeSelected(context) || smartTimerSelected();
 
 	let body: ReactNode = (
 		<>
 			<h1
 				style={{
 					fontSize: shortLandscape
-						? `min(${timerTimeSize}px, 9.5vw)`
+						? `min(${timerTimeSize}px, 9.5vw${besideSmartDevice ? ', 16cqw' : ''})`
 						: timerTimeSize + 'px',
 					fontFamily: timerFontFamily + ', monospace',
 				}}

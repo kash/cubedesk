@@ -429,9 +429,9 @@ export default function SmartCube() {
 			<SmartDevicePanel
 				visual={
 					<div
-						className={cn('short:[zoom:0.3] mt-[-8%] mb-[-8%]', {
+						className={cn('short:[zoom:0.25] mt-[-8%] mb-[-8%]', {
 							'[zoom:0.4]': !mobileMode,
-							'[zoom:0.32]': mobileMode,
+							'[zoom:0.26]': mobileMode,
 						})}
 					>
 						<canvas

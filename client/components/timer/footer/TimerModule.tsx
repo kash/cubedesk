@@ -191,7 +191,7 @@ function TimerModule(props: Props) {
 		'p-2.5',
 	];
 	if (mobileMode) {
-		wrapperClass.push('!h-[256px]', '!overflow-visible');
+		wrapperClass.push('!overflow-visible');
 		if (index > 0) {
 			wrapperClass.push('hidden');
 		}
