@@ -50,9 +50,14 @@ it('keeps empty UTC days and runs only one bounded, read-only query at a time', 
 		demoSolves: 0,
 		demoSessions: 0,
 		signups: 0,
+		trainerSolves: 0,
+		trainerUsers: 0,
+		trainerSessions: 0,
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 0, weekly: 0, monthly: 0});
-	expect(snapshot.breakdown).toEqual([]);
+	expect(snapshot.trainer.users).toEqual({weekly: 0, monthly: 0});
+	expect(snapshot.trainer.puzzles).toEqual([]);
+	expect(snapshot.trainer.sessionLengths.every((bucket) => bucket.sessions === 0)).toBe(true);
 	const timeouts = transaction.mock.calls.map(([, options]) => options);
 	expect(timeouts).toContainEqual({timeout: 35_000, maxWait: 5_000});
 	expect(timeouts).toContainEqual({timeout: 615_000, maxWait: 5_000});
@@ -81,8 +86,9 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 				{
 					bulk: false,
 					userId: 'same-user',
-					eventType: '333',
+					eventType: null,
 					category: 'timer',
+					session: null,
 					solves: BigInt(2),
 				},
 				{
@@ -90,9 +96,17 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 					userId: 'same-user',
 					eventType: '222',
 					category: 'trainer',
+					session: 'same-training',
 					solves: BigInt(1),
 				},
-				{bulk: true, userId: null, eventType: null, category: null, solves: BigInt(5)},
+				{
+					bulk: true,
+					userId: null,
+					eventType: null,
+					category: null,
+					session: null,
+					solves: BigInt(5),
+				},
 			];
 		}
 		if (sql.text.includes('demo_session_id')) {
@@ -118,12 +132,17 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 		activeUsers: 1,
 		demoSolves: 6,
 		demoSessions: 1,
+		trainerSolves: 2,
+		trainerUsers: 1,
+		trainerSessions: 1,
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 1, weekly: 1, monthly: 1});
-	expect(snapshot.breakdown).toEqual([
-		{eventType: '333', category: 'timer', solves: 4},
-		{eventType: '222', category: 'trainer', solves: 2},
-	]);
+	expect(snapshot.trainer.users).toEqual({weekly: 1, monthly: 1});
+	expect(snapshot.trainer.puzzles).toEqual([{eventType: '222', solves: 2, users: 1}]);
+	expect(snapshot.trainer.sessionLengths.find((bucket) => bucket.label === '2–4')).toEqual({
+		label: '2–4',
+		sessions: 1,
+	});
 });
 
 it('falls back from a lifetime timeout to exact indexed date ranges', async () => {
@@ -177,7 +196,7 @@ it('counts import operations separately from imported solves, grouped by start d
 		return empty(sql);
 	});
 	const snapshot = await buildAdminMetrics(cutoff, db);
-	expect(snapshot.version).toBe(3);
+	expect(snapshot.version).toBe(4);
 	expect(snapshot.days.find((day) => day.date === '2026-09-06')).toMatchObject({
 		imports: 0,
 		importsSucceeded: 2,
