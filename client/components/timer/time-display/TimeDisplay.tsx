@@ -7,7 +7,7 @@ import {
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import Manual from '@/components/timer/time-display/Manual';
 import StackMat from '@/components/timer/time-display/stackmat/StackMat';
-import {useStackMat} from '@/components/timer/time-display/stackmat/useStackMat';
+import {stackMatConnected, useStackMat} from '@/components/timer/time-display/stackmat/useStackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
 import {useTimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
@@ -122,7 +122,7 @@ export default function TimeDisplay() {
 		} else {
 			timeStr = String(inspectionTimer - 2);
 		}
-	} else if (stackMatIdle && stackMatStatus === 'off') {
+	} else if (stackMatIdle && !stackMatConnected(stackMatStatus)) {
 		timeStr = '--:--';
 	} else {
 		timeStr = getTimeString(time);
