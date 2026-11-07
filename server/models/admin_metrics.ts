@@ -12,8 +12,9 @@ export function metricsWindow(cutoff: Date) {
 	today.setUTCHours(0, 0, 0, 0);
 	return {
 		today,
-		week: new Date(today.getTime() - 6 * DAY_MS),
-		month: new Date(today.getTime() - 29 * DAY_MS),
+		yesterday: new Date(today.getTime() - DAY_MS),
+		week: new Date(today.getTime() - 7 * DAY_MS),
+		month: new Date(today.getTime() - 30 * DAY_MS),
 		start: new Date(today.getTime() - (METRICS_HISTORY_DAYS - 1) * DAY_MS),
 	};
 }
@@ -228,7 +229,8 @@ export async function buildAdminMetrics(
 	const solves = await solveTotals();
 	const demo = await total('demoTotal');
 	const accounts = await total('accountTotal');
-	const {start, week, month} = metricsWindow(cutoff);
+	const {start, today, yesterday, week, month} = metricsWindow(cutoff);
+	let dailyActive = 0;
 	const weeklyUsers = new Set<string>();
 	const monthlyUsers = new Set<string>();
 	const days: AdminMetricsDay[] = [];
@@ -260,11 +262,7 @@ export async function buildAdminMetrics(
 					continue;
 				}
 				day.solves = count(day.solves + count(row.solves));
-				if (row.userId !== null) {
-					dailyUsers.add(row.userId);
-					if (from >= week) weeklyUsers.add(row.userId);
-					if (from >= month) monthlyUsers.add(row.userId);
-				}
+				if (row.userId !== null) dailyUsers.add(row.userId);
 				if (row.category !== 'trainer') continue;
 				day.trainerSolves = count(day.trainerSolves + count(row.solves));
 				if (row.session !== null) dailyTrainerSessions.add(row.session);
@@ -284,6 +282,17 @@ export async function buildAdminMetrics(
 			}
 		}
 		day.demoSessions = demoSessions.size;
+		if (from < today) {
+			const active = [
+				...dailyUsers,
+				...[...demoSessions].map((session) => `demo:${session}`),
+			];
+			if (from >= yesterday) dailyActive = active.length;
+			for (const id of active) {
+				if (from >= week) weeklyUsers.add(id);
+				if (from >= month) monthlyUsers.add(id);
+			}
+		}
 		days.push(day);
 	}
 	const signupDays = await query<{date: string; count: bigint}>('signupDays', queries.signupDays);
@@ -313,7 +322,7 @@ export async function buildAdminMetrics(
 			accounts: count(accounts.count),
 		},
 		activeUsers: {
-			daily: days[days.length - 1].activeUsers,
+			daily: dailyActive,
 			weekly: weeklyUsers.size,
 			monthly: monthlyUsers.size,
 		},

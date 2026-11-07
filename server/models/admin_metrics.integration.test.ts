@@ -93,10 +93,13 @@ suite('admin metrics PostgreSQL integration', () => {
 			accounts: Number(totals.accounts),
 		});
 		const [active] = await db.$queryRaw<{daily: bigint; weekly: bigint; monthly: bigint}[]>`
-			SELECT count(DISTINCT user_id) FILTER (WHERE created_at >= timestamp '2026-09-07') AS daily,
-			count(DISTINCT user_id) FILTER (WHERE created_at >= timestamp '2026-09-01') AS weekly,
-			count(DISTINCT user_id) AS monthly FROM solve WHERE NOT bulk
-			AND created_at >= timestamp '2026-08-09' AND created_at < ${cutoff}`;
+			SELECT count(DISTINCT id) FILTER (WHERE created_at >= timestamp '2026-09-06') AS daily,
+			count(DISTINCT id) FILTER (WHERE created_at >= timestamp '2026-08-31') AS weekly,
+			count(DISTINCT id) AS monthly FROM (
+				SELECT user_id AS id, created_at FROM solve WHERE NOT bulk
+				UNION ALL SELECT 'demo:' || demo_session_id, created_at FROM demo_solve
+				WHERE demo_session_id <> ''
+			) active WHERE created_at >= timestamp '2026-08-08' AND created_at < timestamp '2026-09-07'`;
 		expect(snapshot.activeUsers).toEqual({
 			daily: Number(active.daily),
 			weekly: Number(active.weekly),
@@ -156,7 +159,7 @@ suite('admin metrics PostgreSQL integration', () => {
 			demoSessions: 0,
 			signups: 0,
 		});
-		expect(snapshot.activeUsers.daily).toBe(0);
+		expect(snapshot.activeUsers.daily).toBeGreaterThan(0);
 		const [totals] = await db.$queryRaw<{registered: bigint; imported: bigint}[]>`
 			SELECT count(*) FILTER (WHERE NOT bulk) AS registered, count(*) FILTER (WHERE bulk) AS imported
 			FROM solve WHERE created_at < ${midnight}`;

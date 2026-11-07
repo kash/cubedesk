@@ -85,7 +85,7 @@ export default function AdminMetrics() {
 					['Imported solves', totals.importedSolves],
 					['Demo solves', totals.demoSolves],
 					['Registered accounts', totals.accounts],
-					['DAU · today', snapshot.activeUsers.daily],
+					['DAU · yesterday', snapshot.activeUsers.daily],
 					['WAU · 7 days', snapshot.activeUsers.weekly],
 					['MAU · 30 days', snapshot.activeUsers.monthly],
 				]
