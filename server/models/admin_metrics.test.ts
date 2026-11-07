@@ -4,6 +4,7 @@ import {buildAdminMetrics} from '@/server/models/admin_metrics';
 
 const cutoff = new Date('2026-09-07T12:00:00Z');
 const today = new Date('2026-09-07T00:00:00Z');
+const yesterday = new Date('2026-09-06T00:00:00Z');
 const zero = BigInt(0);
 
 function database(run: (sql: Prisma.Sql) => unknown) {
@@ -72,9 +73,9 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 	const {db} = database((sql) => {
 		if (!sql.text.includes('GROUP BY')) return empty(sql);
 		const [start, end] = sql.values as Date[];
-		if (start < today) return [];
+		if (start < yesterday) return [];
 		if (sql.text.startsWith('SELECT bulk,')) {
-			ranges.push([start, end]);
+			if (start >= today) ranges.push([start, end]);
 			if (end.getTime() - start.getTime() > 6 * 60 * 60 * 1000) {
 				throw new Error('canceling statement due to statement timeout');
 			}
@@ -128,7 +129,7 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 		trainerSolves: 2,
 		trainerSessions: 1,
 	});
-	expect(snapshot.activeUsers).toEqual({daily: 1, weekly: 1, monthly: 1});
+	expect(snapshot.activeUsers).toEqual({daily: 2, weekly: 2, monthly: 2});
 });
 
 it('falls back from a lifetime timeout to exact indexed date ranges', async () => {
