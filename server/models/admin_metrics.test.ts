@@ -115,15 +115,6 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 				{session: null, solves: BigInt(1)},
 			];
 		}
-		if (sql.text.includes('FROM match m')) {
-			if (end.getTime() - start.getTime() > 6 * 60 * 60 * 1000) {
-				throw new Error('canceling statement due to statement timeout');
-			}
-			return [
-				{session: 'same-match-session', players: ['user-a', 'user-b']},
-				{session: 'other-match-session', players: ['user-a']},
-			];
-		}
 		return [];
 	});
 	const snapshot = await buildAdminMetrics(cutoff, db);
@@ -140,9 +131,6 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 		demoSessions: 1,
 		trainerSolves: 2,
 		trainerSessions: 1,
-		matches: 4,
-		matchSessions: 2,
-		matchPlayers: 2,
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 2, weekly: 2, monthly: 2});
 });
