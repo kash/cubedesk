@@ -70,7 +70,9 @@ export default function AdminMetrics() {
 		};
 	}, [revision]);
 	const snapshot = result?.status === 'ready' ? result.snapshot : null;
-	const days = snapshot?.days.slice(-range) ?? [];
+	const days =
+		snapshot?.days.filter((day) => day.date !== snapshot.cutoff.slice(0, 10)).slice(-range) ??
+		[];
 	const totals = snapshot?.totals;
 	const cards: [string, number][] =
 		snapshot && totals
