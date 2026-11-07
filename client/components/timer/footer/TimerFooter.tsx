@@ -45,7 +45,7 @@ function TimerFooter() {
 		);
 	} else if (mobileMode) {
 		mobileHideButton = (
-			<div className="mb-2 flex h-9 w-full items-center justify-end">
+			<div className="mb-2 flex h-9 w-full shrink-0 items-center justify-end">
 				<Button
 					variant="outline"
 					size="icon"
@@ -91,7 +91,8 @@ function TimerFooter() {
 					// Implicit rows so the column splits evenly between the modules actually shown
 					// (TimerModule hides the 2nd/3rd on short screens)
 					'grid auto-rows-[minmax(0,1fr)] grid-cols-[1fr] divide-y': sideLayout,
-					'h-[256px] divide-x-0 divide-y-0 overflow-visible rounded': mobileMode,
+					'max-h-[256px] min-h-0 flex-1 grid-rows-[minmax(0,1fr)] divide-x-0 divide-y-0 overflow-visible rounded':
+						mobileMode,
 				},
 			)}
 		>
@@ -106,6 +107,7 @@ function TimerFooter() {
 		<div
 			className={cn('relative box-border h-full px-[15px] pt-0 pb-0', {
 				'short:h-full h-[calc(100vh_-_70px)] min-h-0 px-0 pb-2.5': sideLayout,
+				'flex min-h-0 flex-col': mobileMode,
 				'pointer-events-none opacity-10': context.timerStarted,
 			})}
 		>

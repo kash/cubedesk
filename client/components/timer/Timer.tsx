@@ -211,7 +211,9 @@ export default function Timer(props: TimerProps) {
 		'-mt-[10vh]': context.focusMode && !mobileMode,
 	});
 	const mainTimeClass = classNames({
-		'flex w-[95%] max-w-[580px] flex-row items-center justify-between': isSmart || isSmartTimer,
+		'@container flex w-[95%] max-w-[580px] flex-row items-center justify-between':
+			(isSmart || isSmartTimer) && !mobileMode,
+		'flex w-full flex-col items-center gap-2': (isSmart || isSmartTimer) && mobileMode,
 	});
 
 	const timeBar = (
@@ -285,12 +287,14 @@ export default function Timer(props: TimerProps) {
 												: timerLayout === 'right'
 													? 'short:grid-cols-[minmax(0,1fr)_min(350px,40%)] grid-cols-[minmax(0,auto)_350px] grid-rows-[minmax(0,1fr)] !px-2.5 !pb-2.5'
 													: hideMobileTimerFooter && mobileMode
-														? 'grid-rows-[1fr_50px]'
-														: 'grid-rows-[1fr_300px]',
+														? 'grid-rows-[minmax(0,1fr)_50px]'
+														: mobileMode
+															? 'grid-rows-[minmax(min-content,1fr)_minmax(0,300px)]'
+															: 'grid-rows-[1fr_300px]',
 								timerStarted && mobileMode && '!grid-cols-[1fr]',
 								{
 									// Fill the space below the header instead of a fixed viewport height
-									'!h-auto min-h-0 flex-1': mobileMode,
+									'!h-auto min-h-0 flex-1 grid-cols-[minmax(0,1fr)]': mobileMode,
 									'short:h-[calc(100dvh_-_66px)]': sideLayout,
 								},
 							)}
