@@ -19,7 +19,7 @@ export function metricsWindow(cutoff: Date) {
 	};
 }
 
-// Keep the exact production SQL available for EXPLAIN and integration tests.
+// Keep the exact production SQL available for EXPLAIN.
 export function adminMetricsQueries(cutoff: Date) {
 	const {start} = metricsWindow(cutoff);
 	return {
