@@ -52,7 +52,10 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 	}
 
 	return (
-		<div className="relative" style={{width, height}}>
+		<div
+			className="relative touch-pan-y select-none [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none]"
+			style={{width, height}}
+		>
 			<svg
 				width={width}
 				height={height}
@@ -65,6 +68,7 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 				onPointerDown={selectPointer}
 				onPointerLeave={() => setSelectedDate(null)}
 				onPointerCancel={() => setSelectedDate(null)}
+				onContextMenu={(event) => event.preventDefault()}
 				onFocus={(event) => {
 					if (event.currentTarget.matches(':focus-visible'))
 						setSelectedDate(days.at(-1)?.date ?? null);
