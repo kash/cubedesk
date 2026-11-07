@@ -3,8 +3,8 @@ import {CubedeskDb, disablePersistence, getActiveUserId, getDatabase} from '@/db
 import {TAB_ID, withLock} from '@/db/persist/locks';
 import {Session} from '@/types/session';
 import {Solve} from '@/types/solve';
+import {captureException} from '@/util/sentry';
 import {trpc} from '@/util/trpc';
-import * as Sentry from '@sentry/browser';
 import {v4 as uuid} from 'uuid';
 
 // Set when a local write fails, in case the failure also prevents recording that in the DB itself
@@ -25,7 +25,10 @@ let writeQueue: Promise<void> = Promise.resolve();
  * Queues a write to the local DB. Never rejects: a failed write marks the local copy stale and turns off persistence
  * for this tab, which keeps working from memory and the server.
  */
-export function enqueueWrite(label: string, write: (db: CubedeskDb) => Promise<void>): Promise<void> {
+export function enqueueWrite(
+	label: string,
+	write: (db: CubedeskDb) => Promise<void>,
+): Promise<void> {
 	const run = writeQueue.then(async () => {
 		const db = getDatabase();
 		if (!db) {
@@ -68,7 +71,7 @@ export function clearLocalDataStaleMark() {
 
 async function handleWriteFailure(label: string, error: unknown) {
 	console.error(`Local data write failed (${label})`, error);
-	Sentry.captureException(error, {tags: {area: 'local-db', write: label}});
+	captureException(error, {tags: {area: 'local-db', write: label}});
 
 	try {
 		localStorage.setItem(STALE_FLAG_KEY, String(Date.now()));
@@ -98,7 +101,7 @@ function notifyOtherTabs(changes: LocalChanges) {
 	const {putSolves = [], deleteSolveIds = [], putSessions = [], deleteSessionIds = []} = changes;
 	postChanges(
 		[...putSolves.map((solve) => solve.id), ...deleteSolveIds],
-		[...putSessions.map((session) => session.id), ...deleteSessionIds]
+		[...putSessions.map((session) => session.id), ...deleteSessionIds],
 	);
 }
 
@@ -136,7 +139,9 @@ export function beginOp(kind: string, localFirst: LocalChanges = {}): LocalOp {
 		durable: Promise.race([recorded, delay(2000)]),
 		confirm: (afterServer = {}) => {
 			enqueueWrite(kind, async (db) => {
-				await db.transaction('rw', [db.solves, db.sessions], () => applyChanges(db, afterServer));
+				await db.transaction('rw', [db.solves, db.sessions], () =>
+					applyChanges(db, afterServer),
+				);
 				notifyOtherTabs(afterServer);
 			});
 			scheduleHashBump(id);

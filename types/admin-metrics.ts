@@ -11,10 +11,12 @@ export interface AdminMetricsDay {
 	demoSolves: number;
 	demoSessions: number;
 	signups: number;
+	trainerSolves: number;
+	trainerSessions: number;
 }
 
 export interface AdminMetricsSnapshot {
-	version: 3;
+	version: 4;
 	cutoff: string;
 	completedAt: string;
 	totals: {
@@ -25,7 +27,6 @@ export interface AdminMetricsSnapshot {
 	};
 	activeUsers: {daily: number; weekly: number; monthly: number};
 	days: AdminMetricsDay[];
-	breakdown: {eventType: string | null; category: SolveCategory; solves: number}[];
 }
 
 export type AdminMetricsResponse =

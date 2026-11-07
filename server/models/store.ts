@@ -1,19 +1,51 @@
 import {setSsrValue} from '@/actions/ssr';
 import {getSettingsByUserId, getStatsModuleFromSettings} from '@/server/models/settings';
-import {sanitizeUser} from '@/server/models/user_account';
+import {getClientMeById} from '@/server/models/user_account';
 import {logger} from '@/server/services/logger';
-import {getMe} from '@/server/util/auth';
+import {getMe, getSessionUserId} from '@/server/util/auth';
 
-async function setMe(store, req) {
-	const user = await getMe(req);
-	if (!user) {
-		return;
+async function loadSettings(userId: string) {
+	try {
+		return {settings: await getSettingsByUserId(userId)};
+	} catch (error) {
+		logger.warn('Could not load app bootstrap data', {error});
+		return null;
+	}
+}
+
+/**
+ * Embeds the data the app waits on before showing anything, saving the client a round trip after the page loads.
+ * If this fails, the client fetches it instead.
+ */
+function setAppBootstrap(store, settings: Awaited<ReturnType<typeof getSettingsByUserId>>) {
+	try {
+		store.dispatch(
+			setSsrValue('app_bootstrap', {
+				settings,
+				statsModule: getStatsModuleFromSettings(settings),
+			}),
+		);
+	} catch (error) {
+		logger.warn('Could not load app bootstrap data', {error});
+	}
+}
+
+export async function initUserAccount(store, req) {
+	const userId = getSessionUserId(req);
+	if (!userId) {
+		return null;
 	}
 
-	const me = sanitizeUser(user);
-	if (!me || !Object.keys(me).length) {
-		return;
+	const [authUser, me, bootstrap] = await Promise.all([
+		getMe(req),
+		getClientMeById(userId),
+		loadSettings(userId),
+	]);
+	if (!authUser || !me) {
+		return null;
 	}
+
+	me.banned_until = authUser.banned_until;
 
 	store.dispatch({
 		type: 'SET_ME',
@@ -22,31 +54,8 @@ async function setMe(store, req) {
 		},
 	});
 
-	return me;
-}
-
-/**
- * Embeds the data the app waits on before showing anything, saving the client a round trip after the page loads.
- * If this fails, the client fetches it instead.
- */
-async function setAppBootstrap(store, userId: string) {
-	try {
-		const settings = await getSettingsByUserId(userId);
-		store.dispatch(
-			setSsrValue('app_bootstrap', {
-				settings,
-				statsModule: getStatsModuleFromSettings(settings),
-			})
-		);
-	} catch (error) {
-		logger.warn('Could not load app bootstrap data', {error});
-	}
-}
-
-export async function initUserAccount(store, req) {
-	const me = await setMe(store, req);
-	if (me) {
-		await setAppBootstrap(store, me.id);
+	if (bootstrap) {
+		setAppBootstrap(store, bootstrap.settings);
 	}
 
 	return me;

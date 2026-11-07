@@ -1,6 +1,6 @@
 import DemoWarning from '@/components/layout/wrapper/DemoWarning';
 import TimerModule from '@/components/timer/footer/TimerModule';
-import {useTimerContext} from '@/components/timer/Timer';
+import {useTimerFooterContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {setSetting} from '@/db/settings/update';
 import {cn} from '@/util/cn';
@@ -9,8 +9,10 @@ import {useSettings} from '@/util/hooks/useSettings';
 import {CaretDown, CaretUp} from 'phosphor-react';
 import React, {ReactNode} from 'react';
 
-export default function TimerFooter() {
-	const context = useTimerContext();
+export default React.memo(TimerFooter);
+
+function TimerFooter() {
+	const context = useTimerFooterContext();
 	const {timerLayout} = context;
 
 	// Fetch modules from settings or set defaults (if not set)
@@ -43,7 +45,7 @@ export default function TimerFooter() {
 		);
 	} else if (mobileMode) {
 		mobileHideButton = (
-			<div className="mb-2 flex h-9 w-full items-center justify-end">
+			<div className="mb-2 flex h-9 w-full shrink-0 items-center justify-end">
 				<Button
 					variant="outline"
 					size="icon"
@@ -89,7 +91,8 @@ export default function TimerFooter() {
 					// Implicit rows so the column splits evenly between the modules actually shown
 					// (TimerModule hides the 2nd/3rd on short screens)
 					'grid auto-rows-[minmax(0,1fr)] grid-cols-[1fr] divide-y': sideLayout,
-					'h-[256px] divide-x-0 divide-y-0 overflow-visible rounded': mobileMode,
+					'max-h-[256px] min-h-0 flex-1 grid-rows-[minmax(0,1fr)] divide-x-0 divide-y-0 overflow-visible rounded':
+						mobileMode,
 				},
 			)}
 		>
@@ -104,7 +107,8 @@ export default function TimerFooter() {
 		<div
 			className={cn('relative box-border h-full px-[15px] pt-0 pb-0', {
 				'short:h-full h-[calc(100vh_-_70px)] min-h-0 px-0 pb-2.5': sideLayout,
-				'pointer-events-none opacity-10': !!context.timeStartedAt,
+				'flex min-h-0 flex-col': mobileMode,
+				'pointer-events-none opacity-10': context.timerStarted,
 			})}
 		>
 			{timerLayout === 'bottom' && (

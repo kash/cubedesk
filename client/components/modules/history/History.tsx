@@ -45,14 +45,20 @@ export default function History(props: Props) {
 		listClassName,
 	} = props;
 
-	useSolveDb();
+	const solveDbRevision = useSolveDb();
 	const dialogOpen = useAnyDialogOpen();
 
+	const filterKey = JSON.stringify(filterOptions ?? null);
+	const fetchedSolves = React.useMemo(
+		() => (parentSolves ? null : fetchSolves(filterOptions)),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[parentSolves, filterKey, solveDbRevision],
+	);
 	let solves;
 	if (parentSolves) {
 		solves = parentSolves;
 	} else {
-		solves = fetchSolves(filterOptions);
+		solves = fetchedSolves ?? [];
 	}
 
 	function renderSolveRow(index: number) {

@@ -15,13 +15,19 @@ function getSolveTime(solve: Pick<Solve, 'time'> | number): number {
  * @param list - List of Solve objects
  * @param isSorted - If list is already sorted, skip sorting and save on compute
  */
-export function getAverage(list: Array<Pick<Solve, 'time'>> | number[], isSorted: boolean = false): number {
+export function getAverage(
+	list: Array<Pick<Solve, 'time'>> | number[],
+	isSorted: boolean = false,
+): number {
 	if (!list || !list.length) {
 		return 0;
 	}
 
 	if (!isSorted) {
-		list.sort((a, b) => getSolveTime(a) - getSolveTime(b));
+		list = [...list].sort(
+			(a: Pick<Solve, 'time'> | number, b: Pick<Solve, 'time'> | number) =>
+				getSolveTime(a) - getSolveTime(b),
+		) as typeof list;
 	}
 
 	const count = list.length;

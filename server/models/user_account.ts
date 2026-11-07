@@ -6,12 +6,7 @@ import {createMetricLog} from '@/server/models/metric_log';
 import {getLocationFromIp} from '@/server/services/ipstack';
 import {logger} from '@/server/services/logger';
 import {hashPassword} from '@/server/util/password';
-import {
-	InternalUserAccount,
-	PublicUserAccount,
-	UserAccount,
-} from '@/types/user';
-import {publicUserSelect} from '@/types/user';
+import {meUserSelect, publicUserSelect, UserAccount} from '@/types/user';
 import dayjs from 'dayjs';
 import {v4 as uuid} from 'uuid';
 
@@ -22,42 +17,6 @@ export const publicUserInclude = {
 	select: publicUserSelect,
 };
 
-export function sanitizeUser(user: InternalUserAccount, forPublic = false): UserAccount | PublicUserAccount {
-	return sanitizeUsers([user], forPublic)[0];
-}
-
-// Always call this method before returning any user to the frontend
-function sanitizeUsers(users: InternalUserAccount[], forPublic = false): Array<UserAccount | PublicUserAccount> {
-	function sanitizeUser(user: InternalUserAccount): UserAccount | PublicUserAccount {
-		if (!user) {
-			return user;
-		}
-
-		// User's password should never go to the front-end
-		delete (user as Partial<InternalUserAccount>).password;
-		delete (user as Partial<InternalUserAccount>).join_ip;
-
-		if (forPublic) {
-			return <PublicUserAccount>{
-				id: user.id,
-				username: user.username,
-				banned_until: user.banned_until,
-				banned_forever: user.banned_forever,
-				admin: user.admin,
-				created_at: user.created_at,
-				profile: user.profile,
-				verified: user.verified,
-				integrations: user.integrations,
-				badges: user.badges,
-			};
-		}
-
-		return user;
-	}
-
-	return users.map((user) => sanitizeUser({...user}));
-}
-
 export function getUserById(id: string) {
 	return getPrisma().userAccount.findUnique({
 		where: {
@@ -66,46 +25,54 @@ export function getUserById(id: string) {
 	});
 }
 
-// Relations loaded alongside the full user row for internal use. bans is
-// filtered to active ones only.
-const internalUserInclude = {
-	timer_background: true,
-	integrations: true,
-	elo_rating: true,
-	profile: {
-		include: {
-			pfp_image: true,
-		},
-	},
-	bans: {
+export async function getAuthUserById(id: string) {
+	const user = await getPrisma().userAccount.findUnique({
 		where: {
-			active: true,
+			id,
 		},
-	},
-} satisfies Prisma.UserAccountInclude;
+		include: {
+			bans: {
+				where: {
+					active: true,
+				},
+				select: {
+					id: true,
+				},
+				take: 1,
+			},
+		},
+	});
 
-// Full user row (password hash + integration OAuth tokens) with internal
-// relations — server-side only, never send to a client without sanitizing
-export type InternalUser = Prisma.UserAccountGetPayload<{include: typeof internalUserInclude}>;
+	if (!user) {
+		return null;
+	}
 
-export function getUserByIdWithProfile(id: string) {
+	const {bans, ...account} = user;
+	return {account, hasActiveBan: bans.length > 0};
+}
+
+export function getClientMeById(id: string) {
 	return getPrisma().userAccount.findUnique({
 		where: {
 			id,
 		},
-		include: internalUserInclude,
+		select: {
+			...meUserSelect,
+			bans: {
+				where: {
+					active: true,
+				},
+			},
+		},
 	});
 }
 
-// Returns the FULL row (password hash + integration OAuth tokens) — never
-// send this to a client without sanitizing/narrowing first
+// Returns the FULL row (password hash) — never send this to a client
+// without sanitizing/narrowing first
 export function getUserByEmail(email: string) {
 	return getPrisma().userAccount.findUnique({
 		where: {
 			email: email.toLowerCase(),
-		},
-		include: {
-			integrations: true,
 		},
 	});
 }
@@ -117,9 +84,6 @@ export function getUserByUsername(username: string) {
 				equals: username,
 				mode: 'insensitive',
 			},
-		},
-		include: {
-			integrations: true,
 		},
 	});
 }
@@ -175,7 +139,10 @@ export async function updateUserAccount(userId: string, email: string, username:
 	});
 }
 
-export function updateUserAccountWithParams(userId: string, params: Prisma.UserAccountUncheckedUpdateInput) {
+export function updateUserAccountWithParams(
+	userId: string,
+	params: Prisma.UserAccountUncheckedUpdateInput,
+) {
 	return getPrisma().userAccount.update({
 		where: {
 			id: userId,
@@ -211,7 +178,7 @@ export async function createUserAccount(
 	email: string,
 	username: string,
 	password: string,
-	ip: string | undefined
+	ip: string | undefined,
 ) {
 	const user = await getUserByEmail(email);
 	if (user != null) {
@@ -261,7 +228,11 @@ export function bumpOfflineHash(db: Pick<Prisma.TransactionClient, 'userAccount'
  * current if no other client changed data since it last synced. When the check fails the hash is still changed, so
  * other clients learn about this client's change, but the caller must treat its own copy as stale.
  */
-export async function swapOfflineHash(userId: string, hash: string, expected: string | null): Promise<boolean> {
+export async function swapOfflineHash(
+	userId: string,
+	hash: string,
+	expected: string | null,
+): Promise<boolean> {
 	const swapped = await getPrisma().userAccount.updateMany({
 		where: {id: userId, offline_hash: expected},
 		data: {offline_hash: hash},

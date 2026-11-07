@@ -22,7 +22,7 @@ jest.mock('@/components/store', () => ({
 }));
 jest.mock('@/components/timer/Timer', () => ({useTimerContext: () => mockContext}));
 jest.mock('@/db/solves/update', () => ({createSolveDb: jest.fn()}));
-jest.mock('@/db/settings/query', () => ({getSettings: () => ({})}));
+jest.mock('@/db/settings/query', () => ({getSettings: () => ({}), getSetting: () => undefined}));
 jest.mock('@/util/event_handler', () => ({emitEvent: jest.fn()}));
 jest.mock('@/util/storage', () => ({resourceUri: (path) => path}));
 jest.mock('@/util/hooks/useSettings', () => ({useSettings: () => false}));

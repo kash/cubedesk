@@ -81,6 +81,29 @@ export function DropdownMenuCheckboxItem({
 	);
 }
 
+export function DropdownMenuLabel({
+	className,
+	...props
+}: React.ComponentProps<typeof Primitive.Label>) {
+	return (
+		<Primitive.Label
+			{...props}
+			className={cn('text-text/50 px-2 pt-1.5 pb-1 text-xs font-medium', className)}
+		/>
+	);
+}
+export function DropdownMenuSeparator({
+	className,
+	...props
+}: React.ComponentProps<typeof Primitive.Separator>) {
+	return (
+		<Primitive.Separator
+			{...props}
+			className={cn('bg-tmo-module/10 -mx-1 my-1 h-px', className)}
+		/>
+	);
+}
+
 export const DropdownMenuRadioGroup = Primitive.RadioGroup;
 export function DropdownMenuRadioItem({
 	className,

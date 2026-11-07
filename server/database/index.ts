@@ -1,7 +1,7 @@
 import {PrismaClient} from '@/generated/prisma/client';
 import {PrismaPg} from '@prisma/adapter-pg';
 
- declare global {
+declare global {
 	var prisma: PrismaClient | undefined;
 }
 
@@ -40,6 +40,9 @@ export function getPrisma() {
 
 	const adapter = new PrismaPg({
 		connectionString: url,
+		max: readPositiveIntEnv('DATABASE_POOL_MAX', 10),
+		idleTimeoutMillis: readPositiveIntEnv('DATABASE_POOL_IDLE_TIMEOUT_MS', 30000),
+		connectionTimeoutMillis: readPositiveIntEnv('DATABASE_POOL_CONNECT_TIMEOUT_MS', 10000),
 	});
 	const client = new PrismaClient({
 		adapter,
@@ -53,7 +56,9 @@ export function getPrisma() {
 	}
 
 	return client;
-
 }
 
-
+function readPositiveIntEnv(name: string, fallback: number): number {
+	const value = parseInt(process.env[name] ?? '', 10);
+	return Number.isFinite(value) && value > 0 ? value : fallback;
+}

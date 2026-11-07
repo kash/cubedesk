@@ -28,11 +28,16 @@ import {HOTKEY_MAP} from '@/util/timer/hotkeys';
 import screenfull from '@/util/vendor/screenfull';
 import classNames from 'classnames';
 import {
+	Bluetooth,
 	CrosshairSimple,
+	Cube,
 	FrameCorners,
+	GearSix,
+	HandPointing,
 	Keyboard,
 	MagnifyingGlassPlus,
 	Plus,
+	Timer,
 	X,
 } from 'phosphor-react';
 import React, {useEffect, useState} from 'react';
@@ -154,23 +159,42 @@ export default function HeaderControl() {
 		</>
 	);
 
+	const smartCubeDisabled = !isSmartCubeEvent(eventType);
+	const timerTypeOptions: {
+		value: AllSettings['timer_type'];
+		text: string;
+		mobileText?: string;
+		icon: React.ReactElement;
+		disabled?: boolean;
+	}[] = [
+		{value: 'keyboard', text: 'Keyboard', mobileText: 'Touch', icon: <HandPointing />},
+		{value: 'stackmat', text: 'StackMat', icon: <Timer />},
+		{value: 'smart', text: 'Smart Cube', icon: <Cube />, disabled: smartCubeDisabled},
+		{value: 'smarttimer', text: 'Smart Timer', icon: <Bluetooth />},
+	];
+
+	function changeTimerType(value: string) {
+		if (value === 'stackmat') {
+			openStackMat();
+		} else {
+			selectTimerType(value as AllSettings['timer_type']);
+		}
+	}
+
+	const showMobileTimerType = mobileMode && !headerOptions.hideTimerType;
+
 	const timerTypeDropdown = !focusMode && !headerOptions.hideTimerType && !mobileMode && (
 		<div className="flex items-center gap-1">
 			{modeIndicators}
 			<SelectField
 				label="Timer input type"
 				value={timerType}
-				onValueChange={(value) =>
-					value === 'stackmat'
-						? openStackMat()
-						: selectTimerType(value as AllSettings['timer_type'])
-				}
-				options={[
-					{value: 'keyboard', text: 'Keyboard'},
-					{value: 'stackmat', text: 'StackMat'},
-					{value: 'smart', text: 'Smart Cube', disabled: !isSmartCubeEvent(eventType)},
-					{value: 'smarttimer', text: 'Smart Timer'},
-				]}
+				onValueChange={changeTimerType}
+				options={timerTypeOptions.map(({value, text, disabled}) => ({
+					value,
+					text,
+					disabled,
+				}))}
 			/>
 			{timerType === 'stackmat' && (
 				<Button variant="secondary" onClick={openStackMat}>
@@ -222,6 +246,25 @@ export default function HeaderControl() {
 					hidden: headerOptions.hideNewSession || !me,
 					onClick: toggleCreateNewSession,
 					icon: <Plus />,
+				},
+				{
+					text: 'Timer input',
+					heading: true,
+					hidden: !showMobileTimerType,
+				},
+				...timerTypeOptions.map((option) => ({
+					text: option.mobileText ?? option.text,
+					icon: option.icon,
+					on: timerType === option.value,
+					disabled: option.disabled,
+					hidden: !showMobileTimerType,
+					onClick: () => changeTimerType(option.value),
+				})),
+				{
+					text: 'Configure StackMat',
+					icon: <GearSix />,
+					hidden: !showMobileTimerType || timerType !== 'stackmat',
+					onClick: openStackMat,
 				},
 			]}
 		/>

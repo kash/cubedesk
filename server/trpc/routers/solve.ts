@@ -1,6 +1,5 @@
 import type {Prisma, PrismaClient} from '@/generated/prisma/client';
 import type {SolveInput} from '@/types/solve';
-import {getMatchById} from '@/server/models/match';
 import {
 	createSolve,
 	deleteSolve,
@@ -10,8 +9,7 @@ import {
 	updateSolve,
 	updateSolveLiteral,
 } from '@/server/models/solve';
-import {createSolveView, deleteSolveViewsBySolveId} from '@/server/models/solve_view';
-import {deleteTopAverage, deleteTopSolveById} from '@/server/models/top_solve';
+import {createSolveView} from '@/server/models/solve_view';
 import {updateUserAccountWithParams} from '@/server/models/user_account';
 import {protectedProcedure, publicProcedure, router} from '@/server/trpc/trpc';
 import {serializeSolveTimestamps} from '@/server/util/serialize';
@@ -84,9 +82,24 @@ async function assertSolveRefsOwned(prisma: PrismaClient, userId: string, refs: 
 	}
 }
 
-async function getOpenMatchParticipantId(matchId: string, userId: string) {
-	const match = await getMatchById(matchId);
-	const participant = match?.participants.find((part) => part.user_id === userId);
+async function getOpenMatchParticipantId(prisma: PrismaClient, matchId: string, userId: string) {
+	const participant = await prisma.matchParticipant.findUnique({
+		where: {
+			match_id_user_id: {
+				match_id: matchId,
+				user_id: userId,
+			},
+		},
+		select: {
+			id: true,
+			match: {
+				select: {
+					ended_at: true,
+				},
+			},
+		},
+	});
+	const match = participant?.match;
 
 	if (!match || !participant) {
 		throw new TRPCError({code: 'NOT_FOUND'});
@@ -118,15 +131,16 @@ export const solveRouter = router({
 		await assertSolveRefsOwned(ctx.prisma, user.id, input);
 
 		input.match_participant_id = input.match_id
-			? await getOpenMatchParticipantId(input.match_id, user.id)
+			? await getOpenMatchParticipantId(ctx.prisma, input.match_id, user.id)
 			: null;
 
 		input.bulk = false;
-		const createdSolve = await createSolve(user, prepareSmartSolve(input) as SolveInput);
-
-		await updateUserAccountWithParams(user.id, {
-			last_solve_at: new Date(),
-		});
+		const [createdSolve] = await Promise.all([
+			createSolve(user, prepareSmartSolve(input) as SolveInput),
+			updateUserAccountWithParams(user.id, {
+				last_solve_at: new Date(),
+			}),
+		]);
 
 		return serializeSolveTimestamps(createdSolve);
 	}),
@@ -197,7 +211,7 @@ export const solveRouter = router({
 			}
 
 			if (solve.match_id) {
-				await getOpenMatchParticipantId(solve.match_id, ctx.user.id);
+				await getOpenMatchParticipantId(ctx.prisma, solve.match_id, ctx.user.id);
 			}
 
 			const {session_id, game_session_id, smart_device_id} = input.input;
@@ -231,30 +245,18 @@ export const solveRouter = router({
 			}),
 		)
 		.mutation(async ({ctx, input}) => {
-			const solve = await getSolve(input.id);
+			const solve = await ctx.prisma.solve.findUnique({
+				where: {
+					id: input.id,
+				},
+				select: {
+					id: true,
+					user_id: true,
+				},
+			});
 
 			if (!solve || solve.user_id !== ctx.user.id) {
 				throw new TRPCError({code: 'NOT_FOUND'});
-			}
-
-			if (solve.top_solve?.length) {
-				for (const top of solve.top_solve) {
-					await deleteTopSolveById(top.id);
-				}
-			}
-
-			if (
-				solve.top_average_1?.length ||
-				solve.top_average_2?.length ||
-				solve.top_average_3?.length ||
-				solve.top_average_4?.length ||
-				solve.top_average_5?.length
-			) {
-				await deleteTopAverage(solve.event_type, ctx.user);
-			}
-
-			if (solve.solve_views) {
-				await deleteSolveViewsBySolveId(solve.id);
 			}
 
 			const deleted = await deleteSolve(solve);

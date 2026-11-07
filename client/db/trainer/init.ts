@@ -7,7 +7,6 @@ import {
 	TrainerAlgorithmRecord,
 	TrainerFavorite,
 } from '@/types/trainer';
-import _ from 'lodash';
 
 export interface TrainerAlgorithmExtended extends TrainerAlgorithmRecord {
 	overrides?: AlgorithmOverrideInput | null;
@@ -25,7 +24,7 @@ export function initTrainerDb(
 	customAlgos: Array<Serialized<CustomTrainerWithUser>>,
 	algos: TrainerAlgorithm[],
 	overrides: AlgorithmOverrideInput[],
-	favorites: Array<Serialized<TrainerFavorite>>
+	favorites: Array<Serialized<TrainerFavorite>>,
 ) {
 	if (typeof window === 'undefined') {
 		return;
@@ -33,8 +32,10 @@ export function initTrainerDb(
 
 	const table = resetTrainerDb();
 
-	const overrideMap = _.chain(overrides).keyBy('cube_key').value();
-	const faves = _.chain(favorites).keyBy('cube_key').value();
+	const overrideMap = Object.fromEntries(
+		overrides.map((override) => [override.cube_key, override]),
+	);
+	const faves = Object.fromEntries(favorites.map((favorite) => [favorite.cube_key, favorite]));
 
 	for (const algo of [...algos, ...customAlgos]) {
 		const insert: TrainerAlgorithmExtended = {

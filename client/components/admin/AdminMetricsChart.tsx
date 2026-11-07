@@ -52,7 +52,10 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 	}
 
 	return (
-		<div className="relative" style={{width, height}}>
+		<div
+			className="relative touch-pan-y select-none [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none]"
+			style={{width, height}}
+		>
 			<svg
 				width={width}
 				height={height}
@@ -65,6 +68,7 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 				onPointerDown={selectPointer}
 				onPointerLeave={() => setSelectedDate(null)}
 				onPointerCancel={() => setSelectedDate(null)}
+				onContextMenu={(event) => event.preventDefault()}
 				onFocus={(event) => {
 					if (event.currentTarget.matches(':focus-visible'))
 						setSelectedDate(days.at(-1)?.date ?? null);
@@ -226,23 +230,25 @@ function Plot({title, days, series, width, height}: Props & {width: number; heig
 
 export default function AdminMetricsChart(props: Props) {
 	return (
-		<Card className="min-w-0 gap-4">
-			<CardHeader>
+		<Card className="min-w-0 gap-3 py-4 sm:gap-4 sm:py-6">
+			<CardHeader className="px-4 sm:px-6">
 				<CardTitle>{props.title}</CardTitle>
 			</CardHeader>
-			<CardContent>
-				<div className="text-text/65 mb-4 flex flex-wrap gap-x-4 gap-y-2 text-xs">
-					{props.series.map((item) => (
-						<span key={item.key} className="flex items-center gap-2">
-							<span
-								className="h-0.5 w-3 rounded-full"
-								style={{backgroundColor: item.color}}
-							/>
-							{item.label}
-						</span>
-					))}
-				</div>
-				<div className="h-52 w-full">
+			<CardContent className="px-4 sm:px-6">
+				{props.series.length > 1 && (
+					<div className="text-text/65 mb-3 flex flex-wrap gap-x-4 gap-y-2 text-xs">
+						{props.series.map((item) => (
+							<span key={item.key} className="flex items-center gap-2">
+								<span
+									className="h-0.5 w-3 rounded-full"
+									style={{backgroundColor: item.color}}
+								/>
+								{item.label}
+							</span>
+						))}
+					</div>
+				)}
+				<div className="h-44 w-full sm:h-52">
 					<ParentSize>
 						{({width, height}) => <Plot {...props} width={width} height={height} />}
 					</ParentSize>

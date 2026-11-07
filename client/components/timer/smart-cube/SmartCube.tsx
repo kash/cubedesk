@@ -23,6 +23,7 @@ import {Dialog, DialogContent, DialogHeader} from '@/components/ui/dialog';
 import {setEventType} from '@/db/settings/update';
 import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
+import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {SmartTurn} from '@/util/smart_scramble';
 import {isBluetoothAvailable} from '@/util/smart-cube/bluetooth';
@@ -105,6 +106,7 @@ export default function SmartCube() {
 	const [inspectionTime, setInspectionTime] = useState(0);
 
 	const useSpaceWithSmartCube = useSettings('use_space_with_smart_cube');
+	const mobileMode = useGeneral('mobile_mode');
 	const {
 		scramble,
 		smartTurns,
@@ -425,7 +427,12 @@ export default function SmartCube() {
 		<>
 			<SmartDevicePanel
 				visual={
-					<div className="mt-[-8%] mb-[-8%] [zoom:0.4]">
+					<div
+						className={cn('short:[zoom:0.25] mt-[-8%] mb-[-8%]', {
+							'[zoom:0.4]': !mobileMode,
+							'[zoom:0.26]': mobileMode,
+						})}
+					>
 						<canvas
 							width="200px"
 							height="200px"

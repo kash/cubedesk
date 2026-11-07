@@ -4,9 +4,8 @@ import 'seedrandom';
 import {setStore} from '@/components/store';
 import reducers from '@/reducers/reducers';
 import {TRPCProvider} from '@/util/api';
+import {initSentry} from '@/util/sentry';
 import {initThemeFromLocalStorage} from '@/util/themes/theme_init';
-import * as Sentry from '@sentry/browser';
-import {Integrations} from '@sentry/tracing';
 import React from 'react';
 import {createRoot, hydrateRoot} from 'react-dom/client';
 import {HelmetProvider} from 'react-helmet-async';
@@ -28,11 +27,10 @@ delete window.__STORE__;
 import {PageRoutes} from '@/components/map-route';
 
 if (process.env.ENV !== 'development') {
-	Sentry.init({
+	initSentry({
 		dsn: 'https://feee16c821834f408ae2453577b10f9e@o637154.ingest.sentry.io/5756098',
 		release: process.env.RELEASE_NAME,
 		environment: process.env.ENV,
-		integrations: [new Integrations.BrowserTracing()],
 		tracesSampleRate: 0.1,
 		denyUrls: [
 			/^chrome-extension:\/\//,

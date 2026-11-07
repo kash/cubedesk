@@ -7,6 +7,7 @@ import {
 import {preflightChecks} from '@/components/timer/smart-cube/preflight';
 import Manual from '@/components/timer/time-display/Manual';
 import StackMat from '@/components/timer/time-display/stackmat/StackMat';
+import {stackMatConnected, useStackMat} from '@/components/timer/time-display/stackmat/useStackMat';
 import StartInstructions from '@/components/timer/time-display/StartInstructions';
 import {useTimerContext} from '@/components/timer/Timer';
 import {MOBILE_FONT_SIZE_MULTIPLIER} from '@/db/settings/update';
@@ -20,7 +21,7 @@ import React, {ReactNode, useEffect, useRef, useState} from 'react';
 export default function TimeDisplay() {
 	const context = useTimerContext();
 	const [time, setTime] = useState(0);
-	const timerCounter = useRef<NodeJS.Timeout | null>(null);
+	const timerCounter = useRef<number | null>(null);
 	const timerLocked = useRef<boolean>(false);
 
 	const {
@@ -47,6 +48,8 @@ export default function TimeDisplay() {
 	const timerType = useSettings('timer_type');
 	const stackMatOn = timerType === 'stackmat';
 	const zeroOutTimeAfterSolve = useSettings('zero_out_time_after_solve');
+	const stackMatStatus = useStackMat(stackMatOn && !manualEntry && !hideTime);
+	const stackMatIdle = stackMatOn && !timeStartedAt;
 
 	const mobileMode = useGeneral('mobile_mode');
 	const shortLandscape = useGeneral('short_landscape');
@@ -76,7 +79,7 @@ export default function TimeDisplay() {
 		}
 
 		if (timerCounter.current) {
-			clearTimeout(timerCounter.current);
+			cancelAnimationFrame(timerCounter.current);
 		}
 		timerCounter.current = null;
 		timerLocked.current = false;
@@ -90,16 +93,17 @@ export default function TimeDisplay() {
 		if (timerCounter.current) {
 			return;
 		}
-		timerCounter.current = setInterval(() => {
-			const now = new Date();
+		const tick = () => {
+			timerCounter.current = requestAnimationFrame(tick);
 
 			if (timerLocked.current || (!solving && !finalTime) || !timeStartedAt) {
 				return;
 			}
 
-			const runningTime = (now.getTime() - timeStartedAt.getTime()) / 1000;
+			const runningTime = (Date.now() - timeStartedAt.getTime()) / 1000;
 			setTime(runningTime);
-		}, 10);
+		};
+		timerCounter.current = requestAnimationFrame(tick);
 	}
 
 	if (manualEntry && !timesOnDevice(timerType)) {
@@ -118,6 +122,8 @@ export default function TimeDisplay() {
 		} else {
 			timeStr = String(inspectionTimer - 2);
 		}
+	} else if (stackMatIdle && !stackMatConnected(stackMatStatus)) {
+		timeStr = '--:--';
 	} else {
 		timeStr = getTimeString(time);
 	}
@@ -131,7 +137,7 @@ export default function TimeDisplay() {
 	}
 
 	if (stackMatOn) {
-		bottomInfo = <StackMat />;
+		bottomInfo = <StackMat status={stackMatStatus} />;
 	} else if (smartCubeSelected(context)) {
 		if (context.smartCubePuzzle && smartCubeMismatched(context)) {
 			bottomInfo = (
@@ -162,13 +168,14 @@ export default function TimeDisplay() {
 
 	// The smart timer visual is centered on the time, so what's under the time can't count toward its height
 	const hangBottomInfo = smartTimerSelected();
+	const besideSmartDevice = smartCubeSelected(context) || smartTimerSelected();
 
 	let body: ReactNode = (
 		<>
 			<h1
 				style={{
 					fontSize: shortLandscape
-						? `min(${timerTimeSize}px, 9.5vw)`
+						? `min(${timerTimeSize}px, 9.5vw${besideSmartDevice ? ', 16cqw' : ''})`
 						: timerTimeSize + 'px',
 					fontFamily: timerFontFamily + ', monospace',
 				}}
@@ -179,6 +186,8 @@ export default function TimeDisplay() {
 						// Trims the box to the digits so its center is theirs, for whichever font and size. The padding gives
 						// back the height the trim takes away
 						'py-[0.4em] [text-box:trim-both_cap_alphabetic]': hangBottomInfo,
+						'!text-warning': stackMatIdle && stackMatStatus === 'hands',
+						'!text-success': stackMatIdle && stackMatStatus === 'ready',
 					},
 					mobileMode && 'select-none',
 					inInspection && 'text-text/60',
@@ -209,7 +218,7 @@ export default function TimeDisplay() {
 		<div
 			className={classNames(
 				'relative z-[1] flex w-full flex-col items-center justify-center p-0',
-				(smartCubeSelected(context) || smartTimerSelected()) && 'w-1/2',
+				(smartCubeSelected(context) || smartTimerSelected()) && !mobileMode && 'w-1/2',
 				mobileMode && 'select-none',
 				context.focusMode && !mobileMode && 'h-screen !pt-0',
 			)}

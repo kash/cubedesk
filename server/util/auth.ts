@@ -1,49 +1,69 @@
 import {deactivateAllBanLogs} from '@/server/models/ban_log';
 import {getOrCreateUserProfile} from '@/server/models/profile';
-import {getUserById, getUserByIdWithProfile, updateUserAccountWithParams} from '@/server/models/user_account';
+import {
+	getAuthUserById,
+	getUserById,
+	updateUserAccountWithParams,
+} from '@/server/models/user_account';
 import {UserAccount} from '@/types/user';
 import {Request} from 'express';
 import jwt from 'jsonwebtoken';
 
 const jwtSecret = (process as any).env.JWT_SECRET as string;
 
-// Returns the FULL user row (password hash, tokens) for server-side use only
-export async function getMe(req: Request) {
+export function getSessionUserId(req: Request): string | null {
 	const session = req.cookies.session;
 
 	if (!session) {
+		return null;
+	}
+
+	try {
+		const output = jwt.verify(session, jwtSecret);
+		if (output && typeof output === 'object' && typeof output.user_id === 'string') {
+			return output.user_id;
+		}
+	} catch (e) {
+		return null;
+	}
+
+	return null;
+}
+
+// Returns the FULL user row (password hash) for server-side use only
+export async function getMe(req: Request) {
+	const userId = getSessionUserId(req);
+
+	if (!userId) {
 		// User not logged in
 		return null;
 	}
 
 	try {
-		const output: any = jwt.verify(session, jwtSecret);
+		const found = await getAuthUserById(userId);
 
-		if (output) {
-			const me = await getUserByIdWithProfile(output.user_id);
-
-			if (!me) {
-				return null;
-			}
-
-			if (!me.banned_forever && !me.banned_until && me.bans && me.bans.length) {
-				deactivateAllBanLogs(me.id);
-			} else if (me.banned_until && new Date() > new Date(me.banned_until)) {
-				me.banned_until = null;
-				updateUserAccountWithParams(me.id, {
-					banned_until: null,
-					banned_forever: false,
-				});
-
-				deactivateAllBanLogs(me.id);
-			}
-
-			return me;
+		if (!found) {
+			return null;
 		}
+
+		const me = found.account;
+
+		if (!me.banned_forever && !me.banned_until && found.hasActiveBan) {
+			deactivateAllBanLogs(me.id);
+		} else if (me.banned_until && new Date() > new Date(me.banned_until)) {
+			me.banned_until = null;
+			updateUserAccountWithParams(me.id, {
+				banned_until: null,
+				banned_forever: false,
+			});
+
+			deactivateAllBanLogs(me.id);
+		}
+
+		return me;
 	} catch (e) {
 		return null;
 	}
-	return null;
 }
 
 export async function getMeWithCookieString(cookies: string | any): Promise<UserAccount | null> {

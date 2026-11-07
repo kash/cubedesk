@@ -23,7 +23,7 @@ export interface FetchOptions<T> {
 
 type Predicate<T> = (record: T) => boolean;
 
-function isRangeQuery(value: unknown): value is RangeQuery<unknown> {
+export function isRangeQuery(value: unknown): value is RangeQuery<unknown> {
 	return (
 		typeof value === 'object' &&
 		value !== null &&

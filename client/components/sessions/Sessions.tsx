@@ -37,7 +37,35 @@ import {
 } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {Plus} from 'phosphor-react';
-import React, {useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+
+interface NameDraft {
+	sessionId: string;
+	name: string;
+}
+
+interface PendingName {
+	draft: NameDraft | null;
+	timeout: number | null;
+}
+
+function commitSessionName(pending: PendingName) {
+	if (pending.timeout !== null) {
+		window.clearTimeout(pending.timeout);
+		pending.timeout = null;
+	}
+
+	const draft = pending.draft;
+	pending.draft = null;
+	if (!draft) {
+		return;
+	}
+
+	const draftSession = fetchSessionById(draft.sessionId);
+	if (draftSession && draftSession.name !== draft.name) {
+		updateSessionDb(draftSession, {name: draft.name});
+	}
+}
 
 function SortableItem({session, selectedSessionId, selectSession, setSelectedSessionId}) {
 	const {
@@ -121,14 +149,32 @@ export default function Sessions() {
 		if (session) setCubeSelection({sessionId: session.id, eventType: ct.id});
 	}
 
+	const [nameDraft, setNameDraft] = useState<NameDraft | null>(null);
+	const pendingName = useRef<PendingName>({draft: null, timeout: null});
+
+	useEffect(() => {
+		const pending = pendingName.current;
+		return () => commitSessionName(pending);
+	}, []);
+
 	function setSessionName(e) {
 		if (!session) {
 			return;
 		}
 
-		updateSessionDb(session, {
-			name: e.target.value,
-		});
+		const pending = pendingName.current;
+		if (pending.draft && pending.draft.sessionId !== session.id) {
+			commitSessionName(pending);
+		}
+
+		const draft = {sessionId: session.id, name: e.target.value};
+		pending.draft = draft;
+		setNameDraft(draft);
+
+		if (pending.timeout !== null) {
+			window.clearTimeout(pending.timeout);
+		}
+		pending.timeout = window.setTimeout(() => commitSessionName(pending), 300);
 	}
 
 	function openCreateNewSession() {
@@ -174,10 +220,14 @@ export default function Sessions() {
 			'333',
 	);
 
-	const fetchFilter = {
-		session_id: session?.id,
-		event_type: currentCube,
-	};
+	const sessionId = session?.id;
+	const fetchFilter = useMemo(
+		() => ({
+			session_id: sessionId,
+			event_type: currentCube,
+		}),
+		[sessionId, currentCube],
+	);
 
 	const body = session ? (
 		<div className="sessions-detail">
@@ -191,8 +241,9 @@ export default function Sessions() {
 						type="text"
 						placeholder="Session name"
 						name={session.id}
-						value={session.name}
+						value={nameDraft?.sessionId === session.id ? nameDraft.name : session.name}
 						onChange={setSessionName}
+						onBlur={() => commitSessionName(pendingName.current)}
 						maxLength={200}
 					/>
 				</div>

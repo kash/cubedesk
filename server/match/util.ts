@@ -1,6 +1,11 @@
 import {MatchConst} from '@/client/shared/match/consts';
 import {getSocketIO} from '@/server/match/init';
-import {createRedisKey, getValueFromRedis, keyExistsInRedis, RedisNamespace, setKeyInRedis} from '@/server/services/redis';
+import {
+	createRedisKey,
+	getValueFromRedis,
+	RedisNamespace,
+	setKeyInRedis,
+} from '@/server/services/redis';
 import {getMeWithCookieString} from '@/server/util/auth';
 import {PublicUserAccount} from '@/types/user';
 import {RemoteSocket, Socket} from 'socket.io';
@@ -99,36 +104,24 @@ export async function getUserFromClient(client: SocketType): Promise<PublicUserA
 	}
 
 	const redisKey = createRedisKey(RedisNamespace.SOCKET_IO_CLIENT_USER, client.id);
-	const existsInRedis = await keyExistsInRedis(redisKey);
-
-	// Set the user in Redis if it doesn't exist
-	if (!existsInRedis) {
-		const user = await getMeWithCookieString(client.handshake.headers.cookie);
-		if (!user) {
-			return null;
-		}
-
-		const basicUser = getBasicUser(user);
-
-		// Two days in seconds
-		const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
-
-		await setKeyInRedis(
-			createRedisKey(RedisNamespace.SOCKET_IO_CLIENT_USER, client.id),
-			JSON.stringify(basicUser),
-			ONE_DAY_IN_SECONDS
-		);
-
-		return basicUser;
+	const userJson = await getValueFromRedis(redisKey);
+	if (userJson) {
+		return JSON.parse(userJson);
 	}
 
-	const userJson = await getValueFromRedis(createRedisKey(RedisNamespace.SOCKET_IO_CLIENT_USER, client.id));
-	if (!userJson) {
-		// The key expired between the existence check and the read
+	const user = await getMeWithCookieString(client.handshake.headers.cookie);
+	if (!user) {
 		return null;
 	}
 
-	return JSON.parse(userJson);
+	const basicUser = getBasicUser(user);
+
+	// Two days in seconds
+	const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
+
+	await setKeyInRedis(redisKey, JSON.stringify(basicUser), ONE_DAY_IN_SECONDS);
+
+	return basicUser;
 }
 
 export async function getUsersInRoom(room: string) {

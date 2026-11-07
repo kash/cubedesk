@@ -45,18 +45,21 @@ export function adminMetricsRangeQueries(start: Date, end: Date) {
 			WHERE created_at >= ${start} AND created_at < ${end}`,
 		accountTotal: Prisma.sql`SELECT count(*) AS count FROM user_account
 			WHERE created_at >= ${start} AND created_at < ${end}`,
-		// Reduce solves to user/puzzle/activity groups once. The same rows supply
-		// volume, DAU/WAU/MAU and the breakdown, without three overlapping scans
+		// Reduce solves to user/activity/training session groups once. The same rows supply
+		// volume, DAU/WAU/MAU and trainer usage, without overlapping scans
 		// or DISTINCT sorts over 90 days of raw solves. Imports need only one group.
-		solves: Prisma.sql`SELECT bulk,
-			CASE WHEN NOT bulk THEN user_id END AS "userId",
-			CASE WHEN NOT bulk THEN event_type END AS "eventType",
-			CASE WHEN bulk THEN NULL
-				WHEN match_id IS NOT NULL THEN '1v1'
-				WHEN NULLIF(trainer_name, '') IS NOT NULL THEN 'trainer'
-				WHEN from_timer THEN 'timer' ELSE 'other' END AS category,
+		solves: Prisma.sql`SELECT bulk, "userId", category,
+			CASE WHEN category = 'trainer' THEN session END AS session,
 			count(*) AS solves
-			FROM solve WHERE created_at >= ${start} AND created_at < ${end}
+			FROM (SELECT bulk,
+				CASE WHEN NOT bulk THEN user_id END AS "userId",
+				NULLIF(training_session_id, '') AS session,
+				CASE WHEN bulk THEN NULL
+					WHEN match_id IS NOT NULL THEN '1v1'
+					WHEN NULLIF(trainer_name, '') IS NOT NULL
+						OR NULLIF(training_session_id, '') IS NOT NULL THEN 'trainer'
+					WHEN from_timer THEN 'timer' ELSE 'other' END AS category
+				FROM solve WHERE created_at >= ${start} AND created_at < ${end}) AS grouped
 			GROUP BY 1, 2, 3, 4`,
 		demos: Prisma.sql`SELECT NULLIF(demo_session_id, '') AS session, count(*) AS solves
 			FROM demo_solve WHERE created_at >= ${start} AND created_at < ${end}
@@ -81,8 +84,8 @@ function isQueryTimeout(error: unknown): boolean {
 type SolveGroup = {
 	bulk: boolean;
 	userId: string | null;
-	eventType: string | null;
 	category: SolveCategory | null;
+	session: string | null;
 	solves: bigint;
 };
 
@@ -228,7 +231,6 @@ export async function buildAdminMetrics(
 	const {start, week, month} = metricsWindow(cutoff);
 	const weeklyUsers = new Set<string>();
 	const monthlyUsers = new Set<string>();
-	const breakdown = new Map<string, AdminMetricsSnapshot['breakdown'][number]>();
 	const days: AdminMetricsDay[] = [];
 	for (let i = 0; i < METRICS_HISTORY_DAYS; i++) {
 		const from = new Date(start.getTime() + i * DAY_MS);
@@ -244,10 +246,13 @@ export async function buildAdminMetrics(
 			demoSolves: 0,
 			demoSessions: 0,
 			signups: 0,
+			trainerSolves: 0,
+			trainerSessions: 0,
 		};
 		// Keep only one day's identities, plus distinct users for the rolling
 		// windows. Dedupe across split batches, puzzles, and activities as well.
 		const dailyUsers = new Set<string>();
+		const dailyTrainerSessions = new Set<string>();
 		for await (const rows of rangeQuery<SolveGroup>('solves', from, end)) {
 			for (const row of rows) {
 				if (row.bulk) {
@@ -260,14 +265,13 @@ export async function buildAdminMetrics(
 					if (from >= week) weeklyUsers.add(row.userId);
 					if (from >= month) monthlyUsers.add(row.userId);
 				}
-				const category = row.category!;
-				const key = JSON.stringify([row.eventType, category]);
-				const group = breakdown.get(key) ?? {eventType: row.eventType, category, solves: 0};
-				group.solves = count(group.solves + count(row.solves));
-				breakdown.set(key, group);
+				if (row.category !== 'trainer') continue;
+				day.trainerSolves = count(day.trainerSolves + count(row.solves));
+				if (row.session !== null) dailyTrainerSessions.add(row.session);
 			}
 		}
 		day.activeUsers = dailyUsers.size;
+		day.trainerSessions = dailyTrainerSessions.size;
 		const demoSessions = new Set<string>();
 		for await (const rows of rangeQuery<{session: string | null; solves: bigint}>(
 			'demos',
@@ -299,7 +303,7 @@ export async function buildAdminMetrics(
 	}
 	assertActive();
 	return {
-		version: 3,
+		version: 4,
 		cutoff: cutoff.toISOString(),
 		completedAt: new Date().toISOString(),
 		totals: {
@@ -314,17 +318,5 @@ export async function buildAdminMetrics(
 			monthly: monthlyUsers.size,
 		},
 		days,
-		breakdown: [...breakdown.values()].sort(
-			(a, b) =>
-				b.solves - a.solves ||
-				(a.eventType === b.eventType
-					? 0
-					: a.eventType === null
-						? 1
-						: b.eventType === null
-							? -1
-							: a.eventType.localeCompare(b.eventType)) ||
-				a.category.localeCompare(b.category),
-		),
 	};
 }

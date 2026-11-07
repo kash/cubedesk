@@ -53,7 +53,10 @@ export default function Stats() {
 	}, [loggedIn]);
 
 	const urlParams = new URLSearchParams(window.location.search);
-	const tabId = urlParams.get(EVENT_TYPE_QUERY_PARAM) || urlParams.get(LEGACY_EVENT_TYPE_QUERY_PARAM) || ALL_TAB_ID;
+	const tabId =
+		urlParams.get(EVENT_TYPE_QUERY_PARAM) ||
+		urlParams.get(LEGACY_EVENT_TYPE_QUERY_PARAM) ||
+		ALL_TAB_ID;
 
 	const solveUpdate = useSolveDb();
 
@@ -64,12 +67,10 @@ export default function Stats() {
 	}, [solveUpdate]);
 
 	const all = tabId === ALL_TAB_ID;
-	const filterOptions: FilterSolvesOptions = {
-		from_timer: true,
-	};
-	if (!all) {
-		filterOptions.event_type = tabId;
-	}
+	const filterOptions = useMemo<FilterSolvesOptions>(
+		() => (all ? {from_timer: true} : {from_timer: true, event_type: tabId}),
+		[all, tabId],
+	);
 
 	const eventTypeTabs = eventTypes.reduce<HorizontalNavTab[]>((acc, ct) => {
 		const eventType = getEventTypeInfoById(ct.event_type);
@@ -100,12 +101,15 @@ export default function Stats() {
 		body = <CubeStats />;
 	}
 
-	const context: IStatsContext = {
-		all,
-		eventType: getEventTypeInfoById(tabId),
-		filterOptions,
-		stats: stats || ({} as StatsSchema),
-	};
+	const context = useMemo<IStatsContext>(
+		() => ({
+			all,
+			eventType: getEventTypeInfoById(tabId),
+			filterOptions,
+			stats: stats || ({} as StatsSchema),
+		}),
+		[all, tabId, filterOptions, stats],
+	);
 
 	return (
 		<StatsContext.Provider value={context}>

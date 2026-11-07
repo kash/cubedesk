@@ -1,4 +1,4 @@
-import {getSettings} from '@/db/settings/query';
+import {getSetting} from '@/db/settings/query';
 import {CUBE_SCRAMBLES, ScrambleType} from '@/util/cubes/cube_scrambles';
 import {EVENT_TYPES, EventType} from '@/util/cubes/event_types';
 
@@ -12,11 +12,19 @@ export function getDefaultEventTypes(): EventType[] {
 }
 
 // Combines default event types and customer event types as a map
+let allEventTypesSource: unknown;
+let allEventTypesMap: Record<string, EventType> | null = null;
+
 function getAllEventTypesAsMap(): Record<string, EventType> {
-	return {
-		...getCustomEventTypeAsMap(),
-		...EVENT_TYPES,
-	};
+	const customEventTypes = getSetting('custom_event_types');
+	if (!allEventTypesMap || allEventTypesSource !== customEventTypes) {
+		allEventTypesSource = customEventTypes;
+		allEventTypesMap = {
+			...getCustomEventTypeAsMap(),
+			...EVENT_TYPES,
+		};
+	}
+	return allEventTypesMap;
 }
 
 // Combines default event types and custom event types
@@ -69,7 +77,7 @@ export function getEventTypeName(id: string): string | undefined {
 }
 
 function getCustomEventTypes(): EventType[] {
-	const customEventTypes = getSettings()?.custom_event_types;
+	const customEventTypes = getSetting('custom_event_types');
 
 	if (!customEventTypes) {
 		return [];

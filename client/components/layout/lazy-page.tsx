@@ -4,6 +4,7 @@ type AnyComponent = ComponentType<any>;
 
 export type LazyPage = AnyComponent & {
 	load: () => Promise<AnyComponent>;
+	source: string;
 };
 
 /**
@@ -12,7 +13,7 @@ export type LazyPage = AnyComponent & {
  * the server markup matches the first client render. Pages reached later through client-side navigation
  * suspend while their chunk loads.
  */
-export function lazyPage(loader: () => Promise<{default: AnyComponent}>): LazyPage {
+export function lazyPage(loader: () => Promise<{default: AnyComponent}>, source: string): LazyPage {
 	let Loaded: AnyComponent | null = null;
 	let loading: Promise<AnyComponent> | null = null;
 
@@ -48,7 +49,7 @@ export function lazyPage(loader: () => Promise<{default: AnyComponent}>): LazyPa
 		);
 	}
 
-	return Object.assign(Page, {load});
+	return Object.assign(Page, {load, source});
 }
 
 export function isLazyPage(component: unknown): component is LazyPage {

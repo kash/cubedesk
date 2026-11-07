@@ -4,8 +4,10 @@ import {
 	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuLabel,
 	DropdownMenuRadioGroup,
 	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {cn} from '@/util/cn';
@@ -18,6 +20,7 @@ export interface ActionMenuOption {
 	text: string;
 	checkbox?: boolean;
 	radio?: boolean;
+	heading?: boolean;
 	link?: string;
 	// Opens the link in a new tab
 	newTab?: boolean;
@@ -125,6 +128,15 @@ export default function ActionMenu(props: ActionMenuProps) {
 								{options
 									.filter((option) => !option.hidden)
 									.map((option, index) => {
+										if (option.heading)
+											return (
+												<React.Fragment key={index}>
+													{index > 0 && <DropdownMenuSeparator />}
+													<DropdownMenuLabel>
+														{option.text}
+													</DropdownMenuLabel>
+												</React.Fragment>
+											);
 										const body = (
 											<>
 												{option.icon}

@@ -33,7 +33,7 @@ const isDev = env === 'development';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-BigInt.prototype.toJSON = function() {
+BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
 
@@ -82,7 +82,21 @@ initLogger();
 
 // Pages and tRPC responses (solve lists of heavy users can be tens of megabytes of repetitive JSON)
 app.use(compression());
-app.use(bodyParser.json({limit: '200mb', inflate: false}));
+const LARGE_BODY_PROCEDURES = [
+	'imports.',
+	'profile.upload',
+	'timerBackground.',
+	'bulkActions.',
+	'adminTrainer.',
+];
+const largeJsonParser = bodyParser.json({limit: '200mb', inflate: false});
+const defaultJsonParser = bodyParser.json({limit: '10mb', inflate: false});
+app.use((req, res, next) => {
+	const acceptsLargeBody =
+		req.path.startsWith('/trpc/') &&
+		LARGE_BODY_PROCEDURES.some((name) => req.path.includes(name));
+	return (acceptsLargeBody ? largeJsonParser : defaultJsonParser)(req, res, next);
+});
 app.use(cookieParser());
 
 exposeResourcesForSearchEngines();
@@ -109,7 +123,7 @@ if (!isDev && sentryDsn) {
 		dsn: sentryDsn,
 		release: process.env.RELEASE_NAME,
 		tracesSampleRate: 0.1,
-		environment: env
+		environment: env,
 	});
 }
 
@@ -121,7 +135,7 @@ function createServer() {
 	if (isDev && process.env.HTTPS === 'true') {
 		const options = {
 			key: fs.readFileSync('./certs/server.key'),
-			cert: fs.readFileSync('./certs/server.cert')
+			cert: fs.readFileSync('./certs/server.cert'),
 		};
 
 		return https.createServer(options, app);
@@ -141,13 +155,22 @@ function createServer() {
 			responseMeta({paths, type, errors}) {
 				// The trainer catalog is the same for everyone and rarely changes. The client requests it on its own
 				// (unbatched) so the URL is stable and the browser can reuse it.
-				if (type === 'query' && !errors.length && paths?.length === 1 && paths[0] === 'trainer.algorithms') {
-					return {headers: {'cache-control': 'private, max-age=3600, stale-while-revalidate=604800'}};
+				if (
+					type === 'query' &&
+					!errors.length &&
+					paths?.length === 1 &&
+					paths[0] === 'trainer.algorithms'
+				) {
+					return {
+						headers: {
+							'cache-control': 'private, max-age=3600, stale-while-revalidate=604800',
+						},
+					};
 				}
 
 				return {};
 			},
-		})
+		}),
 	);
 
 	// Setup code
@@ -166,7 +189,7 @@ function createServer() {
 		initSocket(server);
 	} catch (e) {
 		logger.error('Could not initiate critical service', {
-			error: e
+			error: e,
 		});
 	}
 })();

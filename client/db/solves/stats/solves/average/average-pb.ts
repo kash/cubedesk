@@ -1,8 +1,11 @@
 import {fetchSolves, FilterSolvesOptions} from '@/db/solves/query';
-import {getAverage} from '@/db/solves/stats/solves/average/get-average';
-import {cacheSolveStat, fetchSolveCache, SolveCacheKey, SolveStatInput} from '@/db/solves/stats/solves/caching';
-import {Solve} from '@/types/solve';
-import SortedArray from '@/util/sorted-array';
+import {forEachWindowAverage} from '@/db/solves/stats/solves/average/sliding';
+import {
+	cacheSolveStat,
+	fetchSolveCache,
+	SolveCacheKey,
+	SolveStatInput,
+} from '@/db/solves/stats/solves/caching';
 
 export function getAveragePB(filterOptions: FilterSolvesOptions, count: number) {
 	const cacheKey: SolveCacheKey = {
@@ -23,33 +26,25 @@ export function getAveragePB(filterOptions: FilterSolvesOptions, count: number) 
 		return null;
 	}
 
-	const firstSolves = allSolves.slice(0, count);
-	const sortedTimes = new SortedArray(firstSolves.map((solve) => solve.time));
-
-	let bestList: Solve[] = [...firstSolves];
-	let best = getAverage(firstSolves);
-
-	for (let i = 1; i < allSolves.length - count; i++) {
-		const dropSolve = allSolves[i - 1];
-		const addSolve = allSolves[i + count - 1];
-
-		sortedTimes.remove(dropSolve.time);
-		sortedTimes.insert(addSolve.time);
-
-		const avg = getAverage(sortedTimes.array);
-
-		if (avg > 0 && (best <= 0 || avg < best)) {
-			best = avg;
-			bestList = allSolves.slice(i, i + count);
-		}
-	}
+	let best = 0;
+	let bestStart = 0;
+	forEachWindowAverage(
+		allSolves.map((solve) => solve.time),
+		count,
+		(avg, start) => {
+			if (start === 0 || (avg > 0 && (best <= 0 || avg < best))) {
+				best = avg;
+				bestStart = start;
+			}
+		},
+	);
 
 	if (best <= 0) {
 		return null;
 	}
 
 	const result: SolveStatInput = {
-		solves: bestList,
+		solves: allSolves.slice(bestStart, bestStart + count),
 		time: best,
 	};
 

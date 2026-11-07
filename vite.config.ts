@@ -34,11 +34,26 @@ function legacyCssLayerPlugin(): Plugin {
 	};
 }
 
-const deploymentId = process.env.DEPLOYMENT_ID || 'app';
 const distBase = process.env.DIST_BASE_URI || '/dist';
 const resourceBase = process.env.RESOURCES_BASE_URI || '/public';
 const baseUri = process.env.BASE_URI || '';
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
+
+const VENDOR_CHUNKS: [string, RegExp][] = [
+	['react', /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/],
+	['sentry', /[\\/]node_modules[\\/]@sentry(-internal)?[\\/]/],
+	['trpc', /[\\/]node_modules[\\/](@trpc|@tanstack)[\\/]/],
+	['radix', /[\\/]node_modules[\\/]@radix-ui[\\/]/],
+	['dexie', /[\\/]node_modules[\\/]dexie[\\/]/],
+	[
+		'socketio',
+		/[\\/]node_modules[\\/](socket\.io-client|socket\.io-parser|engine\.io-client|engine\.io-parser)[\\/]/,
+	],
+];
+
+function getVendorChunk(id: string): string | undefined {
+	return VENDOR_CHUNKS.find(([, pattern]) => pattern.test(id))?.[0];
+}
 
 export default defineConfig(({command, isSsrBuild}) => {
 	const env = process.env.ENV || (command === 'build' ? 'production' : 'development');
@@ -51,6 +66,7 @@ export default defineConfig(({command, isSsrBuild}) => {
 			copyPublicDir: false,
 			cssCodeSplit: false,
 			emptyOutDir: true,
+			manifest: !isSsrBuild,
 			outDir,
 			...(isSsrBuild ? {target: 'node24', minify: false} : {}),
 			rollupOptions: {
@@ -69,15 +85,10 @@ export default defineConfig(({command, isSsrBuild}) => {
 							chunkFileNames: '[name]-[hash].cjs',
 						}
 					: {
-							assetFileNames(assetInfo) {
-								if (assetInfo.name?.endsWith('.css')) {
-									return `${deploymentId}.min.css`;
-								}
-
-								return 'assets/[name]-[hash][extname]';
-							},
+							assetFileNames: 'assets/[name]-[hash][extname]',
 							chunkFileNames: 'assets/[name]-[hash].js',
-							entryFileNames: `${deploymentId}.min.js`,
+							entryFileNames: 'assets/[name]-[hash].js',
+							manualChunks: getVendorChunk,
 						},
 			},
 			sourcemap: 'hidden',

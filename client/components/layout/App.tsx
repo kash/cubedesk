@@ -8,9 +8,11 @@ import TopNav from '@/components/layout/TopNav';
 import Wrapper from '@/components/layout/wrapper/Wrapper';
 import {DemoImportProvider} from '@/components/login/DemoImport';
 import {UserAccount} from '@/types/user';
+import {loadTimerFont} from '@/util/fonts/timer_font';
 import {useDemoSolveWarning} from '@/util/hooks/useDemoSolveWarning';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useMe} from '@/util/hooks/useMe';
+import {useSettings} from '@/util/hooks/useSettings';
 import {initPageTitleBlink} from '@/util/page_title_blink';
 import {initSocketIO} from '@/util/socket/socketio';
 import React, {ReactNode, useEffect, useLayoutEffect} from 'react';
@@ -62,7 +64,14 @@ function AppContent(props: Props) {
 	const dispatch = useDispatch();
 	const appLoaded = useGeneral('app_loaded');
 	const me = useMe();
+	const timerFontFamily = useSettings('timer_font_family');
 	useDemoSolveWarning(!me && appLoaded);
+
+	useEffect(() => {
+		if (appLoaded) {
+			loadTimerFont(timerFontFamily);
+		}
+	}, [appLoaded, timerFontFamily]);
 
 	function appInitiated() {
 		setBrowserSessionId(dispatch);

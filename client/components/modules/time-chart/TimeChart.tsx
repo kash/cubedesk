@@ -30,7 +30,7 @@ export default function TimeChart({filterOptions, dummy}: Props) {
 				);
 		// Serialized filters and the mutable database revision invalidate the query.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dummy, filterStr, filterOptions, solveUpdate]);
+	}, [dummy, filterStr, solveUpdate]);
 
 	if (!data.length) {
 		return <Empty text="No dated completed solves yet" centered />;

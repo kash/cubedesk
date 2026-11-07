@@ -1,5 +1,5 @@
 import {Button} from '@/components/ui/button';
-import * as Sentry from '@sentry/browser';
+import {captureException} from '@/util/sentry';
 import React, {ErrorInfo, ReactNode} from 'react';
 
 interface Props {
@@ -22,7 +22,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
 	}
 
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-		Sentry.captureException(error, {
+		captureException(error, {
 			contexts: {
 				react: {componentStack: errorInfo.componentStack},
 			},

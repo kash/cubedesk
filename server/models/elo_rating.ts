@@ -1,6 +1,5 @@
 import {getPrisma} from '@/server/database';
 import {EloConst} from '@/server/match/pair/elo/calc_elo';
-import {getUserByIdWithProfile} from '@/server/models/user_account';
 
 const ELO_COLUMN_PREFIX = 'elo_';
 const GAMES_COLUMN_PREFIX = 'games_';
@@ -12,15 +11,18 @@ export interface UserEloForEventType {
 }
 
 async function createEloRating(userId: string) {
-	const user = await getUserByIdWithProfile(userId);
-	if (!user?.profile) {
+	const profile = await getPrisma().profile.findUnique({
+		where: {user_id: userId},
+		select: {id: true},
+	});
+	if (!profile) {
 		throw new Error(`Cannot create ELO rating: user ${userId} or their profile not found`);
 	}
 
 	return getPrisma().eloRating.create({
 		data: {
-			user_id: user.id,
-			profile_id: user.profile.id,
+			user_id: userId,
+			profile_id: profile.id,
 			elo_overall_rating: EloConst.ELO_STARTING_VALUE,
 			elo_222_rating: EloConst.ELO_STARTING_VALUE,
 			elo_333_rating: EloConst.ELO_STARTING_VALUE,
@@ -29,7 +31,10 @@ async function createEloRating(userId: string) {
 	});
 }
 
-export async function getUserEloRatingByEventType(userId: string, eventType: string): Promise<UserEloForEventType> {
+export async function getUserEloRatingByEventType(
+	userId: string,
+	eventType: string,
+): Promise<UserEloForEventType> {
 	const rating = await getUserEloRating(userId);
 	const elo: number = rating[getEloRatingColumnNameFromEventType(eventType)];
 	const games: number = rating[getGameCountColumnNameFromEventType(eventType)];

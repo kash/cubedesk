@@ -5,7 +5,7 @@ import {PublicUserAccount} from '@/types/user';
 interface CreateChatMessageInput {
 	id: string;
 	user: PublicUserAccount;
-	match: Match;
+	match: Pick<Match, 'match_session_id'>;
 	badWords: boolean;
 	rawMessage: string;
 	message: string;

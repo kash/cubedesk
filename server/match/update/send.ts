@@ -5,7 +5,7 @@ import {Match} from '@/types/match';
 
 export function emitMatchUpdate<T extends keyof ServerToClientEvents>(
 	socketEvent: T,
-	match: Match,
+	match: Pick<Match, 'id'>,
 	...data: Parameters<ServerToClientEvents[T]>
 ) {
 	const playersRoom = getMatchPlayersRoomName(match);
@@ -16,8 +16,8 @@ export function emitMatchUpdate<T extends keyof ServerToClientEvents>(
 
 	getSocketIO()
 		.to(playersRoom)
-		.emit(socketEvent, ...parsedData as any);
+		.emit(socketEvent, ...(parsedData as any));
 	getSocketIO()
 		.to(spectatorsRoom)
-		.emit(socketEvent, ...parsedData as any);
+		.emit(socketEvent, ...(parsedData as any));
 }

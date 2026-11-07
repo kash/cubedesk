@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "generatorVersion": "1.0.0",
-  "generatedAt": "2026-10-12T20:22:06.565Z",
-  "outputPath": "/home/user/cubedesk/generated/zod",
+  "generatedAt": "2026-10-25T20:50:58.921Z",
+  "outputPath": "/Users/kash/Developer/cubedesk/generated/zod",
   "files": [
     "schemas/enums/TransactionIsolationLevel.schema.ts",
     "schemas/enums/UserAccountScalarFieldEnum.schema.ts",

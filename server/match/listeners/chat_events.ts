@@ -1,5 +1,5 @@
 import {MatchConst} from '@/client/shared/match/consts';
-import {getParticipantMatch} from '@/server/match/authorization';
+import {getParticipantMatchRef} from '@/server/match/authorization';
 import {SocketClient} from '@/server/match/init';
 import {onProtectedSocketEvent, socketIdSchema} from '@/server/match/socket_event';
 import {emitMatchUpdate} from '@/server/match/update/send';
@@ -23,7 +23,7 @@ export function listenForChatEvents(client: SocketClient) {
 		async (user, data) => {
 			const {matchId, message, rawMessage, badWords} = data;
 
-			const match = await getParticipantMatch(user, matchId);
+			const match = await getParticipantMatchRef(user, matchId);
 			if (!match) {
 				return;
 			}

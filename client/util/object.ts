@@ -1,15 +1,25 @@
-import _ from 'lodash';
+function omitDeep(value: unknown, excludeKeys: string[]): unknown {
+	if (Array.isArray(value)) {
+		return value.map((item) => omitDeep(item, excludeKeys));
+	}
 
-function omitDeep(collection: object, excludeKeys: string[]) {
-	function omitFn(value) {
-		if (value && typeof value === 'object') {
-			excludeKeys.forEach((key) => {
-				delete value[key];
-			});
+	if (!value || typeof value !== 'object') {
+		return value;
+	}
+
+	const prototype = Object.getPrototypeOf(value);
+	if (prototype !== Object.prototype && prototype !== null) {
+		return value;
+	}
+
+	const output: Record<string, unknown> = {};
+	for (const [key, child] of Object.entries(value)) {
+		if (!excludeKeys.includes(key)) {
+			output[key] = omitDeep(child, excludeKeys);
 		}
 	}
 
-	return _.cloneDeepWith(collection, omitFn);
+	return output;
 }
 
 // Strips legacy GraphQL __typename keys (still present in old exported/offline data)

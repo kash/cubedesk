@@ -1,6 +1,10 @@
 import type {Stats} from '@/types/stats';
 import type {StatsModule, StatsModuleBlock} from '@/types/stats-module';
-import {getSettingsByUserId, getStatsModuleFromSettings, setSettingByUserId} from '@/server/models/settings';
+import {
+	getSettingsByUserId,
+	getStatsModuleFromSettings,
+	setSettingByUserId,
+} from '@/server/models/settings';
 import {protectedProcedure, router} from '@/server/trpc/trpc';
 import {z} from 'zod';
 
@@ -20,46 +24,51 @@ export const statsRouter = router({
 	overview: protectedProcedure.query(async ({ctx}): Promise<Stats> => {
 		const {prisma, user} = ctx;
 
-		const [participations, friendCount, profileViews, matchSolveCount, solveViews] = await Promise.all([
-			prisma.matchParticipant.findMany({
-				include: {
-					match: true,
-				},
-				where: {
-					user_id: user.id,
-					match: {
-						NOT: [
-							{
-								winner_id: null,
-							},
-						],
+		const [participations, friendCount, profileViews, matchSolveCount, solveViews] =
+			await Promise.all([
+				prisma.matchParticipant.findMany({
+					select: {
+						won: true,
+						lost: true,
 					},
-				},
-			}),
-			prisma.friendship.count({
-				where: {
-					user_id: user.id,
-				},
-			}),
-			prisma.profileView.count({
-				where: {
-					profile_user_id: user.id,
-				},
-			}),
-			prisma.solve.count({
-				where: {
-					user_id: user.id,
-					NOT: {
-						match_id: null,
+					orderBy: {
+						created_at: 'asc',
 					},
-				},
-			}),
-			prisma.solveView.count({
-				where: {
-					user_id: user.id,
-				},
-			}),
-		]);
+					where: {
+						user_id: user.id,
+						match: {
+							NOT: [
+								{
+									winner_id: null,
+								},
+							],
+						},
+					},
+				}),
+				prisma.friendship.count({
+					where: {
+						user_id: user.id,
+					},
+				}),
+				prisma.profileView.count({
+					where: {
+						profile_user_id: user.id,
+					},
+				}),
+				prisma.solve.count({
+					where: {
+						user_id: user.id,
+						NOT: {
+							match_id: null,
+						},
+					},
+				}),
+				prisma.solveView.count({
+					where: {
+						user_id: user.id,
+					},
+				}),
+			]);
 
 		let maxWinStreak = 0;
 		let tempWinStreak = 0;
@@ -79,8 +88,8 @@ export const statsRouter = router({
 				matchesLost++;
 			}
 
-			tempWinStreak = 0;
 			maxWinStreak = Math.max(maxWinStreak, tempWinStreak);
+			tempWinStreak = 0;
 		}
 		maxWinStreak = Math.max(maxWinStreak, tempWinStreak);
 
@@ -102,7 +111,7 @@ export const statsRouter = router({
 		.input(
 			z.object({
 				blocks: z.array(statsModuleBlockSchema),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const statsModule = (await getStatsModuleByUserId(ctx.user.id)) ?? {blocks: []};

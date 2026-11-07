@@ -1,5 +1,4 @@
 import type {Prisma} from '@/generated/prisma/client';
-import {getSolve} from '@/server/models/solve';
 import {
 	deleteTopAverage,
 	deleteTopAverageById,
@@ -36,25 +35,34 @@ const topAverageInclude = {
 	},
 } satisfies Prisma.TopAverageInclude;
 
-const notBannedWhere = {
-	user: {
-		banned_forever: false,
-	},
-	OR: [
-		{
-			user: {
-				banned_until: null,
-			},
+function notBannedWhere() {
+	return {
+		user: {
+			banned_forever: false,
 		},
-		{
-			user: {
-				banned_until: {
-					lt: new Date(),
+		OR: [
+			{
+				user: {
+					banned_until: null,
 				},
 			},
-		},
-	],
-};
+			{
+				user: {
+					banned_until: {
+						lt: new Date(),
+					},
+				},
+			},
+		],
+	};
+}
+
+const publishableSolveSelect = {
+	id: true,
+	user_id: true,
+	time: true,
+	event_type: true,
+} satisfies Prisma.SolveSelect;
 
 const leaderboardsInputSchema = z.object({
 	eventType: z.string(),
@@ -66,7 +74,7 @@ export const leaderboardsRouter = router({
 		const topSolves = await ctx.prisma.topSolve.findMany({
 			where: {
 				event_type: input.eventType,
-				...notBannedWhere,
+				...notBannedWhere(),
 			},
 			orderBy: {
 				time: 'asc',
@@ -86,7 +94,7 @@ export const leaderboardsRouter = router({
 		const topAverages = await ctx.prisma.topAverage.findMany({
 			where: {
 				event_type: input.eventType,
-				...notBannedWhere,
+				...notBannedWhere(),
 			},
 			orderBy: {
 				time: 'asc',
@@ -110,12 +118,15 @@ export const leaderboardsRouter = router({
 		.input(
 			z.object({
 				solveId: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const {user} = ctx;
 
-			const solve = await getSolve(input.solveId);
+			const solve = await ctx.prisma.solve.findUnique({
+				where: {id: input.solveId},
+				select: publishableSolveSelect,
+			});
 			if (!solve || solve.user_id !== user.id) {
 				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid solve'});
 			}
@@ -128,17 +139,21 @@ export const leaderboardsRouter = router({
 		.input(
 			z.object({
 				solveIds: z.array(z.string()).length(5, 'Invalid solve IDs'),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const {user} = ctx;
 
-			const solves = await Promise.all(input.solveIds.map((id) => getSolve(id)));
-
-			const validSolves = solves.filter(
-				(solve): solve is NonNullable<(typeof solves)[number]> => !!solve && solve.user_id === user.id
-			);
-			if (validSolves.length !== solves.length) {
+			const found = await ctx.prisma.solve.findMany({
+				where: {id: {in: input.solveIds}, user_id: user.id},
+				select: publishableSolveSelect,
+			});
+			const byId = new Map(found.map((solve) => [solve.id, solve]));
+			const validSolves = input.solveIds.flatMap((id) => {
+				const solve = byId.get(id);
+				return solve ? [solve] : [];
+			});
+			if (validSolves.length !== input.solveIds.length) {
 				throw new TRPCError({code: 'BAD_REQUEST', message: 'Invalid solve IDs'});
 			}
 
@@ -150,7 +165,7 @@ export const leaderboardsRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const topSolve = await ctx.prisma.topSolve.findUnique({
@@ -170,7 +185,7 @@ export const leaderboardsRouter = router({
 		.input(
 			z.object({
 				id: z.string(),
-			})
+			}),
 		)
 		.mutation(async ({ctx, input}) => {
 			const topAverage = await ctx.prisma.topAverage.findUnique({
@@ -192,7 +207,7 @@ export const leaderboardsRouter = router({
 				page: z.number().int().min(0).default(0),
 				pageSize: z.number().int().min(1).max(100).default(25),
 				searchQuery: z.string().max(250).default(''),
-			})
+			}),
 		)
 		.query(({input}) =>
 			getPaginatedResponse<EloRatingWithUser>({
@@ -202,6 +217,6 @@ export const leaderboardsRouter = router({
 					orderBy: [{elo_333_rating: 'desc'}, {id: 'asc'}],
 					include: eloRatingWithUserInclude,
 				},
-			})
+			}),
 		),
 });

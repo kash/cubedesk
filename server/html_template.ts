@@ -1,20 +1,26 @@
+import {getTimerFontHeadTags} from '@/util/fonts/timer_font';
 import {DEFAULT_THEME_COLORS, getBlockingThemeInitScript} from '@/util/themes/theme_init';
 
-export interface HtmlPagePayload {
-	html: string;
-	cleanState: string;
-	headTags: string;
+export const STATE_PLACEHOLDER = '__CUBEDESK_STATE__';
+export const PRELOAD_PLACEHOLDER = '<!--preload-links-->';
+export const HEAD_TAGS_PLACEHOLDER = '<!--head-tags-->';
+export const APP_HTML_PLACEHOLDER = '<!--app-html-->';
+
+export interface HtmlTemplateAssets {
 	distBase: string;
 	resourceBase: string;
-	cssFileName: string;
-	jsFileName: string;
+	jsFile: string;
+	cssFiles: string[];
 }
 
-export default (payload: HtmlPagePayload) => {
-	const {html, cleanState, headTags, distBase, resourceBase, cssFileName, jsFileName} = payload;
+export function getAssetUri(distBase: string, fileName: string): string {
+	return `${distBase.replace(/\/$/, '')}/${fileName}`;
+}
+
+export default (assets: HtmlTemplateAssets) => {
+	const {distBase, resourceBase, jsFile, cssFiles} = assets;
 
 	const isDev = (process.env.ENV || 'development') === 'development';
-	const fallbackTitle = headTags.includes('<title') ? '' : '<title>CubeDesk</title>';
 	const baseUri = process.env.BASE_URI || 'https://www.cubedesk.io';
 	// Google reads WebSite structured data from the homepage to pick the site name shown in search results
 	const siteNameJsonLd = JSON.stringify({
@@ -23,12 +29,11 @@ export default (payload: HtmlPagePayload) => {
 		name: 'CubeDesk',
 		url: `${baseUri}/`,
 	});
-	const assetBase = distBase.replace(/\/$/, '');
 	const brandingBase = `${resourceBase.replace(/\/$/, '')}/images/branding`;
-	const assetUri = (fileName: string) => `${assetBase}/${fileName}`;
+	const assetUri = (fileName: string) => getAssetUri(distBase, fileName);
 	const cssLink = isDev
 		? '<link rel="stylesheet" href="/client/styles/index.css?direct">'
-		: `<link rel="stylesheet" href="${assetUri(cssFileName)}">`;
+		: cssFiles.map((file) => `<link rel="stylesheet" href="${assetUri(file)}">`).join('');
 	const clientScripts = isDev
 		? `<script type="module">
 				import RefreshRuntime from '/@react-refresh';
@@ -39,7 +44,7 @@ export default (payload: HtmlPagePayload) => {
 			</script>
 			<script type="module" src="/@vite/client"></script>
 			<script type="module" src="/client/components/App.tsx"></script>`
-		: `<script type="module" data-cfasync="false" src="${assetUri(jsFileName)}"></script>`;
+		: `<script type="module" data-cfasync="false" src="${assetUri(jsFile)}"></script>`;
 
 	return `
 		<!DOCTYPE html>
@@ -57,15 +62,14 @@ export default (payload: HtmlPagePayload) => {
 					}
 				</style>
 				<script type="text/javascript" data-cfasync="false">
-					window.__STORE__ = ${cleanState};
+					window.__STORE__ = ${STATE_PLACEHOLDER};
 				</script>
 				<script type="text/javascript" data-cfasync="false">
 					${getBlockingThemeInitScript()}
 				</script>
-				<link rel="preconnect" href="https://fonts.gstatic.com">
-				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans&family=JetBrains+Mono&family=Kiwi+Maru&family=Montserrat&family=Poppins&family=Roboto+Mono&family=Space+Mono&display=swap">
-				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,900&display=swap">
 				${cssLink}
+				${PRELOAD_PLACEHOLDER}
+				${getTimerFontHeadTags()}
 				<link rel="icon" href="${brandingBase}/favicon.ico" type="image/x-icon">
 				<link rel="icon" href="${brandingBase}/favicon-32x32.png" type="image/png" sizes="32x32">
 				<link rel="icon" href="${brandingBase}/favicon-16x16.png" type="image/png" sizes="16x16">
@@ -85,12 +89,11 @@ export default (payload: HtmlPagePayload) => {
 				<meta property="og:site_name" content="CubeDesk">
 				<script type="application/ld+json">${siteNameJsonLd}</script>
 
-				${fallbackTitle}
-				${headTags}
+				${HEAD_TAGS_PLACEHOLDER}
 			</head>
 		
 			<body>
-				<div id="app">${html}</div>
+				<div id="app">${APP_HTML_PLACEHOLDER}</div>
 			</body>
 			${clientScripts}
 		</html>
