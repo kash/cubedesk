@@ -90,4 +90,4 @@ Procedure names are the router keys in `server/trpc/router.ts` plus the procedur
   - Friend requests, accepts and ELO refunds only send email when the recipient's `notification_preference` allows it. Seeded users have email off. Accounts created through `/signup` have it on, so those actions fail for them until you turn it off.
 - **Signup** works but calls `ifconfig.co` for the country, which can stall without internet. Prefer the seeded accounts.
 - **Image uploads** (profile pictures, timer backgrounds) are no-ops in development and render as broken CDN links.
-- **DB integration tests** are skipped unless you opt in, and they need the local Postgres: `METRICS_DB_TESTS=1`, `IMPORT_DB_TESTS=1`, `TRAINER_DB_TESTS=1`.
+- **DB integration tests** are skipped unless you opt in, and they need the local Postgres: `IMPORT_DB_TESTS=1`, `TRAINER_DB_TESTS=1`.
