@@ -121,7 +121,8 @@ export default class Stackmat {
 					audio: selectObj,
 				})
 				.then((stream) => {
-					if (this.audio_context.state === 'suspended' && !force) {
+					if (!this.audio_context || (this.audio_context.state === 'suspended' && !force)) {
+						stream.getTracks().forEach((track) => track.stop());
 						return Promise.reject();
 					}
 					this.success(stream);
@@ -133,10 +134,14 @@ export default class Stackmat {
 
 	stop = () => {
 		if (this.audio_stream !== undefined) {
-			this.source.disconnect(this.node);
-			this.node.disconnect(this.audio_context.destination);
-			this.audio_stream.stop && this.audio_stream.stop();
+			this.source?.disconnect();
+			this.node?.disconnect();
+			this.audio_stream.getTracks().forEach((track) => track.stop());
 			this.audio_stream = undefined;
+		}
+		if (this.audio_context) {
+			this.audio_context.close().catch(() => null);
+			this.audio_context = undefined;
 		}
 	};
 
