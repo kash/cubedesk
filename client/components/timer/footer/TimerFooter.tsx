@@ -8,6 +8,7 @@ import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
 import {CaretDown, CaretUp} from 'phosphor-react';
 import React, {ReactNode} from 'react';
+import {flushSync} from 'react-dom';
 
 export default React.memo(TimerFooter);
 
@@ -24,7 +25,15 @@ function TimerFooter() {
 	const timerModuleCount = useSettings('timer_module_count');
 
 	function toggleMobileHideButton() {
-		setSetting('hide_mobile_timer_footer', !hideMobileTimerFooter);
+		const toggle = () => setSetting('hide_mobile_timer_footer', !hideMobileTimerFooter);
+		if (
+			typeof document.startViewTransition !== 'function' ||
+			window.matchMedia('(prefers-reduced-motion: reduce)').matches
+		) {
+			toggle();
+			return;
+		}
+		document.startViewTransition(() => flushSync(toggle));
 	}
 
 	let mobileHideButton: ReactNode = null;
@@ -47,13 +56,14 @@ function TimerFooter() {
 		mobileHideButton = (
 			<div className="mb-2 flex h-9 w-full shrink-0 items-center justify-end">
 				<Button
-					variant="outline"
+					variant="ghost"
 					size="icon"
+					className="text-text/70 hover:text-text hover:bg-transparent"
 					onClick={toggleMobileHideButton}
 					aria-label="Hide footer"
 					title="Hide footer"
 				>
-					<CaretDown />
+					<CaretDown size={24} />
 				</Button>
 			</div>
 		);
@@ -91,7 +101,7 @@ function TimerFooter() {
 					// Implicit rows so the column splits evenly between the modules actually shown
 					// (TimerModule hides the 2nd/3rd on short screens)
 					'grid auto-rows-[minmax(0,1fr)] grid-cols-[1fr] divide-y': sideLayout,
-					'max-h-[256px] min-h-0 flex-1 grid-rows-[minmax(0,1fr)] divide-x-0 divide-y-0 overflow-visible rounded':
+					'max-h-[256px] min-h-0 flex-1 grid-rows-[minmax(0,1fr)] divide-x-0 divide-y-0 overflow-visible rounded [view-transition-name:timer-footer]':
 						mobileMode,
 				},
 			)}

@@ -997,3 +997,30 @@ html {
     -webkit-box-shadow: 0 0 0 1000px rgb(var(--theme-module)) inset, 0 0 0 3px rgba(var(--theme-primary), 0.5);
   }
 }
+
+::view-transition-group(timer-main) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+::view-transition-old(timer-footer) {
+  animation: timer-footer-out 300ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+::view-transition-new(timer-footer) {
+  animation: timer-footer-in 300ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes timer-footer-out {
+  to {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+}
+
+@keyframes timer-footer-in {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+}

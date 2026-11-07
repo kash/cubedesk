@@ -209,6 +209,7 @@ export default function Timer(props: TimerProps) {
 	const mainCenterClass = classNames('flex w-full flex-col items-center', {
 		'short:mt-0 -mt-[15vh]': sideLayout,
 		'-mt-[10vh]': context.focusMode && !mobileMode,
+		'[view-transition-name:timer-main]': mobileMode,
 	});
 	const mainTimeClass = classNames({
 		'@container flex w-[95%] max-w-[580px] flex-row items-center justify-between':
