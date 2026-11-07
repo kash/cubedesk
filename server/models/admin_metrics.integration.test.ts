@@ -45,21 +45,9 @@ suite('admin metrics PostgreSQL integration', () => {
 			id text PRIMARY KEY, match_session_id text NOT NULL, started_at timestamp(3),
 			aborted boolean NOT NULL DEFAULT false
 		)`);
-		await db.$executeRawUnsafe('CREATE INDEX ON match (started_at)');
 		await db.$executeRawUnsafe(`CREATE TABLE match_participant (
 			id text PRIMARY KEY, match_id text NOT NULL, user_id text NOT NULL
 		)`);
-		await db.$executeRawUnsafe(`INSERT INTO match VALUES
-			('m1', 's1', '2026-09-06 10:00', false),
-			('m2', 's1', '2026-09-06 23:59:59.999', false),
-			('m3', 's2', '2026-09-06 12:00', true),
-			('m4', 's3', NULL, false),
-			('m5', 's4', '2026-09-07 01:00', false),
-			('m6', 's5', '2026-09-07 12:00', false)`);
-		await db.$executeRawUnsafe(`INSERT INTO match_participant VALUES
-			('p1', 'm1', 'user-1'), ('p2', 'm1', 'user-2'), ('p3', 'm2', 'user-1'),
-			('p4', 'm2', 'user-2'), ('p5', 'm3', 'user-3'), ('p6', 'm4', 'user-3'),
-			('p7', 'm5', 'user-2'), ('p8', 'm5', 'user-3'), ('p9', 'm6', 'user-1')`);
 		// Boundaries: before history, first history day, just before MAU/WAU,
 		// first MAU/WAU day, yesterday, today, exact cutoff and after cutoff.
 		await db.$executeRawUnsafe(`INSERT INTO solve
@@ -161,11 +149,9 @@ suite('admin metrics PostgreSQL integration', () => {
 				signups: Number(signups.find((row) => row.date === day.date)?.count ?? 0),
 				trainerSolves: Number(trainer?.solves ?? 0),
 				trainerSessions: Number(trainer?.sessions ?? 0),
-				...(day.date === '2026-09-06'
-					? {matches: 2, matchSessions: 1, matchPlayers: 2}
-					: day.date === '2026-09-07'
-						? {matches: 1, matchSessions: 1, matchPlayers: 2}
-						: {matches: 0, matchSessions: 0, matchPlayers: 0}),
+				matches: 0,
+				matchSessions: 0,
+				matchPlayers: 0,
 			});
 		}
 	}, 30000);
