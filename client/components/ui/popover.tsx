@@ -2,7 +2,7 @@ import {cn} from '@/util/cn';
 import * as Primitive from '@radix-ui/react-popover';
 import React from 'react';
 import {consumeEscapeUntilKeyUp} from './dialog-keyboard';
-import {popupSurface, usePopupActivity} from './popup';
+import {popupMotion, popupSurface, usePopupActivity} from './popup';
 
 export function Popover({
 	open: controlledOpen,
@@ -46,6 +46,8 @@ export function PopoverContent({
 				}}
 				className={cn(
 					popupSurface,
+					popupMotion,
+					'origin-(--radix-popover-content-transform-origin)',
 					'z-[2000000] w-72 max-w-[calc(100vw-1rem)] p-4',
 					className,
 				)}
