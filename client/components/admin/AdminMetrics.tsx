@@ -25,6 +25,13 @@ const TRAINER_SOLVES: MetricsSeries[] = [
 const TRAINER_SESSIONS: MetricsSeries[] = [
 	{key: 'trainerSessions', label: 'Training sessions', color: '#e2b65c'},
 ];
+const MATCHES: MetricsSeries[] = [{key: 'matches', label: '1v1 games', color: '#e78080'}];
+const MATCH_SESSIONS: MetricsSeries[] = [
+	{key: 'matchSessions', label: '1v1 sessions', color: '#e78080'},
+];
+const MATCH_PLAYERS: MetricsSeries[] = [
+	{key: 'matchPlayers', label: '1v1 players', color: '#e78080'},
+];
 
 function StatCards({cards}: {cards: [string, number][]}) {
 	return (
@@ -154,7 +161,7 @@ export default function AdminMetrics() {
 							</NativeSelect>
 						</div>
 					</div>
-					<div className="grid gap-4 lg:grid-cols-2">
+					<div className="grid items-start gap-4 lg:grid-cols-2">
 						<AdminMetricsChart
 							title="Registered solves"
 							days={days}
@@ -172,6 +179,17 @@ export default function AdminMetrics() {
 							title="Trainer solves"
 							days={days}
 							series={TRAINER_SOLVES}
+						/>
+						<AdminMetricsChart title="1v1 games" days={days} series={MATCHES} />
+						<AdminMetricsChart
+							title="1v1 sessions"
+							days={days}
+							series={MATCH_SESSIONS}
+						/>
+						<AdminMetricsChart
+							title="1v1 players"
+							days={days}
+							series={MATCH_PLAYERS}
 						/>
 						<div className="space-y-2">
 							<AdminMetricsChart

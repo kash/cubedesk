@@ -462,6 +462,7 @@ model Match {
   @@index([link_code])
   @@index([match_session_id])
   @@index([spectate_code])
+  @@index([started_at])
   @@index([winner_id])
   @@map("match")
 }
