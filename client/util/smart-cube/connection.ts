@@ -1,5 +1,6 @@
 // Encrypted smart cube connection shared by GAN, MoYu and QiYi cubes, adapted from gan-web-bluetooth (MIT) by Andy Fedotov
 import Aes128 from '@/util/smart-cube/aes';
+import {watchAdvertisements} from '@/util/smart-cube/bluetooth';
 import EventStream from '@/util/smart-cube/events';
 import {parseMacAddress} from '@/util/smart-cube/mac';
 import {
@@ -43,7 +44,9 @@ export class GattQueue {
 export async function connectGatt(device: BluetoothDevice) {
 	if (!device.gatt) throw new Error('Bluetooth GATT is unavailable for this device');
 	const scan = new AbortController();
-	device.watchAdvertisements?.({signal: scan.signal}).catch(() => {});
+	if (typeof device.watchAdvertisements === 'function') {
+		watchAdvertisements(device, scan.signal).catch(() => {});
+	}
 	try {
 		return await device.gatt.connect();
 	} finally {
@@ -67,7 +70,7 @@ export function waitForAdvertisement(device: BluetoothDevice, signal: AbortSigna
 		if (signal.aborted) return resolve(false);
 		signal.addEventListener('abort', onAbort);
 		device.addEventListener('advertisementreceived', onAdvertisement);
-		device.watchAdvertisements({signal: watchController.signal}).catch(() => finish(false));
+		watchAdvertisements(device, watchController.signal).catch(() => finish(false));
 	});
 }
 

@@ -15,6 +15,7 @@ import {ITimerContext, useTimerContext} from '@/components/timer/Timer';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent} from '@/components/ui/dialog';
 import {getSetting} from '@/db/settings/query';
+import {isBluetoothAvailable} from '@/util/smart-cube/bluetooth';
 import {SMART_TIMER_DRIVERS} from '@/util/smart-timer/drivers';
 import {SmartTimerEvent} from '@/util/smart-timer/protocol';
 import {getTimerStore} from '@/util/store/getTimer';
@@ -137,10 +138,7 @@ export default function SmartTimer() {
 	}
 
 	async function connect() {
-		const bluetoothAvailable =
-			!!navigator.bluetooth &&
-			(await navigator.bluetooth.getAvailability().catch(() => false));
-		if (bluetoothAvailable) {
+		if (await isBluetoothAvailable()) {
 			smartTimer.connect();
 		} else {
 			setBluetoothUnavailable(true);

@@ -25,8 +25,9 @@ import {encodeSmartTurns} from '@/shared/smart_turns';
 import {cn} from '@/util/cn';
 import {useGeneral} from '@/util/hooks/useGeneral';
 import {useSettings} from '@/util/hooks/useSettings';
-import {SMART_PUZZLES, SmartPuzzle} from '@/util/smart-cube/puzzle';
 import {SmartTurn} from '@/util/smart_scramble';
+import {isBluetoothAvailable} from '@/util/smart-cube/bluetooth';
+import {SMART_PUZZLES, SmartPuzzle} from '@/util/smart-cube/puzzle';
 import {toastError} from '@/util/toast';
 import Cube from 'cubejs';
 import {DotsThree} from 'phosphor-react';
@@ -315,9 +316,7 @@ export default function SmartCube() {
 
 	async function connectBluetooth() {
 		try {
-			const bluetoothAvailable =
-				!!navigator.bluetooth && (await navigator.bluetooth.getAvailability());
-			if (bluetoothAvailable) {
+			if (await isBluetoothAvailable()) {
 				connection.connect();
 			} else {
 				setBluetoothErrorMessageDialog({props: {}});

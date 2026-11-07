@@ -1,3 +1,5 @@
+import {watchAdvertisements} from '@/util/smart-cube/bluetooth';
+
 // Encrypted smart cubes salt their encryption key with their MAC address, which browsers don't expose directly
 
 /** Normalize a MAC address to the AA:BB:CC:DD:EE:FF format, or null if it isn't a valid one */
@@ -85,6 +87,6 @@ export function readMacAddress(
 		const timeout = setTimeout(() => finish(null), 10000);
 
 		device.addEventListener('advertisementreceived', onAdvertisement);
-		device.watchAdvertisements({signal: abortController.signal}).catch(() => finish(null));
+		watchAdvertisements(device, abortController.signal).catch(() => finish(null));
 	});
 }
