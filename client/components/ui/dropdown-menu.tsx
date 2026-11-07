@@ -3,7 +3,7 @@ import * as Primitive from '@radix-ui/react-dropdown-menu';
 import {Check} from 'phosphor-react';
 import React from 'react';
 import {consumeEscapeUntilKeyUp, getTopDialog} from './dialog-keyboard';
-import {popupItem, popupSurface, usePopupActivity} from './popup';
+import {popupItem, popupMotion, popupSurface, usePopupActivity} from './popup';
 
 export function DropdownMenu({
 	open: controlledOpen,
@@ -51,6 +51,8 @@ export function DropdownMenuContent({
 				}}
 				className={cn(
 					popupSurface,
+					popupMotion,
+					'origin-(--radix-dropdown-menu-content-transform-origin)',
 					'z-[2000000] max-h-[min(24rem,var(--radix-dropdown-menu-content-available-height))] min-w-40 overflow-y-auto p-1',
 					className,
 				)}

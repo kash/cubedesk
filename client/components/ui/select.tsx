@@ -3,7 +3,7 @@ import * as Primitive from '@radix-ui/react-select';
 import {CaretDown, CaretUp, Check} from 'phosphor-react';
 import React from 'react';
 import {consumeEscapeUntilKeyUp, getTopDialog} from './dialog-keyboard';
-import {pickerTrigger, popupItem, popupSurface, usePopupActivity} from './popup';
+import {pickerTrigger, popupItem, popupMotion, popupSurface, usePopupActivity} from './popup';
 
 export function Select({
 	open: controlledOpen,
@@ -67,6 +67,8 @@ export function SelectContent({
 				}}
 				className={cn(
 					popupSurface,
+					popupMotion,
+					'origin-(--radix-select-content-transform-origin)',
 					'z-[2000000] max-h-[min(24rem,var(--radix-select-content-available-height))] min-w-[var(--radix-select-trigger-width)] overflow-hidden',
 					className,
 				)}
@@ -95,7 +97,11 @@ export function SelectItem({
 				    React to remove when browser translation replaces the label's text nodes. */}
 				<span>{children}</span>
 			</Primitive.ItemText>
-			{endContent && <span className="ml-auto pl-6" aria-hidden="true">{endContent}</span>}
+			{endContent && (
+				<span className="ml-auto pl-6" aria-hidden="true">
+					{endContent}
+				</span>
+			)}
 			<Primitive.ItemIndicator className="absolute right-2">
 				<Check className="size-4" />
 			</Primitive.ItemIndicator>
