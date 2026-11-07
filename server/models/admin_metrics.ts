@@ -65,6 +65,11 @@ export function adminMetricsRangeQueries(start: Date, end: Date) {
 		demos: Prisma.sql`SELECT NULLIF(demo_session_id, '') AS session, count(*) AS solves
 			FROM demo_solve WHERE created_at >= ${start} AND created_at < ${end}
 			GROUP BY 1`,
+		matches: Prisma.sql`SELECT m.match_session_id AS session,
+			coalesce(array_agg(p.user_id) FILTER (WHERE p.user_id IS NOT NULL), '{}') AS players
+			FROM match m LEFT JOIN match_participant p ON p.match_id = m.id
+			WHERE m.started_at >= ${start} AND m.started_at < ${end} AND NOT m.aborted
+			GROUP BY m.id`,
 	};
 }
 
@@ -250,6 +255,9 @@ export async function buildAdminMetrics(
 			signups: 0,
 			trainerSolves: 0,
 			trainerSessions: 0,
+			matches: 0,
+			matchSessions: 0,
+			matchPlayers: 0,
 		};
 		// Keep only one day's identities, plus distinct users for the rolling
 		// windows. Dedupe across split batches, puzzles, and activities as well.
@@ -282,6 +290,21 @@ export async function buildAdminMetrics(
 			}
 		}
 		day.demoSessions = demoSessions.size;
+		const matchSessions = new Set<string>();
+		const matchPlayers = new Set<string>();
+		for await (const rows of rangeQuery<{session: string; players: string[]}>(
+			'matches',
+			from,
+			end,
+		)) {
+			for (const row of rows) {
+				day.matches += 1;
+				matchSessions.add(row.session);
+				for (const player of row.players) matchPlayers.add(player);
+			}
+		}
+		day.matchSessions = matchSessions.size;
+		day.matchPlayers = matchPlayers.size;
 		if (from < today) {
 			const active = [
 				...dailyUsers,
@@ -312,7 +335,7 @@ export async function buildAdminMetrics(
 	}
 	assertActive();
 	return {
-		version: 4,
+		version: 5,
 		cutoff: cutoff.toISOString(),
 		completedAt: new Date().toISOString(),
 		totals: {

@@ -53,6 +53,9 @@ it('keeps empty UTC days and runs only one bounded, read-only query at a time', 
 		signups: 0,
 		trainerSolves: 0,
 		trainerSessions: 0,
+		matches: 0,
+		matchSessions: 0,
+		matchPlayers: 0,
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 0, weekly: 0, monthly: 0});
 	const timeouts = transaction.mock.calls.map(([, options]) => options);
@@ -112,6 +115,15 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 				{session: null, solves: BigInt(1)},
 			];
 		}
+		if (sql.text.includes('FROM match m')) {
+			if (end.getTime() - start.getTime() > 6 * 60 * 60 * 1000) {
+				throw new Error('canceling statement due to statement timeout');
+			}
+			return [
+				{session: 'same-match-session', players: ['user-a', 'user-b']},
+				{session: 'other-match-session', players: ['user-a']},
+			];
+		}
 		return [];
 	});
 	const snapshot = await buildAdminMetrics(cutoff, db);
@@ -128,6 +140,9 @@ it('splits timeouts into disjoint ranges and deduplicates users/sessions across 
 		demoSessions: 1,
 		trainerSolves: 2,
 		trainerSessions: 1,
+		matches: 4,
+		matchSessions: 2,
+		matchPlayers: 2,
 	});
 	expect(snapshot.activeUsers).toEqual({daily: 2, weekly: 2, monthly: 2});
 });
@@ -183,7 +198,7 @@ it('counts import operations separately from imported solves, grouped by start d
 		return empty(sql);
 	});
 	const snapshot = await buildAdminMetrics(cutoff, db);
-	expect(snapshot.version).toBe(4);
+	expect(snapshot.version).toBe(5);
 	expect(snapshot.days.find((day) => day.date === '2026-09-06')).toMatchObject({
 		imports: 0,
 		importsSucceeded: 2,

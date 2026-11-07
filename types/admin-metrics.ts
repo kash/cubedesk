@@ -13,10 +13,13 @@ export interface AdminMetricsDay {
 	signups: number;
 	trainerSolves: number;
 	trainerSessions: number;
+	matches: number;
+	matchSessions: number;
+	matchPlayers: number;
 }
 
 export interface AdminMetricsSnapshot {
-	version: 4;
+	version: 5;
 	cutoff: string;
 	completedAt: string;
 	totals: {
