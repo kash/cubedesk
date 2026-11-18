@@ -66,7 +66,7 @@ export function endTimer(context: ITimerContext, finalTimeMilli?: number, overri
 export function resetTimerParams(context: ITimerContext) {
 	resetScramble(context);
 	stopTimer(START_TIMEOUT);
-	clearInspectionTimers(false, true);
+	clearInspectionTimers(true, true);
 	setTimerParams({
 		spaceTimerStarted: 0,
 		solving: false,
