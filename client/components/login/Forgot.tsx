@@ -37,11 +37,6 @@ export default function Forgot() {
 		forgotCodeMutation.isPending ||
 		checkForgotMutation.isPending ||
 		updatePassMutation.isPending;
-	const err =
-		forgotCodeMutation.error?.message ||
-		checkForgotMutation.error?.message ||
-		updatePassMutation.error?.message ||
-		error;
 
 	async function nextStage(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -50,54 +45,60 @@ export default function Forgot() {
 			return;
 		}
 
-		switch (stage) {
-			case ForgotStage.EnterEmail: {
-				if (!email.trim()) {
-					setError('Please enter in your email');
+		setError('');
+
+		try {
+			switch (stage) {
+				case ForgotStage.EnterEmail: {
+					if (!email.trim()) {
+						setError('Please enter in your email');
+						return;
+					}
+
+					await forgotCodeMutation.mutateAsync({email: email.trim()});
+					setStage(ForgotStage.EnterCode);
+					break;
+				}
+				case ForgotStage.EnterCode: {
+					if (!code) {
+						setError('Please enter in a code');
+						return;
+					}
+
+					const valid = await checkForgotMutation.mutateAsync({email: email.trim(), code});
+					if (!valid) {
+						setError('Invalid code');
+						return;
+					}
+
+					setStage(ForgotStage.NewPassword);
+					break;
+				}
+				case ForgotStage.NewPassword: {
+					const validate = validateStrongPassword(newPassword, confirmPassword);
+
+					if (!validate.isStrong) {
+						setError(validate.errorMessage);
+						return;
+					}
+
+					await updatePassMutation.mutateAsync({
+						email: email.trim(),
+						code,
+						password: newPassword,
+					});
+					window.location.href = getSafeRedirect(auth?.redirectTo ?? getRedirectLink());
 					return;
 				}
-
-				await forgotCodeMutation.mutateAsync({email: email.trim()});
-				setStage(ForgotStage.EnterCode);
-				break;
 			}
-			case ForgotStage.EnterCode: {
-				if (!code) {
-					setError('Please enter in a code');
-					return;
-				}
-
-				const valid = await checkForgotMutation.mutateAsync({email: email.trim(), code});
-				if (!valid) {
-					setError('Invalid code');
-					return;
-				}
-
-				setStage(ForgotStage.NewPassword);
-				break;
-			}
-			case ForgotStage.NewPassword: {
-				const validate = validateStrongPassword(newPassword, confirmPassword);
-
-				if (!validate.isStrong) {
-					setError(validate.errorMessage);
-					return;
-				}
-
-				await updatePassMutation.mutateAsync({
-					email: email.trim(),
-					code,
-					password: newPassword,
-				});
-				window.location.href = getSafeRedirect(auth?.redirectTo ?? getRedirectLink());
-				return;
-			}
+		} catch (err) {
+			setError(err instanceof Error ? err.message : 'Failed to reset password');
 		}
 	}
 
 	let body: React.ReactNode = null;
 	switch (stage) {
-		case 0: {
+		case ForgotStage.EnterEmail: {
 			body = (
 				<div className="flex flex-col gap-5">
 					<Field>
@@ -121,7 +122,7 @@ export default function Forgot() {
 			);
 			break;
 		}
-		case 1: {
+		case ForgotStage.EnterCode: {
 			body = (
 				<div className="flex flex-col gap-5">
 					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
@@ -149,7 +150,7 @@ export default function Forgot() {
 			);
 			break;
 		}
-		case 2: {
+		case ForgotStage.NewPassword: {
 			body = (
 				<div className="flex flex-col gap-5">
 					<p className="text-text m-0 text-center text-[0.9rem] leading-[1.4rem]">
@@ -191,7 +192,7 @@ export default function Forgot() {
 							{'Change Password & Log in'}
 							{loading ? <Spinner aria-hidden="true" /> : null}
 						</Button>
-						<ButtonError text={err} />
+						<ButtonError text={error} />
 					</div>
 				</div>
 			);
