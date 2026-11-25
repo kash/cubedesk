@@ -1,6 +1,11 @@
 import Empty from '@/components/common/Empty';
 import Face from '@/components/modules/scramble/Face';
+import PuzzleSvg from '@/components/modules/scramble/PuzzleSvg';
 import {getEventTypeInfoById, getScrambleTypeById} from '@/util/cubes/util';
+import {PuzzleVisual} from '@/util/scramble/visual/geometry';
+import {layoutPyraminx} from '@/util/scramble/visual/pyraminx';
+import {layoutSkewb} from '@/util/scramble/visual/skewb';
+import {layoutSquare1} from '@/util/scramble/visual/square1';
 import {layoutScramble} from '@/util/vendor/scramble_layout';
 import React, {useMemo} from 'react';
 
@@ -12,6 +17,15 @@ export const COLOR_MAP = {
 	Y: '#FFFF49',
 	W: '#FFFFFF',
 	D: '#3F464F',
+};
+
+const PUZZLE_LAYOUTS: Record<
+	string,
+	(scramble: string, frontFace: boolean) => PuzzleVisual | null
+> = {
+	pyraminx: layoutPyraminx,
+	skewb: layoutSkewb,
+	square1: layoutSquare1,
 };
 
 interface Props {
@@ -33,6 +47,15 @@ export default function ScrambleVisual(props: Props) {
 
 	const ct = getEventTypeInfoById(eventType ?? '');
 	const cubeScramble = getScrambleTypeById(ct?.scramble ?? '');
+	const puzzleLayout = cubeScramble ? PUZZLE_LAYOUTS[cubeScramble.id] : undefined;
+
+	const puzzleVisual = useMemo(() => {
+		if (!puzzleLayout || !scramble) {
+			return null;
+		}
+
+		return puzzleLayout(scramble, !!frontFace);
+	}, [puzzleLayout, scramble, frontFace]);
 
 	const visual = useMemo(() => {
 		if (!eventType || !scramble || !cubeScramble) {
@@ -44,9 +67,21 @@ export default function ScrambleVisual(props: Props) {
 		}
 
 		return layoutScramble(scramble, cubeScramble.size);
-	}, [eventType, scramble]);
+	}, [eventType, scramble, cubeScramble]);
 
 	const cubeSize = cubeScramble?.size;
+
+	if (puzzleLayout) {
+		if (!puzzleVisual) {
+			return <Empty text="No scramble yet" centered compact={compact} />;
+		}
+
+		return (
+			<div className="flex h-full w-full items-center justify-center">
+				<PuzzleSvg visual={puzzleVisual} width={props.width} frontFace={frontFace} />
+			</div>
+		);
+	}
 
 	const supported = scrambleIsSupported(cubeScramble?.id);
 	if (!supported) {
